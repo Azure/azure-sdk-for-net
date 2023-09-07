@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class PngFormat : IUtf8JsonSerializable
+    public partial class PngFormat : IUtf8JsonSerializable, IModelJsonSerializable<PngFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PngFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PngFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PngFormat>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("filenamePattern"u8);
             writer.WriteStringValue(FilenamePattern);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PngFormat DeserializePngFormat(JsonElement element)
+        internal static PngFormat DeserializePngFormat(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string odataType = default;
             string filenamePattern = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.Media.Models
                     filenamePattern = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PngFormat(odataType, filenamePattern);
+            return new PngFormat(odataType, filenamePattern, serializedAdditionalRawData);
+        }
+
+        PngFormat IModelJsonSerializable<PngFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PngFormat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePngFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PngFormat>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PngFormat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PngFormat IModelSerializable<PngFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PngFormat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePngFormat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PngFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PngFormat"/> to convert. </param>
+        public static implicit operator RequestContent(PngFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PngFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PngFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePngFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

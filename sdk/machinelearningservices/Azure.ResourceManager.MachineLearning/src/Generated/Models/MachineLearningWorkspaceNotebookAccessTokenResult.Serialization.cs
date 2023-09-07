@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceNotebookAccessTokenResult
+    public partial class MachineLearningWorkspaceNotebookAccessTokenResult : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningWorkspaceNotebookAccessTokenResult>
     {
-        internal static MachineLearningWorkspaceNotebookAccessTokenResult DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningWorkspaceNotebookAccessTokenResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningWorkspaceNotebookAccessTokenResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceNotebookAccessTokenResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningWorkspaceNotebookAccessTokenResult DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> expiresIn = default;
             Optional<string> refreshToken = default;
             Optional<string> scope = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notebookResourceId"u8))
@@ -72,8 +101,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scope = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(notebookResourceId.Value, hostName.Value, publicDns.Value, accessToken.Value, tokenType.Value, Optional.ToNullable(expiresIn), refreshToken.Value, scope.Value);
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(notebookResourceId.Value, hostName.Value, publicDns.Value, accessToken.Value, tokenType.Value, Optional.ToNullable(expiresIn), refreshToken.Value, scope.Value, serializedAdditionalRawData);
+        }
+
+        MachineLearningWorkspaceNotebookAccessTokenResult IModelJsonSerializable<MachineLearningWorkspaceNotebookAccessTokenResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceNotebookAccessTokenResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningWorkspaceNotebookAccessTokenResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceNotebookAccessTokenResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningWorkspaceNotebookAccessTokenResult IModelSerializable<MachineLearningWorkspaceNotebookAccessTokenResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceNotebookAccessTokenResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningWorkspaceNotebookAccessTokenResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningWorkspaceNotebookAccessTokenResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

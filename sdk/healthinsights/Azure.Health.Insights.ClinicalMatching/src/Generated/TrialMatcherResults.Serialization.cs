@@ -10,13 +10,59 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class TrialMatcherResults
+    public partial class TrialMatcherResults : IUtf8JsonSerializable, IModelJsonSerializable<TrialMatcherResults>
     {
-        internal static TrialMatcherResults DeserializeTrialMatcherResults(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrialMatcherResults>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrialMatcherResults>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("patients"u8);
+            writer.WriteStartArray();
+            foreach (var item in Patients)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TrialMatcherPatientResult>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("modelVersion"u8);
+            writer.WriteStringValue(ModelVersion);
+            if (Optional.IsDefined(KnowledgeGraphLastUpdateDate))
+            {
+                writer.WritePropertyName("knowledgeGraphLastUpdateDate"u8);
+                writer.WriteStringValue(KnowledgeGraphLastUpdateDate.Value, "D");
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TrialMatcherResults DeserializeTrialMatcherResults(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +70,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             IReadOnlyList<TrialMatcherPatientResult> patients = default;
             string modelVersion = default;
             Optional<DateTimeOffset> knowledgeGraphLastUpdateDate = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patients"u8))
@@ -50,16 +97,61 @@ namespace Azure.Health.Insights.ClinicalMatching
                     knowledgeGraphLastUpdateDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrialMatcherResults(patients, modelVersion, Optional.ToNullable(knowledgeGraphLastUpdateDate));
+            return new TrialMatcherResults(patients, modelVersion, Optional.ToNullable(knowledgeGraphLastUpdateDate), serializedAdditionalRawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TrialMatcherResults FromResponse(Response response)
+        TrialMatcherResults IModelJsonSerializable<TrialMatcherResults>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTrialMatcherResults(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrialMatcherResults(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrialMatcherResults>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrialMatcherResults IModelSerializable<TrialMatcherResults>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrialMatcherResults(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrialMatcherResults"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrialMatcherResults"/> to convert. </param>
+        public static implicit operator RequestContent(TrialMatcherResults model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrialMatcherResults"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrialMatcherResults(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrialMatcherResults(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

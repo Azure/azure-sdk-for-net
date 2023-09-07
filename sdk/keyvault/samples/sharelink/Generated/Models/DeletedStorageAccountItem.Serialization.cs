@@ -8,14 +8,45 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class DeletedStorageAccountItem
+    public partial class DeletedStorageAccountItem : IUtf8JsonSerializable, IModelJsonSerializable<DeletedStorageAccountItem>
     {
-        internal static DeletedStorageAccountItem DeserializeDeletedStorageAccountItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeletedStorageAccountItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeletedStorageAccountItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeletedStorageAccountItem>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecoveryId))
+            {
+                writer.WritePropertyName("recoveryId"u8);
+                writer.WriteStringValue(RecoveryId);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeletedStorageAccountItem DeserializeDeletedStorageAccountItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +58,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<string> resourceId = default;
             Optional<StorageAccountAttributes> attributes = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryId"u8))
@@ -85,8 +117,61 @@ namespace Azure.Security.KeyVault.Storage.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeletedStorageAccountItem(id.Value, resourceId.Value, attributes.Value, Optional.ToDictionary(tags), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedStorageAccountItem(id.Value, resourceId.Value, attributes.Value, Optional.ToDictionary(tags), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate), serializedAdditionalRawData);
+        }
+
+        DeletedStorageAccountItem IModelJsonSerializable<DeletedStorageAccountItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeletedStorageAccountItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedStorageAccountItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeletedStorageAccountItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeletedStorageAccountItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeletedStorageAccountItem IModelSerializable<DeletedStorageAccountItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeletedStorageAccountItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeletedStorageAccountItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeletedStorageAccountItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeletedStorageAccountItem"/> to convert. </param>
+        public static implicit operator RequestContent(DeletedStorageAccountItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeletedStorageAccountItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeletedStorageAccountItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeletedStorageAccountItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,24 +14,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningSharedPrivateLinkResource. </summary>
     public partial class MachineLearningSharedPrivateLinkResource
     {
-        /// <summary> Initializes a new instance of MachineLearningSharedPrivateLinkResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSharedPrivateLinkResource"/>. </summary>
         public MachineLearningSharedPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSharedPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSharedPrivateLinkResource"/>. </summary>
         /// <param name="name"> Unique name of the private link. </param>
         /// <param name="privateLinkResourceId"> The resource id that private link links to. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requestMessage"> Request message. </param>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        internal MachineLearningSharedPrivateLinkResource(string name, ResourceIdentifier privateLinkResourceId, string groupId, string requestMessage, MachineLearningPrivateEndpointServiceConnectionStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSharedPrivateLinkResource(string name, ResourceIdentifier privateLinkResourceId, string groupId, string requestMessage, MachineLearningPrivateEndpointServiceConnectionStatus? status, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PrivateLinkResourceId = privateLinkResourceId;
             GroupId = groupId;
             RequestMessage = requestMessage;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique name of the private link. </summary>

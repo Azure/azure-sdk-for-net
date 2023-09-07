@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultAccessPolicy : IUtf8JsonSerializable
+    public partial class KeyVaultAccessPolicy : IUtf8JsonSerializable, IModelJsonSerializable<KeyVaultAccessPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KeyVaultAccessPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KeyVaultAccessPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultAccessPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
@@ -26,12 +33,33 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStringValue(ApplicationId.Value);
             }
             writer.WritePropertyName("permissions"u8);
-            writer.WriteObjectValue(Permissions);
+            if (Permissions is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IdentityAccessPermissions>)Permissions).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultAccessPolicy DeserializeKeyVaultAccessPolicy(JsonElement element)
+        internal static KeyVaultAccessPolicy DeserializeKeyVaultAccessPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +68,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             string objectId = default;
             Optional<Guid> applicationId = default;
             IdentityAccessPermissions permissions = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -66,8 +95,61 @@ namespace Azure.ResourceManager.KeyVault.Models
                     permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KeyVaultAccessPolicy(tenantId, objectId, Optional.ToNullable(applicationId), permissions);
+            return new KeyVaultAccessPolicy(tenantId, objectId, Optional.ToNullable(applicationId), permissions, serializedAdditionalRawData);
+        }
+
+        KeyVaultAccessPolicy IModelJsonSerializable<KeyVaultAccessPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultAccessPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultAccessPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KeyVaultAccessPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultAccessPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KeyVaultAccessPolicy IModelSerializable<KeyVaultAccessPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultAccessPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKeyVaultAccessPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KeyVaultAccessPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KeyVaultAccessPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(KeyVaultAccessPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KeyVaultAccessPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KeyVaultAccessPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKeyVaultAccessPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

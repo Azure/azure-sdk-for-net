@@ -8,21 +8,34 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoClusterPatch : IUtf8JsonSerializable
+    public partial class KustoClusterPatch : IUtf8JsonSerializable, IModelJsonSerializable<KustoClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoClusterPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoClusterPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KustoClusterPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KustoSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Identity))
             {
@@ -50,14 +63,28 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedExternalTenants)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KustoClusterTrustedExternalTenant>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue(OptimizedAutoscale);
+                if (OptimizedAutoscale is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OptimizedAutoscale>)OptimizedAutoscale).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsDiskEncryptionEnabled))
             {
@@ -72,12 +99,26 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration);
+                if (VirtualNetworkConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KustoClusterVirtualNetworkConfiguration>)VirtualNetworkConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                if (KeyVaultProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KustoKeyVaultProperties>)KeyVaultProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsPurgeEnabled))
             {
@@ -87,7 +128,14 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensions);
+                if (LanguageExtensions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KustoLanguageExtensionList>)LanguageExtensions).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
@@ -120,7 +168,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in AcceptedAudiences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AcceptedAudience>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -155,11 +210,25 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStringValue(VirtualClusterGraduationProperties);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoClusterPatch DeserializeKustoClusterPatch(JsonElement element)
+        internal static KustoClusterPatch DeserializeKustoClusterPatch(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -197,6 +266,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<string> virtualClusterGraduationProperties = default;
             Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<MigrationClusterProperties> migrationCluster = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -514,8 +584,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoClusterPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, Optional.ToList(trustedExternalTenants), optimizedAutoscale.Value, Optional.ToNullable(enableDiskEncryption), Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(enableDoubleEncryption), Optional.ToNullable(publicNetworkAccess), Optional.ToList(allowedIPRangeList), Optional.ToNullable(engineType), Optional.ToList(acceptedAudiences), Optional.ToNullable(enableAutoStop), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, Optional.ToList(privateEndpointConnections), migrationCluster.Value);
+            return new KustoClusterPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, Optional.ToList(trustedExternalTenants), optimizedAutoscale.Value, Optional.ToNullable(enableDiskEncryption), Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(enableDoubleEncryption), Optional.ToNullable(publicNetworkAccess), Optional.ToList(allowedIPRangeList), Optional.ToNullable(engineType), Optional.ToList(acceptedAudiences), Optional.ToNullable(enableAutoStop), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, Optional.ToList(privateEndpointConnections), migrationCluster.Value, serializedAdditionalRawData);
+        }
+
+        KustoClusterPatch IModelJsonSerializable<KustoClusterPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoClusterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoClusterPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoClusterPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoClusterPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoClusterPatch IModelSerializable<KustoClusterPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoClusterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoClusterPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoClusterPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoClusterPatch"/> to convert. </param>
+        public static implicit operator RequestContent(KustoClusterPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoClusterPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoClusterPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoClusterPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

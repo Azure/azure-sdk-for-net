@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class PartialBatchDeployment : IUtf8JsonSerializable
+    internal partial class PartialBatchDeployment : IUtf8JsonSerializable, IModelJsonSerializable<PartialBatchDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PartialBatchDeployment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PartialBatchDeployment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PartialBatchDeployment>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
@@ -27,7 +35,98 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PartialBatchDeployment DeserializePartialBatchDeployment(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> description = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("description"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PartialBatchDeployment(description.Value, serializedAdditionalRawData);
+        }
+
+        PartialBatchDeployment IModelJsonSerializable<PartialBatchDeployment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartialBatchDeployment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePartialBatchDeployment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PartialBatchDeployment>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartialBatchDeployment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PartialBatchDeployment IModelSerializable<PartialBatchDeployment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartialBatchDeployment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePartialBatchDeployment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PartialBatchDeployment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PartialBatchDeployment"/> to convert. </param>
+        public static implicit operator RequestContent(PartialBatchDeployment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PartialBatchDeployment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PartialBatchDeployment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePartialBatchDeployment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

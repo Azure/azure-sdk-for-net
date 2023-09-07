@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class SecretBaseAttributes : IUtf8JsonSerializable
+    public partial class SecretBaseAttributes : IUtf8JsonSerializable, IModelJsonSerializable<SecretBaseAttributes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecretBaseAttributes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecretBaseAttributes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecretBaseAttributes>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("exp"u8);
                 writer.WriteNumberValue(Expires.Value, "U");
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecretBaseAttributes DeserializeSecretBaseAttributes(JsonElement element)
+        internal static SecretBaseAttributes DeserializeSecretBaseAttributes(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<DateTimeOffset> exp = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -92,8 +114,61 @@ namespace Azure.ResourceManager.KeyVault.Models
                     updated = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecretBaseAttributes(Optional.ToNullable(enabled), Optional.ToNullable(nbf), Optional.ToNullable(exp), Optional.ToNullable(created), Optional.ToNullable(updated));
+            return new SecretBaseAttributes(Optional.ToNullable(enabled), Optional.ToNullable(nbf), Optional.ToNullable(exp), Optional.ToNullable(created), Optional.ToNullable(updated), serializedAdditionalRawData);
+        }
+
+        SecretBaseAttributes IModelJsonSerializable<SecretBaseAttributes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecretBaseAttributes>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretBaseAttributes(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecretBaseAttributes>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecretBaseAttributes>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecretBaseAttributes IModelSerializable<SecretBaseAttributes>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecretBaseAttributes>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecretBaseAttributes(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecretBaseAttributes"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecretBaseAttributes"/> to convert. </param>
+        public static implicit operator RequestContent(SecretBaseAttributes model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecretBaseAttributes"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecretBaseAttributes(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecretBaseAttributes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

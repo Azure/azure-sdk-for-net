@@ -6,15 +6,93 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class SelectiveKeyRestoreDetailsInternal
+    internal partial class SelectiveKeyRestoreDetailsInternal : IUtf8JsonSerializable, IModelJsonSerializable<SelectiveKeyRestoreDetailsInternal>
     {
-        internal static SelectiveKeyRestoreDetailsInternal DeserializeSelectiveKeyRestoreDetailsInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SelectiveKeyRestoreDetailsInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SelectiveKeyRestoreDetailsInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SelectiveKeyRestoreDetailsInternal>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(StatusDetails))
+            {
+                writer.WritePropertyName("statusDetails"u8);
+                writer.WriteStringValue(StatusDetails);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                if (Error != null)
+                {
+                    writer.WritePropertyName("error"u8);
+                    if (Error is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KeyVaultServiceError>)Error).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("error");
+                }
+            }
+            if (Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (Optional.IsDefined(StartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteNumberValue(StartTime.Value, "U");
+            }
+            if (Optional.IsDefined(EndTime))
+            {
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteNumberValue(EndTime.Value, "U");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SelectiveKeyRestoreDetailsInternal DeserializeSelectiveKeyRestoreDetailsInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +103,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             Optional<string> jobId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -71,8 +150,61 @@ namespace Azure.Security.KeyVault.Administration.Models
                     endTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SelectiveKeyRestoreDetailsInternal(status.Value, statusDetails.Value, error.Value, jobId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new SelectiveKeyRestoreDetailsInternal(status.Value, statusDetails.Value, error.Value, jobId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData);
+        }
+
+        SelectiveKeyRestoreDetailsInternal IModelJsonSerializable<SelectiveKeyRestoreDetailsInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SelectiveKeyRestoreDetailsInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelectiveKeyRestoreDetailsInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SelectiveKeyRestoreDetailsInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SelectiveKeyRestoreDetailsInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SelectiveKeyRestoreDetailsInternal IModelSerializable<SelectiveKeyRestoreDetailsInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SelectiveKeyRestoreDetailsInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSelectiveKeyRestoreDetailsInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SelectiveKeyRestoreDetailsInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SelectiveKeyRestoreDetailsInternal"/> to convert. </param>
+        public static implicit operator RequestContent(SelectiveKeyRestoreDetailsInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SelectiveKeyRestoreDetailsInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SelectiveKeyRestoreDetailsInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSelectiveKeyRestoreDetailsInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

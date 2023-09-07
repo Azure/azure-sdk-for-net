@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownAutoMLVertical : IUtf8JsonSerializable
+    internal partial class UnknownAutoMLVertical : IUtf8JsonSerializable, IModelJsonSerializable<AutoMLVertical>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutoMLVertical>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutoMLVertical>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AutoMLVertical>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LogVerbosity))
             {
@@ -35,53 +41,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            if (TrainingData is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningTableJobInput>)TrainingData).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAutoMLVertical DeserializeUnknownAutoMLVertical(JsonElement element)
+        internal static AutoMLVertical DeserializeUnknownAutoMLVertical(JsonElement element, ModelSerializerOptions options = default) => DeserializeAutoMLVertical(element, options);
+
+        AutoMLVertical IModelJsonSerializable<AutoMLVertical>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
-            TaskType taskType = "Unknown";
-            MachineLearningTableJobInput trainingData = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("logVerbosity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("targetColumnName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        targetColumnName = null;
-                        continue;
-                    }
-                    targetColumnName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new TaskType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("trainingData"u8))
-                {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
-                    continue;
-                }
-            }
-            return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData);
+            Core.ModelSerializerHelper.ValidateFormat<AutoMLVertical>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAutoMLVertical(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutoMLVertical>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutoMLVertical>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutoMLVertical IModelSerializable<AutoMLVertical>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutoMLVertical>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutoMLVertical(doc.RootElement, options);
         }
     }
 }

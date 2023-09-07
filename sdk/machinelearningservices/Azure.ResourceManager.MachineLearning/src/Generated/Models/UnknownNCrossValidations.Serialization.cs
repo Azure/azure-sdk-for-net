@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownNCrossValidations : IUtf8JsonSerializable
+    internal partial class UnknownNCrossValidations : IUtf8JsonSerializable, IModelJsonSerializable<NCrossValidations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NCrossValidations>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NCrossValidations>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NCrossValidations>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownNCrossValidations DeserializeUnknownNCrossValidations(JsonElement element)
+        internal static NCrossValidations DeserializeUnknownNCrossValidations(JsonElement element, ModelSerializerOptions options = default) => DeserializeNCrossValidations(element, options);
+
+        NCrossValidations IModelJsonSerializable<NCrossValidations>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            NCrossValidationsMode mode = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("mode"u8))
-                {
-                    mode = new NCrossValidationsMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownNCrossValidations(mode);
+            Core.ModelSerializerHelper.ValidateFormat<NCrossValidations>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownNCrossValidations(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NCrossValidations>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NCrossValidations>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NCrossValidations IModelSerializable<NCrossValidations>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NCrossValidations>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNCrossValidations(doc.RootElement, options);
         }
     }
 }

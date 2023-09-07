@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class EdgeUsageDataEventHub
+    public partial class EdgeUsageDataEventHub : IUtf8JsonSerializable, IModelJsonSerializable<EdgeUsageDataEventHub>
     {
-        internal static EdgeUsageDataEventHub DeserializeEdgeUsageDataEventHub(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeUsageDataEventHub>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeUsageDataEventHub>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeUsageDataEventHub>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(Token))
+            {
+                writer.WritePropertyName("token"u8);
+                writer.WriteStringValue(Token);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EdgeUsageDataEventHub DeserializeEdgeUsageDataEventHub(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> name = default;
             Optional<string> @namespace = default;
             Optional<string> token = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -38,8 +82,61 @@ namespace Azure.ResourceManager.Media.Models
                     token = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeUsageDataEventHub(name.Value, @namespace.Value, token.Value);
+            return new EdgeUsageDataEventHub(name.Value, @namespace.Value, token.Value, serializedAdditionalRawData);
+        }
+
+        EdgeUsageDataEventHub IModelJsonSerializable<EdgeUsageDataEventHub>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeUsageDataEventHub>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeUsageDataEventHub(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeUsageDataEventHub>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeUsageDataEventHub>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeUsageDataEventHub IModelSerializable<EdgeUsageDataEventHub>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeUsageDataEventHub>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeUsageDataEventHub(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdgeUsageDataEventHub"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdgeUsageDataEventHub"/> to convert. </param>
+        public static implicit operator RequestContent(EdgeUsageDataEventHub model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdgeUsageDataEventHub"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdgeUsageDataEventHub(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeUsageDataEventHub(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

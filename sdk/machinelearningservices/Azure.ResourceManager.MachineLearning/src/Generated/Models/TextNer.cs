@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class TextNer : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of TextNer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextNer"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public TextNer(MachineLearningTableJobInput trainingData) : base(trainingData)
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.TextNER;
         }
 
-        /// <summary> Initializes a new instance of TextNer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextNer"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -42,13 +43,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal TextNer(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextNer(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
         {
             PrimaryMetric = primaryMetric;
             FeaturizationSettings = featurizationSettings;
             LimitSettings = limitSettings;
             ValidationData = validationData;
             TaskType = taskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextNer"/> for deserialization. </summary>
+        internal TextNer()
+        {
         }
 
         /// <summary>

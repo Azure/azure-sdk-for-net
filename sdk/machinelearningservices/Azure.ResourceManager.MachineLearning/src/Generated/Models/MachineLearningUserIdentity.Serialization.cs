@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningUserIdentity : IUtf8JsonSerializable
+    public partial class MachineLearningUserIdentity : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningUserIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningUserIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningUserIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningUserIdentity>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("identityType"u8);
             writer.WriteStringValue(IdentityType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningUserIdentity DeserializeMachineLearningUserIdentity(JsonElement element)
+        internal static MachineLearningUserIdentity DeserializeMachineLearningUserIdentity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IdentityConfigurationType identityType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identityType"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     identityType = new IdentityConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningUserIdentity(identityType);
+            return new MachineLearningUserIdentity(identityType, serializedAdditionalRawData);
+        }
+
+        MachineLearningUserIdentity IModelJsonSerializable<MachineLearningUserIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningUserIdentity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningUserIdentity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningUserIdentity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningUserIdentity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningUserIdentity IModelSerializable<MachineLearningUserIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningUserIdentity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningUserIdentity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningUserIdentity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningUserIdentity"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningUserIdentity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningUserIdentity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningUserIdentity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningUserIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

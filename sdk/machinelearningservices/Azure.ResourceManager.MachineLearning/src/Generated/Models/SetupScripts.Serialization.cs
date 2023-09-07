@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class SetupScripts : IUtf8JsonSerializable
+    internal partial class SetupScripts : IUtf8JsonSerializable, IModelJsonSerializable<SetupScripts>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SetupScripts>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SetupScripts>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SetupScripts>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Scripts))
             {
                 writer.WritePropertyName("scripts"u8);
-                writer.WriteObjectValue(Scripts);
+                if (Scripts is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningScriptsToExecute>)Scripts).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SetupScripts DeserializeSetupScripts(JsonElement element)
+        internal static SetupScripts DeserializeSetupScripts(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<MachineLearningScriptsToExecute> scripts = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scripts"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scripts = MachineLearningScriptsToExecute.DeserializeMachineLearningScriptsToExecute(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SetupScripts(scripts.Value);
+            return new SetupScripts(scripts.Value, serializedAdditionalRawData);
+        }
+
+        SetupScripts IModelJsonSerializable<SetupScripts>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SetupScripts>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSetupScripts(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SetupScripts>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SetupScripts>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SetupScripts IModelSerializable<SetupScripts>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SetupScripts>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSetupScripts(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SetupScripts"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SetupScripts"/> to convert. </param>
+        public static implicit operator RequestContent(SetupScripts model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SetupScripts"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SetupScripts(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSetupScripts(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

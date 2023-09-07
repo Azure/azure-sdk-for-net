@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownScheduleActionBase))]
     public abstract partial class MachineLearningScheduleAction
     {
-        /// <summary> Initializes a new instance of MachineLearningScheduleAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleAction"/>. </summary>
         protected MachineLearningScheduleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleAction"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
-        internal MachineLearningScheduleAction(ScheduleActionType actionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningScheduleAction(ScheduleActionType actionType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Specifies the action type of the schedule. </summary>

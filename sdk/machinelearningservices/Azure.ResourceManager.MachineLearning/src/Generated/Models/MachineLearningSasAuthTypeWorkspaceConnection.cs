@@ -5,25 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningSasAuthTypeWorkspaceConnection. </summary>
     public partial class MachineLearningSasAuthTypeWorkspaceConnection : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningSasAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>. </summary>
         public MachineLearningSasAuthTypeWorkspaceConnection()
         {
             AuthType = MachineLearningConnectionAuthType.Sas;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSasAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="target"></param>
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentials"></param>
-        internal MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, WorkspaceConnectionSharedAccessSignature credentials) : base(authType, category, target, value, valueFormat)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, WorkspaceConnectionSharedAccessSignature credentials, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, category, target, value, valueFormat, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12FramingSettings : IUtf8JsonSerializable
+    public partial class X12FramingSettings : IUtf8JsonSerializable, IModelJsonSerializable<X12FramingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X12FramingSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X12FramingSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<X12FramingSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dataElementSeparator"u8);
             writer.WriteNumberValue(DataElementSeparator);
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(CharacterSet.ToString());
             writer.WritePropertyName("segmentTerminatorSuffix"u8);
             writer.WriteStringValue(SegmentTerminatorSuffix.ToSerialString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12FramingSettings DeserializeX12FramingSettings(JsonElement element)
+        internal static X12FramingSettings DeserializeX12FramingSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
             int segmentTerminator = default;
             X12CharacterSet characterSet = default;
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataElementSeparator"u8))
@@ -82,8 +105,61 @@ namespace Azure.ResourceManager.Logic.Models
                     segmentTerminatorSuffix = property.Value.GetString().ToSegmentTerminatorSuffix();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X12FramingSettings(dataElementSeparator, componentSeparator, replaceSeparatorsInPayload, replaceCharacter, segmentTerminator, characterSet, segmentTerminatorSuffix);
+            return new X12FramingSettings(dataElementSeparator, componentSeparator, replaceSeparatorsInPayload, replaceCharacter, segmentTerminator, characterSet, segmentTerminatorSuffix, serializedAdditionalRawData);
+        }
+
+        X12FramingSettings IModelJsonSerializable<X12FramingSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12FramingSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12FramingSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X12FramingSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12FramingSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X12FramingSettings IModelSerializable<X12FramingSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12FramingSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX12FramingSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="X12FramingSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="X12FramingSettings"/> to convert. </param>
+        public static implicit operator RequestContent(X12FramingSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="X12FramingSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator X12FramingSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX12FramingSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

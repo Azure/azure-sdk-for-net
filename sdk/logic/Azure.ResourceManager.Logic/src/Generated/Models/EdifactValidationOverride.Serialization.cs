@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactValidationOverride : IUtf8JsonSerializable
+    public partial class EdifactValidationOverride : IUtf8JsonSerializable, IModelJsonSerializable<EdifactValidationOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdifactValidationOverride>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdifactValidationOverride>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactValidationOverride>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(TrailingSeparatorPolicy.ToString());
             writer.WritePropertyName("trimLeadingAndTrailingSpacesAndZeroes"u8);
             writer.WriteBooleanValue(TrimLeadingAndTrailingSpacesAndZeroes);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdifactValidationOverride DeserializeEdifactValidationOverride(JsonElement element)
+        internal static EdifactValidationOverride DeserializeEdifactValidationOverride(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool allowLeadingAndTrailingSpacesAndZeroes = default;
             TrailingSeparatorPolicy trailingSeparatorPolicy = default;
             bool trimLeadingAndTrailingSpacesAndZeroes = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))
@@ -82,8 +105,61 @@ namespace Azure.ResourceManager.Logic.Models
                     trimLeadingAndTrailingSpacesAndZeroes = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdifactValidationOverride(messageId, enforceCharacterSet, validateEdiTypes, validateXsdTypes, allowLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy, trimLeadingAndTrailingSpacesAndZeroes);
+            return new EdifactValidationOverride(messageId, enforceCharacterSet, validateEdiTypes, validateXsdTypes, allowLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy, trimLeadingAndTrailingSpacesAndZeroes, serializedAdditionalRawData);
+        }
+
+        EdifactValidationOverride IModelJsonSerializable<EdifactValidationOverride>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactValidationOverride>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactValidationOverride(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdifactValidationOverride>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactValidationOverride>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdifactValidationOverride IModelSerializable<EdifactValidationOverride>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactValidationOverride>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdifactValidationOverride(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdifactValidationOverride"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdifactValidationOverride"/> to convert. </param>
+        public static implicit operator RequestContent(EdifactValidationOverride model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdifactValidationOverride"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdifactValidationOverride(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdifactValidationOverride(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

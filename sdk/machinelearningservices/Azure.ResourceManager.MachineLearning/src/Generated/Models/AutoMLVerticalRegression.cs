@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Regression task in AutoML Table vertical. </summary>
     public partial class AutoMLVerticalRegression : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of AutoMLVerticalRegression. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVerticalRegression"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public AutoMLVerticalRegression(MachineLearningTableJobInput trainingData) : base(trainingData)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.Regression;
         }
 
-        /// <summary> Initializes a new instance of AutoMLVerticalRegression. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVerticalRegression"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -57,7 +57,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Applied when validation dataset is not provided.
         /// </param>
         /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
-        internal AutoMLVerticalRegression(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, AutoMLVerticalRegressionPrimaryMetric? primaryMetric, RegressionTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoMLVerticalRegression(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, AutoMLVerticalRegressionPrimaryMetric? primaryMetric, RegressionTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
         {
             PrimaryMetric = primaryMetric;
             TrainingSettings = trainingSettings;
@@ -71,6 +72,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ValidationDataSize = validationDataSize;
             WeightColumnName = weightColumnName;
             TaskType = taskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoMLVerticalRegression"/> for deserialization. </summary>
+        internal AutoMLVerticalRegression()
+        {
         }
 
         /// <summary> Primary metric for regression task. </summary>

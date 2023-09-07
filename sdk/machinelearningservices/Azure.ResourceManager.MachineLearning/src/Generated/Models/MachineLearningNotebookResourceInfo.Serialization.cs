@@ -5,15 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningNotebookResourceInfo
+    public partial class MachineLearningNotebookResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningNotebookResourceInfo>
     {
-        internal static MachineLearningNotebookResourceInfo DeserializeMachineLearningNotebookResourceInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningNotebookResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningNotebookResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningNotebookResourceInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Fqdn))
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(NotebookPreparationError))
+            {
+                if (NotebookPreparationError != null)
+                {
+                    writer.WritePropertyName("notebookPreparationError"u8);
+                    if (NotebookPreparationError is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningNotebookPreparationError>)NotebookPreparationError).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("notebookPreparationError");
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningNotebookResourceInfo DeserializeMachineLearningNotebookResourceInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> fqdn = default;
             Optional<string> resourceId = default;
             Optional<MachineLearningNotebookPreparationError> notebookPreparationError = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -43,8 +101,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningNotebookResourceInfo(fqdn.Value, resourceId.Value, notebookPreparationError.Value);
+            return new MachineLearningNotebookResourceInfo(fqdn.Value, resourceId.Value, notebookPreparationError.Value, serializedAdditionalRawData);
+        }
+
+        MachineLearningNotebookResourceInfo IModelJsonSerializable<MachineLearningNotebookResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningNotebookResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningNotebookResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningNotebookResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningNotebookResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningNotebookResourceInfo IModelSerializable<MachineLearningNotebookResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningNotebookResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningNotebookResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningNotebookResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningNotebookResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningNotebookResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningNotebookResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningNotebookResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

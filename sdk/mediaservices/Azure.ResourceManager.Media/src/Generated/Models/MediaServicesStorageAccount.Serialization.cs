@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaServicesStorageAccount : IUtf8JsonSerializable
+    public partial class MediaServicesStorageAccount : IUtf8JsonSerializable, IModelJsonSerializable<MediaServicesStorageAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaServicesStorageAccount>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaServicesStorageAccount>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaServicesStorageAccount>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -25,13 +33,34 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                if (Identity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceIdentity>)Identity).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MediaServicesStorageAccount DeserializeMediaServicesStorageAccount(JsonElement element)
+        internal static MediaServicesStorageAccount DeserializeMediaServicesStorageAccount(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             MediaServicesStorageAccountType type = default;
             Optional<ResourceIdentity> identity = default;
             Optional<string> status = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -70,8 +100,61 @@ namespace Azure.ResourceManager.Media.Models
                     status = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaServicesStorageAccount(id.Value, type, identity.Value, status.Value);
+            return new MediaServicesStorageAccount(id.Value, type, identity.Value, status.Value, serializedAdditionalRawData);
+        }
+
+        MediaServicesStorageAccount IModelJsonSerializable<MediaServicesStorageAccount>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaServicesStorageAccount>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaServicesStorageAccount(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaServicesStorageAccount>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaServicesStorageAccount>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaServicesStorageAccount IModelSerializable<MediaServicesStorageAccount>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaServicesStorageAccount>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaServicesStorageAccount(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaServicesStorageAccount"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaServicesStorageAccount"/> to convert. </param>
+        public static implicit operator RequestContent(MediaServicesStorageAccount model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaServicesStorageAccount"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaServicesStorageAccount(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaServicesStorageAccount(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

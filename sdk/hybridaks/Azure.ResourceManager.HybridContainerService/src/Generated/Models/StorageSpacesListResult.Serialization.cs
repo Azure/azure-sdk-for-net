@@ -5,23 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class StorageSpacesListResult
+    internal partial class StorageSpacesListResult : IUtf8JsonSerializable, IModelJsonSerializable<StorageSpacesListResult>
     {
-        internal static StorageSpacesListResult DeserializeStorageSpacesListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageSpacesListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageSpacesListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSpacesListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StorageSpaceData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageSpacesListResult DeserializeStorageSpacesListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<StorageSpaceData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +93,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageSpacesListResult(Optional.ToList(value), nextLink.Value);
+            return new StorageSpacesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        StorageSpacesListResult IModelJsonSerializable<StorageSpacesListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSpacesListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSpacesListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageSpacesListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSpacesListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageSpacesListResult IModelSerializable<StorageSpacesListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSpacesListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageSpacesListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageSpacesListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageSpacesListResult"/> to convert. </param>
+        public static implicit operator RequestContent(StorageSpacesListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageSpacesListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageSpacesListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageSpacesListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

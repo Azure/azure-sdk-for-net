@@ -5,17 +5,76 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class QueryApprovalRequestResult
+    public partial class QueryApprovalRequestResult : IUtf8JsonSerializable, IModelJsonSerializable<QueryApprovalRequestResult>
     {
-        internal static QueryApprovalRequestResult DeserializeQueryApprovalRequestResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QueryApprovalRequestResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QueryApprovalRequestResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<QueryApprovalRequestResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UniqueOfferId))
+            {
+                writer.WritePropertyName("uniqueOfferId"u8);
+                writer.WriteStringValue(UniqueOfferId);
+            }
+            if (Optional.IsCollectionDefined(PlansDetails))
+            {
+                writer.WritePropertyName("plansDetails"u8);
+                writer.WriteStartObject();
+                foreach (var item in PlansDetails)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PrivateStorePlanDetails>)item.Value).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(MessageCode))
+            {
+                writer.WritePropertyName("messageCode"u8);
+                writer.WriteNumberValue(MessageCode.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static QueryApprovalRequestResult DeserializeQueryApprovalRequestResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +83,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyDictionary<string, PrivateStorePlanDetails>> plansDetails = default;
             Optional<ETag> etag = default;
             Optional<long> messageCode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueOfferId"u8))
@@ -63,8 +123,61 @@ namespace Azure.ResourceManager.Marketplace.Models
                     messageCode = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QueryApprovalRequestResult(uniqueOfferId.Value, Optional.ToDictionary(plansDetails), Optional.ToNullable(etag), Optional.ToNullable(messageCode));
+            return new QueryApprovalRequestResult(uniqueOfferId.Value, Optional.ToDictionary(plansDetails), Optional.ToNullable(etag), Optional.ToNullable(messageCode), serializedAdditionalRawData);
+        }
+
+        QueryApprovalRequestResult IModelJsonSerializable<QueryApprovalRequestResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryApprovalRequestResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryApprovalRequestResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QueryApprovalRequestResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryApprovalRequestResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QueryApprovalRequestResult IModelSerializable<QueryApprovalRequestResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryApprovalRequestResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQueryApprovalRequestResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QueryApprovalRequestResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueryApprovalRequestResult"/> to convert. </param>
+        public static implicit operator RequestContent(QueryApprovalRequestResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueryApprovalRequestResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueryApprovalRequestResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQueryApprovalRequestResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

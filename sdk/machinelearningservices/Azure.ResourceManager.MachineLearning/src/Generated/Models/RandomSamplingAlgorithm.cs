@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines a Sampling Algorithm that generates values randomly. </summary>
     public partial class RandomSamplingAlgorithm : SamplingAlgorithm
     {
-        /// <summary> Initializes a new instance of RandomSamplingAlgorithm. </summary>
+        /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
         public RandomSamplingAlgorithm()
         {
             SamplingAlgorithmType = SamplingAlgorithmType.Random;
         }
 
-        /// <summary> Initializes a new instance of RandomSamplingAlgorithm. </summary>
+        /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
         /// <param name="rule"> The specific type of random algorithm. </param>
         /// <param name="seed"> An optional integer to use as the seed for random number generation. </param>
-        internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, RandomSamplingAlgorithmRule? rule, int? seed) : base(samplingAlgorithmType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, RandomSamplingAlgorithmRule? rule, int? seed, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(samplingAlgorithmType, serializedAdditionalRawData)
         {
             Rule = rule;
             Seed = seed;

@@ -14,6 +14,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A patient record, including their clinical information and data. </summary>
     public partial class PatientRecord
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of PatientRecord. </summary>
         /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -29,11 +32,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
         /// <param name="info"> Patient structured information, including demographics and known structured clinical information. </param>
         /// <param name="data"> Patient unstructured clinical data, given as documents. </param>
-        internal PatientRecord(string id, PatientInfo info, IList<PatientDocument> data)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PatientRecord(string id, PatientInfo info, IList<PatientDocument> data, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Info = info;
             Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PatientRecord"/> for deserialization. </summary>
+        internal PatientRecord()
+        {
         }
 
         /// <summary> A given identifier for the patient. Has to be unique across all patients in a single request. </summary>

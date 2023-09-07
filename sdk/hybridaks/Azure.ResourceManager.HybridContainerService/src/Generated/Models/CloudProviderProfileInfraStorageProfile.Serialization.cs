@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class CloudProviderProfileInfraStorageProfile : IUtf8JsonSerializable
+    internal partial class CloudProviderProfileInfraStorageProfile : IUtf8JsonSerializable, IModelJsonSerializable<CloudProviderProfileInfraStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudProviderProfileInfraStorageProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudProviderProfileInfraStorageProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CloudProviderProfileInfraStorageProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StorageSpaceIds))
             {
@@ -26,16 +33,31 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudProviderProfileInfraStorageProfile DeserializeCloudProviderProfileInfraStorageProfile(JsonElement element)
+        internal static CloudProviderProfileInfraStorageProfile DeserializeCloudProviderProfileInfraStorageProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> storageSpaceIds = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageSpaceIds"u8))
@@ -52,8 +74,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     storageSpaceIds = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudProviderProfileInfraStorageProfile(Optional.ToList(storageSpaceIds));
+            return new CloudProviderProfileInfraStorageProfile(Optional.ToList(storageSpaceIds), serializedAdditionalRawData);
+        }
+
+        CloudProviderProfileInfraStorageProfile IModelJsonSerializable<CloudProviderProfileInfraStorageProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudProviderProfileInfraStorageProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudProviderProfileInfraStorageProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudProviderProfileInfraStorageProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudProviderProfileInfraStorageProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudProviderProfileInfraStorageProfile IModelSerializable<CloudProviderProfileInfraStorageProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudProviderProfileInfraStorageProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudProviderProfileInfraStorageProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudProviderProfileInfraStorageProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudProviderProfileInfraStorageProfile"/> to convert. </param>
+        public static implicit operator RequestContent(CloudProviderProfileInfraStorageProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudProviderProfileInfraStorageProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudProviderProfileInfraStorageProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudProviderProfileInfraStorageProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

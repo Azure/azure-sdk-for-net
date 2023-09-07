@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class TrackDashSettings : IUtf8JsonSerializable
+    internal partial class TrackDashSettings : IUtf8JsonSerializable, IModelJsonSerializable<TrackDashSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrackDashSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrackDashSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrackDashSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrackDashSettings DeserializeTrackDashSettings(JsonElement element)
+        internal static TrackDashSettings DeserializeTrackDashSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> role = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.Media.Models
                     role = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrackDashSettings(role.Value);
+            return new TrackDashSettings(role.Value, serializedAdditionalRawData);
+        }
+
+        TrackDashSettings IModelJsonSerializable<TrackDashSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrackDashSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrackDashSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrackDashSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrackDashSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrackDashSettings IModelSerializable<TrackDashSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrackDashSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrackDashSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrackDashSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrackDashSettings"/> to convert. </param>
+        public static implicit operator RequestContent(TrackDashSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrackDashSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrackDashSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrackDashSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

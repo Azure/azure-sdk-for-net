@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class ManagedHsmPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IModelJsonSerializable<ManagedHsmPrivateLinkServiceConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedHsmPrivateLinkServiceConnectionState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedHsmPrivateLinkServiceConnectionState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedHsmPrivateLinkServiceConnectionState>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedHsmPrivateLinkServiceConnectionState DeserializeManagedHsmPrivateLinkServiceConnectionState(JsonElement element)
+        internal static ManagedHsmPrivateLinkServiceConnectionState DeserializeManagedHsmPrivateLinkServiceConnectionState(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<ManagedHsmPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<ManagedHsmActionsRequiredMessage> actionsRequired = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -67,8 +90,61 @@ namespace Azure.ResourceManager.KeyVault.Models
                     actionsRequired = new ManagedHsmActionsRequiredMessage(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedHsmPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired));
+            return new ManagedHsmPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired), serializedAdditionalRawData);
+        }
+
+        ManagedHsmPrivateLinkServiceConnectionState IModelJsonSerializable<ManagedHsmPrivateLinkServiceConnectionState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedHsmPrivateLinkServiceConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedHsmPrivateLinkServiceConnectionState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedHsmPrivateLinkServiceConnectionState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedHsmPrivateLinkServiceConnectionState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedHsmPrivateLinkServiceConnectionState IModelSerializable<ManagedHsmPrivateLinkServiceConnectionState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedHsmPrivateLinkServiceConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedHsmPrivateLinkServiceConnectionState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedHsmPrivateLinkServiceConnectionState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedHsmPrivateLinkServiceConnectionState"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedHsmPrivateLinkServiceConnectionState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedHsmPrivateLinkServiceConnectionState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedHsmPrivateLinkServiceConnectionState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedHsmPrivateLinkServiceConnectionState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

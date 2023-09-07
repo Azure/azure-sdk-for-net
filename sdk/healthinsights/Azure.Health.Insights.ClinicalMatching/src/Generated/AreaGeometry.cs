@@ -15,6 +15,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> `GeoJSON` geometry, representing the area circle's center. </summary>
     public partial class AreaGeometry
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of AreaGeometry. </summary>
         /// <param name="type"> `GeoJSON` geometry type. </param>
         /// <param name="coordinates">
@@ -36,10 +39,17 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// Coordinates of the area circle's center, represented according to the `GeoJSON` standard.
         /// This is an array of 2 decimal numbers, longitude and latitude (precisely in this order).
         /// </param>
-        internal AreaGeometry(GeoJsonGeometryType type, IList<float> coordinates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AreaGeometry(GeoJsonGeometryType type, IList<float> coordinates, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Coordinates = coordinates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AreaGeometry"/> for deserialization. </summary>
+        internal AreaGeometry()
+        {
         }
 
         /// <summary> `GeoJSON` geometry type. </summary>

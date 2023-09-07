@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultPatchProperties : IUtf8JsonSerializable
+    public partial class KeyVaultPatchProperties : IUtf8JsonSerializable, IModelJsonSerializable<KeyVaultPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KeyVaultPatchProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KeyVaultPatchProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultPatchProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
@@ -23,7 +31,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KeyVaultSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
@@ -31,7 +46,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KeyVaultAccessPolicy>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -78,14 +100,232 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                if (NetworkRuleSet is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KeyVaultNetworkRuleSet>)NetworkRuleSet).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static KeyVaultPatchProperties DeserializeKeyVaultPatchProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Guid> tenantId = default;
+            Optional<KeyVaultSku> sku = default;
+            Optional<IList<KeyVaultAccessPolicy>> accessPolicies = default;
+            Optional<bool> enabledForDeployment = default;
+            Optional<bool> enabledForDiskEncryption = default;
+            Optional<bool> enabledForTemplateDeployment = default;
+            Optional<bool> enableSoftDelete = default;
+            Optional<bool> enableRbacAuthorization = default;
+            Optional<int> softDeleteRetentionInDays = default;
+            Optional<KeyVaultPatchMode> createMode = default;
+            Optional<bool> enablePurgeProtection = default;
+            Optional<KeyVaultNetworkRuleSet> networkAcls = default;
+            Optional<string> publicNetworkAccess = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tenantId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("accessPolicies"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KeyVaultAccessPolicy> array = new List<KeyVaultAccessPolicy>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item));
+                    }
+                    accessPolicies = array;
+                    continue;
+                }
+                if (property.NameEquals("enabledForDeployment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enabledForDeployment = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("enabledForDiskEncryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enabledForDiskEncryption = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("enabledForTemplateDeployment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enabledForTemplateDeployment = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("enableSoftDelete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableSoftDelete = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("enableRbacAuthorization"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableRbacAuthorization = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("softDeleteRetentionInDays"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    softDeleteRetentionInDays = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createMode = property.Value.GetString().ToKeyVaultPatchMode();
+                    continue;
+                }
+                if (property.NameEquals("enablePurgeProtection"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enablePurgeProtection = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("networkAcls"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("publicNetworkAccess"u8))
+                {
+                    publicNetworkAccess = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new KeyVaultPatchProperties(Optional.ToNullable(tenantId), sku.Value, Optional.ToList(accessPolicies), Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, publicNetworkAccess.Value, serializedAdditionalRawData);
+        }
+
+        KeyVaultPatchProperties IModelJsonSerializable<KeyVaultPatchProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultPatchProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultPatchProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KeyVaultPatchProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultPatchProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KeyVaultPatchProperties IModelSerializable<KeyVaultPatchProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultPatchProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKeyVaultPatchProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KeyVaultPatchProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KeyVaultPatchProperties"/> to convert. </param>
+        public static implicit operator RequestContent(KeyVaultPatchProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KeyVaultPatchProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KeyVaultPatchProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKeyVaultPatchProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

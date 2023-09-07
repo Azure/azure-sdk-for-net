@@ -5,22 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningFqdnEndpointsProperties
+    public partial class MachineLearningFqdnEndpointsProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningFqdnEndpointsProperties>
     {
-        internal static MachineLearningFqdnEndpointsProperties DeserializeMachineLearningFqdnEndpointsProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningFqdnEndpointsProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningFqdnEndpointsProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningFqdnEndpointsProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
+            if (Optional.IsCollectionDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in Endpoints)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningFqdnEndpoint>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningFqdnEndpointsProperties DeserializeMachineLearningFqdnEndpointsProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> category = default;
             Optional<IReadOnlyList<MachineLearningFqdnEndpoint>> endpoints = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -42,8 +92,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     endpoints = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningFqdnEndpointsProperties(category.Value, Optional.ToList(endpoints));
+            return new MachineLearningFqdnEndpointsProperties(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+        }
+
+        MachineLearningFqdnEndpointsProperties IModelJsonSerializable<MachineLearningFqdnEndpointsProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningFqdnEndpointsProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningFqdnEndpointsProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningFqdnEndpointsProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningFqdnEndpointsProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningFqdnEndpointsProperties IModelSerializable<MachineLearningFqdnEndpointsProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningFqdnEndpointsProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningFqdnEndpointsProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningFqdnEndpointsProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningFqdnEndpointsProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningFqdnEndpointsProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningFqdnEndpointsProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningFqdnEndpointsProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningFqdnEndpointsProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

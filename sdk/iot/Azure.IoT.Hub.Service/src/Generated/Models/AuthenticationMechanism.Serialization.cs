@@ -5,36 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class AuthenticationMechanism : IUtf8JsonSerializable
+    public partial class AuthenticationMechanism : IUtf8JsonSerializable, IModelJsonSerializable<AuthenticationMechanism>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AuthenticationMechanism>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AuthenticationMechanism>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AuthenticationMechanism>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue(SymmetricKey);
+                if (SymmetricKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SymmetricKey>)SymmetricKey).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
-                writer.WriteObjectValue(X509Thumbprint);
+                if (X509Thumbprint is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<X509Thumbprint>)X509Thumbprint).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AuthenticationMechanism DeserializeAuthenticationMechanism(JsonElement element)
+        internal static AuthenticationMechanism DeserializeAuthenticationMechanism(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +78,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<SymmetricKey> symmetricKey = default;
             Optional<X509Thumbprint> x509Thumbprint = default;
             Optional<AuthenticationMechanismType> type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("symmetricKey"u8))
@@ -71,8 +108,61 @@ namespace Azure.IoT.Hub.Service.Models
                     type = new AuthenticationMechanismType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AuthenticationMechanism(symmetricKey.Value, x509Thumbprint.Value, Optional.ToNullable(type));
+            return new AuthenticationMechanism(symmetricKey.Value, x509Thumbprint.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+        }
+
+        AuthenticationMechanism IModelJsonSerializable<AuthenticationMechanism>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AuthenticationMechanism>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthenticationMechanism(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AuthenticationMechanism>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AuthenticationMechanism>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AuthenticationMechanism IModelSerializable<AuthenticationMechanism>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AuthenticationMechanism>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAuthenticationMechanism(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AuthenticationMechanism"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AuthenticationMechanism"/> to convert. </param>
+        public static implicit operator RequestContent(AuthenticationMechanism model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AuthenticationMechanism"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AuthenticationMechanism(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAuthenticationMechanism(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

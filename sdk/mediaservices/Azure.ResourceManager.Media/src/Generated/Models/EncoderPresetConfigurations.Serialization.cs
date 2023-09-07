@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class EncoderPresetConfigurations : IUtf8JsonSerializable
+    public partial class EncoderPresetConfigurations : IUtf8JsonSerializable, IModelJsonSerializable<EncoderPresetConfigurations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EncoderPresetConfigurations>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EncoderPresetConfigurations>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EncoderPresetConfigurations>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Complexity))
             {
@@ -55,11 +63,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("minHeight"u8);
                 writer.WriteNumberValue(MinHeight.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EncoderPresetConfigurations DeserializeEncoderPresetConfigurations(JsonElement element)
+        internal static EncoderPresetConfigurations DeserializeEncoderPresetConfigurations(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +94,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<int> maxLayers = default;
             Optional<int> minBitrateBps = default;
             Optional<int> minHeight = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complexity"u8))
@@ -146,8 +169,61 @@ namespace Azure.ResourceManager.Media.Models
                     minHeight = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EncoderPresetConfigurations(Optional.ToNullable(complexity), Optional.ToNullable(interleaveOutput), Optional.ToNullable(keyFrameIntervalInSeconds), Optional.ToNullable(maxBitrateBps), Optional.ToNullable(maxHeight), Optional.ToNullable(maxLayers), Optional.ToNullable(minBitrateBps), Optional.ToNullable(minHeight));
+            return new EncoderPresetConfigurations(Optional.ToNullable(complexity), Optional.ToNullable(interleaveOutput), Optional.ToNullable(keyFrameIntervalInSeconds), Optional.ToNullable(maxBitrateBps), Optional.ToNullable(maxHeight), Optional.ToNullable(maxLayers), Optional.ToNullable(minBitrateBps), Optional.ToNullable(minHeight), serializedAdditionalRawData);
+        }
+
+        EncoderPresetConfigurations IModelJsonSerializable<EncoderPresetConfigurations>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EncoderPresetConfigurations>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEncoderPresetConfigurations(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EncoderPresetConfigurations>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EncoderPresetConfigurations>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EncoderPresetConfigurations IModelSerializable<EncoderPresetConfigurations>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EncoderPresetConfigurations>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEncoderPresetConfigurations(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EncoderPresetConfigurations"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EncoderPresetConfigurations"/> to convert. </param>
+        public static implicit operator RequestContent(EncoderPresetConfigurations model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EncoderPresetConfigurations"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EncoderPresetConfigurations(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEncoderPresetConfigurations(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

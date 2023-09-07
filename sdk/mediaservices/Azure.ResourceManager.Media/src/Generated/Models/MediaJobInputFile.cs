@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
@@ -12,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> An InputDefinition for a single file.  TrackSelections are scoped to the file specified. </summary>
     public partial class MediaJobInputFile : MediaJobInputDefinition
     {
-        /// <summary> Initializes a new instance of MediaJobInputFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputFile"/>. </summary>
         public MediaJobInputFile()
         {
             OdataType = "#Microsoft.Media.InputFile";
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputFile"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="includedTracks">
         /// The list of TrackDescriptors which define the metadata and selection of tracks in the input.
@@ -26,7 +27,8 @@ namespace Azure.ResourceManager.Media.Models
         /// The available derived classes include <see cref="AudioTrackDescriptor"/>, <see cref="SelectAudioTrackByAttribute"/>, <see cref="SelectAudioTrackById"/>, <see cref="SelectVideoTrackByAttribute"/>, <see cref="SelectVideoTrackById"/> and <see cref="VideoTrackDescriptor"/>.
         /// </param>
         /// <param name="filename"> Name of the file that this input definition applies to. </param>
-        internal MediaJobInputFile(string odataType, IList<TrackDescriptor> includedTracks, string filename) : base(odataType, includedTracks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobInputFile(string odataType, IList<TrackDescriptor> includedTracks, string filename, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, includedTracks, serializedAdditionalRawData)
         {
             Filename = filename;
             OdataType = odataType ?? "#Microsoft.Media.InputFile";

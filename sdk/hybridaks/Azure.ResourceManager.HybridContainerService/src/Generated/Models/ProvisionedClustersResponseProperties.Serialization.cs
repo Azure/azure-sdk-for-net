@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClustersResponseProperties : IUtf8JsonSerializable
+    public partial class ProvisionedClustersResponseProperties : IUtf8JsonSerializable, IModelJsonSerializable<ProvisionedClustersResponseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProvisionedClustersResponseProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProvisionedClustersResponseProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersResponseProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableRbac))
             {
@@ -24,12 +31,26 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile"u8);
-                writer.WriteObjectValue(LinuxProfile);
+                if (LinuxProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinuxProfileProperties>)LinuxProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
-                writer.WriteObjectValue(Features);
+                if (Features is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ProvisionedClustersCommonPropertiesFeatures>)Features).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(AddonProfiles))
             {
@@ -38,14 +59,28 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 foreach (var item in AddonProfiles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AddonProfiles>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ControlPlane))
             {
                 writer.WritePropertyName("controlPlane"u8);
-                writer.WriteObjectValue(ControlPlane);
+                if (ControlPlane is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ControlPlaneProfile>)ControlPlane).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(KubernetesVersion))
             {
@@ -55,7 +90,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                if (NetworkProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkProfile>)NetworkProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NodeResourceGroup))
             {
@@ -68,35 +110,84 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentPoolProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NamedAgentPoolProfile>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CloudProviderProfile))
             {
                 writer.WritePropertyName("cloudProviderProfile"u8);
-                writer.WriteObjectValue(CloudProviderProfile);
+                if (CloudProviderProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CloudProviderProfile>)CloudProviderProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AadProfile))
             {
                 writer.WritePropertyName("aadProfile"u8);
-                writer.WriteObjectValue(AadProfile);
+                if (AadProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AADProfileResponse>)AadProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(WindowsProfile))
             {
                 writer.WritePropertyName("windowsProfile"u8);
-                writer.WriteObjectValue(WindowsProfile);
+                if (WindowsProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WindowsProfileResponse>)WindowsProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig);
+                if (HttpProxyConfig is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HttpProxyConfigResponse>)HttpProxyConfig).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClustersResponseProperties DeserializeProvisionedClustersResponseProperties(JsonElement element)
+        internal static ProvisionedClustersResponseProperties DeserializeProvisionedClustersResponseProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,6 +207,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<AADProfileResponse> aadProfile = default;
             Optional<WindowsProfileResponse> windowsProfile = default;
             Optional<HttpProxyConfigResponse> httpProxyConfig = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableRbac"u8))
@@ -255,8 +347,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     httpProxyConfig = HttpProxyConfigResponse.DeserializeHttpProxyConfigResponse(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProvisionedClustersResponseProperties(aadProfile.Value, windowsProfile.Value, httpProxyConfig.Value, Optional.ToNullable(enableRbac), linuxProfile.Value, features.Value, Optional.ToDictionary(addonProfiles), controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, nodeResourceGroup.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value);
+            return new ProvisionedClustersResponseProperties(aadProfile.Value, windowsProfile.Value, httpProxyConfig.Value, Optional.ToNullable(enableRbac), linuxProfile.Value, features.Value, Optional.ToDictionary(addonProfiles), controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, nodeResourceGroup.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+        }
+
+        ProvisionedClustersResponseProperties IModelJsonSerializable<ProvisionedClustersResponseProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersResponseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClustersResponseProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProvisionedClustersResponseProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersResponseProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProvisionedClustersResponseProperties IModelSerializable<ProvisionedClustersResponseProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersResponseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProvisionedClustersResponseProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ProvisionedClustersResponseProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ProvisionedClustersResponseProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ProvisionedClustersResponseProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProvisionedClustersResponseProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ProvisionedClustersResponseProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProvisionedClustersResponseProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

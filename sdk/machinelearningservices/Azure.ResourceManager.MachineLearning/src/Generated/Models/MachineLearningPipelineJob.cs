@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Pipeline Job definition: defines generic to MFE attributes. </summary>
     public partial class MachineLearningPipelineJob : MachineLearningJobProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningPipelineJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPipelineJob"/>. </summary>
         public MachineLearningPipelineJob()
         {
             Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobType = JobType.Pipeline;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPipelineJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPipelineJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -57,7 +57,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="settings"> Pipeline settings, for things like ContinueRunOnStepFailure etc. </param>
         /// <param name="sourceJobId"> ARM resource ID of source job. </param>
-        internal MachineLearningPipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, BinaryData> jobs, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData settings, ResourceIdentifier sourceJobId) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningPipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, BinaryData> jobs, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData settings, ResourceIdentifier sourceJobId, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status, serializedAdditionalRawData)
         {
             Inputs = inputs;
             Jobs = jobs;

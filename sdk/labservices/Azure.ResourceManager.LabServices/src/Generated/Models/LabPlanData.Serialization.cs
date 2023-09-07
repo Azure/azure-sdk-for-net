@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabPlanData : IUtf8JsonSerializable
+    public partial class LabPlanData : IUtf8JsonSerializable, IModelJsonSerializable<LabPlanData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LabPlanData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LabPlanData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LabPlanData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -42,17 +48,38 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(DefaultConnectionProfile))
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
-                writer.WriteObjectValue(DefaultConnectionProfile);
+                if (DefaultConnectionProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LabConnectionProfile>)DefaultConnectionProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DefaultAutoShutdownProfile))
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
-                writer.WriteObjectValue(DefaultAutoShutdownProfile);
+                if (DefaultAutoShutdownProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LabAutoShutdownProfile>)DefaultAutoShutdownProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DefaultNetworkProfile))
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
-                writer.WriteObjectValue(DefaultNetworkProfile);
+                if (DefaultNetworkProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LabPlanNetworkProfile>)DefaultNetworkProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(AllowedRegions))
             {
@@ -72,7 +99,14 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(SupportInfo))
             {
                 writer.WritePropertyName("supportInfo"u8);
-                writer.WriteObjectValue(SupportInfo);
+                if (SupportInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LabPlanSupportInfo>)SupportInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LinkedLmsInstance))
             {
@@ -80,11 +114,25 @@ namespace Azure.ResourceManager.LabServices
                 writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabPlanData DeserializeLabPlanData(JsonElement element)
+        internal static LabPlanData DeserializeLabPlanData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,6 +152,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<LabPlanSupportInfo> supportInfo = default;
             Optional<Uri> linkedLmsInstance = default;
             Optional<LabServicesProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -247,8 +296,61 @@ namespace Azure.ResourceManager.LabServices
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LabPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value, Optional.ToNullable(provisioningState));
+            return new LabPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        LabPlanData IModelJsonSerializable<LabPlanData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabPlanData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabPlanData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LabPlanData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabPlanData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LabPlanData IModelSerializable<LabPlanData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabPlanData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLabPlanData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LabPlanData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LabPlanData"/> to convert. </param>
+        public static implicit operator RequestContent(LabPlanData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LabPlanData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LabPlanData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLabPlanData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

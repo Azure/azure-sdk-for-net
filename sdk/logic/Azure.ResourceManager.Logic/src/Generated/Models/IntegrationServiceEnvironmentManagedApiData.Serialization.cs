@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationServiceEnvironmentManagedApiData : IUtf8JsonSerializable
+    public partial class IntegrationServiceEnvironmentManagedApiData : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationServiceEnvironmentManagedApiData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationServiceEnvironmentManagedApiData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationServiceEnvironmentManagedApiData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationServiceEnvironmentManagedApiData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -37,19 +43,47 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment);
+                if (IntegrationServiceEnvironment is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogicResourceReference>)IntegrationServiceEnvironment).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
-                writer.WriteObjectValue(DeploymentParameters);
+                if (DeploymentParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IntegrationServiceEnvironmentManagedApiDeploymentParameters>)DeploymentParameters).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationServiceEnvironmentManagedApiData DeserializeIntegrationServiceEnvironmentManagedApiData(JsonElement element)
+        internal static IntegrationServiceEnvironmentManagedApiData DeserializeIntegrationServiceEnvironmentManagedApiData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +108,7 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicWorkflowProvisioningState> provisioningState = default;
             Optional<LogicApiTier> category = default;
             Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -282,8 +317,61 @@ namespace Azure.ResourceManager.Logic
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToDictionary(connectionParameters), metadata.Value, Optional.ToList(runtimeUrls), generalInformation.Value, Optional.ToList(capabilities), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value);
+            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToDictionary(connectionParameters), metadata.Value, Optional.ToList(runtimeUrls), generalInformation.Value, Optional.ToList(capabilities), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value, serializedAdditionalRawData);
+        }
+
+        IntegrationServiceEnvironmentManagedApiData IModelJsonSerializable<IntegrationServiceEnvironmentManagedApiData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationServiceEnvironmentManagedApiData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmentManagedApiData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationServiceEnvironmentManagedApiData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationServiceEnvironmentManagedApiData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationServiceEnvironmentManagedApiData IModelSerializable<IntegrationServiceEnvironmentManagedApiData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationServiceEnvironmentManagedApiData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationServiceEnvironmentManagedApiData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationServiceEnvironmentManagedApiData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationServiceEnvironmentManagedApiData"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationServiceEnvironmentManagedApiData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationServiceEnvironmentManagedApiData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationServiceEnvironmentManagedApiData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationServiceEnvironmentManagedApiData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

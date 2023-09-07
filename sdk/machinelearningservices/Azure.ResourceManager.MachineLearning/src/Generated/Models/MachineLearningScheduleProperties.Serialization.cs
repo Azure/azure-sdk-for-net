@@ -5,19 +5,33 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningScheduleProperties : IUtf8JsonSerializable
+    public partial class MachineLearningScheduleProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningScheduleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningScheduleProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningScheduleProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningScheduleProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
+            if (Action is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningScheduleAction>)Action).Serialize(writer, options);
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
@@ -36,7 +50,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
+            if (Trigger is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningTriggerBase>)Trigger).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -85,11 +106,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningScheduleProperties DeserializeMachineLearningScheduleProperties(JsonElement element)
+        internal static MachineLearningScheduleProperties DeserializeMachineLearningScheduleProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -102,6 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -182,8 +218,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningScheduleProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), action, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(provisioningState), trigger);
+            return new MachineLearningScheduleProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), action, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(provisioningState), trigger, serializedAdditionalRawData);
+        }
+
+        MachineLearningScheduleProperties IModelJsonSerializable<MachineLearningScheduleProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningScheduleProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningScheduleProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningScheduleProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningScheduleProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningScheduleProperties IModelSerializable<MachineLearningScheduleProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningScheduleProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningScheduleProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningScheduleProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningScheduleProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningScheduleProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningScheduleProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningScheduleProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningScheduleProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,20 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class ProvisionedClustersCommonPropertiesStatusFeaturesStatus
+    internal partial class ProvisionedClustersCommonPropertiesStatusFeaturesStatus : IUtf8JsonSerializable, IModelJsonSerializable<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>
     {
-        internal static ProvisionedClustersCommonPropertiesStatusFeaturesStatus DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ArcAgentStatus))
+            {
+                writer.WritePropertyName("arcAgentStatus"u8);
+                if (ArcAgentStatus is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ArcAgentStatus>)ArcAgentStatus).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ProvisionedClustersCommonPropertiesStatusFeaturesStatus DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ArcAgentStatus> arcAgentStatus = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arcAgentStatus"u8))
@@ -30,8 +71,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     arcAgentStatus = ArcAgentStatus.DeserializeArcAgentStatus(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProvisionedClustersCommonPropertiesStatusFeaturesStatus(arcAgentStatus.Value);
+            return new ProvisionedClustersCommonPropertiesStatusFeaturesStatus(arcAgentStatus.Value, serializedAdditionalRawData);
+        }
+
+        ProvisionedClustersCommonPropertiesStatusFeaturesStatus IModelJsonSerializable<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProvisionedClustersCommonPropertiesStatusFeaturesStatus IModelSerializable<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersCommonPropertiesStatusFeaturesStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ProvisionedClustersCommonPropertiesStatusFeaturesStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ProvisionedClustersCommonPropertiesStatusFeaturesStatus"/> to convert. </param>
+        public static implicit operator RequestContent(ProvisionedClustersCommonPropertiesStatusFeaturesStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProvisionedClustersCommonPropertiesStatusFeaturesStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ProvisionedClustersCommonPropertiesStatusFeaturesStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

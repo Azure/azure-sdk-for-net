@@ -5,36 +5,92 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactProtocolSettings : IUtf8JsonSerializable
+    public partial class EdifactProtocolSettings : IUtf8JsonSerializable, IModelJsonSerializable<EdifactProtocolSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdifactProtocolSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdifactProtocolSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactProtocolSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings);
+            if (ValidationSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EdifactValidationSettings>)ValidationSettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("framingSettings"u8);
-            writer.WriteObjectValue(FramingSettings);
+            if (FramingSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EdifactFramingSettings>)FramingSettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings);
+            if (EnvelopeSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EdifactEnvelopeSettings>)EnvelopeSettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("acknowledgementSettings"u8);
-            writer.WriteObjectValue(AcknowledgementSettings);
+            if (AcknowledgementSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EdifactAcknowledgementSettings>)AcknowledgementSettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("messageFilter"u8);
-            writer.WriteObjectValue(MessageFilter);
+            if (MessageFilter is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EdifactMessageFilter>)MessageFilter).Serialize(writer, options);
+            }
             writer.WritePropertyName("processingSettings"u8);
-            writer.WriteObjectValue(ProcessingSettings);
+            if (ProcessingSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EdifactProcessingSettings>)ProcessingSettings).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EdifactEnvelopeOverride>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +100,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EdifactMessageIdentifier>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +115,14 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdifactSchemaReference>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ValidationOverrides))
@@ -61,7 +131,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EdifactValidationOverride>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -71,15 +148,36 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in EdifactDelimiterOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EdifactDelimiterOverride>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static EdifactProtocolSettings DeserializeEdifactProtocolSettings(JsonElement element)
+        internal static EdifactProtocolSettings DeserializeEdifactProtocolSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +193,7 @@ namespace Azure.ResourceManager.Logic.Models
             IList<EdifactSchemaReference> schemaReferences = default;
             Optional<IList<EdifactValidationOverride>> validationOverrides = default;
             Optional<IList<EdifactDelimiterOverride>> edifactDelimiterOverrides = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationSettings"u8))
@@ -193,8 +292,61 @@ namespace Azure.ResourceManager.Logic.Models
                     edifactDelimiterOverrides = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdifactProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(validationOverrides), Optional.ToList(edifactDelimiterOverrides));
+            return new EdifactProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(validationOverrides), Optional.ToList(edifactDelimiterOverrides), serializedAdditionalRawData);
+        }
+
+        EdifactProtocolSettings IModelJsonSerializable<EdifactProtocolSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactProtocolSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactProtocolSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdifactProtocolSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactProtocolSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdifactProtocolSettings IModelSerializable<EdifactProtocolSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactProtocolSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdifactProtocolSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdifactProtocolSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdifactProtocolSettings"/> to convert. </param>
+        public static implicit operator RequestContent(EdifactProtocolSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdifactProtocolSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdifactProtocolSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdifactProtocolSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

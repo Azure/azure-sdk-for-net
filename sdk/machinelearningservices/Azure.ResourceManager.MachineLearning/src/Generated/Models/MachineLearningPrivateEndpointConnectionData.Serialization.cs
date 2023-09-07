@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class MachineLearningPrivateEndpointConnectionData : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningPrivateEndpointConnectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningPrivateEndpointConnectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningPrivateEndpointConnectionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -27,7 +34,14 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,19 +61,47 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint);
+                if (PrivateEndpoint is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningPrivateEndpoint>)PrivateEndpoint).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                if (ConnectionState is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningPrivateLinkServiceConnectionState>)ConnectionState).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningPrivateEndpointConnectionData DeserializeMachineLearningPrivateEndpointConnectionData(JsonElement element)
+        internal static MachineLearningPrivateEndpointConnectionData DeserializeMachineLearningPrivateEndpointConnectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +117,7 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<MachineLearningPrivateEndpoint> privateEndpoint = default;
             Optional<MachineLearningPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<MachineLearningPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -178,8 +221,61 @@ namespace Azure.ResourceManager.MachineLearning
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new MachineLearningPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        MachineLearningPrivateEndpointConnectionData IModelJsonSerializable<MachineLearningPrivateEndpointConnectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningPrivateEndpointConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningPrivateEndpointConnectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningPrivateEndpointConnectionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningPrivateEndpointConnectionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningPrivateEndpointConnectionData IModelSerializable<MachineLearningPrivateEndpointConnectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningPrivateEndpointConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningPrivateEndpointConnectionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningPrivateEndpointConnectionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningPrivateEndpointConnectionData"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningPrivateEndpointConnectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningPrivateEndpointConnectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningPrivateEndpointConnectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

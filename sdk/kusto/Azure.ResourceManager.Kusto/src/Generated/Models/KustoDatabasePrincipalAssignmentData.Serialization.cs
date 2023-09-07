@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoDatabasePrincipalAssignmentData : IUtf8JsonSerializable
+    public partial class KustoDatabasePrincipalAssignmentData : IUtf8JsonSerializable, IModelJsonSerializable<KustoDatabasePrincipalAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoDatabasePrincipalAssignmentData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoDatabasePrincipalAssignmentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KustoDatabasePrincipalAssignmentData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.Kusto
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoDatabasePrincipalAssignmentData DeserializeKustoDatabasePrincipalAssignmentData(JsonElement element)
+        internal static KustoDatabasePrincipalAssignmentData DeserializeKustoDatabasePrincipalAssignmentData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +83,7 @@ namespace Azure.ResourceManager.Kusto
             Optional<string> principalName = default;
             Optional<KustoProvisioningState> provisioningState = default;
             Optional<Guid> aadObjectId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -160,8 +182,61 @@ namespace Azure.ResourceManager.Kusto
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoDatabasePrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId));
+            return new KustoDatabasePrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId), serializedAdditionalRawData);
+        }
+
+        KustoDatabasePrincipalAssignmentData IModelJsonSerializable<KustoDatabasePrincipalAssignmentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoDatabasePrincipalAssignmentData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoDatabasePrincipalAssignmentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoDatabasePrincipalAssignmentData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoDatabasePrincipalAssignmentData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoDatabasePrincipalAssignmentData IModelSerializable<KustoDatabasePrincipalAssignmentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoDatabasePrincipalAssignmentData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoDatabasePrincipalAssignmentData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoDatabasePrincipalAssignmentData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoDatabasePrincipalAssignmentData"/> to convert. </param>
+        public static implicit operator RequestContent(KustoDatabasePrincipalAssignmentData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoDatabasePrincipalAssignmentData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoDatabasePrincipalAssignmentData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoDatabasePrincipalAssignmentData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

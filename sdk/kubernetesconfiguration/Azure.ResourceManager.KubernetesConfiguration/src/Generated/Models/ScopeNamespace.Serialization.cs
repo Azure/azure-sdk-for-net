@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    internal partial class ScopeNamespace : IUtf8JsonSerializable
+    internal partial class ScopeNamespace : IUtf8JsonSerializable, IModelJsonSerializable<ScopeNamespace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScopeNamespace>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScopeNamespace>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ScopeNamespace>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScopeNamespace DeserializeScopeNamespace(JsonElement element)
+        internal static ScopeNamespace DeserializeScopeNamespace(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> targetNamespace = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetNamespace"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     targetNamespace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScopeNamespace(targetNamespace.Value);
+            return new ScopeNamespace(targetNamespace.Value, serializedAdditionalRawData);
+        }
+
+        ScopeNamespace IModelJsonSerializable<ScopeNamespace>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScopeNamespace>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScopeNamespace(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScopeNamespace>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScopeNamespace>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScopeNamespace IModelSerializable<ScopeNamespace>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScopeNamespace>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScopeNamespace(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScopeNamespace"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScopeNamespace"/> to convert. </param>
+        public static implicit operator RequestContent(ScopeNamespace model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScopeNamespace"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScopeNamespace(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScopeNamespace(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

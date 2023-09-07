@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class PngLayer : IUtf8JsonSerializable
+    public partial class PngLayer : IUtf8JsonSerializable, IModelJsonSerializable<PngLayer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PngLayer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PngLayer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PngLayer>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Width))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PngLayer DeserializePngLayer(JsonElement element)
+        internal static PngLayer DeserializePngLayer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> width = default;
             Optional<string> height = default;
             Optional<string> label = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("width"u8))
@@ -59,8 +82,61 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PngLayer(width.Value, height.Value, label.Value);
+            return new PngLayer(width.Value, height.Value, label.Value, serializedAdditionalRawData);
+        }
+
+        PngLayer IModelJsonSerializable<PngLayer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PngLayer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePngLayer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PngLayer>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PngLayer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PngLayer IModelSerializable<PngLayer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PngLayer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePngLayer(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PngLayer"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PngLayer"/> to convert. </param>
+        public static implicit operator RequestContent(PngLayer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PngLayer"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PngLayer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePngLayer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

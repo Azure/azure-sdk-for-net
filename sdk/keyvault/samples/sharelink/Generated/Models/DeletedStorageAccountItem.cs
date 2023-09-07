@@ -13,12 +13,12 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The deleted storage account item containing metadata about the deleted storage account. </summary>
     public partial class DeletedStorageAccountItem : StorageAccountItem
     {
-        /// <summary> Initializes a new instance of DeletedStorageAccountItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedStorageAccountItem"/>. </summary>
         internal DeletedStorageAccountItem()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedStorageAccountItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedStorageAccountItem"/>. </summary>
         /// <param name="id"> Storage identifier. </param>
         /// <param name="resourceId"> Storage account resource Id. </param>
         /// <param name="attributes"> The storage account management attributes. </param>
@@ -26,7 +26,8 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <param name="recoveryId"> The url of the recovery object, used to identify and recover the deleted storage account. </param>
         /// <param name="scheduledPurgeDate"> The time when the storage account is scheduled to be purged, in UTC. </param>
         /// <param name="deletedDate"> The time when the storage account was deleted, in UTC. </param>
-        internal DeletedStorageAccountItem(string id, string resourceId, StorageAccountAttributes attributes, IReadOnlyDictionary<string, string> tags, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate) : base(id, resourceId, attributes, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedStorageAccountItem(string id, string resourceId, StorageAccountAttributes attributes, IReadOnlyDictionary<string, string> tags, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resourceId, attributes, tags, serializedAdditionalRawData)
         {
             RecoveryId = recoveryId;
             ScheduledPurgeDate = scheduledPurgeDate;

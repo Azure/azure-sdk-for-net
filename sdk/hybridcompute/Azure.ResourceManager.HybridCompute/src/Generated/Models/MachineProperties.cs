@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the properties of a hybrid machine. </summary>
     public partial class MachineProperties
     {
-        /// <summary> Initializes a new instance of MachineProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineProperties"/>. </summary>
         public MachineProperties()
         {
             ErrorDetails = new ChangeTrackingList<ResponseError>();
             DetectedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineProperties"/>. </summary>
         /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
         /// <param name="agentConfiguration"> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </param>
         /// <param name="serviceStatuses"> Statuses of dependent services that are reported back to ARM. </param>
@@ -49,7 +52,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
         /// <param name="mssqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
-        internal MachineProperties(LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, CloudMetadata cloudMetadata, OSProfile osProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, string vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, string vmUuid, string osSku, string domainName, string adFqdn, string dnsFqdn, string privateLinkScopeResourceId, string parentClusterResourceId, string mssqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineProperties(LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, CloudMetadata cloudMetadata, OSProfile osProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, string vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, string vmUuid, string osSku, string domainName, string adFqdn, string dnsFqdn, string privateLinkScopeResourceId, string parentClusterResourceId, string mssqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocationData = locationData;
             AgentConfiguration = agentConfiguration;
@@ -77,6 +81,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ParentClusterResourceId = parentClusterResourceId;
             MssqlDiscovered = mssqlDiscovered;
             DetectedProperties = detectedProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>

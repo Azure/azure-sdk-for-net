@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputePrivateLinkScopePatch : IUtf8JsonSerializable
+    public partial class HybridComputePrivateLinkScopePatch : IUtf8JsonSerializable, IModelJsonSerializable<HybridComputePrivateLinkScopePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HybridComputePrivateLinkScopePatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HybridComputePrivateLinkScopePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkScopePatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -26,7 +34,102 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HybridComputePrivateLinkScopePatch DeserializeHybridComputePrivateLinkScopePatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HybridComputePrivateLinkScopePatch(Optional.ToDictionary(tags), serializedAdditionalRawData);
+        }
+
+        HybridComputePrivateLinkScopePatch IModelJsonSerializable<HybridComputePrivateLinkScopePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkScopePatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputePrivateLinkScopePatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HybridComputePrivateLinkScopePatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkScopePatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HybridComputePrivateLinkScopePatch IModelSerializable<HybridComputePrivateLinkScopePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkScopePatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHybridComputePrivateLinkScopePatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HybridComputePrivateLinkScopePatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HybridComputePrivateLinkScopePatch"/> to convert. </param>
+        public static implicit operator RequestContent(HybridComputePrivateLinkScopePatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HybridComputePrivateLinkScopePatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HybridComputePrivateLinkScopePatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHybridComputePrivateLinkScopePatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

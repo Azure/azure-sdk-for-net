@@ -5,16 +5,143 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Rendering
 {
-    public partial class MapTileSet
+    public partial class MapTileSet : IUtf8JsonSerializable, IModelJsonSerializable<MapTileSet>
     {
-        internal static MapTileSet DeserializeMapTileSet(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MapTileSet>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MapTileSet>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MapTileSet>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TileJsonVersion))
+            {
+                writer.WritePropertyName("tilejson"u8);
+                writer.WriteStringValue(TileJsonVersion);
+            }
+            if (Optional.IsDefined(TileSetName))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(TileSetName);
+            }
+            if (Optional.IsDefined(TileSetDescription))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(TileSetDescription);
+            }
+            if (Optional.IsDefined(TileSetVersion))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(TileSetVersion);
+            }
+            if (Optional.IsDefined(CopyrightAttribution))
+            {
+                writer.WritePropertyName("attribution"u8);
+                writer.WriteStringValue(CopyrightAttribution);
+            }
+            if (Optional.IsDefined(Template))
+            {
+                writer.WritePropertyName("template"u8);
+                writer.WriteStringValue(Template);
+            }
+            if (Optional.IsDefined(MapTileLegend))
+            {
+                writer.WritePropertyName("legend"u8);
+                writer.WriteStringValue(MapTileLegend);
+            }
+            if (Optional.IsDefined(SchemeInternal))
+            {
+                writer.WritePropertyName("scheme"u8);
+                writer.WriteStringValue(SchemeInternal);
+            }
+            if (Optional.IsCollectionDefined(TileEndpoints))
+            {
+                writer.WritePropertyName("tiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in TileEndpoints)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Grids))
+            {
+                writer.WritePropertyName("grids"u8);
+                writer.WriteStartArray();
+                foreach (var item in Grids)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(GeoJsonDataFiles))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteStartArray();
+                foreach (var item in GeoJsonDataFiles)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MinZoomLevel))
+            {
+                writer.WritePropertyName("minzoom"u8);
+                writer.WriteNumberValue(MinZoomLevel.Value);
+            }
+            if (Optional.IsDefined(MaxZoomLevel))
+            {
+                writer.WritePropertyName("maxzoom"u8);
+                writer.WriteNumberValue(MaxZoomLevel.Value);
+            }
+            if (Optional.IsCollectionDefined(BoundsInternal))
+            {
+                writer.WritePropertyName("bounds"u8);
+                writer.WriteStartArray();
+                foreach (var item in BoundsInternal)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(CenterInternal))
+            {
+                writer.WritePropertyName("center"u8);
+                writer.WriteStartArray();
+                foreach (var item in CenterInternal)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MapTileSet DeserializeMapTileSet(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +161,7 @@ namespace Azure.Maps.Rendering
             Optional<int> maxzoom = default;
             Optional<IReadOnlyList<float>> bounds = default;
             Optional<IReadOnlyList<float>> center = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tilejson"u8))
@@ -164,8 +292,61 @@ namespace Azure.Maps.Rendering
                     center = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MapTileSet(tilejson.Value, name.Value, description.Value, version.Value, attribution.Value, template.Value, legend.Value, scheme.Value, Optional.ToList(tiles), Optional.ToList(grids), Optional.ToList(data), Optional.ToNullable(minzoom), Optional.ToNullable(maxzoom), Optional.ToList(bounds), Optional.ToList(center));
+            return new MapTileSet(tilejson.Value, name.Value, description.Value, version.Value, attribution.Value, template.Value, legend.Value, scheme.Value, Optional.ToList(tiles), Optional.ToList(grids), Optional.ToList(data), Optional.ToNullable(minzoom), Optional.ToNullable(maxzoom), Optional.ToList(bounds), Optional.ToList(center), serializedAdditionalRawData);
+        }
+
+        MapTileSet IModelJsonSerializable<MapTileSet>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapTileSet>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapTileSet(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MapTileSet>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapTileSet>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MapTileSet IModelSerializable<MapTileSet>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapTileSet>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMapTileSet(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MapTileSet"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MapTileSet"/> to convert. </param>
+        public static implicit operator RequestContent(MapTileSet model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MapTileSet"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MapTileSet(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMapTileSet(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

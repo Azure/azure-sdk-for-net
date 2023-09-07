@@ -5,31 +5,143 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class GeographicArea : IUtf8JsonSerializable
+    public partial class GeographicArea : IUtf8JsonSerializable, IModelJsonSerializable<GeographicArea>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GeographicArea>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GeographicArea>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
+            if (Geometry is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<AreaGeometry>)Geometry).Serialize(writer, options);
+            }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<AreaProperties>)Properties).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal static GeographicArea DeserializeGeographicArea(JsonElement element, ModelSerializerOptions options = default)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            GeoJsonType type = default;
+            AreaGeometry geometry = default;
+            AreaProperties properties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = new GeoJsonType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("geometry"u8))
+                {
+                    geometry = AreaGeometry.DeserializeAreaGeometry(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = AreaProperties.DeserializeAreaProperties(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new GeographicArea(type, geometry, properties, serializedAdditionalRawData);
+        }
+
+        GeographicArea IModelJsonSerializable<GeographicArea>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGeographicArea(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GeographicArea>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GeographicArea IModelSerializable<GeographicArea>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGeographicArea(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GeographicArea"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GeographicArea"/> to convert. </param>
+        public static implicit operator RequestContent(GeographicArea model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GeographicArea"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GeographicArea(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGeographicArea(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

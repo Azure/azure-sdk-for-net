@@ -6,24 +6,26 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningUriFolderJobOutput. </summary>
     public partial class MachineLearningUriFolderJobOutput : MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningUriFolderJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUriFolderJobOutput"/>. </summary>
         public MachineLearningUriFolderJobOutput()
         {
             JobOutputType = JobOutputType.UriFolder;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUriFolderJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUriFolderJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        internal MachineLearningUriFolderJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningUriFolderJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, jobOutputType, serializedAdditionalRawData)
         {
             Mode = mode;
             Uri = uri;

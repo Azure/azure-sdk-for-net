@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownEarlyTerminationPolicy : IUtf8JsonSerializable
+    internal partial class UnknownEarlyTerminationPolicy : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningEarlyTerminationPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningEarlyTerminationPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningEarlyTerminationPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningEarlyTerminationPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DelayEvaluation))
             {
@@ -27,45 +33,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("policyType"u8);
             writer.WriteStringValue(PolicyType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownEarlyTerminationPolicy DeserializeUnknownEarlyTerminationPolicy(JsonElement element)
+        internal static MachineLearningEarlyTerminationPolicy DeserializeUnknownEarlyTerminationPolicy(JsonElement element, ModelSerializerOptions options = default) => DeserializeMachineLearningEarlyTerminationPolicy(element, options);
+
+        MachineLearningEarlyTerminationPolicy IModelJsonSerializable<MachineLearningEarlyTerminationPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<int> delayEvaluation = default;
-            Optional<int> evaluationInterval = default;
-            EarlyTerminationPolicyType policyType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("delayEvaluation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    delayEvaluation = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("evaluationInterval"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    evaluationInterval = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("policyType"u8))
-                {
-                    policyType = new EarlyTerminationPolicyType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownEarlyTerminationPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType);
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningEarlyTerminationPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownEarlyTerminationPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningEarlyTerminationPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningEarlyTerminationPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningEarlyTerminationPolicy IModelSerializable<MachineLearningEarlyTerminationPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningEarlyTerminationPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningEarlyTerminationPolicy(doc.RootElement, options);
         }
     }
 }

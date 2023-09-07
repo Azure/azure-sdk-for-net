@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,12 +14,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
     public partial class TerminalServerConfiguration : TerminalServerPatchableProperties
     {
-        /// <summary> Initializes a new instance of TerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
         public TerminalServerConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
@@ -26,7 +28,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal TerminalServerConfiguration(string username, string password, string serialNumber, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(username, password, serialNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TerminalServerConfiguration(string username, string password, string serialNumber, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(username, password, serialNumber, serializedAdditionalRawData)
         {
             NetworkDeviceId = networkDeviceId;
             PrimaryIPv4Prefix = primaryIPv4Prefix;

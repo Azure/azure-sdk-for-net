@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="ContentKeyPolicyRestrictionTokenKey"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ContentKeyPolicyRsaTokenKey"/>, <see cref="ContentKeyPolicySymmetricTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownContentKeyPolicyRestrictionTokenKey))]
     public abstract partial class ContentKeyPolicyRestrictionTokenKey
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyRestrictionTokenKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyRestrictionTokenKey"/>. </summary>
         protected ContentKeyPolicyRestrictionTokenKey()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyRestrictionTokenKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyRestrictionTokenKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal ContentKeyPolicyRestrictionTokenKey(string odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyRestrictionTokenKey(string odataType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataType = odataType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The discriminator for derived types. </summary>

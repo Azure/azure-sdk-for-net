@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownTargetLags : IUtf8JsonSerializable
+    internal partial class UnknownTargetLags : IUtf8JsonSerializable, IModelJsonSerializable<TargetLags>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TargetLags>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TargetLags>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TargetLags>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownTargetLags DeserializeUnknownTargetLags(JsonElement element)
+        internal static TargetLags DeserializeUnknownTargetLags(JsonElement element, ModelSerializerOptions options = default) => DeserializeTargetLags(element, options);
+
+        TargetLags IModelJsonSerializable<TargetLags>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            TargetLagsMode mode = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("mode"u8))
-                {
-                    mode = new TargetLagsMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownTargetLags(mode);
+            Core.ModelSerializerHelper.ValidateFormat<TargetLags>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownTargetLags(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TargetLags>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetLags>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TargetLags IModelSerializable<TargetLags>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetLags>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTargetLags(doc.RootElement, options);
         }
     }
 }

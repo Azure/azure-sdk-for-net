@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="ClipTime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AbsoluteClipTime"/> and <see cref="UtcClipTime"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownClipTime))]
     public abstract partial class ClipTime
     {
-        /// <summary> Initializes a new instance of ClipTime. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClipTime"/>. </summary>
         protected ClipTime()
         {
         }
 
-        /// <summary> Initializes a new instance of ClipTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClipTime"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal ClipTime(string odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClipTime(string odataType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataType = odataType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The discriminator for derived types. </summary>

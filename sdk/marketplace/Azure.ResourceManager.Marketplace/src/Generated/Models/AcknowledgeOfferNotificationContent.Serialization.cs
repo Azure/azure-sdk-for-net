@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class AcknowledgeOfferNotificationContent : IUtf8JsonSerializable
+    public partial class AcknowledgeOfferNotificationContent : IUtf8JsonSerializable, IModelJsonSerializable<AcknowledgeOfferNotificationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcknowledgeOfferNotificationContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcknowledgeOfferNotificationContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AcknowledgeOfferNotificationContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -53,7 +61,159 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AcknowledgeOfferNotificationContent DeserializeAcknowledgeOfferNotificationContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> acknowledge = default;
+            Optional<bool> dismiss = default;
+            Optional<bool> removeOffer = default;
+            Optional<IList<string>> addPlans = default;
+            Optional<IList<string>> removePlans = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("acknowledge"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            acknowledge = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("dismiss"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dismiss = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("removeOffer"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            removeOffer = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("addPlans"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            addPlans = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("removePlans"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            removePlans = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AcknowledgeOfferNotificationContent(Optional.ToNullable(acknowledge), Optional.ToNullable(dismiss), Optional.ToNullable(removeOffer), Optional.ToList(addPlans), Optional.ToList(removePlans), serializedAdditionalRawData);
+        }
+
+        AcknowledgeOfferNotificationContent IModelJsonSerializable<AcknowledgeOfferNotificationContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcknowledgeOfferNotificationContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcknowledgeOfferNotificationContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcknowledgeOfferNotificationContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcknowledgeOfferNotificationContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcknowledgeOfferNotificationContent IModelSerializable<AcknowledgeOfferNotificationContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcknowledgeOfferNotificationContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcknowledgeOfferNotificationContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcknowledgeOfferNotificationContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcknowledgeOfferNotificationContent"/> to convert. </param>
+        public static implicit operator RequestContent(AcknowledgeOfferNotificationContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcknowledgeOfferNotificationContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcknowledgeOfferNotificationContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcknowledgeOfferNotificationContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

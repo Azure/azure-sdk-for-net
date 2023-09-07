@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownSeasonality : IUtf8JsonSerializable
+    internal partial class UnknownSeasonality : IUtf8JsonSerializable, IModelJsonSerializable<ForecastingSeasonality>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ForecastingSeasonality>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ForecastingSeasonality>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ForecastingSeasonality>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownSeasonality DeserializeUnknownSeasonality(JsonElement element)
+        internal static ForecastingSeasonality DeserializeUnknownSeasonality(JsonElement element, ModelSerializerOptions options = default) => DeserializeForecastingSeasonality(element, options);
+
+        ForecastingSeasonality IModelJsonSerializable<ForecastingSeasonality>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            SeasonalityMode mode = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("mode"u8))
-                {
-                    mode = new SeasonalityMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSeasonality(mode);
+            Core.ModelSerializerHelper.ValidateFormat<ForecastingSeasonality>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSeasonality(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ForecastingSeasonality>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ForecastingSeasonality>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ForecastingSeasonality IModelSerializable<ForecastingSeasonality>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ForecastingSeasonality>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeForecastingSeasonality(doc.RootElement, options);
         }
     }
 }

@@ -5,32 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NeighborAddress : IUtf8JsonSerializable
+    public partial class NeighborAddress : IUtf8JsonSerializable, IModelJsonSerializable<NeighborAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NeighborAddress>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NeighborAddress>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NeighborAddress>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NeighborAddress DeserializeNeighborAddress(JsonElement element)
+        internal static NeighborAddress DeserializeNeighborAddress(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> address = default;
             Optional<NetworkFabricConfigurationState> configurationState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -47,8 +70,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     configurationState = new NetworkFabricConfigurationState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NeighborAddress(address.Value, Optional.ToNullable(configurationState));
+            return new NeighborAddress(address.Value, Optional.ToNullable(configurationState), serializedAdditionalRawData);
+        }
+
+        NeighborAddress IModelJsonSerializable<NeighborAddress>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NeighborAddress>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNeighborAddress(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NeighborAddress>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NeighborAddress>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NeighborAddress IModelSerializable<NeighborAddress>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NeighborAddress>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNeighborAddress(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NeighborAddress"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NeighborAddress"/> to convert. </param>
+        public static implicit operator RequestContent(NeighborAddress model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NeighborAddress"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NeighborAddress(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNeighborAddress(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

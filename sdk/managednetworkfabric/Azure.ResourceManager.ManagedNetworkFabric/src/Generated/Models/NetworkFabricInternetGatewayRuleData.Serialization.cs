@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkFabricInternetGatewayRuleData : IUtf8JsonSerializable
+    public partial class NetworkFabricInternetGatewayRuleData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkFabricInternetGatewayRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkFabricInternetGatewayRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkFabricInternetGatewayRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricInternetGatewayRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -39,13 +46,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStringValue(Annotation);
             }
             writer.WritePropertyName("ruleProperties"u8);
-            writer.WriteObjectValue(RuleProperties);
+            if (RuleProperties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<InternetGatewayRules>)RuleProperties).Serialize(writer, options);
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkFabricInternetGatewayRuleData DeserializeNetworkFabricInternetGatewayRuleData(JsonElement element)
+        internal static NetworkFabricInternetGatewayRuleData DeserializeNetworkFabricInternetGatewayRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             InternetGatewayRules ruleProperties = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<ResourceIdentifier>> internetGatewayIds = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -157,8 +186,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkFabricInternetGatewayRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, ruleProperties, Optional.ToNullable(provisioningState), Optional.ToList(internetGatewayIds));
+            return new NetworkFabricInternetGatewayRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, ruleProperties, Optional.ToNullable(provisioningState), Optional.ToList(internetGatewayIds), serializedAdditionalRawData);
+        }
+
+        NetworkFabricInternetGatewayRuleData IModelJsonSerializable<NetworkFabricInternetGatewayRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricInternetGatewayRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricInternetGatewayRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkFabricInternetGatewayRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricInternetGatewayRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkFabricInternetGatewayRuleData IModelSerializable<NetworkFabricInternetGatewayRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricInternetGatewayRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkFabricInternetGatewayRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkFabricInternetGatewayRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkFabricInternetGatewayRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkFabricInternetGatewayRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkFabricInternetGatewayRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkFabricInternetGatewayRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkFabricInternetGatewayRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

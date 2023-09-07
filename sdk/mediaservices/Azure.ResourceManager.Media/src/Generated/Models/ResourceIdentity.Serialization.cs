@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ResourceIdentity : IUtf8JsonSerializable
+    public partial class ResourceIdentity : IUtf8JsonSerializable, IModelJsonSerializable<ResourceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceIdentity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("useSystemAssignedIdentity"u8);
             writer.WriteBooleanValue(UseSystemAssignedIdentity);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceIdentity DeserializeResourceIdentity(JsonElement element)
+        internal static ResourceIdentity DeserializeResourceIdentity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> userAssignedIdentity = default;
             bool useSystemAssignedIdentity = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))
@@ -45,8 +68,61 @@ namespace Azure.ResourceManager.Media.Models
                     useSystemAssignedIdentity = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceIdentity(userAssignedIdentity.Value, useSystemAssignedIdentity);
+            return new ResourceIdentity(userAssignedIdentity.Value, useSystemAssignedIdentity, serializedAdditionalRawData);
+        }
+
+        ResourceIdentity IModelJsonSerializable<ResourceIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceIdentity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceIdentity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceIdentity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceIdentity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceIdentity IModelSerializable<ResourceIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceIdentity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceIdentity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceIdentity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceIdentity"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceIdentity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceIdentity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceIdentity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

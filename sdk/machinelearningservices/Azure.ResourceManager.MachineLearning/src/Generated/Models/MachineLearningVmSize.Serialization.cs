@@ -5,16 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningVmSize
+    public partial class MachineLearningVmSize : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningVmSize>
     {
-        internal static MachineLearningVmSize DeserializeMachineLearningVmSize(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningVmSize>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningVmSize>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningVmSize>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EstimatedVmPrices))
+            {
+                writer.WritePropertyName("estimatedVMPrices"u8);
+                if (EstimatedVmPrices is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningEstimatedVmPrices>)EstimatedVmPrices).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(SupportedComputeTypes))
+            {
+                writer.WritePropertyName("supportedComputeTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedComputeTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningVmSize DeserializeMachineLearningVmSize(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<bool> premiumIO = default;
             Optional<MachineLearningEstimatedVmPrices> estimatedVmPrices = default;
             Optional<IReadOnlyList<string>> supportedComputeTypes = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -128,8 +178,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     supportedComputeTypes = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningVmSize(name.Value, family.Value, Optional.ToNullable(vCpus), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, Optional.ToList(supportedComputeTypes));
+            return new MachineLearningVmSize(name.Value, family.Value, Optional.ToNullable(vCpus), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, Optional.ToList(supportedComputeTypes), serializedAdditionalRawData);
+        }
+
+        MachineLearningVmSize IModelJsonSerializable<MachineLearningVmSize>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningVmSize>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningVmSize(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningVmSize>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningVmSize>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningVmSize IModelSerializable<MachineLearningVmSize>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningVmSize>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningVmSize(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningVmSize"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningVmSize"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningVmSize model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningVmSize"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningVmSize(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningVmSize(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,32 +6,54 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RootCertificateProperties : IUtf8JsonSerializable
+    public partial class RootCertificateProperties : IUtf8JsonSerializable, IModelJsonSerializable<RootCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RootCertificateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RootCertificateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RootCertificateProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsRootCertificateV2Enabled))
             {
                 writer.WritePropertyName("enableRootCertificateV2"u8);
                 writer.WriteBooleanValue(IsRootCertificateV2Enabled.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RootCertificateProperties DeserializeRootCertificateProperties(JsonElement element)
+        internal static RootCertificateProperties DeserializeRootCertificateProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enableRootCertificateV2 = default;
             Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableRootCertificateV2"u8))
@@ -52,8 +74,61 @@ namespace Azure.ResourceManager.IotHub.Models
                     lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RootCertificateProperties(Optional.ToNullable(enableRootCertificateV2), Optional.ToNullable(lastUpdatedTimeUtc));
+            return new RootCertificateProperties(Optional.ToNullable(enableRootCertificateV2), Optional.ToNullable(lastUpdatedTimeUtc), serializedAdditionalRawData);
+        }
+
+        RootCertificateProperties IModelJsonSerializable<RootCertificateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RootCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRootCertificateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RootCertificateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RootCertificateProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RootCertificateProperties IModelSerializable<RootCertificateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RootCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRootCertificateProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RootCertificateProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RootCertificateProperties"/> to convert. </param>
+        public static implicit operator RequestContent(RootCertificateProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RootCertificateProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RootCertificateProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRootCertificateProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

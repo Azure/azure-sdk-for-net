@@ -5,31 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class OSProfile : IUtf8JsonSerializable
+    public partial class OSProfile : IUtf8JsonSerializable, IModelJsonSerializable<OSProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OSProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OSProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration);
+                if (WindowsConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OSProfileWindowsConfiguration>)WindowsConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
-                writer.WriteObjectValue(LinuxConfiguration);
+                if (LinuxConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OSProfileLinuxConfiguration>)LinuxConfiguration).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static OSProfile DeserializeOSProfile(JsonElement element)
+        internal static OSProfile DeserializeOSProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +73,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> computerName = default;
             Optional<OSProfileWindowsConfiguration> windowsConfiguration = default;
             Optional<OSProfileLinuxConfiguration> linuxConfiguration = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerName"u8))
@@ -62,8 +99,61 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     linuxConfiguration = OSProfileLinuxConfiguration.DeserializeOSProfileLinuxConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OSProfile(computerName.Value, windowsConfiguration.Value, linuxConfiguration.Value);
+            return new OSProfile(computerName.Value, windowsConfiguration.Value, linuxConfiguration.Value, serializedAdditionalRawData);
+        }
+
+        OSProfile IModelJsonSerializable<OSProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOSProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OSProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OSProfile IModelSerializable<OSProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOSProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OSProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OSProfile"/> to convert. </param>
+        public static implicit operator RequestContent(OSProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OSProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OSProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOSProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

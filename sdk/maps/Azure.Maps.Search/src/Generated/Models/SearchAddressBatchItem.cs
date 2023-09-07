@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> An item returned from Search Address Batch service call. </summary>
     internal partial class SearchAddressBatchItem : BatchResultItem
     {
-        /// <summary> Initializes a new instance of SearchAddressBatchItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddressBatchItem"/>. </summary>
         internal SearchAddressBatchItem()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchAddressBatchItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddressBatchItem"/>. </summary>
         /// <param name="statusCode"> HTTP request status code. </param>
         /// <param name="response"> The result of the query. SearchAddressResponse if the query completed successfully, ErrorResponse otherwise. </param>
-        internal SearchAddressBatchItem(int? statusCode, SearchAddressBatchItemResponse response) : base(statusCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchAddressBatchItem(int? statusCode, SearchAddressBatchItemResponse response, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(statusCode, serializedAdditionalRawData)
         {
             Response = response;
         }

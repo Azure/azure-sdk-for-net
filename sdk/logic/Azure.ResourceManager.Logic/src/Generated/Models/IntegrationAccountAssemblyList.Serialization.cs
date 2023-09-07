@@ -5,22 +5,67 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class IntegrationAccountAssemblyList
+    internal partial class IntegrationAccountAssemblyList : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountAssemblyList>
     {
-        internal static IntegrationAccountAssemblyList DeserializeIntegrationAccountAssemblyList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountAssemblyList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountAssemblyList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountAssemblyList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<IntegrationAccountAssemblyDefinitionData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IntegrationAccountAssemblyList DeserializeIntegrationAccountAssemblyList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<IntegrationAccountAssemblyDefinitionData>> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,8 +82,61 @@ namespace Azure.ResourceManager.Logic.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationAccountAssemblyList(Optional.ToList(value));
+            return new IntegrationAccountAssemblyList(Optional.ToList(value), serializedAdditionalRawData);
+        }
+
+        IntegrationAccountAssemblyList IModelJsonSerializable<IntegrationAccountAssemblyList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountAssemblyList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountAssemblyList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountAssemblyList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountAssemblyList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountAssemblyList IModelSerializable<IntegrationAccountAssemblyList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountAssemblyList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountAssemblyList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationAccountAssemblyList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationAccountAssemblyList"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationAccountAssemblyList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationAccountAssemblyList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationAccountAssemblyList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountAssemblyList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

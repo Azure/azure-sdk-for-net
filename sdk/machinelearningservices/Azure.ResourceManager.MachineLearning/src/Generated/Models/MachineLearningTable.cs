@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> MLTable data definition. </summary>
     public partial class MachineLearningTable : MachineLearningDataVersionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTable"/>. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public MachineLearningTable(Uri dataUri) : base(dataUri)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataType = MachineLearningDataType.Mltable;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTable"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -34,10 +34,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataType"> [Required] Specifies the type of data. </param>
         /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
         /// <param name="referencedUris"> Uris referenced in the MLTable definition (required for lineage). </param>
-        internal MachineLearningTable(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri, IList<Uri> referencedUris) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningTable(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri, IList<Uri> referencedUris, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri, serializedAdditionalRawData)
         {
             ReferencedUris = referencedUris;
             DataType = dataType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTable"/> for deserialization. </summary>
+        internal MachineLearningTable()
+        {
         }
 
         /// <summary> Uris referenced in the MLTable definition (required for lineage). </summary>

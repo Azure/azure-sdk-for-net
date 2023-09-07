@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSasDatastoreCredentials : IUtf8JsonSerializable
+    public partial class MachineLearningSasDatastoreCredentials : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningSasDatastoreCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningSasDatastoreCredentials>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningSasDatastoreCredentials>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSasDatastoreCredentials>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets);
+            if (Secrets is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningSasDatastoreSecrets>)Secrets).Serialize(writer, options);
+            }
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningSasDatastoreCredentials DeserializeMachineLearningSasDatastoreCredentials(JsonElement element)
+        internal static MachineLearningSasDatastoreCredentials DeserializeMachineLearningSasDatastoreCredentials(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MachineLearningSasDatastoreSecrets secrets = default;
             CredentialsType credentialsType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"u8))
@@ -42,8 +72,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     credentialsType = new CredentialsType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningSasDatastoreCredentials(credentialsType, secrets);
+            return new MachineLearningSasDatastoreCredentials(credentialsType, secrets, serializedAdditionalRawData);
+        }
+
+        MachineLearningSasDatastoreCredentials IModelJsonSerializable<MachineLearningSasDatastoreCredentials>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSasDatastoreCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSasDatastoreCredentials(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningSasDatastoreCredentials>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSasDatastoreCredentials>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningSasDatastoreCredentials IModelSerializable<MachineLearningSasDatastoreCredentials>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSasDatastoreCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningSasDatastoreCredentials(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningSasDatastoreCredentials"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningSasDatastoreCredentials"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningSasDatastoreCredentials model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningSasDatastoreCredentials"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningSasDatastoreCredentials(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningSasDatastoreCredentials(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

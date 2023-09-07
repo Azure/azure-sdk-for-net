@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricSkuResource(Client, NetworkFabricSkuData.DeserializeNetworkFabricSkuData(e)), _networkFabricSkuClientDiagnostics, Pipeline, "NetworkFabricSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricSkuResource(Client, NetworkFabricSkuData.DeserializeNetworkFabricSkuData(e)), _networkFabricSkuClientDiagnostics, Pipeline, "NetworkFabricSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricSkuResource(Client, NetworkFabricSkuData.DeserializeNetworkFabricSkuData(e)), _networkFabricSkuClientDiagnostics, Pipeline, "NetworkFabricSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricSkuResource(Client, NetworkFabricSkuData.DeserializeNetworkFabricSkuData(e)), _networkFabricSkuClientDiagnostics, Pipeline, "NetworkFabricSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

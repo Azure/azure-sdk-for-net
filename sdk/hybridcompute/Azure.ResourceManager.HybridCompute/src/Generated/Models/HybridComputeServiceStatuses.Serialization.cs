@@ -5,37 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeServiceStatuses : IUtf8JsonSerializable
+    public partial class HybridComputeServiceStatuses : IUtf8JsonSerializable, IModelJsonSerializable<HybridComputeServiceStatuses>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HybridComputeServiceStatuses>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HybridComputeServiceStatuses>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputeServiceStatuses>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtensionService))
             {
                 writer.WritePropertyName("extensionService"u8);
-                writer.WriteObjectValue(ExtensionService);
+                if (ExtensionService is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HybridComputeServiceStatus>)ExtensionService).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(GuestConfigurationService))
             {
                 writer.WritePropertyName("guestConfigurationService"u8);
-                writer.WriteObjectValue(GuestConfigurationService);
+                if (GuestConfigurationService is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HybridComputeServiceStatus>)GuestConfigurationService).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HybridComputeServiceStatuses DeserializeHybridComputeServiceStatuses(JsonElement element)
+        internal static HybridComputeServiceStatuses DeserializeHybridComputeServiceStatuses(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<HybridComputeServiceStatus> extensionService = default;
             Optional<HybridComputeServiceStatus> guestConfigurationService = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensionService"u8))
@@ -56,8 +93,61 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     guestConfigurationService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HybridComputeServiceStatuses(extensionService.Value, guestConfigurationService.Value);
+            return new HybridComputeServiceStatuses(extensionService.Value, guestConfigurationService.Value, serializedAdditionalRawData);
+        }
+
+        HybridComputeServiceStatuses IModelJsonSerializable<HybridComputeServiceStatuses>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputeServiceStatuses>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputeServiceStatuses(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HybridComputeServiceStatuses>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputeServiceStatuses>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HybridComputeServiceStatuses IModelSerializable<HybridComputeServiceStatuses>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputeServiceStatuses>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHybridComputeServiceStatuses(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HybridComputeServiceStatuses"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HybridComputeServiceStatuses"/> to convert. </param>
+        public static implicit operator RequestContent(HybridComputeServiceStatuses model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HybridComputeServiceStatuses"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HybridComputeServiceStatuses(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHybridComputeServiceStatuses(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

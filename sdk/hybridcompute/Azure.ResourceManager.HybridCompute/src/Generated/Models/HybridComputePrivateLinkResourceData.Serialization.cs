@@ -5,28 +5,57 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    public partial class HybridComputePrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class HybridComputePrivateLinkResourceData : IUtf8JsonSerializable, IModelJsonSerializable<HybridComputePrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HybridComputePrivateLinkResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HybridComputePrivateLinkResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkResourceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HybridComputePrivateLinkResourceProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HybridComputePrivateLinkResourceData DeserializeHybridComputePrivateLinkResourceData(JsonElement element)
+        internal static HybridComputePrivateLinkResourceData DeserializeHybridComputePrivateLinkResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +65,7 @@ namespace Azure.ResourceManager.HybridCompute
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -71,8 +101,61 @@ namespace Azure.ResourceManager.HybridCompute
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HybridComputePrivateLinkResourceData(id, name, type, systemData.Value, properties.Value);
+            return new HybridComputePrivateLinkResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+        }
+
+        HybridComputePrivateLinkResourceData IModelJsonSerializable<HybridComputePrivateLinkResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputePrivateLinkResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HybridComputePrivateLinkResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HybridComputePrivateLinkResourceData IModelSerializable<HybridComputePrivateLinkResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHybridComputePrivateLinkResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HybridComputePrivateLinkResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HybridComputePrivateLinkResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(HybridComputePrivateLinkResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HybridComputePrivateLinkResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HybridComputePrivateLinkResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHybridComputePrivateLinkResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

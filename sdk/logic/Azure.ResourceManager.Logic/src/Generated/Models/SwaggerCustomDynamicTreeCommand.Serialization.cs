@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicTreeCommand : IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicTreeCommand : IUtf8JsonSerializable, IModelJsonSerializable<SwaggerCustomDynamicTreeCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SwaggerCustomDynamicTreeCommand>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SwaggerCustomDynamicTreeCommand>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerCustomDynamicTreeCommand>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OperationId))
             {
@@ -58,15 +65,36 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SwaggerCustomDynamicTreeParameterInfo>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SwaggerCustomDynamicTreeCommand DeserializeSwaggerCustomDynamicTreeCommand(JsonElement element)
+        internal static SwaggerCustomDynamicTreeCommand DeserializeSwaggerCustomDynamicTreeCommand(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +107,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> itemIsParent = default;
             Optional<string> selectableFilter = default;
             Optional<IDictionary<string, SwaggerCustomDynamicTreeParameterInfo>> parameters = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -130,8 +159,61 @@ namespace Azure.ResourceManager.Logic.Models
                     parameters = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SwaggerCustomDynamicTreeCommand(operationId.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, itemFullTitlePath.Value, itemIsParent.Value, selectableFilter.Value, Optional.ToDictionary(parameters));
+            return new SwaggerCustomDynamicTreeCommand(operationId.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, itemFullTitlePath.Value, itemIsParent.Value, selectableFilter.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+        }
+
+        SwaggerCustomDynamicTreeCommand IModelJsonSerializable<SwaggerCustomDynamicTreeCommand>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerCustomDynamicTreeCommand>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSwaggerCustomDynamicTreeCommand(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SwaggerCustomDynamicTreeCommand>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerCustomDynamicTreeCommand>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SwaggerCustomDynamicTreeCommand IModelSerializable<SwaggerCustomDynamicTreeCommand>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerCustomDynamicTreeCommand>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSwaggerCustomDynamicTreeCommand(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SwaggerCustomDynamicTreeCommand"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SwaggerCustomDynamicTreeCommand"/> to convert. </param>
+        public static implicit operator RequestContent(SwaggerCustomDynamicTreeCommand model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SwaggerCustomDynamicTreeCommand"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SwaggerCustomDynamicTreeCommand(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSwaggerCustomDynamicTreeCommand(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

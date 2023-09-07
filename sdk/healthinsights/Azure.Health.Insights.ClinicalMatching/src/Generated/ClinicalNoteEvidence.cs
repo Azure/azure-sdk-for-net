@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -13,6 +14,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A piece of evidence from a clinical note (text document). </summary>
     public partial class ClinicalNoteEvidence
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of ClinicalNoteEvidence. </summary>
         /// <param name="id"> The identifier of the document containing the evidence. </param>
         /// <param name="offset"> The start index of the evidence text span in the document (0 based). </param>
@@ -32,12 +36,19 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="text"> The actual text span which is evidence for the inference. </param>
         /// <param name="offset"> The start index of the evidence text span in the document (0 based). </param>
         /// <param name="length"> The length of the evidence text span. </param>
-        internal ClinicalNoteEvidence(string id, string text, int offset, int length)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalNoteEvidence(string id, string text, int offset, int length, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Text = text;
             Offset = offset;
             Length = length;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalNoteEvidence"/> for deserialization. </summary>
+        internal ClinicalNoteEvidence()
+        {
         }
 
         /// <summary> The identifier of the document containing the evidence. </summary>

@@ -6,24 +6,26 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningFlowModelJobOutput. </summary>
     public partial class MachineLearningFlowModelJobOutput : MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningFlowModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFlowModelJobOutput"/>. </summary>
         public MachineLearningFlowModelJobOutput()
         {
             JobOutputType = JobOutputType.MlflowModel;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFlowModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFlowModelJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        internal MachineLearningFlowModelJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningFlowModelJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, jobOutputType, serializedAdditionalRawData)
         {
             Mode = mode;
             Uri = uri;

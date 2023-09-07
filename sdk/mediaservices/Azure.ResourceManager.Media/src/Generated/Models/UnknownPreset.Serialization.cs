@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownPreset : IUtf8JsonSerializable
+    internal partial class UnknownPreset : IUtf8JsonSerializable, IModelJsonSerializable<MediaTransformPreset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaTransformPreset>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaTransformPreset>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaTransformPreset>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownPreset DeserializeUnknownPreset(JsonElement element)
+        internal static MediaTransformPreset DeserializeUnknownPreset(JsonElement element, ModelSerializerOptions options = default) => DeserializeMediaTransformPreset(element, options);
+
+        MediaTransformPreset IModelJsonSerializable<MediaTransformPreset>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string odataType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownPreset(odataType);
+            Core.ModelSerializerHelper.ValidateFormat<MediaTransformPreset>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownPreset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaTransformPreset>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaTransformPreset>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaTransformPreset IModelSerializable<MediaTransformPreset>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaTransformPreset>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaTransformPreset(doc.RootElement, options);
         }
     }
 }

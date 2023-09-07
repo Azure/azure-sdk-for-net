@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkFabricAccessControlListData : IUtf8JsonSerializable
+    public partial class NetworkFabricAccessControlListData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkFabricAccessControlListData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkFabricAccessControlListData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkFabricAccessControlListData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricAccessControlListData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -60,7 +66,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in MatchConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AccessControlListMatchConfiguration>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -70,16 +83,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in DynamicMatchConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<CommonDynamicMatchConfiguration>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkFabricAccessControlListData DeserializeNetworkFabricAccessControlListData(JsonElement element)
+        internal static NetworkFabricAccessControlListData DeserializeNetworkFabricAccessControlListData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,6 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<NetworkFabricConfigurationState> configurationState = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -253,8 +288,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkFabricAccessControlListData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(configurationType), aclsUrl.Value, Optional.ToNullable(defaultAction), Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations), Optional.ToNullable(lastSyncedTime), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
+            return new NetworkFabricAccessControlListData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(configurationType), aclsUrl.Value, Optional.ToNullable(defaultAction), Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations), Optional.ToNullable(lastSyncedTime), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+        }
+
+        NetworkFabricAccessControlListData IModelJsonSerializable<NetworkFabricAccessControlListData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricAccessControlListData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricAccessControlListData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkFabricAccessControlListData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricAccessControlListData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkFabricAccessControlListData IModelSerializable<NetworkFabricAccessControlListData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricAccessControlListData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkFabricAccessControlListData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkFabricAccessControlListData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkFabricAccessControlListData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkFabricAccessControlListData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkFabricAccessControlListData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkFabricAccessControlListData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkFabricAccessControlListData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

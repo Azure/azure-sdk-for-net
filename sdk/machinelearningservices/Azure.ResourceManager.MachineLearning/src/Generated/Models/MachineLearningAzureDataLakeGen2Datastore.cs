@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure Data Lake Gen2 datastore configuration. </summary>
     public partial class MachineLearningAzureDataLakeGen2Datastore : MachineLearningDatastoreProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningAzureDataLakeGen2Datastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen2Datastore"/>. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = DatastoreType.AzureDataLakeGen2;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAzureDataLakeGen2Datastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen2Datastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        internal MachineLearningAzureDataLakeGen2Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string filesystem, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningAzureDataLakeGen2Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string filesystem, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, properties, tags, credentials, datastoreType, isDefault, serializedAdditionalRawData)
         {
             AccountName = accountName;
             Endpoint = endpoint;
@@ -58,6 +59,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Protocol = protocol;
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
             DatastoreType = datastoreType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen2Datastore"/> for deserialization. </summary>
+        internal MachineLearningAzureDataLakeGen2Datastore()
+        {
         }
 
         /// <summary> [Required] Storage account name. </summary>

@@ -5,21 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicSku
+    public partial class LogicSku : IUtf8JsonSerializable, IModelJsonSerializable<LogicSku>
     {
-        internal static LogicSku DeserializeLogicSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LogicSku>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name.ToString());
+            if (Optional.IsDefined(Plan))
+            {
+                writer.WritePropertyName("plan"u8);
+                if (Plan is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogicResourceReference>)Plan).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogicSku DeserializeLogicSku(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             LogicSkuName name = default;
             Optional<LogicResourceReference> plan = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -36,8 +79,61 @@ namespace Azure.ResourceManager.Logic.Models
                     plan = LogicResourceReference.DeserializeLogicResourceReference(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicSku(name, plan.Value);
+            return new LogicSku(name, plan.Value, serializedAdditionalRawData);
+        }
+
+        LogicSku IModelJsonSerializable<LogicSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicSku IModelSerializable<LogicSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogicSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogicSku"/> to convert. </param>
+        public static implicit operator RequestContent(LogicSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogicSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogicSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

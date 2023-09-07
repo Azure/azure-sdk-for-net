@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricRoutePolicyPatch : IUtf8JsonSerializable
+    public partial class NetworkFabricRoutePolicyPatch : IUtf8JsonSerializable, IModelJsonSerializable<NetworkFabricRoutePolicyPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkFabricRoutePolicyPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkFabricRoutePolicyPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricRoutePolicyPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -39,12 +47,151 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Statements)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RoutePolicyStatementProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static NetworkFabricRoutePolicyPatch DeserializeNetworkFabricRoutePolicyPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<CommunityActionType> defaultAction = default;
+            Optional<IList<RoutePolicyStatementProperties>> statements = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("defaultAction"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultAction = new CommunityActionType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("statements"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<RoutePolicyStatementProperties> array = new List<RoutePolicyStatementProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item));
+                            }
+                            statements = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new NetworkFabricRoutePolicyPatch(Optional.ToDictionary(tags), Optional.ToNullable(defaultAction), Optional.ToList(statements), serializedAdditionalRawData);
+        }
+
+        NetworkFabricRoutePolicyPatch IModelJsonSerializable<NetworkFabricRoutePolicyPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricRoutePolicyPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricRoutePolicyPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkFabricRoutePolicyPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricRoutePolicyPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkFabricRoutePolicyPatch IModelSerializable<NetworkFabricRoutePolicyPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricRoutePolicyPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkFabricRoutePolicyPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkFabricRoutePolicyPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkFabricRoutePolicyPatch"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkFabricRoutePolicyPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkFabricRoutePolicyPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkFabricRoutePolicyPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

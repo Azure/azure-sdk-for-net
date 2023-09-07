@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaVideoBase : IUtf8JsonSerializable
+    public partial class MediaVideoBase : IUtf8JsonSerializable, IModelJsonSerializable<MediaVideoBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaVideoBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaVideoBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaVideoBase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyFrameInterval))
             {
@@ -38,11 +45,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaVideoBase DeserializeMediaVideoBase(JsonElement element)
+        internal static MediaVideoBase DeserializeMediaVideoBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,11 +79,14 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<TimeSpan> keyFrameInterval = default;
             Optional<InputVideoStretchMode> stretchMode = default;
             Optional<VideoSyncMode> syncMode = default;
             string odataType = "#Microsoft.Media.Video";
             Optional<string> label = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyFrameInterval"u8))
@@ -102,8 +126,61 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaVideoBase(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode));
+            return new MediaVideoBase(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), serializedAdditionalRawData);
+        }
+
+        MediaVideoBase IModelJsonSerializable<MediaVideoBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaVideoBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaVideoBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaVideoBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaVideoBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaVideoBase IModelSerializable<MediaVideoBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaVideoBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaVideoBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaVideoBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaVideoBase"/> to convert. </param>
+        public static implicit operator RequestContent(MediaVideoBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaVideoBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaVideoBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaVideoBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

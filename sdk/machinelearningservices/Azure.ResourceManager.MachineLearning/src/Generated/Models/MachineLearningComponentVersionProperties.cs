@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Definition of a component version: defines resources that span component types. </summary>
     public partial class MachineLearningComponentVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningComponentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionProperties"/>. </summary>
         public MachineLearningComponentVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComponentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Defines Component definition details.
         /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command" /&gt;
         /// </param>
-        internal MachineLearningComponentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, BinaryData componentSpec) : base(description, properties, tags, isAnonymous, isArchived)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComponentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, BinaryData componentSpec, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, properties, tags, isAnonymous, isArchived, serializedAdditionalRawData)
         {
             ComponentSpec = componentSpec;
         }

@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoEventGridDataConnection : IUtf8JsonSerializable
+    public partial class KustoEventGridDataConnection : IUtf8JsonSerializable, IModelJsonSerializable<KustoEventGridDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoEventGridDataConnection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoEventGridDataConnection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KustoEventGridDataConnection>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -82,11 +89,25 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStringValue(DatabaseRouting.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoEventGridDataConnection DeserializeKustoEventGridDataConnection(JsonElement element)
+        internal static KustoEventGridDataConnection DeserializeKustoEventGridDataConnection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -110,6 +131,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<Guid> managedIdentityObjectId = default;
             Optional<KustoDatabaseRouting> databaseRouting = default;
             Optional<KustoProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -267,8 +289,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoEventGridDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, storageAccountResourceId.Value, eventGridResourceId.Value, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToNullable(ignoreFirstRecord), Optional.ToNullable(blobStorageEventType), managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), Optional.ToNullable(databaseRouting), Optional.ToNullable(provisioningState));
+            return new KustoEventGridDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, storageAccountResourceId.Value, eventGridResourceId.Value, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToNullable(ignoreFirstRecord), Optional.ToNullable(blobStorageEventType), managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), Optional.ToNullable(databaseRouting), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        KustoEventGridDataConnection IModelJsonSerializable<KustoEventGridDataConnection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoEventGridDataConnection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoEventGridDataConnection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoEventGridDataConnection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoEventGridDataConnection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoEventGridDataConnection IModelSerializable<KustoEventGridDataConnection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoEventGridDataConnection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoEventGridDataConnection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoEventGridDataConnection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoEventGridDataConnection"/> to convert. </param>
+        public static implicit operator RequestContent(KustoEventGridDataConnection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoEventGridDataConnection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoEventGridDataConnection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoEventGridDataConnection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

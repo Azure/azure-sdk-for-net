@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class OSProfileWindowsConfiguration : IUtf8JsonSerializable
+    public partial class OSProfileWindowsConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<OSProfileWindowsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OSProfileWindowsConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OSProfileWindowsConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfileWindowsConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("patchSettings"u8);
             writer.WriteStartObject();
@@ -28,17 +36,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OSProfileWindowsConfiguration DeserializeOSProfileWindowsConfiguration(JsonElement element)
+        internal static OSProfileWindowsConfiguration DeserializeOSProfileWindowsConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AssessmentModeType> assessmentMode = default;
             Optional<PatchModeType> patchMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchSettings"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OSProfileWindowsConfiguration(Optional.ToNullable(assessmentMode), Optional.ToNullable(patchMode));
+            return new OSProfileWindowsConfiguration(Optional.ToNullable(assessmentMode), Optional.ToNullable(patchMode), serializedAdditionalRawData);
+        }
+
+        OSProfileWindowsConfiguration IModelJsonSerializable<OSProfileWindowsConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfileWindowsConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOSProfileWindowsConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OSProfileWindowsConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfileWindowsConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OSProfileWindowsConfiguration IModelSerializable<OSProfileWindowsConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfileWindowsConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOSProfileWindowsConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OSProfileWindowsConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OSProfileWindowsConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(OSProfileWindowsConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OSProfileWindowsConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OSProfileWindowsConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOSProfileWindowsConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

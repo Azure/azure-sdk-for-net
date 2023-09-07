@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model asset version details. </summary>
     public partial class MachineLearningModelVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionProperties"/>. </summary>
         public MachineLearningModelVersionProperties()
         {
             Flavors = new ChangeTrackingDictionary<string, MachineLearningFlavorData>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -30,7 +30,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="jobName"> Name of the training job which produced this model. </param>
         /// <param name="modelType"> The storage format for this entity. Used for NCD. </param>
         /// <param name="modelUri"> The URI path to the model contents. </param>
-        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, string jobName, string modelType, Uri modelUri) : base(description, properties, tags, isAnonymous, isArchived)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, string jobName, string modelType, Uri modelUri, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, properties, tags, isAnonymous, isArchived, serializedAdditionalRawData)
         {
             Flavors = flavors;
             JobName = jobName;

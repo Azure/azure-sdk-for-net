@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Compute start stop schedule properties. </summary>
     public partial class MachineLearningComputeStartStopSchedule
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeStartStopSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeStartStopSchedule"/>. </summary>
         internal MachineLearningComputeStartStopSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeStartStopSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeStartStopSchedule"/>. </summary>
         /// <param name="id"> A system assigned id for the schedule. </param>
         /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
         /// <param name="status"> Is the schedule enabled or disabled?. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="recurrence"> Required if triggerType is Recurrence. </param>
         /// <param name="cron"> Required if triggerType is Cron. </param>
         /// <param name="schedule"> [Deprecated] Not used any more. </param>
-        internal MachineLearningComputeStartStopSchedule(string id, MachineLearningComputeProvisioningStatus? provisioningStatus, MachineLearningScheduleStatus? status, MachineLearningComputePowerAction? action, MachineLearningTriggerType? triggerType, MachineLearningRecurrenceTrigger recurrence, CronTrigger cron, MachineLearningScheduleBase schedule)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeStartStopSchedule(string id, MachineLearningComputeProvisioningStatus? provisioningStatus, MachineLearningScheduleStatus? status, MachineLearningComputePowerAction? action, MachineLearningTriggerType? triggerType, MachineLearningRecurrenceTrigger recurrence, CronTrigger cron, MachineLearningScheduleBase schedule, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ProvisioningStatus = provisioningStatus;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Recurrence = recurrence;
             Cron = cron;
             Schedule = schedule;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A system assigned id for the schedule. </summary>

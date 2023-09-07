@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetwork.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    public partial class ManagedNetworkData : IUtf8JsonSerializable
+    public partial class ManagedNetworkData : IUtf8JsonSerializable, IModelJsonSerializable<ManagedNetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedNetworkData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedNetworkData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedNetworkData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -37,14 +43,35 @@ namespace Azure.ResourceManager.ManagedNetwork
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                if (Scope is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<Scope>)Scope).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedNetworkData DeserializeManagedNetworkData(JsonElement element)
+        internal static ManagedNetworkData DeserializeManagedNetworkData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +86,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             Optional<ETag> etag = default;
             Optional<Scope> scope = default;
             Optional<ConnectivityCollection> connectivity = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -152,8 +180,61 @@ namespace Azure.ResourceManager.ManagedNetwork
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(etag), scope.Value, connectivity.Value);
+            return new ManagedNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(etag), scope.Value, connectivity.Value, serializedAdditionalRawData);
+        }
+
+        ManagedNetworkData IModelJsonSerializable<ManagedNetworkData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedNetworkData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedNetworkData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedNetworkData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedNetworkData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedNetworkData IModelSerializable<ManagedNetworkData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedNetworkData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedNetworkData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedNetworkData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedNetworkData"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedNetworkData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedNetworkData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedNetworkData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedNetworkData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

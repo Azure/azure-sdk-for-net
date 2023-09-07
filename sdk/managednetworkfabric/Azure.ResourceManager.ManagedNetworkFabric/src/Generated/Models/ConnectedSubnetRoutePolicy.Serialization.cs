@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ConnectedSubnetRoutePolicy : IUtf8JsonSerializable
+    public partial class ConnectedSubnetRoutePolicy : IUtf8JsonSerializable, IModelJsonSerializable<ConnectedSubnetRoutePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectedSubnetRoutePolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectedSubnetRoutePolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectedSubnetRoutePolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExportRoutePolicyId))
             {
@@ -23,19 +31,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy);
+                if (ExportRoutePolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<L3ExportRoutePolicy>)ExportRoutePolicy).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ConnectedSubnetRoutePolicy DeserializeConnectedSubnetRoutePolicy(JsonElement element)
+        internal static ConnectedSubnetRoutePolicy DeserializeConnectedSubnetRoutePolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> exportRoutePolicyId = default;
             Optional<L3ExportRoutePolicy> exportRoutePolicy = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exportRoutePolicyId"u8))
@@ -56,8 +86,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectedSubnetRoutePolicy(exportRoutePolicyId.Value, exportRoutePolicy.Value);
+            return new ConnectedSubnetRoutePolicy(exportRoutePolicyId.Value, exportRoutePolicy.Value, serializedAdditionalRawData);
+        }
+
+        ConnectedSubnetRoutePolicy IModelJsonSerializable<ConnectedSubnetRoutePolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectedSubnetRoutePolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectedSubnetRoutePolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectedSubnetRoutePolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectedSubnetRoutePolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectedSubnetRoutePolicy IModelSerializable<ConnectedSubnetRoutePolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectedSubnetRoutePolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectedSubnetRoutePolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectedSubnetRoutePolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectedSubnetRoutePolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectedSubnetRoutePolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectedSubnetRoutePolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectedSubnetRoutePolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectedSubnetRoutePolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

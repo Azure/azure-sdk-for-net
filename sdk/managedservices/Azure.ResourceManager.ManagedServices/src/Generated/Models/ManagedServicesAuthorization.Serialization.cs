@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesAuthorization : IUtf8JsonSerializable
+    public partial class ManagedServicesAuthorization : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServicesAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServicesAuthorization>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServicesAuthorization>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesAuthorization>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
@@ -36,11 +42,25 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedServicesAuthorization DeserializeManagedServicesAuthorization(JsonElement element)
+        internal static ManagedServicesAuthorization DeserializeManagedServicesAuthorization(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +69,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<string> principalIdDisplayName = default;
             string roleDefinitionId = default;
             Optional<IList<Guid>> delegatedRoleDefinitionIds = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -80,8 +101,61 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     delegatedRoleDefinitionIds = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedServicesAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, Optional.ToList(delegatedRoleDefinitionIds));
+            return new ManagedServicesAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, Optional.ToList(delegatedRoleDefinitionIds), serializedAdditionalRawData);
+        }
+
+        ManagedServicesAuthorization IModelJsonSerializable<ManagedServicesAuthorization>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesAuthorization>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesAuthorization(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServicesAuthorization>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesAuthorization>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServicesAuthorization IModelSerializable<ManagedServicesAuthorization>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesAuthorization>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServicesAuthorization(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedServicesAuthorization"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedServicesAuthorization"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedServicesAuthorization model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedServicesAuthorization"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedServicesAuthorization(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedServicesAuthorization(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

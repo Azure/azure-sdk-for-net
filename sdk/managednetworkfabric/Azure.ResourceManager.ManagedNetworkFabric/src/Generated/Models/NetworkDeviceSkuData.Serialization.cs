@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkDeviceSkuData : IUtf8JsonSerializable
+    public partial class NetworkDeviceSkuData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkDeviceSkuData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkDeviceSkuData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkDeviceSkuData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkDeviceSkuData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -33,7 +40,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in SupportedVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SupportedVersionProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -53,16 +67,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in Interfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NetworkDeviceInterfaceProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkDeviceSkuData DeserializeNetworkDeviceSkuData(JsonElement element)
+        internal static NetworkDeviceSkuData DeserializeNetworkDeviceSkuData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +112,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<IList<NetworkDeviceRoleName>> supportedRoleTypes = default;
             Optional<IList<NetworkDeviceInterfaceProperties>> interfaces = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -176,8 +212,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, Optional.ToList(supportedVersions), Optional.ToList(supportedRoleTypes), Optional.ToList(interfaces), Optional.ToNullable(provisioningState));
+            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, Optional.ToList(supportedVersions), Optional.ToList(supportedRoleTypes), Optional.ToList(interfaces), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        NetworkDeviceSkuData IModelJsonSerializable<NetworkDeviceSkuData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkDeviceSkuData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkDeviceSkuData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkDeviceSkuData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkDeviceSkuData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkDeviceSkuData IModelSerializable<NetworkDeviceSkuData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkDeviceSkuData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkDeviceSkuData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkDeviceSkuData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkDeviceSkuData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkDeviceSkuData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkDeviceSkuData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkDeviceSkuData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkDeviceSkuData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

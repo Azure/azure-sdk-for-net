@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Logic
         public virtual AsyncPageable<IntegrationAccountAssemblyDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Logic
         public virtual Pageable<IntegrationAccountAssemblyDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

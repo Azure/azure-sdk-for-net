@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    internal partial class PagedVirtualMachines
+    internal partial class PagedVirtualMachines : IUtf8JsonSerializable, IModelJsonSerializable<PagedVirtualMachines>
     {
-        internal static PagedVirtualMachines DeserializePagedVirtualMachines(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PagedVirtualMachines>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PagedVirtualMachines>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PagedVirtualMachines>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PagedVirtualMachines DeserializePagedVirtualMachines(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<LabVirtualMachineData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.LabServices.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PagedVirtualMachines(Optional.ToList(value), nextLink.Value);
+            return new PagedVirtualMachines(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        PagedVirtualMachines IModelJsonSerializable<PagedVirtualMachines>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PagedVirtualMachines>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePagedVirtualMachines(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PagedVirtualMachines>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PagedVirtualMachines>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PagedVirtualMachines IModelSerializable<PagedVirtualMachines>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PagedVirtualMachines>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePagedVirtualMachines(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PagedVirtualMachines"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PagedVirtualMachines"/> to convert. </param>
+        public static implicit operator RequestContent(PagedVirtualMachines model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PagedVirtualMachines"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PagedVirtualMachines(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePagedVirtualMachines(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

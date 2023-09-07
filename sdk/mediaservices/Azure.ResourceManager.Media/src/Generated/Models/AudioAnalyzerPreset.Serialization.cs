@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioAnalyzerPreset : IUtf8JsonSerializable
+    public partial class AudioAnalyzerPreset : IUtf8JsonSerializable, IModelJsonSerializable<AudioAnalyzerPreset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AudioAnalyzerPreset>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AudioAnalyzerPreset>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AudioAnalyzerPreset>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AudioLanguage))
             {
@@ -39,11 +46,25 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AudioAnalyzerPreset DeserializeAudioAnalyzerPreset(JsonElement element)
+        internal static AudioAnalyzerPreset DeserializeAudioAnalyzerPreset(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,10 +76,13 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.VideoAnalyzerPreset": return VideoAnalyzerPreset.DeserializeVideoAnalyzerPreset(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<string> audioLanguage = default;
             Optional<AudioAnalysisMode> mode = default;
             Optional<IDictionary<string, string>> experimentalOptions = default;
             string odataType = "#Microsoft.Media.AudioAnalyzerPreset";
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("audioLanguage"u8))
@@ -94,8 +118,61 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AudioAnalyzerPreset(odataType, audioLanguage.Value, Optional.ToNullable(mode), Optional.ToDictionary(experimentalOptions));
+            return new AudioAnalyzerPreset(odataType, audioLanguage.Value, Optional.ToNullable(mode), Optional.ToDictionary(experimentalOptions), serializedAdditionalRawData);
+        }
+
+        AudioAnalyzerPreset IModelJsonSerializable<AudioAnalyzerPreset>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AudioAnalyzerPreset>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAudioAnalyzerPreset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AudioAnalyzerPreset>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AudioAnalyzerPreset>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AudioAnalyzerPreset IModelSerializable<AudioAnalyzerPreset>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AudioAnalyzerPreset>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAudioAnalyzerPreset(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AudioAnalyzerPreset"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AudioAnalyzerPreset"/> to convert. </param>
+        public static implicit operator RequestContent(AudioAnalyzerPreset model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AudioAnalyzerPreset"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AudioAnalyzerPreset(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAudioAnalyzerPreset(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

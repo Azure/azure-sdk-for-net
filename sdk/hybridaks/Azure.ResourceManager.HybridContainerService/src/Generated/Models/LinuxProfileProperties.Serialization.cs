@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class LinuxProfileProperties : IUtf8JsonSerializable
+    public partial class LinuxProfileProperties : IUtf8JsonSerializable, IModelJsonSerializable<LinuxProfileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinuxProfileProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinuxProfileProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxProfileProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AdminUsername))
             {
@@ -23,19 +31,41 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh);
+                if (Ssh is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinuxProfilePropertiesSsh>)Ssh).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static LinuxProfileProperties DeserializeLinuxProfileProperties(JsonElement element)
+        internal static LinuxProfileProperties DeserializeLinuxProfileProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> adminUsername = default;
             Optional<LinuxProfilePropertiesSsh> ssh = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))
@@ -52,8 +82,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     ssh = LinuxProfilePropertiesSsh.DeserializeLinuxProfilePropertiesSsh(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinuxProfileProperties(adminUsername.Value, ssh.Value);
+            return new LinuxProfileProperties(adminUsername.Value, ssh.Value, serializedAdditionalRawData);
+        }
+
+        LinuxProfileProperties IModelJsonSerializable<LinuxProfileProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxProfileProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinuxProfileProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinuxProfileProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxProfileProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinuxProfileProperties IModelSerializable<LinuxProfileProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxProfileProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinuxProfileProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LinuxProfileProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LinuxProfileProperties"/> to convert. </param>
+        public static implicit operator RequestContent(LinuxProfileProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LinuxProfileProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LinuxProfileProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinuxProfileProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

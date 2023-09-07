@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownContentKeyPolicyRestrictionTokenKey : IUtf8JsonSerializable
+    internal partial class UnknownContentKeyPolicyRestrictionTokenKey : IUtf8JsonSerializable, IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyRestrictionTokenKey>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownContentKeyPolicyRestrictionTokenKey DeserializeUnknownContentKeyPolicyRestrictionTokenKey(JsonElement element)
+        internal static ContentKeyPolicyRestrictionTokenKey DeserializeUnknownContentKeyPolicyRestrictionTokenKey(JsonElement element, ModelSerializerOptions options = default) => DeserializeContentKeyPolicyRestrictionTokenKey(element, options);
+
+        ContentKeyPolicyRestrictionTokenKey IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string odataType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownContentKeyPolicyRestrictionTokenKey(odataType);
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyRestrictionTokenKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownContentKeyPolicyRestrictionTokenKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContentKeyPolicyRestrictionTokenKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyRestrictionTokenKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContentKeyPolicyRestrictionTokenKey IModelSerializable<ContentKeyPolicyRestrictionTokenKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyRestrictionTokenKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContentKeyPolicyRestrictionTokenKey(doc.RootElement, options);
         }
     }
 }

@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDataFactoryCompute : IUtf8JsonSerializable
+    public partial class MachineLearningDataFactoryCompute : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningDataFactoryCompute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningDataFactoryCompute>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningDataFactoryCompute>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningDataFactoryCompute>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
@@ -53,11 +59,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningDataFactoryCompute DeserializeMachineLearningDataFactoryCompute(JsonElement element)
+        internal static MachineLearningDataFactoryCompute DeserializeMachineLearningDataFactoryCompute(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IReadOnlyList<MachineLearningError>> provisioningErrors = default;
             Optional<bool> isAttachedCompute = default;
             Optional<bool> disableLocalAuth = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -164,8 +185,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     disableLocalAuth = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningDataFactoryCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth));
+            return new MachineLearningDataFactoryCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+        }
+
+        MachineLearningDataFactoryCompute IModelJsonSerializable<MachineLearningDataFactoryCompute>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningDataFactoryCompute>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDataFactoryCompute(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningDataFactoryCompute>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningDataFactoryCompute>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningDataFactoryCompute IModelSerializable<MachineLearningDataFactoryCompute>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningDataFactoryCompute>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningDataFactoryCompute(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningDataFactoryCompute"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningDataFactoryCompute"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningDataFactoryCompute model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningDataFactoryCompute"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningDataFactoryCompute(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningDataFactoryCompute(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

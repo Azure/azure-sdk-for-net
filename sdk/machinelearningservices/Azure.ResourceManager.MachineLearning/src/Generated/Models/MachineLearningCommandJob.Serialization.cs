@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningCommandJob : IUtf8JsonSerializable
+    public partial class MachineLearningCommandJob : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningCommandJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningCommandJob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningCommandJob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningCommandJob>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CodeId))
             {
@@ -36,7 +42,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Distribution != null)
                 {
                     writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue(Distribution);
+                    if (Distribution is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningDistributionConfiguration>)Distribution).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -72,7 +85,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<MachineLearningJobInput>)item.Value).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -86,7 +106,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Limits != null)
                 {
                     writer.WritePropertyName("limits"u8);
-                    writer.WriteObjectValue(Limits);
+                    if (Limits is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningCommandJobLimits>)Limits).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -102,7 +129,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Outputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<MachineLearningJobOutput>)item.Value).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -114,7 +148,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                if (Resources is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningJobResourceConfiguration>)Resources).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ComponentId))
             {
@@ -162,7 +203,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    if (Identity is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningIdentityConfiguration>)Identity).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -185,7 +233,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Services)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<MachineLearningJobService>)item.Value).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -242,11 +297,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningCommandJob DeserializeMachineLearningCommandJob(JsonElement element)
+        internal static MachineLearningCommandJob DeserializeMachineLearningCommandJob(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -273,6 +342,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeId"u8))
@@ -502,8 +572,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningCommandJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status), codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(inputs), limits.Value, Optional.ToDictionary(outputs), parameters.Value, resources.Value);
+            return new MachineLearningCommandJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status), codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(inputs), limits.Value, Optional.ToDictionary(outputs), parameters.Value, resources.Value, serializedAdditionalRawData);
+        }
+
+        MachineLearningCommandJob IModelJsonSerializable<MachineLearningCommandJob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningCommandJob>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningCommandJob(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningCommandJob>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningCommandJob>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningCommandJob IModelSerializable<MachineLearningCommandJob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningCommandJob>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningCommandJob(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningCommandJob"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningCommandJob"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningCommandJob model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningCommandJob"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningCommandJob(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningCommandJob(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

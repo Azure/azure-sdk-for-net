@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaJobInputSequence : IUtf8JsonSerializable
+    public partial class MediaJobInputSequence : IUtf8JsonSerializable, IModelJsonSerializable<MediaJobInputSequence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaJobInputSequence>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaJobInputSequence>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaJobInputSequence>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Inputs))
             {
@@ -22,23 +29,45 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MediaJobInputClip>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaJobInputSequence DeserializeMediaJobInputSequence(JsonElement element)
+        internal static MediaJobInputSequence DeserializeMediaJobInputSequence(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<MediaJobInputClip>> inputs = default;
             string odataType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputs"u8))
@@ -60,8 +89,61 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaJobInputSequence(odataType, Optional.ToList(inputs));
+            return new MediaJobInputSequence(odataType, Optional.ToList(inputs), serializedAdditionalRawData);
+        }
+
+        MediaJobInputSequence IModelJsonSerializable<MediaJobInputSequence>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaJobInputSequence>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaJobInputSequence(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaJobInputSequence>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaJobInputSequence>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaJobInputSequence IModelSerializable<MediaJobInputSequence>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaJobInputSequence>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaJobInputSequence(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaJobInputSequence"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaJobInputSequence"/> to convert. </param>
+        public static implicit operator RequestContent(MediaJobInputSequence model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaJobInputSequence"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaJobInputSequence(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaJobInputSequence(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

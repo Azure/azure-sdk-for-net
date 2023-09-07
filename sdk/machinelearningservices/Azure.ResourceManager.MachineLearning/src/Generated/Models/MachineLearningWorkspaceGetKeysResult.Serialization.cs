@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceGetKeysResult
+    public partial class MachineLearningWorkspaceGetKeysResult : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningWorkspaceGetKeysResult>
     {
-        internal static MachineLearningWorkspaceGetKeysResult DeserializeMachineLearningWorkspaceGetKeysResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningWorkspaceGetKeysResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningWorkspaceGetKeysResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceGetKeysResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningWorkspaceGetKeysResult DeserializeMachineLearningWorkspaceGetKeysResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> appInsightsInstrumentationKey = default;
             Optional<MachineLearningContainerRegistryCredentials> containerRegistryCredentials = default;
             Optional<MachineLearningWorkspaceGetNotebookKeysResult> notebookAccessKeys = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userStorageKey"u8))
@@ -58,8 +87,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     notebookAccessKeys = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningWorkspaceGetKeysResult(userStorageKey.Value, userStorageResourceId.Value, appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value);
+            return new MachineLearningWorkspaceGetKeysResult(userStorageKey.Value, userStorageResourceId.Value, appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value, serializedAdditionalRawData);
+        }
+
+        MachineLearningWorkspaceGetKeysResult IModelJsonSerializable<MachineLearningWorkspaceGetKeysResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceGetKeysResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceGetKeysResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningWorkspaceGetKeysResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceGetKeysResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningWorkspaceGetKeysResult IModelSerializable<MachineLearningWorkspaceGetKeysResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceGetKeysResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningWorkspaceGetKeysResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningWorkspaceGetKeysResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningWorkspaceGetKeysResult"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningWorkspaceGetKeysResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningWorkspaceGetKeysResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningWorkspaceGetKeysResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningWorkspaceGetKeysResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

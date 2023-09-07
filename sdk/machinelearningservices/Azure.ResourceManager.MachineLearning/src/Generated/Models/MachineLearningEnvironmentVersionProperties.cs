@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Environment version details. </summary>
     public partial class MachineLearningEnvironmentVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentVersionProperties"/>. </summary>
         public MachineLearningEnvironmentVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
         /// <param name="osType"> The OS type of the environment. </param>
-        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, MachineLearningOperatingSystemType? osType) : base(description, properties, tags, isAnonymous, isArchived)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, MachineLearningOperatingSystemType? osType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, properties, tags, isAnonymous, isArchived, serializedAdditionalRawData)
         {
             AutoRebuild = autoRebuild;
             Build = build;

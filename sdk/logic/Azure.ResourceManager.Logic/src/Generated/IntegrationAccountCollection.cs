@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

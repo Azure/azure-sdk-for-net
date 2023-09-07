@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAksComputeProperties : IUtf8JsonSerializable
+    public partial class MachineLearningAksComputeProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningAksComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningAksComputeProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningAksComputeProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningAksComputeProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterFqdn))
             {
@@ -62,7 +69,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SslConfiguration != null)
                 {
                     writer.WritePropertyName("sslConfiguration"u8);
-                    writer.WriteObjectValue(SslConfiguration);
+                    if (SslConfiguration is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningSslConfiguration>)SslConfiguration).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -74,7 +88,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AksNetworkingConfiguration != null)
                 {
                     writer.WritePropertyName("aksNetworkingConfiguration"u8);
-                    writer.WriteObjectValue(AksNetworkingConfiguration);
+                    if (AksNetworkingConfiguration is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningAksNetworkingConfiguration>)AksNetworkingConfiguration).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -98,11 +119,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("loadBalancerSubnet");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningAksComputeProperties DeserializeMachineLearningAksComputeProperties(JsonElement element)
+        internal static MachineLearningAksComputeProperties DeserializeMachineLearningAksComputeProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,6 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningAksNetworkingConfiguration> aksNetworkingConfiguration = default;
             Optional<MachineLearningLoadBalancerType> loadBalancerType = default;
             Optional<string> loadBalancerSubnet = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterFqdn"u8))
@@ -211,8 +247,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     loadBalancerSubnet = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningAksComputeProperties(clusterFqdn.Value, Optional.ToList(systemServices), Optional.ToNullable(agentCount), agentVmSize.Value, Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value);
+            return new MachineLearningAksComputeProperties(clusterFqdn.Value, Optional.ToList(systemServices), Optional.ToNullable(agentCount), agentVmSize.Value, Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value, serializedAdditionalRawData);
+        }
+
+        MachineLearningAksComputeProperties IModelJsonSerializable<MachineLearningAksComputeProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningAksComputeProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAksComputeProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningAksComputeProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningAksComputeProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningAksComputeProperties IModelSerializable<MachineLearningAksComputeProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningAksComputeProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningAksComputeProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningAksComputeProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningAksComputeProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningAksComputeProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningAksComputeProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningAksComputeProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningAksComputeProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

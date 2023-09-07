@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> A person's contact details. </summary>
     public partial class ContactDetails
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of ContactDetails. </summary>
         public ContactDetails()
         {
@@ -19,11 +25,13 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="name"> The person's name. </param>
         /// <param name="email"> The person's email. </param>
         /// <param name="phone"> A person's phone number. </param>
-        internal ContactDetails(string name, string email, string phone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContactDetails(string name, string email, string phone, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Email = email;
             Phone = phone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The person's name. </summary>

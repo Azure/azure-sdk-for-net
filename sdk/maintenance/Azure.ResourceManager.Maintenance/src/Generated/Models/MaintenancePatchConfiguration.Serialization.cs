@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenancePatchConfiguration : IUtf8JsonSerializable
+    public partial class MaintenancePatchConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<MaintenancePatchConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MaintenancePatchConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MaintenancePatchConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenancePatchConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RebootSetting))
             {
@@ -23,18 +31,46 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters);
+                if (WindowsParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MaintenanceWindowsPatchSettings>)WindowsParameters).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters);
+                if (LinuxParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MaintenanceLinuxPatchSettings>)LinuxParameters).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MaintenancePatchConfiguration DeserializeMaintenancePatchConfiguration(JsonElement element)
+        internal static MaintenancePatchConfiguration DeserializeMaintenancePatchConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +78,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             Optional<MaintenanceRebootOption> rebootSetting = default;
             Optional<MaintenanceWindowsPatchSettings> windowsParameters = default;
             Optional<MaintenanceLinuxPatchSettings> linuxParameters = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rebootSetting"u8))
@@ -71,8 +108,61 @@ namespace Azure.ResourceManager.Maintenance.Models
                     linuxParameters = MaintenanceLinuxPatchSettings.DeserializeMaintenanceLinuxPatchSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MaintenancePatchConfiguration(Optional.ToNullable(rebootSetting), windowsParameters.Value, linuxParameters.Value);
+            return new MaintenancePatchConfiguration(Optional.ToNullable(rebootSetting), windowsParameters.Value, linuxParameters.Value, serializedAdditionalRawData);
+        }
+
+        MaintenancePatchConfiguration IModelJsonSerializable<MaintenancePatchConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenancePatchConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenancePatchConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MaintenancePatchConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenancePatchConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MaintenancePatchConfiguration IModelSerializable<MaintenancePatchConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenancePatchConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMaintenancePatchConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MaintenancePatchConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MaintenancePatchConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(MaintenancePatchConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MaintenancePatchConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MaintenancePatchConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMaintenancePatchConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

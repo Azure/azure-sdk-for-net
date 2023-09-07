@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class OptimizedAutoscale : IUtf8JsonSerializable
+    public partial class OptimizedAutoscale : IUtf8JsonSerializable, IModelJsonSerializable<OptimizedAutoscale>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OptimizedAutoscale>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OptimizedAutoscale>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OptimizedAutoscale>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("version"u8);
             writer.WriteNumberValue(Version);
@@ -23,11 +31,25 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteNumberValue(Minimum);
             writer.WritePropertyName("maximum"u8);
             writer.WriteNumberValue(Maximum);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OptimizedAutoscale DeserializeOptimizedAutoscale(JsonElement element)
+        internal static OptimizedAutoscale DeserializeOptimizedAutoscale(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.Kusto.Models
             bool isEnabled = default;
             int minimum = default;
             int maximum = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -58,8 +81,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     maximum = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OptimizedAutoscale(version, isEnabled, minimum, maximum);
+            return new OptimizedAutoscale(version, isEnabled, minimum, maximum, serializedAdditionalRawData);
+        }
+
+        OptimizedAutoscale IModelJsonSerializable<OptimizedAutoscale>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OptimizedAutoscale>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOptimizedAutoscale(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OptimizedAutoscale>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OptimizedAutoscale>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OptimizedAutoscale IModelSerializable<OptimizedAutoscale>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OptimizedAutoscale>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOptimizedAutoscale(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OptimizedAutoscale"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OptimizedAutoscale"/> to convert. </param>
+        public static implicit operator RequestContent(OptimizedAutoscale model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OptimizedAutoscale"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OptimizedAutoscale(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOptimizedAutoscale(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

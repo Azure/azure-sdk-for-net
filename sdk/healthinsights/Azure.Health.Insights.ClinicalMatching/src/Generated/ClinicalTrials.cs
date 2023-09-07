@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,6 +18,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// </summary>
     public partial class ClinicalTrials
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of ClinicalTrials. </summary>
         public ClinicalTrials()
         {
@@ -30,10 +34,12 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// A list of filters, each one creating a selection of trials from a given
         /// clinical trial registry.
         /// </param>
-        internal ClinicalTrials(IList<ClinicalTrialDetails> customTrials, IList<ClinicalTrialRegistryFilter> registryFilters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrials(IList<ClinicalTrialDetails> customTrials, IList<ClinicalTrialRegistryFilter> registryFilters, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomTrials = customTrials;
             RegistryFilters = registryFilters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of clinical trials. </summary>

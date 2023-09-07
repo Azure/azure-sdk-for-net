@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    internal partial class StorageAccountCreateParameters : IUtf8JsonSerializable
+    internal partial class StorageAccountCreateParameters : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountCreateParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountCreateParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountCreateParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountCreateParameters>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
@@ -29,7 +37,14 @@ namespace Azure.Security.KeyVault.Storage.Models
             if (Optional.IsDefined(StorageAccountAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(StorageAccountAttributes);
+                if (StorageAccountAttributes is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageAccountAttributes>)StorageAccountAttributes).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -42,7 +57,136 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static StorageAccountCreateParameters DeserializeStorageAccountCreateParameters(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string resourceId = default;
+            string activeKeyName = default;
+            bool autoRegenerateKey = default;
+            Optional<string> regenerationPeriod = default;
+            Optional<StorageAccountAttributes> attributes = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceId"u8))
+                {
+                    resourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("activeKeyName"u8))
+                {
+                    activeKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoRegenerateKey"u8))
+                {
+                    autoRegenerateKey = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("regenerationPeriod"u8))
+                {
+                    regenerationPeriod = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("attributes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    attributes = StorageAccountAttributes.DeserializeStorageAccountAttributes(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new StorageAccountCreateParameters(resourceId, activeKeyName, autoRegenerateKey, regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+        }
+
+        StorageAccountCreateParameters IModelJsonSerializable<StorageAccountCreateParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountCreateParameters>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountCreateParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountCreateParameters>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountCreateParameters>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountCreateParameters IModelSerializable<StorageAccountCreateParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountCreateParameters>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountCreateParameters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageAccountCreateParameters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageAccountCreateParameters"/> to convert. </param>
+        public static implicit operator RequestContent(StorageAccountCreateParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageAccountCreateParameters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageAccountCreateParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageAccountCreateParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

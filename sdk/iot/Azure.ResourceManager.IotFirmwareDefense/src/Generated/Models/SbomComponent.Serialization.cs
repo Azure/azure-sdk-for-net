@@ -8,14 +8,108 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class SbomComponent
+    public partial class SbomComponent : IUtf8JsonSerializable, IModelJsonSerializable<SbomComponent>
     {
-        internal static SbomComponent DeserializeSbomComponent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SbomComponent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SbomComponent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SbomComponent>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ComponentId))
+            {
+                if (ComponentId != null)
+                {
+                    writer.WritePropertyName("componentId"u8);
+                    writer.WriteStringValue(ComponentId);
+                }
+                else
+                {
+                    writer.WriteNull("componentId");
+                }
+            }
+            if (Optional.IsDefined(ComponentName))
+            {
+                if (ComponentName != null)
+                {
+                    writer.WritePropertyName("componentName"u8);
+                    writer.WriteStringValue(ComponentName);
+                }
+                else
+                {
+                    writer.WriteNull("componentName");
+                }
+            }
+            if (Optional.IsDefined(Version))
+            {
+                if (Version != null)
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+                else
+                {
+                    writer.WriteNull("version");
+                }
+            }
+            if (Optional.IsDefined(License))
+            {
+                if (License != null)
+                {
+                    writer.WritePropertyName("license"u8);
+                    writer.WriteStringValue(License);
+                }
+                else
+                {
+                    writer.WriteNull("license");
+                }
+            }
+            if (Optional.IsDefined(ReleaseOn))
+            {
+                writer.WritePropertyName("releaseDate"u8);
+                writer.WriteStringValue(ReleaseOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Paths))
+            {
+                writer.WritePropertyName("paths"u8);
+                writer.WriteStartArray();
+                foreach (var item in Paths)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsUpdateAvailable))
+            {
+                writer.WritePropertyName("isUpdateAvailable"u8);
+                writer.WriteStringValue(IsUpdateAvailable.Value.ToString());
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SbomComponent DeserializeSbomComponent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +121,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<DateTimeOffset> releaseDate = default;
             Optional<IReadOnlyList<string>> paths = default;
             Optional<IsUpdateAvailable> isUpdateAvailable = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("componentId"u8))
@@ -101,8 +196,61 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     isUpdateAvailable = new IsUpdateAvailable(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SbomComponent(componentId.Value, componentName.Value, version.Value, license.Value, Optional.ToNullable(releaseDate), Optional.ToList(paths), Optional.ToNullable(isUpdateAvailable));
+            return new SbomComponent(componentId.Value, componentName.Value, version.Value, license.Value, Optional.ToNullable(releaseDate), Optional.ToList(paths), Optional.ToNullable(isUpdateAvailable), serializedAdditionalRawData);
+        }
+
+        SbomComponent IModelJsonSerializable<SbomComponent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SbomComponent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSbomComponent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SbomComponent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SbomComponent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SbomComponent IModelSerializable<SbomComponent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SbomComponent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSbomComponent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SbomComponent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SbomComponent"/> to convert. </param>
+        public static implicit operator RequestContent(SbomComponent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SbomComponent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SbomComponent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSbomComponent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteSectionTecCause
+    public partial class RouteSectionTecCause : IUtf8JsonSerializable, IModelJsonSerializable<RouteSectionTecCause>
     {
-        internal static RouteSectionTecCause DeserializeRouteSectionTecCause(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteSectionTecCause>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteSectionTecCause>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RouteSectionTecCause>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouteSectionTecCause DeserializeRouteSectionTecCause(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> mainCauseCode = default;
             Optional<int> subCauseCode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mainCauseCode"u8))
@@ -40,8 +69,61 @@ namespace Azure.Maps.Routing.Models
                     subCauseCode = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteSectionTecCause(Optional.ToNullable(mainCauseCode), Optional.ToNullable(subCauseCode));
+            return new RouteSectionTecCause(Optional.ToNullable(mainCauseCode), Optional.ToNullable(subCauseCode), serializedAdditionalRawData);
+        }
+
+        RouteSectionTecCause IModelJsonSerializable<RouteSectionTecCause>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouteSectionTecCause>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteSectionTecCause(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteSectionTecCause>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouteSectionTecCause>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteSectionTecCause IModelSerializable<RouteSectionTecCause>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouteSectionTecCause>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteSectionTecCause(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouteSectionTecCause"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouteSectionTecCause"/> to convert. </param>
+        public static implicit operator RequestContent(RouteSectionTecCause model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouteSectionTecCause"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouteSectionTecCause(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteSectionTecCause(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

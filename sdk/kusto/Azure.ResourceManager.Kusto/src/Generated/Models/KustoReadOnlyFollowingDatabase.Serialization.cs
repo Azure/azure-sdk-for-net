@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoReadOnlyFollowingDatabase : IUtf8JsonSerializable
+    public partial class KustoReadOnlyFollowingDatabase : IUtf8JsonSerializable, IModelJsonSerializable<KustoReadOnlyFollowingDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoReadOnlyFollowingDatabase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoReadOnlyFollowingDatabase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KustoReadOnlyFollowingDatabase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -32,11 +39,25 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoReadOnlyFollowingDatabase DeserializeKustoReadOnlyFollowingDatabase(JsonElement element)
+        internal static KustoReadOnlyFollowingDatabase DeserializeKustoReadOnlyFollowingDatabase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +79,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<string> originalDatabaseName = default;
             Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
             Optional<SuspensionDetails> suspensionDetails = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -197,8 +219,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value);
+            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value, serializedAdditionalRawData);
+        }
+
+        KustoReadOnlyFollowingDatabase IModelJsonSerializable<KustoReadOnlyFollowingDatabase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoReadOnlyFollowingDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoReadOnlyFollowingDatabase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoReadOnlyFollowingDatabase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoReadOnlyFollowingDatabase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoReadOnlyFollowingDatabase IModelSerializable<KustoReadOnlyFollowingDatabase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoReadOnlyFollowingDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoReadOnlyFollowingDatabase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoReadOnlyFollowingDatabase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoReadOnlyFollowingDatabase"/> to convert. </param>
+        public static implicit operator RequestContent(KustoReadOnlyFollowingDatabase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoReadOnlyFollowingDatabase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoReadOnlyFollowingDatabase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoReadOnlyFollowingDatabase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

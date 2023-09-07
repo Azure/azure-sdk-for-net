@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class H265Video : IUtf8JsonSerializable
+    public partial class H265Video : IUtf8JsonSerializable, IModelJsonSerializable<H265Video>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<H265Video>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<H265Video>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<H265Video>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UseSceneChangeDetection))
             {
@@ -33,7 +39,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<H265Layer>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -59,11 +72,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static H265Video DeserializeH265Video(JsonElement element)
+        internal static H265Video DeserializeH265Video(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +103,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<VideoSyncMode> syncMode = default;
             string odataType = default;
             Optional<string> label = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sceneChangeDetection"u8))
@@ -147,8 +175,61 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new H265Video(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(sceneChangeDetection), Optional.ToNullable(complexity), Optional.ToList(layers));
+            return new H265Video(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(sceneChangeDetection), Optional.ToNullable(complexity), Optional.ToList(layers), serializedAdditionalRawData);
+        }
+
+        H265Video IModelJsonSerializable<H265Video>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<H265Video>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeH265Video(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<H265Video>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<H265Video>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        H265Video IModelSerializable<H265Video>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<H265Video>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeH265Video(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="H265Video"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="H265Video"/> to convert. </param>
+        public static implicit operator RequestContent(H265Video model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="H265Video"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator H265Video(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeH265Video(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

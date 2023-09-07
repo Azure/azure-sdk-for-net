@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
-    public partial class IotCentralNetworkRuleSets : IUtf8JsonSerializable
+    public partial class IotCentralNetworkRuleSets : IUtf8JsonSerializable, IModelJsonSerializable<IotCentralNetworkRuleSets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotCentralNetworkRuleSets>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotCentralNetworkRuleSets>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IotCentralNetworkRuleSets>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplyToDevices))
             {
@@ -37,15 +44,36 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<IotCentralNetworkRuleSetIPRule>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static IotCentralNetworkRuleSets DeserializeIotCentralNetworkRuleSets(JsonElement element)
+        internal static IotCentralNetworkRuleSets DeserializeIotCentralNetworkRuleSets(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +82,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             Optional<bool> applyToIoTCentral = default;
             Optional<IotCentralNetworkAction> defaultAction = default;
             Optional<IList<IotCentralNetworkRuleSetIPRule>> ipRules = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applyToDevices"u8))
@@ -97,8 +126,61 @@ namespace Azure.ResourceManager.IotCentral.Models
                     ipRules = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotCentralNetworkRuleSets(Optional.ToNullable(applyToDevices), Optional.ToNullable(applyToIoTCentral), Optional.ToNullable(defaultAction), Optional.ToList(ipRules));
+            return new IotCentralNetworkRuleSets(Optional.ToNullable(applyToDevices), Optional.ToNullable(applyToIoTCentral), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), serializedAdditionalRawData);
+        }
+
+        IotCentralNetworkRuleSets IModelJsonSerializable<IotCentralNetworkRuleSets>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotCentralNetworkRuleSets>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotCentralNetworkRuleSets(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotCentralNetworkRuleSets>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotCentralNetworkRuleSets>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotCentralNetworkRuleSets IModelSerializable<IotCentralNetworkRuleSets>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotCentralNetworkRuleSets>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotCentralNetworkRuleSets(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotCentralNetworkRuleSets"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotCentralNetworkRuleSets"/> to convert. </param>
+        public static implicit operator RequestContent(IotCentralNetworkRuleSets model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotCentralNetworkRuleSets"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotCentralNetworkRuleSets(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotCentralNetworkRuleSets(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

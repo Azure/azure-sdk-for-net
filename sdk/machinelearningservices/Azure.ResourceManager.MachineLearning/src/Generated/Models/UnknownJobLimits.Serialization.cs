@@ -8,13 +8,18 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownJobLimits : IUtf8JsonSerializable
+    internal partial class UnknownJobLimits : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningJobLimits>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningJobLimits>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningJobLimits>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobLimits>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
@@ -30,36 +35,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeout");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownJobLimits DeserializeUnknownJobLimits(JsonElement element)
+        internal static MachineLearningJobLimits DeserializeUnknownJobLimits(JsonElement element, ModelSerializerOptions options = default) => DeserializeMachineLearningJobLimits(element, options);
+
+        MachineLearningJobLimits IModelJsonSerializable<MachineLearningJobLimits>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            JobLimitsType jobLimitsType = "Unknown";
-            Optional<TimeSpan?> timeout = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("jobLimitsType"u8))
-                {
-                    jobLimitsType = new JobLimitsType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("timeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        timeout = null;
-                        continue;
-                    }
-                    timeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-            }
-            return new UnknownJobLimits(jobLimitsType, Optional.ToNullable(timeout));
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobLimits>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownJobLimits(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningJobLimits>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobLimits>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningJobLimits IModelSerializable<MachineLearningJobLimits>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobLimits>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningJobLimits(doc.RootElement, options);
         }
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ServiceManagedResourcesSettings. </summary>
     internal partial class ServiceManagedResourcesSettings
     {
-        /// <summary> Initializes a new instance of ServiceManagedResourcesSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceManagedResourcesSettings"/>. </summary>
         public ServiceManagedResourcesSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceManagedResourcesSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceManagedResourcesSettings"/>. </summary>
         /// <param name="cosmosDb"> The settings for the service managed cosmosdb account. </param>
-        internal ServiceManagedResourcesSettings(CosmosDbSettings cosmosDb)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceManagedResourcesSettings(CosmosDbSettings cosmosDb, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CosmosDb = cosmosDb;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The settings for the service managed cosmosdb account. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -23,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelDistributionSettingsClassification : ImageModelDistributionSettings
     {
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsClassification"/>. </summary>
         public ImageModelDistributionSettingsClassification()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsClassification"/>. </summary>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
@@ -83,7 +86,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Weighted loss. The accepted values are 0 for no weighted loss.
         /// 1 for weighted loss with sqrt.(class_weights). 2 for weighted loss with class_weights. Must be 0 or 1 or 2.
         /// </param>
-        internal ImageModelDistributionSettingsClassification(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, string trainingCropSize, string validationCropSize, string validationResizeSize, string weightedLoss) : base(amsGradient, augmentations, beta1, beta2, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageModelDistributionSettingsClassification(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, string trainingCropSize, string validationCropSize, string validationResizeSize, string weightedLoss, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(amsGradient, augmentations, beta1, beta2, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay, serializedAdditionalRawData)
         {
             TrainingCropSize = trainingCropSize;
             ValidationCropSize = validationCropSize;

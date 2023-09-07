@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRunActionCorrelation : IUtf8JsonSerializable
+    public partial class LogicWorkflowRunActionCorrelation : IUtf8JsonSerializable, IModelJsonSerializable<LogicWorkflowRunActionCorrelation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicWorkflowRunActionCorrelation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicWorkflowRunActionCorrelation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowRunActionCorrelation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionTrackingId))
             {
@@ -37,11 +43,25 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowRunActionCorrelation DeserializeLogicWorkflowRunActionCorrelation(JsonElement element)
+        internal static LogicWorkflowRunActionCorrelation DeserializeLogicWorkflowRunActionCorrelation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<Guid> actionTrackingId = default;
             Optional<string> clientTrackingId = default;
             Optional<IList<string>> clientKeywords = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionTrackingId"u8))
@@ -79,8 +100,61 @@ namespace Azure.ResourceManager.Logic.Models
                     clientKeywords = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicWorkflowRunActionCorrelation(clientTrackingId.Value, Optional.ToList(clientKeywords), Optional.ToNullable(actionTrackingId));
+            return new LogicWorkflowRunActionCorrelation(clientTrackingId.Value, Optional.ToList(clientKeywords), Optional.ToNullable(actionTrackingId), serializedAdditionalRawData);
+        }
+
+        LogicWorkflowRunActionCorrelation IModelJsonSerializable<LogicWorkflowRunActionCorrelation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowRunActionCorrelation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowRunActionCorrelation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicWorkflowRunActionCorrelation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowRunActionCorrelation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicWorkflowRunActionCorrelation IModelSerializable<LogicWorkflowRunActionCorrelation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowRunActionCorrelation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowRunActionCorrelation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogicWorkflowRunActionCorrelation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogicWorkflowRunActionCorrelation"/> to convert. </param>
+        public static implicit operator RequestContent(LogicWorkflowRunActionCorrelation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogicWorkflowRunActionCorrelation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogicWorkflowRunActionCorrelation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicWorkflowRunActionCorrelation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

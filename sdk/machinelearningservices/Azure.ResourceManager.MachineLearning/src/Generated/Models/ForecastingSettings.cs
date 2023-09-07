@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting specific parameters. </summary>
     public partial class ForecastingSettings
     {
-        /// <summary> Initializes a new instance of ForecastingSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         public ForecastingSettings()
         {
             TimeSeriesIdColumnNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ForecastingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         /// <param name="countryOrRegionForHolidays">
         /// Country or region for holidays for forecasting tasks.
         /// These should be ISO 3166 two-letter country/region codes, for example 'US' or 'GB'.
@@ -63,7 +67,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If grain is not defined, the data set is assumed to be one time-series. This parameter is used with task type forecasting.
         /// </param>
         /// <param name="useStl"> Configure STL Decomposition of the time-series target column. </param>
-        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CountryOrRegionForHolidays = countryOrRegionForHolidays;
             CvStepSize = cvStepSize;
@@ -78,6 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TimeColumnName = timeColumnName;
             TimeSeriesIdColumnNames = timeSeriesIdColumnNames;
             UseStl = useStl;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

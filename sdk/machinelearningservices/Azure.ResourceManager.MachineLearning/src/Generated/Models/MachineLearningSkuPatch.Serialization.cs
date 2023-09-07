@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSkuPatch : IUtf8JsonSerializable
+    public partial class MachineLearningSkuPatch : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningSkuPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningSkuPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningSkuPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSkuPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Capacity))
             {
@@ -40,7 +48,125 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToSerialString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MachineLearningSkuPatch DeserializeMachineLearningSkuPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> capacity = default;
+            Optional<string> family = default;
+            Optional<string> name = default;
+            Optional<string> size = default;
+            Optional<MachineLearningSkuTier> tier = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("capacity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacity = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("family"u8))
+                {
+                    family = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("size"u8))
+                {
+                    size = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tier"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tier = property.Value.GetString().ToMachineLearningSkuTier();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MachineLearningSkuPatch(Optional.ToNullable(capacity), family.Value, name.Value, size.Value, Optional.ToNullable(tier), serializedAdditionalRawData);
+        }
+
+        MachineLearningSkuPatch IModelJsonSerializable<MachineLearningSkuPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSkuPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSkuPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningSkuPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSkuPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningSkuPatch IModelSerializable<MachineLearningSkuPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSkuPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningSkuPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningSkuPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningSkuPatch"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningSkuPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningSkuPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningSkuPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningSkuPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

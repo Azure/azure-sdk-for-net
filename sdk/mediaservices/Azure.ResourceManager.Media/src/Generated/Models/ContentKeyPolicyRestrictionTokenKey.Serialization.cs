@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyRestrictionTokenKey : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyRestrictionTokenKey : IUtf8JsonSerializable, IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyRestrictionTokenKey>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyRestrictionTokenKey DeserializeContentKeyPolicyRestrictionTokenKey(JsonElement element)
+        internal static ContentKeyPolicyRestrictionTokenKey DeserializeContentKeyPolicyRestrictionTokenKey(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,7 +57,72 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey": return ContentKeyPolicyX509CertificateTokenKey.DeserializeContentKeyPolicyX509CertificateTokenKey(element);
                 }
             }
-            return UnknownContentKeyPolicyRestrictionTokenKey.DeserializeUnknownContentKeyPolicyRestrictionTokenKey(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string odataType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownContentKeyPolicyRestrictionTokenKey(odataType, serializedAdditionalRawData);
+        }
+
+        ContentKeyPolicyRestrictionTokenKey IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyRestrictionTokenKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyRestrictionTokenKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContentKeyPolicyRestrictionTokenKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyRestrictionTokenKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContentKeyPolicyRestrictionTokenKey IModelSerializable<ContentKeyPolicyRestrictionTokenKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyRestrictionTokenKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContentKeyPolicyRestrictionTokenKey(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContentKeyPolicyRestrictionTokenKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContentKeyPolicyRestrictionTokenKey"/> to convert. </param>
+        public static implicit operator RequestContent(ContentKeyPolicyRestrictionTokenKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContentKeyPolicyRestrictionTokenKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContentKeyPolicyRestrictionTokenKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContentKeyPolicyRestrictionTokenKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

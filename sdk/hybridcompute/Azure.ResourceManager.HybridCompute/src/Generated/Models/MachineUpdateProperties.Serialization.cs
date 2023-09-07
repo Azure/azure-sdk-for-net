@@ -5,30 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineUpdateProperties : IUtf8JsonSerializable
+    public partial class MachineUpdateProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineUpdateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineUpdateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineUpdateProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue(LocationData);
+                if (LocationData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LocationData>)LocationData).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                if (OSProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OSProfile>)OSProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
-                writer.WriteObjectValue(CloudMetadata);
+                if (CloudMetadata is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CloudMetadata>)CloudMetadata).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ParentClusterResourceId))
             {
@@ -40,7 +69,129 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MachineUpdateProperties DeserializeMachineUpdateProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<LocationData> locationData = default;
+            Optional<OSProfile> osProfile = default;
+            Optional<CloudMetadata> cloudMetadata = default;
+            Optional<string> parentClusterResourceId = default;
+            Optional<string> privateLinkScopeResourceId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("locationData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    locationData = LocationData.DeserializeLocationData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("osProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    osProfile = OSProfile.DeserializeOSProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("cloudMetadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudMetadata = CloudMetadata.DeserializeCloudMetadata(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("parentClusterResourceId"u8))
+                {
+                    parentClusterResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("privateLinkScopeResourceId"u8))
+                {
+                    privateLinkScopeResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MachineUpdateProperties(locationData.Value, osProfile.Value, cloudMetadata.Value, parentClusterResourceId.Value, privateLinkScopeResourceId.Value, serializedAdditionalRawData);
+        }
+
+        MachineUpdateProperties IModelJsonSerializable<MachineUpdateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineUpdateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineUpdateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineUpdateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineUpdateProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineUpdateProperties IModelSerializable<MachineUpdateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineUpdateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineUpdateProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineUpdateProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineUpdateProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineUpdateProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineUpdateProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineUpdateProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineUpdateProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

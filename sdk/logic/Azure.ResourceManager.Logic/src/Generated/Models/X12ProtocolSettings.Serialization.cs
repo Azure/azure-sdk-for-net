@@ -5,38 +5,101 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12ProtocolSettings : IUtf8JsonSerializable
+    public partial class X12ProtocolSettings : IUtf8JsonSerializable, IModelJsonSerializable<X12ProtocolSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X12ProtocolSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X12ProtocolSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<X12ProtocolSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings);
+            if (ValidationSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12ValidationSettings>)ValidationSettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("framingSettings"u8);
-            writer.WriteObjectValue(FramingSettings);
+            if (FramingSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12FramingSettings>)FramingSettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings);
+            if (EnvelopeSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12EnvelopeSettings>)EnvelopeSettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("acknowledgementSettings"u8);
-            writer.WriteObjectValue(AcknowledgementSettings);
+            if (AcknowledgementSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12AcknowledgementSettings>)AcknowledgementSettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("messageFilter"u8);
-            writer.WriteObjectValue(MessageFilter);
+            if (MessageFilter is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12MessageFilter>)MessageFilter).Serialize(writer, options);
+            }
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue(SecuritySettings);
+            if (SecuritySettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12SecuritySettings>)SecuritySettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("processingSettings"u8);
-            writer.WriteObjectValue(ProcessingSettings);
+            if (ProcessingSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12ProcessingSettings>)ProcessingSettings).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<X12EnvelopeOverride>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -46,7 +109,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<X12ValidationOverride>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +126,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<X12MessageIdentifier>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +141,14 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<X12SchemaReference>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(X12DelimiterOverrides))
@@ -73,15 +157,36 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in X12DelimiterOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<X12DelimiterOverrides>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static X12ProtocolSettings DeserializeX12ProtocolSettings(JsonElement element)
+        internal static X12ProtocolSettings DeserializeX12ProtocolSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,6 +203,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IList<X12MessageIdentifier>> messageFilterList = default;
             IList<X12SchemaReference> schemaReferences = default;
             Optional<IList<X12DelimiterOverrides>> x12DelimiterOverrides = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationSettings"u8))
@@ -201,8 +307,61 @@ namespace Azure.ResourceManager.Logic.Models
                     x12DelimiterOverrides = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, securitySettings, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(validationOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(x12DelimiterOverrides));
+            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, securitySettings, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(validationOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(x12DelimiterOverrides), serializedAdditionalRawData);
+        }
+
+        X12ProtocolSettings IModelJsonSerializable<X12ProtocolSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12ProtocolSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12ProtocolSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X12ProtocolSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12ProtocolSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X12ProtocolSettings IModelSerializable<X12ProtocolSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12ProtocolSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX12ProtocolSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="X12ProtocolSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="X12ProtocolSettings"/> to convert. </param>
+        public static implicit operator RequestContent(X12ProtocolSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="X12ProtocolSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator X12ProtocolSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX12ProtocolSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

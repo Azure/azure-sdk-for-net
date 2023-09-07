@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> A piece of evidence corresponding to a Trial Matcher inference. </summary>
     public partial class TrialMatcherInferenceEvidence
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of TrialMatcherInferenceEvidence. </summary>
         internal TrialMatcherInferenceEvidence()
         {
@@ -23,12 +29,14 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// system.
         /// </param>
         /// <param name="importance"> A value indicating how important this piece of evidence is for the inference. </param>
-        internal TrialMatcherInferenceEvidence(string eligibilityCriteriaEvidence, ClinicalNoteEvidence patientDataEvidence, ClinicalCodedElement patientInfoEvidence, float? importance)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherInferenceEvidence(string eligibilityCriteriaEvidence, ClinicalNoteEvidence patientDataEvidence, ClinicalCodedElement patientInfoEvidence, float? importance, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EligibilityCriteriaEvidence = eligibilityCriteriaEvidence;
             PatientDataEvidence = patientDataEvidence;
             PatientInfoEvidence = patientInfoEvidence;
             Importance = importance;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A piece of evidence from the eligibility criteria text of a clinical trial. </summary>

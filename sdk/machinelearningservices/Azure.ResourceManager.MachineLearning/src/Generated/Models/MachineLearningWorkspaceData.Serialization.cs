@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningWorkspaceData : IUtf8JsonSerializable
+    public partial class MachineLearningWorkspaceData : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningWorkspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningWorkspaceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningWorkspaceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -28,7 +34,14 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -90,7 +103,14 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                if (Encryption is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningEncryptionSetting>)Encryption).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsHbiWorkspace))
             {
@@ -118,14 +138,28 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningSharedPrivateLinkResource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue(ServiceManagedResourcesSettings);
+                if (ServiceManagedResourcesSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ServiceManagedResourcesSettings>)ServiceManagedResourcesSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
@@ -138,11 +172,25 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WriteBooleanValue(IsV1LegacyMode.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningWorkspaceData DeserializeMachineLearningWorkspaceData(JsonElement element)
+        internal static MachineLearningWorkspaceData DeserializeMachineLearningWorkspaceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -180,6 +228,7 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<bool> storageHnsEnabled = default;
             Optional<Uri> mlFlowTrackingUri = default;
             Optional<bool> v1LegacyMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -456,8 +505,61 @@ namespace Azure.ResourceManager.MachineLearning
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(tenantId), Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value, Optional.ToNullable(v1LegacyMode));
+            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(tenantId), Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value, Optional.ToNullable(v1LegacyMode), serializedAdditionalRawData);
+        }
+
+        MachineLearningWorkspaceData IModelJsonSerializable<MachineLearningWorkspaceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningWorkspaceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningWorkspaceData IModelSerializable<MachineLearningWorkspaceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningWorkspaceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningWorkspaceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningWorkspaceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningWorkspaceData"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningWorkspaceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningWorkspaceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningWorkspaceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningWorkspaceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

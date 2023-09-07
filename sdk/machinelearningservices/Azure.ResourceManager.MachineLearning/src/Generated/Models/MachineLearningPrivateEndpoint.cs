@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The Private Endpoint resource. </summary>
     public partial class MachineLearningPrivateEndpoint
     {
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpoint"/>. </summary>
         public MachineLearningPrivateEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpoint"/>. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
         /// <param name="subnetArmId"> The ARM identifier for Subnet resource that private endpoint links to. </param>
-        internal MachineLearningPrivateEndpoint(ResourceIdentifier id, ResourceIdentifier subnetArmId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningPrivateEndpoint(ResourceIdentifier id, ResourceIdentifier subnetArmId, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SubnetArmId = subnetArmId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>

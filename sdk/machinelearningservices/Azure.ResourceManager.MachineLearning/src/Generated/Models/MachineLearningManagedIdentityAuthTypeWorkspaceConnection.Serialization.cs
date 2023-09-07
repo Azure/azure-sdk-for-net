@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningManagedIdentityAuthTypeWorkspaceConnection : IUtf8JsonSerializable
+    public partial class MachineLearningManagedIdentityAuthTypeWorkspaceConnection : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                if (Credentials is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningWorkspaceConnectionManagedIdentity>)Credentials).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
@@ -42,11 +57,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("valueFormat"u8);
                 writer.WriteStringValue(ValueFormat.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningManagedIdentityAuthTypeWorkspaceConnection DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(JsonElement element)
+        internal static MachineLearningManagedIdentityAuthTypeWorkspaceConnection DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> target = default;
             Optional<string> value = default;
             Optional<MachineLearningValueFormat> valueFormat = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("credentials"u8))
@@ -101,8 +131,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     valueFormat = new MachineLearningValueFormat(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), target.Value, value.Value, Optional.ToNullable(valueFormat), credentials.Value);
+            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), target.Value, value.Value, Optional.ToNullable(valueFormat), credentials.Value, serializedAdditionalRawData);
+        }
+
+        MachineLearningManagedIdentityAuthTypeWorkspaceConnection IModelJsonSerializable<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningManagedIdentityAuthTypeWorkspaceConnection IModelSerializable<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningManagedIdentityAuthTypeWorkspaceConnection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningManagedIdentityAuthTypeWorkspaceConnection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

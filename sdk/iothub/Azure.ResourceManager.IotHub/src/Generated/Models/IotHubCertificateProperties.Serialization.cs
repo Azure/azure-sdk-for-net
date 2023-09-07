@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubCertificateProperties : IUtf8JsonSerializable
+    public partial class IotHubCertificateProperties : IUtf8JsonSerializable, IModelJsonSerializable<IotHubCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubCertificateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubCertificateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubCertificateProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsVerified))
             {
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.IotHub.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Certificate.ToString()).RootElement);
 #endif
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotHubCertificateProperties DeserializeIotHubCertificateProperties(JsonElement element)
+        internal static IotHubCertificateProperties DeserializeIotHubCertificateProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +67,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
             Optional<BinaryData> certificate = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subject"u8))
@@ -103,8 +125,61 @@ namespace Azure.ResourceManager.IotHub.Models
                     certificate = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotHubCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), Optional.ToNullable(created), Optional.ToNullable(updated), certificate.Value);
+            return new IotHubCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), Optional.ToNullable(created), Optional.ToNullable(updated), certificate.Value, serializedAdditionalRawData);
+        }
+
+        IotHubCertificateProperties IModelJsonSerializable<IotHubCertificateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubCertificateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubCertificateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubCertificateProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubCertificateProperties IModelSerializable<IotHubCertificateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubCertificateProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotHubCertificateProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotHubCertificateProperties"/> to convert. </param>
+        public static implicit operator RequestContent(IotHubCertificateProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotHubCertificateProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotHubCertificateProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubCertificateProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

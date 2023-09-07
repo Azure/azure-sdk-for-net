@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoClusterVirtualNetworkConfiguration : IUtf8JsonSerializable
+    public partial class KustoClusterVirtualNetworkConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<KustoClusterVirtualNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoClusterVirtualNetworkConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoClusterVirtualNetworkConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KustoClusterVirtualNetworkConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
@@ -21,11 +29,25 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(EnginePublicIPId);
             writer.WritePropertyName("dataManagementPublicIpId"u8);
             writer.WriteStringValue(DataManagementPublicIPId);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoClusterVirtualNetworkConfiguration DeserializeKustoClusterVirtualNetworkConfiguration(JsonElement element)
+        internal static KustoClusterVirtualNetworkConfiguration DeserializeKustoClusterVirtualNetworkConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +55,7 @@ namespace Azure.ResourceManager.Kusto.Models
             string subnetId = default;
             string enginePublicIPId = default;
             string dataManagementPublicIPId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -50,8 +73,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     dataManagementPublicIPId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoClusterVirtualNetworkConfiguration(subnetId, enginePublicIPId, dataManagementPublicIPId);
+            return new KustoClusterVirtualNetworkConfiguration(subnetId, enginePublicIPId, dataManagementPublicIPId, serializedAdditionalRawData);
+        }
+
+        KustoClusterVirtualNetworkConfiguration IModelJsonSerializable<KustoClusterVirtualNetworkConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoClusterVirtualNetworkConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoClusterVirtualNetworkConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoClusterVirtualNetworkConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoClusterVirtualNetworkConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoClusterVirtualNetworkConfiguration IModelSerializable<KustoClusterVirtualNetworkConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoClusterVirtualNetworkConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoClusterVirtualNetworkConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoClusterVirtualNetworkConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoClusterVirtualNetworkConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(KustoClusterVirtualNetworkConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoClusterVirtualNetworkConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoClusterVirtualNetworkConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoClusterVirtualNetworkConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

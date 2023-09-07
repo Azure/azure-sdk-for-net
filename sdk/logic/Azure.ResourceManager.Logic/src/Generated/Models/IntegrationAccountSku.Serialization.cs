@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class IntegrationAccountSku : IUtf8JsonSerializable
+    internal partial class IntegrationAccountSku : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountSku>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountSku DeserializeIntegrationAccountSku(JsonElement element)
+        internal static IntegrationAccountSku DeserializeIntegrationAccountSku(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IntegrationAccountSkuName name = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.Logic.Models
                     name = new IntegrationAccountSkuName(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationAccountSku(name);
+            return new IntegrationAccountSku(name, serializedAdditionalRawData);
+        }
+
+        IntegrationAccountSku IModelJsonSerializable<IntegrationAccountSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountSku IModelSerializable<IntegrationAccountSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationAccountSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationAccountSku"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationAccountSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationAccountSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationAccountSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

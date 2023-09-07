@@ -5,27 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2OneWayAgreement : IUtf8JsonSerializable
+    public partial class AS2OneWayAgreement : IUtf8JsonSerializable, IModelJsonSerializable<AS2OneWayAgreement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AS2OneWayAgreement>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AS2OneWayAgreement>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AS2OneWayAgreement>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("senderBusinessIdentity"u8);
-            writer.WriteObjectValue(SenderBusinessIdentity);
+            if (SenderBusinessIdentity is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IntegrationAccountBusinessIdentity>)SenderBusinessIdentity).Serialize(writer, options);
+            }
             writer.WritePropertyName("receiverBusinessIdentity"u8);
-            writer.WriteObjectValue(ReceiverBusinessIdentity);
+            if (ReceiverBusinessIdentity is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IntegrationAccountBusinessIdentity>)ReceiverBusinessIdentity).Serialize(writer, options);
+            }
             writer.WritePropertyName("protocolSettings"u8);
-            writer.WriteObjectValue(ProtocolSettings);
+            if (ProtocolSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<AS2ProtocolSettings>)ProtocolSettings).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AS2OneWayAgreement DeserializeAS2OneWayAgreement(JsonElement element)
+        internal static AS2OneWayAgreement DeserializeAS2OneWayAgreement(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
             IntegrationAccountBusinessIdentity senderBusinessIdentity = default;
             IntegrationAccountBusinessIdentity receiverBusinessIdentity = default;
             AS2ProtocolSettings protocolSettings = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("senderBusinessIdentity"u8))
@@ -50,8 +94,61 @@ namespace Azure.ResourceManager.Logic.Models
                     protocolSettings = AS2ProtocolSettings.DeserializeAS2ProtocolSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AS2OneWayAgreement(senderBusinessIdentity, receiverBusinessIdentity, protocolSettings);
+            return new AS2OneWayAgreement(senderBusinessIdentity, receiverBusinessIdentity, protocolSettings, serializedAdditionalRawData);
+        }
+
+        AS2OneWayAgreement IModelJsonSerializable<AS2OneWayAgreement>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AS2OneWayAgreement>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAS2OneWayAgreement(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AS2OneWayAgreement>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AS2OneWayAgreement>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AS2OneWayAgreement IModelSerializable<AS2OneWayAgreement>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AS2OneWayAgreement>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAS2OneWayAgreement(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AS2OneWayAgreement"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AS2OneWayAgreement"/> to convert. </param>
+        public static implicit operator RequestContent(AS2OneWayAgreement model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AS2OneWayAgreement"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AS2OneWayAgreement(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAS2OneWayAgreement(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

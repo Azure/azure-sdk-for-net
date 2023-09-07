@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoNameAvailabilityResult
+    public partial class KustoNameAvailabilityResult : IUtf8JsonSerializable, IModelJsonSerializable<KustoNameAvailabilityResult>
     {
-        internal static KustoNameAvailabilityResult DeserializeKustoNameAvailabilityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoNameAvailabilityResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoNameAvailabilityResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KustoNameAvailabilityResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NameAvailable))
+            {
+                writer.WritePropertyName("nameAvailable"u8);
+                writer.WriteBooleanValue(NameAvailable.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason.Value.ToString());
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static KustoNameAvailabilityResult DeserializeKustoNameAvailabilityResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<string> name = default;
             Optional<string> message = default;
             Optional<KustoNameUnavailableReason> reason = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -52,8 +101,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     reason = new KustoNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoNameAvailabilityResult(Optional.ToNullable(nameAvailable), name.Value, message.Value, Optional.ToNullable(reason));
+            return new KustoNameAvailabilityResult(Optional.ToNullable(nameAvailable), name.Value, message.Value, Optional.ToNullable(reason), serializedAdditionalRawData);
+        }
+
+        KustoNameAvailabilityResult IModelJsonSerializable<KustoNameAvailabilityResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoNameAvailabilityResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoNameAvailabilityResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoNameAvailabilityResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoNameAvailabilityResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoNameAvailabilityResult IModelSerializable<KustoNameAvailabilityResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoNameAvailabilityResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoNameAvailabilityResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoNameAvailabilityResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoNameAvailabilityResult"/> to convert. </param>
+        public static implicit operator RequestContent(KustoNameAvailabilityResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoNameAvailabilityResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoNameAvailabilityResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoNameAvailabilityResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

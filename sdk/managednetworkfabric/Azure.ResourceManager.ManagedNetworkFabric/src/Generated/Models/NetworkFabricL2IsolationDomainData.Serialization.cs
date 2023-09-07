@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkFabricL2IsolationDomainData : IUtf8JsonSerializable
+    public partial class NetworkFabricL2IsolationDomainData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkFabricL2IsolationDomainData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkFabricL2IsolationDomainData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkFabricL2IsolationDomainData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricL2IsolationDomainData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -48,11 +55,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteNumberValue(Mtu.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkFabricL2IsolationDomainData DeserializeNetworkFabricL2IsolationDomainData(JsonElement element)
+        internal static NetworkFabricL2IsolationDomainData DeserializeNetworkFabricL2IsolationDomainData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<NetworkFabricConfigurationState> configurationState = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -178,8 +200,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkFabricL2IsolationDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, networkFabricId, vlanId, Optional.ToNullable(mtu), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
+            return new NetworkFabricL2IsolationDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, networkFabricId, vlanId, Optional.ToNullable(mtu), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+        }
+
+        NetworkFabricL2IsolationDomainData IModelJsonSerializable<NetworkFabricL2IsolationDomainData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricL2IsolationDomainData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricL2IsolationDomainData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkFabricL2IsolationDomainData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricL2IsolationDomainData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkFabricL2IsolationDomainData IModelSerializable<NetworkFabricL2IsolationDomainData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricL2IsolationDomainData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkFabricL2IsolationDomainData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkFabricL2IsolationDomainData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkFabricL2IsolationDomainData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkFabricL2IsolationDomainData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkFabricL2IsolationDomainData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkFabricL2IsolationDomainData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkFabricL2IsolationDomainData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class InternetGatewayRules : IUtf8JsonSerializable
+    public partial class InternetGatewayRules : IUtf8JsonSerializable, IModelJsonSerializable<InternetGatewayRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InternetGatewayRules>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InternetGatewayRules>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InternetGatewayRules>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
@@ -25,17 +32,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InternetGatewayRules DeserializeInternetGatewayRules(JsonElement element)
+        internal static InternetGatewayRules DeserializeInternetGatewayRules(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             InternetGatewayRuleAction action = default;
             IList<string> addressList = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -53,8 +75,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     addressList = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InternetGatewayRules(action, addressList);
+            return new InternetGatewayRules(action, addressList, serializedAdditionalRawData);
+        }
+
+        InternetGatewayRules IModelJsonSerializable<InternetGatewayRules>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InternetGatewayRules>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInternetGatewayRules(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InternetGatewayRules>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InternetGatewayRules>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InternetGatewayRules IModelSerializable<InternetGatewayRules>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InternetGatewayRules>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInternetGatewayRules(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InternetGatewayRules"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InternetGatewayRules"/> to convert. </param>
+        public static implicit operator RequestContent(InternetGatewayRules model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InternetGatewayRules"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InternetGatewayRules(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInternetGatewayRules(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

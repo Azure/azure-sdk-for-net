@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class VmTagSettings : IUtf8JsonSerializable
+    public partial class VmTagSettings : IUtf8JsonSerializable, IModelJsonSerializable<VmTagSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmTagSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmTagSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VmTagSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -42,17 +49,32 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("filterOperator"u8);
                 writer.WriteStringValue(FilterOperator.Value.ToSerialString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmTagSettings DeserializeVmTagSettings(JsonElement element)
+        internal static VmTagSettings DeserializeVmTagSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IDictionary<string, IList<string>>> tags = default;
             Optional<VmTagOperator> filterOperator = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -90,8 +112,61 @@ namespace Azure.ResourceManager.Maintenance.Models
                     filterOperator = property.Value.GetString().ToVmTagOperator();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmTagSettings(Optional.ToDictionary(tags), Optional.ToNullable(filterOperator));
+            return new VmTagSettings(Optional.ToDictionary(tags), Optional.ToNullable(filterOperator), serializedAdditionalRawData);
+        }
+
+        VmTagSettings IModelJsonSerializable<VmTagSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmTagSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmTagSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmTagSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmTagSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmTagSettings IModelSerializable<VmTagSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmTagSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmTagSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VmTagSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VmTagSettings"/> to convert. </param>
+        public static implicit operator RequestContent(VmTagSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VmTagSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VmTagSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmTagSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

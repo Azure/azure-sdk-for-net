@@ -5,23 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
-    internal partial class EndpointsList
+    internal partial class EndpointsList : IUtf8JsonSerializable, IModelJsonSerializable<EndpointsList>
     {
-        internal static EndpointsList DeserializeEndpointsList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EndpointsList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EndpointsList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointsList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EndpointResourceData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EndpointsList DeserializeEndpointsList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<EndpointResourceData>> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -43,8 +93,61 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EndpointsList(nextLink.Value, Optional.ToList(value));
+            return new EndpointsList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+        }
+
+        EndpointsList IModelJsonSerializable<EndpointsList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointsList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEndpointsList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EndpointsList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointsList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EndpointsList IModelSerializable<EndpointsList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointsList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEndpointsList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EndpointsList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EndpointsList"/> to convert. </param>
+        public static implicit operator RequestContent(EndpointsList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EndpointsList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EndpointsList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEndpointsList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

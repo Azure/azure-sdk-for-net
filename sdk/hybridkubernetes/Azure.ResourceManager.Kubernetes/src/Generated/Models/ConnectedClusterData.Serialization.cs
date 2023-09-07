@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    public partial class ConnectedClusterData : IUtf8JsonSerializable
+    public partial class ConnectedClusterData : IUtf8JsonSerializable, IModelJsonSerializable<ConnectedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectedClusterData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectedClusterData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectedClusterData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
             JsonSerializer.Serialize(writer, Identity); if (Optional.IsCollectionDefined(Tags))
@@ -63,11 +69,25 @@ namespace Azure.ResourceManager.Kubernetes
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element)
+        internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -93,6 +113,7 @@ namespace Azure.ResourceManager.Kubernetes
             Optional<ConnectivityStatus> connectivityStatus = default;
             Optional<PrivateLinkState> privateLinkState = default;
             Optional<string> privateLinkScopeResourceId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -253,8 +274,61 @@ namespace Azure.ResourceManager.Kubernetes
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, agentPublicKeyCertificate, kubernetesVersion.Value, Optional.ToNullable(totalNodeCount), Optional.ToNullable(totalCoreCount), agentVersion.Value, Optional.ToNullable(provisioningState), distribution.Value, infrastructure.Value, offering.Value, Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), Optional.ToNullable(connectivityStatus), Optional.ToNullable(privateLinkState), privateLinkScopeResourceId.Value);
+            return new ConnectedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, agentPublicKeyCertificate, kubernetesVersion.Value, Optional.ToNullable(totalNodeCount), Optional.ToNullable(totalCoreCount), agentVersion.Value, Optional.ToNullable(provisioningState), distribution.Value, infrastructure.Value, offering.Value, Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), Optional.ToNullable(connectivityStatus), Optional.ToNullable(privateLinkState), privateLinkScopeResourceId.Value, serializedAdditionalRawData);
+        }
+
+        ConnectedClusterData IModelJsonSerializable<ConnectedClusterData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectedClusterData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectedClusterData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectedClusterData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectedClusterData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectedClusterData IModelSerializable<ConnectedClusterData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectedClusterData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectedClusterData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectedClusterData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectedClusterData"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectedClusterData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectedClusterData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectedClusterData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectedClusterData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

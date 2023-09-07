@@ -5,32 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class RoutePolicyStatementProperties : IUtf8JsonSerializable
+    public partial class RoutePolicyStatementProperties : IUtf8JsonSerializable, IModelJsonSerializable<RoutePolicyStatementProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoutePolicyStatementProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoutePolicyStatementProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RoutePolicyStatementProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sequenceNumber"u8);
             writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
+            if (Condition is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<StatementConditionProperties>)Condition).Serialize(writer, options);
+            }
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
+            if (Action is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<StatementActionProperties>)Action).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoutePolicyStatementProperties DeserializeRoutePolicyStatementProperties(JsonElement element)
+        internal static RoutePolicyStatementProperties DeserializeRoutePolicyStatementProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             StatementConditionProperties condition = default;
             StatementActionProperties action = default;
             Optional<string> annotation = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sequenceNumber"u8))
@@ -61,8 +98,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoutePolicyStatementProperties(annotation.Value, sequenceNumber, condition, action);
+            return new RoutePolicyStatementProperties(annotation.Value, sequenceNumber, condition, action, serializedAdditionalRawData);
+        }
+
+        RoutePolicyStatementProperties IModelJsonSerializable<RoutePolicyStatementProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoutePolicyStatementProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutePolicyStatementProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoutePolicyStatementProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoutePolicyStatementProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoutePolicyStatementProperties IModelSerializable<RoutePolicyStatementProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoutePolicyStatementProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoutePolicyStatementProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RoutePolicyStatementProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RoutePolicyStatementProperties"/> to convert. </param>
+        public static implicit operator RequestContent(RoutePolicyStatementProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RoutePolicyStatementProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RoutePolicyStatementProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoutePolicyStatementProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

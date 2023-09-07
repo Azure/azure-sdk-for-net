@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultNetworkRuleSet : IUtf8JsonSerializable
+    public partial class KeyVaultNetworkRuleSet : IUtf8JsonSerializable, IModelJsonSerializable<KeyVaultNetworkRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KeyVaultNetworkRuleSet>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KeyVaultNetworkRuleSet>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultNetworkRuleSet>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Bypass))
             {
@@ -32,7 +39,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KeyVaultIPRule>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,15 +56,36 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KeyVaultVirtualNetworkRule>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultNetworkRuleSet DeserializeKeyVaultNetworkRuleSet(JsonElement element)
+        internal static KeyVaultNetworkRuleSet DeserializeKeyVaultNetworkRuleSet(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +94,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<KeyVaultNetworkRuleAction> defaultAction = default;
             Optional<IList<KeyVaultIPRule>> ipRules = default;
             Optional<IList<KeyVaultVirtualNetworkRule>> virtualNetworkRules = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"u8))
@@ -107,8 +143,61 @@ namespace Azure.ResourceManager.KeyVault.Models
                     virtualNetworkRules = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KeyVaultNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
+            return new KeyVaultNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+        }
+
+        KeyVaultNetworkRuleSet IModelJsonSerializable<KeyVaultNetworkRuleSet>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultNetworkRuleSet>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultNetworkRuleSet(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KeyVaultNetworkRuleSet>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultNetworkRuleSet>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KeyVaultNetworkRuleSet IModelSerializable<KeyVaultNetworkRuleSet>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultNetworkRuleSet>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKeyVaultNetworkRuleSet(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KeyVaultNetworkRuleSet"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KeyVaultNetworkRuleSet"/> to convert. </param>
+        public static implicit operator RequestContent(KeyVaultNetworkRuleSet model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KeyVaultNetworkRuleSet"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KeyVaultNetworkRuleSet(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKeyVaultNetworkRuleSet(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

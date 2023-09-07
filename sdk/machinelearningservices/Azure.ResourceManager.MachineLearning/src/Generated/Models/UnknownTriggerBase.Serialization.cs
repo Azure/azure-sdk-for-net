@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownTriggerBase : IUtf8JsonSerializable
+    internal partial class UnknownTriggerBase : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningTriggerBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningTriggerBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningTriggerBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningTriggerBase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EndTime))
             {
@@ -46,53 +52,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("triggerType"u8);
             writer.WriteStringValue(TriggerType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownTriggerBase DeserializeUnknownTriggerBase(JsonElement element)
+        internal static MachineLearningTriggerBase DeserializeUnknownTriggerBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeMachineLearningTriggerBase(element, options);
+
+        MachineLearningTriggerBase IModelJsonSerializable<MachineLearningTriggerBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> endTime = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
-            MachineLearningTriggerType triggerType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endTime = null;
-                        continue;
-                    }
-                    endTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("startTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        startTime = null;
-                        continue;
-                    }
-                    startTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timeZone"u8))
-                {
-                    timeZone = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("triggerType"u8))
-                {
-                    triggerType = new MachineLearningTriggerType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownTriggerBase(endTime.Value, startTime.Value, timeZone.Value, triggerType);
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningTriggerBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownTriggerBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningTriggerBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningTriggerBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningTriggerBase IModelSerializable<MachineLearningTriggerBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningTriggerBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningTriggerBase(doc.RootElement, options);
         }
     }
 }

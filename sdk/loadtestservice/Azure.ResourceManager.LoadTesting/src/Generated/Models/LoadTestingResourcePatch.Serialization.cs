@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class LoadTestingResourcePatch : IUtf8JsonSerializable
+    public partial class LoadTestingResourcePatch : IUtf8JsonSerializable, IModelJsonSerializable<LoadTestingResourcePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LoadTestingResourcePatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LoadTestingResourcePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LoadTestingResourcePatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -52,7 +60,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 if (Encryption != null)
                 {
                     writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue(Encryption);
+                    if (Encryption is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LoadTestingCmkEncryptionProperties>)Encryption).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -60,7 +75,142 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static LoadTestingResourcePatch DeserializeLoadTestingResourcePatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<string> description = default;
+            Optional<LoadTestingCmkEncryptionProperties> encryption = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                encryption = null;
+                                continue;
+                            }
+                            encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new LoadTestingResourcePatch(Optional.ToDictionary(tags), identity, description.Value, encryption.Value, serializedAdditionalRawData);
+        }
+
+        LoadTestingResourcePatch IModelJsonSerializable<LoadTestingResourcePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadTestingResourcePatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadTestingResourcePatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LoadTestingResourcePatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadTestingResourcePatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LoadTestingResourcePatch IModelSerializable<LoadTestingResourcePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadTestingResourcePatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLoadTestingResourcePatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LoadTestingResourcePatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LoadTestingResourcePatch"/> to convert. </param>
+        public static implicit operator RequestContent(LoadTestingResourcePatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LoadTestingResourcePatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LoadTestingResourcePatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLoadTestingResourcePatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

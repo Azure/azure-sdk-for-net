@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class MarketplaceAdminApprovalRequestData : IUtf8JsonSerializable
+    public partial class MarketplaceAdminApprovalRequestData : IUtf8JsonSerializable, IModelJsonSerializable<MarketplaceAdminApprovalRequestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MarketplaceAdminApprovalRequestData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MarketplaceAdminApprovalRequestData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MarketplaceAdminApprovalRequestData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -67,11 +73,25 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MarketplaceAdminApprovalRequestData DeserializeMarketplaceAdminApprovalRequestData(JsonElement element)
+        internal static MarketplaceAdminApprovalRequestData DeserializeMarketplaceAdminApprovalRequestData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,6 +110,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<IReadOnlyList<PlanRequesterDetails>> plans = default;
             Optional<IList<Guid>> collectionIds = default;
             Optional<Uri> icon = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -213,8 +234,61 @@ namespace Azure.ResourceManager.Marketplace
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), Optional.ToList(approvedPlans), comment.Value, administrator.Value, Optional.ToList(plans), Optional.ToList(collectionIds), icon.Value);
+            return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), Optional.ToList(approvedPlans), comment.Value, administrator.Value, Optional.ToList(plans), Optional.ToList(collectionIds), icon.Value, serializedAdditionalRawData);
+        }
+
+        MarketplaceAdminApprovalRequestData IModelJsonSerializable<MarketplaceAdminApprovalRequestData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MarketplaceAdminApprovalRequestData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMarketplaceAdminApprovalRequestData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MarketplaceAdminApprovalRequestData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MarketplaceAdminApprovalRequestData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MarketplaceAdminApprovalRequestData IModelSerializable<MarketplaceAdminApprovalRequestData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MarketplaceAdminApprovalRequestData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMarketplaceAdminApprovalRequestData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MarketplaceAdminApprovalRequestData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MarketplaceAdminApprovalRequestData"/> to convert. </param>
+        public static implicit operator RequestContent(MarketplaceAdminApprovalRequestData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MarketplaceAdminApprovalRequestData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MarketplaceAdminApprovalRequestData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMarketplaceAdminApprovalRequestData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

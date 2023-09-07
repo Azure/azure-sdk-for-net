@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class OrchestratorProfile
+    public partial class OrchestratorProfile : IUtf8JsonSerializable, IModelJsonSerializable<OrchestratorProfile>
     {
-        internal static OrchestratorProfile DeserializeOrchestratorProfile(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrchestratorProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OrchestratorProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorProfile>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OrchestratorProfile DeserializeOrchestratorProfile(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<bool> isPreview = default;
             Optional<string> orchestratorType = default;
             Optional<string> orchestratorVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isPreview"u8))
@@ -42,8 +71,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     orchestratorVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OrchestratorProfile(Optional.ToNullable(isPreview), orchestratorType.Value, orchestratorVersion.Value);
+            return new OrchestratorProfile(Optional.ToNullable(isPreview), orchestratorType.Value, orchestratorVersion.Value, serializedAdditionalRawData);
+        }
+
+        OrchestratorProfile IModelJsonSerializable<OrchestratorProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrchestratorProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OrchestratorProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OrchestratorProfile IModelSerializable<OrchestratorProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOrchestratorProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OrchestratorProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OrchestratorProfile"/> to convert. </param>
+        public static implicit operator RequestContent(OrchestratorProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OrchestratorProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OrchestratorProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOrchestratorProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

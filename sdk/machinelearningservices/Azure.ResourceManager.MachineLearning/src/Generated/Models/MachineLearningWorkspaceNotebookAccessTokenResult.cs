@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
     public partial class MachineLearningWorkspaceNotebookAccessTokenResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
         internal MachineLearningWorkspaceNotebookAccessTokenResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
         /// <param name="notebookResourceId"></param>
         /// <param name="hostName"></param>
         /// <param name="publicDns"></param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="expiresIn"></param>
         /// <param name="refreshToken"></param>
         /// <param name="scope"></param>
-        internal MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId, string hostName, string publicDns, string accessToken, string tokenType, int? expiresIn, string refreshToken, string scope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId, string hostName, string publicDns, string accessToken, string tokenType, int? expiresIn, string refreshToken, string scope, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NotebookResourceId = notebookResourceId;
             HostName = hostName;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ExpiresIn = expiresIn;
             RefreshToken = refreshToken;
             Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the notebook resource id. </summary>

@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesRegistrationAssignmentProperties : IUtf8JsonSerializable
+    public partial class ManagedServicesRegistrationAssignmentProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServicesRegistrationAssignmentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServicesRegistrationAssignmentProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServicesRegistrationAssignmentProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesRegistrationAssignmentProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("registrationDefinitionId"u8);
             writer.WriteStringValue(RegistrationId);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedServicesRegistrationAssignmentProperties DeserializeManagedServicesRegistrationAssignmentProperties(JsonElement element)
+        internal static ManagedServicesRegistrationAssignmentProperties DeserializeManagedServicesRegistrationAssignmentProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +51,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             ResourceIdentifier registrationDefinitionId = default;
             Optional<ManagedServicesProvisioningState> provisioningState = default;
             Optional<ManagedServicesRegistrationAssignmentRegistrationData> registrationDefinition = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registrationDefinitionId"u8))
@@ -54,8 +77,61 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     registrationDefinition = ManagedServicesRegistrationAssignmentRegistrationData.DeserializeManagedServicesRegistrationAssignmentRegistrationData(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedServicesRegistrationAssignmentProperties(registrationDefinitionId, Optional.ToNullable(provisioningState), registrationDefinition.Value);
+            return new ManagedServicesRegistrationAssignmentProperties(registrationDefinitionId, Optional.ToNullable(provisioningState), registrationDefinition.Value, serializedAdditionalRawData);
+        }
+
+        ManagedServicesRegistrationAssignmentProperties IModelJsonSerializable<ManagedServicesRegistrationAssignmentProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesRegistrationAssignmentProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesRegistrationAssignmentProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServicesRegistrationAssignmentProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesRegistrationAssignmentProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServicesRegistrationAssignmentProperties IModelSerializable<ManagedServicesRegistrationAssignmentProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesRegistrationAssignmentProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServicesRegistrationAssignmentProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedServicesRegistrationAssignmentProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedServicesRegistrationAssignmentProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedServicesRegistrationAssignmentProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedServicesRegistrationAssignmentProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedServicesRegistrationAssignmentProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedServicesRegistrationAssignmentProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

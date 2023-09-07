@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.IoT.Hub.Service.Models;
 
 namespace Azure.IoT.Hub.Service
@@ -56,7 +57,14 @@ namespace Azure.IoT.Hub.Service
             content.JsonWriter.WriteStartArray();
             foreach (var item in devices)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                if (item is null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExportImportDevice>)item).Serialize(content.JsonWriter, ModelSerializerOptions.DefaultWireOptions);
+                }
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

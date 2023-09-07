@@ -5,17 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network and credentials configuration already applied to terminal server. </summary>
     public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : TerminalServerPatchableProperties
     {
-        /// <summary> Initializes a new instance of NetworkFabricPatchablePropertiesTerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchablePropertiesTerminalServerConfiguration"/>. </summary>
         public NetworkFabricPatchablePropertiesTerminalServerConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricPatchablePropertiesTerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchablePropertiesTerminalServerConfiguration"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
@@ -23,7 +26,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal NetworkFabricPatchablePropertiesTerminalServerConfiguration(string username, string password, string serialNumber, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(username, password, serialNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricPatchablePropertiesTerminalServerConfiguration(string username, string password, string serialNumber, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(username, password, serialNumber, serializedAdditionalRawData)
         {
             PrimaryIPv4Prefix = primaryIPv4Prefix;
             PrimaryIPv6Prefix = primaryIPv6Prefix;

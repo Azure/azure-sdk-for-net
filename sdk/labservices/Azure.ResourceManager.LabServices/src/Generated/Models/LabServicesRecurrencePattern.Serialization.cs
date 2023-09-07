@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabServicesRecurrencePattern : IUtf8JsonSerializable
+    public partial class LabServicesRecurrencePattern : IUtf8JsonSerializable, IModelJsonSerializable<LabServicesRecurrencePattern>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LabServicesRecurrencePattern>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LabServicesRecurrencePattern>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LabServicesRecurrencePattern>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToSerialString());
@@ -36,11 +42,25 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             writer.WritePropertyName("expirationDate"u8);
             writer.WriteStringValue(ExpireOn, "O");
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabServicesRecurrencePattern DeserializeLabServicesRecurrencePattern(JsonElement element)
+        internal static LabServicesRecurrencePattern DeserializeLabServicesRecurrencePattern(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<IList<LabServicesDayOfWeek>> weekDays = default;
             Optional<int> interval = default;
             DateTimeOffset expirationDate = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frequency"u8))
@@ -84,8 +105,61 @@ namespace Azure.ResourceManager.LabServices.Models
                     expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LabServicesRecurrencePattern(frequency, Optional.ToList(weekDays), Optional.ToNullable(interval), expirationDate);
+            return new LabServicesRecurrencePattern(frequency, Optional.ToList(weekDays), Optional.ToNullable(interval), expirationDate, serializedAdditionalRawData);
+        }
+
+        LabServicesRecurrencePattern IModelJsonSerializable<LabServicesRecurrencePattern>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabServicesRecurrencePattern>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabServicesRecurrencePattern(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LabServicesRecurrencePattern>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabServicesRecurrencePattern>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LabServicesRecurrencePattern IModelSerializable<LabServicesRecurrencePattern>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabServicesRecurrencePattern>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLabServicesRecurrencePattern(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LabServicesRecurrencePattern"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LabServicesRecurrencePattern"/> to convert. </param>
+        public static implicit operator RequestContent(LabServicesRecurrencePattern model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LabServicesRecurrencePattern"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LabServicesRecurrencePattern(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLabServicesRecurrencePattern(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

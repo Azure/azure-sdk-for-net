@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -13,6 +14,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> Details of a research facility where a clinical trial is conducted. </summary>
     public partial class ClinicalTrialResearchFacility
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of ClinicalTrialResearchFacility. </summary>
         /// <param name="name"> The facility's name. </param>
         /// <param name="countryOrRegion"> Country/region name. </param>
@@ -31,12 +35,19 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="city"> City name. </param>
         /// <param name="state"> State name. </param>
         /// <param name="countryOrRegion"> Country/region name. </param>
-        internal ClinicalTrialResearchFacility(string name, string city, string state, string countryOrRegion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrialResearchFacility(string name, string city, string state, string countryOrRegion, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             City = city;
             State = state;
             CountryOrRegion = countryOrRegion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialResearchFacility"/> for deserialization. </summary>
+        internal ClinicalTrialResearchFacility()
+        {
         }
 
         /// <summary> The facility's name. </summary>

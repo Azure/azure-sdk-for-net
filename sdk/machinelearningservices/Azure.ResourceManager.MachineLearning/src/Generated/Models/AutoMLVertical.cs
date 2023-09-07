@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -16,9 +18,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownAutoMLVertical))]
     public abstract partial class AutoMLVertical
     {
-        /// <summary> Initializes a new instance of AutoMLVertical. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         protected AutoMLVertical(MachineLearningTableJobInput trainingData)
@@ -28,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TrainingData = trainingData;
         }
 
-        /// <summary> Initializes a new instance of AutoMLVertical. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -36,12 +42,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="trainingData"> [Required] Training data input. </param>
-        internal AutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogVerbosity = logVerbosity;
             TargetColumnName = targetColumnName;
             TaskType = taskType;
             TrainingData = trainingData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/> for deserialization. </summary>
+        internal AutoMLVertical()
+        {
         }
 
         /// <summary> Log verbosity for the job. </summary>

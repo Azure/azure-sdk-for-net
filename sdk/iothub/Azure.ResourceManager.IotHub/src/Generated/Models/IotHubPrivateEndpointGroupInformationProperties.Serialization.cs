@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubPrivateEndpointGroupInformationProperties
+    public partial class IotHubPrivateEndpointGroupInformationProperties : IUtf8JsonSerializable, IModelJsonSerializable<IotHubPrivateEndpointGroupInformationProperties>
     {
-        internal static IotHubPrivateEndpointGroupInformationProperties DeserializeIotHubPrivateEndpointGroupInformationProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubPrivateEndpointGroupInformationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubPrivateEndpointGroupInformationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubPrivateEndpointGroupInformationProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
+            }
+            if (Optional.IsCollectionDefined(RequiredMembers))
+            {
+                writer.WritePropertyName("requiredMembers"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequiredMembers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RequiredDnsZoneNames))
+            {
+                writer.WritePropertyName("requiredZoneNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequiredDnsZoneNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IotHubPrivateEndpointGroupInformationProperties DeserializeIotHubPrivateEndpointGroupInformationProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +74,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IReadOnlyList<string>> requiredZoneNames = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -57,8 +110,61 @@ namespace Azure.ResourceManager.IotHub.Models
                     requiredZoneNames = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotHubPrivateEndpointGroupInformationProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new IotHubPrivateEndpointGroupInformationProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), serializedAdditionalRawData);
+        }
+
+        IotHubPrivateEndpointGroupInformationProperties IModelJsonSerializable<IotHubPrivateEndpointGroupInformationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubPrivateEndpointGroupInformationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubPrivateEndpointGroupInformationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubPrivateEndpointGroupInformationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubPrivateEndpointGroupInformationProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubPrivateEndpointGroupInformationProperties IModelSerializable<IotHubPrivateEndpointGroupInformationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubPrivateEndpointGroupInformationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubPrivateEndpointGroupInformationProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotHubPrivateEndpointGroupInformationProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotHubPrivateEndpointGroupInformationProperties"/> to convert. </param>
+        public static implicit operator RequestContent(IotHubPrivateEndpointGroupInformationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotHubPrivateEndpointGroupInformationProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotHubPrivateEndpointGroupInformationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubPrivateEndpointGroupInformationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

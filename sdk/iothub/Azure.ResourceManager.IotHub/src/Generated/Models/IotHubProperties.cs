@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotHub;
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of an IoT hub. </summary>
     public partial class IotHubProperties
     {
-        /// <summary> Initializes a new instance of IotHubProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubProperties"/>. </summary>
         public IotHubProperties()
         {
             AuthorizationPolicies = new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Locations = new ChangeTrackingList<IotHubLocationDescription>();
         }
 
-        /// <summary> Initializes a new instance of IotHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubProperties"/>. </summary>
         /// <param name="authorizationPolicies"> The shared access policies you can use to secure a connection to the IoT hub. </param>
         /// <param name="disableLocalAuth"> If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication. </param>
         /// <param name="disableDeviceSas"> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </param>
@@ -56,7 +60,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
         /// <param name="rootCertificate"> This property store root certificate related information. </param>
         /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
-        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, EncryptionPropertiesDescription encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, RootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, EncryptionPropertiesDescription encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, RootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -86,6 +91,7 @@ namespace Azure.ResourceManager.IotHub.Models
             EnableDataResidency = enableDataResidency;
             RootCertificate = rootCertificate;
             IPVersion = ipVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The shared access policies you can use to secure a connection to the IoT hub. </summary>

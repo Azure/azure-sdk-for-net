@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMachineLearningModelFactory
     {
-        /// <summary> Initializes a new instance of MachineLearningError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningError"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <returns> A new <see cref="Models.MachineLearningError"/> instance for mocking. </returns>
         public static MachineLearningError MachineLearningError(ResponseError error = null)
         {
-            return new MachineLearningError(error);
+            return new MachineLearningError(error, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             privateEndpointConnections ??= new List<MachineLearningPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<MachineLearningSharedPrivateLinkResource>();
 
-            return new MachineLearningWorkspaceData(id, name, resourceType, systemData, tags, location, identity, sku, workspaceId, description, friendlyName, keyVault, applicationInsights, containerRegistry, storageAccount, discoveryUri, provisioningState, encryption, isHbiWorkspace, serviceProvisionedResourceGroup, privateLinkCount, imageBuildCompute, allowPublicAccessWhenBehindVnet, publicNetworkAccess, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), notebookInfo, cosmosDbCollectionsThroughput != null ? new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput)) : null, primaryUserAssignedIdentity, tenantId, isStorageHnsEnabled, mlFlowTrackingUri, isV1LegacyMode);
+            return new MachineLearningWorkspaceData(id, name, resourceType, systemData, tags, location, identity, sku, workspaceId, description, friendlyName, keyVault, applicationInsights, containerRegistry, storageAccount, discoveryUri, provisioningState, encryption, isHbiWorkspace, serviceProvisionedResourceGroup, privateLinkCount, imageBuildCompute, allowPublicAccessWhenBehindVnet, publicNetworkAccess, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), notebookInfo, cosmosDbCollectionsThroughput != null ? new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput, new Dictionary<string, BinaryData>()), new Dictionary<string, BinaryData>()) : null, primaryUserAssignedIdentity, tenantId, isStorageHnsEnabled, mlFlowTrackingUri, isV1LegacyMode, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -88,46 +88,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, identity, sku, privateEndpoint, connectionState, provisioningState);
+            return new MachineLearningPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, identity, sku, privateEndpoint, connectionState, provisioningState, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpoint"/>. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
         /// <param name="subnetArmId"> The ARM identifier for Subnet resource that private endpoint links to. </param>
         /// <returns> A new <see cref="Models.MachineLearningPrivateEndpoint"/> instance for mocking. </returns>
         public static MachineLearningPrivateEndpoint MachineLearningPrivateEndpoint(ResourceIdentifier id = null, ResourceIdentifier subnetArmId = null)
         {
-            return new MachineLearningPrivateEndpoint(id, subnetArmId);
+            return new MachineLearningPrivateEndpoint(id, subnetArmId, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
         /// <param name="fqdn"></param>
         /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
         /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
         /// <returns> A new <see cref="Models.MachineLearningNotebookResourceInfo"/> instance for mocking. </returns>
         public static MachineLearningNotebookResourceInfo MachineLearningNotebookResourceInfo(string fqdn = null, string resourceId = null, MachineLearningNotebookPreparationError notebookPreparationError = null)
         {
-            return new MachineLearningNotebookResourceInfo(fqdn, resourceId, notebookPreparationError);
+            return new MachineLearningNotebookResourceInfo(fqdn, resourceId, notebookPreparationError, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNotebookPreparationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookPreparationError"/>. </summary>
         /// <param name="errorMessage"></param>
         /// <param name="statusCode"></param>
         /// <returns> A new <see cref="Models.MachineLearningNotebookPreparationError"/> instance for mocking. </returns>
         public static MachineLearningNotebookPreparationError MachineLearningNotebookPreparationError(string errorMessage = null, int? statusCode = null)
         {
-            return new MachineLearningNotebookPreparationError(errorMessage, statusCode);
+            return new MachineLearningNotebookPreparationError(errorMessage, statusCode, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceDiagnoseResult"/>. </summary>
         /// <param name="value"></param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceDiagnoseResult"/> instance for mocking. </returns>
         public static MachineLearningWorkspaceDiagnoseResult MachineLearningWorkspaceDiagnoseResult(MachineLearningDiagnoseResultValue value = null)
         {
-            return new MachineLearningWorkspaceDiagnoseResult(value);
+            return new MachineLearningWorkspaceDiagnoseResult(value, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDiagnoseResultValue"/>. </summary>
         /// <param name="userDefinedRouteResults"></param>
         /// <param name="networkSecurityRuleResults"></param>
         /// <param name="resourceLockResults"></param>
@@ -150,20 +150,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             applicationInsightsResults ??= new List<MachineLearningDiagnoseResult>();
             otherResults ??= new List<MachineLearningDiagnoseResult>();
 
-            return new MachineLearningDiagnoseResultValue(userDefinedRouteResults?.ToList(), networkSecurityRuleResults?.ToList(), resourceLockResults?.ToList(), dnsResolutionResults?.ToList(), storageAccountResults?.ToList(), keyVaultResults?.ToList(), containerRegistryResults?.ToList(), applicationInsightsResults?.ToList(), otherResults?.ToList());
+            return new MachineLearningDiagnoseResultValue(userDefinedRouteResults?.ToList(), networkSecurityRuleResults?.ToList(), resourceLockResults?.ToList(), dnsResolutionResults?.ToList(), storageAccountResults?.ToList(), keyVaultResults?.ToList(), containerRegistryResults?.ToList(), applicationInsightsResults?.ToList(), otherResults?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDiagnoseResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDiagnoseResult"/>. </summary>
         /// <param name="code"> Code for workspace setup error. </param>
         /// <param name="level"> Level of workspace setup error. </param>
         /// <param name="message"> Message of workspace setup error. </param>
         /// <returns> A new <see cref="Models.MachineLearningDiagnoseResult"/> instance for mocking. </returns>
         public static MachineLearningDiagnoseResult MachineLearningDiagnoseResult(string code = null, MachineLearningDiagnoseResultLevel? level = null, string message = null)
         {
-            return new MachineLearningDiagnoseResult(code, level, message);
+            return new MachineLearningDiagnoseResult(code, level, message, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetKeysResult"/>. </summary>
         /// <param name="userStorageKey"></param>
         /// <param name="userStorageResourceId"></param>
         /// <param name="appInsightsInstrumentationKey"></param>
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetKeysResult"/> instance for mocking. </returns>
         public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string userStorageKey = null, string userStorageResourceId = null, string appInsightsInstrumentationKey = null, MachineLearningContainerRegistryCredentials containerRegistryCredentials = null, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = null)
         {
-            return new MachineLearningWorkspaceGetKeysResult(userStorageKey, userStorageResourceId, appInsightsInstrumentationKey, containerRegistryCredentials, notebookAccessKeys);
+            return new MachineLearningWorkspaceGetKeysResult(userStorageKey, userStorageResourceId, appInsightsInstrumentationKey, containerRegistryCredentials, notebookAccessKeys, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
         /// <param name="location"></param>
         /// <param name="username"></param>
         /// <param name="passwords"></param>
@@ -184,28 +184,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             passwords ??= new List<MachineLearningPasswordDetail>();
 
-            return new MachineLearningContainerRegistryCredentials(location, username, passwords?.ToList());
+            return new MachineLearningContainerRegistryCredentials(location, username, passwords?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPasswordDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPasswordDetail"/>. </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns> A new <see cref="Models.MachineLearningPasswordDetail"/> instance for mocking. </returns>
         public static MachineLearningPasswordDetail MachineLearningPasswordDetail(string name = null, string value = null)
         {
-            return new MachineLearningPasswordDetail(name, value);
+            return new MachineLearningPasswordDetail(name, value, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetNotebookKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
         /// <param name="primaryAccessKey"></param>
         /// <param name="secondaryAccessKey"></param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetNotebookKeysResult"/> instance for mocking. </returns>
         public static MachineLearningWorkspaceGetNotebookKeysResult MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey = null, string secondaryAccessKey = null)
         {
-            return new MachineLearningWorkspaceGetNotebookKeysResult(primaryAccessKey, secondaryAccessKey);
+            return new MachineLearningWorkspaceGetNotebookKeysResult(primaryAccessKey, secondaryAccessKey, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsage"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
         /// <param name="usageType"> Specifies the resource type. </param>
@@ -216,19 +216,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningUsage"/> instance for mocking. </returns>
         public static MachineLearningUsage MachineLearningUsage(string id = null, string amlWorkspaceLocation = null, string usageType = null, MachineLearningUsageUnit? unit = null, long? currentValue = null, long? limit = null, MachineLearningUsageName name = null)
         {
-            return new MachineLearningUsage(id, amlWorkspaceLocation, usageType, unit, currentValue, limit, name);
+            return new MachineLearningUsage(id, amlWorkspaceLocation, usageType, unit, currentValue, limit, name, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsageName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <returns> A new <see cref="Models.MachineLearningUsageName"/> instance for mocking. </returns>
         public static MachineLearningUsageName MachineLearningUsageName(string value = null, string localizedValue = null)
         {
-            return new MachineLearningUsageName(value, localizedValue);
+            return new MachineLearningUsageName(value, localizedValue, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningVmSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVmSize"/>. </summary>
         /// <param name="name"> The name of the virtual machine size. </param>
         /// <param name="family"> The family name of the virtual machine size. </param>
         /// <param name="vCpus"> The number of vCPUs supported by the virtual machine size. </param>
@@ -245,10 +245,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             supportedComputeTypes ??= new List<string>();
 
-            return new MachineLearningVmSize(name, family, vCpus, gpus, osVhdSizeMB, maxResourceVolumeMB, memoryGB, lowPriorityCapable, isPremiumIOSupported, estimatedVmPrices, supportedComputeTypes?.ToList());
+            return new MachineLearningVmSize(name, family, vCpus, gpus, osVhdSizeMB, maxResourceVolumeMB, memoryGB, lowPriorityCapable, isPremiumIOSupported, estimatedVmPrices, supportedComputeTypes?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrices. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrices"/>. </summary>
         /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
         /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
         /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
@@ -257,20 +257,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             values ??= new List<MachineLearningEstimatedVmPrice>();
 
-            return new MachineLearningEstimatedVmPrices(billingCurrency, unitOfMeasure, values?.ToList());
+            return new MachineLearningEstimatedVmPrices(billingCurrency, unitOfMeasure, values?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrice. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrice"/>. </summary>
         /// <param name="retailPrice"> The price charged for using the VM. </param>
         /// <param name="osType"> Operating system type used by the VM. </param>
         /// <param name="vmTier"> The type of the VM. </param>
         /// <returns> A new <see cref="Models.MachineLearningEstimatedVmPrice"/> instance for mocking. </returns>
         public static MachineLearningEstimatedVmPrice MachineLearningEstimatedVmPrice(double retailPrice = default, MachineLearningVmPriceOSType osType = default, MachineLearningVmTier vmTier = default)
         {
-            return new MachineLearningEstimatedVmPrice(retailPrice, osType, vmTier);
+            return new MachineLearningEstimatedVmPrice(retailPrice, osType, vmTier, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceQuotaUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceQuotaUpdate"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="updateWorkspaceQuotasType"> Specifies the resource type. </param>
         /// <param name="limit"> The maximum permitted quota of the resource. </param>
@@ -279,10 +279,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceQuotaUpdate"/> instance for mocking. </returns>
         public static MachineLearningWorkspaceQuotaUpdate MachineLearningWorkspaceQuotaUpdate(string id = null, string updateWorkspaceQuotasType = null, long? limit = null, MachineLearningQuotaUnit? unit = null, MachineLearningWorkspaceQuotaStatus? status = null)
         {
-            return new MachineLearningWorkspaceQuotaUpdate(id, updateWorkspaceQuotasType, limit, unit, status);
+            return new MachineLearningWorkspaceQuotaUpdate(id, updateWorkspaceQuotasType, limit, unit, status, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningResourceQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningResourceQuota"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
         /// <param name="resourceQuotaType"> Specifies the resource type. </param>
@@ -292,19 +292,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningResourceQuota"/> instance for mocking. </returns>
         public static MachineLearningResourceQuota MachineLearningResourceQuota(string id = null, string amlWorkspaceLocation = null, string resourceQuotaType = null, MachineLearningResourceName name = null, long? limit = null, MachineLearningQuotaUnit? unit = null)
         {
-            return new MachineLearningResourceQuota(id, amlWorkspaceLocation, resourceQuotaType, name, limit, unit);
+            return new MachineLearningResourceQuota(id, amlWorkspaceLocation, resourceQuotaType, name, limit, unit, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningResourceName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <returns> A new <see cref="Models.MachineLearningResourceName"/> instance for mocking. </returns>
         public static MachineLearningResourceName MachineLearningResourceName(string value = null, string localizedValue = null)
         {
-            return new MachineLearningResourceName(value, localizedValue);
+            return new MachineLearningResourceName(value, localizedValue, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningComputeData(id, name, resourceType, systemData, tags, location, identity, sku, properties);
+            return new MachineLearningComputeData(id, name, resourceType, systemData, tags, location, identity, sku, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeProperties"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
@@ -342,10 +342,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new UnknownCompute(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth);
+            return new UnknownCompute(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, default);
         }
 
-        /// <summary> Initializes a new instance of AmlComputeNodeInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlComputeNodeInformation"/>. </summary>
         /// <param name="nodeId"> ID of the compute node. </param>
         /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
         /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
@@ -355,10 +355,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.AmlComputeNodeInformation"/> instance for mocking. </returns>
         public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = null, IPAddress privateIPAddress = null, IPAddress publicIPAddress = null, int? port = null, MachineLearningNodeState? nodeState = null, string runId = null)
         {
-            return new AmlComputeNodeInformation(nodeId, privateIPAddress, publicIPAddress, port, nodeState, runId);
+            return new AmlComputeNodeInformation(nodeId, privateIPAddress, publicIPAddress, port, nodeState, runId, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
         /// <param name="notebookResourceId"></param>
         /// <param name="hostName"></param>
         /// <param name="publicDns"></param>
@@ -370,10 +370,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/> instance for mocking. </returns>
         public static MachineLearningWorkspaceNotebookAccessTokenResult MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId = null, string hostName = null, string publicDns = null, string accessToken = null, string tokenType = null, int? expiresIn = null, string refreshToken = null, string scope = null)
         {
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(notebookResourceId, hostName, publicDns, accessToken, tokenType, expiresIn, refreshToken, scope);
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(notebookResourceId, hostName, publicDns, accessToken, tokenType, expiresIn, refreshToken, scope, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -392,18 +392,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new MachineLearningPrivateLinkResource(id, name, resourceType, systemData, tags, location, identity, sku, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new MachineLearningPrivateLinkResource(id, name, resourceType, systemData, tags, location, identity, sku, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetStorageAccountKeysResult"/>. </summary>
         /// <param name="userStorageKey"></param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetStorageAccountKeysResult"/> instance for mocking. </returns>
         public static MachineLearningWorkspaceGetStorageAccountKeysResult MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey = null)
         {
-            return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey);
+            return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -415,18 +415,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceConnectionData"/> instance for mocking. </returns>
         public static MachineLearningWorkspaceConnectionData MachineLearningWorkspaceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningWorkspaceConnectionProperties properties = null)
         {
-            return new MachineLearningWorkspaceConnectionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningWorkspaceConnectionData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpoints"/>. </summary>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoints"/> instance for mocking. </returns>
         public static MachineLearningFqdnEndpoints MachineLearningFqdnEndpoints(MachineLearningFqdnEndpointsProperties properties = null)
         {
-            return new MachineLearningFqdnEndpoints(properties);
+            return new MachineLearningFqdnEndpoints(properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpointsProperties"/>. </summary>
         /// <param name="category"></param>
         /// <param name="endpoints"></param>
         /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointsProperties"/> instance for mocking. </returns>
@@ -434,10 +434,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             endpoints ??= new List<MachineLearningFqdnEndpoint>();
 
-            return new MachineLearningFqdnEndpointsProperties(category, endpoints?.ToList());
+            return new MachineLearningFqdnEndpointsProperties(category, endpoints?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpoint"/>. </summary>
         /// <param name="domainName"></param>
         /// <param name="endpointDetails"></param>
         /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoint"/> instance for mocking. </returns>
@@ -445,18 +445,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             endpointDetails ??= new List<MachineLearningFqdnEndpointDetail>();
 
-            return new MachineLearningFqdnEndpoint(domainName, endpointDetails?.ToList());
+            return new MachineLearningFqdnEndpoint(domainName, endpointDetails?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpointDetail"/>. </summary>
         /// <param name="port"></param>
         /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointDetail"/> instance for mocking. </returns>
         public static MachineLearningFqdnEndpointDetail MachineLearningFqdnEndpointDetail(int? port = null)
         {
-            return new MachineLearningFqdnEndpointDetail(port);
+            return new MachineLearningFqdnEndpointDetail(port, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningBatchEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -472,10 +472,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningBatchEndpointData(id, name, resourceType, systemData, tags, location, identity, kind, properties, sku);
+            return new MachineLearningBatchEndpointData(id, name, resourceType, systemData, tags, location, identity, kind, properties, sku, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningBatchEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
@@ -492,10 +492,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningBatchEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri, defaultsDeploymentName != null ? new BatchEndpointDefaults(defaultsDeploymentName) : null, provisioningState);
+            return new MachineLearningBatchEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri, defaultsDeploymentName != null ? new BatchEndpointDefaults(defaultsDeploymentName, new Dictionary<string, BinaryData>()) : null, provisioningState, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
@@ -510,10 +510,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri);
+            return new MachineLearningEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningBatchDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -529,10 +529,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningBatchDeploymentData(id, name, resourceType, systemData, tags, location, identity, kind, properties, sku);
+            return new MachineLearningBatchDeploymentData(id, name, resourceType, systemData, tags, location, identity, kind, properties, sku, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningBatchDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentProperties"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
@@ -575,10 +575,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningBatchDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, compute, errorThreshold, loggingLevel, maxConcurrencyPerInstance, miniBatchSize, model, outputAction, outputFileName, provisioningState, resources, retrySettings);
+            return new MachineLearningBatchDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, compute, errorThreshold, loggingLevel, maxConcurrencyPerInstance, miniBatchSize, model, outputAction, outputFileName, provisioningState, resources, retrySettings, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCodeContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCodeContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -587,10 +587,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningCodeContainerData"/> instance for mocking. </returns>
         public static MachineLearningCodeContainerData MachineLearningCodeContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningCodeContainerProperties properties = null)
         {
-            return new MachineLearningCodeContainerData(id, name, resourceType, systemData, properties);
+            return new MachineLearningCodeContainerData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCodeContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCodeContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -603,10 +603,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningCodeContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion);
+            return new MachineLearningCodeContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAssetContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssetContainer"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -619,10 +619,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningAssetContainer(description, properties, tags, isArchived, latestVersion, nextVersion);
+            return new MachineLearningAssetContainer(description, properties, tags, isArchived, latestVersion, nextVersion, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCodeVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCodeVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -631,10 +631,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningCodeVersionData"/> instance for mocking. </returns>
         public static MachineLearningCodeVersionData MachineLearningCodeVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningCodeVersionProperties properties = null)
         {
-            return new MachineLearningCodeVersionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningCodeVersionData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComponentContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -643,10 +643,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningComponentContainerData"/> instance for mocking. </returns>
         public static MachineLearningComponentContainerData MachineLearningComponentContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningComponentContainerProperties properties = null)
         {
-            return new MachineLearningComponentContainerData(id, name, resourceType, systemData, properties);
+            return new MachineLearningComponentContainerData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComponentContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -659,10 +659,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningComponentContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion);
+            return new MachineLearningComponentContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComponentVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -671,10 +671,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningComponentVersionData"/> instance for mocking. </returns>
         public static MachineLearningComponentVersionData MachineLearningComponentVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningComponentVersionProperties properties = null)
         {
-            return new MachineLearningComponentVersionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningComponentVersionData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -683,10 +683,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningDataContainerData"/> instance for mocking. </returns>
         public static MachineLearningDataContainerData MachineLearningDataContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDataContainerProperties properties = null)
         {
-            return new MachineLearningDataContainerData(id, name, resourceType, systemData, properties);
+            return new MachineLearningDataContainerData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -700,10 +700,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningDataContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, dataType);
+            return new MachineLearningDataContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, dataType, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -716,10 +716,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningDataVersionData"/> instance for mocking. </returns>
         public static MachineLearningDataVersionData MachineLearningDataVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDataVersionProperties properties = null)
         {
-            return new MachineLearningDataVersionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningDataVersionData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDatastoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -732,10 +732,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningDatastoreData"/> instance for mocking. </returns>
         public static MachineLearningDatastoreData MachineLearningDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDatastoreProperties properties = null)
         {
-            return new MachineLearningDatastoreData(id, name, resourceType, systemData, properties);
+            return new MachineLearningDatastoreData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDatastoreProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -752,10 +752,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningDatastoreProperties(description, properties, tags, credentials, datastoreType, isDefault);
+            return new MachineLearningDatastoreProperties(description, properties, tags, credentials, datastoreType, isDefault, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -764,10 +764,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningEnvironmentContainerData"/> instance for mocking. </returns>
         public static MachineLearningEnvironmentContainerData MachineLearningEnvironmentContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningEnvironmentContainerProperties properties = null)
         {
-            return new MachineLearningEnvironmentContainerData(id, name, resourceType, systemData, properties);
+            return new MachineLearningEnvironmentContainerData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -780,10 +780,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningEnvironmentContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion);
+            return new MachineLearningEnvironmentContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -792,10 +792,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningEnvironmentVersionData"/> instance for mocking. </returns>
         public static MachineLearningEnvironmentVersionData MachineLearningEnvironmentVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningEnvironmentVersionProperties properties = null)
         {
-            return new MachineLearningEnvironmentVersionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningEnvironmentVersionData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -823,10 +823,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningEnvironmentVersionProperties(description, properties, tags, isAnonymous, isArchived, autoRebuild, build, condaFile, environmentType, image, inferenceConfig, osType);
+            return new MachineLearningEnvironmentVersionProperties(description, properties, tags, isAnonymous, isArchived, autoRebuild, build, condaFile, environmentType, image, inferenceConfig, osType, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -839,10 +839,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningJobData"/> instance for mocking. </returns>
         public static MachineLearningJobData MachineLearningJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningJobProperties properties = null)
         {
-            return new MachineLearningJobData(id, name, resourceType, systemData, properties);
+            return new MachineLearningJobData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -870,10 +870,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             tags ??= new Dictionary<string, string>();
             services ??= new Dictionary<string, MachineLearningJobService>();
 
-            return new MachineLearningJobProperties(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status);
+            return new MachineLearningJobProperties(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
         /// <param name="endpoint"> Url for endpoint. </param>
         /// <param name="errorMessage"> Any error in the service. </param>
         /// <param name="jobServiceType"> Endpoint type. </param>
@@ -885,10 +885,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningJobService(endpoint, errorMessage, jobServiceType, port, properties, status);
+            return new MachineLearningJobService(endpoint, errorMessage, jobServiceType, port, properties, status, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningModelContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -897,10 +897,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningModelContainerData"/> instance for mocking. </returns>
         public static MachineLearningModelContainerData MachineLearningModelContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningModelContainerProperties properties = null)
         {
-            return new MachineLearningModelContainerData(id, name, resourceType, systemData, properties);
+            return new MachineLearningModelContainerData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningModelContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -913,10 +913,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningModelContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion);
+            return new MachineLearningModelContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningModelVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -925,10 +925,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningModelVersionData"/> instance for mocking. </returns>
         public static MachineLearningModelVersionData MachineLearningModelVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningModelVersionProperties properties = null)
         {
-            return new MachineLearningModelVersionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningModelVersionData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -944,10 +944,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningOnlineEndpointData(id, name, resourceType, systemData, tags, location, identity, kind, properties, sku);
+            return new MachineLearningOnlineEndpointData(id, name, resourceType, systemData, tags, location, identity, kind, properties, sku, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
@@ -970,10 +970,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             traffic ??= new Dictionary<string, int>();
 
-            return new MachineLearningOnlineEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri, compute, provisioningState, publicNetworkAccess, traffic);
+            return new MachineLearningOnlineEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri, compute, provisioningState, publicNetworkAccess, traffic, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -993,10 +993,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningOnlineDeploymentData(id, name, resourceType, systemData, tags, location, identity, kind, properties, sku);
+            return new MachineLearningOnlineDeploymentData(id, name, resourceType, systemData, tags, location, identity, kind, properties, sku, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentProperties"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
@@ -1026,28 +1026,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningOnlineDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
+            return new MachineLearningOnlineDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDeploymentLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentLogs"/>. </summary>
         /// <param name="content"> The retrieved online deployment logs. </param>
         /// <returns> A new <see cref="Models.MachineLearningDeploymentLogs"/> instance for mocking. </returns>
         public static MachineLearningDeploymentLogs MachineLearningDeploymentLogs(string content = null)
         {
-            return new MachineLearningDeploymentLogs(content);
+            return new MachineLearningDeploymentLogs(content, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuDetail"/>. </summary>
         /// <param name="capacity"> Gets or sets the Sku Capacity. </param>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="sku"> Gets or sets the Sku. </param>
         /// <returns> A new <see cref="Models.MachineLearningSkuDetail"/> instance for mocking. </returns>
         public static MachineLearningSkuDetail MachineLearningSkuDetail(MachineLearningSkuCapacity capacity = null, string resourceType = null, MachineLearningSkuSetting sku = null)
         {
-            return new MachineLearningSkuDetail(capacity, resourceType, sku);
+            return new MachineLearningSkuDetail(capacity, resourceType, sku, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuCapacity"/>. </summary>
         /// <param name="default"> Gets or sets the default capacity. </param>
         /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="minimum"> Gets or sets the minimum. </param>
@@ -1055,19 +1055,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningSkuCapacity"/> instance for mocking. </returns>
         public static MachineLearningSkuCapacity MachineLearningSkuCapacity(int? @default = null, int? maximum = null, int? minimum = null, MachineLearningSkuScaleType? scaleType = null)
         {
-            return new MachineLearningSkuCapacity(@default, maximum, minimum, scaleType);
+            return new MachineLearningSkuCapacity(@default, maximum, minimum, scaleType, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSkuSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuSetting"/>. </summary>
         /// <param name="name"> [Required] The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         /// <returns> A new <see cref="Models.MachineLearningSkuSetting"/> instance for mocking. </returns>
         public static MachineLearningSkuSetting MachineLearningSkuSetting(string name = null, MachineLearningSkuTier? tier = null)
         {
-            return new MachineLearningSkuSetting(name, tier);
+            return new MachineLearningSkuSetting(name, tier, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEndpointAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointKeyRegenerateContent"/>. </summary>
+        /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
+        /// <param name="keyValue"> The value the key is set to. </param>
+        /// <returns> A new <see cref="Models.MachineLearningEndpointKeyRegenerateContent"/> instance for mocking. </returns>
+        public static MachineLearningEndpointKeyRegenerateContent MachineLearningEndpointKeyRegenerateContent(MachineLearningKeyType keyType = default, string keyValue = null)
+        {
+            return new MachineLearningEndpointKeyRegenerateContent(keyType, keyValue, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointAuthToken"/>. </summary>
         /// <param name="accessToken"> Access token for endpoint authentication. </param>
         /// <param name="expireOn"> Access token expiry time (UTC). </param>
         /// <param name="refreshOn"> Refresh access token after time (UTC). </param>
@@ -1075,10 +1084,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningEndpointAuthToken"/> instance for mocking. </returns>
         public static MachineLearningEndpointAuthToken MachineLearningEndpointAuthToken(string accessToken = null, DateTimeOffset? expireOn = null, DateTimeOffset? refreshOn = null, string tokenType = null)
         {
-            return new MachineLearningEndpointAuthToken(accessToken, expireOn, refreshOn, tokenType);
+            return new MachineLearningEndpointAuthToken(accessToken, expireOn, refreshOn, tokenType, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1087,10 +1096,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="MachineLearning.MachineLearningScheduleData"/> instance for mocking. </returns>
         public static MachineLearningScheduleData MachineLearningScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningScheduleProperties properties = null)
         {
-            return new MachineLearningScheduleData(id, name, resourceType, systemData, properties);
+            return new MachineLearningScheduleData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -1113,20 +1122,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningScheduleProperties(description, properties, tags, action, displayName, isEnabled, provisioningState, trigger);
+            return new MachineLearningScheduleProperties(description, properties, tags, action, displayName, isEnabled, provisioningState, trigger, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUserFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUserFeature"/>. </summary>
         /// <param name="id"> Specifies the feature ID. </param>
         /// <param name="displayName"> Specifies the feature name. </param>
         /// <param name="description"> Describes the feature for user experience. </param>
         /// <returns> A new <see cref="Models.MachineLearningUserFeature"/> instance for mocking. </returns>
         public static MachineLearningUserFeature MachineLearningUserFeature(string id = null, string displayName = null, string description = null)
         {
-            return new MachineLearningUserFeature(id, displayName, description);
+            return new MachineLearningUserFeature(id, displayName, description, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAksCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksCompute"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1142,10 +1151,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningAksCompute(ComputeType.Aks, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningAksCompute(ComputeType.Aks, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAksComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeProperties"/>. </summary>
         /// <param name="clusterFqdn"> Cluster full qualified domain name. </param>
         /// <param name="systemServices"> System services. </param>
         /// <param name="agentCount"> Number of agents. </param>
@@ -1160,20 +1169,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             systemServices ??= new List<MachineLearningComputeSystemService>();
 
-            return new MachineLearningAksComputeProperties(clusterFqdn, systemServices?.ToList(), agentCount, agentVmSize, clusterPurpose, sslConfiguration, aksNetworkingConfiguration, loadBalancerType, loadBalancerSubnet);
+            return new MachineLearningAksComputeProperties(clusterFqdn, systemServices?.ToList(), agentCount, agentVmSize, clusterPurpose, sslConfiguration, aksNetworkingConfiguration, loadBalancerType, loadBalancerSubnet, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeSystemService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSystemService"/>. </summary>
         /// <param name="systemServiceType"> The type of this system service. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="version"> The version for this type. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeSystemService"/> instance for mocking. </returns>
         public static MachineLearningComputeSystemService MachineLearningComputeSystemService(string systemServiceType = null, string publicIPAddress = null, string version = null)
         {
-            return new MachineLearningComputeSystemService(systemServiceType, publicIPAddress, version);
+            return new MachineLearningComputeSystemService(systemServiceType, publicIPAddress, version, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningKubernetesCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesCompute"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1189,10 +1198,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningKubernetesCompute(ComputeType.Kubernetes, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningKubernetesCompute(ComputeType.Kubernetes, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties, default);
         }
 
-        /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlComputeProperties"/>. </summary>
         /// <param name="osType"> Compute OS Type. </param>
         /// <param name="vmSize"> Virtual Machine Size. </param>
         /// <param name="vmPriority"> Virtual Machine priority. </param>
@@ -1215,10 +1224,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             errors ??= new List<MachineLearningError>();
 
-            return new AmlComputeProperties(osType, vmSize, vmPriority, virtualMachineImageId != null ? new VirtualMachineImage(virtualMachineImageId) : null, isolatedNetwork, scaleSettings, userAccountCredentials, subnetId != null ? new ResourceId(subnetId) : null, remoteLoginPortPublicAccess, allocationState, allocationStateTransitionOn, errors?.ToList(), currentNodeCount, targetNodeCount, nodeStateCounts, enableNodePublicIP, propertyBag);
+            return new AmlComputeProperties(osType, vmSize, vmPriority, virtualMachineImageId != null ? new VirtualMachineImage(virtualMachineImageId, new Dictionary<string, BinaryData>()) : null, isolatedNetwork, scaleSettings, userAccountCredentials, subnetId != null ? new ResourceId(subnetId, new Dictionary<string, BinaryData>()) : null, remoteLoginPortPublicAccess, allocationState, allocationStateTransitionOn, errors?.ToList(), currentNodeCount, targetNodeCount, nodeStateCounts, enableNodePublicIP, propertyBag, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNodeStateCounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNodeStateCounts"/>. </summary>
         /// <param name="idleNodeCount"> Number of compute nodes in idle state. </param>
         /// <param name="runningNodeCount"> Number of compute nodes which are running jobs. </param>
         /// <param name="preparingNodeCount"> Number of compute nodes which are being prepared. </param>
@@ -1228,10 +1237,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningNodeStateCounts"/> instance for mocking. </returns>
         public static MachineLearningNodeStateCounts MachineLearningNodeStateCounts(int? idleNodeCount = null, int? runningNodeCount = null, int? preparingNodeCount = null, int? unusableNodeCount = null, int? leavingNodeCount = null, int? preemptedNodeCount = null)
         {
-            return new MachineLearningNodeStateCounts(idleNodeCount, runningNodeCount, preparingNodeCount, unusableNodeCount, leavingNodeCount, preemptedNodeCount);
+            return new MachineLearningNodeStateCounts(idleNodeCount, runningNodeCount, preparingNodeCount, unusableNodeCount, leavingNodeCount, preemptedNodeCount, default);
         }
 
-        /// <summary> Initializes a new instance of AmlCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlCompute"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1247,10 +1256,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new AmlCompute(ComputeType.AmlCompute, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
+            return new AmlCompute(ComputeType.AmlCompute, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceProperties"/>. </summary>
         /// <param name="vmSize"> Virtual Machine Size. </param>
         /// <param name="subnetId"> Virtual network subnet resource ID the compute nodes belong to. </param>
         /// <param name="applicationSharingPolicy"> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </param>
@@ -1280,10 +1289,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             dataDisks ??= new List<MachineLearningComputeInstanceDataDisk>();
             dataMounts ??= new List<MachineLearningComputeInstanceDataMount>();
 
-            return new MachineLearningComputeInstanceProperties(vmSize, subnetId != null ? new ResourceId(subnetId) : null, applicationSharingPolicy, sshSettings, connectivityEndpoints, applications?.ToList(), createdBy, errors?.ToList(), state, computeInstanceAuthorizationType, personalComputeInstanceAssignedUser != null ? new PersonalComputeInstanceSettings(personalComputeInstanceAssignedUser) : null, scripts != null ? new SetupScripts(scripts) : null, lastOperation, schedulesComputeStartStop != null ? new ComputeSchedules(schedulesComputeStartStop?.ToList()) : null, enableNodePublicIP, containers?.ToList(), dataDisks?.ToList(), dataMounts?.ToList(), versionsRuntime != null ? new ComputeInstanceVersion(versionsRuntime) : null);
+            return new MachineLearningComputeInstanceProperties(vmSize, subnetId != null ? new ResourceId(subnetId, new Dictionary<string, BinaryData>()) : null, applicationSharingPolicy, sshSettings, connectivityEndpoints, applications?.ToList(), createdBy, errors?.ToList(), state, computeInstanceAuthorizationType, personalComputeInstanceAssignedUser != null ? new PersonalComputeInstanceSettings(personalComputeInstanceAssignedUser, new Dictionary<string, BinaryData>()) : null, scripts != null ? new SetupScripts(scripts, new Dictionary<string, BinaryData>()) : null, lastOperation, schedulesComputeStartStop != null ? new ComputeSchedules(schedulesComputeStartStop?.ToList(), new Dictionary<string, BinaryData>()) : null, enableNodePublicIP, containers?.ToList(), dataDisks?.ToList(), dataMounts?.ToList(), versionsRuntime != null ? new ComputeInstanceVersion(versionsRuntime, new Dictionary<string, BinaryData>()) : null, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceSshSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceSshSettings"/>. </summary>
         /// <param name="sshPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </param>
         /// <param name="adminUserName"> Describes the admin user name. </param>
         /// <param name="sshPort"> Describes the port for connecting through SSH. </param>
@@ -1291,38 +1300,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceSshSettings"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceSshSettings MachineLearningComputeInstanceSshSettings(MachineLearningSshPublicAccess? sshPublicAccess = null, string adminUserName = null, int? sshPort = null, string adminPublicKey = null)
         {
-            return new MachineLearningComputeInstanceSshSettings(sshPublicAccess, adminUserName, sshPort, adminPublicKey);
+            return new MachineLearningComputeInstanceSshSettings(sshPublicAccess, adminUserName, sshPort, adminPublicKey, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceConnectivityEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceConnectivityEndpoints"/>. </summary>
         /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
         /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceConnectivityEndpoints"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceConnectivityEndpoints MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress = null, string privateIPAddress = null)
         {
-            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress, privateIPAddress);
+            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress, privateIPAddress, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceApplication"/>. </summary>
         /// <param name="displayName"> Name of the ComputeInstance application. </param>
         /// <param name="endpointUri"> Application' endpoint URI. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceApplication"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceApplication MachineLearningComputeInstanceApplication(string displayName = null, Uri endpointUri = null)
         {
-            return new MachineLearningComputeInstanceApplication(displayName, endpointUri);
+            return new MachineLearningComputeInstanceApplication(displayName, endpointUri, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceCreatedBy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceCreatedBy"/>. </summary>
         /// <param name="userName"> Name of the user. </param>
         /// <param name="userOrgId"> Uniquely identifies user' Azure Active Directory organization. </param>
         /// <param name="userId"> Uniquely identifies the user within his/her organization. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceCreatedBy"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceCreatedBy MachineLearningComputeInstanceCreatedBy(string userName = null, string userOrgId = null, string userId = null)
         {
-            return new MachineLearningComputeInstanceCreatedBy(userName, userOrgId, userId);
+            return new MachineLearningComputeInstanceCreatedBy(userName, userOrgId, userId, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceLastOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceLastOperation"/>. </summary>
         /// <param name="operationName"> Name of the last operation. </param>
         /// <param name="operationOn"> Time of the last operation. </param>
         /// <param name="operationStatus"> Operation status. </param>
@@ -1330,10 +1339,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceLastOperation"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceLastOperation MachineLearningComputeInstanceLastOperation(MachineLearningOperationName? operationName = null, DateTimeOffset? operationOn = null, MachineLearningOperationStatus? operationStatus = null, MachineLearningOperationTrigger? operationTrigger = null)
         {
-            return new MachineLearningComputeInstanceLastOperation(operationName, operationOn, operationStatus, operationTrigger);
+            return new MachineLearningComputeInstanceLastOperation(operationName, operationOn, operationStatus, operationTrigger, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeStartStopSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeStartStopSchedule"/>. </summary>
         /// <param name="id"> A system assigned id for the schedule. </param>
         /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
         /// <param name="status"> Is the schedule enabled or disabled?. </param>
@@ -1345,20 +1354,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningComputeStartStopSchedule"/> instance for mocking. </returns>
         public static MachineLearningComputeStartStopSchedule MachineLearningComputeStartStopSchedule(string id = null, MachineLearningComputeProvisioningStatus? provisioningStatus = null, MachineLearningScheduleStatus? status = null, MachineLearningComputePowerAction? action = null, MachineLearningTriggerType? triggerType = null, MachineLearningRecurrenceTrigger recurrence = null, CronTrigger cron = null, MachineLearningScheduleBase schedule = null)
         {
-            return new MachineLearningComputeStartStopSchedule(id, provisioningStatus, status, action, triggerType, recurrence, cron, schedule);
+            return new MachineLearningComputeStartStopSchedule(id, provisioningStatus, status, action, triggerType, recurrence, cron, schedule, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScheduleBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleBase"/>. </summary>
         /// <param name="id"> A system assigned id for the schedule. </param>
         /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
         /// <param name="status"> Is the schedule enabled or disabled?. </param>
         /// <returns> A new <see cref="Models.MachineLearningScheduleBase"/> instance for mocking. </returns>
         public static MachineLearningScheduleBase MachineLearningScheduleBase(string id = null, MachineLearningScheduleProvisioningState? provisioningStatus = null, MachineLearningScheduleStatus? status = null)
         {
-            return new MachineLearningScheduleBase(id, provisioningStatus, status);
+            return new MachineLearningScheduleBase(id, provisioningStatus, status, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceContainer"/>. </summary>
         /// <param name="name"> Name of the ComputeInstance container. </param>
         /// <param name="autosave"> Auto save settings. </param>
         /// <param name="gpu"> Information of GPU. </param>
@@ -1370,19 +1379,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             services ??= new List<BinaryData>();
 
-            return new MachineLearningComputeInstanceContainer(name, autosave, gpu, network, environment, services?.ToList());
+            return new MachineLearningComputeInstanceContainer(name, autosave, gpu, network, environment, services?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceEnvironmentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceEnvironmentInfo"/>. </summary>
         /// <param name="name"> name of environment. </param>
         /// <param name="version"> version of environment. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceEnvironmentInfo"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceEnvironmentInfo MachineLearningComputeInstanceEnvironmentInfo(string name = null, string version = null)
         {
-            return new MachineLearningComputeInstanceEnvironmentInfo(name, version);
+            return new MachineLearningComputeInstanceEnvironmentInfo(name, version, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataDisk"/>. </summary>
         /// <param name="caching"> Caching type of Data Disk. </param>
         /// <param name="diskSizeGB"> The initial disk size in gigabytes. </param>
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. </param>
@@ -1390,10 +1399,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceDataDisk"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceDataDisk MachineLearningComputeInstanceDataDisk(MachineLearningCachingType? caching = null, int? diskSizeGB = null, int? lun = null, MachineLearningStorageAccountType? storageAccountType = null)
         {
-            return new MachineLearningComputeInstanceDataDisk(caching, diskSizeGB, lun, storageAccountType);
+            return new MachineLearningComputeInstanceDataDisk(caching, diskSizeGB, lun, storageAccountType, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataMount. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataMount"/>. </summary>
         /// <param name="source"> Source of the ComputeInstance data mount. </param>
         /// <param name="sourceType"> Data source type. </param>
         /// <param name="mountName"> name of the ComputeInstance data mount. </param>
@@ -1406,10 +1415,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceDataMount"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceDataMount MachineLearningComputeInstanceDataMount(string source = null, MachineLearningSourceType? sourceType = null, string mountName = null, MachineLearningMountAction? mountAction = null, string createdBy = null, string mountPath = null, MachineLearningMountState? mountState = null, DateTimeOffset? mountedOn = null, string error = null)
         {
-            return new MachineLearningComputeInstanceDataMount(source, sourceType, mountName, mountAction, createdBy, mountPath, mountState, mountedOn, error);
+            return new MachineLearningComputeInstanceDataMount(source, sourceType, mountName, mountAction, createdBy, mountPath, mountState, mountedOn, error, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstance"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1425,10 +1434,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningComputeInstance(ComputeType.ComputeInstance, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningComputeInstance(ComputeType.ComputeInstance, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningVirtualMachineCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVirtualMachineCompute"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1444,10 +1453,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningVirtualMachineCompute(ComputeType.VirtualMachine, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningVirtualMachineCompute(ComputeType.VirtualMachine, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningHDInsightCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningHDInsightCompute"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1463,10 +1472,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningHDInsightCompute(ComputeType.HDInsight, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningHDInsightCompute(ComputeType.HDInsight, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataFactoryCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataFactoryCompute"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1481,10 +1490,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningDataFactoryCompute(ComputeType.DataFactory, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth);
+            return new MachineLearningDataFactoryCompute(ComputeType.DataFactory, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDatabricksCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatabricksCompute"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1500,10 +1509,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningDatabricksCompute(ComputeType.Databricks, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningDatabricksCompute(ComputeType.Databricks, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataLakeAnalytics. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataLakeAnalytics"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1519,10 +1528,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningDataLakeAnalytics(ComputeType.DataLakeAnalytics, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, dataLakeStoreAccountName != null ? new MachineLearningDataLakeAnalyticsProperties(dataLakeStoreAccountName) : null);
+            return new MachineLearningDataLakeAnalytics(ComputeType.DataLakeAnalytics, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, dataLakeStoreAccountName != null ? new MachineLearningDataLakeAnalyticsProperties(dataLakeStoreAccountName, new Dictionary<string, BinaryData>()) : null, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSynapseSpark. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSynapseSpark"/>. </summary>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
         /// <param name="description"> The description of the Machine Learning compute. </param>
@@ -1538,36 +1547,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningSynapseSpark(ComputeType.SynapseSpark, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningSynapseSpark(ComputeType.SynapseSpark, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAksComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeSecrets"/>. </summary>
         /// <param name="userKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
         /// <param name="adminKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
         /// <param name="imagePullSecretName"> Image registry pull secret. </param>
         /// <returns> A new <see cref="Models.MachineLearningAksComputeSecrets"/> instance for mocking. </returns>
         public static MachineLearningAksComputeSecrets MachineLearningAksComputeSecrets(string userKubeConfig = null, string adminKubeConfig = null, string imagePullSecretName = null)
         {
-            return new MachineLearningAksComputeSecrets(ComputeType.Aks, userKubeConfig, adminKubeConfig, imagePullSecretName);
+            return new MachineLearningAksComputeSecrets(ComputeType.Aks, userKubeConfig, adminKubeConfig, imagePullSecretName, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningVirtualMachineSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVirtualMachineSecrets"/>. </summary>
         /// <param name="administratorAccount"> Admin credentials for virtual machine. </param>
         /// <returns> A new <see cref="Models.MachineLearningVirtualMachineSecrets"/> instance for mocking. </returns>
         public static MachineLearningVirtualMachineSecrets MachineLearningVirtualMachineSecrets(MachineLearningVmSshCredentials administratorAccount = null)
         {
-            return new MachineLearningVirtualMachineSecrets(ComputeType.VirtualMachine, administratorAccount);
+            return new MachineLearningVirtualMachineSecrets(ComputeType.VirtualMachine, administratorAccount, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDatabricksComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatabricksComputeSecrets"/>. </summary>
         /// <param name="databricksAccessToken"> access token for databricks account. </param>
         /// <returns> A new <see cref="Models.MachineLearningDatabricksComputeSecrets"/> instance for mocking. </returns>
         public static MachineLearningDatabricksComputeSecrets MachineLearningDatabricksComputeSecrets(string databricksAccessToken = null)
         {
-            return new MachineLearningDatabricksComputeSecrets(ComputeType.Databricks, databricksAccessToken);
+            return new MachineLearningDatabricksComputeSecrets(ComputeType.Databricks, databricksAccessToken, default);
         }
 
-        /// <summary> Initializes a new instance of AutoMLJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -1612,10 +1621,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             environmentVariables ??= new Dictionary<string, string>();
             outputs ??= new Dictionary<string, MachineLearningJobOutput>();
 
-            return new AutoMLJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.AutoML, services, status, environmentId, environmentVariables, outputs, resources, taskDetails);
+            return new AutoMLJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.AutoML, services, status, environmentId, environmentVariables, outputs, resources, taskDetails, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAzureBlobDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureBlobDatastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -1636,10 +1645,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningAzureBlobDatastore(description, properties, tags, credentials, DatastoreType.AzureBlob, isDefault, accountName, containerName, endpoint, protocol, serviceDataAccessAuthIdentity);
+            return new MachineLearningAzureBlobDatastore(description, properties, tags, credentials, DatastoreType.AzureBlob, isDefault, accountName, containerName, endpoint, protocol, serviceDataAccessAuthIdentity, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAzureDataLakeGen1Datastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen1Datastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -1657,10 +1666,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningAzureDataLakeGen1Datastore(description, properties, tags, credentials, DatastoreType.AzureDataLakeGen1, isDefault, serviceDataAccessAuthIdentity, storeName);
+            return new MachineLearningAzureDataLakeGen1Datastore(description, properties, tags, credentials, DatastoreType.AzureDataLakeGen1, isDefault, serviceDataAccessAuthIdentity, storeName, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAzureDataLakeGen2Datastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen2Datastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -1681,10 +1690,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningAzureDataLakeGen2Datastore(description, properties, tags, credentials, DatastoreType.AzureDataLakeGen2, isDefault, accountName, endpoint, filesystem, protocol, serviceDataAccessAuthIdentity);
+            return new MachineLearningAzureDataLakeGen2Datastore(description, properties, tags, credentials, DatastoreType.AzureDataLakeGen2, isDefault, accountName, endpoint, filesystem, protocol, serviceDataAccessAuthIdentity, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAzureFileDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureFileDatastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -1705,10 +1714,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningAzureFileDatastore(description, properties, tags, credentials, DatastoreType.AzureFile, isDefault, accountName, endpoint, fileShareName, protocol, serviceDataAccessAuthIdentity);
+            return new MachineLearningAzureFileDatastore(description, properties, tags, credentials, DatastoreType.AzureFile, isDefault, accountName, endpoint, fileShareName, protocol, serviceDataAccessAuthIdentity, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCommandJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -1760,10 +1769,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             inputs ??= new Dictionary<string, MachineLearningJobInput>();
             outputs ??= new Dictionary<string, MachineLearningJobOutput>();
 
-            return new MachineLearningCommandJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Command, services, status, codeId, command, distribution, environmentId, environmentVariables, inputs, limits, outputs, parameters, resources);
+            return new MachineLearningCommandJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Command, services, status, codeId, command, distribution, environmentId, environmentVariables, inputs, limits, outputs, parameters, resources, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningKubernetesOnlineDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesOnlineDeployment"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
@@ -1793,10 +1802,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, MachineLearningEndpointComputeType.Kubernetes, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings, containerResourceRequirements);
+            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, MachineLearningEndpointComputeType.Kubernetes, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings, containerResourceRequirements, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningManagedOnlineDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningManagedOnlineDeployment"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
@@ -1825,10 +1834,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningManagedOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, MachineLearningEndpointComputeType.Managed, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
+            return new MachineLearningManagedOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, MachineLearningEndpointComputeType.Managed, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPipelineJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPipelineJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -1871,10 +1880,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             jobs ??= new Dictionary<string, BinaryData>();
             outputs ??= new Dictionary<string, MachineLearningJobOutput>();
 
-            return new MachineLearningPipelineJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Pipeline, services, status, inputs, jobs, outputs, settings, sourceJobId);
+            return new MachineLearningPipelineJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Pipeline, services, status, inputs, jobs, outputs, settings, sourceJobId, default);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSweepJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -1927,10 +1936,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             inputs ??= new Dictionary<string, MachineLearningJobInput>();
             outputs ??= new Dictionary<string, MachineLearningJobOutput>();
 
-            return new MachineLearningSweepJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Sweep, services, status, earlyTermination, inputs, limits, objective, outputs, samplingAlgorithm, searchSpace, trial);
+            return new MachineLearningSweepJob(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Sweep, services, status, earlyTermination, inputs, limits, objective, outputs, samplingAlgorithm, searchSpace, trial, default);
         }
 
-        /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextClassificationMultilabel"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -1947,10 +1956,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TextClassificationMultilabel"/> instance for mocking. </returns>
         public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationMultilabelPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpVerticalLimitSettings limitSettings = null, MachineLearningTableJobInput validationData = null)
         {
-            return new TextClassificationMultilabel(logVerbosity, targetColumnName, TaskType.TextClassificationMultilabel, trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage) : null, limitSettings, validationData);
+            return new TextClassificationMultilabel(logVerbosity, targetColumnName, TaskType.TextClassificationMultilabel, trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, new Dictionary<string, BinaryData>()) : null, limitSettings, validationData, default);
         }
 
-        /// <summary> Initializes a new instance of TextNer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextNer"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -1967,7 +1976,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TextNer"/> instance for mocking. </returns>
         public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpVerticalLimitSettings limitSettings = null, MachineLearningTableJobInput validationData = null)
         {
-            return new TextNer(logVerbosity, targetColumnName, TaskType.TextNER, trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage) : null, limitSettings, validationData);
+            return new TextNer(logVerbosity, targetColumnName, TaskType.TextNER, trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, new Dictionary<string, BinaryData>()) : null, limitSettings, validationData, default);
         }
     }
 }

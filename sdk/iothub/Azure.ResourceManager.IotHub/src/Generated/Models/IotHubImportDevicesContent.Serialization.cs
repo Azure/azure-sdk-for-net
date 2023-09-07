@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubImportDevicesContent : IUtf8JsonSerializable
+    public partial class IotHubImportDevicesContent : IUtf8JsonSerializable, IModelJsonSerializable<IotHubImportDevicesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubImportDevicesContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubImportDevicesContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubImportDevicesContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("inputBlobContainerUri"u8);
             writer.WriteStringValue(InputBlobContainerUri.AbsoluteUri);
@@ -37,7 +45,14 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                if (Identity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedIdentity>)Identity).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IncludeConfigurations))
             {
@@ -49,7 +64,147 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static IotHubImportDevicesContent DeserializeIotHubImportDevicesContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri inputBlobContainerUri = default;
+            Uri outputBlobContainerUri = default;
+            Optional<string> inputBlobName = default;
+            Optional<string> outputBlobName = default;
+            Optional<IotHubAuthenticationType> authenticationType = default;
+            Optional<ManagedIdentity> identity = default;
+            Optional<bool> includeConfigurations = default;
+            Optional<string> configurationsBlobName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("inputBlobContainerUri"u8))
+                {
+                    inputBlobContainerUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("outputBlobContainerUri"u8))
+                {
+                    outputBlobContainerUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("inputBlobName"u8))
+                {
+                    inputBlobName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("outputBlobName"u8))
+                {
+                    outputBlobName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authenticationType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authenticationType = new IotHubAuthenticationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("includeConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeConfigurations = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("configurationsBlobName"u8))
+                {
+                    configurationsBlobName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new IotHubImportDevicesContent(inputBlobContainerUri, outputBlobContainerUri, inputBlobName.Value, outputBlobName.Value, Optional.ToNullable(authenticationType), identity.Value, Optional.ToNullable(includeConfigurations), configurationsBlobName.Value, serializedAdditionalRawData);
+        }
+
+        IotHubImportDevicesContent IModelJsonSerializable<IotHubImportDevicesContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubImportDevicesContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubImportDevicesContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubImportDevicesContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubImportDevicesContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubImportDevicesContent IModelSerializable<IotHubImportDevicesContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubImportDevicesContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubImportDevicesContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotHubImportDevicesContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotHubImportDevicesContent"/> to convert. </param>
+        public static implicit operator RequestContent(IotHubImportDevicesContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotHubImportDevicesContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotHubImportDevicesContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubImportDevicesContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

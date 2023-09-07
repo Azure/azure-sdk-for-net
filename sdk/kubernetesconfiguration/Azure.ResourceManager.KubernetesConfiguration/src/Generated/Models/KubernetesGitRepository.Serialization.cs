@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesGitRepository : IUtf8JsonSerializable
+    public partial class KubernetesGitRepository : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesGitRepository>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesGitRepository>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesGitRepository>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepository>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (RepositoryRef != null)
                 {
                     writer.WritePropertyName("repositoryRef"u8);
-                    writer.WriteObjectValue(RepositoryRef);
+                    if (RepositoryRef is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesGitRepositoryRef>)RepositoryRef).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -112,11 +126,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("localAuthRef");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesGitRepository DeserializeKubernetesGitRepository(JsonElement element)
+        internal static KubernetesGitRepository DeserializeKubernetesGitRepository(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,6 +157,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> httpsUser = default;
             Optional<string> httpsCACert = default;
             Optional<string> localAuthRef = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -211,8 +240,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     localAuthRef = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KubernetesGitRepository(url.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), repositoryRef.Value, sshKnownHosts.Value, httpsUser.Value, httpsCACert.Value, localAuthRef.Value);
+            return new KubernetesGitRepository(url.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), repositoryRef.Value, sshKnownHosts.Value, httpsUser.Value, httpsCACert.Value, localAuthRef.Value, serializedAdditionalRawData);
+        }
+
+        KubernetesGitRepository IModelJsonSerializable<KubernetesGitRepository>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepository>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesGitRepository(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesGitRepository>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepository>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesGitRepository IModelSerializable<KubernetesGitRepository>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepository>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesGitRepository(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesGitRepository"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesGitRepository"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesGitRepository model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesGitRepository"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesGitRepository(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesGitRepository(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

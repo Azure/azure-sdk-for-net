@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Maps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mapsAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), _mapsAccountAccountsClientDiagnostics, Pipeline, "MapsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), _mapsAccountAccountsClientDiagnostics, Pipeline, "MapsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Maps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mapsAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), _mapsAccountAccountsClientDiagnostics, Pipeline, "MapsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), _mapsAccountAccountsClientDiagnostics, Pipeline, "MapsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

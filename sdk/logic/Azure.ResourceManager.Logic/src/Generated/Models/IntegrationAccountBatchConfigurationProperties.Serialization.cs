@@ -6,20 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountBatchConfigurationProperties : IUtf8JsonSerializable
+    public partial class IntegrationAccountBatchConfigurationProperties : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountBatchConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountBatchConfigurationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountBatchConfigurationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountBatchConfigurationProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("batchGroupName"u8);
             writer.WriteStringValue(BatchGroupName);
             writer.WritePropertyName("releaseCriteria"u8);
-            writer.WriteObjectValue(ReleaseCriteria);
+            if (ReleaseCriteria is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IntegrationAccountBatchReleaseCriteria>)ReleaseCriteria).Serialize(writer, options);
+            }
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
@@ -39,11 +53,25 @@ namespace Azure.ResourceManager.Logic.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
 #endif
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountBatchConfigurationProperties DeserializeIntegrationAccountBatchConfigurationProperties(JsonElement element)
+        internal static IntegrationAccountBatchConfigurationProperties DeserializeIntegrationAccountBatchConfigurationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchGroupName"u8))
@@ -92,8 +121,61 @@ namespace Azure.ResourceManager.Logic.Models
                     metadata = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationAccountBatchConfigurationProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, batchGroupName, releaseCriteria);
+            return new IntegrationAccountBatchConfigurationProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, batchGroupName, releaseCriteria, serializedAdditionalRawData);
+        }
+
+        IntegrationAccountBatchConfigurationProperties IModelJsonSerializable<IntegrationAccountBatchConfigurationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountBatchConfigurationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountBatchConfigurationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountBatchConfigurationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountBatchConfigurationProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountBatchConfigurationProperties IModelSerializable<IntegrationAccountBatchConfigurationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountBatchConfigurationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountBatchConfigurationProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationAccountBatchConfigurationProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationAccountBatchConfigurationProperties"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationAccountBatchConfigurationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationAccountBatchConfigurationProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationAccountBatchConfigurationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountBatchConfigurationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

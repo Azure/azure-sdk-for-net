@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class TwinConfiguration : IUtf8JsonSerializable
+    public partial class TwinConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<TwinConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TwinConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TwinConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TwinConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -41,7 +47,14 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteObjectValue(Content);
+                if (Content is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ConfigurationContent>)Content).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TargetCondition))
             {
@@ -66,23 +79,51 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(SystemMetrics))
             {
                 writer.WritePropertyName("systemMetrics"u8);
-                writer.WriteObjectValue(SystemMetrics);
+                if (SystemMetrics is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ConfigurationMetrics>)SystemMetrics).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics);
+                if (Metrics is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ConfigurationMetrics>)Metrics).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TwinConfiguration DeserializeTwinConfiguration(JsonElement element)
+        internal static TwinConfiguration DeserializeTwinConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,6 +139,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<ConfigurationMetrics> systemMetrics = default;
             Optional<ConfigurationMetrics> metrics = default;
             Optional<string> etag = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -188,8 +230,61 @@ namespace Azure.IoT.Hub.Service.Models
                     etag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TwinConfiguration(id.Value, schemaVersion.Value, Optional.ToDictionary(labels), content.Value, targetCondition.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(priority), systemMetrics.Value, metrics.Value, etag.Value);
+            return new TwinConfiguration(id.Value, schemaVersion.Value, Optional.ToDictionary(labels), content.Value, targetCondition.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(priority), systemMetrics.Value, metrics.Value, etag.Value, serializedAdditionalRawData);
+        }
+
+        TwinConfiguration IModelJsonSerializable<TwinConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TwinConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTwinConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TwinConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TwinConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TwinConfiguration IModelSerializable<TwinConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TwinConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTwinConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TwinConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TwinConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(TwinConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TwinConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TwinConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTwinConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

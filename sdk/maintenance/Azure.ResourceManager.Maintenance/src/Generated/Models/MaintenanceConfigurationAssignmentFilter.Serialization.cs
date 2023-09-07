@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenanceConfigurationAssignmentFilter : IUtf8JsonSerializable
+    public partial class MaintenanceConfigurationAssignmentFilter : IUtf8JsonSerializable, IModelJsonSerializable<MaintenanceConfigurationAssignmentFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MaintenanceConfigurationAssignmentFilter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MaintenanceConfigurationAssignmentFilter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceConfigurationAssignmentFilter>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ResourceTypes))
             {
@@ -59,13 +66,34 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(TagSettings))
             {
                 writer.WritePropertyName("tagSettings"u8);
-                writer.WriteObjectValue(TagSettings);
+                if (TagSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VmTagSettings>)TagSettings).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MaintenanceConfigurationAssignmentFilter DeserializeMaintenanceConfigurationAssignmentFilter(JsonElement element)
+        internal static MaintenanceConfigurationAssignmentFilter DeserializeMaintenanceConfigurationAssignmentFilter(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +103,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             Optional<IList<string>> osTypes = default;
             Optional<IList<AzureLocation>> locations = default;
             Optional<VmTagSettings> tagSettings = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceTypes"u8))
@@ -142,8 +171,61 @@ namespace Azure.ResourceManager.Maintenance.Models
                     tagSettings = VmTagSettings.DeserializeVmTagSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MaintenanceConfigurationAssignmentFilter(Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(osTypes), Optional.ToList(locations), tagSettings.Value);
+            return new MaintenanceConfigurationAssignmentFilter(Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(osTypes), Optional.ToList(locations), tagSettings.Value, serializedAdditionalRawData);
+        }
+
+        MaintenanceConfigurationAssignmentFilter IModelJsonSerializable<MaintenanceConfigurationAssignmentFilter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceConfigurationAssignmentFilter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenanceConfigurationAssignmentFilter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MaintenanceConfigurationAssignmentFilter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceConfigurationAssignmentFilter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MaintenanceConfigurationAssignmentFilter IModelSerializable<MaintenanceConfigurationAssignmentFilter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceConfigurationAssignmentFilter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMaintenanceConfigurationAssignmentFilter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MaintenanceConfigurationAssignmentFilter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MaintenanceConfigurationAssignmentFilter"/> to convert. </param>
+        public static implicit operator RequestContent(MaintenanceConfigurationAssignmentFilter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MaintenanceConfigurationAssignmentFilter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MaintenanceConfigurationAssignmentFilter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMaintenanceConfigurationAssignmentFilter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

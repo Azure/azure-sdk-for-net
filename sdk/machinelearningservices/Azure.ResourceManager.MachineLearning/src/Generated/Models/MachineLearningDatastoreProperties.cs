@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class MachineLearningDatastoreProperties : MachineLearningResourceBase
     {
-        /// <summary> Initializes a new instance of MachineLearningDatastoreProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreProperties"/>. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Credentials = credentials;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDatastoreProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -43,11 +43,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        internal MachineLearningDatastoreProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault) : base(description, properties, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDatastoreProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, properties, tags, serializedAdditionalRawData)
         {
             Credentials = credentials;
             DatastoreType = datastoreType;
             IsDefault = isDefault;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreProperties"/> for deserialization. </summary>
+        internal MachineLearningDatastoreProperties()
+        {
         }
 
         /// <summary>

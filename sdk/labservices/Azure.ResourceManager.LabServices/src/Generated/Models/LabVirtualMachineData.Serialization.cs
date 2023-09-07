@@ -5,26 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabVirtualMachineData : IUtf8JsonSerializable
+    public partial class LabVirtualMachineData : IUtf8JsonSerializable, IModelJsonSerializable<LabVirtualMachineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LabVirtualMachineData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LabVirtualMachineData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LabVirtualMachineData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabVirtualMachineData DeserializeLabVirtualMachineData(JsonElement element)
+        internal static LabVirtualMachineData DeserializeLabVirtualMachineData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +60,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<LabVirtualMachineConnectionProfile> connectionProfile = default;
             Optional<string> claimedByUserId = default;
             Optional<LabVirtualMachineType> vmType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,8 +140,61 @@ namespace Azure.ResourceManager.LabServices
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LabVirtualMachineData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), connectionProfile.Value, claimedByUserId.Value, Optional.ToNullable(vmType));
+            return new LabVirtualMachineData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), connectionProfile.Value, claimedByUserId.Value, Optional.ToNullable(vmType), serializedAdditionalRawData);
+        }
+
+        LabVirtualMachineData IModelJsonSerializable<LabVirtualMachineData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabVirtualMachineData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabVirtualMachineData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LabVirtualMachineData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabVirtualMachineData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LabVirtualMachineData IModelSerializable<LabVirtualMachineData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabVirtualMachineData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLabVirtualMachineData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LabVirtualMachineData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LabVirtualMachineData"/> to convert. </param>
+        public static implicit operator RequestContent(LabVirtualMachineData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LabVirtualMachineData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LabVirtualMachineData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLabVirtualMachineData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

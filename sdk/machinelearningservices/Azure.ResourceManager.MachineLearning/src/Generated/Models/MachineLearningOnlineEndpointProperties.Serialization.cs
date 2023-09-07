@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningOnlineEndpointProperties : IUtf8JsonSerializable
+    public partial class MachineLearningOnlineEndpointProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningOnlineEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningOnlineEndpointProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningOnlineEndpointProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningOnlineEndpointProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Compute))
             {
@@ -71,7 +77,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Keys != null)
                 {
                     writer.WritePropertyName("keys"u8);
-                    writer.WriteObjectValue(Keys);
+                    if (Keys is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningEndpointAuthKeys>)Keys).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -96,11 +109,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningOnlineEndpointProperties DeserializeMachineLearningOnlineEndpointProperties(JsonElement element)
+        internal static MachineLearningOnlineEndpointProperties DeserializeMachineLearningOnlineEndpointProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -115,6 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, string>> properties = default;
             Optional<Uri> scoringUri = default;
             Optional<Uri> swaggerUri = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("compute"u8))
@@ -220,8 +248,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     swaggerUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningOnlineEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, compute.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(traffic));
+            return new MachineLearningOnlineEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, compute.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(traffic), serializedAdditionalRawData);
+        }
+
+        MachineLearningOnlineEndpointProperties IModelJsonSerializable<MachineLearningOnlineEndpointProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningOnlineEndpointProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningOnlineEndpointProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningOnlineEndpointProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningOnlineEndpointProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningOnlineEndpointProperties IModelSerializable<MachineLearningOnlineEndpointProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningOnlineEndpointProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningOnlineEndpointProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningOnlineEndpointProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningOnlineEndpointProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningOnlineEndpointProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningOnlineEndpointProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningOnlineEndpointProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningOnlineEndpointProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
