@@ -192,6 +192,83 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.PublicAudience);
+
+            DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
+                service.Uri,
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            DataLakeServiceProperties properties = await aadServiceClient.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience($"https://{service.AccountName}.blob.core.windows.net/.default"));
+
+            DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
+                service.Uri,
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            DataLakeServiceProperties properties = await aadServiceClient.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.DataLakeServiceAccountAudience(service.AccountName));
+
+            DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
+                service.Uri,
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            DataLakeServiceProperties properties = await aadServiceClient.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience("https://badaudience.blob.core.windows.net"));
+
+            DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
+                service.Uri,
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
+                aadServiceClient.GetPropertiesAsync(),
+                e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
+        }
+
+        [RecordedTest]
         public async Task GetUserDelegationKey()
         {
             // Arrange

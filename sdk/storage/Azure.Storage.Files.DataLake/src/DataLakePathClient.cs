@@ -454,12 +454,14 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
             : this(
-                  pathUri,
-                  credential.AsPolicy(options),
-                  options,
-                  storageSharedKeyCredential: null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+                pathUri,
+                credential.AsPolicy(
+                    options?.Audience != null ? options.Audience.Value.ToString() : DataLakeAudience.PublicAudience.ToString(),
+                    options),
+                options,
+                storageSharedKeyCredential: null,
+                sasCredential: null,
+                tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }

@@ -16,6 +16,11 @@ namespace Azure.Storage
     internal static class StorageClientOptions
     {
         /// <summary>
+        /// The default scope used for token authentication with Storage.
+        /// </summary>
+        private const string StorageScope = "https://storage.azure.com/.default";
+
+        /// <summary>
         /// Set common ClientOptions defaults for Azure Storage.
         /// </summary>
         /// <param name="options">Storage ClientOptions.</param>
@@ -65,7 +70,7 @@ namespace Azure.Storage
         public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, string scope, ClientOptions options) =>
             new StorageBearerTokenChallengeAuthorizationPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)),
-                scope,
+                scope ?? StorageScope,
                 options is ISupportsTenantIdChallenges { EnableTenantDiscovery: true });
 
         /// <summary>
