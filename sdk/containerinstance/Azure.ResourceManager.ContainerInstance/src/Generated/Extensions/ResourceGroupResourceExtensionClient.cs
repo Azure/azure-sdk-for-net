@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerInstance
             try
             {
                 var response = await SubnetServiceAssociationLinkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerInstance
             try
             {
                 var response = SubnetServiceAssociationLinkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName, cancellationToken);
-                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

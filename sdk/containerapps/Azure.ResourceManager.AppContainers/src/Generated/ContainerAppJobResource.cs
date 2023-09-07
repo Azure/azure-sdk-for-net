@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppJobJobsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -263,7 +262,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppJobJobsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -301,7 +300,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppJobJobsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -339,7 +338,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppJobJobsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -374,7 +373,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppJobJobsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -409,7 +408,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppJobJobsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -443,7 +442,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppJobJobsRestClient.StopMultipleExecutionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -477,7 +476,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppJobJobsRestClient.StopMultipleExecutions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -507,7 +506,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppWritableSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -528,7 +527,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppWritableSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>

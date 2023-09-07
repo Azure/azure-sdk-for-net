@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             try
             {
                 var response = await _managedCcfManagedCcfRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, appName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation<ManagedCcfResource>(new ManagedCcfOperationSource(Client), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, appName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConfidentialLedgerArmOperation<ManagedCcfResource>(new ManagedCcfOperationSource(Client), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, appName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             try
             {
                 var response = _managedCcfManagedCcfRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, appName, data, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation<ManagedCcfResource>(new ManagedCcfOperationSource(Client), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, appName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConfidentialLedgerArmOperation<ManagedCcfResource>(new ManagedCcfOperationSource(Client), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, appName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), _managedCcfManagedCcfClientDiagnostics, Pipeline, "ManagedCcfCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), _managedCcfManagedCcfClientDiagnostics, Pipeline, "ManagedCcfCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), _managedCcfManagedCcfClientDiagnostics, Pipeline, "ManagedCcfCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), _managedCcfManagedCcfClientDiagnostics, Pipeline, "ManagedCcfCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

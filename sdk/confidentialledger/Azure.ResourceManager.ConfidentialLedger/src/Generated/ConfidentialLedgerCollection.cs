@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             try
             {
                 var response = await _confidentialLedgerLedgerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             try
             {
                 var response = _confidentialLedgerLedgerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), _confidentialLedgerLedgerClientDiagnostics, Pipeline, "ConfidentialLedgerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), _confidentialLedgerLedgerClientDiagnostics, Pipeline, "ConfidentialLedgerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), _confidentialLedgerLedgerClientDiagnostics, Pipeline, "ConfidentialLedgerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), _confidentialLedgerLedgerClientDiagnostics, Pipeline, "ConfidentialLedgerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
