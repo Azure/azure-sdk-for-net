@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ScriptActionProfile : IUtf8JsonSerializable
+    public partial class ScriptActionProfile : IUtf8JsonSerializable, IModelJsonSerializable<ScriptActionProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScriptActionProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScriptActionProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ScriptActionProfile>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ScriptActionProfileType);
@@ -44,11 +51,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("shouldPersist"u8);
                 writer.WriteBooleanValue(ShouldPersist.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScriptActionProfile DeserializeScriptActionProfile(JsonElement element)
+        internal static ScriptActionProfile DeserializeScriptActionProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             IList<string> services = default;
             Optional<int> timeoutInMinutes = default;
             Optional<bool> shouldPersist = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -110,8 +132,61 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     shouldPersist = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScriptActionProfile(type, name, url, parameters.Value, services, Optional.ToNullable(timeoutInMinutes), Optional.ToNullable(shouldPersist));
+            return new ScriptActionProfile(type, name, url, parameters.Value, services, Optional.ToNullable(timeoutInMinutes), Optional.ToNullable(shouldPersist), serializedAdditionalRawData);
+        }
+
+        ScriptActionProfile IModelJsonSerializable<ScriptActionProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScriptActionProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScriptActionProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScriptActionProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScriptActionProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScriptActionProfile IModelSerializable<ScriptActionProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScriptActionProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScriptActionProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScriptActionProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScriptActionProfile"/> to convert. </param>
+        public static implicit operator RequestContent(ScriptActionProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScriptActionProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScriptActionProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScriptActionProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

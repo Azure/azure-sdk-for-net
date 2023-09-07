@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemPatch : IUtf8JsonSerializable
+    public partial class EdgeOrderItemPatch : IUtf8JsonSerializable, IModelJsonSerializable<EdgeOrderItemPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeOrderItemPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeOrderItemPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderItemPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -31,12 +39,26 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ForwardAddress))
             {
                 writer.WritePropertyName("forwardAddress"u8);
-                writer.WriteObjectValue(ForwardAddress);
+                if (ForwardAddress is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdgeOrderItemAddressProperties>)ForwardAddress).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                if (Preferences is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OrderItemPreferences>)Preferences).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
@@ -49,7 +71,149 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static EdgeOrderItemPatch DeserializeEdgeOrderItemPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<EdgeOrderItemAddressProperties> forwardAddress = default;
+            Optional<OrderItemPreferences> preferences = default;
+            Optional<IList<string>> notificationEmailList = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("forwardAddress"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("preferences"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("notificationEmailList"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            notificationEmailList = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new EdgeOrderItemPatch(Optional.ToDictionary(tags), forwardAddress.Value, preferences.Value, Optional.ToList(notificationEmailList), serializedAdditionalRawData);
+        }
+
+        EdgeOrderItemPatch IModelJsonSerializable<EdgeOrderItemPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderItemPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeOrderItemPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeOrderItemPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderItemPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeOrderItemPatch IModelSerializable<EdgeOrderItemPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderItemPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeOrderItemPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdgeOrderItemPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdgeOrderItemPatch"/> to convert. </param>
+        public static implicit operator RequestContent(EdgeOrderItemPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdgeOrderItemPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdgeOrderItemPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeOrderItemPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

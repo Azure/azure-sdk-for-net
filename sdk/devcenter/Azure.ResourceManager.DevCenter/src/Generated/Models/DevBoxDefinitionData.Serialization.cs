@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevBoxDefinitionData : IUtf8JsonSerializable
+    public partial class DevBoxDefinitionData : IUtf8JsonSerializable, IModelJsonSerializable<DevBoxDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevBoxDefinitionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevBoxDefinitionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevBoxDefinitionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -36,12 +43,26 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                if (ImageReference is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DevCenterImageReference>)ImageReference).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DevCenterSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OSStorageType))
             {
@@ -54,11 +75,25 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WriteStringValue(HibernateSupport.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevBoxDefinitionData DeserializeDevBoxDefinitionData(JsonElement element)
+        internal static DevBoxDefinitionData DeserializeDevBoxDefinitionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +112,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<ImageValidationStatus> imageValidationStatus = default;
             Optional<ImageValidationErrorDetails> imageValidationErrorDetails = default;
             Optional<DevCenterImageReference> activeImageReference = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -202,8 +238,61 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevBoxDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value);
+            return new DevBoxDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value, serializedAdditionalRawData);
+        }
+
+        DevBoxDefinitionData IModelJsonSerializable<DevBoxDefinitionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevBoxDefinitionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevBoxDefinitionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevBoxDefinitionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevBoxDefinitionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevBoxDefinitionData IModelSerializable<DevBoxDefinitionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevBoxDefinitionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevBoxDefinitionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevBoxDefinitionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevBoxDefinitionData"/> to convert. </param>
+        public static implicit operator RequestContent(DevBoxDefinitionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevBoxDefinitionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevBoxDefinitionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevBoxDefinitionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

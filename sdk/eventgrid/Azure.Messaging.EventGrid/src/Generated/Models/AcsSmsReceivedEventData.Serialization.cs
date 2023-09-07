@@ -6,17 +6,69 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsSmsReceivedEventDataConverter))]
-    public partial class AcsSmsReceivedEventData
+    public partial class AcsSmsReceivedEventData : IUtf8JsonSerializable, IModelJsonSerializable<AcsSmsReceivedEventData>
     {
-        internal static AcsSmsReceivedEventData DeserializeAcsSmsReceivedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcsSmsReceivedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcsSmsReceivedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AcsSmsReceivedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(ReceivedTimestamp))
+            {
+                writer.WritePropertyName("receivedTimestamp"u8);
+                writer.WriteStringValue(ReceivedTimestamp.Value, "O");
+            }
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(From))
+            {
+                writer.WritePropertyName("from"u8);
+                writer.WriteStringValue(From);
+            }
+            if (Optional.IsDefined(To))
+            {
+                writer.WritePropertyName("to"u8);
+                writer.WriteStringValue(To);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcsSmsReceivedEventData DeserializeAcsSmsReceivedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +78,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> messageId = default;
             Optional<string> @from = default;
             Optional<string> to = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -57,15 +110,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     to = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcsSmsReceivedEventData(messageId.Value, @from.Value, to.Value, message.Value, Optional.ToNullable(receivedTimestamp));
+            return new AcsSmsReceivedEventData(messageId.Value, @from.Value, to.Value, message.Value, Optional.ToNullable(receivedTimestamp), serializedAdditionalRawData);
+        }
+
+        AcsSmsReceivedEventData IModelJsonSerializable<AcsSmsReceivedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsSmsReceivedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsSmsReceivedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcsSmsReceivedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsSmsReceivedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcsSmsReceivedEventData IModelSerializable<AcsSmsReceivedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsSmsReceivedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcsSmsReceivedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcsSmsReceivedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcsSmsReceivedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(AcsSmsReceivedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcsSmsReceivedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcsSmsReceivedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcsSmsReceivedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AcsSmsReceivedEventDataConverter : JsonConverter<AcsSmsReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsSmsReceivedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsSmsReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

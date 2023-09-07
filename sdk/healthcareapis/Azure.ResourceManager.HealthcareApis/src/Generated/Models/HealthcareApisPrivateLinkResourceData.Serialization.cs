@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    public partial class HealthcareApisPrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class HealthcareApisPrivateLinkResourceData : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareApisPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareApisPrivateLinkResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareApisPrivateLinkResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisPrivateLinkResourceData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthcareApisPrivateLinkResourceData DeserializeHealthcareApisPrivateLinkResourceData(JsonElement element)
+        internal static HealthcareApisPrivateLinkResourceData DeserializeHealthcareApisPrivateLinkResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +67,7 @@ namespace Azure.ResourceManager.HealthcareApis
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IList<string>> requiredZoneNames = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,8 +139,61 @@ namespace Azure.ResourceManager.HealthcareApis
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareApisPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new HealthcareApisPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), serializedAdditionalRawData);
+        }
+
+        HealthcareApisPrivateLinkResourceData IModelJsonSerializable<HealthcareApisPrivateLinkResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisPrivateLinkResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareApisPrivateLinkResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareApisPrivateLinkResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisPrivateLinkResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareApisPrivateLinkResourceData IModelSerializable<HealthcareApisPrivateLinkResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisPrivateLinkResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareApisPrivateLinkResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareApisPrivateLinkResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareApisPrivateLinkResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareApisPrivateLinkResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareApisPrivateLinkResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareApisPrivateLinkResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareApisPrivateLinkResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

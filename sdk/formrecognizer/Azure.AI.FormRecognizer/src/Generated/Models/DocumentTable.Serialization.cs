@@ -5,16 +5,92 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentTable
+    public partial class DocumentTable : IUtf8JsonSerializable, IModelJsonSerializable<DocumentTable>
     {
-        internal static DocumentTable DeserializeDocumentTable(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DocumentTable>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DocumentTable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentTable>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("rowCount"u8);
+            writer.WriteNumberValue(RowCount);
+            writer.WritePropertyName("columnCount"u8);
+            writer.WriteNumberValue(ColumnCount);
+            writer.WritePropertyName("cells"u8);
+            writer.WriteStartArray();
+            foreach (var item in Cells)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DocumentTableCell>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(BoundingRegions))
+            {
+                writer.WritePropertyName("boundingRegions"u8);
+                writer.WriteStartArray();
+                foreach (var item in BoundingRegions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BoundingRegion>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("spans"u8);
+            writer.WriteStartArray();
+            foreach (var item in Spans)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DocumentSpan>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DocumentTable DeserializeDocumentTable(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +100,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             IReadOnlyList<DocumentTableCell> cells = default;
             Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rowCount"u8))
@@ -70,8 +147,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     spans = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DocumentTable(rowCount, columnCount, cells, Optional.ToList(boundingRegions), spans);
+            return new DocumentTable(rowCount, columnCount, cells, Optional.ToList(boundingRegions), spans, serializedAdditionalRawData);
+        }
+
+        DocumentTable IModelJsonSerializable<DocumentTable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentTable>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentTable(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DocumentTable>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentTable>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DocumentTable IModelSerializable<DocumentTable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentTable>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDocumentTable(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DocumentTable"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DocumentTable"/> to convert. </param>
+        public static implicit operator RequestContent(DocumentTable model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DocumentTable"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DocumentTable(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDocumentTable(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

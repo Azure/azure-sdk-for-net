@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class TopicTypeData : IUtf8JsonSerializable
+    public partial class TopicTypeData : IUtf8JsonSerializable, IModelJsonSerializable<TopicTypeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TopicTypeData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TopicTypeData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TopicTypeData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -76,11 +83,25 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TopicTypeData DeserializeTopicTypeData(JsonElement element)
+        internal static TopicTypeData DeserializeTopicTypeData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,6 +119,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<string> sourceResourceFormat = default;
             Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
             Optional<bool> areRegionalAndGlobalSourcesSupported = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -211,8 +233,61 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported));
+            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported), serializedAdditionalRawData);
+        }
+
+        TopicTypeData IModelJsonSerializable<TopicTypeData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TopicTypeData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTopicTypeData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TopicTypeData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TopicTypeData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TopicTypeData IModelSerializable<TopicTypeData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TopicTypeData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTopicTypeData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TopicTypeData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TopicTypeData"/> to convert. </param>
+        public static implicit operator RequestContent(TopicTypeData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TopicTypeData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TopicTypeData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTopicTypeData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

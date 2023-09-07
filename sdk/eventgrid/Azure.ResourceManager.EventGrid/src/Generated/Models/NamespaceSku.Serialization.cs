@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class NamespaceSku : IUtf8JsonSerializable
+    public partial class NamespaceSku : IUtf8JsonSerializable, IModelJsonSerializable<NamespaceSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NamespaceSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NamespaceSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NamespaceSku>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NamespaceSku DeserializeNamespaceSku(JsonElement element)
+        internal static NamespaceSku DeserializeNamespaceSku(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<EventGridSkuName> name = default;
             Optional<int> capacity = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NamespaceSku(Optional.ToNullable(name), Optional.ToNullable(capacity));
+            return new NamespaceSku(Optional.ToNullable(name), Optional.ToNullable(capacity), serializedAdditionalRawData);
+        }
+
+        NamespaceSku IModelJsonSerializable<NamespaceSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamespaceSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNamespaceSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NamespaceSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamespaceSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NamespaceSku IModelSerializable<NamespaceSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamespaceSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNamespaceSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NamespaceSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NamespaceSku"/> to convert. </param>
+        public static implicit operator RequestContent(NamespaceSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NamespaceSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NamespaceSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNamespaceSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

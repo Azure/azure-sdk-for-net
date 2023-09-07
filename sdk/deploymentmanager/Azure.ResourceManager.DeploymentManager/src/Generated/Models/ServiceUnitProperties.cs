@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Defines the properties of a service unit. </summary>
     public partial class ServiceUnitProperties
     {
-        /// <summary> Initializes a new instance of ServiceUnitProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitProperties"/>. </summary>
         /// <param name="targetResourceGroup"> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </param>
         /// <param name="deploymentMode"> Describes the type of ARM deployment to be performed on the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceGroup"/> is null. </exception>
@@ -25,15 +29,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             DeploymentMode = deploymentMode;
         }
 
-        /// <summary> Initializes a new instance of ServiceUnitProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitProperties"/>. </summary>
         /// <param name="targetResourceGroup"> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </param>
         /// <param name="deploymentMode"> Describes the type of ARM deployment to be performed on the resource. </param>
         /// <param name="artifacts"> The artifacts for the service unit. </param>
-        internal ServiceUnitProperties(string targetResourceGroup, DeploymentMode deploymentMode, ServiceUnitArtifacts artifacts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceUnitProperties(string targetResourceGroup, DeploymentMode deploymentMode, ServiceUnitArtifacts artifacts, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetResourceGroup = targetResourceGroup;
             DeploymentMode = deploymentMode;
             Artifacts = artifacts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitProperties"/> for deserialization. </summary>
+        internal ServiceUnitProperties()
+        {
         }
 
         /// <summary> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </summary>

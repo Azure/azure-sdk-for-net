@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownEventSubscriptionDestination : IUtf8JsonSerializable
+    internal partial class UnknownEventSubscriptionDestination : IUtf8JsonSerializable, IModelJsonSerializable<EventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventSubscriptionDestination>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventSubscriptionDestination>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EventSubscriptionDestination>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownEventSubscriptionDestination DeserializeUnknownEventSubscriptionDestination(JsonElement element)
+        internal static EventSubscriptionDestination DeserializeUnknownEventSubscriptionDestination(JsonElement element, ModelSerializerOptions options = default) => DeserializeEventSubscriptionDestination(element, options);
+
+        EventSubscriptionDestination IModelJsonSerializable<EventSubscriptionDestination>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            EndpointType endpointType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endpointType"u8))
-                {
-                    endpointType = new EndpointType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownEventSubscriptionDestination(endpointType);
+            Core.ModelSerializerHelper.ValidateFormat<EventSubscriptionDestination>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownEventSubscriptionDestination(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventSubscriptionDestination>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventSubscriptionDestination>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventSubscriptionDestination IModelSerializable<EventSubscriptionDestination>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventSubscriptionDestination>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventSubscriptionDestination(doc.RootElement, options);
         }
     }
 }

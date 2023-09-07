@@ -5,17 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-    public partial class TrainingDocumentInfo
+    public partial class TrainingDocumentInfo : IUtf8JsonSerializable, IModelJsonSerializable<TrainingDocumentInfo>
     {
-        internal static TrainingDocumentInfo DeserializeTrainingDocumentInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrainingDocumentInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrainingDocumentInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrainingDocumentInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("documentName"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("pages"u8);
+            writer.WriteNumberValue(PageCount);
+            writer.WritePropertyName("errors"u8);
+            writer.WriteStartArray();
+            foreach (var item in Errors)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FormRecognizerError>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TrainingDocumentInfo DeserializeTrainingDocumentInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +71,7 @@ namespace Azure.AI.FormRecognizer.Training
             int pages = default;
             IReadOnlyList<FormRecognizerError> errors = default;
             TrainingStatus status = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentName"u8))
@@ -51,8 +99,61 @@ namespace Azure.AI.FormRecognizer.Training
                     status = property.Value.GetString().ToTrainingStatus();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrainingDocumentInfo(documentName, pages, errors, status);
+            return new TrainingDocumentInfo(documentName, pages, errors, status, serializedAdditionalRawData);
+        }
+
+        TrainingDocumentInfo IModelJsonSerializable<TrainingDocumentInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrainingDocumentInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrainingDocumentInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrainingDocumentInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrainingDocumentInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrainingDocumentInfo IModelSerializable<TrainingDocumentInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrainingDocumentInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrainingDocumentInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrainingDocumentInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrainingDocumentInfo"/> to convert. </param>
+        public static implicit operator RequestContent(TrainingDocumentInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrainingDocumentInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrainingDocumentInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrainingDocumentInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

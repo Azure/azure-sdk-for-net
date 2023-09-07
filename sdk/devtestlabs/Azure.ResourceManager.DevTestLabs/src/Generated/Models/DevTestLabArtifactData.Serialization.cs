@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabArtifactData : IUtf8JsonSerializable
+    public partial class DevTestLabArtifactData : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabArtifactData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabArtifactData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabArtifactData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabArtifactData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -34,11 +40,25 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabArtifactData DeserializeDevTestLabArtifactData(JsonElement element)
+        internal static DevTestLabArtifactData DeserializeDevTestLabArtifactData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +77,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> targetOSType = default;
             Optional<BinaryData> parameters = default;
             Optional<DateTimeOffset> createdDate = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -162,8 +183,61 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabArtifactData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, title.Value, description.Value, publisher.Value, filePath.Value, icon.Value, targetOSType.Value, parameters.Value, Optional.ToNullable(createdDate));
+            return new DevTestLabArtifactData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, title.Value, description.Value, publisher.Value, filePath.Value, icon.Value, targetOSType.Value, parameters.Value, Optional.ToNullable(createdDate), serializedAdditionalRawData);
+        }
+
+        DevTestLabArtifactData IModelJsonSerializable<DevTestLabArtifactData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabArtifactData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabArtifactData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabArtifactData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabArtifactData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabArtifactData IModelSerializable<DevTestLabArtifactData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabArtifactData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabArtifactData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabArtifactData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabArtifactData"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabArtifactData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabArtifactData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabArtifactData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabArtifactData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

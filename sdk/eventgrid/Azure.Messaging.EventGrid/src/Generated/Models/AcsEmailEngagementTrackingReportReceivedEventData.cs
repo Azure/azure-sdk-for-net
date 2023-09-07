@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.EmailEngagementTrackingReportReceived event. </summary>
     public partial class AcsEmailEngagementTrackingReportReceivedEventData
     {
-        /// <summary> Initializes a new instance of AcsEmailEngagementTrackingReportReceivedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
         internal AcsEmailEngagementTrackingReportReceivedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsEmailEngagementTrackingReportReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="messageId"> The Id of the email that has been sent. </param>
         /// <param name="userActionTimestamp"> The time at which the user interacted with the email. </param>
         /// <param name="engagementContext"> The context of the type of engagement user had with email. </param>
         /// <param name="userAgent"> The user agent interacting with the email. </param>
         /// <param name="engagement"> The type of engagement user have with email. </param>
-        internal AcsEmailEngagementTrackingReportReceivedEventData(string sender, string messageId, DateTimeOffset? userActionTimestamp, string engagementContext, string userAgent, AcsUserEngagement? engagement)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsEmailEngagementTrackingReportReceivedEventData(string sender, string messageId, DateTimeOffset? userActionTimestamp, string engagementContext, string userAgent, AcsUserEngagement? engagement, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sender = sender;
             MessageId = messageId;
@@ -32,6 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             EngagementContext = engagementContext;
             UserAgent = userAgent;
             Engagement = engagement;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Sender Email Address. </summary>

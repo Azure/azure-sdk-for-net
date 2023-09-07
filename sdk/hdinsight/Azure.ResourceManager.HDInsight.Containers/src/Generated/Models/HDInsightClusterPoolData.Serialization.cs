@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HDInsight.Containers.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers
 {
-    public partial class HDInsightClusterPoolData : IUtf8JsonSerializable
+    public partial class HDInsightClusterPoolData : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightClusterPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightClusterPoolData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightClusterPoolData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterPoolData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -41,29 +48,71 @@ namespace Azure.ResourceManager.HDInsight.Containers
             if (Optional.IsDefined(ClusterPoolProfile))
             {
                 writer.WritePropertyName("clusterPoolProfile"u8);
-                writer.WriteObjectValue(ClusterPoolProfile);
+                if (ClusterPoolProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterPoolProfile>)ClusterPoolProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                if (ComputeProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterPoolComputeProfile>)ComputeProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                if (NetworkProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterPoolNetworkProfile>)NetworkProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile);
+                if (LogAnalyticsProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterPoolLogAnalyticsProfile>)LogAnalyticsProfile).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightClusterPoolData DeserializeHDInsightClusterPoolData(JsonElement element)
+        internal static HDInsightClusterPoolData DeserializeHDInsightClusterPoolData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +133,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             Optional<ClusterPoolNetworkProfile> networkProfile = default;
             Optional<ClusterPoolLogAnalyticsProfile> logAnalyticsProfile = default;
             Optional<string> status = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -215,8 +265,61 @@ namespace Azure.ResourceManager.HDInsight.Containers
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightClusterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), deploymentId.Value, managedResourceGroupName.Value, aksManagedResourceGroupName.Value, clusterPoolProfile.Value, computeProfile.Value, aksClusterProfile.Value, networkProfile.Value, logAnalyticsProfile.Value, status.Value);
+            return new HDInsightClusterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), deploymentId.Value, managedResourceGroupName.Value, aksManagedResourceGroupName.Value, clusterPoolProfile.Value, computeProfile.Value, aksClusterProfile.Value, networkProfile.Value, logAnalyticsProfile.Value, status.Value, serializedAdditionalRawData);
+        }
+
+        HDInsightClusterPoolData IModelJsonSerializable<HDInsightClusterPoolData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterPoolData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterPoolData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightClusterPoolData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterPoolData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightClusterPoolData IModelSerializable<HDInsightClusterPoolData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterPoolData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightClusterPoolData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HDInsightClusterPoolData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HDInsightClusterPoolData"/> to convert. </param>
+        public static implicit operator RequestContent(HDInsightClusterPoolData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HDInsightClusterPoolData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HDInsightClusterPoolData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightClusterPoolData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

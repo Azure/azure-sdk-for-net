@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HealthBot.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthBot
 {
-    public partial class HealthBotData : IUtf8JsonSerializable
+    public partial class HealthBotData : IUtf8JsonSerializable, IModelJsonSerializable<HealthBotData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthBotData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthBotData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthBotData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<HealthBotSku>)Sku).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -28,7 +42,14 @@ namespace Azure.ResourceManager.HealthBot
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HealthBotProperties>)Properties).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -43,11 +64,25 @@ namespace Azure.ResourceManager.HealthBot
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthBotData DeserializeHealthBotData(JsonElement element)
+        internal static HealthBotData DeserializeHealthBotData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +96,7 @@ namespace Azure.ResourceManager.HealthBot
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -129,8 +165,61 @@ namespace Azure.ResourceManager.HealthBot
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthBotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, properties.Value);
+            return new HealthBotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, properties.Value, serializedAdditionalRawData);
+        }
+
+        HealthBotData IModelJsonSerializable<HealthBotData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthBotData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthBotData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthBotData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthBotData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthBotData IModelSerializable<HealthBotData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthBotData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthBotData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthBotData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthBotData"/> to convert. </param>
+        public static implicit operator RequestContent(HealthBotData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthBotData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthBotData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthBotData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

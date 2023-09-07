@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// Please note <see cref="StepProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="HealthCheckStepProperties"/> and <see cref="WaitStepProperties"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownStepProperties))]
     public abstract partial class StepProperties
     {
-        /// <summary> Initializes a new instance of StepProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StepProperties"/>. </summary>
         protected StepProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepProperties"/>. </summary>
         /// <param name="stepType"> The type of step. </param>
-        internal StepProperties(StepType stepType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StepProperties(StepType stepType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StepType = stepType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of step. </summary>

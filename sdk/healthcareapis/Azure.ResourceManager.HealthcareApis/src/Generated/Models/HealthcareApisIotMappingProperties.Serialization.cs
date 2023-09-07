@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisIotMappingProperties : IUtf8JsonSerializable
+    public partial class HealthcareApisIotMappingProperties : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareApisIotMappingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareApisIotMappingProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareApisIotMappingProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisIotMappingProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Content))
             {
@@ -25,16 +32,31 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
 #endif
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthcareApisIotMappingProperties DeserializeHealthcareApisIotMappingProperties(JsonElement element)
+        internal static HealthcareApisIotMappingProperties DeserializeHealthcareApisIotMappingProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<BinaryData> content = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -46,8 +68,61 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     content = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareApisIotMappingProperties(content.Value);
+            return new HealthcareApisIotMappingProperties(content.Value, serializedAdditionalRawData);
+        }
+
+        HealthcareApisIotMappingProperties IModelJsonSerializable<HealthcareApisIotMappingProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisIotMappingProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareApisIotMappingProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareApisIotMappingProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisIotMappingProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareApisIotMappingProperties IModelSerializable<HealthcareApisIotMappingProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisIotMappingProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareApisIotMappingProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareApisIotMappingProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareApisIotMappingProperties"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareApisIotMappingProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareApisIotMappingProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareApisIotMappingProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareApisIotMappingProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

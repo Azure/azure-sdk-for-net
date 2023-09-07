@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightApplicationEndpoint : IUtf8JsonSerializable
+    public partial class HDInsightApplicationEndpoint : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightApplicationEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightApplicationEndpoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightApplicationEndpoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightApplicationEndpoint>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EndpointLocation))
             {
@@ -36,11 +44,25 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightApplicationEndpoint DeserializeHDInsightApplicationEndpoint(JsonElement element)
+        internal static HDInsightApplicationEndpoint DeserializeHDInsightApplicationEndpoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<int> destinationPort = default;
             Optional<int> publicPort = default;
             Optional<IPAddress> privateIPAddress = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -83,8 +106,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightApplicationEndpoint(location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value);
+            return new HDInsightApplicationEndpoint(location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value, serializedAdditionalRawData);
+        }
+
+        HDInsightApplicationEndpoint IModelJsonSerializable<HDInsightApplicationEndpoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightApplicationEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightApplicationEndpoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightApplicationEndpoint>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightApplicationEndpoint>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightApplicationEndpoint IModelSerializable<HDInsightApplicationEndpoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightApplicationEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightApplicationEndpoint(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HDInsightApplicationEndpoint"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HDInsightApplicationEndpoint"/> to convert. </param>
+        public static implicit operator RequestContent(HDInsightApplicationEndpoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HDInsightApplicationEndpoint"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HDInsightApplicationEndpoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightApplicationEndpoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

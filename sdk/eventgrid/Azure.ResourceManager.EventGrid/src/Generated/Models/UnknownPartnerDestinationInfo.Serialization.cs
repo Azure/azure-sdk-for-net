@@ -5,16 +5,21 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownPartnerDestinationInfo : IUtf8JsonSerializable
+    internal partial class UnknownPartnerDestinationInfo : IUtf8JsonSerializable, IModelJsonSerializable<PartnerDestinationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PartnerDestinationInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PartnerDestinationInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerDestinationInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureSubscriptionId))
             {
@@ -44,68 +49,55 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceMoveChangeHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceMoveChangeHistory>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static UnknownPartnerDestinationInfo DeserializeUnknownPartnerDestinationInfo(JsonElement element)
+        internal static PartnerDestinationInfo DeserializeUnknownPartnerDestinationInfo(JsonElement element, ModelSerializerOptions options = default) => DeserializePartnerDestinationInfo(element, options);
+
+        PartnerDestinationInfo IModelJsonSerializable<PartnerDestinationInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> azureSubscriptionId = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> name = default;
-            PartnerEndpointType endpointType = "Unknown";
-            Optional<string> endpointServiceContext = default;
-            Optional<IList<ResourceMoveChangeHistory>> resourceMoveChangeHistory = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("azureSubscriptionId"u8))
-                {
-                    azureSubscriptionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceGroupName"u8))
-                {
-                    resourceGroupName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("endpointType"u8))
-                {
-                    endpointType = new PartnerEndpointType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("endpointServiceContext"u8))
-                {
-                    endpointServiceContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceMoveChangeHistory"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResourceMoveChangeHistory> array = new List<ResourceMoveChangeHistory>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item));
-                    }
-                    resourceMoveChangeHistory = array;
-                    continue;
-                }
-            }
-            return new UnknownPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, Optional.ToList(resourceMoveChangeHistory));
+            Core.ModelSerializerHelper.ValidateFormat<PartnerDestinationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownPartnerDestinationInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PartnerDestinationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerDestinationInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PartnerDestinationInfo IModelSerializable<PartnerDestinationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerDestinationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePartnerDestinationInfo(doc.RootElement, options);
         }
     }
 }

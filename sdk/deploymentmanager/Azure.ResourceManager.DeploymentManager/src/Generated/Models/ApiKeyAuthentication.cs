@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> ApiKey authentication gives a name and a value that can be included in either the request header or query parameters. </summary>
     public partial class ApiKeyAuthentication : RestRequestAuthentication
     {
-        /// <summary> Initializes a new instance of ApiKeyAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiKeyAuthentication"/>. </summary>
         /// <param name="name"> The key name of the authentication key/value pair. </param>
         /// <param name="in"> The location of the authentication key/value pair in the request. </param>
         /// <param name="value"> The value of the authentication key/value pair. </param>
@@ -29,17 +30,23 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             AuthType = RestAuthType.ApiKey;
         }
 
-        /// <summary> Initializes a new instance of ApiKeyAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiKeyAuthentication"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="name"> The key name of the authentication key/value pair. </param>
         /// <param name="in"> The location of the authentication key/value pair in the request. </param>
         /// <param name="value"> The value of the authentication key/value pair. </param>
-        internal ApiKeyAuthentication(RestAuthType authType, string name, RestAuthLocation @in, string value) : base(authType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiKeyAuthentication(RestAuthType authType, string name, RestAuthLocation @in, string value, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
         {
             Name = name;
             In = @in;
             Value = value;
             AuthType = authType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiKeyAuthentication"/> for deserialization. </summary>
+        internal ApiKeyAuthentication()
+        {
         }
 
         /// <summary> The key name of the authentication key/value pair. </summary>

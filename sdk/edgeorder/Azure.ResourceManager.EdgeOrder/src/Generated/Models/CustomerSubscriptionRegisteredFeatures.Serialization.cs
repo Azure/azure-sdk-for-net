@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class CustomerSubscriptionRegisteredFeatures : IUtf8JsonSerializable
+    public partial class CustomerSubscriptionRegisteredFeatures : IUtf8JsonSerializable, IModelJsonSerializable<CustomerSubscriptionRegisteredFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomerSubscriptionRegisteredFeatures>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomerSubscriptionRegisteredFeatures>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomerSubscriptionRegisteredFeatures>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -25,7 +33,99 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CustomerSubscriptionRegisteredFeatures DeserializeCustomerSubscriptionRegisteredFeatures(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> name = default;
+            Optional<string> state = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    state = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CustomerSubscriptionRegisteredFeatures(name.Value, state.Value, serializedAdditionalRawData);
+        }
+
+        CustomerSubscriptionRegisteredFeatures IModelJsonSerializable<CustomerSubscriptionRegisteredFeatures>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomerSubscriptionRegisteredFeatures>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomerSubscriptionRegisteredFeatures(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomerSubscriptionRegisteredFeatures>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomerSubscriptionRegisteredFeatures>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomerSubscriptionRegisteredFeatures IModelSerializable<CustomerSubscriptionRegisteredFeatures>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomerSubscriptionRegisteredFeatures>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomerSubscriptionRegisteredFeatures(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomerSubscriptionRegisteredFeatures"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomerSubscriptionRegisteredFeatures"/> to convert. </param>
+        public static implicit operator RequestContent(CustomerSubscriptionRegisteredFeatures model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomerSubscriptionRegisteredFeatures"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomerSubscriptionRegisteredFeatures(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomerSubscriptionRegisteredFeatures(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

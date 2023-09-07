@@ -5,29 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemAddressDetails : IUtf8JsonSerializable
+    public partial class EdgeOrderItemAddressDetails : IUtf8JsonSerializable, IModelJsonSerializable<EdgeOrderItemAddressDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeOrderItemAddressDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeOrderItemAddressDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderItemAddressDetails>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("forwardAddress"u8);
-            writer.WriteObjectValue(ForwardAddress);
+            if (ForwardAddress is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EdgeOrderItemAddressProperties>)ForwardAddress).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeOrderItemAddressDetails DeserializeEdgeOrderItemAddressDetails(JsonElement element)
+        internal static EdgeOrderItemAddressDetails DeserializeEdgeOrderItemAddressDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EdgeOrderItemAddressProperties forwardAddress = default;
             Optional<EdgeOrderItemAddressProperties> returnAddress = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("forwardAddress"u8))
@@ -44,8 +74,61 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress.Value);
+            return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress.Value, serializedAdditionalRawData);
+        }
+
+        EdgeOrderItemAddressDetails IModelJsonSerializable<EdgeOrderItemAddressDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderItemAddressDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeOrderItemAddressDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeOrderItemAddressDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderItemAddressDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeOrderItemAddressDetails IModelSerializable<EdgeOrderItemAddressDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderItemAddressDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeOrderItemAddressDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdgeOrderItemAddressDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdgeOrderItemAddressDetails"/> to convert. </param>
+        public static implicit operator RequestContent(EdgeOrderItemAddressDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdgeOrderItemAddressDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdgeOrderItemAddressDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeOrderItemAddressDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

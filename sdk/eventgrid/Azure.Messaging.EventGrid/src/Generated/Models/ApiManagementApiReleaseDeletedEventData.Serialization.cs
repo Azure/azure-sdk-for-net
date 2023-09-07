@@ -6,22 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ApiManagementApiReleaseDeletedEventDataConverter))]
-    public partial class ApiManagementApiReleaseDeletedEventData
+    public partial class ApiManagementApiReleaseDeletedEventData : IUtf8JsonSerializable, IModelJsonSerializable<ApiManagementApiReleaseDeletedEventData>
     {
-        internal static ApiManagementApiReleaseDeletedEventData DeserializeApiManagementApiReleaseDeletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiManagementApiReleaseDeletedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiManagementApiReleaseDeletedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementApiReleaseDeletedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceUri))
+            {
+                writer.WritePropertyName("resourceUri"u8);
+                writer.WriteStringValue(ResourceUri);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApiManagementApiReleaseDeletedEventData DeserializeApiManagementApiReleaseDeletedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> resourceUri = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUri"u8))
@@ -29,15 +62,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     resourceUri = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApiManagementApiReleaseDeletedEventData(resourceUri.Value);
+            return new ApiManagementApiReleaseDeletedEventData(resourceUri.Value, serializedAdditionalRawData);
+        }
+
+        ApiManagementApiReleaseDeletedEventData IModelJsonSerializable<ApiManagementApiReleaseDeletedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementApiReleaseDeletedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementApiReleaseDeletedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiManagementApiReleaseDeletedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementApiReleaseDeletedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiManagementApiReleaseDeletedEventData IModelSerializable<ApiManagementApiReleaseDeletedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementApiReleaseDeletedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiManagementApiReleaseDeletedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiManagementApiReleaseDeletedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiManagementApiReleaseDeletedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(ApiManagementApiReleaseDeletedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiManagementApiReleaseDeletedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiManagementApiReleaseDeletedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiManagementApiReleaseDeletedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ApiManagementApiReleaseDeletedEventDataConverter : JsonConverter<ApiManagementApiReleaseDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ApiManagementApiReleaseDeletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ApiManagementApiReleaseDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

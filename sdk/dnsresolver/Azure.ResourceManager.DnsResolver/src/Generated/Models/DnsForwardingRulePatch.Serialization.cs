@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class DnsForwardingRulePatch : IUtf8JsonSerializable
+    public partial class DnsForwardingRulePatch : IUtf8JsonSerializable, IModelJsonSerializable<DnsForwardingRulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DnsForwardingRulePatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DnsForwardingRulePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DnsForwardingRulePatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -23,7 +31,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetDnsServers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TargetDnsServer>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +59,139 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStringValue(DnsForwardingRuleState.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DnsForwardingRulePatch DeserializeDnsForwardingRulePatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<TargetDnsServer>> targetDnsServers = default;
+            Optional<IDictionary<string, string>> metadata = default;
+            Optional<DnsForwardingRuleState> forwardingRuleState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("targetDnsServers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<TargetDnsServer> array = new List<TargetDnsServer>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(TargetDnsServer.DeserializeTargetDnsServer(item));
+                            }
+                            targetDnsServers = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("metadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            metadata = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("forwardingRuleState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            forwardingRuleState = new DnsForwardingRuleState(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DnsForwardingRulePatch(Optional.ToList(targetDnsServers), Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), serializedAdditionalRawData);
+        }
+
+        DnsForwardingRulePatch IModelJsonSerializable<DnsForwardingRulePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsForwardingRulePatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsForwardingRulePatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DnsForwardingRulePatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsForwardingRulePatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DnsForwardingRulePatch IModelSerializable<DnsForwardingRulePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsForwardingRulePatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDnsForwardingRulePatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DnsForwardingRulePatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DnsForwardingRulePatch"/> to convert. </param>
+        public static implicit operator RequestContent(DnsForwardingRulePatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DnsForwardingRulePatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DnsForwardingRulePatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDnsForwardingRulePatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

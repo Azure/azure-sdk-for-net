@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    internal partial class EnvironmentTypeListResult
+    internal partial class EnvironmentTypeListResult : IUtf8JsonSerializable, IModelJsonSerializable<EnvironmentTypeListResult>
     {
-        internal static EnvironmentTypeListResult DeserializeEnvironmentTypeListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EnvironmentTypeListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EnvironmentTypeListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EnvironmentTypeListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EnvironmentTypeListResult DeserializeEnvironmentTypeListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<DevCenterEnvironmentTypeData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.DevCenter.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EnvironmentTypeListResult(Optional.ToList(value), nextLink.Value);
+            return new EnvironmentTypeListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        EnvironmentTypeListResult IModelJsonSerializable<EnvironmentTypeListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EnvironmentTypeListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEnvironmentTypeListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EnvironmentTypeListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EnvironmentTypeListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EnvironmentTypeListResult IModelSerializable<EnvironmentTypeListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EnvironmentTypeListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEnvironmentTypeListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EnvironmentTypeListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EnvironmentTypeListResult"/> to convert. </param>
+        public static implicit operator RequestContent(EnvironmentTypeListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EnvironmentTypeListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EnvironmentTypeListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEnvironmentTypeListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

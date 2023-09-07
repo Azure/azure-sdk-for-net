@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByCloudHsmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, HardwareSecurityModulesPrivateEndpointConnectionData.DeserializeHardwareSecurityModulesPrivateEndpointConnectionData(e)), _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HardwareSecurityModulesPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, HardwareSecurityModulesPrivateEndpointConnectionData.DeserializeHardwareSecurityModulesPrivateEndpointConnectionData(e)), _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HardwareSecurityModulesPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByCloudHsmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, HardwareSecurityModulesPrivateEndpointConnectionData.DeserializeHardwareSecurityModulesPrivateEndpointConnectionData(e)), _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HardwareSecurityModulesPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, HardwareSecurityModulesPrivateEndpointConnectionData.DeserializeHardwareSecurityModulesPrivateEndpointConnectionData(e)), _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HardwareSecurityModulesPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

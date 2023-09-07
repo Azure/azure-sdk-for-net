@@ -6,17 +6,79 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(PolicyInsightsPolicyStateCreatedEventDataConverter))]
-    public partial class PolicyInsightsPolicyStateCreatedEventData
+    public partial class PolicyInsightsPolicyStateCreatedEventData : IUtf8JsonSerializable, IModelJsonSerializable<PolicyInsightsPolicyStateCreatedEventData>
     {
-        internal static PolicyInsightsPolicyStateCreatedEventData DeserializePolicyInsightsPolicyStateCreatedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyInsightsPolicyStateCreatedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyInsightsPolicyStateCreatedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyInsightsPolicyStateCreatedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(PolicyAssignmentId))
+            {
+                writer.WritePropertyName("policyAssignmentId"u8);
+                writer.WriteStringValue(PolicyAssignmentId);
+            }
+            if (Optional.IsDefined(PolicyDefinitionId))
+            {
+                writer.WritePropertyName("policyDefinitionId"u8);
+                writer.WriteStringValue(PolicyDefinitionId);
+            }
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            {
+                writer.WritePropertyName("policyDefinitionReferenceId"u8);
+                writer.WriteStringValue(PolicyDefinitionReferenceId);
+            }
+            if (Optional.IsDefined(ComplianceState))
+            {
+                writer.WritePropertyName("complianceState"u8);
+                writer.WriteStringValue(ComplianceState);
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (Optional.IsDefined(ComplianceReasonCode))
+            {
+                writer.WritePropertyName("complianceReasonCode"u8);
+                writer.WriteStringValue(ComplianceReasonCode);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicyInsightsPolicyStateCreatedEventData DeserializePolicyInsightsPolicyStateCreatedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +90,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> complianceState = default;
             Optional<string> subscriptionId = default;
             Optional<string> complianceReasonCode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -69,15 +132,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     complianceReasonCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyInsightsPolicyStateCreatedEventData(Optional.ToNullable(timestamp), policyAssignmentId.Value, policyDefinitionId.Value, policyDefinitionReferenceId.Value, complianceState.Value, subscriptionId.Value, complianceReasonCode.Value);
+            return new PolicyInsightsPolicyStateCreatedEventData(Optional.ToNullable(timestamp), policyAssignmentId.Value, policyDefinitionId.Value, policyDefinitionReferenceId.Value, complianceState.Value, subscriptionId.Value, complianceReasonCode.Value, serializedAdditionalRawData);
+        }
+
+        PolicyInsightsPolicyStateCreatedEventData IModelJsonSerializable<PolicyInsightsPolicyStateCreatedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyInsightsPolicyStateCreatedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyInsightsPolicyStateCreatedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyInsightsPolicyStateCreatedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyInsightsPolicyStateCreatedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyInsightsPolicyStateCreatedEventData IModelSerializable<PolicyInsightsPolicyStateCreatedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyInsightsPolicyStateCreatedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyInsightsPolicyStateCreatedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PolicyInsightsPolicyStateCreatedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PolicyInsightsPolicyStateCreatedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(PolicyInsightsPolicyStateCreatedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PolicyInsightsPolicyStateCreatedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PolicyInsightsPolicyStateCreatedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyInsightsPolicyStateCreatedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class PolicyInsightsPolicyStateCreatedEventDataConverter : JsonConverter<PolicyInsightsPolicyStateCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, PolicyInsightsPolicyStateCreatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override PolicyInsightsPolicyStateCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

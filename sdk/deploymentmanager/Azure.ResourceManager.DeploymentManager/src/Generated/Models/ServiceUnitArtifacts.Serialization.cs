@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class ServiceUnitArtifacts : IUtf8JsonSerializable
+    public partial class ServiceUnitArtifacts : IUtf8JsonSerializable, IModelJsonSerializable<ServiceUnitArtifacts>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceUnitArtifacts>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceUnitArtifacts>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceUnitArtifacts>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateUri))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 writer.WritePropertyName("parametersArtifactSourceRelativePath"u8);
                 writer.WriteStringValue(ParametersArtifactSourceRelativePath);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceUnitArtifacts DeserializeServiceUnitArtifacts(JsonElement element)
+        internal static ServiceUnitArtifacts DeserializeServiceUnitArtifacts(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<Uri> parametersUri = default;
             Optional<string> templateArtifactSourceRelativePath = default;
             Optional<string> parametersArtifactSourceRelativePath = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateUri"u8))
@@ -79,8 +101,61 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     parametersArtifactSourceRelativePath = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceUnitArtifacts(templateUri.Value, parametersUri.Value, templateArtifactSourceRelativePath.Value, parametersArtifactSourceRelativePath.Value);
+            return new ServiceUnitArtifacts(templateUri.Value, parametersUri.Value, templateArtifactSourceRelativePath.Value, parametersArtifactSourceRelativePath.Value, serializedAdditionalRawData);
+        }
+
+        ServiceUnitArtifacts IModelJsonSerializable<ServiceUnitArtifacts>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceUnitArtifacts>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceUnitArtifacts(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceUnitArtifacts>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceUnitArtifacts>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceUnitArtifacts IModelSerializable<ServiceUnitArtifacts>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceUnitArtifacts>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceUnitArtifacts(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceUnitArtifacts"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceUnitArtifacts"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceUnitArtifacts model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceUnitArtifacts"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceUnitArtifacts(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceUnitArtifacts(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

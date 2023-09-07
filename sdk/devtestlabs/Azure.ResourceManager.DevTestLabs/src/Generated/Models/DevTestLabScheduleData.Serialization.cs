@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabScheduleData : IUtf8JsonSerializable
+    public partial class DevTestLabScheduleData : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabScheduleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabScheduleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabScheduleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabScheduleData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,17 +53,38 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(WeeklyRecurrence))
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
-                writer.WriteObjectValue(WeeklyRecurrence);
+                if (WeeklyRecurrence is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DevTestLabWeekDetails>)WeeklyRecurrence).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DailyRecurrence))
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
-                writer.WriteObjectValue(DailyRecurrence);
+                if (DailyRecurrence is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DayDetails>)DailyRecurrence).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(HourlyRecurrence))
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
-                writer.WriteObjectValue(HourlyRecurrence);
+                if (HourlyRecurrence is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HourDetails>)HourlyRecurrence).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -67,7 +94,14 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(NotificationSettings))
             {
                 writer.WritePropertyName("notificationSettings"u8);
-                writer.WriteObjectValue(NotificationSettings);
+                if (NotificationSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DevTestLabNotificationSettings>)NotificationSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TargetResourceId))
             {
@@ -75,11 +109,25 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStringValue(TargetResourceId);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabScheduleData DeserializeDevTestLabScheduleData(JsonElement element)
+        internal static DevTestLabScheduleData DeserializeDevTestLabScheduleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,6 +149,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> targetResourceId = default;
             Optional<string> provisioningState = default;
             Optional<Guid> uniqueIdentifier = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -241,8 +290,61 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabScheduleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(status), taskType.Value, weeklyRecurrence.Value, dailyRecurrence.Value, hourlyRecurrence.Value, timeZoneId.Value, notificationSettings.Value, Optional.ToNullable(createdDate), targetResourceId.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabScheduleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(status), taskType.Value, weeklyRecurrence.Value, dailyRecurrence.Value, hourlyRecurrence.Value, timeZoneId.Value, notificationSettings.Value, Optional.ToNullable(createdDate), targetResourceId.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+        }
+
+        DevTestLabScheduleData IModelJsonSerializable<DevTestLabScheduleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabScheduleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabScheduleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabScheduleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabScheduleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabScheduleData IModelSerializable<DevTestLabScheduleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabScheduleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabScheduleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabScheduleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabScheduleData"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabScheduleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabScheduleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabScheduleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabScheduleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

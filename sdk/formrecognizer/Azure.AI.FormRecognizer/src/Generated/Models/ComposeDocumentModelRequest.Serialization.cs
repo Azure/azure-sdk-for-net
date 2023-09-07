@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class ComposeDocumentModelRequest : IUtf8JsonSerializable
+    internal partial class ComposeDocumentModelRequest : IUtf8JsonSerializable, IModelJsonSerializable<ComposeDocumentModelRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComposeDocumentModelRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ComposeDocumentModelRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ComposeDocumentModelRequest>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
@@ -26,7 +34,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteStartArray();
             foreach (var item in ComponentModels)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ComponentDocumentModelDetails>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Tags))
@@ -40,7 +55,125 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ComposeDocumentModelRequest DeserializeComposeDocumentModelRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string modelId = default;
+            Optional<string> description = default;
+            IList<ComponentDocumentModelDetails> componentModels = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("modelId"u8))
+                {
+                    modelId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("componentModels"u8))
+                {
+                    List<ComponentDocumentModelDetails> array = new List<ComponentDocumentModelDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item));
+                    }
+                    componentModels = array;
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ComposeDocumentModelRequest(modelId, description.Value, componentModels, Optional.ToDictionary(tags), serializedAdditionalRawData);
+        }
+
+        ComposeDocumentModelRequest IModelJsonSerializable<ComposeDocumentModelRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComposeDocumentModelRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeComposeDocumentModelRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ComposeDocumentModelRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComposeDocumentModelRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ComposeDocumentModelRequest IModelSerializable<ComposeDocumentModelRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComposeDocumentModelRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeComposeDocumentModelRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ComposeDocumentModelRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ComposeDocumentModelRequest"/> to convert. </param>
+        public static implicit operator RequestContent(ComposeDocumentModelRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ComposeDocumentModelRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ComposeDocumentModelRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeComposeDocumentModelRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

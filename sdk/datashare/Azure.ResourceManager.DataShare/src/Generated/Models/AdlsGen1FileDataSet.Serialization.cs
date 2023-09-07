@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class AdlsGen1FileDataSet : IUtf8JsonSerializable
+    public partial class AdlsGen1FileDataSet : IUtf8JsonSerializable, IModelJsonSerializable<AdlsGen1FileDataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdlsGen1FileDataSet>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdlsGen1FileDataSet>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AdlsGen1FileDataSet>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -32,11 +39,25 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AdlsGen1FileDataSet DeserializeAdlsGen1FileDataSet(JsonElement element)
+        internal static AdlsGen1FileDataSet DeserializeAdlsGen1FileDataSet(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +73,7 @@ namespace Azure.ResourceManager.DataShare.Models
             string folderPath = default;
             string resourceGroup = default;
             string subscriptionId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -129,8 +151,61 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AdlsGen1FileDataSet(id, name, type, systemData.Value, kind, accountName, Optional.ToNullable(dataSetId), fileName, folderPath, resourceGroup, subscriptionId);
+            return new AdlsGen1FileDataSet(id, name, type, systemData.Value, kind, accountName, Optional.ToNullable(dataSetId), fileName, folderPath, resourceGroup, subscriptionId, serializedAdditionalRawData);
+        }
+
+        AdlsGen1FileDataSet IModelJsonSerializable<AdlsGen1FileDataSet>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdlsGen1FileDataSet>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdlsGen1FileDataSet(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdlsGen1FileDataSet>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdlsGen1FileDataSet>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdlsGen1FileDataSet IModelSerializable<AdlsGen1FileDataSet>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdlsGen1FileDataSet>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdlsGen1FileDataSet(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AdlsGen1FileDataSet"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AdlsGen1FileDataSet"/> to convert. </param>
+        public static implicit operator RequestContent(AdlsGen1FileDataSet model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AdlsGen1FileDataSet"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AdlsGen1FileDataSet(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAdlsGen1FileDataSet(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

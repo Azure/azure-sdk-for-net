@@ -8,24 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationAssignmentReportInfo : IUtf8JsonSerializable
+    public partial class GuestConfigurationAssignmentReportInfo : IUtf8JsonSerializable, IModelJsonSerializable<GuestConfigurationAssignmentReportInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GuestConfigurationAssignmentReportInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GuestConfigurationAssignmentReportInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GuestConfigurationAssignmentReportInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
-                writer.WriteObjectValue(Assignment);
+                if (Assignment is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GuestConfigurationAssignmentInfo>)Assignment).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                if (Vm is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GuestConfigurationVmInfo>)Vm).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Resources))
             {
@@ -33,15 +53,36 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AssignmentReportResourceInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static GuestConfigurationAssignmentReportInfo DeserializeGuestConfigurationAssignmentReportInfo(JsonElement element)
+        internal static GuestConfigurationAssignmentReportInfo DeserializeGuestConfigurationAssignmentReportInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +96,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<GuestConfigurationAssignmentReportType> operationType = default;
             Optional<IList<AssignmentReportResourceInfo>> resources = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -143,8 +185,61 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     resources = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GuestConfigurationAssignmentReportInfo(id.Value, Optional.ToNullable(reportId), assignment.Value, vm.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complianceStatus), Optional.ToNullable(operationType), Optional.ToList(resources));
+            return new GuestConfigurationAssignmentReportInfo(id.Value, Optional.ToNullable(reportId), assignment.Value, vm.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complianceStatus), Optional.ToNullable(operationType), Optional.ToList(resources), serializedAdditionalRawData);
+        }
+
+        GuestConfigurationAssignmentReportInfo IModelJsonSerializable<GuestConfigurationAssignmentReportInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GuestConfigurationAssignmentReportInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGuestConfigurationAssignmentReportInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GuestConfigurationAssignmentReportInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GuestConfigurationAssignmentReportInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GuestConfigurationAssignmentReportInfo IModelSerializable<GuestConfigurationAssignmentReportInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GuestConfigurationAssignmentReportInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGuestConfigurationAssignmentReportInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GuestConfigurationAssignmentReportInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GuestConfigurationAssignmentReportInfo"/> to convert. </param>
+        public static implicit operator RequestContent(GuestConfigurationAssignmentReportInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GuestConfigurationAssignmentReportInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GuestConfigurationAssignmentReportInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGuestConfigurationAssignmentReportInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

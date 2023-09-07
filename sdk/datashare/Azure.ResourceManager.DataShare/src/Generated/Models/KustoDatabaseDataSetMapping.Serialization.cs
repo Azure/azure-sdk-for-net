@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class KustoDatabaseDataSetMapping : IUtf8JsonSerializable
+    public partial class KustoDatabaseDataSetMapping : IUtf8JsonSerializable, IModelJsonSerializable<KustoDatabaseDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoDatabaseDataSetMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoDatabaseDataSetMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KustoDatabaseDataSetMapping>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("kustoClusterResourceId"u8);
             writer.WriteStringValue(KustoClusterResourceId);
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoDatabaseDataSetMapping DeserializeKustoDatabaseDataSetMapping(JsonElement element)
+        internal static KustoDatabaseDataSetMapping DeserializeKustoDatabaseDataSetMapping(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier kustoClusterResourceId = default;
             Optional<AzureLocation> location = default;
             Optional<DataShareProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -125,8 +147,61 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoDatabaseDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), kustoClusterResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState));
+            return new KustoDatabaseDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), kustoClusterResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        KustoDatabaseDataSetMapping IModelJsonSerializable<KustoDatabaseDataSetMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoDatabaseDataSetMapping>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoDatabaseDataSetMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoDatabaseDataSetMapping>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoDatabaseDataSetMapping>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoDatabaseDataSetMapping IModelSerializable<KustoDatabaseDataSetMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoDatabaseDataSetMapping>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoDatabaseDataSetMapping(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoDatabaseDataSetMapping"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoDatabaseDataSetMapping"/> to convert. </param>
+        public static implicit operator RequestContent(KustoDatabaseDataSetMapping model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoDatabaseDataSetMapping"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoDatabaseDataSetMapping(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoDatabaseDataSetMapping(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

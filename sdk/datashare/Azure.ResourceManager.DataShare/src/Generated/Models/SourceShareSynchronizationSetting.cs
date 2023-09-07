@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.DataShare.Models
     /// Please note <see cref="SourceShareSynchronizationSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ScheduledSourceSynchronizationSetting"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownSourceShareSynchronizationSetting))]
     public abstract partial class SourceShareSynchronizationSetting
     {
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSetting"/>. </summary>
         protected SourceShareSynchronizationSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSetting"/>. </summary>
         /// <param name="kind"> Kind of synchronization setting on share. </param>
-        internal SourceShareSynchronizationSetting(SourceShareSynchronizationSettingKind kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceShareSynchronizationSetting(SourceShareSynchronizationSettingKind kind, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of synchronization setting on share. </summary>

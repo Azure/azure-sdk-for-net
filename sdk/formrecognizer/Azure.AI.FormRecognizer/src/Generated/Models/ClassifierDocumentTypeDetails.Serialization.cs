@@ -5,37 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class ClassifierDocumentTypeDetails : IUtf8JsonSerializable
+    public partial class ClassifierDocumentTypeDetails : IUtf8JsonSerializable, IModelJsonSerializable<ClassifierDocumentTypeDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClassifierDocumentTypeDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClassifierDocumentTypeDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClassifierDocumentTypeDetails>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(AzureBlobSource);
+                if (AzureBlobSource is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BlobContentSource>)AzureBlobSource).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(AzureBlobFileListSource);
+                if (AzureBlobFileListSource is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BlobFileListContentSource>)AzureBlobFileListSource).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ClassifierDocumentTypeDetails DeserializeClassifierDocumentTypeDetails(JsonElement element)
+        internal static ClassifierDocumentTypeDetails DeserializeClassifierDocumentTypeDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<BlobContentSource> azureBlobSource = default;
             Optional<BlobFileListContentSource> azureBlobFileListSource = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBlobSource"u8))
@@ -56,8 +93,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     azureBlobFileListSource = BlobFileListContentSource.DeserializeBlobFileListContentSource(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClassifierDocumentTypeDetails(azureBlobSource.Value, azureBlobFileListSource.Value);
+            return new ClassifierDocumentTypeDetails(azureBlobSource.Value, azureBlobFileListSource.Value, serializedAdditionalRawData);
+        }
+
+        ClassifierDocumentTypeDetails IModelJsonSerializable<ClassifierDocumentTypeDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClassifierDocumentTypeDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClassifierDocumentTypeDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClassifierDocumentTypeDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClassifierDocumentTypeDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClassifierDocumentTypeDetails IModelSerializable<ClassifierDocumentTypeDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClassifierDocumentTypeDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClassifierDocumentTypeDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClassifierDocumentTypeDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClassifierDocumentTypeDetails"/> to convert. </param>
+        public static implicit operator RequestContent(ClassifierDocumentTypeDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClassifierDocumentTypeDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClassifierDocumentTypeDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClassifierDocumentTypeDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

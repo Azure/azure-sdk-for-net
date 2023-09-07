@@ -5,49 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    internal partial class UnknownMeterDetails
+    internal partial class UnknownMeterDetails : IUtf8JsonSerializable, IModelJsonSerializable<EdgeOrderProductMeterDetails>
     {
-        internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeOrderProductMeterDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeOrderProductMeterDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderProductMeterDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("billingType"u8);
+            writer.WriteStringValue(BillingType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            BillingType billingType = "Unknown";
-            Optional<double> multiplier = default;
-            Optional<EdgeOrderProductChargingType> chargingType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("billingType"u8))
+                foreach (var property in _serializedAdditionalRawData)
                 {
-                    billingType = new BillingType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("multiplier"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    multiplier = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("chargingType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    chargingType = new EdgeOrderProductChargingType(property.Value.GetString());
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType));
+            writer.WriteEndObject();
+        }
+
+        internal static EdgeOrderProductMeterDetails DeserializeUnknownMeterDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeEdgeOrderProductMeterDetails(element, options);
+
+        EdgeOrderProductMeterDetails IModelJsonSerializable<EdgeOrderProductMeterDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderProductMeterDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMeterDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeOrderProductMeterDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderProductMeterDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeOrderProductMeterDetails IModelSerializable<EdgeOrderProductMeterDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeOrderProductMeterDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeOrderProductMeterDetails(doc.RootElement, options);
         }
     }
 }

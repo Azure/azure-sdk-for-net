@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class SessionHostPatch : IUtf8JsonSerializable
+    public partial class SessionHostPatch : IUtf8JsonSerializable, IModelJsonSerializable<SessionHostPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SessionHostPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SessionHostPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SessionHostPatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -34,11 +42,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SessionHostPatch DeserializeSessionHostPatch(JsonElement element)
+        internal static SessionHostPatch DeserializeSessionHostPatch(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +72,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<bool> allowNewSession = default;
             Optional<string> assignedUser = default;
             Optional<string> friendlyName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,8 +130,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SessionHostPatch(id, name, type, systemData.Value, Optional.ToNullable(allowNewSession), assignedUser.Value, friendlyName.Value);
+            return new SessionHostPatch(id, name, type, systemData.Value, Optional.ToNullable(allowNewSession), assignedUser.Value, friendlyName.Value, serializedAdditionalRawData);
+        }
+
+        SessionHostPatch IModelJsonSerializable<SessionHostPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SessionHostPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSessionHostPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SessionHostPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SessionHostPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SessionHostPatch IModelSerializable<SessionHostPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SessionHostPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSessionHostPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SessionHostPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SessionHostPatch"/> to convert. </param>
+        public static implicit operator RequestContent(SessionHostPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SessionHostPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SessionHostPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSessionHostPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

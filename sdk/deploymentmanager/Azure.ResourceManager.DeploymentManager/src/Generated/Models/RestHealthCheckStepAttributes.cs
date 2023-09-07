@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Defines the REST health check step properties. </summary>
     public partial class RestHealthCheckStepAttributes : HealthCheckStepAttributes
     {
-        /// <summary> Initializes a new instance of RestHealthCheckStepAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestHealthCheckStepAttributes"/>. </summary>
         /// <param name="healthyStateDuration"> The duration in ISO 8601 format for which the resource is expected to be continuously healthy. If maxElasticDuration is specified, healthy state duration is enforced after the detection of first healthy signal. </param>
         public RestHealthCheckStepAttributes(TimeSpan healthyStateDuration) : base(healthyStateDuration)
         {
@@ -22,16 +22,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             HealthCheckStepAttributesType = "REST";
         }
 
-        /// <summary> Initializes a new instance of RestHealthCheckStepAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestHealthCheckStepAttributes"/>. </summary>
         /// <param name="healthCheckStepAttributesType"> The type of health check. </param>
         /// <param name="waitDuration"> The duration in ISO 8601 format for which health check waits idly without any checks. </param>
         /// <param name="maxElasticDuration"> The duration in ISO 8601 format for which the health check waits for the resource to become healthy. Health check fails if it doesn't. Health check starts to enforce healthyStateDuration once resource becomes healthy. </param>
         /// <param name="healthyStateDuration"> The duration in ISO 8601 format for which the resource is expected to be continuously healthy. If maxElasticDuration is specified, healthy state duration is enforced after the detection of first healthy signal. </param>
         /// <param name="healthChecks"> The list of checks that form the health check step. </param>
-        internal RestHealthCheckStepAttributes(string healthCheckStepAttributesType, TimeSpan? waitDuration, TimeSpan? maxElasticDuration, TimeSpan healthyStateDuration, IList<RestHealthCheck> healthChecks) : base(healthCheckStepAttributesType, waitDuration, maxElasticDuration, healthyStateDuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestHealthCheckStepAttributes(string healthCheckStepAttributesType, TimeSpan? waitDuration, TimeSpan? maxElasticDuration, TimeSpan healthyStateDuration, IList<RestHealthCheck> healthChecks, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(healthCheckStepAttributesType, waitDuration, maxElasticDuration, healthyStateDuration, serializedAdditionalRawData)
         {
             HealthChecks = healthChecks;
             HealthCheckStepAttributesType = healthCheckStepAttributesType ?? "REST";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestHealthCheckStepAttributes"/> for deserialization. </summary>
+        internal RestHealthCheckStepAttributes()
+        {
         }
 
         /// <summary> The list of checks that form the health check step. </summary>

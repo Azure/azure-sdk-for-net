@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary>
@@ -12,22 +16,28 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// Please note <see cref="TimeSeriesDatabaseConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataExplorerConnectionProperties"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownTimeSeriesDatabaseConnectionProperties))]
     public abstract partial class TimeSeriesDatabaseConnectionProperties
     {
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionProperties"/>. </summary>
         protected TimeSeriesDatabaseConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionProperties"/>. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
-        internal TimeSeriesDatabaseConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesDatabaseConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionType = connectionType;
             ProvisioningState = provisioningState;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of time series connection resource. </summary>

@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> The properties that define a Step group in a rollout. </summary>
     public partial class StepGroup
     {
-        /// <summary> Initializes a new instance of StepGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StepGroup"/>. </summary>
         /// <param name="name"> The name of the step group. </param>
         /// <param name="deploymentTargetId"> The resource Id of service unit to be deployed. The service unit should be from the service topology referenced in targetServiceTopologyId. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="deploymentTargetId"/> is null. </exception>
@@ -30,19 +33,26 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             PostDeploymentSteps = new ChangeTrackingList<PrePostStep>();
         }
 
-        /// <summary> Initializes a new instance of StepGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepGroup"/>. </summary>
         /// <param name="name"> The name of the step group. </param>
         /// <param name="dependsOnStepGroups"> The list of step group names on which this step group depends on. </param>
         /// <param name="preDeploymentSteps"> The list of steps to be run before deploying the target. </param>
         /// <param name="deploymentTargetId"> The resource Id of service unit to be deployed. The service unit should be from the service topology referenced in targetServiceTopologyId. </param>
         /// <param name="postDeploymentSteps"> The list of steps to be run after deploying the target. </param>
-        internal StepGroup(string name, IList<string> dependsOnStepGroups, IList<PrePostStep> preDeploymentSteps, string deploymentTargetId, IList<PrePostStep> postDeploymentSteps)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StepGroup(string name, IList<string> dependsOnStepGroups, IList<PrePostStep> preDeploymentSteps, string deploymentTargetId, IList<PrePostStep> postDeploymentSteps, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DependsOnStepGroups = dependsOnStepGroups;
             PreDeploymentSteps = preDeploymentSteps;
             DeploymentTargetId = deploymentTargetId;
             PostDeploymentSteps = postDeploymentSteps;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StepGroup"/> for deserialization. </summary>
+        internal StepGroup()
+        {
         }
 
         /// <summary> The name of the step group. </summary>

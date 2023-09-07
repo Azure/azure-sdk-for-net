@@ -6,17 +6,79 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(KeyVaultSecretNewVersionCreatedEventDataConverter))]
-    public partial class KeyVaultSecretNewVersionCreatedEventData
+    public partial class KeyVaultSecretNewVersionCreatedEventData : IUtf8JsonSerializable, IModelJsonSerializable<KeyVaultSecretNewVersionCreatedEventData>
     {
-        internal static KeyVaultSecretNewVersionCreatedEventData DeserializeKeyVaultSecretNewVersionCreatedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KeyVaultSecretNewVersionCreatedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KeyVaultSecretNewVersionCreatedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultSecretNewVersionCreatedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("Id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(VaultName))
+            {
+                writer.WritePropertyName("VaultName"u8);
+                writer.WriteStringValue(VaultName);
+            }
+            if (Optional.IsDefined(ObjectType))
+            {
+                writer.WritePropertyName("ObjectType"u8);
+                writer.WriteStringValue(ObjectType);
+            }
+            if (Optional.IsDefined(ObjectName))
+            {
+                writer.WritePropertyName("ObjectName"u8);
+                writer.WriteStringValue(ObjectName);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("Version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(Nbf))
+            {
+                writer.WritePropertyName("NBF"u8);
+                writer.WriteNumberValue(Nbf.Value);
+            }
+            if (Optional.IsDefined(Exp))
+            {
+                writer.WritePropertyName("EXP"u8);
+                writer.WriteNumberValue(Exp.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static KeyVaultSecretNewVersionCreatedEventData DeserializeKeyVaultSecretNewVersionCreatedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +90,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> version = default;
             Optional<float> nbf = default;
             Optional<float> exp = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -73,15 +136,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     exp = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KeyVaultSecretNewVersionCreatedEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+            return new KeyVaultSecretNewVersionCreatedEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp), serializedAdditionalRawData);
+        }
+
+        KeyVaultSecretNewVersionCreatedEventData IModelJsonSerializable<KeyVaultSecretNewVersionCreatedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultSecretNewVersionCreatedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultSecretNewVersionCreatedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KeyVaultSecretNewVersionCreatedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultSecretNewVersionCreatedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KeyVaultSecretNewVersionCreatedEventData IModelSerializable<KeyVaultSecretNewVersionCreatedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultSecretNewVersionCreatedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKeyVaultSecretNewVersionCreatedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KeyVaultSecretNewVersionCreatedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KeyVaultSecretNewVersionCreatedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(KeyVaultSecretNewVersionCreatedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KeyVaultSecretNewVersionCreatedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KeyVaultSecretNewVersionCreatedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKeyVaultSecretNewVersionCreatedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class KeyVaultSecretNewVersionCreatedEventDataConverter : JsonConverter<KeyVaultSecretNewVersionCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, KeyVaultSecretNewVersionCreatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override KeyVaultSecretNewVersionCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

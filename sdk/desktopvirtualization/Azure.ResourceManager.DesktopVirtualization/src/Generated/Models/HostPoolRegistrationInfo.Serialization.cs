@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class HostPoolRegistrationInfo : IUtf8JsonSerializable
+    public partial class HostPoolRegistrationInfo : IUtf8JsonSerializable, IModelJsonSerializable<HostPoolRegistrationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HostPoolRegistrationInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HostPoolRegistrationInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HostPoolRegistrationInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpireOn))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("registrationTokenOperation"u8);
                 writer.WriteStringValue(RegistrationTokenOperation.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element)
+        internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<DateTimeOffset> expirationTime = default;
             Optional<string> token = default;
             Optional<HostPoolRegistrationTokenOperation> registrationTokenOperation = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expirationTime"u8))
@@ -68,8 +90,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     registrationTokenOperation = new HostPoolRegistrationTokenOperation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HostPoolRegistrationInfo(Optional.ToNullable(expirationTime), token.Value, Optional.ToNullable(registrationTokenOperation));
+            return new HostPoolRegistrationInfo(Optional.ToNullable(expirationTime), token.Value, Optional.ToNullable(registrationTokenOperation), serializedAdditionalRawData);
+        }
+
+        HostPoolRegistrationInfo IModelJsonSerializable<HostPoolRegistrationInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HostPoolRegistrationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHostPoolRegistrationInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HostPoolRegistrationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HostPoolRegistrationInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HostPoolRegistrationInfo IModelSerializable<HostPoolRegistrationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HostPoolRegistrationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHostPoolRegistrationInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HostPoolRegistrationInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HostPoolRegistrationInfo"/> to convert. </param>
+        public static implicit operator RequestContent(HostPoolRegistrationInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HostPoolRegistrationInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HostPoolRegistrationInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHostPoolRegistrationInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

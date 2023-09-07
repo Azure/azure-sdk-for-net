@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     /// <summary> Individual resource operation information. </summary>
     public partial class ResourceOperation
     {
-        /// <summary> Initializes a new instance of ResourceOperation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceOperation"/>. </summary>
         internal ResourceOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceOperation"/>. </summary>
         /// <param name="resourceName"> Name of the resource as specified in the artifacts. For ARM resources, this is the name of the resource specified in the template. </param>
         /// <param name="operationId"> Unique identifier of the operation. For ARM resources, this is the operationId obtained from ARM service. </param>
         /// <param name="resourceType"> Type of the resource as specified in the artifacts. For ARM resources, this is the type of the resource specified in the template. </param>
         /// <param name="provisioningState"> State of the resource deployment. For ARM resources, this is the current provisioning state of the resource. </param>
         /// <param name="statusMessage"> Descriptive information of the resource operation. </param>
         /// <param name="statusCode"> Http status code of the operation. </param>
-        internal ResourceOperation(string resourceName, string operationId, string resourceType, string provisioningState, string statusMessage, string statusCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceOperation(string resourceName, string operationId, string resourceType, string provisioningState, string statusMessage, string statusCode, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceName = resourceName;
             OperationId = operationId;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             ProvisioningState = provisioningState;
             StatusMessage = statusMessage;
             StatusCode = statusCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the resource as specified in the artifacts. For ARM resources, this is the name of the resource specified in the template. </summary>

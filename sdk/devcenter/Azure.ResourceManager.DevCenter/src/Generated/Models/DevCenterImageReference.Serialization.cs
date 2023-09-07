@@ -5,32 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterImageReference : IUtf8JsonSerializable
+    public partial class DevCenterImageReference : IUtf8JsonSerializable, IModelJsonSerializable<DevCenterImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevCenterImageReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevCenterImageReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterImageReference>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevCenterImageReference DeserializeDevCenterImageReference(JsonElement element)
+        internal static DevCenterImageReference DeserializeDevCenterImageReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> id = default;
             Optional<string> exactVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -47,8 +70,61 @@ namespace Azure.ResourceManager.DevCenter.Models
                     exactVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevCenterImageReference(id.Value, exactVersion.Value);
+            return new DevCenterImageReference(id.Value, exactVersion.Value, serializedAdditionalRawData);
+        }
+
+        DevCenterImageReference IModelJsonSerializable<DevCenterImageReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterImageReference>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterImageReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevCenterImageReference>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterImageReference>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevCenterImageReference IModelSerializable<DevCenterImageReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterImageReference>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevCenterImageReference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevCenterImageReference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevCenterImageReference"/> to convert. </param>
+        public static implicit operator RequestContent(DevCenterImageReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevCenterImageReference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevCenterImageReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevCenterImageReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -54,9 +54,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -132,9 +130,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             _userAgent.Apply(message);
             return message;
         }
@@ -525,7 +521,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OutboundEnvironmentEndpointGroup>> ListOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<OutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -537,9 +533,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointGroup value = default;
+                        OutboundEnvironmentEndpointCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutboundEnvironmentEndpointGroup.DeserializeOutboundEnvironmentEndpointGroup(document.RootElement);
+                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -554,7 +550,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OutboundEnvironmentEndpointGroup> ListOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<OutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -566,9 +562,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointGroup value = default;
+                        OutboundEnvironmentEndpointCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutboundEnvironmentEndpointGroup.DeserializeOutboundEnvironmentEndpointGroup(document.RootElement);
+                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -742,7 +738,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OutboundEnvironmentEndpointGroup>> ListOutboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<OutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -755,9 +751,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointGroup value = default;
+                        OutboundEnvironmentEndpointCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutboundEnvironmentEndpointGroup.DeserializeOutboundEnvironmentEndpointGroup(document.RootElement);
+                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -773,7 +769,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OutboundEnvironmentEndpointGroup> ListOutboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<OutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -786,9 +782,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointGroup value = default;
+                        OutboundEnvironmentEndpointCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutboundEnvironmentEndpointGroup.DeserializeOutboundEnvironmentEndpointGroup(document.RootElement);
+                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    internal partial class UnknownStepProperties : IUtf8JsonSerializable
+    internal partial class UnknownStepProperties : IUtf8JsonSerializable, IModelJsonSerializable<StepProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StepProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StepProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StepProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("stepType"u8);
             writer.WriteStringValue(StepType.ToSerialString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownStepProperties DeserializeUnknownStepProperties(JsonElement element)
+        internal static StepProperties DeserializeUnknownStepProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeStepProperties(element, options);
+
+        StepProperties IModelJsonSerializable<StepProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            StepType stepType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("stepType"u8))
-                {
-                    stepType = property.Value.GetString().ToStepType();
-                    continue;
-                }
-            }
-            return new UnknownStepProperties(stepType);
+            Core.ModelSerializerHelper.ValidateFormat<StepProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownStepProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StepProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StepProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StepProperties IModelSerializable<StepProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StepProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStepProperties(doc.RootElement, options);
         }
     }
 }

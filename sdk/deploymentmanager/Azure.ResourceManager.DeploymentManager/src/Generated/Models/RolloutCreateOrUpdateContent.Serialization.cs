@@ -5,20 +5,34 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class RolloutCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class RolloutCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<RolloutCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RolloutCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RolloutCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RolloutCreateOrUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity);
+            if (Identity is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<Identity>)Identity).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -47,15 +61,36 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             writer.WriteStartArray();
             foreach (var item in StepGroups)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StepGroup>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RolloutCreateOrUpdateContent DeserializeRolloutCreateOrUpdateContent(JsonElement element)
+        internal static RolloutCreateOrUpdateContent DeserializeRolloutCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,6 +106,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<string> artifactSourceId = default;
             string targetServiceTopologyId = default;
             IList<StepGroup> stepGroups = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -158,8 +194,61 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RolloutCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, buildVersion, artifactSourceId.Value, targetServiceTopologyId, stepGroups);
+            return new RolloutCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, buildVersion, artifactSourceId.Value, targetServiceTopologyId, stepGroups, serializedAdditionalRawData);
+        }
+
+        RolloutCreateOrUpdateContent IModelJsonSerializable<RolloutCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RolloutCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRolloutCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RolloutCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RolloutCreateOrUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RolloutCreateOrUpdateContent IModelSerializable<RolloutCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RolloutCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRolloutCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RolloutCreateOrUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RolloutCreateOrUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(RolloutCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RolloutCreateOrUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RolloutCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRolloutCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

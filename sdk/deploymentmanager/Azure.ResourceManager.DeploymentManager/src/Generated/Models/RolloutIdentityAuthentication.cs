@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     /// <summary> RolloutIdentity uses the user-assigned managed identity authentication context specified in the Identity property during rollout creation. </summary>
     public partial class RolloutIdentityAuthentication : RestRequestAuthentication
     {
-        /// <summary> Initializes a new instance of RolloutIdentityAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutIdentityAuthentication"/>. </summary>
         public RolloutIdentityAuthentication()
         {
             AuthType = RestAuthType.RolloutIdentity;
         }
 
-        /// <summary> Initializes a new instance of RolloutIdentityAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutIdentityAuthentication"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
-        internal RolloutIdentityAuthentication(RestAuthType authType) : base(authType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RolloutIdentityAuthentication(RestAuthType authType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
         {
             AuthType = authType;
         }

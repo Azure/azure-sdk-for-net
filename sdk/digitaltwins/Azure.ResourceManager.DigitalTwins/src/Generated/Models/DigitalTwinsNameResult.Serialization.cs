@@ -5,15 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsNameResult
+    public partial class DigitalTwinsNameResult : IUtf8JsonSerializable, IModelJsonSerializable<DigitalTwinsNameResult>
     {
-        internal static DigitalTwinsNameResult DeserializeDigitalTwinsNameResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DigitalTwinsNameResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DigitalTwinsNameResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DigitalTwinsNameResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsNameAvailable))
+            {
+                writer.WritePropertyName("nameAvailable"u8);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                if (Message != null)
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+                else
+                {
+                    writer.WriteNull("message");
+                }
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                if (Reason != null)
+                {
+                    writer.WritePropertyName("reason"u8);
+                    writer.WriteStringValue(Reason.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("reason");
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DigitalTwinsNameResult DeserializeDigitalTwinsNameResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +78,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<bool> nameAvailable = default;
             Optional<string> message = default;
             Optional<DigitalTwinsNameUnavailableReason?> reason = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -52,8 +110,61 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     reason = new DigitalTwinsNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DigitalTwinsNameResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason));
+            return new DigitalTwinsNameResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason), serializedAdditionalRawData);
+        }
+
+        DigitalTwinsNameResult IModelJsonSerializable<DigitalTwinsNameResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DigitalTwinsNameResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsNameResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DigitalTwinsNameResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DigitalTwinsNameResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DigitalTwinsNameResult IModelSerializable<DigitalTwinsNameResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DigitalTwinsNameResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDigitalTwinsNameResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DigitalTwinsNameResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DigitalTwinsNameResult"/> to convert. </param>
+        public static implicit operator RequestContent(DigitalTwinsNameResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DigitalTwinsNameResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DigitalTwinsNameResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDigitalTwinsNameResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

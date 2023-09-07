@@ -6,17 +6,64 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerServiceNewKubernetesVersionAvailableEventDataConverter))]
-    public partial class ContainerServiceNewKubernetesVersionAvailableEventData
+    public partial class ContainerServiceNewKubernetesVersionAvailableEventData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerServiceNewKubernetesVersionAvailableEventData>
     {
-        internal static ContainerServiceNewKubernetesVersionAvailableEventData DeserializeContainerServiceNewKubernetesVersionAvailableEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerServiceNewKubernetesVersionAvailableEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerServiceNewKubernetesVersionAvailableEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerServiceNewKubernetesVersionAvailableEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LatestSupportedKubernetesVersion))
+            {
+                writer.WritePropertyName("latestSupportedKubernetesVersion"u8);
+                writer.WriteStringValue(LatestSupportedKubernetesVersion);
+            }
+            if (Optional.IsDefined(LatestStableKubernetesVersion))
+            {
+                writer.WritePropertyName("latestStableKubernetesVersion"u8);
+                writer.WriteStringValue(LatestStableKubernetesVersion);
+            }
+            if (Optional.IsDefined(LowestMinorKubernetesVersion))
+            {
+                writer.WritePropertyName("lowestMinorKubernetesVersion"u8);
+                writer.WriteStringValue(LowestMinorKubernetesVersion);
+            }
+            if (Optional.IsDefined(LatestPreviewKubernetesVersion))
+            {
+                writer.WritePropertyName("latestPreviewKubernetesVersion"u8);
+                writer.WriteStringValue(LatestPreviewKubernetesVersion);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerServiceNewKubernetesVersionAvailableEventData DeserializeContainerServiceNewKubernetesVersionAvailableEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> latestStableKubernetesVersion = default;
             Optional<string> lowestMinorKubernetesVersion = default;
             Optional<string> latestPreviewKubernetesVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestSupportedKubernetesVersion"u8))
@@ -47,15 +95,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     latestPreviewKubernetesVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion.Value, latestStableKubernetesVersion.Value, lowestMinorKubernetesVersion.Value, latestPreviewKubernetesVersion.Value);
+            return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion.Value, latestStableKubernetesVersion.Value, lowestMinorKubernetesVersion.Value, latestPreviewKubernetesVersion.Value, serializedAdditionalRawData);
+        }
+
+        ContainerServiceNewKubernetesVersionAvailableEventData IModelJsonSerializable<ContainerServiceNewKubernetesVersionAvailableEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerServiceNewKubernetesVersionAvailableEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceNewKubernetesVersionAvailableEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerServiceNewKubernetesVersionAvailableEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerServiceNewKubernetesVersionAvailableEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerServiceNewKubernetesVersionAvailableEventData IModelSerializable<ContainerServiceNewKubernetesVersionAvailableEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerServiceNewKubernetesVersionAvailableEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerServiceNewKubernetesVersionAvailableEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerServiceNewKubernetesVersionAvailableEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerServiceNewKubernetesVersionAvailableEventData"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerServiceNewKubernetesVersionAvailableEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerServiceNewKubernetesVersionAvailableEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerServiceNewKubernetesVersionAvailableEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerServiceNewKubernetesVersionAvailableEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ContainerServiceNewKubernetesVersionAvailableEventDataConverter : JsonConverter<ContainerServiceNewKubernetesVersionAvailableEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerServiceNewKubernetesVersionAvailableEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ContainerServiceNewKubernetesVersionAvailableEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.DeploymentManager
     /// </summary>
     public partial class ServiceUnitResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceUnitResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="targetResourceGroup"> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </param>
         /// <param name="deploymentMode"> Describes the type of ARM deployment to be performed on the resource. </param>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.DeploymentManager
             DeploymentMode = deploymentMode;
         }
 
-        /// <summary> Initializes a new instance of ServiceUnitResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,11 +45,18 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <param name="targetResourceGroup"> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </param>
         /// <param name="deploymentMode"> Describes the type of ARM deployment to be performed on the resource. </param>
         /// <param name="artifacts"> The artifacts for the service unit. </param>
-        internal ServiceUnitResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string targetResourceGroup, DeploymentMode deploymentMode, ServiceUnitArtifacts artifacts) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceUnitResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string targetResourceGroup, DeploymentMode deploymentMode, ServiceUnitArtifacts artifacts, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TargetResourceGroup = targetResourceGroup;
             DeploymentMode = deploymentMode;
             Artifacts = artifacts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitResourceData"/> for deserialization. </summary>
+        internal ServiceUnitResourceData()
+        {
         }
 
         /// <summary> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </summary>

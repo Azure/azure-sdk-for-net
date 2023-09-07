@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class SessionHostHealthCheckReport
+    public partial class SessionHostHealthCheckReport : IUtf8JsonSerializable, IModelJsonSerializable<SessionHostHealthCheckReport>
     {
-        internal static SessionHostHealthCheckReport DeserializeSessionHostHealthCheckReport(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SessionHostHealthCheckReport>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SessionHostHealthCheckReport>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SessionHostHealthCheckReport>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SessionHostHealthCheckReport DeserializeSessionHostHealthCheckReport(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<SessionHostHealthCheckName> healthCheckName = default;
             Optional<SessionHostHealthCheckResult> healthCheckResult = default;
             Optional<SessionHostHealthCheckFailureDetails> additionalFailureDetails = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthCheckName"u8))
@@ -50,8 +79,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SessionHostHealthCheckReport(Optional.ToNullable(healthCheckName), Optional.ToNullable(healthCheckResult), additionalFailureDetails.Value);
+            return new SessionHostHealthCheckReport(Optional.ToNullable(healthCheckName), Optional.ToNullable(healthCheckResult), additionalFailureDetails.Value, serializedAdditionalRawData);
+        }
+
+        SessionHostHealthCheckReport IModelJsonSerializable<SessionHostHealthCheckReport>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SessionHostHealthCheckReport>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSessionHostHealthCheckReport(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SessionHostHealthCheckReport>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SessionHostHealthCheckReport>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SessionHostHealthCheckReport IModelSerializable<SessionHostHealthCheckReport>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SessionHostHealthCheckReport>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSessionHostHealthCheckReport(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SessionHostHealthCheckReport"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SessionHostHealthCheckReport"/> to convert. </param>
+        public static implicit operator RequestContent(SessionHostHealthCheckReport model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SessionHostHealthCheckReport"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SessionHostHealthCheckReport(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSessionHostHealthCheckReport(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

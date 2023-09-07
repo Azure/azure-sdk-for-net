@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightLinuxOSProfile : IUtf8JsonSerializable
+    public partial class HDInsightLinuxOSProfile : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightLinuxOSProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightLinuxOSProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightLinuxOSProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightLinuxOSProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Username))
             {
@@ -28,13 +36,34 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue(SshProfile);
+                if (SshProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SshProfile>)SshProfile).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightLinuxOSProfile DeserializeHDInsightLinuxOSProfile(JsonElement element)
+        internal static HDInsightLinuxOSProfile DeserializeHDInsightLinuxOSProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> username = default;
             Optional<string> password = default;
             Optional<SshProfile> sshProfile = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -63,8 +93,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     sshProfile = SshProfile.DeserializeSshProfile(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightLinuxOSProfile(username.Value, password.Value, sshProfile.Value);
+            return new HDInsightLinuxOSProfile(username.Value, password.Value, sshProfile.Value, serializedAdditionalRawData);
+        }
+
+        HDInsightLinuxOSProfile IModelJsonSerializable<HDInsightLinuxOSProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightLinuxOSProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightLinuxOSProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightLinuxOSProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightLinuxOSProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightLinuxOSProfile IModelSerializable<HDInsightLinuxOSProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightLinuxOSProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightLinuxOSProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HDInsightLinuxOSProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HDInsightLinuxOSProfile"/> to convert. </param>
+        public static implicit operator RequestContent(HDInsightLinuxOSProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HDInsightLinuxOSProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HDInsightLinuxOSProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightLinuxOSProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

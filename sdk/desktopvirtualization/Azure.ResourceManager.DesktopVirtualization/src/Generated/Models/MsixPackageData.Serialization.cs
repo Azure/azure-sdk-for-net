@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class MsixPackageData : IUtf8JsonSerializable
+    public partial class MsixPackageData : IUtf8JsonSerializable, IModelJsonSerializable<MsixPackageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MsixPackageData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MsixPackageData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MsixPackageData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -69,7 +75,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStartArray();
                 foreach (var item in PackageDependencies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MsixPackageDependencies>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,16 +102,37 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStartArray();
                 foreach (var item in PackageApplications)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MsixPackageApplications>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MsixPackageData DeserializeMsixPackageData(JsonElement element)
+        internal static MsixPackageData DeserializeMsixPackageData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -118,6 +152,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> version = default;
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<IList<MsixPackageApplications>> packageApplications = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -246,8 +281,61 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MsixPackageData(id, name, type, systemData.Value, imagePath.Value, packageName.Value, packageFamilyName.Value, displayName.Value, packageRelativePath.Value, Optional.ToNullable(isRegularRegistration), Optional.ToNullable(isActive), Optional.ToList(packageDependencies), version.Value, Optional.ToNullable(lastUpdated), Optional.ToList(packageApplications));
+            return new MsixPackageData(id, name, type, systemData.Value, imagePath.Value, packageName.Value, packageFamilyName.Value, displayName.Value, packageRelativePath.Value, Optional.ToNullable(isRegularRegistration), Optional.ToNullable(isActive), Optional.ToList(packageDependencies), version.Value, Optional.ToNullable(lastUpdated), Optional.ToList(packageApplications), serializedAdditionalRawData);
+        }
+
+        MsixPackageData IModelJsonSerializable<MsixPackageData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MsixPackageData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMsixPackageData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MsixPackageData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MsixPackageData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MsixPackageData IModelSerializable<MsixPackageData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MsixPackageData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMsixPackageData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MsixPackageData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MsixPackageData"/> to convert. </param>
+        public static implicit operator RequestContent(MsixPackageData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MsixPackageData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MsixPackageData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMsixPackageData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

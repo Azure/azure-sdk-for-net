@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsApplicationGroupResource(Client, EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e)), _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventHubsApplicationGroupResource(Client, EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e)), _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsApplicationGroupResource(Client, EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e)), _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventHubsApplicationGroupResource(Client, EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e)), _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

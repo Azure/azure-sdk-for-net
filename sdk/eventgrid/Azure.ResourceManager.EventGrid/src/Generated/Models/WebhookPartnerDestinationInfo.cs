@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the WebHook of the partner destination. </summary>
     public partial class WebhookPartnerDestinationInfo : PartnerDestinationInfo
     {
-        /// <summary> Initializes a new instance of WebhookPartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookPartnerDestinationInfo"/>. </summary>
         public WebhookPartnerDestinationInfo()
         {
             EndpointType = PartnerEndpointType.WebHook;
         }
 
-        /// <summary> Initializes a new instance of WebhookPartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookPartnerDestinationInfo"/>. </summary>
         /// <param name="azureSubscriptionId">
         /// Azure subscription ID of the subscriber. The partner destination associated with the channel will be
         /// created under this Azure subscription.
@@ -39,7 +39,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="PartnerClientAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureADPartnerClientAuthentication"/>.
         /// </param>
-        internal WebhookPartnerDestinationInfo(string azureSubscriptionId, string resourceGroupName, string name, PartnerEndpointType endpointType, string endpointServiceContext, IList<ResourceMoveChangeHistory> resourceMoveChangeHistory, Uri endpointUri, Uri endpointBaseUri, PartnerClientAuthentication clientAuthentication) : base(azureSubscriptionId, resourceGroupName, name, endpointType, endpointServiceContext, resourceMoveChangeHistory)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebhookPartnerDestinationInfo(string azureSubscriptionId, string resourceGroupName, string name, PartnerEndpointType endpointType, string endpointServiceContext, IList<ResourceMoveChangeHistory> resourceMoveChangeHistory, Uri endpointUri, Uri endpointBaseUri, PartnerClientAuthentication clientAuthentication, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(azureSubscriptionId, resourceGroupName, name, endpointType, endpointServiceContext, resourceMoveChangeHistory, serializedAdditionalRawData)
         {
             EndpointUri = endpointUri;
             EndpointBaseUri = endpointBaseUri;

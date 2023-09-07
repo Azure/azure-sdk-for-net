@@ -5,25 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class DataShareTriggerData : IUtf8JsonSerializable
+    public partial class DataShareTriggerData : IUtf8JsonSerializable, IModelJsonSerializable<DataShareTriggerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataShareTriggerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataShareTriggerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataShareTriggerData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataShareTriggerData DeserializeDataShareTriggerData(JsonElement element)
+        internal static DataShareTriggerData DeserializeDataShareTriggerData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,11 +57,14 @@ namespace Azure.ResourceManager.DataShare
                     case "ScheduleBased": return ScheduledTrigger.DeserializeScheduledTrigger(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             TriggerKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -71,8 +96,61 @@ namespace Azure.ResourceManager.DataShare
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataShareTriggerData(id, name, type, systemData.Value, kind);
+            return new DataShareTriggerData(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+        }
+
+        DataShareTriggerData IModelJsonSerializable<DataShareTriggerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataShareTriggerData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataShareTriggerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataShareTriggerData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataShareTriggerData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataShareTriggerData IModelSerializable<DataShareTriggerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataShareTriggerData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataShareTriggerData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataShareTriggerData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataShareTriggerData"/> to convert. </param>
+        public static implicit operator RequestContent(DataShareTriggerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataShareTriggerData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataShareTriggerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataShareTriggerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

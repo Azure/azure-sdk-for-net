@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Job error state event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobErrored event. </summary>
     public partial class MediaJobErroredEventData : MediaJobStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobErroredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobErroredEventData"/>. </summary>
         internal MediaJobErroredEventData()
         {
             Outputs = new ChangeTrackingList<MediaJobOutput>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobErroredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobErroredEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
@@ -28,7 +29,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
         /// </param>
-        internal MediaJobErroredEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData, IReadOnlyList<MediaJobOutput> outputs) : base(previousState, state, correlationData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobErroredEventData(MediaJobState? previousState, MediaJobState? state, IReadOnlyDictionary<string, string> correlationData, IReadOnlyList<MediaJobOutput> outputs, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(previousState, state, correlationData, serializedAdditionalRawData)
         {
             Outputs = outputs;
         }

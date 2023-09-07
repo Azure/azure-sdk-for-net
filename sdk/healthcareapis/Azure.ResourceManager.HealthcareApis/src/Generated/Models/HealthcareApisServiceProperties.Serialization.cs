@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceProperties : IUtf8JsonSerializable
+    public partial class HealthcareApisServiceProperties : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareApisServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareApisServiceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareApisServiceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisServiceProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
@@ -23,29 +30,64 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HealthcareApisServiceAccessPolicyEntry>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CosmosDbConfiguration))
             {
                 writer.WritePropertyName("cosmosDbConfiguration"u8);
-                writer.WriteObjectValue(CosmosDbConfiguration);
+                if (CosmosDbConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HealthcareApisServiceCosmosDbConfiguration>)CosmosDbConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue(AuthenticationConfiguration);
+                if (AuthenticationConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HealthcareApisServiceAuthenticationConfiguration>)AuthenticationConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue(CorsConfiguration);
+                if (CorsConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HealthcareApisServiceCorsConfiguration>)CorsConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
-                writer.WriteObjectValue(ExportConfiguration);
+                if (ExportConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ServiceExportConfigurationInfo>)ExportConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -53,7 +95,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HealthcareApisPrivateEndpointConnectionData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -65,18 +114,46 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
-                writer.WriteObjectValue(AcrConfiguration);
+                if (AcrConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HealthcareApisServiceAcrConfiguration>)AcrConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
-                writer.WriteObjectValue(ImportConfiguration);
+                if (ImportConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HealthcareApisServiceImportConfiguration>)ImportConfiguration).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HealthcareApisServiceProperties DeserializeHealthcareApisServiceProperties(JsonElement element)
+        internal static HealthcareApisServiceProperties DeserializeHealthcareApisServiceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +168,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
             Optional<HealthcareApisServiceAcrConfiguration> acrConfiguration = default;
             Optional<HealthcareApisServiceImportConfiguration> importConfiguration = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -193,8 +271,61 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     importConfiguration = HealthcareApisServiceImportConfiguration.DeserializeHealthcareApisServiceImportConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareApisServiceProperties(Optional.ToNullable(provisioningState), Optional.ToList(accessPolicies), cosmosDbConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), acrConfiguration.Value, importConfiguration.Value);
+            return new HealthcareApisServiceProperties(Optional.ToNullable(provisioningState), Optional.ToList(accessPolicies), cosmosDbConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), acrConfiguration.Value, importConfiguration.Value, serializedAdditionalRawData);
+        }
+
+        HealthcareApisServiceProperties IModelJsonSerializable<HealthcareApisServiceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisServiceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareApisServiceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareApisServiceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisServiceProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareApisServiceProperties IModelSerializable<HealthcareApisServiceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisServiceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareApisServiceProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareApisServiceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareApisServiceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareApisServiceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareApisServiceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareApisServiceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareApisServiceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the azure function destination for an event subscription. </summary>
     public partial class AzureFunctionEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of AzureFunctionEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionEventSubscriptionDestination"/>. </summary>
         public AzureFunctionEventSubscriptionDestination()
         {
             DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.AzureFunction;
         }
 
-        /// <summary> Initializes a new instance of AzureFunctionEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of the Azure Function destination of an event subscription. </param>
         /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </param>
-        internal AzureFunctionEventSubscriptionDestination(EndpointType endpointType, ResourceIdentifier resourceId, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFunctionEventSubscriptionDestination(EndpointType endpointType, ResourceIdentifier resourceId, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, IList<DeliveryAttributeMapping> deliveryAttributeMappings, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(endpointType, serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             MaxEventsPerBatch = maxEventsPerBatch;

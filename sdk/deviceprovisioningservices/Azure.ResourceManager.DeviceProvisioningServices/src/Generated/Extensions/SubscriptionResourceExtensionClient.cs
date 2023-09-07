@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), DeviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceProvisioningServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), DeviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceProvisioningServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), DeviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceProvisioningServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), DeviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceProvisioningServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

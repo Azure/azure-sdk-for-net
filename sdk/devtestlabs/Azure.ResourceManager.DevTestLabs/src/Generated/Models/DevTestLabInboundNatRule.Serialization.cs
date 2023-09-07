@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabInboundNatRule : IUtf8JsonSerializable
+    public partial class DevTestLabInboundNatRule : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabInboundNatRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabInboundNatRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabInboundNatRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabInboundNatRule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TransportProtocol))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabInboundNatRule DeserializeDevTestLabInboundNatRule(JsonElement element)
+        internal static DevTestLabInboundNatRule DeserializeDevTestLabInboundNatRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DevTestLabTransportProtocol> transportProtocol = default;
             Optional<int> frontendPort = default;
             Optional<int> backendPort = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transportProtocol"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     backendPort = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabInboundNatRule(Optional.ToNullable(transportProtocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort));
+            return new DevTestLabInboundNatRule(Optional.ToNullable(transportProtocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), serializedAdditionalRawData);
+        }
+
+        DevTestLabInboundNatRule IModelJsonSerializable<DevTestLabInboundNatRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabInboundNatRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabInboundNatRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabInboundNatRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabInboundNatRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabInboundNatRule IModelSerializable<DevTestLabInboundNatRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabInboundNatRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabInboundNatRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabInboundNatRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabInboundNatRule"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabInboundNatRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabInboundNatRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabInboundNatRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabInboundNatRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

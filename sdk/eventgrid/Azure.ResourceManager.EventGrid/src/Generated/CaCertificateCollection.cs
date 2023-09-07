@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _caCertificateRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _caCertificateRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CaCertificateResource(Client, CaCertificateData.DeserializeCaCertificateData(e)), _caCertificateClientDiagnostics, Pipeline, "CaCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CaCertificateResource(Client, CaCertificateData.DeserializeCaCertificateData(e)), _caCertificateClientDiagnostics, Pipeline, "CaCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _caCertificateRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _caCertificateRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CaCertificateResource(Client, CaCertificateData.DeserializeCaCertificateData(e)), _caCertificateClientDiagnostics, Pipeline, "CaCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CaCertificateResource(Client, CaCertificateData.DeserializeCaCertificateData(e)), _caCertificateClientDiagnostics, Pipeline, "CaCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Data source used when creating the volume. </summary>
     public partial class ElasticSanVolumeDataSourceInfo
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeDataSourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeDataSourceInfo"/>. </summary>
         public ElasticSanVolumeDataSourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeDataSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeDataSourceInfo"/>. </summary>
         /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
         /// <param name="sourceUri"> If createOption is Copy, this is the ARM id of the source snapshot or disk. If createOption is Restore, this is the ARM-like id of the source disk restore point. </param>
-        internal ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource, Uri sourceUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource, Uri sourceUri, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateSource = createSource;
             SourceUri = sourceUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This enumerates the possible sources of a volume creation. </summary>

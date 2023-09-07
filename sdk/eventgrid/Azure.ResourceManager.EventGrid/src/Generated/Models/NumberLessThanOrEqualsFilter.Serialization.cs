@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class NumberLessThanOrEqualsFilter : IUtf8JsonSerializable
+    public partial class NumberLessThanOrEqualsFilter : IUtf8JsonSerializable, IModelJsonSerializable<NumberLessThanOrEqualsFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NumberLessThanOrEqualsFilter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NumberLessThanOrEqualsFilter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NumberLessThanOrEqualsFilter>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NumberLessThanOrEqualsFilter DeserializeNumberLessThanOrEqualsFilter(JsonElement element)
+        internal static NumberLessThanOrEqualsFilter DeserializeNumberLessThanOrEqualsFilter(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<double> value = default;
             FilterOperatorType operatorType = default;
             Optional<string> key = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -60,8 +83,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     key = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NumberLessThanOrEqualsFilter(operatorType, key.Value, Optional.ToNullable(value));
+            return new NumberLessThanOrEqualsFilter(operatorType, key.Value, Optional.ToNullable(value), serializedAdditionalRawData);
+        }
+
+        NumberLessThanOrEqualsFilter IModelJsonSerializable<NumberLessThanOrEqualsFilter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NumberLessThanOrEqualsFilter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNumberLessThanOrEqualsFilter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NumberLessThanOrEqualsFilter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NumberLessThanOrEqualsFilter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NumberLessThanOrEqualsFilter IModelSerializable<NumberLessThanOrEqualsFilter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NumberLessThanOrEqualsFilter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNumberLessThanOrEqualsFilter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NumberLessThanOrEqualsFilter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NumberLessThanOrEqualsFilter"/> to convert. </param>
+        public static implicit operator RequestContent(NumberLessThanOrEqualsFilter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NumberLessThanOrEqualsFilter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NumberLessThanOrEqualsFilter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNumberLessThanOrEqualsFilter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

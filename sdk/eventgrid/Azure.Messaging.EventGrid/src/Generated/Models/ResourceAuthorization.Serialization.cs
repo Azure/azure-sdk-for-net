@@ -5,16 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class ResourceAuthorization
+    public partial class ResourceAuthorization : IUtf8JsonSerializable, IModelJsonSerializable<ResourceAuthorization>
     {
-        internal static ResourceAuthorization DeserializeResourceAuthorization(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceAuthorization>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceAuthorization>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceAuthorization>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
+            }
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action);
+            }
+            if (Optional.IsCollectionDefined(Evidence))
+            {
+                writer.WritePropertyName("evidence"u8);
+                writer.WriteStartObject();
+                foreach (var item in Evidence)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceAuthorization DeserializeResourceAuthorization(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> scope = default;
             Optional<string> action = default;
             Optional<IReadOnlyDictionary<string, string>> evidence = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -48,8 +97,61 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     evidence = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceAuthorization(scope.Value, action.Value, Optional.ToDictionary(evidence));
+            return new ResourceAuthorization(scope.Value, action.Value, Optional.ToDictionary(evidence), serializedAdditionalRawData);
+        }
+
+        ResourceAuthorization IModelJsonSerializable<ResourceAuthorization>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceAuthorization>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceAuthorization(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceAuthorization>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceAuthorization>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceAuthorization IModelSerializable<ResourceAuthorization>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceAuthorization>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceAuthorization(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceAuthorization"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceAuthorization"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceAuthorization model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceAuthorization"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceAuthorization(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceAuthorization(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

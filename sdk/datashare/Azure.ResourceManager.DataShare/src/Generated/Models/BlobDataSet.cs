@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> An Azure storage blob data set. </summary>
     public partial class BlobDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of BlobDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobDataSet"/>. </summary>
         /// <param name="containerName"> Container that has the file path. </param>
         /// <param name="filePath"> File path within the source data set. </param>
         /// <param name="resourceGroup"> Resource group of storage account. </param>
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetKind.Blob;
         }
 
-        /// <summary> Initializes a new instance of BlobDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +51,8 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal BlobDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string containerName, Guid? dataSetId, string filePath, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string containerName, Guid? dataSetId, string filePath, string resourceGroup, string storageAccountName, string subscriptionId, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             ContainerName = containerName;
             DataSetId = dataSetId;
@@ -59,6 +61,11 @@ namespace Azure.ResourceManager.DataShare.Models
             StorageAccountName = storageAccountName;
             SubscriptionId = subscriptionId;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobDataSet"/> for deserialization. </summary>
+        internal BlobDataSet()
+        {
         }
 
         /// <summary> Container that has the file path. </summary>

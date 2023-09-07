@@ -6,17 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(RedisScalingCompletedEventDataConverter))]
-    public partial class RedisScalingCompletedEventData
+    public partial class RedisScalingCompletedEventData : IUtf8JsonSerializable, IModelJsonSerializable<RedisScalingCompletedEventData>
     {
-        internal static RedisScalingCompletedEventData DeserializeRedisScalingCompletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedisScalingCompletedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedisScalingCompletedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RedisScalingCompletedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RedisScalingCompletedEventData DeserializeRedisScalingCompletedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> name = default;
             Optional<string> status = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -45,15 +88,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     status = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RedisScalingCompletedEventData(Optional.ToNullable(timestamp), name.Value, status.Value);
+            return new RedisScalingCompletedEventData(Optional.ToNullable(timestamp), name.Value, status.Value, serializedAdditionalRawData);
+        }
+
+        RedisScalingCompletedEventData IModelJsonSerializable<RedisScalingCompletedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisScalingCompletedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisScalingCompletedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedisScalingCompletedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisScalingCompletedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedisScalingCompletedEventData IModelSerializable<RedisScalingCompletedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisScalingCompletedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedisScalingCompletedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RedisScalingCompletedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RedisScalingCompletedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(RedisScalingCompletedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RedisScalingCompletedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RedisScalingCompletedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedisScalingCompletedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class RedisScalingCompletedEventDataConverter : JsonConverter<RedisScalingCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, RedisScalingCompletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override RedisScalingCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

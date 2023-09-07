@@ -5,20 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    internal partial class WebConnectivityEndpoint
+    internal partial class WebConnectivityEndpoint : IUtf8JsonSerializable, IModelJsonSerializable<WebConnectivityEndpoint>
     {
-        internal static WebConnectivityEndpoint DeserializeWebConnectivityEndpoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebConnectivityEndpoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebConnectivityEndpoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebConnectivityEndpoint>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("fqdn"u8);
+            writer.WriteStringValue(Fqdn);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static WebConnectivityEndpoint DeserializeWebConnectivityEndpoint(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string fqdn = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -26,8 +57,61 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     fqdn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebConnectivityEndpoint(fqdn);
+            return new WebConnectivityEndpoint(fqdn, serializedAdditionalRawData);
+        }
+
+        WebConnectivityEndpoint IModelJsonSerializable<WebConnectivityEndpoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebConnectivityEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebConnectivityEndpoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebConnectivityEndpoint>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebConnectivityEndpoint>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebConnectivityEndpoint IModelSerializable<WebConnectivityEndpoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebConnectivityEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebConnectivityEndpoint(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebConnectivityEndpoint"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebConnectivityEndpoint"/> to convert. </param>
+        public static implicit operator RequestContent(WebConnectivityEndpoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebConnectivityEndpoint"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebConnectivityEndpoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebConnectivityEndpoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,22 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ApiManagementProductUpdatedEventDataConverter))]
-    public partial class ApiManagementProductUpdatedEventData
+    public partial class ApiManagementProductUpdatedEventData : IUtf8JsonSerializable, IModelJsonSerializable<ApiManagementProductUpdatedEventData>
     {
-        internal static ApiManagementProductUpdatedEventData DeserializeApiManagementProductUpdatedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiManagementProductUpdatedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiManagementProductUpdatedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementProductUpdatedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceUri))
+            {
+                writer.WritePropertyName("resourceUri"u8);
+                writer.WriteStringValue(ResourceUri);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApiManagementProductUpdatedEventData DeserializeApiManagementProductUpdatedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> resourceUri = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUri"u8))
@@ -29,15 +62,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     resourceUri = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApiManagementProductUpdatedEventData(resourceUri.Value);
+            return new ApiManagementProductUpdatedEventData(resourceUri.Value, serializedAdditionalRawData);
+        }
+
+        ApiManagementProductUpdatedEventData IModelJsonSerializable<ApiManagementProductUpdatedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementProductUpdatedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementProductUpdatedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiManagementProductUpdatedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementProductUpdatedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiManagementProductUpdatedEventData IModelSerializable<ApiManagementProductUpdatedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementProductUpdatedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiManagementProductUpdatedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiManagementProductUpdatedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiManagementProductUpdatedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(ApiManagementProductUpdatedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiManagementProductUpdatedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiManagementProductUpdatedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiManagementProductUpdatedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ApiManagementProductUpdatedEventDataConverter : JsonConverter<ApiManagementProductUpdatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ApiManagementProductUpdatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ApiManagementProductUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

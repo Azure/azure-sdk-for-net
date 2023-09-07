@@ -5,23 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    internal partial class ForwardingRuleListResult
+    internal partial class ForwardingRuleListResult : IUtf8JsonSerializable, IModelJsonSerializable<ForwardingRuleListResult>
     {
-        internal static ForwardingRuleListResult DeserializeForwardingRuleListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ForwardingRuleListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ForwardingRuleListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ForwardingRuleListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DnsForwardingRuleData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ForwardingRuleListResult DeserializeForwardingRuleListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<DnsForwardingRuleData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +88,61 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ForwardingRuleListResult(Optional.ToList(value), nextLink.Value);
+            return new ForwardingRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        ForwardingRuleListResult IModelJsonSerializable<ForwardingRuleListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ForwardingRuleListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeForwardingRuleListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ForwardingRuleListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ForwardingRuleListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ForwardingRuleListResult IModelSerializable<ForwardingRuleListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ForwardingRuleListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeForwardingRuleListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ForwardingRuleListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ForwardingRuleListResult"/> to convert. </param>
+        public static implicit operator RequestContent(ForwardingRuleListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ForwardingRuleListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ForwardingRuleListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeForwardingRuleListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

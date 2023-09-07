@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorEndpointPurgeContent : IUtf8JsonSerializable
+    public partial class FrontDoorEndpointPurgeContent : IUtf8JsonSerializable, IModelJsonSerializable<FrontDoorEndpointPurgeContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FrontDoorEndpointPurgeContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FrontDoorEndpointPurgeContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorEndpointPurgeContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("contentPaths"u8);
             writer.WriteStartArray();
@@ -22,7 +30,98 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static FrontDoorEndpointPurgeContent DeserializeFrontDoorEndpointPurgeContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> contentPaths = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("contentPaths"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    contentPaths = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new FrontDoorEndpointPurgeContent(contentPaths, serializedAdditionalRawData);
+        }
+
+        FrontDoorEndpointPurgeContent IModelJsonSerializable<FrontDoorEndpointPurgeContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorEndpointPurgeContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorEndpointPurgeContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FrontDoorEndpointPurgeContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorEndpointPurgeContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FrontDoorEndpointPurgeContent IModelSerializable<FrontDoorEndpointPurgeContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorEndpointPurgeContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFrontDoorEndpointPurgeContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FrontDoorEndpointPurgeContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FrontDoorEndpointPurgeContent"/> to convert. </param>
+        public static implicit operator RequestContent(FrontDoorEndpointPurgeContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FrontDoorEndpointPurgeContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FrontDoorEndpointPurgeContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFrontDoorEndpointPurgeContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

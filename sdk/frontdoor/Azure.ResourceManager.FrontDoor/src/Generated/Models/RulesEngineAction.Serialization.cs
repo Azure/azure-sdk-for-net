@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RulesEngineAction : IUtf8JsonSerializable
+    public partial class RulesEngineAction : IUtf8JsonSerializable, IModelJsonSerializable<RulesEngineAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RulesEngineAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RulesEngineAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RulesEngineAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RequestHeaderActions))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaderActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RulesEngineHeaderAction>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +46,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseHeaderActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RulesEngineHeaderAction>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -41,18 +62,39 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 if (RouteConfigurationOverride != null)
                 {
                     writer.WritePropertyName("routeConfigurationOverride"u8);
-                    writer.WriteObjectValue(RouteConfigurationOverride);
+                    if (RouteConfigurationOverride is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RouteConfiguration>)RouteConfigurationOverride).Serialize(writer, options);
+                    }
                 }
                 else
                 {
                     writer.WriteNull("routeConfigurationOverride");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element)
+        internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +102,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<IList<RulesEngineHeaderAction>> requestHeaderActions = default;
             Optional<IList<RulesEngineHeaderAction>> responseHeaderActions = default;
             Optional<RouteConfiguration> routeConfigurationOverride = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestHeaderActions"u8))
@@ -100,8 +143,61 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RulesEngineAction(Optional.ToList(requestHeaderActions), Optional.ToList(responseHeaderActions), routeConfigurationOverride.Value);
+            return new RulesEngineAction(Optional.ToList(requestHeaderActions), Optional.ToList(responseHeaderActions), routeConfigurationOverride.Value, serializedAdditionalRawData);
+        }
+
+        RulesEngineAction IModelJsonSerializable<RulesEngineAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulesEngineAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRulesEngineAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RulesEngineAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulesEngineAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RulesEngineAction IModelSerializable<RulesEngineAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulesEngineAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRulesEngineAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RulesEngineAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RulesEngineAction"/> to convert. </param>
+        public static implicit operator RequestContent(RulesEngineAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RulesEngineAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RulesEngineAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRulesEngineAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

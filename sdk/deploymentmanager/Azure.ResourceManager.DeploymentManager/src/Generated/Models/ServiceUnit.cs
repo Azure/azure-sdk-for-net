@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Defines a service unit. </summary>
     public partial class ServiceUnit : ServiceUnitProperties
     {
-        /// <summary> Initializes a new instance of ServiceUnit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceUnit"/>. </summary>
         /// <param name="targetResourceGroup"> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </param>
         /// <param name="deploymentMode"> Describes the type of ARM deployment to be performed on the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceGroup"/> is null. </exception>
@@ -25,16 +25,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Steps = new ChangeTrackingList<RolloutStep>();
         }
 
-        /// <summary> Initializes a new instance of ServiceUnit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceUnit"/>. </summary>
         /// <param name="targetResourceGroup"> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </param>
         /// <param name="deploymentMode"> Describes the type of ARM deployment to be performed on the resource. </param>
         /// <param name="artifacts"> The artifacts for the service unit. </param>
         /// <param name="name"> Name of the service unit. </param>
         /// <param name="steps"> Detailed step information, if present. </param>
-        internal ServiceUnit(string targetResourceGroup, DeploymentMode deploymentMode, ServiceUnitArtifacts artifacts, string name, IReadOnlyList<RolloutStep> steps) : base(targetResourceGroup, deploymentMode, artifacts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceUnit(string targetResourceGroup, DeploymentMode deploymentMode, ServiceUnitArtifacts artifacts, string name, IReadOnlyList<RolloutStep> steps, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(targetResourceGroup, deploymentMode, artifacts, serializedAdditionalRawData)
         {
             Name = name;
             Steps = steps;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceUnit"/> for deserialization. </summary>
+        internal ServiceUnit()
+        {
         }
 
         /// <summary> Name of the service unit. </summary>

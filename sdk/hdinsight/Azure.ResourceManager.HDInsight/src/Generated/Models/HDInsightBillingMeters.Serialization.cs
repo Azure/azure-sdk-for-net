@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightBillingMeters
+    public partial class HDInsightBillingMeters : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightBillingMeters>
     {
-        internal static HDInsightBillingMeters DeserializeHDInsightBillingMeters(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightBillingMeters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightBillingMeters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightBillingMeters>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MeterParameter))
+            {
+                writer.WritePropertyName("meterParameter"u8);
+                writer.WriteStringValue(MeterParameter);
+            }
+            if (Optional.IsDefined(Meter))
+            {
+                writer.WritePropertyName("meter"u8);
+                writer.WriteStringValue(Meter);
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HDInsightBillingMeters DeserializeHDInsightBillingMeters(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> meterParameter = default;
             Optional<string> meter = default;
             Optional<string> unit = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterParameter"u8))
@@ -38,8 +82,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     unit = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightBillingMeters(meterParameter.Value, meter.Value, unit.Value);
+            return new HDInsightBillingMeters(meterParameter.Value, meter.Value, unit.Value, serializedAdditionalRawData);
+        }
+
+        HDInsightBillingMeters IModelJsonSerializable<HDInsightBillingMeters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightBillingMeters>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightBillingMeters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightBillingMeters>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightBillingMeters>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightBillingMeters IModelSerializable<HDInsightBillingMeters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightBillingMeters>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightBillingMeters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HDInsightBillingMeters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HDInsightBillingMeters"/> to convert. </param>
+        public static implicit operator RequestContent(HDInsightBillingMeters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HDInsightBillingMeters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HDInsightBillingMeters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightBillingMeters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

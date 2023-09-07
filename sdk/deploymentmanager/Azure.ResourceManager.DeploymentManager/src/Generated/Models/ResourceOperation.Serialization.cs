@@ -5,15 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class ResourceOperation
+    public partial class ResourceOperation : IUtf8JsonSerializable, IModelJsonSerializable<ResourceOperation>
     {
-        internal static ResourceOperation DeserializeResourceOperation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceOperation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceOperation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceOperation>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceOperation DeserializeResourceOperation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +62,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<string> provisioningState = default;
             Optional<string> statusMessage = default;
             Optional<string> statusCode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -56,8 +95,61 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     statusCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceOperation(resourceName.Value, operationId.Value, resourceType.Value, provisioningState.Value, statusMessage.Value, statusCode.Value);
+            return new ResourceOperation(resourceName.Value, operationId.Value, resourceType.Value, provisioningState.Value, statusMessage.Value, statusCode.Value, serializedAdditionalRawData);
+        }
+
+        ResourceOperation IModelJsonSerializable<ResourceOperation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceOperation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceOperation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceOperation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceOperation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceOperation IModelSerializable<ResourceOperation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceOperation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceOperation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceOperation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceOperation"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceOperation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceOperation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceOperation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceOperation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,69 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class Service
+    public partial class Service : IUtf8JsonSerializable, IModelJsonSerializable<Service>
     {
-        internal static Service DeserializeService(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Service>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Service>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Service>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsCollectionDefined(ServiceUnits))
+            {
+                writer.WritePropertyName("serviceUnits"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceUnits)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ServiceUnit>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("targetLocation"u8);
+            writer.WriteStringValue(TargetLocation);
+            writer.WritePropertyName("targetSubscriptionId"u8);
+            writer.WriteStringValue(TargetSubscriptionId);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static Service DeserializeService(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<IReadOnlyList<ServiceUnit>> serviceUnits = default;
             string targetLocation = default;
             string targetSubscriptionId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -54,8 +108,61 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     targetSubscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Service(targetLocation, targetSubscriptionId, name.Value, Optional.ToList(serviceUnits));
+            return new Service(targetLocation, targetSubscriptionId, name.Value, Optional.ToList(serviceUnits), serializedAdditionalRawData);
+        }
+
+        Service IModelJsonSerializable<Service>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Service>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Service>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Service>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Service IModelSerializable<Service>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Service>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeService(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Service"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Service"/> to convert. </param>
+        public static implicit operator RequestContent(Service model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Service"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Service(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
@@ -14,26 +16,37 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// Please note <see cref="HealthCheckStepAttributes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RestHealthCheckStepAttributes"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownHealthCheckStepAttributes))]
     public abstract partial class HealthCheckStepAttributes
     {
-        /// <summary> Initializes a new instance of HealthCheckStepAttributes. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStepAttributes"/>. </summary>
         /// <param name="healthyStateDuration"> The duration in ISO 8601 format for which the resource is expected to be continuously healthy. If maxElasticDuration is specified, healthy state duration is enforced after the detection of first healthy signal. </param>
         protected HealthCheckStepAttributes(TimeSpan healthyStateDuration)
         {
             HealthyStateDuration = healthyStateDuration;
         }
 
-        /// <summary> Initializes a new instance of HealthCheckStepAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStepAttributes"/>. </summary>
         /// <param name="healthCheckStepAttributesType"> The type of health check. </param>
         /// <param name="waitDuration"> The duration in ISO 8601 format for which health check waits idly without any checks. </param>
         /// <param name="maxElasticDuration"> The duration in ISO 8601 format for which the health check waits for the resource to become healthy. Health check fails if it doesn't. Health check starts to enforce healthyStateDuration once resource becomes healthy. </param>
         /// <param name="healthyStateDuration"> The duration in ISO 8601 format for which the resource is expected to be continuously healthy. If maxElasticDuration is specified, healthy state duration is enforced after the detection of first healthy signal. </param>
-        internal HealthCheckStepAttributes(string healthCheckStepAttributesType, TimeSpan? waitDuration, TimeSpan? maxElasticDuration, TimeSpan healthyStateDuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthCheckStepAttributes(string healthCheckStepAttributesType, TimeSpan? waitDuration, TimeSpan? maxElasticDuration, TimeSpan healthyStateDuration, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HealthCheckStepAttributesType = healthCheckStepAttributesType;
             WaitDuration = waitDuration;
             MaxElasticDuration = maxElasticDuration;
             HealthyStateDuration = healthyStateDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStepAttributes"/> for deserialization. </summary>
+        internal HealthCheckStepAttributes()
+        {
         }
 
         /// <summary> The type of health check. </summary>

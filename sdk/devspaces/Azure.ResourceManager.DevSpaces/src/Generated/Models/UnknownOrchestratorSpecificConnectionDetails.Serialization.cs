@@ -5,29 +5,60 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
-    internal partial class UnknownOrchestratorSpecificConnectionDetails
+    internal partial class UnknownOrchestratorSpecificConnectionDetails : IUtf8JsonSerializable, IModelJsonSerializable<OrchestratorSpecificConnectionDetails>
     {
-        internal static UnknownOrchestratorSpecificConnectionDetails DeserializeUnknownOrchestratorSpecificConnectionDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrchestratorSpecificConnectionDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OrchestratorSpecificConnectionDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorSpecificConnectionDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            string instanceType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"u8))
+                foreach (var property in _serializedAdditionalRawData)
                 {
-                    instanceType = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownOrchestratorSpecificConnectionDetails(instanceType);
+            writer.WriteEndObject();
+        }
+
+        internal static OrchestratorSpecificConnectionDetails DeserializeUnknownOrchestratorSpecificConnectionDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeOrchestratorSpecificConnectionDetails(element, options);
+
+        OrchestratorSpecificConnectionDetails IModelJsonSerializable<OrchestratorSpecificConnectionDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorSpecificConnectionDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownOrchestratorSpecificConnectionDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OrchestratorSpecificConnectionDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorSpecificConnectionDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OrchestratorSpecificConnectionDetails IModelSerializable<OrchestratorSpecificConnectionDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorSpecificConnectionDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOrchestratorSpecificConnectionDetails(doc.RootElement, options);
         }
     }
 }

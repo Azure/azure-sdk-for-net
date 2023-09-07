@@ -6,15 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsSmsDeliveryAttemptProperties
+    public partial class AcsSmsDeliveryAttemptProperties : IUtf8JsonSerializable, IModelJsonSerializable<AcsSmsDeliveryAttemptProperties>
     {
-        internal static AcsSmsDeliveryAttemptProperties DeserializeAcsSmsDeliveryAttemptProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcsSmsDeliveryAttemptProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcsSmsDeliveryAttemptProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AcsSmsDeliveryAttemptProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(SegmentsSucceeded))
+            {
+                writer.WritePropertyName("segmentsSucceeded"u8);
+                writer.WriteNumberValue(SegmentsSucceeded.Value);
+            }
+            if (Optional.IsDefined(SegmentsFailed))
+            {
+                writer.WritePropertyName("segmentsFailed"u8);
+                writer.WriteNumberValue(SegmentsFailed.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcsSmsDeliveryAttemptProperties DeserializeAcsSmsDeliveryAttemptProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> timestamp = default;
             Optional<int> segmentsSucceeded = default;
             Optional<int> segmentsFailed = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -51,8 +94,61 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     segmentsFailed = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcsSmsDeliveryAttemptProperties(Optional.ToNullable(timestamp), Optional.ToNullable(segmentsSucceeded), Optional.ToNullable(segmentsFailed));
+            return new AcsSmsDeliveryAttemptProperties(Optional.ToNullable(timestamp), Optional.ToNullable(segmentsSucceeded), Optional.ToNullable(segmentsFailed), serializedAdditionalRawData);
+        }
+
+        AcsSmsDeliveryAttemptProperties IModelJsonSerializable<AcsSmsDeliveryAttemptProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsSmsDeliveryAttemptProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsSmsDeliveryAttemptProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcsSmsDeliveryAttemptProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsSmsDeliveryAttemptProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcsSmsDeliveryAttemptProperties IModelSerializable<AcsSmsDeliveryAttemptProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsSmsDeliveryAttemptProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcsSmsDeliveryAttemptProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcsSmsDeliveryAttemptProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcsSmsDeliveryAttemptProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AcsSmsDeliveryAttemptProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcsSmsDeliveryAttemptProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcsSmsDeliveryAttemptProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcsSmsDeliveryAttemptProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

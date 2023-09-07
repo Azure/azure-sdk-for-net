@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabTargetCost : IUtf8JsonSerializable
+    public partial class DevTestLabTargetCost : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabTargetCost>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabTargetCost>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabTargetCost>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabTargetCost>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -33,7 +39,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in CostThresholds)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DevTestLabCostThreshold>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,11 +65,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("cycleType"u8);
                 writer.WriteStringValue(CycleType.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabTargetCost DeserializeDevTestLabTargetCost(JsonElement element)
+        internal static DevTestLabTargetCost DeserializeDevTestLabTargetCost(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DateTimeOffset> cycleStartDateTime = default;
             Optional<DateTimeOffset> cycleEndDateTime = default;
             Optional<DevTestLabReportingCycleType> cycleType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -128,8 +156,61 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     cycleType = new DevTestLabReportingCycleType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabTargetCost(Optional.ToNullable(status), Optional.ToNullable(target), Optional.ToList(costThresholds), Optional.ToNullable(cycleStartDateTime), Optional.ToNullable(cycleEndDateTime), Optional.ToNullable(cycleType));
+            return new DevTestLabTargetCost(Optional.ToNullable(status), Optional.ToNullable(target), Optional.ToList(costThresholds), Optional.ToNullable(cycleStartDateTime), Optional.ToNullable(cycleEndDateTime), Optional.ToNullable(cycleType), serializedAdditionalRawData);
+        }
+
+        DevTestLabTargetCost IModelJsonSerializable<DevTestLabTargetCost>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabTargetCost>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabTargetCost(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabTargetCost>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabTargetCost>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabTargetCost IModelSerializable<DevTestLabTargetCost>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabTargetCost>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabTargetCost(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabTargetCost"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabTargetCost"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabTargetCost model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabTargetCost"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabTargetCost(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabTargetCost(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

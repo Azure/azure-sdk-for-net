@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabCostThreshold : IUtf8JsonSerializable
+    public partial class DevTestLabCostThreshold : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabCostThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabCostThreshold>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabCostThreshold>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabCostThreshold>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ThresholdId))
             {
@@ -23,7 +31,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(PercentageThreshold))
             {
                 writer.WritePropertyName("percentageThreshold"u8);
-                writer.WriteObjectValue(PercentageThreshold);
+                if (PercentageThreshold is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PercentageCostThresholdProperties>)PercentageThreshold).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DisplayOnChart))
             {
@@ -40,11 +55,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("notificationSent"u8);
                 writer.WriteStringValue(NotificationSent);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabCostThreshold DeserializeDevTestLabCostThreshold(JsonElement element)
+        internal static DevTestLabCostThreshold DeserializeDevTestLabCostThreshold(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DevTestLabCostThresholdStatus> displayOnChart = default;
             Optional<DevTestLabCostThresholdStatus> sendNotificationWhenExceeded = default;
             Optional<string> notificationSent = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thresholdId"u8))
@@ -93,8 +123,61 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     notificationSent = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabCostThreshold(thresholdId.Value, percentageThreshold.Value, Optional.ToNullable(displayOnChart), Optional.ToNullable(sendNotificationWhenExceeded), notificationSent.Value);
+            return new DevTestLabCostThreshold(thresholdId.Value, percentageThreshold.Value, Optional.ToNullable(displayOnChart), Optional.ToNullable(sendNotificationWhenExceeded), notificationSent.Value, serializedAdditionalRawData);
+        }
+
+        DevTestLabCostThreshold IModelJsonSerializable<DevTestLabCostThreshold>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabCostThreshold>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabCostThreshold(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabCostThreshold>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabCostThreshold>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabCostThreshold IModelSerializable<DevTestLabCostThreshold>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabCostThreshold>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabCostThreshold(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabCostThreshold"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabCostThreshold"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabCostThreshold model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabCostThreshold"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabCostThreshold(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabCostThreshold(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

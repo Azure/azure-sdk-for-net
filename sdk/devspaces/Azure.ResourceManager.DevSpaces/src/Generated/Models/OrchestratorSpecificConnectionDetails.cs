@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DevSpaces.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// Please note <see cref="OrchestratorSpecificConnectionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="KubernetesConnectionDetails"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownOrchestratorSpecificConnectionDetails))]
     public abstract partial class OrchestratorSpecificConnectionDetails
     {
-        /// <summary> Initializes a new instance of OrchestratorSpecificConnectionDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrchestratorSpecificConnectionDetails"/>. </summary>
         protected OrchestratorSpecificConnectionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of OrchestratorSpecificConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestratorSpecificConnectionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        internal OrchestratorSpecificConnectionDetails(string instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrchestratorSpecificConnectionDetails(string instanceType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the Instance type. </summary>

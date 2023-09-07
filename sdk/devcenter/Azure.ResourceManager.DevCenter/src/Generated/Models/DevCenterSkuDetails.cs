@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The resource model definition representing SKU for DevCenter resources. </summary>
     public partial class DevCenterSkuDetails : DevCenterSku
     {
-        /// <summary> Initializes a new instance of DevCenterSkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterSkuDetails"/>. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DevCenterSkuDetails(string name) : base(name)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             Capabilities = new ChangeTrackingList<DevCenterCapability>();
         }
 
-        /// <summary> Initializes a new instance of DevCenterSkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterSkuDetails"/>. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
@@ -34,11 +34,17 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="resourceType"> The name of the resource type. </param>
         /// <param name="locations"> SKU supported locations. </param>
         /// <param name="capabilities"> Collection of name/value pairs to describe the SKU capabilities. </param>
-        internal DevCenterSkuDetails(string name, DevCenterSkuTier? tier, string size, string family, int? capacity, ResourceType? resourceType, IReadOnlyList<string> locations, IReadOnlyList<DevCenterCapability> capabilities) : base(name, tier, size, family, capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterSkuDetails(string name, DevCenterSkuTier? tier, string size, string family, int? capacity, ResourceType? resourceType, IReadOnlyList<string> locations, IReadOnlyList<DevCenterCapability> capabilities, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(name, tier, size, family, capacity, serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Locations = locations;
             Capabilities = capabilities;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterSkuDetails"/> for deserialization. </summary>
+        internal DevCenterSkuDetails()
+        {
         }
 
         /// <summary> The name of the resource type. </summary>

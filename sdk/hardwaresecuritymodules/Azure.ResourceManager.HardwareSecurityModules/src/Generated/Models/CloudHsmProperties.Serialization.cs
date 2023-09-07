@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class CloudHsmProperties : IUtf8JsonSerializable
+    public partial class CloudHsmProperties : IUtf8JsonSerializable, IModelJsonSerializable<CloudHsmProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudHsmProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudHsmProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CloudHsmProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Fqdn))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("stateMessage"u8);
                 writer.WriteStringValue(StateMessage);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudHsmProperties DeserializeCloudHsmProperties(JsonElement element)
+        internal static CloudHsmProperties DeserializeCloudHsmProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             Optional<string> fqdn = default;
             Optional<string> state = default;
             Optional<string> stateMessage = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -59,8 +82,61 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     stateMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudHsmProperties(fqdn.Value, state.Value, stateMessage.Value);
+            return new CloudHsmProperties(fqdn.Value, state.Value, stateMessage.Value, serializedAdditionalRawData);
+        }
+
+        CloudHsmProperties IModelJsonSerializable<CloudHsmProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudHsmProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudHsmProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudHsmProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudHsmProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudHsmProperties IModelSerializable<CloudHsmProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudHsmProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudHsmProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudHsmProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudHsmProperties"/> to convert. </param>
+        public static implicit operator RequestContent(CloudHsmProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudHsmProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudHsmProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudHsmProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

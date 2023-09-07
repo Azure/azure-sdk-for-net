@@ -530,9 +530,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (sendMessage != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(sendMessage);
-                request.Content = content;
+                request.Content = sendMessage;
             }
             _userAgent.Apply(message);
             return message;

@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsNetworkSecurityPerimeter
+    public partial class EventHubsNetworkSecurityPerimeter : IUtf8JsonSerializable, IModelJsonSerializable<EventHubsNetworkSecurityPerimeter>
     {
-        internal static EventHubsNetworkSecurityPerimeter DeserializeEventHubsNetworkSecurityPerimeter(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventHubsNetworkSecurityPerimeter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventHubsNetworkSecurityPerimeter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsNetworkSecurityPerimeter>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(PerimeterGuid))
+            {
+                writer.WritePropertyName("perimeterGuid"u8);
+                writer.WriteStringValue(PerimeterGuid);
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EventHubsNetworkSecurityPerimeter DeserializeEventHubsNetworkSecurityPerimeter(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<string> id = default;
             Optional<string> perimeterGuid = default;
             Optional<AzureLocation> location = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -42,8 +86,61 @@ namespace Azure.ResourceManager.EventHubs.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventHubsNetworkSecurityPerimeter(id.Value, perimeterGuid.Value, Optional.ToNullable(location));
+            return new EventHubsNetworkSecurityPerimeter(id.Value, perimeterGuid.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+        }
+
+        EventHubsNetworkSecurityPerimeter IModelJsonSerializable<EventHubsNetworkSecurityPerimeter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsNetworkSecurityPerimeter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsNetworkSecurityPerimeter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventHubsNetworkSecurityPerimeter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsNetworkSecurityPerimeter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventHubsNetworkSecurityPerimeter IModelSerializable<EventHubsNetworkSecurityPerimeter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsNetworkSecurityPerimeter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventHubsNetworkSecurityPerimeter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventHubsNetworkSecurityPerimeter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventHubsNetworkSecurityPerimeter"/> to convert. </param>
+        public static implicit operator RequestContent(EventHubsNetworkSecurityPerimeter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventHubsNetworkSecurityPerimeter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventHubsNetworkSecurityPerimeter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventHubsNetworkSecurityPerimeter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

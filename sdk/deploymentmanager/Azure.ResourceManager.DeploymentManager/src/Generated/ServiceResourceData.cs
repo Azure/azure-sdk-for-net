@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.DeploymentManager
     /// </summary>
     public partial class ServiceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="targetLocation"> The Azure location to which the resources in the service belong to or should be deployed to. </param>
         /// <param name="targetSubscriptionId"> The subscription to which the resources in the service belong to or should be deployed to. </param>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.DeploymentManager
             TargetSubscriptionId = targetSubscriptionId;
         }
 
-        /// <summary> Initializes a new instance of ServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,10 +44,17 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <param name="location"> The location. </param>
         /// <param name="targetLocation"> The Azure location to which the resources in the service belong to or should be deployed to. </param>
         /// <param name="targetSubscriptionId"> The subscription to which the resources in the service belong to or should be deployed to. </param>
-        internal ServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string targetLocation, string targetSubscriptionId) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string targetLocation, string targetSubscriptionId, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TargetLocation = targetLocation;
             TargetSubscriptionId = targetSubscriptionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceData"/> for deserialization. </summary>
+        internal ServiceResourceData()
+        {
         }
 
         /// <summary> The Azure location to which the resources in the service belong to or should be deployed to. </summary>

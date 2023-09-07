@@ -5,36 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Dynatrace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    public partial class DynatraceTagRuleData : IUtf8JsonSerializable
+    public partial class DynatraceTagRuleData : IUtf8JsonSerializable, IModelJsonSerializable<DynatraceTagRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynatraceTagRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynatraceTagRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceTagRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules);
+                if (LogRules is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DynatraceMonitorResourceLogRules>)LogRules).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules);
+                if (MetricRules is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DynatraceMonitorResourceMetricRules>)MetricRules).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DynatraceTagRuleData DeserializeDynatraceTagRuleData(JsonElement element)
+        internal static DynatraceTagRuleData DeserializeDynatraceTagRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +82,7 @@ namespace Azure.ResourceManager.Dynatrace
             Optional<DynatraceMonitorResourceLogRules> logRules = default;
             Optional<DynatraceMonitorResourceMetricRules> metricRules = default;
             Optional<DynatraceProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -111,8 +148,61 @@ namespace Azure.ResourceManager.Dynatrace
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DynatraceTagRuleData(id, name, type, systemData.Value, logRules.Value, metricRules.Value, Optional.ToNullable(provisioningState));
+            return new DynatraceTagRuleData(id, name, type, systemData.Value, logRules.Value, metricRules.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        DynatraceTagRuleData IModelJsonSerializable<DynatraceTagRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceTagRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceTagRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynatraceTagRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceTagRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynatraceTagRuleData IModelSerializable<DynatraceTagRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceTagRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynatraceTagRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DynatraceTagRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DynatraceTagRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(DynatraceTagRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DynatraceTagRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DynatraceTagRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynatraceTagRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

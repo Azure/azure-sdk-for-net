@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> An ADLS Gen2 file data set mapping. </summary>
     public partial class AdlsGen2FileDataSetMapping : ShareDataSetMappingData
     {
-        /// <summary> Initializes a new instance of AdlsGen2FileDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FileDataSetMapping"/>. </summary>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="filePath"> File path within the file system. </param>
         /// <param name="fileSystem"> File system to which the file belongs. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetMappingKind.AdlsGen2File;
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FileDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FileDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +56,8 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal AdlsGen2FileDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, string filePath, string fileSystem, DataShareOutputType? outputType, DataShareProvisioningState? provisioningState, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdlsGen2FileDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, string filePath, string fileSystem, DataShareOutputType? outputType, DataShareProvisioningState? provisioningState, string resourceGroup, string storageAccountName, string subscriptionId, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             DataSetId = dataSetId;
             DataSetMappingStatus = dataSetMappingStatus;
@@ -67,6 +69,11 @@ namespace Azure.ResourceManager.DataShare.Models
             StorageAccountName = storageAccountName;
             SubscriptionId = subscriptionId;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FileDataSetMapping"/> for deserialization. </summary>
+        internal AdlsGen2FileDataSetMapping()
+        {
         }
 
         /// <summary> The id of the source data set. </summary>

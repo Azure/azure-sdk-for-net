@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> The properties that make up a REST request. </summary>
     public partial class RestRequest
     {
-        /// <summary> Initializes a new instance of RestRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestRequest"/>. </summary>
         /// <param name="method"> The HTTP method to use for the request. </param>
         /// <param name="uri"> The HTTP URI to use for the request. </param>
         /// <param name="authentication">
@@ -30,6 +34,28 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Method = method;
             Uri = uri;
             Authentication = authentication;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestRequest"/>. </summary>
+        /// <param name="method"> The HTTP method to use for the request. </param>
+        /// <param name="uri"> The HTTP URI to use for the request. </param>
+        /// <param name="authentication">
+        /// The authentication information required in the request to the health provider.
+        /// Please note <see cref="RestRequestAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ApiKeyAuthentication"/> and <see cref="RolloutIdentityAuthentication"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestRequest(RestRequestMethod method, Uri uri, RestRequestAuthentication authentication, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Method = method;
+            Uri = uri;
+            Authentication = authentication;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestRequest"/> for deserialization. </summary>
+        internal RestRequest()
+        {
         }
 
         /// <summary> The HTTP method to use for the request. </summary>

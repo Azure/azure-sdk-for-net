@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeploymentManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.DeploymentManager
     /// </summary>
     public partial class RolloutData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RolloutData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RolloutData"/>. </summary>
         /// <param name="location"> The location. </param>
         public RolloutData(AzureLocation location) : base(location)
         {
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.DeploymentManager
             Services = new ChangeTrackingList<Service>();
         }
 
-        /// <summary> Initializes a new instance of RolloutData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +46,8 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <param name="totalRetryAttempts"> The cardinal count of total number of retries performed on the rollout at a given time. </param>
         /// <param name="operationInfo"> Operational information of the rollout. </param>
         /// <param name="services"> The detailed information on the services being deployed. </param>
-        internal RolloutData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Identity identity, string buildVersion, string artifactSourceId, string targetServiceTopologyId, IList<StepGroup> stepGroups, string status, int? totalRetryAttempts, RolloutOperationInfo operationInfo, IReadOnlyList<Service> services) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RolloutData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Identity identity, string buildVersion, string artifactSourceId, string targetServiceTopologyId, IList<StepGroup> stepGroups, string status, int? totalRetryAttempts, RolloutOperationInfo operationInfo, IReadOnlyList<Service> services, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             BuildVersion = buildVersion;
@@ -53,6 +58,12 @@ namespace Azure.ResourceManager.DeploymentManager
             TotalRetryAttempts = totalRetryAttempts;
             OperationInfo = operationInfo;
             Services = services;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RolloutData"/> for deserialization. </summary>
+        internal RolloutData()
+        {
         }
 
         /// <summary> Identity for the resource. </summary>

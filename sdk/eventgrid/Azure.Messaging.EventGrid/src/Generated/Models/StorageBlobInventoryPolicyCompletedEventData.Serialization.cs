@@ -6,17 +6,79 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(StorageBlobInventoryPolicyCompletedEventDataConverter))]
-    public partial class StorageBlobInventoryPolicyCompletedEventData
+    public partial class StorageBlobInventoryPolicyCompletedEventData : IUtf8JsonSerializable, IModelJsonSerializable<StorageBlobInventoryPolicyCompletedEventData>
     {
-        internal static StorageBlobInventoryPolicyCompletedEventData DeserializeStorageBlobInventoryPolicyCompletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageBlobInventoryPolicyCompletedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageBlobInventoryPolicyCompletedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageBlobInventoryPolicyCompletedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ScheduleDateTime))
+            {
+                writer.WritePropertyName("scheduleDateTime"u8);
+                writer.WriteStringValue(ScheduleDateTime.Value, "O");
+            }
+            if (Optional.IsDefined(AccountName))
+            {
+                writer.WritePropertyName("accountName"u8);
+                writer.WriteStringValue(AccountName);
+            }
+            if (Optional.IsDefined(RuleName))
+            {
+                writer.WritePropertyName("ruleName"u8);
+                writer.WriteStringValue(RuleName);
+            }
+            if (Optional.IsDefined(PolicyRunStatus))
+            {
+                writer.WritePropertyName("policyRunStatus"u8);
+                writer.WriteStringValue(PolicyRunStatus);
+            }
+            if (Optional.IsDefined(PolicyRunStatusMessage))
+            {
+                writer.WritePropertyName("policyRunStatusMessage"u8);
+                writer.WriteStringValue(PolicyRunStatusMessage);
+            }
+            if (Optional.IsDefined(PolicyRunId))
+            {
+                writer.WritePropertyName("policyRunId"u8);
+                writer.WriteStringValue(PolicyRunId);
+            }
+            if (Optional.IsDefined(ManifestBlobUrl))
+            {
+                writer.WritePropertyName("manifestBlobUrl"u8);
+                writer.WriteStringValue(ManifestBlobUrl);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageBlobInventoryPolicyCompletedEventData DeserializeStorageBlobInventoryPolicyCompletedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +90,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> policyRunStatusMessage = default;
             Optional<string> policyRunId = default;
             Optional<string> manifestBlobUrl = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleDateTime"u8))
@@ -69,15 +132,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     manifestBlobUrl = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageBlobInventoryPolicyCompletedEventData(Optional.ToNullable(scheduleDateTime), accountName.Value, ruleName.Value, policyRunStatus.Value, policyRunStatusMessage.Value, policyRunId.Value, manifestBlobUrl.Value);
+            return new StorageBlobInventoryPolicyCompletedEventData(Optional.ToNullable(scheduleDateTime), accountName.Value, ruleName.Value, policyRunStatus.Value, policyRunStatusMessage.Value, policyRunId.Value, manifestBlobUrl.Value, serializedAdditionalRawData);
+        }
+
+        StorageBlobInventoryPolicyCompletedEventData IModelJsonSerializable<StorageBlobInventoryPolicyCompletedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageBlobInventoryPolicyCompletedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageBlobInventoryPolicyCompletedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageBlobInventoryPolicyCompletedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageBlobInventoryPolicyCompletedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageBlobInventoryPolicyCompletedEventData IModelSerializable<StorageBlobInventoryPolicyCompletedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageBlobInventoryPolicyCompletedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageBlobInventoryPolicyCompletedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageBlobInventoryPolicyCompletedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageBlobInventoryPolicyCompletedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(StorageBlobInventoryPolicyCompletedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageBlobInventoryPolicyCompletedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageBlobInventoryPolicyCompletedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageBlobInventoryPolicyCompletedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class StorageBlobInventoryPolicyCompletedEventDataConverter : JsonConverter<StorageBlobInventoryPolicyCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageBlobInventoryPolicyCompletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override StorageBlobInventoryPolicyCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

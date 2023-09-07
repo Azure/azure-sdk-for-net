@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontDoorExperimentData : IUtf8JsonSerializable
+    public partial class FrontDoorExperimentData : IUtf8JsonSerializable, IModelJsonSerializable<FrontDoorExperimentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FrontDoorExperimentData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FrontDoorExperimentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorExperimentData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -42,12 +48,26 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(ExperimentEndpointA))
             {
                 writer.WritePropertyName("endpointA"u8);
-                writer.WriteObjectValue(ExperimentEndpointA);
+                if (ExperimentEndpointA is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FrontDoorExperimentEndpointProperties>)ExperimentEndpointA).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExperimentEndpointB))
             {
                 writer.WritePropertyName("endpointB"u8);
-                writer.WriteObjectValue(ExperimentEndpointB);
+                if (ExperimentEndpointB is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FrontDoorExperimentEndpointProperties>)ExperimentEndpointB).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EnabledState))
             {
@@ -55,11 +75,25 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorExperimentData DeserializeFrontDoorExperimentData(JsonElement element)
+        internal static FrontDoorExperimentData DeserializeFrontDoorExperimentData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +111,7 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<NetworkExperimentResourceState> resourceState = default;
             Optional<string> status = default;
             Optional<Uri> scriptFileUri = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -189,8 +224,61 @@ namespace Azure.ResourceManager.FrontDoor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FrontDoorExperimentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), status.Value, scriptFileUri.Value);
+            return new FrontDoorExperimentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), status.Value, scriptFileUri.Value, serializedAdditionalRawData);
+        }
+
+        FrontDoorExperimentData IModelJsonSerializable<FrontDoorExperimentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorExperimentData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorExperimentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FrontDoorExperimentData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorExperimentData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FrontDoorExperimentData IModelSerializable<FrontDoorExperimentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorExperimentData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFrontDoorExperimentData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FrontDoorExperimentData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FrontDoorExperimentData"/> to convert. </param>
+        public static implicit operator RequestContent(FrontDoorExperimentData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FrontDoorExperimentData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FrontDoorExperimentData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFrontDoorExperimentData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class ServiceResourceDetails
+    internal partial class ServiceResourceDetails : IUtf8JsonSerializable, IModelJsonSerializable<ServiceResourceDetails>
     {
-        internal static ServiceResourceDetails DeserializeServiceResourceDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceResourceDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceResourceDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceResourceDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("customDocumentModels"u8);
+            if (CustomDocumentModels is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<CustomDocumentModelsDetails>)CustomDocumentModels).Serialize(writer, options);
+            }
+            if (Optional.IsDefined(CustomNeuralDocumentModelBuilds))
+            {
+                writer.WritePropertyName("customNeuralDocumentModelBuilds"u8);
+                if (CustomNeuralDocumentModelBuilds is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceQuotaDetails>)CustomNeuralDocumentModelBuilds).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServiceResourceDetails DeserializeServiceResourceDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             CustomDocumentModelsDetails customDocumentModels = default;
             Optional<ResourceQuotaDetails> customNeuralDocumentModelBuilds = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"u8))
@@ -36,8 +86,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     customNeuralDocumentModelBuilds = ResourceQuotaDetails.DeserializeResourceQuotaDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds.Value);
+            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds.Value, serializedAdditionalRawData);
+        }
+
+        ServiceResourceDetails IModelJsonSerializable<ServiceResourceDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceResourceDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceResourceDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceResourceDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceResourceDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceResourceDetails IModelSerializable<ServiceResourceDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceResourceDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceResourceDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceResourceDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceResourceDetails"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceResourceDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceResourceDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceResourceDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceResourceDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

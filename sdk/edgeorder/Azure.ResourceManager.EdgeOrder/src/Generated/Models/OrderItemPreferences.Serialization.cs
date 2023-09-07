@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class OrderItemPreferences : IUtf8JsonSerializable
+    public partial class OrderItemPreferences : IUtf8JsonSerializable, IModelJsonSerializable<OrderItemPreferences>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrderItemPreferences>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OrderItemPreferences>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OrderItemPreferences>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(NotificationPreferences))
             {
@@ -22,30 +29,72 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NotificationPreference>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences);
+                if (TransportPreferences is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TransportPreferences>)TransportPreferences).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue(EncryptionPreferences);
+                if (EncryptionPreferences is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EncryptionPreferences>)EncryptionPreferences).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ManagementResourcePreferences))
             {
                 writer.WritePropertyName("managementResourcePreferences"u8);
-                writer.WriteObjectValue(ManagementResourcePreferences);
+                if (ManagementResourcePreferences is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagementResourcePreferences>)ManagementResourcePreferences).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static OrderItemPreferences DeserializeOrderItemPreferences(JsonElement element)
+        internal static OrderItemPreferences DeserializeOrderItemPreferences(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +103,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<TransportPreferences> transportPreferences = default;
             Optional<EncryptionPreferences> encryptionPreferences = default;
             Optional<ManagementResourcePreferences> managementResourcePreferences = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationPreferences"u8))
@@ -97,8 +147,61 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OrderItemPreferences(Optional.ToList(notificationPreferences), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value);
+            return new OrderItemPreferences(Optional.ToList(notificationPreferences), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value, serializedAdditionalRawData);
+        }
+
+        OrderItemPreferences IModelJsonSerializable<OrderItemPreferences>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrderItemPreferences>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrderItemPreferences(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OrderItemPreferences>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrderItemPreferences>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OrderItemPreferences IModelSerializable<OrderItemPreferences>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrderItemPreferences>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOrderItemPreferences(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OrderItemPreferences"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OrderItemPreferences"/> to convert. </param>
+        public static implicit operator RequestContent(OrderItemPreferences model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OrderItemPreferences"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OrderItemPreferences(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOrderItemPreferences(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

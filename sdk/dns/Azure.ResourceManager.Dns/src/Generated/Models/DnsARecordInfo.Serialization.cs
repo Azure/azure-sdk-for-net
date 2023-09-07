@@ -5,32 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsARecordInfo : IUtf8JsonSerializable
+    public partial class DnsARecordInfo : IUtf8JsonSerializable, IModelJsonSerializable<DnsARecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DnsARecordInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DnsARecordInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DnsARecordInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DnsARecordInfo DeserializeDnsARecordInfo(JsonElement element)
+        internal static DnsARecordInfo DeserializeDnsARecordInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IPAddress> ipv4Address = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Address"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.Dns.Models
                     ipv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DnsARecordInfo(ipv4Address.Value);
+            return new DnsARecordInfo(ipv4Address.Value, serializedAdditionalRawData);
+        }
+
+        DnsARecordInfo IModelJsonSerializable<DnsARecordInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsARecordInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsARecordInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DnsARecordInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsARecordInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DnsARecordInfo IModelSerializable<DnsARecordInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsARecordInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDnsARecordInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DnsARecordInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DnsARecordInfo"/> to convert. </param>
+        public static implicit operator RequestContent(DnsARecordInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DnsARecordInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DnsARecordInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDnsARecordInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

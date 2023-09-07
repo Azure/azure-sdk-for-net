@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontDoorNetworkExperimentProfileData : IUtf8JsonSerializable
+    public partial class FrontDoorNetworkExperimentProfileData : IUtf8JsonSerializable, IModelJsonSerializable<FrontDoorNetworkExperimentProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FrontDoorNetworkExperimentProfileData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FrontDoorNetworkExperimentProfileData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorNetworkExperimentProfileData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -45,11 +51,25 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorNetworkExperimentProfileData DeserializeFrontDoorNetworkExperimentProfileData(JsonElement element)
+        internal static FrontDoorNetworkExperimentProfileData DeserializeFrontDoorNetworkExperimentProfileData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +83,7 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<SystemData> systemData = default;
             Optional<NetworkExperimentResourceState> resourceState = default;
             Optional<FrontDoorExperimentState> enabledState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -147,8 +168,61 @@ namespace Azure.ResourceManager.FrontDoor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FrontDoorNetworkExperimentProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(resourceState), Optional.ToNullable(enabledState));
+            return new FrontDoorNetworkExperimentProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(resourceState), Optional.ToNullable(enabledState), serializedAdditionalRawData);
+        }
+
+        FrontDoorNetworkExperimentProfileData IModelJsonSerializable<FrontDoorNetworkExperimentProfileData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorNetworkExperimentProfileData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorNetworkExperimentProfileData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FrontDoorNetworkExperimentProfileData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorNetworkExperimentProfileData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FrontDoorNetworkExperimentProfileData IModelSerializable<FrontDoorNetworkExperimentProfileData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorNetworkExperimentProfileData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFrontDoorNetworkExperimentProfileData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FrontDoorNetworkExperimentProfileData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FrontDoorNetworkExperimentProfileData"/> to convert. </param>
+        public static implicit operator RequestContent(FrontDoorNetworkExperimentProfileData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FrontDoorNetworkExperimentProfileData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FrontDoorNetworkExperimentProfileData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFrontDoorNetworkExperimentProfileData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

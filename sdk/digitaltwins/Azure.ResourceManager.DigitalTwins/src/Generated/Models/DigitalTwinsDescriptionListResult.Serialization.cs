@@ -5,23 +5,80 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    internal partial class DigitalTwinsDescriptionListResult
+    internal partial class DigitalTwinsDescriptionListResult : IUtf8JsonSerializable, IModelJsonSerializable<DigitalTwinsDescriptionListResult>
     {
-        internal static DigitalTwinsDescriptionListResult DeserializeDigitalTwinsDescriptionListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DigitalTwinsDescriptionListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DigitalTwinsDescriptionListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DigitalTwinsDescriptionListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                if (NextLink != null)
+                {
+                    writer.WritePropertyName("nextLink"u8);
+                    writer.WriteStringValue(NextLink);
+                }
+                else
+                {
+                    writer.WriteNull("nextLink");
+                }
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DigitalTwinsDescriptionData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DigitalTwinsDescriptionListResult DeserializeDigitalTwinsDescriptionListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<DigitalTwinsDescriptionData>> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -48,8 +105,61 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DigitalTwinsDescriptionListResult(nextLink.Value, Optional.ToList(value));
+            return new DigitalTwinsDescriptionListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+        }
+
+        DigitalTwinsDescriptionListResult IModelJsonSerializable<DigitalTwinsDescriptionListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DigitalTwinsDescriptionListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsDescriptionListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DigitalTwinsDescriptionListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DigitalTwinsDescriptionListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DigitalTwinsDescriptionListResult IModelSerializable<DigitalTwinsDescriptionListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DigitalTwinsDescriptionListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDigitalTwinsDescriptionListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DigitalTwinsDescriptionListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DigitalTwinsDescriptionListResult"/> to convert. </param>
+        public static implicit operator RequestContent(DigitalTwinsDescriptionListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DigitalTwinsDescriptionListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DigitalTwinsDescriptionListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDigitalTwinsDescriptionListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

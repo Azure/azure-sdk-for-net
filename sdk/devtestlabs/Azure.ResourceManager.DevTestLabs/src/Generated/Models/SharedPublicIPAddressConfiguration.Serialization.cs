@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class SharedPublicIPAddressConfiguration : IUtf8JsonSerializable
+    internal partial class SharedPublicIPAddressConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<SharedPublicIPAddressConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SharedPublicIPAddressConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SharedPublicIPAddressConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SharedPublicIPAddressConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(InboundNatRules))
             {
@@ -22,20 +29,42 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DevTestLabInboundNatRule>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SharedPublicIPAddressConfiguration DeserializeSharedPublicIPAddressConfiguration(JsonElement element)
+        internal static SharedPublicIPAddressConfiguration DeserializeSharedPublicIPAddressConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<DevTestLabInboundNatRule>> inboundNatRules = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNatRules"u8))
@@ -52,8 +81,61 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     inboundNatRules = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SharedPublicIPAddressConfiguration(Optional.ToList(inboundNatRules));
+            return new SharedPublicIPAddressConfiguration(Optional.ToList(inboundNatRules), serializedAdditionalRawData);
+        }
+
+        SharedPublicIPAddressConfiguration IModelJsonSerializable<SharedPublicIPAddressConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SharedPublicIPAddressConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharedPublicIPAddressConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SharedPublicIPAddressConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SharedPublicIPAddressConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SharedPublicIPAddressConfiguration IModelSerializable<SharedPublicIPAddressConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SharedPublicIPAddressConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSharedPublicIPAddressConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SharedPublicIPAddressConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SharedPublicIPAddressConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(SharedPublicIPAddressConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SharedPublicIPAddressConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SharedPublicIPAddressConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSharedPublicIPAddressConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

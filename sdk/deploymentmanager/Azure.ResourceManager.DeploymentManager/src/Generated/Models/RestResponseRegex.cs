@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> The regular expressions to match the response content with. </summary>
     public partial class RestResponseRegex
     {
-        /// <summary> Initializes a new instance of RestResponseRegex. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestResponseRegex"/>. </summary>
         public RestResponseRegex()
         {
             Matches = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RestResponseRegex. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestResponseRegex"/>. </summary>
         /// <param name="matches"> The list of regular expressions. </param>
         /// <param name="matchQuantifier"> Indicates whether any or all of the expressions should match with the response content. </param>
-        internal RestResponseRegex(IList<string> matches, RestMatchQuantifier? matchQuantifier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestResponseRegex(IList<string> matches, RestMatchQuantifier? matchQuantifier, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Matches = matches;
             MatchQuantifier = matchQuantifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of regular expressions. </summary>

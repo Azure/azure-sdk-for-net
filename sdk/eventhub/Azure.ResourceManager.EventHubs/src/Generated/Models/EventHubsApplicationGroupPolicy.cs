@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,9 +17,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// Please note <see cref="EventHubsApplicationGroupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="EventHubsThrottlingPolicy"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownEventHubsApplicationGroupPolicy))]
     public abstract partial class EventHubsApplicationGroupPolicy
     {
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected EventHubsApplicationGroupPolicy(string name)
@@ -27,13 +33,20 @@ namespace Azure.ResourceManager.EventHubs.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
-        internal EventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ApplicationGroupPolicyType = applicationGroupPolicyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/> for deserialization. </summary>
+        internal EventHubsApplicationGroupPolicy()
+        {
         }
 
         /// <summary> The Name of this policy. </summary>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Defines a service. </summary>
     public partial class Service : ServiceProperties
     {
-        /// <summary> Initializes a new instance of Service. </summary>
+        /// <summary> Initializes a new instance of <see cref="Service"/>. </summary>
         /// <param name="targetLocation"> The Azure location to which the resources in the service belong to or should be deployed to. </param>
         /// <param name="targetSubscriptionId"> The subscription to which the resources in the service belong to or should be deployed to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocation"/> or <paramref name="targetSubscriptionId"/> is null. </exception>
@@ -26,19 +26,21 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             ServiceUnits = new ChangeTrackingList<ServiceUnit>();
         }
 
-        /// <summary> Initializes a new instance of Service. </summary>
+        /// <summary> Initializes a new instance of <see cref="Service"/>. </summary>
         /// <param name="targetLocation"> The Azure location to which the resources in the service belong to or should be deployed to. </param>
         /// <param name="targetSubscriptionId"> The subscription to which the resources in the service belong to or should be deployed to. </param>
         /// <param name="name"> Name of the service. </param>
         /// <param name="serviceUnits"> The detailed information about the units that make up the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLocation"/> or <paramref name="targetSubscriptionId"/> is null. </exception>
-        internal Service(string targetLocation, string targetSubscriptionId, string name, IReadOnlyList<ServiceUnit> serviceUnits) : base(targetLocation, targetSubscriptionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Service(string targetLocation, string targetSubscriptionId, string name, IReadOnlyList<ServiceUnit> serviceUnits, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(targetLocation, targetSubscriptionId, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(targetLocation, nameof(targetLocation));
-            Argument.AssertNotNull(targetSubscriptionId, nameof(targetSubscriptionId));
-
             Name = name;
             ServiceUnits = serviceUnits;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Service"/> for deserialization. </summary>
+        internal Service()
+        {
         }
 
         /// <summary> Name of the service. </summary>

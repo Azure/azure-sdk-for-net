@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class InboundEndpointIPConfiguration : IUtf8JsonSerializable
+    public partial class InboundEndpointIPConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<InboundEndpointIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InboundEndpointIPConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InboundEndpointIPConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InboundEndpointIPConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
             JsonSerializer.Serialize(writer, Subnet); if (Optional.IsDefined(PrivateIPAddress))
@@ -28,11 +36,25 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InboundEndpointIPConfiguration DeserializeInboundEndpointIPConfiguration(JsonElement element)
+        internal static InboundEndpointIPConfiguration DeserializeInboundEndpointIPConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             WritableSubResource subnet = default;
             Optional<IPAddress> privateIPAddress = default;
             Optional<InboundEndpointIPAllocationMethod> privateIPAllocationMethod = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnet"u8))
@@ -65,8 +88,61 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     privateIPAllocationMethod = new InboundEndpointIPAllocationMethod(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InboundEndpointIPConfiguration(subnet, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod));
+            return new InboundEndpointIPConfiguration(subnet, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), serializedAdditionalRawData);
+        }
+
+        InboundEndpointIPConfiguration IModelJsonSerializable<InboundEndpointIPConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InboundEndpointIPConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInboundEndpointIPConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InboundEndpointIPConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InboundEndpointIPConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InboundEndpointIPConfiguration IModelSerializable<InboundEndpointIPConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InboundEndpointIPConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInboundEndpointIPConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InboundEndpointIPConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InboundEndpointIPConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(InboundEndpointIPConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InboundEndpointIPConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InboundEndpointIPConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInboundEndpointIPConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

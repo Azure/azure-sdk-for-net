@@ -5,16 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class QuotaCapability
+    public partial class QuotaCapability : IUtf8JsonSerializable, IModelJsonSerializable<QuotaCapability>
     {
-        internal static QuotaCapability DeserializeQuotaCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QuotaCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QuotaCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaCapability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CoresUsed))
+            {
+                writer.WritePropertyName("coresUsed"u8);
+                writer.WriteNumberValue(CoresUsed.Value);
+            }
+            if (Optional.IsDefined(MaxCoresAllowed))
+            {
+                writer.WritePropertyName("maxCoresAllowed"u8);
+                writer.WriteNumberValue(MaxCoresAllowed.Value);
+            }
+            if (Optional.IsCollectionDefined(RegionalQuotas))
+            {
+                writer.WritePropertyName("regionalQuotas"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegionalQuotas)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RegionalQuotaCapability>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static QuotaCapability DeserializeQuotaCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<long> coresUsed = default;
             Optional<long> maxCoresAllowed = default;
             Optional<IReadOnlyList<RegionalQuotaCapability>> regionalQuotas = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coresUsed"u8))
@@ -56,8 +111,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     regionalQuotas = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QuotaCapability(Optional.ToNullable(coresUsed), Optional.ToNullable(maxCoresAllowed), Optional.ToList(regionalQuotas));
+            return new QuotaCapability(Optional.ToNullable(coresUsed), Optional.ToNullable(maxCoresAllowed), Optional.ToList(regionalQuotas), serializedAdditionalRawData);
+        }
+
+        QuotaCapability IModelJsonSerializable<QuotaCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaCapability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuotaCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QuotaCapability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaCapability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QuotaCapability IModelSerializable<QuotaCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaCapability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQuotaCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QuotaCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QuotaCapability"/> to convert. </param>
+        public static implicit operator RequestContent(QuotaCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QuotaCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QuotaCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQuotaCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

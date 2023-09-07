@@ -6,21 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationVmssVmInfo : IUtf8JsonSerializable
+    public partial class GuestConfigurationVmssVmInfo : IUtf8JsonSerializable, IModelJsonSerializable<GuestConfigurationVmssVmInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GuestConfigurationVmssVmInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GuestConfigurationVmssVmInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GuestConfigurationVmssVmInfo>(this, options.Format);
+
             writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element)
+        internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +51,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<Guid?> latestReportId = default;
             Optional<DateTimeOffset?> lastComplianceChecked = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmId"u8))
@@ -79,8 +101,61 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     lastComplianceChecked = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GuestConfigurationVmssVmInfo(Optional.ToNullable(vmId), vmResourceId.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(latestReportId), Optional.ToNullable(lastComplianceChecked));
+            return new GuestConfigurationVmssVmInfo(Optional.ToNullable(vmId), vmResourceId.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(latestReportId), Optional.ToNullable(lastComplianceChecked), serializedAdditionalRawData);
+        }
+
+        GuestConfigurationVmssVmInfo IModelJsonSerializable<GuestConfigurationVmssVmInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GuestConfigurationVmssVmInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGuestConfigurationVmssVmInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GuestConfigurationVmssVmInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GuestConfigurationVmssVmInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GuestConfigurationVmssVmInfo IModelSerializable<GuestConfigurationVmssVmInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GuestConfigurationVmssVmInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGuestConfigurationVmssVmInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GuestConfigurationVmssVmInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GuestConfigurationVmssVmInfo"/> to convert. </param>
+        public static implicit operator RequestContent(GuestConfigurationVmssVmInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GuestConfigurationVmssVmInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GuestConfigurationVmssVmInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGuestConfigurationVmssVmInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

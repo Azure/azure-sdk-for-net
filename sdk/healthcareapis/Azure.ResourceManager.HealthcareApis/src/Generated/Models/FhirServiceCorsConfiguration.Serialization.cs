@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServiceCorsConfiguration : IUtf8JsonSerializable
+    public partial class FhirServiceCorsConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<FhirServiceCorsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FhirServiceCorsConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FhirServiceCorsConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FhirServiceCorsConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Origins))
             {
@@ -56,11 +63,25 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FhirServiceCorsConfiguration DeserializeFhirServiceCorsConfiguration(JsonElement element)
+        internal static FhirServiceCorsConfiguration DeserializeFhirServiceCorsConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +91,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<IList<string>> methods = default;
             Optional<int> maxAge = default;
             Optional<bool> allowCredentials = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origins"u8))
@@ -132,8 +154,61 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     allowCredentials = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FhirServiceCorsConfiguration(Optional.ToList(origins), Optional.ToList(headers), Optional.ToList(methods), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials));
+            return new FhirServiceCorsConfiguration(Optional.ToList(origins), Optional.ToList(headers), Optional.ToList(methods), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
+        }
+
+        FhirServiceCorsConfiguration IModelJsonSerializable<FhirServiceCorsConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FhirServiceCorsConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFhirServiceCorsConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FhirServiceCorsConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FhirServiceCorsConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FhirServiceCorsConfiguration IModelSerializable<FhirServiceCorsConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FhirServiceCorsConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFhirServiceCorsConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FhirServiceCorsConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FhirServiceCorsConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(FhirServiceCorsConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FhirServiceCorsConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FhirServiceCorsConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFhirServiceCorsConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

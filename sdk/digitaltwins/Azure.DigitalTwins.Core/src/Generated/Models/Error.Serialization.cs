@@ -5,16 +5,55 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class Error
+    internal partial class Error : IUtf8JsonSerializable, IModelJsonSerializable<Error>
     {
-        internal static Error DeserializeError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Error>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Error>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<Error>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Innererror))
+            {
+                writer.WritePropertyName("innererror"u8);
+                if (Innererror is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InnerError>)Innererror).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static Error DeserializeError(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +62,7 @@ namespace Azure.DigitalTwins.Core
             Optional<string> message = default;
             Optional<IReadOnlyList<Error>> details = default;
             Optional<InnerError> innererror = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -58,8 +98,61 @@ namespace Azure.DigitalTwins.Core
                     innererror = InnerError.DeserializeInnerError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Error(code.Value, message.Value, Optional.ToList(details), innererror.Value);
+            return new Error(code.Value, message.Value, Optional.ToList(details), innererror.Value, serializedAdditionalRawData);
+        }
+
+        Error IModelJsonSerializable<Error>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<Error>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeError(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Error>.Serialize(ModelSerializerOptions options)
+        {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<Error>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Error IModelSerializable<Error>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<Error>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeError(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Error"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Error"/> to convert. </param>
+        public static implicit operator RequestContent(Error model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Error"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Error(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeError(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

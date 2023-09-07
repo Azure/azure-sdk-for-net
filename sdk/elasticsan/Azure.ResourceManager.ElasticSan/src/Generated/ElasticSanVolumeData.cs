@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanVolumeData : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
         /// <param name="sizeGiB"> Volume size. </param>
         public ElasticSanVolumeData(long sizeGiB)
         {
             SizeGiB = sizeGiB;
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +38,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="creationData"> State of the operation on the resource. </param>
         /// <param name="sizeGiB"> Volume size. </param>
         /// <param name="storageTarget"> Storage target information. </param>
-        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             VolumeId = volumeId;
             CreationData = creationData;
             SizeGiB = sizeGiB;
             StorageTarget = storageTarget;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/> for deserialization. </summary>
+        internal ElasticSanVolumeData()
+        {
         }
 
         /// <summary> Unique Id of the volume in GUID format. </summary>

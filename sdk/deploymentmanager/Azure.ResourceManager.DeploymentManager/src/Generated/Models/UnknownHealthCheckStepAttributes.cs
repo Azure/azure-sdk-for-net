@@ -6,20 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     /// <summary> The UnknownHealthCheckStepAttributes. </summary>
     internal partial class UnknownHealthCheckStepAttributes : HealthCheckStepAttributes
     {
-        /// <summary> Initializes a new instance of UnknownHealthCheckStepAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownHealthCheckStepAttributes"/>. </summary>
         /// <param name="healthCheckStepAttributesType"> The type of health check. </param>
         /// <param name="waitDuration"> The duration in ISO 8601 format for which health check waits idly without any checks. </param>
         /// <param name="maxElasticDuration"> The duration in ISO 8601 format for which the health check waits for the resource to become healthy. Health check fails if it doesn't. Health check starts to enforce healthyStateDuration once resource becomes healthy. </param>
         /// <param name="healthyStateDuration"> The duration in ISO 8601 format for which the resource is expected to be continuously healthy. If maxElasticDuration is specified, healthy state duration is enforced after the detection of first healthy signal. </param>
-        internal UnknownHealthCheckStepAttributes(string healthCheckStepAttributesType, TimeSpan? waitDuration, TimeSpan? maxElasticDuration, TimeSpan healthyStateDuration) : base(healthCheckStepAttributesType, waitDuration, maxElasticDuration, healthyStateDuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownHealthCheckStepAttributes(string healthCheckStepAttributesType, TimeSpan? waitDuration, TimeSpan? maxElasticDuration, TimeSpan healthyStateDuration, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(healthCheckStepAttributesType, waitDuration, maxElasticDuration, healthyStateDuration, serializedAdditionalRawData)
         {
             HealthCheckStepAttributesType = healthCheckStepAttributesType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownHealthCheckStepAttributes"/> for deserialization. </summary>
+        internal UnknownHealthCheckStepAttributes()
+        {
         }
     }
 }

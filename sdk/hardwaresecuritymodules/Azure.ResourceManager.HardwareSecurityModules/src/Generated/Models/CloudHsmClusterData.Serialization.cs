@@ -5,23 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    public partial class CloudHsmClusterData : IUtf8JsonSerializable
+    public partial class CloudHsmClusterData : IUtf8JsonSerializable, IModelJsonSerializable<CloudHsmClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudHsmClusterData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudHsmClusterData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CloudHsmClusterData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CloudHsmClusterSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -51,15 +65,29 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(SecurityDomain))
             {
                 writer.WritePropertyName("securityDomain"u8);
-                writer.WriteObjectValue(SecurityDomain);
+                if (SecurityDomain is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CloudHsmClusterSecurityDomainProperties>)SecurityDomain).Serialize(writer, options);
+                }
             }
-            if (Optional.IsCollectionDefined(HsmProperties))
+            if (Optional.IsCollectionDefined(Hsms))
             {
                 writer.WritePropertyName("hsms"u8);
                 writer.WriteStartArray();
-                foreach (var item in HsmProperties)
+                foreach (var item in Hsms)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<CloudHsmProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -74,16 +102,37 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HardwareSecurityModulesPrivateEndpointConnectionData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudHsmClusterData DeserializeCloudHsmClusterData(JsonElement element)
+        internal static CloudHsmClusterData DeserializeCloudHsmClusterData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,6 +150,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             Optional<IList<CloudHsmProperties>> hsms = default;
             Optional<string> publicNetworkAccess = default;
             Optional<IList<HardwareSecurityModulesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -223,8 +273,61 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudHsmClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), autoGeneratedDomainNameLabelScope.Value, securityDomain.Value, Optional.ToList(hsms), publicNetworkAccess.Value, Optional.ToList(privateEndpointConnections), sku.Value);
+            return new CloudHsmClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), autoGeneratedDomainNameLabelScope.Value, securityDomain.Value, Optional.ToList(hsms), publicNetworkAccess.Value, Optional.ToList(privateEndpointConnections), sku.Value, serializedAdditionalRawData);
+        }
+
+        CloudHsmClusterData IModelJsonSerializable<CloudHsmClusterData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudHsmClusterData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudHsmClusterData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudHsmClusterData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudHsmClusterData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudHsmClusterData IModelSerializable<CloudHsmClusterData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudHsmClusterData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudHsmClusterData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudHsmClusterData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudHsmClusterData"/> to convert. </param>
+        public static implicit operator RequestContent(CloudHsmClusterData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudHsmClusterData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudHsmClusterData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudHsmClusterData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

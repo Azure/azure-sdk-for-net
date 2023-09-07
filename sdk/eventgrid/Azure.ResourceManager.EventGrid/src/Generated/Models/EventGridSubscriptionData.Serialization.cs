@@ -8,33 +8,60 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventGridSubscriptionData : IUtf8JsonSerializable
+    public partial class EventGridSubscriptionData : IUtf8JsonSerializable, IModelJsonSerializable<EventGridSubscriptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventGridSubscriptionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventGridSubscriptionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridSubscriptionData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                if (Destination is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EventSubscriptionDestination>)Destination).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeliveryWithResourceIdentity);
+                if (DeliveryWithResourceIdentity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeliveryWithResourceIdentity>)DeliveryWithResourceIdentity).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                if (Filter is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EventSubscriptionFilter>)Filter).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -59,24 +86,59 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy);
+                if (RetryPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EventSubscriptionRetryPolicy>)RetryPolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
-                writer.WriteObjectValue(DeadLetterDestination);
+                if (DeadLetterDestination is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeadLetterDestination>)DeadLetterDestination).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DeadLetterWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterWithResourceIdentity);
+                if (DeadLetterWithResourceIdentity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeadLetterWithResourceIdentity>)DeadLetterWithResourceIdentity).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventGridSubscriptionData DeserializeEventGridSubscriptionData(JsonElement element)
+        internal static EventGridSubscriptionData DeserializeEventGridSubscriptionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,6 +158,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
             Optional<DeadLetterDestination> deadLetterDestination = default;
             Optional<DeadLetterWithResourceIdentity> deadLetterWithResourceIdentity = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -234,8 +297,61 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventGridSubscriptionData(id, name, type, systemData.Value, topic.Value, Optional.ToNullable(provisioningState), destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value);
+            return new EventGridSubscriptionData(id, name, type, systemData.Value, topic.Value, Optional.ToNullable(provisioningState), destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value, serializedAdditionalRawData);
+        }
+
+        EventGridSubscriptionData IModelJsonSerializable<EventGridSubscriptionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridSubscriptionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridSubscriptionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventGridSubscriptionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridSubscriptionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventGridSubscriptionData IModelSerializable<EventGridSubscriptionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridSubscriptionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventGridSubscriptionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventGridSubscriptionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventGridSubscriptionData"/> to convert. </param>
+        public static implicit operator RequestContent(EventGridSubscriptionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventGridSubscriptionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventGridSubscriptionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventGridSubscriptionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

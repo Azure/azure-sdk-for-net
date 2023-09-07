@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> HostPool properties that can be patched. </summary>
     public partial class HostPoolPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of HostPoolPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HostPoolPatch"/>. </summary>
         public HostPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of HostPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +47,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
         /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
-        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, SessionHostAgentUpdatePatchProperties agentUpdate) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, SessionHostAgentUpdatePatchProperties agentUpdate, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             FriendlyName = friendlyName;
@@ -63,6 +68,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             PreferredAppGroupType = preferredAppGroupType;
             StartVmOnConnect = startVmOnConnect;
             AgentUpdate = agentUpdate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> tags to be updated. </summary>

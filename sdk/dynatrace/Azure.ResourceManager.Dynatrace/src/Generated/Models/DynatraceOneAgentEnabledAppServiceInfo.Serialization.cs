@@ -5,15 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceOneAgentEnabledAppServiceInfo
+    public partial class DynatraceOneAgentEnabledAppServiceInfo : IUtf8JsonSerializable, IModelJsonSerializable<DynatraceOneAgentEnabledAppServiceInfo>
     {
-        internal static DynatraceOneAgentEnabledAppServiceInfo DeserializeDynatraceOneAgentEnabledAppServiceInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynatraceOneAgentEnabledAppServiceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynatraceOneAgentEnabledAppServiceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceOneAgentEnabledAppServiceInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(MonitoringType))
+            {
+                writer.WritePropertyName("monitoringType"u8);
+                writer.WriteStringValue(MonitoringType.Value.ToString());
+            }
+            if (Optional.IsDefined(AutoUpdateSetting))
+            {
+                writer.WritePropertyName("autoUpdateSetting"u8);
+                writer.WriteStringValue(AutoUpdateSetting.Value.ToString());
+            }
+            if (Optional.IsDefined(UpdateStatus))
+            {
+                writer.WritePropertyName("updateStatus"u8);
+                writer.WriteStringValue(UpdateStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(AvailabilityState))
+            {
+                writer.WritePropertyName("availabilityState"u8);
+                writer.WriteStringValue(AvailabilityState.Value.ToString());
+            }
+            if (Optional.IsDefined(LogModule))
+            {
+                writer.WritePropertyName("logModule"u8);
+                writer.WriteStringValue(LogModule.Value.ToString());
+            }
+            if (Optional.IsDefined(HostGroup))
+            {
+                writer.WritePropertyName("hostGroup"u8);
+                writer.WriteStringValue(HostGroup);
+            }
+            if (Optional.IsDefined(HostName))
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DynatraceOneAgentEnabledAppServiceInfo DeserializeDynatraceOneAgentEnabledAppServiceInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +100,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<DynatraceLogModuleState> logModule = default;
             Optional<string> hostGroup = default;
             Optional<string> hostName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -98,8 +172,61 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     hostName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DynatraceOneAgentEnabledAppServiceInfo(resourceId.Value, version.Value, Optional.ToNullable(monitoringType), Optional.ToNullable(autoUpdateSetting), Optional.ToNullable(updateStatus), Optional.ToNullable(availabilityState), Optional.ToNullable(logModule), hostGroup.Value, hostName.Value);
+            return new DynatraceOneAgentEnabledAppServiceInfo(resourceId.Value, version.Value, Optional.ToNullable(monitoringType), Optional.ToNullable(autoUpdateSetting), Optional.ToNullable(updateStatus), Optional.ToNullable(availabilityState), Optional.ToNullable(logModule), hostGroup.Value, hostName.Value, serializedAdditionalRawData);
+        }
+
+        DynatraceOneAgentEnabledAppServiceInfo IModelJsonSerializable<DynatraceOneAgentEnabledAppServiceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceOneAgentEnabledAppServiceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceOneAgentEnabledAppServiceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynatraceOneAgentEnabledAppServiceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceOneAgentEnabledAppServiceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynatraceOneAgentEnabledAppServiceInfo IModelSerializable<DynatraceOneAgentEnabledAppServiceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceOneAgentEnabledAppServiceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynatraceOneAgentEnabledAppServiceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DynatraceOneAgentEnabledAppServiceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DynatraceOneAgentEnabledAppServiceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(DynatraceOneAgentEnabledAppServiceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DynatraceOneAgentEnabledAppServiceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DynatraceOneAgentEnabledAppServiceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynatraceOneAgentEnabledAppServiceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

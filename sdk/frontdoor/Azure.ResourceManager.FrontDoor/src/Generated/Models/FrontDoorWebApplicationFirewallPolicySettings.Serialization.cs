@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorWebApplicationFirewallPolicySettings : IUtf8JsonSerializable
+    public partial class FrontDoorWebApplicationFirewallPolicySettings : IUtf8JsonSerializable, IModelJsonSerializable<FrontDoorWebApplicationFirewallPolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FrontDoorWebApplicationFirewallPolicySettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FrontDoorWebApplicationFirewallPolicySettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorWebApplicationFirewallPolicySettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteStringValue(RequestBodyCheck.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element)
+        internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<int> customBlockResponseStatusCode = default;
             Optional<string> customBlockResponseBody = default;
             Optional<PolicyRequestBodyCheck> requestBodyCheck = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledState"u8))
@@ -113,8 +135,61 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     requestBodyCheck = new PolicyRequestBodyCheck(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FrontDoorWebApplicationFirewallPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), redirectUrl.Value, Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Optional.ToNullable(requestBodyCheck));
+            return new FrontDoorWebApplicationFirewallPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), redirectUrl.Value, Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Optional.ToNullable(requestBodyCheck), serializedAdditionalRawData);
+        }
+
+        FrontDoorWebApplicationFirewallPolicySettings IModelJsonSerializable<FrontDoorWebApplicationFirewallPolicySettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorWebApplicationFirewallPolicySettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorWebApplicationFirewallPolicySettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FrontDoorWebApplicationFirewallPolicySettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorWebApplicationFirewallPolicySettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FrontDoorWebApplicationFirewallPolicySettings IModelSerializable<FrontDoorWebApplicationFirewallPolicySettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorWebApplicationFirewallPolicySettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFrontDoorWebApplicationFirewallPolicySettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FrontDoorWebApplicationFirewallPolicySettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FrontDoorWebApplicationFirewallPolicySettings"/> to convert. </param>
+        public static implicit operator RequestContent(FrontDoorWebApplicationFirewallPolicySettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FrontDoorWebApplicationFirewallPolicySettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FrontDoorWebApplicationFirewallPolicySettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFrontDoorWebApplicationFirewallPolicySettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

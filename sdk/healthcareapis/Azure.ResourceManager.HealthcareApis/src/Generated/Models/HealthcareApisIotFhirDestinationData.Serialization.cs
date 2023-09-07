@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    public partial class HealthcareApisIotFhirDestinationData : IUtf8JsonSerializable
+    public partial class HealthcareApisIotFhirDestinationData : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareApisIotFhirDestinationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareApisIotFhirDestinationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareApisIotFhirDestinationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisIotFhirDestinationData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -35,13 +42,34 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WritePropertyName("fhirServiceResourceId"u8);
             writer.WriteStringValue(FhirServiceResourceId);
             writer.WritePropertyName("fhirMapping"u8);
-            writer.WriteObjectValue(FhirMapping);
+            if (FhirMapping is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<HealthcareApisIotMappingProperties>)FhirMapping).Serialize(writer, options);
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthcareApisIotFhirDestinationData DeserializeHealthcareApisIotFhirDestinationData(JsonElement element)
+        internal static HealthcareApisIotFhirDestinationData DeserializeHealthcareApisIotFhirDestinationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,6 +84,7 @@ namespace Azure.ResourceManager.HealthcareApis
             HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType = default;
             ResourceIdentifier fhirServiceResourceId = default;
             HealthcareApisIotMappingProperties fhirMapping = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -136,8 +165,61 @@ namespace Azure.ResourceManager.HealthcareApis
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareApisIotFhirDestinationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), resourceIdentityResolutionType, fhirServiceResourceId, fhirMapping, Optional.ToNullable(location), Optional.ToNullable(etag));
+            return new HealthcareApisIotFhirDestinationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), resourceIdentityResolutionType, fhirServiceResourceId, fhirMapping, Optional.ToNullable(location), Optional.ToNullable(etag), serializedAdditionalRawData);
+        }
+
+        HealthcareApisIotFhirDestinationData IModelJsonSerializable<HealthcareApisIotFhirDestinationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisIotFhirDestinationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareApisIotFhirDestinationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareApisIotFhirDestinationData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisIotFhirDestinationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareApisIotFhirDestinationData IModelSerializable<HealthcareApisIotFhirDestinationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisIotFhirDestinationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareApisIotFhirDestinationData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareApisIotFhirDestinationData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareApisIotFhirDestinationData"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareApisIotFhirDestinationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareApisIotFhirDestinationData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareApisIotFhirDestinationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareApisIotFhirDestinationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

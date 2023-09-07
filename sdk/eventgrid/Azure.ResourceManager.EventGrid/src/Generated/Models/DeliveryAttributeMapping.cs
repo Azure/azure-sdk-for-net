@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownDeliveryAttributeMapping))]
     public abstract partial class DeliveryAttributeMapping
     {
-        /// <summary> Initializes a new instance of DeliveryAttributeMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeliveryAttributeMapping"/>. </summary>
         protected DeliveryAttributeMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of DeliveryAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
         /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
-        internal DeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             MappingType = mappingType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the delivery attribute or header. </summary>

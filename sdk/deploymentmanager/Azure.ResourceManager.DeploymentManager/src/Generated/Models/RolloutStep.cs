@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Defines a specific step on a target service unit. </summary>
     public partial class RolloutStep
     {
-        /// <summary> Initializes a new instance of RolloutStep. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RolloutStep"/>. </summary>
         /// <param name="name"> Name of the step. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal RolloutStep(string name)
@@ -26,14 +29,15 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Messages = new ChangeTrackingList<Message>();
         }
 
-        /// <summary> Initializes a new instance of RolloutStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutStep"/>. </summary>
         /// <param name="name"> Name of the step. </param>
         /// <param name="status"> Current state of the step. </param>
         /// <param name="stepGroup"> The step group the current step is part of. </param>
         /// <param name="operationInfo"> Detailed information of specific action execution. </param>
         /// <param name="resourceOperations"> Set of resource operations that were performed, if any, on an Azure resource. </param>
         /// <param name="messages"> Supplementary informative messages during rollout. </param>
-        internal RolloutStep(string name, string status, string stepGroup, StepOperationInfo operationInfo, IReadOnlyList<ResourceOperation> resourceOperations, IReadOnlyList<Message> messages)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RolloutStep(string name, string status, string stepGroup, StepOperationInfo operationInfo, IReadOnlyList<ResourceOperation> resourceOperations, IReadOnlyList<Message> messages, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
@@ -41,6 +45,12 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             OperationInfo = operationInfo;
             ResourceOperations = resourceOperations;
             Messages = messages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RolloutStep"/> for deserialization. </summary>
+        internal RolloutStep()
+        {
         }
 
         /// <summary> Name of the step. </summary>

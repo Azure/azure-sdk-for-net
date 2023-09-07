@@ -5,15 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabResourceCost
+    public partial class DevTestLabResourceCost : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabResourceCost>
     {
-        internal static DevTestLabResourceCost DeserializeDevTestLabResourceCost(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabResourceCost>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabResourceCost>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabResourceCost>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourcename"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (Optional.IsDefined(ResourceUniqueId))
+            {
+                writer.WritePropertyName("resourceUId"u8);
+                writer.WriteStringValue(ResourceUniqueId);
+            }
+            if (Optional.IsDefined(ResourceCost))
+            {
+                writer.WritePropertyName("resourceCost"u8);
+                writer.WriteNumberValue(ResourceCost.Value);
+            }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (Optional.IsDefined(ResourceOwner))
+            {
+                writer.WritePropertyName("resourceOwner"u8);
+                writer.WriteStringValue(ResourceOwner);
+            }
+            if (Optional.IsDefined(ResourcePricingTier))
+            {
+                writer.WritePropertyName("resourcePricingTier"u8);
+                writer.WriteStringValue(ResourcePricingTier);
+            }
+            if (Optional.IsDefined(ResourceStatus))
+            {
+                writer.WritePropertyName("resourceStatus"u8);
+                writer.WriteStringValue(ResourceStatus);
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(ExternalResourceId))
+            {
+                writer.WritePropertyName("externalResourceId"u8);
+                writer.WriteStringValue(ExternalResourceId);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DevTestLabResourceCost DeserializeDevTestLabResourceCost(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> resourceStatus = default;
             Optional<string> resourceId = default;
             Optional<string> externalResourceId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourcename"u8))
@@ -78,8 +152,61 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     externalResourceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabResourceCost(resourcename.Value, resourceUId.Value, Optional.ToNullable(resourceCost), resourceType.Value, resourceOwner.Value, resourcePricingTier.Value, resourceStatus.Value, resourceId.Value, externalResourceId.Value);
+            return new DevTestLabResourceCost(resourcename.Value, resourceUId.Value, Optional.ToNullable(resourceCost), resourceType.Value, resourceOwner.Value, resourcePricingTier.Value, resourceStatus.Value, resourceId.Value, externalResourceId.Value, serializedAdditionalRawData);
+        }
+
+        DevTestLabResourceCost IModelJsonSerializable<DevTestLabResourceCost>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabResourceCost>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabResourceCost(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabResourceCost>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabResourceCost>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabResourceCost IModelSerializable<DevTestLabResourceCost>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabResourceCost>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabResourceCost(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabResourceCost"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabResourceCost"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabResourceCost model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabResourceCost"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabResourceCost(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabResourceCost(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudHsmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudHsmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudHsmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudHsmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedHsms", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedHsms", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedHsms", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedHsms", "value", "nextLink", cancellationToken);
         }
     }
 }

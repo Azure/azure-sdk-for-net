@@ -6,17 +6,64 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(SignalRServiceClientConnectionConnectedEventDataConverter))]
-    public partial class SignalRServiceClientConnectionConnectedEventData
+    public partial class SignalRServiceClientConnectionConnectedEventData : IUtf8JsonSerializable, IModelJsonSerializable<SignalRServiceClientConnectionConnectedEventData>
     {
-        internal static SignalRServiceClientConnectionConnectedEventData DeserializeSignalRServiceClientConnectionConnectedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SignalRServiceClientConnectionConnectedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SignalRServiceClientConnectionConnectedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SignalRServiceClientConnectionConnectedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(HubName))
+            {
+                writer.WritePropertyName("hubName"u8);
+                writer.WriteStringValue(HubName);
+            }
+            if (Optional.IsDefined(ConnectionId))
+            {
+                writer.WritePropertyName("connectionId"u8);
+                writer.WriteStringValue(ConnectionId);
+            }
+            if (Optional.IsDefined(UserId))
+            {
+                writer.WritePropertyName("userId"u8);
+                writer.WriteStringValue(UserId);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SignalRServiceClientConnectionConnectedEventData DeserializeSignalRServiceClientConnectionConnectedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> hubName = default;
             Optional<string> connectionId = default;
             Optional<string> userId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -51,15 +99,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     userId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SignalRServiceClientConnectionConnectedEventData(Optional.ToNullable(timestamp), hubName.Value, connectionId.Value, userId.Value);
+            return new SignalRServiceClientConnectionConnectedEventData(Optional.ToNullable(timestamp), hubName.Value, connectionId.Value, userId.Value, serializedAdditionalRawData);
+        }
+
+        SignalRServiceClientConnectionConnectedEventData IModelJsonSerializable<SignalRServiceClientConnectionConnectedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SignalRServiceClientConnectionConnectedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalRServiceClientConnectionConnectedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SignalRServiceClientConnectionConnectedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SignalRServiceClientConnectionConnectedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SignalRServiceClientConnectionConnectedEventData IModelSerializable<SignalRServiceClientConnectionConnectedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SignalRServiceClientConnectionConnectedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSignalRServiceClientConnectionConnectedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SignalRServiceClientConnectionConnectedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SignalRServiceClientConnectionConnectedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(SignalRServiceClientConnectionConnectedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SignalRServiceClientConnectionConnectedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SignalRServiceClientConnectionConnectedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSignalRServiceClientConnectionConnectedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SignalRServiceClientConnectionConnectedEventDataConverter : JsonConverter<SignalRServiceClientConnectionConnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, SignalRServiceClientConnectionConnectedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override SignalRServiceClientConnectionConnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

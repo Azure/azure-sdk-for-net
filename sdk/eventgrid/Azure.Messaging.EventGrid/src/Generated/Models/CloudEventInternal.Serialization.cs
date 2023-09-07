@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.Models
 {
-    internal partial class CloudEventInternal : IUtf8JsonSerializable
+    internal partial class CloudEventInternal : IUtf8JsonSerializable, IModelJsonSerializable<CloudEventInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudEventInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudEventInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEventInternal>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -59,6 +67,140 @@ namespace Azure.Messaging.EventGrid.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
+        }
+
+        internal static CloudEventInternal DeserializeCloudEventInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            string source = default;
+            Optional<JsonElement> data = default;
+            Optional<byte[]> dataBase64 = default;
+            string type = default;
+            Optional<DateTimeOffset> time = default;
+            string specversion = default;
+            Optional<string> dataschema = default;
+            Optional<string> datacontenttype = default;
+            Optional<string> subject = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("source"u8))
+                {
+                    source = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("data"u8))
+                {
+                    data = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("data_base64"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataBase64 = property.Value.GetBytesFromBase64("D");
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("time"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    time = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("specversion"u8))
+                {
+                    specversion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataschema"u8))
+                {
+                    dataschema = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("datacontenttype"u8))
+                {
+                    datacontenttype = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subject"u8))
+                {
+                    subject = property.Value.GetString();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new CloudEventInternal(id, source, data, dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
+        }
+
+        CloudEventInternal IModelJsonSerializable<CloudEventInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEventInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudEventInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudEventInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEventInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudEventInternal IModelSerializable<CloudEventInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEventInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudEventInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudEventInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudEventInternal"/> to convert. </param>
+        public static implicit operator RequestContent(CloudEventInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudEventInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudEventInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudEventInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

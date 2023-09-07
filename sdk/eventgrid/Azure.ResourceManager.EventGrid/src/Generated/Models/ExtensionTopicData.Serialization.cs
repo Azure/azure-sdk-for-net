@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class ExtensionTopicData : IUtf8JsonSerializable
+    public partial class ExtensionTopicData : IUtf8JsonSerializable, IModelJsonSerializable<ExtensionTopicData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExtensionTopicData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExtensionTopicData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExtensionTopicData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStringValue(SystemTopic);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtensionTopicData DeserializeExtensionTopicData(JsonElement element)
+        internal static ExtensionTopicData DeserializeExtensionTopicData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +66,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> systemTopic = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -92,8 +115,61 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExtensionTopicData(id, name, type, systemData.Value, description.Value, systemTopic.Value);
+            return new ExtensionTopicData(id, name, type, systemData.Value, description.Value, systemTopic.Value, serializedAdditionalRawData);
+        }
+
+        ExtensionTopicData IModelJsonSerializable<ExtensionTopicData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtensionTopicData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtensionTopicData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExtensionTopicData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtensionTopicData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExtensionTopicData IModelSerializable<ExtensionTopicData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtensionTopicData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExtensionTopicData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExtensionTopicData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExtensionTopicData"/> to convert. </param>
+        public static implicit operator RequestContent(ExtensionTopicData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExtensionTopicData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExtensionTopicData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExtensionTopicData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

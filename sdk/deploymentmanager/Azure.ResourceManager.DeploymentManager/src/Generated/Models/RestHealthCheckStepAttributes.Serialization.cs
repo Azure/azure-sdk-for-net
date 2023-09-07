@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class RestHealthCheckStepAttributes : IUtf8JsonSerializable
+    public partial class RestHealthCheckStepAttributes : IUtf8JsonSerializable, IModelJsonSerializable<RestHealthCheckStepAttributes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestHealthCheckStepAttributes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestHealthCheckStepAttributes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RestHealthCheckStepAttributes>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(HealthCheckStepAttributesType);
@@ -39,16 +45,37 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthChecks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RestHealthCheck>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RestHealthCheckStepAttributes DeserializeRestHealthCheckStepAttributes(JsonElement element)
+        internal static RestHealthCheckStepAttributes DeserializeRestHealthCheckStepAttributes(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +85,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<TimeSpan> maxElasticDuration = default;
             TimeSpan healthyStateDuration = default;
             Optional<IList<RestHealthCheck>> healthChecks = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -114,8 +142,61 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RestHealthCheckStepAttributes(type, Optional.ToNullable(waitDuration), Optional.ToNullable(maxElasticDuration), healthyStateDuration, Optional.ToList(healthChecks));
+            return new RestHealthCheckStepAttributes(type, Optional.ToNullable(waitDuration), Optional.ToNullable(maxElasticDuration), healthyStateDuration, Optional.ToList(healthChecks), serializedAdditionalRawData);
+        }
+
+        RestHealthCheckStepAttributes IModelJsonSerializable<RestHealthCheckStepAttributes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestHealthCheckStepAttributes>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestHealthCheckStepAttributes(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestHealthCheckStepAttributes>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestHealthCheckStepAttributes>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestHealthCheckStepAttributes IModelSerializable<RestHealthCheckStepAttributes>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestHealthCheckStepAttributes>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestHealthCheckStepAttributes(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestHealthCheckStepAttributes"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestHealthCheckStepAttributes"/> to convert. </param>
+        public static implicit operator RequestContent(RestHealthCheckStepAttributes model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestHealthCheckStepAttributes"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestHealthCheckStepAttributes(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestHealthCheckStepAttributes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

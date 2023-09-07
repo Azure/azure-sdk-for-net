@@ -5,29 +5,152 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ConfigurationFilters : IUtf8JsonSerializable
+    public partial class ConfigurationFilters : IUtf8JsonSerializable, IModelJsonSerializable<ConfigurationFilters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConfigurationFilters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConfigurationFilters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConfigurationFilters>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue(HierarchyInformation);
+            if (HierarchyInformation is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<HierarchyInformation>)HierarchyInformation).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(FilterableProperty))
             {
                 writer.WritePropertyName("filterableProperty"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilterableProperty)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FilterableProperty>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ConfigurationFilters DeserializeConfigurationFilters(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            HierarchyInformation hierarchyInformation = default;
+            Optional<IList<FilterableProperty>> filterableProperty = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("hierarchyInformation"u8))
+                {
+                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("filterableProperty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FilterableProperty> array = new List<FilterableProperty>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.FilterableProperty.DeserializeFilterableProperty(item));
+                    }
+                    filterableProperty = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ConfigurationFilters(hierarchyInformation, Optional.ToList(filterableProperty), serializedAdditionalRawData);
+        }
+
+        ConfigurationFilters IModelJsonSerializable<ConfigurationFilters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfigurationFilters>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigurationFilters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConfigurationFilters>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfigurationFilters>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConfigurationFilters IModelSerializable<ConfigurationFilters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfigurationFilters>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConfigurationFilters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConfigurationFilters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConfigurationFilters"/> to convert. </param>
+        public static implicit operator RequestContent(ConfigurationFilters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConfigurationFilters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConfigurationFilters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConfigurationFilters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridJsonInputSchemaMapping : IUtf8JsonSerializable
+    public partial class EventGridJsonInputSchemaMapping : IUtf8JsonSerializable, IModelJsonSerializable<EventGridJsonInputSchemaMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventGridJsonInputSchemaMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventGridJsonInputSchemaMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridJsonInputSchemaMapping>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("inputSchemaMappingType"u8);
             writer.WriteStringValue(InputSchemaMappingType.ToString());
@@ -22,39 +30,95 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteObjectValue(Id);
+                if (Id is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonField>)Id).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
-                writer.WriteObjectValue(Topic);
+                if (Topic is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonField>)Topic).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EventTime))
             {
                 writer.WritePropertyName("eventTime"u8);
-                writer.WriteObjectValue(EventTime);
+                if (EventTime is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonField>)EventTime).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
-                writer.WriteObjectValue(EventType);
+                if (EventType is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonFieldWithDefault>)EventType).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
-                writer.WriteObjectValue(Subject);
+                if (Subject is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonFieldWithDefault>)Subject).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DataVersion))
             {
                 writer.WritePropertyName("dataVersion"u8);
-                writer.WriteObjectValue(DataVersion);
+                if (DataVersion is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonFieldWithDefault>)DataVersion).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventGridJsonInputSchemaMapping DeserializeEventGridJsonInputSchemaMapping(JsonElement element)
+        internal static EventGridJsonInputSchemaMapping DeserializeEventGridJsonInputSchemaMapping(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<JsonFieldWithDefault> eventType = default;
             Optional<JsonFieldWithDefault> subject = default;
             Optional<JsonFieldWithDefault> dataVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputSchemaMappingType"u8))
@@ -139,8 +204,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventGridJsonInputSchemaMapping(inputSchemaMappingType, id.Value, topic.Value, eventTime.Value, eventType.Value, subject.Value, dataVersion.Value);
+            return new EventGridJsonInputSchemaMapping(inputSchemaMappingType, id.Value, topic.Value, eventTime.Value, eventType.Value, subject.Value, dataVersion.Value, serializedAdditionalRawData);
+        }
+
+        EventGridJsonInputSchemaMapping IModelJsonSerializable<EventGridJsonInputSchemaMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridJsonInputSchemaMapping>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridJsonInputSchemaMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventGridJsonInputSchemaMapping>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridJsonInputSchemaMapping>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventGridJsonInputSchemaMapping IModelSerializable<EventGridJsonInputSchemaMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridJsonInputSchemaMapping>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventGridJsonInputSchemaMapping(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventGridJsonInputSchemaMapping"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventGridJsonInputSchemaMapping"/> to convert. </param>
+        public static implicit operator RequestContent(EventGridJsonInputSchemaMapping model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventGridJsonInputSchemaMapping"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventGridJsonInputSchemaMapping(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventGridJsonInputSchemaMapping(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

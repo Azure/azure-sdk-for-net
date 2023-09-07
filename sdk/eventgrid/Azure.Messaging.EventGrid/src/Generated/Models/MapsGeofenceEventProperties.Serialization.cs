@@ -5,16 +5,85 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class MapsGeofenceEventProperties
+    public partial class MapsGeofenceEventProperties : IUtf8JsonSerializable, IModelJsonSerializable<MapsGeofenceEventProperties>
     {
-        internal static MapsGeofenceEventProperties DeserializeMapsGeofenceEventProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MapsGeofenceEventProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MapsGeofenceEventProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MapsGeofenceEventProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ExpiredGeofenceGeometryId))
+            {
+                writer.WritePropertyName("expiredGeofenceGeometryId"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpiredGeofenceGeometryId)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Geometries))
+            {
+                writer.WritePropertyName("geometries"u8);
+                writer.WriteStartArray();
+                foreach (var item in Geometries)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MapsGeofenceGeometry>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(InvalidPeriodGeofenceGeometryId))
+            {
+                writer.WritePropertyName("invalidPeriodGeofenceGeometryId"u8);
+                writer.WriteStartArray();
+                foreach (var item in InvalidPeriodGeofenceGeometryId)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsEventPublished))
+            {
+                writer.WritePropertyName("isEventPublished"u8);
+                writer.WriteBooleanValue(IsEventPublished.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MapsGeofenceEventProperties DeserializeMapsGeofenceEventProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +92,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<IReadOnlyList<MapsGeofenceGeometry>> geometries = default;
             Optional<IReadOnlyList<string>> invalidPeriodGeofenceGeometryId = default;
             Optional<bool> isEventPublished = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiredGeofenceGeometryId"u8))
@@ -76,8 +146,61 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     isEventPublished = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MapsGeofenceEventProperties(Optional.ToList(expiredGeofenceGeometryId), Optional.ToList(geometries), Optional.ToList(invalidPeriodGeofenceGeometryId), Optional.ToNullable(isEventPublished));
+            return new MapsGeofenceEventProperties(Optional.ToList(expiredGeofenceGeometryId), Optional.ToList(geometries), Optional.ToList(invalidPeriodGeofenceGeometryId), Optional.ToNullable(isEventPublished), serializedAdditionalRawData);
+        }
+
+        MapsGeofenceEventProperties IModelJsonSerializable<MapsGeofenceEventProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapsGeofenceEventProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapsGeofenceEventProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MapsGeofenceEventProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapsGeofenceEventProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MapsGeofenceEventProperties IModelSerializable<MapsGeofenceEventProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapsGeofenceEventProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMapsGeofenceEventProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MapsGeofenceEventProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MapsGeofenceEventProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MapsGeofenceEventProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MapsGeofenceEventProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MapsGeofenceEventProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMapsGeofenceEventProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

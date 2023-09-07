@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanVolumeGroupResource(Client, ElasticSanVolumeGroupData.DeserializeElasticSanVolumeGroupData(e)), _elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "ElasticSanVolumeGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ElasticSanVolumeGroupResource(Client, ElasticSanVolumeGroupData.DeserializeElasticSanVolumeGroupData(e)), _elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "ElasticSanVolumeGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanVolumeGroupResource(Client, ElasticSanVolumeGroupData.DeserializeElasticSanVolumeGroupData(e)), _elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "ElasticSanVolumeGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ElasticSanVolumeGroupResource(Client, ElasticSanVolumeGroupData.DeserializeElasticSanVolumeGroupData(e)), _elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "ElasticSanVolumeGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,15 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class AnalyzeResultOperation
+    internal partial class AnalyzeResultOperation : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeResultOperation>
     {
-        internal static AnalyzeResultOperation DeserializeAnalyzeResultOperation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeResultOperation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeResultOperation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeResultOperation>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedDateTime, "O");
+            writer.WritePropertyName("lastUpdatedDateTime"u8);
+            writer.WriteStringValue(LastUpdatedDateTime, "O");
+            if (Optional.IsDefined(_error))
+            {
+                writer.WritePropertyName("error"u8);
+                _error.WriteTo(writer);
+            }
+            if (Optional.IsDefined(AnalyzeResult))
+            {
+                writer.WritePropertyName("analyzeResult"u8);
+                if (AnalyzeResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AnalyzeResult>)AnalyzeResult).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnalyzeResultOperation DeserializeAnalyzeResultOperation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +74,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DateTimeOffset lastUpdatedDateTime = default;
             Optional<JsonElement> error = default;
             Optional<AnalyzeResult> analyzeResult = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -55,8 +106,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     analyzeResult = AnalyzeResult.DeserializeAnalyzeResult(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnalyzeResultOperation(status, createdDateTime, lastUpdatedDateTime, error, analyzeResult.Value);
+            return new AnalyzeResultOperation(status, createdDateTime, lastUpdatedDateTime, error, analyzeResult.Value, serializedAdditionalRawData);
+        }
+
+        AnalyzeResultOperation IModelJsonSerializable<AnalyzeResultOperation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeResultOperation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeResultOperation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeResultOperation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeResultOperation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeResultOperation IModelSerializable<AnalyzeResultOperation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeResultOperation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeResultOperation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalyzeResultOperation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalyzeResultOperation"/> to convert. </param>
+        public static implicit operator RequestContent(AnalyzeResultOperation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalyzeResultOperation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalyzeResultOperation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeResultOperation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

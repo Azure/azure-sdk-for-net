@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class PartnerNamespaceChannelData : IUtf8JsonSerializable
+    public partial class PartnerNamespaceChannelData : IUtf8JsonSerializable, IModelJsonSerializable<PartnerNamespaceChannelData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PartnerNamespaceChannelData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PartnerNamespaceChannelData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerNamespaceChannelData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -28,12 +35,26 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
-                writer.WriteObjectValue(PartnerTopicInfo);
+                if (PartnerTopicInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PartnerTopicInfo>)PartnerTopicInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PartnerDestinationInfo))
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
-                writer.WriteObjectValue(PartnerDestinationInfo);
+                if (PartnerDestinationInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PartnerDestinationInfo>)PartnerDestinationInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MessageForActivation))
             {
@@ -56,11 +77,25 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PartnerNamespaceChannelData DeserializePartnerNamespaceChannelData(JsonElement element)
+        internal static PartnerNamespaceChannelData DeserializePartnerNamespaceChannelData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +111,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<PartnerNamespaceChannelProvisioningState> provisioningState = default;
             Optional<PartnerTopicReadinessState> readinessState = default;
             Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -173,8 +209,61 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, partnerDestinationInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc));
+            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, partnerDestinationInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc), serializedAdditionalRawData);
+        }
+
+        PartnerNamespaceChannelData IModelJsonSerializable<PartnerNamespaceChannelData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerNamespaceChannelData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerNamespaceChannelData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PartnerNamespaceChannelData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerNamespaceChannelData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PartnerNamespaceChannelData IModelSerializable<PartnerNamespaceChannelData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerNamespaceChannelData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePartnerNamespaceChannelData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PartnerNamespaceChannelData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PartnerNamespaceChannelData"/> to convert. </param>
+        public static implicit operator RequestContent(PartnerNamespaceChannelData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PartnerNamespaceChannelData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PartnerNamespaceChannelData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePartnerNamespaceChannelData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

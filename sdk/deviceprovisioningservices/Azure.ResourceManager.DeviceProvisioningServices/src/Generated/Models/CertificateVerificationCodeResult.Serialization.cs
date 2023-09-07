@@ -5,17 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class CertificateVerificationCodeResult
+    public partial class CertificateVerificationCodeResult : IUtf8JsonSerializable, IModelJsonSerializable<CertificateVerificationCodeResult>
     {
-        internal static CertificateVerificationCodeResult DeserializeCertificateVerificationCodeResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CertificateVerificationCodeResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CertificateVerificationCodeResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CertificateVerificationCodeResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CertificateVerificationCodeProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CertificateVerificationCodeResult DeserializeCertificateVerificationCodeResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +65,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -70,8 +110,61 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CertificateVerificationCodeResult(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value);
+            return new CertificateVerificationCodeResult(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value, serializedAdditionalRawData);
+        }
+
+        CertificateVerificationCodeResult IModelJsonSerializable<CertificateVerificationCodeResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CertificateVerificationCodeResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCertificateVerificationCodeResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CertificateVerificationCodeResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CertificateVerificationCodeResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CertificateVerificationCodeResult IModelSerializable<CertificateVerificationCodeResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CertificateVerificationCodeResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCertificateVerificationCodeResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CertificateVerificationCodeResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CertificateVerificationCodeResult"/> to convert. </param>
+        public static implicit operator RequestContent(CertificateVerificationCodeResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CertificateVerificationCodeResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CertificateVerificationCodeResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCertificateVerificationCodeResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

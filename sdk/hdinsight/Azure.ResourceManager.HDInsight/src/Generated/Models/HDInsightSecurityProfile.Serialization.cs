@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightSecurityProfile : IUtf8JsonSerializable
+    public partial class HDInsightSecurityProfile : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightSecurityProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightSecurityProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightSecurityProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DirectoryType))
             {
@@ -77,11 +83,25 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("msiResourceId"u8);
                 writer.WriteStringValue(MsiResourceId);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightSecurityProfile DeserializeHDInsightSecurityProfile(JsonElement element)
+        internal static HDInsightSecurityProfile DeserializeHDInsightSecurityProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IList<string>> clusterUsersGroupDNs = default;
             Optional<ResourceIdentifier> aaddsResourceId = default;
             Optional<ResourceIdentifier> msiResourceId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoryType"u8))
@@ -179,8 +200,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     msiResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightSecurityProfile(Optional.ToNullable(directoryType), domain.Value, organizationalUnitDN.Value, Optional.ToList(ldapsUrls), domainUsername.Value, domainUserPassword.Value, Optional.ToList(clusterUsersGroupDNs), aaddsResourceId.Value, msiResourceId.Value);
+            return new HDInsightSecurityProfile(Optional.ToNullable(directoryType), domain.Value, organizationalUnitDN.Value, Optional.ToList(ldapsUrls), domainUsername.Value, domainUserPassword.Value, Optional.ToList(clusterUsersGroupDNs), aaddsResourceId.Value, msiResourceId.Value, serializedAdditionalRawData);
+        }
+
+        HDInsightSecurityProfile IModelJsonSerializable<HDInsightSecurityProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightSecurityProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightSecurityProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightSecurityProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightSecurityProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightSecurityProfile IModelSerializable<HDInsightSecurityProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightSecurityProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightSecurityProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HDInsightSecurityProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HDInsightSecurityProfile"/> to convert. </param>
+        public static implicit operator RequestContent(HDInsightSecurityProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HDInsightSecurityProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HDInsightSecurityProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightSecurityProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

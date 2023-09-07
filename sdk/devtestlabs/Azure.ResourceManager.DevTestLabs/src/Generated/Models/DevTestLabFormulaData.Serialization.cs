@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabFormulaData : IUtf8JsonSerializable
+    public partial class DevTestLabFormulaData : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabFormulaData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabFormulaData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabFormulaData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabFormulaData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,19 +53,47 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(FormulaContent))
             {
                 writer.WritePropertyName("formulaContent"u8);
-                writer.WriteObjectValue(FormulaContent);
+                if (FormulaContent is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DevTestLabVmCreationContent>)FormulaContent).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                if (Vm is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FormulaPropertiesFromVm>)Vm).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabFormulaData DeserializeDevTestLabFormulaData(JsonElement element)
+        internal static DevTestLabFormulaData DeserializeDevTestLabFormulaData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +112,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<FormulaPropertiesFromVm> vm = default;
             Optional<string> provisioningState = default;
             Optional<Guid> uniqueIdentifier = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -191,8 +226,61 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabFormulaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, author.Value, osType.Value, Optional.ToNullable(creationDate), formulaContent.Value, vm.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabFormulaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, author.Value, osType.Value, Optional.ToNullable(creationDate), formulaContent.Value, vm.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+        }
+
+        DevTestLabFormulaData IModelJsonSerializable<DevTestLabFormulaData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabFormulaData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabFormulaData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabFormulaData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabFormulaData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabFormulaData IModelSerializable<DevTestLabFormulaData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabFormulaData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabFormulaData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabFormulaData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabFormulaData"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabFormulaData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabFormulaData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabFormulaData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabFormulaData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

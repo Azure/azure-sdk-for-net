@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class DnsForwardingRulesetPatch : IUtf8JsonSerializable
+    public partial class DnsForwardingRulesetPatch : IUtf8JsonSerializable, IModelJsonSerializable<DnsForwardingRulesetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DnsForwardingRulesetPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DnsForwardingRulesetPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DnsForwardingRulesetPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DnsResolverOutboundEndpoints))
             {
@@ -36,7 +45,117 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DnsForwardingRulesetPatch DeserializeDnsForwardingRulesetPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<WritableSubResource>> dnsResolverOutboundEndpoints = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("dnsResolverOutboundEndpoints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                    }
+                    dnsResolverOutboundEndpoints = array;
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DnsForwardingRulesetPatch(Optional.ToList(dnsResolverOutboundEndpoints), Optional.ToDictionary(tags), serializedAdditionalRawData);
+        }
+
+        DnsForwardingRulesetPatch IModelJsonSerializable<DnsForwardingRulesetPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsForwardingRulesetPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsForwardingRulesetPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DnsForwardingRulesetPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsForwardingRulesetPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DnsForwardingRulesetPatch IModelSerializable<DnsForwardingRulesetPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsForwardingRulesetPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDnsForwardingRulesetPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DnsForwardingRulesetPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DnsForwardingRulesetPatch"/> to convert. </param>
+        public static implicit operator RequestContent(DnsForwardingRulesetPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DnsForwardingRulesetPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DnsForwardingRulesetPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDnsForwardingRulesetPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

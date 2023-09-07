@@ -6,17 +6,79 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MachineLearningServicesRunStatusChangedEventDataConverter))]
-    public partial class MachineLearningServicesRunStatusChangedEventData
+    public partial class MachineLearningServicesRunStatusChangedEventData : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningServicesRunStatusChangedEventData>
     {
-        internal static MachineLearningServicesRunStatusChangedEventData DeserializeMachineLearningServicesRunStatusChangedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningServicesRunStatusChangedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningServicesRunStatusChangedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningServicesRunStatusChangedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ExperimentId))
+            {
+                writer.WritePropertyName("experimentId"u8);
+                writer.WriteStringValue(ExperimentId);
+            }
+            if (Optional.IsDefined(ExperimentName))
+            {
+                writer.WritePropertyName("experimentName"u8);
+                writer.WriteStringValue(ExperimentName);
+            }
+            if (Optional.IsDefined(RunId))
+            {
+                writer.WritePropertyName("runId"u8);
+                writer.WriteStringValue(RunId);
+            }
+            if (Optional.IsDefined(RunType))
+            {
+                writer.WritePropertyName("runType"u8);
+                writer.WriteStringValue(RunType);
+            }
+            if (Optional.IsDefined(RunTags))
+            {
+                writer.WritePropertyName("runTags"u8);
+                writer.WriteObjectValue(RunTags);
+            }
+            if (Optional.IsDefined(RunProperties))
+            {
+                writer.WritePropertyName("runProperties"u8);
+                writer.WriteObjectValue(RunProperties);
+            }
+            if (Optional.IsDefined(RunStatus))
+            {
+                writer.WritePropertyName("runStatus"u8);
+                writer.WriteStringValue(RunStatus);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningServicesRunStatusChangedEventData DeserializeMachineLearningServicesRunStatusChangedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +90,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<object> runTags = default;
             Optional<object> runProperties = default;
             Optional<string> runStatus = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("experimentId"u8))
@@ -73,15 +136,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     runStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningServicesRunStatusChangedEventData(experimentId.Value, experimentName.Value, runId.Value, runType.Value, runTags.Value, runProperties.Value, runStatus.Value);
+            return new MachineLearningServicesRunStatusChangedEventData(experimentId.Value, experimentName.Value, runId.Value, runType.Value, runTags.Value, runProperties.Value, runStatus.Value, serializedAdditionalRawData);
+        }
+
+        MachineLearningServicesRunStatusChangedEventData IModelJsonSerializable<MachineLearningServicesRunStatusChangedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningServicesRunStatusChangedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningServicesRunStatusChangedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningServicesRunStatusChangedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningServicesRunStatusChangedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningServicesRunStatusChangedEventData IModelSerializable<MachineLearningServicesRunStatusChangedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningServicesRunStatusChangedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningServicesRunStatusChangedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningServicesRunStatusChangedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningServicesRunStatusChangedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningServicesRunStatusChangedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningServicesRunStatusChangedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningServicesRunStatusChangedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningServicesRunStatusChangedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class MachineLearningServicesRunStatusChangedEventDataConverter : JsonConverter<MachineLearningServicesRunStatusChangedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MachineLearningServicesRunStatusChangedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MachineLearningServicesRunStatusChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

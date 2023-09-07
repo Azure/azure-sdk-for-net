@@ -8,14 +8,90 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentClassifierBuildOperationDetails
+    public partial class DocumentClassifierBuildOperationDetails : IUtf8JsonSerializable, IModelJsonSerializable<DocumentClassifierBuildOperationDetails>
     {
-        internal static DocumentClassifierBuildOperationDetails DeserializeDocumentClassifierBuildOperationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DocumentClassifierBuildOperationDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DocumentClassifierBuildOperationDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentClassifierBuildOperationDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Result))
+            {
+                writer.WritePropertyName("result"u8);
+                if (Result is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DocumentClassifierDetails>)Result).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("operationId"u8);
+            writer.WriteStringValue(OperationId);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (Optional.IsDefined(PercentCompleted))
+            {
+                writer.WritePropertyName("percentCompleted"u8);
+                writer.WriteNumberValue(PercentCompleted.Value);
+            }
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            writer.WritePropertyName("lastUpdatedDateTime"u8);
+            writer.WriteStringValue(LastUpdatedOn, "O");
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("resourceLocation"u8);
+            writer.WriteStringValue(ResourceLocation.AbsoluteUri);
+            if (Optional.IsDefined(ServiceVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ServiceVersion);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(JsonError))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonError.WriteTo(writer);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DocumentClassifierBuildOperationDetails DeserializeDocumentClassifierBuildOperationDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +107,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<string> apiVersion = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<JsonElement> error = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -105,8 +182,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     error = property.Value.Clone();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DocumentClassifierBuildOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
+            return new DocumentClassifierBuildOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value, serializedAdditionalRawData);
+        }
+
+        DocumentClassifierBuildOperationDetails IModelJsonSerializable<DocumentClassifierBuildOperationDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentClassifierBuildOperationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentClassifierBuildOperationDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DocumentClassifierBuildOperationDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentClassifierBuildOperationDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DocumentClassifierBuildOperationDetails IModelSerializable<DocumentClassifierBuildOperationDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentClassifierBuildOperationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDocumentClassifierBuildOperationDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DocumentClassifierBuildOperationDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DocumentClassifierBuildOperationDetails"/> to convert. </param>
+        public static implicit operator RequestContent(DocumentClassifierBuildOperationDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DocumentClassifierBuildOperationDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DocumentClassifierBuildOperationDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDocumentClassifierBuildOperationDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

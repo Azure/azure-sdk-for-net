@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
@@ -51,7 +52,14 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                if (item is null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EventGridEventInternal>)item).Serialize(content.JsonWriter, ModelSerializerOptions.DefaultWireOptions);
+                }
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -131,7 +139,14 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                if (item is null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CloudEventInternal>)item).Serialize(content.JsonWriter, ModelSerializerOptions.DefaultWireOptions);
+                }
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

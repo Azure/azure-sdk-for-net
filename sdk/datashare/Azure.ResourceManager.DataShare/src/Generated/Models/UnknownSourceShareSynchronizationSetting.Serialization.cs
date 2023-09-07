@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    internal partial class UnknownSourceShareSynchronizationSetting
+    internal partial class UnknownSourceShareSynchronizationSetting : IUtf8JsonSerializable, IModelJsonSerializable<SourceShareSynchronizationSetting>
     {
-        internal static UnknownSourceShareSynchronizationSetting DeserializeUnknownSourceShareSynchronizationSetting(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SourceShareSynchronizationSetting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SourceShareSynchronizationSetting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<SourceShareSynchronizationSetting>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            SourceShareSynchronizationSettingKind kind = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
+                foreach (var property in _serializedAdditionalRawData)
                 {
-                    kind = new SourceShareSynchronizationSettingKind(property.Value.GetString());
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownSourceShareSynchronizationSetting(kind);
+            writer.WriteEndObject();
+        }
+
+        internal static SourceShareSynchronizationSetting DeserializeUnknownSourceShareSynchronizationSetting(JsonElement element, ModelSerializerOptions options = default) => DeserializeSourceShareSynchronizationSetting(element, options);
+
+        SourceShareSynchronizationSetting IModelJsonSerializable<SourceShareSynchronizationSetting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SourceShareSynchronizationSetting>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSourceShareSynchronizationSetting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SourceShareSynchronizationSetting>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SourceShareSynchronizationSetting>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SourceShareSynchronizationSetting IModelSerializable<SourceShareSynchronizationSetting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SourceShareSynchronizationSetting>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSourceShareSynchronizationSetting(doc.RootElement, options);
         }
     }
 }

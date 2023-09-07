@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Get Operation response object. </summary>
     public partial class DocumentModelComposeOperationDetails : OperationDetails
     {
-        /// <summary> Initializes a new instance of DocumentModelComposeOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelComposeOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Kind = DocumentOperationKind.DocumentModelCompose;
         }
 
-        /// <summary> Initializes a new instance of DocumentModelComposeOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelComposeOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -42,10 +42,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="jsonError"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal DocumentModelComposeOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string serviceVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, serviceVersion, tags, jsonError)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentModelComposeOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string serviceVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError, DocumentModelDetails result, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, serviceVersion, tags, jsonError, serializedAdditionalRawData)
         {
             Result = result;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentModelComposeOperationDetails"/> for deserialization. </summary>
+        internal DocumentModelComposeOperationDetails()
+        {
         }
 
         /// <summary> Operation result upon success. </summary>

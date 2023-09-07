@@ -6,17 +6,124 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerRegistryEventDataConverter))]
-    public partial class ContainerRegistryEventData
+    public partial class ContainerRegistryEventData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryEventData>
     {
-        internal static ContainerRegistryEventData DeserializeContainerRegistryEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action);
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                if (Target is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryEventTarget>)Target).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Request))
+            {
+                writer.WritePropertyName("request"u8);
+                if (Request is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryEventRequest>)Request).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Actor))
+            {
+                writer.WritePropertyName("actor"u8);
+                if (Actor is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryEventActor>)Actor).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                if (Source is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryEventSource>)Source).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ConnectedRegistry))
+            {
+                writer.WritePropertyName("connectedRegistry"u8);
+                if (ConnectedRegistry is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryEventConnectedRegistry>)ConnectedRegistry).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerRegistryEventData DeserializeContainerRegistryEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +137,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<ContainerRegistryEventActor> actor = default;
             Optional<ContainerRegistryEventSource> source = default;
             Optional<ContainerRegistryEventConnectedRegistry> connectedRegistry = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -101,15 +209,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryEventData(id.Value, Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, request.Value, actor.Value, source.Value, connectedRegistry.Value);
+            return new ContainerRegistryEventData(id.Value, Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, request.Value, actor.Value, source.Value, connectedRegistry.Value, serializedAdditionalRawData);
+        }
+
+        ContainerRegistryEventData IModelJsonSerializable<ContainerRegistryEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryEventData IModelSerializable<ContainerRegistryEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryEventData"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ContainerRegistryEventDataConverter : JsonConverter<ContainerRegistryEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerRegistryEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ContainerRegistryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

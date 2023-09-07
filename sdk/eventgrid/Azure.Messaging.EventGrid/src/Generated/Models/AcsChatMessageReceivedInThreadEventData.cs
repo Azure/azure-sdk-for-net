@@ -14,13 +14,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageReceivedInThread event. </summary>
     public partial class AcsChatMessageReceivedInThreadEventData : AcsChatMessageEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatMessageReceivedInThreadEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedInThreadEventData"/>. </summary>
         internal AcsChatMessageReceivedInThreadEventData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsChatMessageReceivedInThreadEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedInThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>
@@ -31,7 +31,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
-        internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, serializedAdditionalRawData)
         {
             MessageBody = messageBody;
             Metadata = metadata;

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class ClientCertificateSubjectDistinguishedName : IUtf8JsonSerializable
+    public partial class ClientCertificateSubjectDistinguishedName : IUtf8JsonSerializable, IModelJsonSerializable<ClientCertificateSubjectDistinguishedName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClientCertificateSubjectDistinguishedName>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClientCertificateSubjectDistinguishedName>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClientCertificateSubjectDistinguishedName>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CommonName))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClientCertificateSubjectDistinguishedName DeserializeClientCertificateSubjectDistinguishedName(JsonElement element)
+        internal static ClientCertificateSubjectDistinguishedName DeserializeClientCertificateSubjectDistinguishedName(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> organization = default;
             Optional<string> organizationUnit = default;
             Optional<string> countryCode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commonName"u8))
@@ -70,8 +93,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     countryCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClientCertificateSubjectDistinguishedName(commonName.Value, organization.Value, organizationUnit.Value, countryCode.Value);
+            return new ClientCertificateSubjectDistinguishedName(commonName.Value, organization.Value, organizationUnit.Value, countryCode.Value, serializedAdditionalRawData);
+        }
+
+        ClientCertificateSubjectDistinguishedName IModelJsonSerializable<ClientCertificateSubjectDistinguishedName>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClientCertificateSubjectDistinguishedName>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClientCertificateSubjectDistinguishedName(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClientCertificateSubjectDistinguishedName>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClientCertificateSubjectDistinguishedName>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClientCertificateSubjectDistinguishedName IModelSerializable<ClientCertificateSubjectDistinguishedName>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClientCertificateSubjectDistinguishedName>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClientCertificateSubjectDistinguishedName(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClientCertificateSubjectDistinguishedName"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClientCertificateSubjectDistinguishedName"/> to convert. </param>
+        public static implicit operator RequestContent(ClientCertificateSubjectDistinguishedName model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClientCertificateSubjectDistinguishedName"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClientCertificateSubjectDistinguishedName(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClientCertificateSubjectDistinguishedName(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,32 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsProvisioningIssue : IUtf8JsonSerializable
+    public partial class EventHubsProvisioningIssue : IUtf8JsonSerializable, IModelJsonSerializable<EventHubsProvisioningIssue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventHubsProvisioningIssue>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventHubsProvisioningIssue>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsProvisioningIssue>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubsProvisioningIssue DeserializeEventHubsProvisioningIssue(JsonElement element)
+        internal static EventHubsProvisioningIssue DeserializeEventHubsProvisioningIssue(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<EventHubsProvisioningIssueProperties> properties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,8 +70,61 @@ namespace Azure.ResourceManager.EventHubs.Models
                     properties = EventHubsProvisioningIssueProperties.DeserializeEventHubsProvisioningIssueProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventHubsProvisioningIssue(name.Value, properties.Value);
+            return new EventHubsProvisioningIssue(name.Value, properties.Value, serializedAdditionalRawData);
+        }
+
+        EventHubsProvisioningIssue IModelJsonSerializable<EventHubsProvisioningIssue>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsProvisioningIssue>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsProvisioningIssue(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventHubsProvisioningIssue>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsProvisioningIssue>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventHubsProvisioningIssue IModelSerializable<EventHubsProvisioningIssue>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsProvisioningIssue>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventHubsProvisioningIssue(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventHubsProvisioningIssue"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventHubsProvisioningIssue"/> to convert. </param>
+        public static implicit operator RequestContent(EventHubsProvisioningIssue model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventHubsProvisioningIssue"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventHubsProvisioningIssue(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventHubsProvisioningIssue(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

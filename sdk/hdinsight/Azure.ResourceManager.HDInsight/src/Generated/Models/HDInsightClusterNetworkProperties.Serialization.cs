@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterNetworkProperties : IUtf8JsonSerializable
+    public partial class HDInsightClusterNetworkProperties : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightClusterNetworkProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightClusterNetworkProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightClusterNetworkProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterNetworkProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceProviderConnection))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("privateLink"u8);
                 writer.WriteStringValue(PrivateLink.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightClusterNetworkProperties DeserializeHDInsightClusterNetworkProperties(JsonElement element)
+        internal static HDInsightClusterNetworkProperties DeserializeHDInsightClusterNetworkProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<HDInsightResourceProviderConnection> resourceProviderConnection = default;
             Optional<HDInsightPrivateLinkState> privateLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceProviderConnection"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     privateLink = new HDInsightPrivateLinkState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightClusterNetworkProperties(Optional.ToNullable(resourceProviderConnection), Optional.ToNullable(privateLink));
+            return new HDInsightClusterNetworkProperties(Optional.ToNullable(resourceProviderConnection), Optional.ToNullable(privateLink), serializedAdditionalRawData);
+        }
+
+        HDInsightClusterNetworkProperties IModelJsonSerializable<HDInsightClusterNetworkProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterNetworkProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterNetworkProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightClusterNetworkProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterNetworkProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightClusterNetworkProperties IModelSerializable<HDInsightClusterNetworkProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterNetworkProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightClusterNetworkProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HDInsightClusterNetworkProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HDInsightClusterNetworkProperties"/> to convert. </param>
+        public static implicit operator RequestContent(HDInsightClusterNetworkProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HDInsightClusterNetworkProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HDInsightClusterNetworkProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightClusterNetworkProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

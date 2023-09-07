@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class WebHookEventSubscriptionDestination : IUtf8JsonSerializable
+    public partial class WebHookEventSubscriptionDestination : IUtf8JsonSerializable, IModelJsonSerializable<WebHookEventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebHookEventSubscriptionDestination>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebHookEventSubscriptionDestination>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebHookEventSubscriptionDestination>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
@@ -52,7 +58,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in DeliveryAttributeMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DeliveryAttributeMapping>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,11 +75,25 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element)
+        internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +107,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
             Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
             Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -172,8 +200,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings), Optional.ToNullable(minimumTlsVersionAllowed));
+            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings), Optional.ToNullable(minimumTlsVersionAllowed), serializedAdditionalRawData);
+        }
+
+        WebHookEventSubscriptionDestination IModelJsonSerializable<WebHookEventSubscriptionDestination>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebHookEventSubscriptionDestination>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebHookEventSubscriptionDestination(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebHookEventSubscriptionDestination>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebHookEventSubscriptionDestination>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebHookEventSubscriptionDestination IModelSerializable<WebHookEventSubscriptionDestination>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebHookEventSubscriptionDestination>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebHookEventSubscriptionDestination(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebHookEventSubscriptionDestination"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebHookEventSubscriptionDestination"/> to convert. </param>
+        public static implicit operator RequestContent(WebHookEventSubscriptionDestination model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebHookEventSubscriptionDestination"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebHookEventSubscriptionDestination(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebHookEventSubscriptionDestination(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

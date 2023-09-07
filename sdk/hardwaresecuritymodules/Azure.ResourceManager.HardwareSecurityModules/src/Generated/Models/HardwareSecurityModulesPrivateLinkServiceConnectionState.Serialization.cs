@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class HardwareSecurityModulesPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class HardwareSecurityModulesPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IModelJsonSerializable<HardwareSecurityModulesPrivateLinkServiceConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HardwareSecurityModulesPrivateLinkServiceConnectionState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HardwareSecurityModulesPrivateLinkServiceConnectionState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HardwareSecurityModulesPrivateLinkServiceConnectionState>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HardwareSecurityModulesPrivateLinkServiceConnectionState DeserializeHardwareSecurityModulesPrivateLinkServiceConnectionState(JsonElement element)
+        internal static HardwareSecurityModulesPrivateLinkServiceConnectionState DeserializeHardwareSecurityModulesPrivateLinkServiceConnectionState(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             Optional<HardwareSecurityModulesPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -63,8 +86,61 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HardwareSecurityModulesPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new HardwareSecurityModulesPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, serializedAdditionalRawData);
+        }
+
+        HardwareSecurityModulesPrivateLinkServiceConnectionState IModelJsonSerializable<HardwareSecurityModulesPrivateLinkServiceConnectionState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HardwareSecurityModulesPrivateLinkServiceConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHardwareSecurityModulesPrivateLinkServiceConnectionState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HardwareSecurityModulesPrivateLinkServiceConnectionState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HardwareSecurityModulesPrivateLinkServiceConnectionState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HardwareSecurityModulesPrivateLinkServiceConnectionState IModelSerializable<HardwareSecurityModulesPrivateLinkServiceConnectionState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HardwareSecurityModulesPrivateLinkServiceConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHardwareSecurityModulesPrivateLinkServiceConnectionState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HardwareSecurityModulesPrivateLinkServiceConnectionState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HardwareSecurityModulesPrivateLinkServiceConnectionState"/> to convert. </param>
+        public static implicit operator RequestContent(HardwareSecurityModulesPrivateLinkServiceConnectionState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HardwareSecurityModulesPrivateLinkServiceConnectionState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HardwareSecurityModulesPrivateLinkServiceConnectionState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHardwareSecurityModulesPrivateLinkServiceConnectionState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
