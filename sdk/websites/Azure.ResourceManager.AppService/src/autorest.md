@@ -364,6 +364,7 @@ rename-mapping:
   AddressResponse.properties.vipMappings: VirtualIPMappings
   CloningInfo.sourceWebAppLocation: -|azure-location
   AzureTableStorageApplicationLogsConfig.sasUrl: SasUriString
+  WebSiteInstanceStatus.properties.healthCheckUrl: healthCheckUrlString
 
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
