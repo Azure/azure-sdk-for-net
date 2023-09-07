@@ -33,25 +33,6 @@ namespace Azure.Core.Experimental.Tests
             Assert.True(new Variant((object)null).IsNull);
         }
 
-        //[Test]
-        //public void CanReadArrayAsString()
-        //{
-        //    ArraySegment<byte> bytes = new("variant"u8.ToArray());
-        //    Variant v = bytes;
-
-        //    Assert.AreEqual(bytes.ToString(), v.ToString());
-        //}
-
-        //[Test]
-        //public void CanReadBoolAsString()
-        //{
-        //    Variant v = true;
-        //    Assert.AreEqual("true", v.ToString());
-
-        //    v = false;
-        //    Assert.AreEqual("false", v.ToString());
-        //}
-
         [TestCaseSource(nameof(VariantValues))]
         public void CanGetAsString(Variant v, Variant s)
         {

@@ -1398,16 +1398,69 @@ namespace Azure
             {
                 result = "null";
             }
-            else if (_object is TypeFlag flag)
+            else if (Type == typeof(bool))
             {
-                if (Type == typeof(bool))
-                {
-                    result = ((bool)this) ? "true" : "false";
-                }
-                else
-                {
-                    result = flag.ToObject(this).ToString();
-                }
+                result = ((bool)this) ? "true" : "false";
+            }
+            else if (Type == typeof(byte))
+            {
+                result = As<byte>().ToString();
+            }
+            else if (Type == typeof(sbyte))
+            {
+                result = As<sbyte>().ToString();
+            }
+            else if (Type == typeof(char))
+            {
+                result = As<char>().ToString();
+            }
+            else if (Type == typeof(short))
+            {
+                result = As<short>().ToString();
+            }
+            else if (Type == typeof(int))
+            {
+                result = As<int>().ToString();
+            }
+            else if (Type == typeof(long))
+            {
+                result = As<long>().ToString();
+            }
+            else if (Type == typeof(ushort))
+            {
+                result = As<ushort>().ToString();
+            }
+            else if (Type == typeof(uint))
+            {
+                result = As<uint>().ToString();
+            }
+            else if (Type == typeof(ulong))
+            {
+                result = As<ulong>().ToString();
+            }
+            else if (Type == typeof(float))
+            {
+                result = As<float>().ToString();
+            }
+            else if (Type == typeof(double))
+            {
+                result = As<double>().ToString();
+            }
+            else if (Type == typeof(decimal))
+            {
+                result = As<decimal>().ToString();
+            }
+            else if (Type == typeof(DateTime))
+            {
+                result = As<DateTime>().ToString();
+            }
+            else if (Type == typeof(DateTimeOffset))
+            {
+                result = As<DateTimeOffset>().ToString();
+            }
+            else if (Type == typeof(string))
+            {
+                result = (string)this;
             }
             else if (Type == typeof(ArraySegment<byte>))
             {
