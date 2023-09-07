@@ -27,21 +27,21 @@ namespace Azure.Data.AppConfiguration
         /// <param name="status"> The current status of the snapshot. </param>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
-        /// <param name="created"> The time that the snapshot was created. </param>
-        /// <param name="expires"> The time that the snapshot will expire. </param>
+        /// <param name="createdOn"> The time that the snapshot was created. </param>
+        /// <param name="expiresOn"> The time that the snapshot will expire. </param>
         /// <param name="retentionPeriod"> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </param>
         /// <param name="size"> The size in bytes of the snapshot. </param>
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, IList<SnapshotSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemCount, IDictionary<string, string> tags, ETag eTag)
+        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, IList<SnapshotSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? size, long? itemCount, IDictionary<string, string> tags, ETag eTag)
         {
             Name = name;
             Status = status;
             Filters = filters;
             CompositionType = compositionType;
-            Created = created;
-            Expires = expires;
+            CreatedOn = createdOn;
+            ExpiresOn = expiresOn;
             _retentionPeriod = retentionPeriod;
             Size = size;
             ItemCount = itemCount;
@@ -58,9 +58,9 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
         public CompositionType? CompositionType { get; set; }
         /// <summary> The time that the snapshot was created. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time that the snapshot will expire. </summary>
-        public DateTimeOffset? Expires { get; }
+        public DateTimeOffset? ExpiresOn { get; }
         private long? _retentionPeriod;
         /// <summary> The amount of time that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
         public TimeSpan? RetentionPeriod {

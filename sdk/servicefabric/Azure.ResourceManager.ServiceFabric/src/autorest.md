@@ -82,7 +82,7 @@ prepend-rp-prefix:
   - ProvisioningState
   - ServiceResource
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
