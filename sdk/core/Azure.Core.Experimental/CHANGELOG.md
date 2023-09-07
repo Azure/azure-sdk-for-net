@@ -8,6 +8,7 @@
 - Renamed `Azure.Value` to `Azure.Variant`.
 - Added cast operators to/from string to `Variant`.
 - Added `Variant.Null` and `variant.IsNull` APIs to `Variant`.
+- Added `ToString` implementation to `Variant`.
 
 ## 0.1.0-preview.29 (2023-08-07)
 
