@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), ServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), ServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), ServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), ServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServices", "value", "nextLink", cancellationToken);
         }
     }
 }
