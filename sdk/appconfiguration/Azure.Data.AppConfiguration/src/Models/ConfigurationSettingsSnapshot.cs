@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> The Snapshot. </summary>
-    public partial class ConfigurationSettingsSnapshot
+    internal partial class ConfigurationSettingsSnapshot
     {
         /// <summary> Initializes a new instance of Snapshot. </summary>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>

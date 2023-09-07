@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    public partial class ConfigurationSettingsSnapshot : IUtf8JsonSerializable
+    internal partial class ConfigurationSettingsSnapshot : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Enables filtering of key-values. </summary>
-    public partial class SnapshotSettingFilter
+    internal partial class SnapshotSettingFilter
     {
         /// <summary> Initializes a new instance of KeyValueFilter. </summary>
         /// <param name="key"> Filters key-values by their key field. </param>
