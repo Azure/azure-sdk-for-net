@@ -1388,5 +1388,36 @@ namespace Azure
             return value;
         }
         #endregion
+
+        /// <inheritdoc/>
+        public override string? ToString()
+        {
+            if (_object == null)
+            {
+                return "null";
+            }
+
+            if (_object is TypeFlag flag)
+            {
+                if (Type == typeof(bool))
+                {
+                    return flag.ToObject(this).ToString()!.ToLowerInvariant();
+                }
+
+                return flag.ToObject(this).ToString();
+            }
+
+            if (Type == typeof(ArraySegment<byte>))
+            {
+                return ((ArraySegment<byte>)this).ToString();
+            }
+
+            if (Type == typeof(ArraySegment<char>))
+            {
+                return ((ArraySegment<char>)this).ToString();
+            }
+
+            return _object.ToString();
+        }
     }
 }
