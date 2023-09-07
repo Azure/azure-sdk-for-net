@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Security.Cryptography;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
