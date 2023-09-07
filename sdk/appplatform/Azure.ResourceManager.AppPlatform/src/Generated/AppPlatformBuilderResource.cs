@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -366,7 +365,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual AsyncPageable<ResourceIdentifier> GetDeploymentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
         }
 
         /// <summary>
@@ -387,7 +386,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual Pageable<ResourceIdentifier> GetDeployments(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
         }
     }
 }

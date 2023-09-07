@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentOperationRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentOperationRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AssignmentOperationResource(Client, AssignmentOperationData.DeserializeAssignmentOperationData(e)), _assignmentOperationClientDiagnostics, Pipeline, "AssignmentOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AssignmentOperationResource(Client, AssignmentOperationData.DeserializeAssignmentOperationData(e)), _assignmentOperationClientDiagnostics, Pipeline, "AssignmentOperationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentOperationRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentOperationRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AssignmentOperationResource(Client, AssignmentOperationData.DeserializeAssignmentOperationData(e)), _assignmentOperationClientDiagnostics, Pipeline, "AssignmentOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AssignmentOperationResource(Client, AssignmentOperationData.DeserializeAssignmentOperationData(e)), _assignmentOperationClientDiagnostics, Pipeline, "AssignmentOperationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, tags);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiOperationRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, tags);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiOperationResource(Client, ApiOperationData.DeserializeApiOperationData(e)), _apiOperationClientDiagnostics, Pipeline, "ApiOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiOperationResource(Client, ApiOperationData.DeserializeApiOperationData(e)), _apiOperationClientDiagnostics, Pipeline, "ApiOperationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, tags);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiOperationRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, tags);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiOperationResource(Client, ApiOperationData.DeserializeApiOperationData(e)), _apiOperationClientDiagnostics, Pipeline, "ApiOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiOperationResource(Client, ApiOperationData.DeserializeApiOperationData(e)), _apiOperationClientDiagnostics, Pipeline, "ApiOperationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

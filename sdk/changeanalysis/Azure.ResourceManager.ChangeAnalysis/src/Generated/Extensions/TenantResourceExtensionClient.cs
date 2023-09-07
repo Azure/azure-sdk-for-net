@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
     }
 }

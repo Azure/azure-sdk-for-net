@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Advisor
         public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Advisor
         public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetTypeRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetTypeRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<ApiManagementPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPolicyPolicyRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiManagementPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiManagementPolicyPolicyClientDiagnostics, Pipeline, "ApiManagementPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiManagementPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiManagementPolicyPolicyClientDiagnostics, Pipeline, "ApiManagementPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<ApiManagementPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPolicyPolicyRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiManagementPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiManagementPolicyPolicyClientDiagnostics, Pipeline, "ApiManagementPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiManagementPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiManagementPolicyPolicyClientDiagnostics, Pipeline, "ApiManagementPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
