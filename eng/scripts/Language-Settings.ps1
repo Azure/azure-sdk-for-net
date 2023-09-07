@@ -418,7 +418,7 @@ function EnsureCustomSource($package) {
       -AllVersions `
       -AllowPrereleaseVersions
 
-      if (!$? -or !$existingVersions) { 
+      if (!$? -or !$existingVersions) {
         Write-Host "Failed to find package $($package.Name) in custom source $customPackageSource"
         return $package
       }
@@ -565,4 +565,30 @@ function Get-dotnet-EmitterName() {
 
 function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
   return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
+}
+
+function Update-dotnet-GeneratedSdks([string]$PackageFoldersFile) {
+  $packageFolders = Get-Content $PackageFoldersFile | ConvertFrom-Json
+  $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
+
+  foreach ($folder in $packageFolders) {
+    Push-Location $RepoRoot
+    try {
+      Write-Host 'Generating projects under folder ' -ForegroundColor Green -NoNewline
+      Write-Host "$folder" -ForegroundColor Yellow
+      if ($showSummary) {
+        Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$folder`" /v:n /ds eng\service.proj" -GroupOutput
+      }
+      else {
+        Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$folder`" eng\service.proj" -GroupOutput
+      }
+      if ($LastExitCode -ne 0) {
+        Write-Error "Generation error in $folder"
+        exit 1
+      }
+    }
+    finally {
+      Pop-Location
+    }
+  }
 }
