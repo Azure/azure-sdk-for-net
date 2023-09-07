@@ -142,7 +142,7 @@ namespace Azure.Core.Pipeline
 #if !NET5_0
         [DynamicDependency(nameof(Exception.Message), typeof(Exception))]
         [DynamicDependency(nameof(Exception.StackTrace), typeof(Exception))]
-        [RequiresUnreferencedCode("The exception is used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the exception type being passed in using DynamicDependency attributes.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into scope.Failed has the commonly used properties being preserved with DynamicDependency on the failed method.")]
 #endif
         public void Failed(Exception? exception = default)
         {

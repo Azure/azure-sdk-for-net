@@ -11,6 +11,8 @@ namespace Azure.Core
 {
     internal static class RequestContentHelper
     {
+        internal const string SerializationTrimmingMessage = "This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.";
+
         public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable) where T: notnull
         {
             var content = new Utf8JsonRequestContent();
@@ -24,6 +26,12 @@ namespace Azure.Core
             return content;
         }
 
+#if !NET5_0_OR_GREATER
+        // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+        // The call to JsonSerializer.Serialize is not compatible with trimming, but is only used in NET 5 and below, so don't warn otherwise.
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationTrimmingMessage)]
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCode(SerializationTrimmingMessage)]
+#endif
         public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
             var content = new Utf8JsonRequestContent();
@@ -62,6 +70,12 @@ namespace Azure.Core
             return content;
         }
 
+#if !NET5_0_OR_GREATER
+        // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+        // The call to JsonSerializer.Serialize is not compatible with trimming, but is only used in NET 5 and below, so don't warn otherwise.
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationTrimmingMessage)]
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCode(SerializationTrimmingMessage)]
+#endif
         public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
             var content = new Utf8JsonRequestContent();

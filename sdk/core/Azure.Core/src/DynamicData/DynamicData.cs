@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
@@ -476,6 +477,7 @@ namespace Azure.Core.Serialization
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
 #if !NET5_0
+        // Since this type is used in an attribute it cannot be annotated correctly through the call chain.
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "This JsonConverter is only used with its parent class DynamicData class which is already marked as RequiresUnreferencedCode.")]
 #endif
         private class DynamicDataJsonConverter : JsonConverter<DynamicData>
