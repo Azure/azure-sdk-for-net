@@ -80,7 +80,7 @@ format-by-name-rules:
 # mgmt-debug:
 #   show-serialized-names: true
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

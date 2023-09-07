@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
+#nullable enable
+
 namespace Azure.Core.Json
 {
     internal partial struct MutableJsonElement

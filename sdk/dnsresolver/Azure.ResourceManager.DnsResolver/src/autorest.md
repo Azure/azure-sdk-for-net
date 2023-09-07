@@ -29,7 +29,7 @@ format-by-name-rules:
   '*IPAddress': 'ip-address'
   'ResourceGuid': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -8,15 +8,15 @@ azure-arm: true
 csharp: true
 library-name: IotHub
 namespace: Azure.ResourceManager.IotHub
-require: https://github.com/Azure/azure-rest-api-specs/blob/0f9df940977c680c39938c8b8bd5baf893737ed0/specification/iothub/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1df6d6f671dc5059016fbc2c0a624e01f0b2972c/specification/iothub/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-# mgmt-debug: 
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 override-operation-name:
   IotHubResource_CheckNameAvailability: CheckIotHubNameAvailability
@@ -60,6 +60,8 @@ rename-mapping:
   IotHubSkuDescription.resourceType: -|resource-type
   CertificateProperties.thumbprint: ThumbprintString
   CertificatePropertiesWithNonce.thumbprint: ThumbprintString
+  RootCertificateProperties.enableRootCertificateV2: IsRootCertificateV2Enabled
+  RootCertificateProperties.lastUpdatedTimeUtc: LastUpdatedOn
 
 prepend-rp-prefix:
   - AuthenticationType
@@ -98,6 +100,7 @@ prepend-rp-prefix:
   - NetworkRuleIPAction
   - RoutingProperties
   - StorageEndpointProperties
+  - IPVersion
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -108,7 +111,7 @@ format-by-name-rules:
   'certificate': 'any'
   'UserAssignedIdentity': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
@@ -92,8 +93,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 builder.Services.Configure(configureAzureMonitor);
             }
 
-            builder.ConfigureResource(r => r.AddDetector(new AppServiceResourceDetector())
-                                             .AddDetector(new AzureVMResourceDetector()));
+            Action<ResourceBuilder> configureResource = (r) => r
+                .AddAttributes(new[] { new KeyValuePair<string, object>("telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore") })
+                .AddDetector(new AppServiceResourceDetector())
+                .AddDetector(new AzureVMResourceDetector());
+
+            builder.ConfigureResource(configureResource);
 
             builder.WithTracing(b => b
                             .AddSource("Azure.*")
@@ -125,9 +130,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             {
                 logging.AddOpenTelemetry(builderOptions =>
                 {
-                    builderOptions.SetResourceBuilder(ResourceBuilder.CreateDefault()
-                                                                     .AddDetector(new AppServiceResourceDetector())
-                                                                     .AddDetector(new AzureVMResourceDetector()));
+                    var resourceBuilder = ResourceBuilder.CreateDefault();
+                    configureResource(resourceBuilder);
+                    builderOptions.SetResourceBuilder(resourceBuilder);
+
                     builderOptions.IncludeFormattedMessage = true;
                     builderOptions.IncludeScopes = false;
                 });
