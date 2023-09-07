@@ -1,40 +1,40 @@
-function Invoke-LoggedCommand($command, $executePath)
+function Invoke-LoggedCommand($Command, $ExecutePath, [switch]$GroupOutput)
 {
     $pipelineBuild = !!$env:TF_BUILD
     $startTime = Get-Date
 
-    if($pipelineBuild) {
-        Write-Host "##[group]$command"
+    if($pipelineBuild -and $GroupOutput) {
+        Write-Host "##[group]$Command"
     } else {
-        Write-Host "> $command"
+        Write-Host "> $Command"
     }
 
-    if($executePath) {
-      Push-Location $executePath
+    if($ExecutePath) {
+      Push-Location $ExecutePath
     }
 
     try {
       if ($IsLinux -or $IsMacOs)
       {
-          sh -c "$command 2>&1"
+          sh -c "$Command 2>&1"
       }
       else
       {
-          cmd /c "$command 2>&1"
+          cmd /c "$Command 2>&1"
       }
 
       $duration = (Get-Date) - $startTime
 
-      if($pipelineBuild) {
+      if($pipelineBuild -and $GroupOutput) {
         Write-Host "##[endgroup]"
       }
 
       if($LastExitCode -ne 0)
       {
           if($pipelineBuild) {
-              Write-Error "##[error]Command failed to execute ($duration): $command`n"
+              Write-Error "##[error]Command failed to execute ($duration): $Command`n"
           } else {
-              Write-Error "Command failed to execute ($duration): $command`n"
+              Write-Error "Command failed to execute ($duration): $Command`n"
           }
       }
       else {
@@ -42,7 +42,7 @@ function Invoke-LoggedCommand($command, $executePath)
       }
     }
     finally {
-      if($executePath) {
+      if($ExecutePath) {
         Pop-Location
       }
     }
