@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The recommended configuration for a three tier SAP system. </summary>
     public partial class ThreeTierRecommendationResult : SapSizingRecommendationResult
     {
-        /// <summary> Initializes a new instance of ThreeTierRecommendationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreeTierRecommendationResult"/>. </summary>
         internal ThreeTierRecommendationResult()
         {
             DeploymentType = SapDeploymentType.ThreeTier;
         }
 
-        /// <summary> Initializes a new instance of ThreeTierRecommendationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreeTierRecommendationResult"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="dbVmSku"> The database VM SKU. </param>
         /// <param name="databaseInstanceCount"> The database server instance count. </param>
@@ -24,7 +27,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="centralServerInstanceCount"> The central server instance count. </param>
         /// <param name="applicationServerVmSku"> The application server VM SKU. </param>
         /// <param name="applicationServerInstanceCount"> The application server instance count. </param>
-        internal ThreeTierRecommendationResult(SapDeploymentType deploymentType, string dbVmSku, long? databaseInstanceCount, string centralServerVmSku, long? centralServerInstanceCount, string applicationServerVmSku, long? applicationServerInstanceCount) : base(deploymentType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreeTierRecommendationResult(SapDeploymentType deploymentType, string dbVmSku, long? databaseInstanceCount, string centralServerVmSku, long? centralServerInstanceCount, string applicationServerVmSku, long? applicationServerInstanceCount, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(deploymentType, serializedAdditionalRawData)
         {
             DBVmSku = dbVmSku;
             DatabaseInstanceCount = databaseInstanceCount;

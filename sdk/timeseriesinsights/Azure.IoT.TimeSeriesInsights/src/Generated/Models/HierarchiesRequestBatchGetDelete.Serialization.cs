@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class HierarchiesRequestBatchGetDelete : IUtf8JsonSerializable
+    internal partial class HierarchiesRequestBatchGetDelete : IUtf8JsonSerializable, IModelJsonSerializable<HierarchiesRequestBatchGetDelete>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HierarchiesRequestBatchGetDelete>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HierarchiesRequestBatchGetDelete>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesRequestBatchGetDelete>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(HierarchyIds))
             {
@@ -35,7 +43,117 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HierarchiesRequestBatchGetDelete DeserializeHierarchiesRequestBatchGetDelete(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> hierarchyIds = default;
+            Optional<IList<string>> names = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("hierarchyIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    hierarchyIds = array;
+                    continue;
+                }
+                if (property.NameEquals("names"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    names = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HierarchiesRequestBatchGetDelete(Optional.ToList(hierarchyIds), Optional.ToList(names), serializedAdditionalRawData);
+        }
+
+        HierarchiesRequestBatchGetDelete IModelJsonSerializable<HierarchiesRequestBatchGetDelete>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesRequestBatchGetDelete>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHierarchiesRequestBatchGetDelete(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HierarchiesRequestBatchGetDelete>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesRequestBatchGetDelete>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HierarchiesRequestBatchGetDelete IModelSerializable<HierarchiesRequestBatchGetDelete>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesRequestBatchGetDelete>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHierarchiesRequestBatchGetDelete(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HierarchiesRequestBatchGetDelete"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HierarchiesRequestBatchGetDelete"/> to convert. </param>
+        public static implicit operator RequestContent(HierarchiesRequestBatchGetDelete model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HierarchiesRequestBatchGetDelete"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HierarchiesRequestBatchGetDelete(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHierarchiesRequestBatchGetDelete(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

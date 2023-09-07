@@ -5,22 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.Tables.Models
 {
-    internal partial class TableEntityQueryResponse
+    internal partial class TableEntityQueryResponse : IUtf8JsonSerializable, IModelJsonSerializable<TableEntityQueryResponse>
     {
-        internal static TableEntityQueryResponse DeserializeTableEntityQueryResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TableEntityQueryResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TableEntityQueryResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TableEntityQueryResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OdataMetadata))
+            {
+                writer.WritePropertyName("odata.metadata"u8);
+                writer.WriteStringValue(OdataMetadata);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartObject();
+                    foreach (var item0 in item)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteObjectValue(item0.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TableEntityQueryResponse DeserializeTableEntityQueryResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> odataMetadata = default;
             Optional<IReadOnlyList<IDictionary<string, object>>> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("odata.metadata"u8))
@@ -61,8 +120,61 @@ namespace Azure.Data.Tables.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TableEntityQueryResponse(odataMetadata.Value, Optional.ToList(value));
+            return new TableEntityQueryResponse(odataMetadata.Value, Optional.ToList(value), serializedAdditionalRawData);
+        }
+
+        TableEntityQueryResponse IModelJsonSerializable<TableEntityQueryResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TableEntityQueryResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTableEntityQueryResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TableEntityQueryResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TableEntityQueryResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TableEntityQueryResponse IModelSerializable<TableEntityQueryResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TableEntityQueryResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTableEntityQueryResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TableEntityQueryResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TableEntityQueryResponse"/> to convert. </param>
+        public static implicit operator RequestContent(TableEntityQueryResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TableEntityQueryResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TableEntityQueryResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTableEntityQueryResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

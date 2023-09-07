@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

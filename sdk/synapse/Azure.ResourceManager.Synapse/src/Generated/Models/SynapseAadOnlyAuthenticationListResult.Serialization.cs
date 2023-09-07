@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class SynapseAadOnlyAuthenticationListResult
+    internal partial class SynapseAadOnlyAuthenticationListResult : IUtf8JsonSerializable, IModelJsonSerializable<SynapseAadOnlyAuthenticationListResult>
     {
-        internal static SynapseAadOnlyAuthenticationListResult DeserializeSynapseAadOnlyAuthenticationListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseAadOnlyAuthenticationListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseAadOnlyAuthenticationListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseAadOnlyAuthenticationListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseAadOnlyAuthenticationListResult DeserializeSynapseAadOnlyAuthenticationListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<SynapseAadOnlyAuthenticationData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseAadOnlyAuthenticationListResult(Optional.ToList(value), nextLink.Value);
+            return new SynapseAadOnlyAuthenticationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        SynapseAadOnlyAuthenticationListResult IModelJsonSerializable<SynapseAadOnlyAuthenticationListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseAadOnlyAuthenticationListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseAadOnlyAuthenticationListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseAadOnlyAuthenticationListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseAadOnlyAuthenticationListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseAadOnlyAuthenticationListResult IModelSerializable<SynapseAadOnlyAuthenticationListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseAadOnlyAuthenticationListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseAadOnlyAuthenticationListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseAadOnlyAuthenticationListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseAadOnlyAuthenticationListResult"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseAadOnlyAuthenticationListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseAadOnlyAuthenticationListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseAadOnlyAuthenticationListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseAadOnlyAuthenticationListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

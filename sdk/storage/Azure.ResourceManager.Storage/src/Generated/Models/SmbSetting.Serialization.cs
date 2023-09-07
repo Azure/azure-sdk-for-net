@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class SmbSetting : IUtf8JsonSerializable
+    public partial class SmbSetting : IUtf8JsonSerializable, IModelJsonSerializable<SmbSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SmbSetting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SmbSetting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SmbSetting>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Multichannel))
             {
                 writer.WritePropertyName("multichannel"u8);
-                writer.WriteObjectValue(Multichannel);
+                if (Multichannel is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<Multichannel>)Multichannel).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Versions))
             {
@@ -40,11 +55,25 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("channelEncryption"u8);
                 writer.WriteStringValue(ChannelEncryption);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SmbSetting DeserializeSmbSetting(JsonElement element)
+        internal static SmbSetting DeserializeSmbSetting(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +83,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> authenticationMethods = default;
             Optional<string> kerberosTicketEncryption = default;
             Optional<string> channelEncryption = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("multichannel"u8))
@@ -85,8 +115,61 @@ namespace Azure.ResourceManager.Storage.Models
                     channelEncryption = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SmbSetting(multichannel.Value, versions.Value, authenticationMethods.Value, kerberosTicketEncryption.Value, channelEncryption.Value);
+            return new SmbSetting(multichannel.Value, versions.Value, authenticationMethods.Value, kerberosTicketEncryption.Value, channelEncryption.Value, serializedAdditionalRawData);
+        }
+
+        SmbSetting IModelJsonSerializable<SmbSetting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SmbSetting>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSmbSetting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SmbSetting>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SmbSetting>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SmbSetting IModelSerializable<SmbSetting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SmbSetting>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSmbSetting(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SmbSetting"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SmbSetting"/> to convert. </param>
+        public static implicit operator RequestContent(SmbSetting model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SmbSetting"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SmbSetting(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSmbSetting(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

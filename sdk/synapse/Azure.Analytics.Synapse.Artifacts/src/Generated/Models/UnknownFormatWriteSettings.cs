@@ -12,12 +12,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownFormatWriteSettings. </summary>
     internal partial class UnknownFormatWriteSettings : FormatWriteSettings
     {
-        /// <summary> Initializes a new instance of UnknownFormatWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFormatWriteSettings"/>. </summary>
         /// <param name="type"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownFormatWriteSettings(string type, IDictionary<string, object> additionalProperties) : base(type, additionalProperties)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownFormatWriteSettings"/> for deserialization. </summary>
+        internal UnknownFormatWriteSettings()
+        {
         }
     }
 }

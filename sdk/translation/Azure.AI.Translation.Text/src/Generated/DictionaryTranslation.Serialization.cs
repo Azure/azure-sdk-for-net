@@ -5,17 +5,67 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class DictionaryTranslation
+    public partial class DictionaryTranslation : IUtf8JsonSerializable, IModelJsonSerializable<DictionaryTranslation>
     {
-        internal static DictionaryTranslation DeserializeDictionaryTranslation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DictionaryTranslation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DictionaryTranslation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("normalizedTarget"u8);
+            writer.WriteStringValue(NormalizedTarget);
+            writer.WritePropertyName("displayTarget"u8);
+            writer.WriteStringValue(DisplayTarget);
+            writer.WritePropertyName("posTag"u8);
+            writer.WriteStringValue(PosTag);
+            writer.WritePropertyName("confidence"u8);
+            writer.WriteNumberValue(Confidence);
+            writer.WritePropertyName("prefixWord"u8);
+            writer.WriteStringValue(PrefixWord);
+            writer.WritePropertyName("backTranslations"u8);
+            writer.WriteStartArray();
+            foreach (var item in BackTranslations)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BackTranslation>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DictionaryTranslation DeserializeDictionaryTranslation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +76,7 @@ namespace Azure.AI.Translation.Text
             float confidence = default;
             string prefixWord = default;
             IReadOnlyList<BackTranslation> backTranslations = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("normalizedTarget"u8))
@@ -63,16 +114,61 @@ namespace Azure.AI.Translation.Text
                     backTranslations = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DictionaryTranslation(normalizedTarget, displayTarget, posTag, confidence, prefixWord, backTranslations);
+            return new DictionaryTranslation(normalizedTarget, displayTarget, posTag, confidence, prefixWord, backTranslations, serializedAdditionalRawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DictionaryTranslation FromResponse(Response response)
+        DictionaryTranslation IModelJsonSerializable<DictionaryTranslation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDictionaryTranslation(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDictionaryTranslation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DictionaryTranslation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DictionaryTranslation IModelSerializable<DictionaryTranslation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDictionaryTranslation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DictionaryTranslation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DictionaryTranslation"/> to convert. </param>
+        public static implicit operator RequestContent(DictionaryTranslation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DictionaryTranslation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DictionaryTranslation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDictionaryTranslation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

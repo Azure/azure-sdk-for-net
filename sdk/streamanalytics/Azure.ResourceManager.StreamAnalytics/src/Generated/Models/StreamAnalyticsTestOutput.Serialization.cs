@@ -5,19 +5,121 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsTestOutput : IUtf8JsonSerializable
+    public partial class StreamAnalyticsTestOutput : IUtf8JsonSerializable, IModelJsonSerializable<StreamAnalyticsTestOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamAnalyticsTestOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamAnalyticsTestOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsTestOutput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output);
+            if (Output is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<StreamingJobOutputData>)Output).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static StreamAnalyticsTestOutput DeserializeStreamAnalyticsTestOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            StreamingJobOutputData output = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("output"u8))
+                {
+                    output = StreamingJobOutputData.DeserializeStreamingJobOutputData(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new StreamAnalyticsTestOutput(output, serializedAdditionalRawData);
+        }
+
+        StreamAnalyticsTestOutput IModelJsonSerializable<StreamAnalyticsTestOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsTestOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsTestOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamAnalyticsTestOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsTestOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamAnalyticsTestOutput IModelSerializable<StreamAnalyticsTestOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsTestOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsTestOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StreamAnalyticsTestOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StreamAnalyticsTestOutput"/> to convert. </param>
+        public static implicit operator RequestContent(StreamAnalyticsTestOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StreamAnalyticsTestOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StreamAnalyticsTestOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamAnalyticsTestOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

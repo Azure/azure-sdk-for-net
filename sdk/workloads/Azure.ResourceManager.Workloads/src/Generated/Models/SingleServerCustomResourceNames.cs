@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.Workloads.Models
     /// Please note <see cref="SingleServerCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SingleServerFullResourceNames"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownSingleServerCustomResourceNames))]
     public abstract partial class SingleServerCustomResourceNames
     {
-        /// <summary> Initializes a new instance of SingleServerCustomResourceNames. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SingleServerCustomResourceNames"/>. </summary>
         protected SingleServerCustomResourceNames()
         {
         }
 
-        /// <summary> Initializes a new instance of SingleServerCustomResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleServerCustomResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
-        internal SingleServerCustomResourceNames(SapNamingPatternType namingPatternType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SingleServerCustomResourceNames(SapNamingPatternType namingPatternType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NamingPatternType = namingPatternType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The pattern type to be used for resource naming. </summary>

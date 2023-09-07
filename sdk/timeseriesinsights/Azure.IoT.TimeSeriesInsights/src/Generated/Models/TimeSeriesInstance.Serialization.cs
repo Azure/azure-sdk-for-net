@@ -5,13 +5,226 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesInstance : IUtf8JsonSerializable
+    public partial class TimeSeriesInstance : IUtf8JsonSerializable, IModelJsonSerializable<TimeSeriesInstance>
     {
+        void IModelJsonSerializable<TimeSeriesInstance>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TimeSeriesInstance>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("timeSeriesId"u8);
+            writer.WriteStartArray();
+            foreach (var item in TimeSeriesIdInternal)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("typeId"u8);
+            writer.WriteStringValue(TimeSeriesTypeId);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(HierarchyIds))
+            {
+                writer.WritePropertyName("hierarchyIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in HierarchyIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(InstanceFields))
+            {
+                writer.WritePropertyName("instanceFields"u8);
+                writer.WriteStartObject();
+                foreach (var item in InstanceFields)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TimeSeriesInstance DeserializeTimeSeriesInstance(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<object> timeSeriesId = default;
+            string typeId = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<IList<string>> hierarchyIds = default;
+            Optional<IDictionary<string, object>> instanceFields = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("timeSeriesId"u8))
+                {
+                    List<object> array = new List<object>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetObject());
+                        }
+                    }
+                    timeSeriesId = array;
+                    continue;
+                }
+                if (property.NameEquals("typeId"u8))
+                {
+                    typeId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("hierarchyIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    hierarchyIds = array;
+                    continue;
+                }
+                if (property.NameEquals("instanceFields"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
+                    }
+                    instanceFields = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new TimeSeriesInstance(timeSeriesId, typeId, name.Value, description.Value, Optional.ToList(hierarchyIds), Optional.ToDictionary(instanceFields), serializedAdditionalRawData);
+        }
+
+        TimeSeriesInstance IModelJsonSerializable<TimeSeriesInstance>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TimeSeriesInstance>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTimeSeriesInstance(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TimeSeriesInstance>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TimeSeriesInstance>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TimeSeriesInstance IModelSerializable<TimeSeriesInstance>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TimeSeriesInstance>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTimeSeriesInstance(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TimeSeriesInstance"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TimeSeriesInstance"/> to convert. </param>
+        public static implicit operator RequestContent(TimeSeriesInstance model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TimeSeriesInstance"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TimeSeriesInstance(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTimeSeriesInstance(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

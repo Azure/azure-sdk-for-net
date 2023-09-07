@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure blobFS write settings. </summary>
     public partial class AzureBlobFSWriteSettings : StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of AzureBlobFSWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSWriteSettings"/>. </summary>
         public AzureBlobFSWriteSettings()
         {
             Type = "AzureBlobFSWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobFSWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSWriteSettings"/>. </summary>
         /// <param name="type"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>

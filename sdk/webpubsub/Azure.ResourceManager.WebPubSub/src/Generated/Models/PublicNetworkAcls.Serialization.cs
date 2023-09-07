@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class PublicNetworkAcls : IUtf8JsonSerializable
+    public partial class PublicNetworkAcls : IUtf8JsonSerializable, IModelJsonSerializable<PublicNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PublicNetworkAcls>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PublicNetworkAcls>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PublicNetworkAcls>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Allow))
             {
@@ -36,17 +43,32 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PublicNetworkAcls DeserializePublicNetworkAcls(JsonElement element)
+        internal static PublicNetworkAcls DeserializePublicNetworkAcls(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<WebPubSubRequestType>> allow = default;
             Optional<IList<WebPubSubRequestType>> deny = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allow"u8))
@@ -77,8 +99,61 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     deny = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PublicNetworkAcls(Optional.ToList(allow), Optional.ToList(deny));
+            return new PublicNetworkAcls(Optional.ToList(allow), Optional.ToList(deny), serializedAdditionalRawData);
+        }
+
+        PublicNetworkAcls IModelJsonSerializable<PublicNetworkAcls>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicNetworkAcls>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePublicNetworkAcls(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PublicNetworkAcls>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicNetworkAcls>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PublicNetworkAcls IModelSerializable<PublicNetworkAcls>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicNetworkAcls>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePublicNetworkAcls(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PublicNetworkAcls"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PublicNetworkAcls"/> to convert. </param>
+        public static implicit operator RequestContent(PublicNetworkAcls model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PublicNetworkAcls"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PublicNetworkAcls(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePublicNetworkAcls(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

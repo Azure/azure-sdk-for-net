@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,9 @@ namespace Azure.AI.Translation.Text
     /// <summary> Response for the languages API. </summary>
     public partial class GetLanguagesResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of GetLanguagesResult. </summary>
         internal GetLanguagesResult()
         {
@@ -25,11 +29,13 @@ namespace Azure.AI.Translation.Text
         /// <param name="translation"> Languages that support translate API. </param>
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="dictionary"> Languages that support dictionary API. </param>
-        internal GetLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation, IReadOnlyDictionary<string, TransliterationLanguage> transliteration, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation, IReadOnlyDictionary<string, TransliterationLanguage> transliteration, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Translation = translation;
             Transliteration = transliteration;
             Dictionary = dictionary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Languages that support translate API. </summary>

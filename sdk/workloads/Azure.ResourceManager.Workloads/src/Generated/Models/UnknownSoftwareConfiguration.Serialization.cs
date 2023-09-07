@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class UnknownSoftwareConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownSoftwareConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<SapSoftwareConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapSoftwareConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapSoftwareConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SapSoftwareConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownSoftwareConfiguration DeserializeUnknownSoftwareConfiguration(JsonElement element)
+        internal static SapSoftwareConfiguration DeserializeUnknownSoftwareConfiguration(JsonElement element, ModelSerializerOptions options = default) => DeserializeSapSoftwareConfiguration(element, options);
+
+        SapSoftwareConfiguration IModelJsonSerializable<SapSoftwareConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            SapSoftwareInstallationType softwareInstallationType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("softwareInstallationType"u8))
-                {
-                    softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSoftwareConfiguration(softwareInstallationType);
+            Core.ModelSerializerHelper.ValidateFormat<SapSoftwareConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSoftwareConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapSoftwareConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapSoftwareConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapSoftwareConfiguration IModelSerializable<SapSoftwareConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapSoftwareConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapSoftwareConfiguration(doc.RootElement, options);
         }
     }
 }

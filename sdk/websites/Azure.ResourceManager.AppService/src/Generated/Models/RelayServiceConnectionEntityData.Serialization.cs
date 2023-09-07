@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class RelayServiceConnectionEntityData : IUtf8JsonSerializable
+    public partial class RelayServiceConnectionEntityData : IUtf8JsonSerializable, IModelJsonSerializable<RelayServiceConnectionEntityData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RelayServiceConnectionEntityData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RelayServiceConnectionEntityData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RelayServiceConnectionEntityData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -55,11 +62,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStringValue(BiztalkUri.AbsoluteUri);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RelayServiceConnectionEntityData DeserializeRelayServiceConnectionEntityData(JsonElement element)
+        internal static RelayServiceConnectionEntityData DeserializeRelayServiceConnectionEntityData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +96,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> hostname = default;
             Optional<int> port = default;
             Optional<Uri> biztalkUri = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -156,8 +178,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RelayServiceConnectionEntityData(id, name, type, systemData.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value, kind.Value);
+            return new RelayServiceConnectionEntityData(id, name, type, systemData.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value, kind.Value, serializedAdditionalRawData);
+        }
+
+        RelayServiceConnectionEntityData IModelJsonSerializable<RelayServiceConnectionEntityData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RelayServiceConnectionEntityData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRelayServiceConnectionEntityData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RelayServiceConnectionEntityData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RelayServiceConnectionEntityData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RelayServiceConnectionEntityData IModelSerializable<RelayServiceConnectionEntityData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RelayServiceConnectionEntityData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRelayServiceConnectionEntityData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RelayServiceConnectionEntityData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RelayServiceConnectionEntityData"/> to convert. </param>
+        public static implicit operator RequestContent(RelayServiceConnectionEntityData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RelayServiceConnectionEntityData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RelayServiceConnectionEntityData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRelayServiceConnectionEntityData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(OracleSourceConverter))]
-    public partial class OracleSource : IUtf8JsonSerializable
+    public partial class OracleSource : IUtf8JsonSerializable, IModelJsonSerializable<OracleSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OracleSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OracleSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OracleSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OracleReaderQuery))
             {
@@ -37,7 +43,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                if (PartitionSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OraclePartitionSettings>)PartitionSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -69,8 +82,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static OracleSource DeserializeOracleSource(JsonElement element)
+        internal static OracleSource DeserializeOracleSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -169,6 +184,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new OracleSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, oracleReaderQuery.Value, queryTimeout.Value, Optional.ToNullable(partitionOption), partitionSettings.Value, additionalColumns.Value);
+        }
+
+        OracleSource IModelJsonSerializable<OracleSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OracleSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOracleSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OracleSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OracleSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OracleSource IModelSerializable<OracleSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OracleSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOracleSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OracleSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OracleSource"/> to convert. </param>
+        public static implicit operator RequestContent(OracleSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OracleSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OracleSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOracleSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class OracleSourceConverter : JsonConverter<OracleSource>

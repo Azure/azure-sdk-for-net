@@ -5,16 +5,21 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownProcessorNodeBase : IUtf8JsonSerializable
+    internal partial class UnknownProcessorNodeBase : IUtf8JsonSerializable, IModelJsonSerializable<ProcessorNodeBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProcessorNodeBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProcessorNodeBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ProcessorNodeBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
@@ -24,45 +29,54 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NodeInput>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownProcessorNodeBase DeserializeUnknownProcessorNodeBase(JsonElement element)
+        internal static ProcessorNodeBase DeserializeUnknownProcessorNodeBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeProcessorNodeBase(element, options);
+
+        ProcessorNodeBase IModelJsonSerializable<ProcessorNodeBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            string name = default;
-            IList<NodeInput> inputs = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputs"u8))
-                {
-                    List<NodeInput> array = new List<NodeInput>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(NodeInput.DeserializeNodeInput(item));
-                    }
-                    inputs = array;
-                    continue;
-                }
-            }
-            return new UnknownProcessorNodeBase(type, name, inputs);
+            Core.ModelSerializerHelper.ValidateFormat<ProcessorNodeBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownProcessorNodeBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProcessorNodeBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProcessorNodeBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProcessorNodeBase IModelSerializable<ProcessorNodeBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProcessorNodeBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProcessorNodeBase(doc.RootElement, options);
         }
     }
 }

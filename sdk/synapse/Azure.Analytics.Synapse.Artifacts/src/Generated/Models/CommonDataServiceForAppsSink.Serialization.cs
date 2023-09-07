@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CommonDataServiceForAppsSinkConverter))]
-    public partial class CommonDataServiceForAppsSink : IUtf8JsonSerializable
+    public partial class CommonDataServiceForAppsSink : IUtf8JsonSerializable, IModelJsonSerializable<CommonDataServiceForAppsSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommonDataServiceForAppsSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommonDataServiceForAppsSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CommonDataServiceForAppsSink>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("writeBehavior"u8);
             writer.WriteStringValue(WriteBehavior.ToString());
@@ -66,8 +72,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CommonDataServiceForAppsSink DeserializeCommonDataServiceForAppsSink(JsonElement element)
+        internal static CommonDataServiceForAppsSink DeserializeCommonDataServiceForAppsSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -162,6 +170,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CommonDataServiceForAppsSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, writeBehavior, ignoreNullValues.Value, alternateKeyName.Value);
+        }
+
+        CommonDataServiceForAppsSink IModelJsonSerializable<CommonDataServiceForAppsSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommonDataServiceForAppsSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonDataServiceForAppsSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommonDataServiceForAppsSink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommonDataServiceForAppsSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommonDataServiceForAppsSink IModelSerializable<CommonDataServiceForAppsSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommonDataServiceForAppsSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommonDataServiceForAppsSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CommonDataServiceForAppsSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CommonDataServiceForAppsSink"/> to convert. </param>
+        public static implicit operator RequestContent(CommonDataServiceForAppsSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CommonDataServiceForAppsSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CommonDataServiceForAppsSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommonDataServiceForAppsSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class CommonDataServiceForAppsSinkConverter : JsonConverter<CommonDataServiceForAppsSink>

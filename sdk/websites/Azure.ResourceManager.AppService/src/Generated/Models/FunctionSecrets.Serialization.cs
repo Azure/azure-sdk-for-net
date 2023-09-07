@@ -6,21 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FunctionSecrets
+    public partial class FunctionSecrets : IUtf8JsonSerializable, IModelJsonSerializable<FunctionSecrets>
     {
-        internal static FunctionSecrets DeserializeFunctionSecrets(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FunctionSecrets>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FunctionSecrets>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FunctionSecrets>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Key))
+            {
+                writer.WritePropertyName("key"u8);
+                writer.WriteStringValue(Key);
+            }
+            if (Optional.IsDefined(TriggerUri))
+            {
+                writer.WritePropertyName("trigger_url"u8);
+                writer.WriteStringValue(TriggerUri.AbsoluteUri);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FunctionSecrets DeserializeFunctionSecrets(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> key = default;
             Optional<Uri> triggerUrl = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -37,8 +75,61 @@ namespace Azure.ResourceManager.AppService.Models
                     triggerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FunctionSecrets(key.Value, triggerUrl.Value);
+            return new FunctionSecrets(key.Value, triggerUrl.Value, serializedAdditionalRawData);
+        }
+
+        FunctionSecrets IModelJsonSerializable<FunctionSecrets>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FunctionSecrets>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFunctionSecrets(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FunctionSecrets>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FunctionSecrets>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FunctionSecrets IModelSerializable<FunctionSecrets>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FunctionSecrets>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFunctionSecrets(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FunctionSecrets"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FunctionSecrets"/> to convert. </param>
+        public static implicit operator RequestContent(FunctionSecrets model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FunctionSecrets"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FunctionSecrets(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFunctionSecrets(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

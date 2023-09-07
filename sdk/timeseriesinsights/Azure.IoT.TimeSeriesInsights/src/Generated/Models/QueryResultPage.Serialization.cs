@@ -8,14 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class QueryResultPage
+    internal partial class QueryResultPage : IUtf8JsonSerializable, IModelJsonSerializable<QueryResultPage>
     {
-        internal static QueryResultPage DeserializeQueryResultPage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QueryResultPage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QueryResultPage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<QueryResultPage>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static QueryResultPage DeserializeQueryResultPage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +50,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<IReadOnlyList<PropertyValues>> properties = default;
             Optional<double> progress = default;
             Optional<string> continuationToken = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamps"u8))
@@ -68,8 +95,61 @@ namespace Azure.IoT.TimeSeriesInsights
                     continuationToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QueryResultPage(continuationToken.Value, Optional.ToList(timestamps), Optional.ToList(properties), Optional.ToNullable(progress));
+            return new QueryResultPage(continuationToken.Value, Optional.ToList(timestamps), Optional.ToList(properties), Optional.ToNullable(progress), serializedAdditionalRawData);
+        }
+
+        QueryResultPage IModelJsonSerializable<QueryResultPage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryResultPage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryResultPage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QueryResultPage>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryResultPage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QueryResultPage IModelSerializable<QueryResultPage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryResultPage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQueryResultPage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QueryResultPage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueryResultPage"/> to convert. </param>
+        public static implicit operator RequestContent(QueryResultPage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueryResultPage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueryResultPage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQueryResultPage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

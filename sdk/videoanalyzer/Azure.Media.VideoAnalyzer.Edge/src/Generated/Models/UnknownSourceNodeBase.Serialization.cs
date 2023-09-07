@@ -5,45 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownSourceNodeBase : IUtf8JsonSerializable
+    internal partial class UnknownSourceNodeBase : IUtf8JsonSerializable, IModelJsonSerializable<SourceNodeBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SourceNodeBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SourceNodeBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SourceNodeBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownSourceNodeBase DeserializeUnknownSourceNodeBase(JsonElement element)
+        internal static SourceNodeBase DeserializeUnknownSourceNodeBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeSourceNodeBase(element, options);
+
+        SourceNodeBase IModelJsonSerializable<SourceNodeBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownSourceNodeBase(type, name);
+            Core.ModelSerializerHelper.ValidateFormat<SourceNodeBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSourceNodeBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SourceNodeBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SourceNodeBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SourceNodeBase IModelSerializable<SourceNodeBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SourceNodeBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSourceNodeBase(doc.RootElement, options);
         }
     }
 }

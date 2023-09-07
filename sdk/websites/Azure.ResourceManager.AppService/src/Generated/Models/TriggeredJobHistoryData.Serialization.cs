@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class TriggeredJobHistoryData : IUtf8JsonSerializable
+    public partial class TriggeredJobHistoryData : IUtf8JsonSerializable, IModelJsonSerializable<TriggeredJobHistoryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TriggeredJobHistoryData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TriggeredJobHistoryData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TriggeredJobHistoryData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -31,16 +38,37 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Runs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TriggeredJobRun>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TriggeredJobHistoryData DeserializeTriggeredJobHistoryData(JsonElement element)
+        internal static TriggeredJobHistoryData DeserializeTriggeredJobHistoryData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +79,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IList<TriggeredJobRun>> runs = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -108,8 +137,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TriggeredJobHistoryData(id, name, type, systemData.Value, Optional.ToList(runs), kind.Value);
+            return new TriggeredJobHistoryData(id, name, type, systemData.Value, Optional.ToList(runs), kind.Value, serializedAdditionalRawData);
+        }
+
+        TriggeredJobHistoryData IModelJsonSerializable<TriggeredJobHistoryData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TriggeredJobHistoryData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTriggeredJobHistoryData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TriggeredJobHistoryData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TriggeredJobHistoryData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TriggeredJobHistoryData IModelSerializable<TriggeredJobHistoryData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TriggeredJobHistoryData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTriggeredJobHistoryData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TriggeredJobHistoryData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TriggeredJobHistoryData"/> to convert. </param>
+        public static implicit operator RequestContent(TriggeredJobHistoryData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TriggeredJobHistoryData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TriggeredJobHistoryData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTriggeredJobHistoryData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,22 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudEndpointBackupContent : IUtf8JsonSerializable
+    public partial class CloudEndpointBackupContent : IUtf8JsonSerializable, IModelJsonSerializable<CloudEndpointBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudEndpointBackupContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudEndpointBackupContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEndpointBackupContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureFileShare))
             {
                 writer.WritePropertyName("azureFileShare"u8);
                 writer.WriteStringValue(AzureFileShare);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CloudEndpointBackupContent DeserializeCloudEndpointBackupContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> azureFileShare = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("azureFileShare"u8))
+                {
+                    azureFileShare = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CloudEndpointBackupContent(azureFileShare.Value, serializedAdditionalRawData);
+        }
+
+        CloudEndpointBackupContent IModelJsonSerializable<CloudEndpointBackupContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEndpointBackupContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudEndpointBackupContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudEndpointBackupContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEndpointBackupContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudEndpointBackupContent IModelSerializable<CloudEndpointBackupContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEndpointBackupContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudEndpointBackupContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudEndpointBackupContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudEndpointBackupContent"/> to convert. </param>
+        public static implicit operator RequestContent(CloudEndpointBackupContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudEndpointBackupContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudEndpointBackupContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudEndpointBackupContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

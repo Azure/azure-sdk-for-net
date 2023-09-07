@@ -9,21 +9,67 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TriggerRunsQueryResponseConverter))]
-    public partial class TriggerRunsQueryResponse
+    public partial class TriggerRunsQueryResponse : IUtf8JsonSerializable, IModelJsonSerializable<TriggerRunsQueryResponse>
     {
-        internal static TriggerRunsQueryResponse DeserializeTriggerRunsQueryResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TriggerRunsQueryResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TriggerRunsQueryResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TriggerRunsQueryResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TriggerRun>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(ContinuationToken))
+            {
+                writer.WritePropertyName("continuationToken"u8);
+                writer.WriteStringValue(ContinuationToken);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TriggerRunsQueryResponse DeserializeTriggerRunsQueryResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<TriggerRun> value = default;
             Optional<string> continuationToken = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -41,15 +87,68 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continuationToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TriggerRunsQueryResponse(value, continuationToken.Value);
+            return new TriggerRunsQueryResponse(value, continuationToken.Value, serializedAdditionalRawData);
+        }
+
+        TriggerRunsQueryResponse IModelJsonSerializable<TriggerRunsQueryResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TriggerRunsQueryResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTriggerRunsQueryResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TriggerRunsQueryResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TriggerRunsQueryResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TriggerRunsQueryResponse IModelSerializable<TriggerRunsQueryResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TriggerRunsQueryResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTriggerRunsQueryResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TriggerRunsQueryResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TriggerRunsQueryResponse"/> to convert. </param>
+        public static implicit operator RequestContent(TriggerRunsQueryResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TriggerRunsQueryResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TriggerRunsQueryResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTriggerRunsQueryResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class TriggerRunsQueryResponseConverter : JsonConverter<TriggerRunsQueryResponse>
         {
             public override void Write(Utf8JsonWriter writer, TriggerRunsQueryResponse model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override TriggerRunsQueryResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

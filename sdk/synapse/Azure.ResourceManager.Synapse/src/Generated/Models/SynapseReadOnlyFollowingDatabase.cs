@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse;
@@ -15,13 +16,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing a read only following database. </summary>
     public partial class SynapseReadOnlyFollowingDatabase : SynapseDatabaseData
     {
-        /// <summary> Initializes a new instance of SynapseReadOnlyFollowingDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseReadOnlyFollowingDatabase"/>. </summary>
         public SynapseReadOnlyFollowingDatabase()
         {
             Kind = SynapseKind.ReadOnlyFollowing;
         }
 
-        /// <summary> Initializes a new instance of SynapseReadOnlyFollowingDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseReadOnlyFollowingDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="leaderClusterResourceId"> The name of the leader cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration cluster. </param>
         /// <param name="principalsModificationKind"> The principals modification kind of the database. </param>
-        internal SynapseReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind, ResourceProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, SynapsePrincipalsModificationKind? principalsModificationKind) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind, ResourceProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, SynapsePrincipalsModificationKind? principalsModificationKind, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;

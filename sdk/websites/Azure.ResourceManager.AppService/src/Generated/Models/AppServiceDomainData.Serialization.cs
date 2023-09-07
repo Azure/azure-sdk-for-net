@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceDomainData : IUtf8JsonSerializable
+    public partial class AppServiceDomainData : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceDomainData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceDomainData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceDomainData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDomainData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -42,22 +48,50 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ContactAdmin))
             {
                 writer.WritePropertyName("contactAdmin"u8);
-                writer.WriteObjectValue(ContactAdmin);
+                if (ContactAdmin is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RegistrationContactInfo>)ContactAdmin).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ContactBilling))
             {
                 writer.WritePropertyName("contactBilling"u8);
-                writer.WriteObjectValue(ContactBilling);
+                if (ContactBilling is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RegistrationContactInfo>)ContactBilling).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ContactRegistrant))
             {
                 writer.WritePropertyName("contactRegistrant"u8);
-                writer.WriteObjectValue(ContactRegistrant);
+                if (ContactRegistrant is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RegistrationContactInfo>)ContactRegistrant).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ContactTech))
             {
                 writer.WritePropertyName("contactTech"u8);
-                writer.WriteObjectValue(ContactTech);
+                if (ContactTech is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RegistrationContactInfo>)ContactTech).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsDomainPrivacyEnabled))
             {
@@ -72,7 +106,14 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Consent))
             {
                 writer.WritePropertyName("consent"u8);
-                writer.WriteObjectValue(Consent);
+                if (Consent is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DomainPurchaseConsent>)Consent).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DnsType))
             {
@@ -95,11 +136,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStringValue(AuthCode);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceDomainData DeserializeAppServiceDomainData(JsonElement element)
+        internal static AppServiceDomainData DeserializeAppServiceDomainData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -131,6 +186,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> dnsZoneId = default;
             Optional<AppServiceDnsType> targetDnsType = default;
             Optional<string> authCode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -380,8 +436,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value);
+            return new AppServiceDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value, serializedAdditionalRawData);
+        }
+
+        AppServiceDomainData IModelJsonSerializable<AppServiceDomainData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDomainData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceDomainData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceDomainData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDomainData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceDomainData IModelSerializable<AppServiceDomainData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDomainData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceDomainData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceDomainData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceDomainData"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceDomainData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceDomainData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceDomainData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceDomainData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

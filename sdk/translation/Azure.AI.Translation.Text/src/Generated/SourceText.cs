@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,6 +14,9 @@ namespace Azure.AI.Translation.Text
     /// <summary> Input text in the default script of the source language. </summary>
     public partial class SourceText
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of SourceText. </summary>
         /// <param name="text"> Input text in the default script of the source language. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
@@ -21,6 +25,20 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
+        }
+
+        /// <summary> Initializes a new instance of SourceText. </summary>
+        /// <param name="text"> Input text in the default script of the source language. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceText(string text, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceText"/> for deserialization. </summary>
+        internal SourceText()
+        {
         }
 
         /// <summary> Input text in the default script of the source language. </summary>

@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class WebPubSubSharedPrivateLinkData : IUtf8JsonSerializable
+    public partial class WebPubSubSharedPrivateLinkData : IUtf8JsonSerializable, IModelJsonSerializable<WebPubSubSharedPrivateLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebPubSubSharedPrivateLinkData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebPubSubSharedPrivateLinkData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebPubSubSharedPrivateLinkData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WriteStringValue(RequestMessage);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebPubSubSharedPrivateLinkData DeserializeWebPubSubSharedPrivateLinkData(JsonElement element)
+        internal static WebPubSubSharedPrivateLinkData DeserializeWebPubSubSharedPrivateLinkData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +75,7 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<WebPubSubProvisioningState> provisioningState = default;
             Optional<string> requestMessage = default;
             Optional<WebPubSubSharedPrivateLinkStatus> status = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -128,8 +151,61 @@ namespace Azure.ResourceManager.WebPubSub
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebPubSubSharedPrivateLinkData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status));
+            return new WebPubSubSharedPrivateLinkData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+        }
+
+        WebPubSubSharedPrivateLinkData IModelJsonSerializable<WebPubSubSharedPrivateLinkData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebPubSubSharedPrivateLinkData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebPubSubSharedPrivateLinkData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebPubSubSharedPrivateLinkData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebPubSubSharedPrivateLinkData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebPubSubSharedPrivateLinkData IModelSerializable<WebPubSubSharedPrivateLinkData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebPubSubSharedPrivateLinkData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebPubSubSharedPrivateLinkData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebPubSubSharedPrivateLinkData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebPubSubSharedPrivateLinkData"/> to convert. </param>
+        public static implicit operator RequestContent(WebPubSubSharedPrivateLinkData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebPubSubSharedPrivateLinkData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebPubSubSharedPrivateLinkData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebPubSubSharedPrivateLinkData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class PageList
+    internal partial class PageList : IXmlSerializable, IModelSerializable<PageList>
     {
-        internal static PageList DeserializePageList(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "PageList");
+            if (Optional.IsDefined(NextMarker))
+            {
+                writer.WriteStartElement("NextMarker");
+                writer.WriteValue(NextMarker);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(PageRange))
+            {
+                foreach (var item in PageRange)
+                {
+                    writer.WriteObjectValue(item, "PageRange");
+                }
+            }
+            if (Optional.IsCollectionDefined(ClearRange))
+            {
+                foreach (var item in ClearRange)
+                {
+                    writer.WriteObjectValue(item, "ClearRange");
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static PageList DeserializePageList(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string nextMarker = default;
             IReadOnlyList<PageRange> pageRange = default;
             IReadOnlyList<ClearRange> clearRange = default;
@@ -34,7 +68,57 @@ namespace Azure.Storage.Blobs.Models
                 array0.Add(Models.ClearRange.DeserializeClearRange(e));
             }
             clearRange = array0;
-            return new PageList(pageRange, clearRange, nextMarker);
+            return new PageList(pageRange, clearRange, nextMarker, default);
+        }
+
+        BinaryData IModelSerializable<PageList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PageList>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        PageList IModelSerializable<PageList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PageList>(this, options.Format);
+
+            return DeserializePageList(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="PageList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PageList"/> to convert. </param>
+        public static implicit operator RequestContent(PageList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PageList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PageList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializePageList(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

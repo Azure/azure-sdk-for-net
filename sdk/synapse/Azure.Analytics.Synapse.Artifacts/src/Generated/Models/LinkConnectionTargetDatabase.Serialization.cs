@@ -6,39 +6,75 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionTargetDatabaseConverter))]
-    public partial class LinkConnectionTargetDatabase : IUtf8JsonSerializable
+    public partial class LinkConnectionTargetDatabase : IUtf8JsonSerializable, IModelJsonSerializable<LinkConnectionTargetDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinkConnectionTargetDatabase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinkConnectionTargetDatabase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LinkConnectionTargetDatabase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                if (LinkedService is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinkedServiceReference>)LinkedService).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TypeProperties))
             {
                 writer.WritePropertyName("typeProperties"u8);
-                writer.WriteObjectValue(TypeProperties);
+                if (TypeProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinkConnectionTargetDatabaseTypeProperties>)TypeProperties).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static LinkConnectionTargetDatabase DeserializeLinkConnectionTargetDatabase(JsonElement element)
+        internal static LinkConnectionTargetDatabase DeserializeLinkConnectionTargetDatabase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<LinkedServiceReference> linkedService = default;
             Optional<LinkConnectionTargetDatabaseTypeProperties> typeProperties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -59,8 +95,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     typeProperties = LinkConnectionTargetDatabaseTypeProperties.DeserializeLinkConnectionTargetDatabaseTypeProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinkConnectionTargetDatabase(linkedService.Value, typeProperties.Value);
+            return new LinkConnectionTargetDatabase(linkedService.Value, typeProperties.Value, serializedAdditionalRawData);
+        }
+
+        LinkConnectionTargetDatabase IModelJsonSerializable<LinkConnectionTargetDatabase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkConnectionTargetDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkConnectionTargetDatabase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinkConnectionTargetDatabase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkConnectionTargetDatabase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinkConnectionTargetDatabase IModelSerializable<LinkConnectionTargetDatabase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkConnectionTargetDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinkConnectionTargetDatabase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LinkConnectionTargetDatabase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LinkConnectionTargetDatabase"/> to convert. </param>
+        public static implicit operator RequestContent(LinkConnectionTargetDatabase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LinkConnectionTargetDatabase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LinkConnectionTargetDatabase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinkConnectionTargetDatabase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class LinkConnectionTargetDatabaseConverter : JsonConverter<LinkConnectionTargetDatabase>

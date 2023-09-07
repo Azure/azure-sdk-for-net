@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SlotDifference : IUtf8JsonSerializable
+    public partial class SlotDifference : IUtf8JsonSerializable, IModelJsonSerializable<SlotDifference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SlotDifference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SlotDifference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SlotDifference>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SlotDifference DeserializeSlotDifference(JsonElement element)
+        internal static SlotDifference DeserializeSlotDifference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> valueInCurrentSlot = default;
             Optional<string> valueInTargetSlot = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -123,8 +146,61 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SlotDifference(id, name, type, systemData.Value, level.Value, settingType.Value, diffRule.Value, settingName.Value, valueInCurrentSlot.Value, valueInTargetSlot.Value, description.Value, kind.Value);
+            return new SlotDifference(id, name, type, systemData.Value, level.Value, settingType.Value, diffRule.Value, settingName.Value, valueInCurrentSlot.Value, valueInTargetSlot.Value, description.Value, kind.Value, serializedAdditionalRawData);
+        }
+
+        SlotDifference IModelJsonSerializable<SlotDifference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SlotDifference>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSlotDifference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SlotDifference>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SlotDifference>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SlotDifference IModelSerializable<SlotDifference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SlotDifference>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSlotDifference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SlotDifference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SlotDifference"/> to convert. </param>
+        public static implicit operator RequestContent(SlotDifference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SlotDifference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SlotDifference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSlotDifference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

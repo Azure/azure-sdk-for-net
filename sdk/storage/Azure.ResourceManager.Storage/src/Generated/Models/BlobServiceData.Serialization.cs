@@ -5,24 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class BlobServiceData : IUtf8JsonSerializable
+    public partial class BlobServiceData : IUtf8JsonSerializable, IModelJsonSerializable<BlobServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BlobServiceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BlobServiceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BlobServiceData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                if (Cors is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCorsRules>)Cors).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DefaultServiceVersion))
             {
@@ -32,7 +47,14 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WritePropertyName("deleteRetentionPolicy"u8);
-                writer.WriteObjectValue(DeleteRetentionPolicy);
+                if (DeleteRetentionPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeleteRetentionPolicy>)DeleteRetentionPolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsVersioningEnabled))
             {
@@ -47,29 +69,71 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(ChangeFeed))
             {
                 writer.WritePropertyName("changeFeed"u8);
-                writer.WriteObjectValue(ChangeFeed);
+                if (ChangeFeed is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BlobServiceChangeFeed>)ChangeFeed).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RestorePolicy))
             {
                 writer.WritePropertyName("restorePolicy"u8);
-                writer.WriteObjectValue(RestorePolicy);
+                if (RestorePolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RestorePolicy>)RestorePolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ContainerDeleteRetentionPolicy))
             {
                 writer.WritePropertyName("containerDeleteRetentionPolicy"u8);
-                writer.WriteObjectValue(ContainerDeleteRetentionPolicy);
+                if (ContainerDeleteRetentionPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeleteRetentionPolicy>)ContainerDeleteRetentionPolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LastAccessTimeTrackingPolicy))
             {
                 writer.WritePropertyName("lastAccessTimeTrackingPolicy"u8);
-                writer.WriteObjectValue(LastAccessTimeTrackingPolicy);
+                if (LastAccessTimeTrackingPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LastAccessTimeTrackingPolicy>)LastAccessTimeTrackingPolicy).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobServiceData DeserializeBlobServiceData(JsonElement element)
+        internal static BlobServiceData DeserializeBlobServiceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +152,7 @@ namespace Azure.ResourceManager.Storage
             Optional<RestorePolicy> restorePolicy = default;
             Optional<DeleteRetentionPolicy> containerDeleteRetentionPolicy = default;
             Optional<LastAccessTimeTrackingPolicy> lastAccessTimeTrackingPolicy = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -212,8 +277,61 @@ namespace Azure.ResourceManager.Storage
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BlobServiceData(id, name, type, systemData.Value, sku.Value, cors.Value, defaultServiceVersion.Value, deleteRetentionPolicy.Value, Optional.ToNullable(isVersioningEnabled), Optional.ToNullable(automaticSnapshotPolicyEnabled), changeFeed.Value, restorePolicy.Value, containerDeleteRetentionPolicy.Value, lastAccessTimeTrackingPolicy.Value);
+            return new BlobServiceData(id, name, type, systemData.Value, sku.Value, cors.Value, defaultServiceVersion.Value, deleteRetentionPolicy.Value, Optional.ToNullable(isVersioningEnabled), Optional.ToNullable(automaticSnapshotPolicyEnabled), changeFeed.Value, restorePolicy.Value, containerDeleteRetentionPolicy.Value, lastAccessTimeTrackingPolicy.Value, serializedAdditionalRawData);
+        }
+
+        BlobServiceData IModelJsonSerializable<BlobServiceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobServiceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobServiceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BlobServiceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobServiceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BlobServiceData IModelSerializable<BlobServiceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobServiceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBlobServiceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BlobServiceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobServiceData"/> to convert. </param>
+        public static implicit operator RequestContent(BlobServiceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobServiceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobServiceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBlobServiceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

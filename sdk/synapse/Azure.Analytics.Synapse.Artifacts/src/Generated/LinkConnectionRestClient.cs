@@ -103,9 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(linkConnection);
-            request.Content = content;
+            request.Content = linkConnection;
             return message;
         }
 
@@ -317,9 +315,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(editTablesRequest);
-            request.Content = content;
+            request.Content = editTablesRequest;
             return message;
         }
 
@@ -651,9 +647,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(queryTableStatusRequest);
-            request.Content = content;
+            request.Content = queryTableStatusRequest;
             return message;
         }
 
@@ -735,9 +729,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateLandingZoneCredentialRequest);
-            request.Content = content;
+            request.Content = updateLandingZoneCredentialRequest;
             return message;
         }
 

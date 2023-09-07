@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    internal partial class UnknownEndpointBaseProperties : IUtf8JsonSerializable
+    internal partial class UnknownEndpointBaseProperties : IUtf8JsonSerializable, IModelJsonSerializable<EndpointBaseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EndpointBaseProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EndpointBaseProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointBaseProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
@@ -22,41 +28,44 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownEndpointBaseProperties DeserializeUnknownEndpointBaseProperties(JsonElement element)
+        internal static EndpointBaseProperties DeserializeUnknownEndpointBaseProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeEndpointBaseProperties(element, options);
+
+        EndpointBaseProperties IModelJsonSerializable<EndpointBaseProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            EndpointType endpointType = "Unknown";
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endpointType"u8))
-                {
-                    endpointType = new EndpointType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new StorageMoverProvisioningState(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownEndpointBaseProperties(endpointType, description.Value, Optional.ToNullable(provisioningState));
+            Core.ModelSerializerHelper.ValidateFormat<EndpointBaseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownEndpointBaseProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EndpointBaseProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointBaseProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EndpointBaseProperties IModelSerializable<EndpointBaseProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointBaseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEndpointBaseProperties(doc.RootElement, options);
         }
     }
 }

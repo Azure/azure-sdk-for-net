@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class SlotConfigNamesResourceData : IUtf8JsonSerializable
+    public partial class SlotConfigNamesResourceData : IUtf8JsonSerializable, IModelJsonSerializable<SlotConfigNamesResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SlotConfigNamesResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SlotConfigNamesResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SlotConfigNamesResourceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -55,11 +62,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SlotConfigNamesResourceData DeserializeSlotConfigNamesResourceData(JsonElement element)
+        internal static SlotConfigNamesResourceData DeserializeSlotConfigNamesResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +93,7 @@ namespace Azure.ResourceManager.AppService
             Optional<IList<string>> connectionStringNames = default;
             Optional<IList<string>> appSettingNames = default;
             Optional<IList<string>> azureStorageConfigNames = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -157,8 +179,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SlotConfigNamesResourceData(id, name, type, systemData.Value, Optional.ToList(connectionStringNames), Optional.ToList(appSettingNames), Optional.ToList(azureStorageConfigNames), kind.Value);
+            return new SlotConfigNamesResourceData(id, name, type, systemData.Value, Optional.ToList(connectionStringNames), Optional.ToList(appSettingNames), Optional.ToList(azureStorageConfigNames), kind.Value, serializedAdditionalRawData);
+        }
+
+        SlotConfigNamesResourceData IModelJsonSerializable<SlotConfigNamesResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SlotConfigNamesResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSlotConfigNamesResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SlotConfigNamesResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SlotConfigNamesResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SlotConfigNamesResourceData IModelSerializable<SlotConfigNamesResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SlotConfigNamesResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSlotConfigNamesResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SlotConfigNamesResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SlotConfigNamesResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(SlotConfigNamesResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SlotConfigNamesResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SlotConfigNamesResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSlotConfigNamesResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

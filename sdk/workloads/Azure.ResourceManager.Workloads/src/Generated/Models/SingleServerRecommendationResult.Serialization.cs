@@ -5,21 +5,57 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SingleServerRecommendationResult
+    public partial class SingleServerRecommendationResult : IUtf8JsonSerializable, IModelJsonSerializable<SingleServerRecommendationResult>
     {
-        internal static SingleServerRecommendationResult DeserializeSingleServerRecommendationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SingleServerRecommendationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SingleServerRecommendationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SingleServerRecommendationResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VmSku))
+            {
+                writer.WritePropertyName("vmSku"u8);
+                writer.WriteStringValue(VmSku);
+            }
+            writer.WritePropertyName("deploymentType"u8);
+            writer.WriteStringValue(DeploymentType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SingleServerRecommendationResult DeserializeSingleServerRecommendationResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> vmSku = default;
             SapDeploymentType deploymentType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSku"u8))
@@ -32,8 +68,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SingleServerRecommendationResult(deploymentType, vmSku.Value);
+            return new SingleServerRecommendationResult(deploymentType, vmSku.Value, serializedAdditionalRawData);
+        }
+
+        SingleServerRecommendationResult IModelJsonSerializable<SingleServerRecommendationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SingleServerRecommendationResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSingleServerRecommendationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SingleServerRecommendationResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SingleServerRecommendationResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SingleServerRecommendationResult IModelSerializable<SingleServerRecommendationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SingleServerRecommendationResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSingleServerRecommendationResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SingleServerRecommendationResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SingleServerRecommendationResult"/> to convert. </param>
+        public static implicit operator RequestContent(SingleServerRecommendationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SingleServerRecommendationResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SingleServerRecommendationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSingleServerRecommendationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

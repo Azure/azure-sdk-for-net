@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Properties of integration runtime node. </summary>
     public partial class SynapseManagedIntegrationRuntimeNode
     {
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedIntegrationRuntimeNode"/>. </summary>
         internal SynapseManagedIntegrationRuntimeNode()
         {
             Errors = new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedIntegrationRuntimeNode"/>. </summary>
         /// <param name="nodeId"> The managed integration runtime node id. </param>
         /// <param name="status"> The managed integration runtime node status. </param>
         /// <param name="errors"> The errors that occurred on this integration runtime node. </param>

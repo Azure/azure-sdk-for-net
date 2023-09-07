@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class IoTHubStreamInputDataSource : IUtf8JsonSerializable
+    public partial class IoTHubStreamInputDataSource : IUtf8JsonSerializable, IModelJsonSerializable<IoTHubStreamInputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IoTHubStreamInputDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IoTHubStreamInputDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IoTHubStreamInputDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
@@ -45,11 +53,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(Endpoint);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IoTHubStreamInputDataSource DeserializeIoTHubStreamInputDataSource(JsonElement element)
+        internal static IoTHubStreamInputDataSource DeserializeIoTHubStreamInputDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +82,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> sharedAccessPolicyKey = default;
             Optional<string> consumerGroupName = default;
             Optional<string> endpoint = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -104,8 +127,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IoTHubStreamInputDataSource(type, iotHubNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, consumerGroupName.Value, endpoint.Value);
+            return new IoTHubStreamInputDataSource(type, iotHubNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, consumerGroupName.Value, endpoint.Value, serializedAdditionalRawData);
+        }
+
+        IoTHubStreamInputDataSource IModelJsonSerializable<IoTHubStreamInputDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IoTHubStreamInputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIoTHubStreamInputDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IoTHubStreamInputDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IoTHubStreamInputDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IoTHubStreamInputDataSource IModelSerializable<IoTHubStreamInputDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IoTHubStreamInputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIoTHubStreamInputDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IoTHubStreamInputDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IoTHubStreamInputDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(IoTHubStreamInputDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IoTHubStreamInputDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IoTHubStreamInputDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIoTHubStreamInputDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

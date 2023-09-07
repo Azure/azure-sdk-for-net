@@ -5,36 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyAction : IUtf8JsonSerializable
+    public partial class ManagementPolicyAction : IUtf8JsonSerializable, IModelJsonSerializable<ManagementPolicyAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagementPolicyAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagementPolicyAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementPolicyAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseBlob))
             {
                 writer.WritePropertyName("baseBlob"u8);
-                writer.WriteObjectValue(BaseBlob);
+                if (BaseBlob is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagementPolicyBaseBlob>)BaseBlob).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot);
+                if (Snapshot is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagementPolicySnapShot>)Snapshot).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version);
+                if (Version is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagementPolicyVersion>)Version).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagementPolicyAction DeserializeManagementPolicyAction(JsonElement element)
+        internal static ManagementPolicyAction DeserializeManagementPolicyAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<ManagementPolicyBaseBlob> baseBlob = default;
             Optional<ManagementPolicySnapShot> snapshot = default;
             Optional<ManagementPolicyVersion> version = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseBlob"u8))
@@ -71,8 +115,61 @@ namespace Azure.ResourceManager.Storage.Models
                     version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagementPolicyAction(baseBlob.Value, snapshot.Value, version.Value);
+            return new ManagementPolicyAction(baseBlob.Value, snapshot.Value, version.Value, serializedAdditionalRawData);
+        }
+
+        ManagementPolicyAction IModelJsonSerializable<ManagementPolicyAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementPolicyAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementPolicyAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagementPolicyAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementPolicyAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagementPolicyAction IModelSerializable<ManagementPolicyAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementPolicyAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagementPolicyAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagementPolicyAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagementPolicyAction"/> to convert. </param>
+        public static implicit operator RequestContent(ManagementPolicyAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagementPolicyAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagementPolicyAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagementPolicyAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

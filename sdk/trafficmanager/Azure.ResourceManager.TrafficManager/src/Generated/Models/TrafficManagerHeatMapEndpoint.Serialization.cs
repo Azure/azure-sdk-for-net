@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerHeatMapEndpoint : IUtf8JsonSerializable
+    public partial class TrafficManagerHeatMapEndpoint : IUtf8JsonSerializable, IModelJsonSerializable<TrafficManagerHeatMapEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrafficManagerHeatMapEndpoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrafficManagerHeatMapEndpoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerHeatMapEndpoint>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("endpointId"u8);
                 writer.WriteNumberValue(EndpointId.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficManagerHeatMapEndpoint DeserializeTrafficManagerHeatMapEndpoint(JsonElement element)
+        internal static TrafficManagerHeatMapEndpoint DeserializeTrafficManagerHeatMapEndpoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<int> endpointId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     endpointId = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrafficManagerHeatMapEndpoint(resourceId.Value, Optional.ToNullable(endpointId));
+            return new TrafficManagerHeatMapEndpoint(resourceId.Value, Optional.ToNullable(endpointId), serializedAdditionalRawData);
+        }
+
+        TrafficManagerHeatMapEndpoint IModelJsonSerializable<TrafficManagerHeatMapEndpoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerHeatMapEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerHeatMapEndpoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrafficManagerHeatMapEndpoint>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerHeatMapEndpoint>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrafficManagerHeatMapEndpoint IModelSerializable<TrafficManagerHeatMapEndpoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerHeatMapEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrafficManagerHeatMapEndpoint(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrafficManagerHeatMapEndpoint"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrafficManagerHeatMapEndpoint"/> to convert. </param>
+        public static implicit operator RequestContent(TrafficManagerHeatMapEndpoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrafficManagerHeatMapEndpoint"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrafficManagerHeatMapEndpoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrafficManagerHeatMapEndpoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

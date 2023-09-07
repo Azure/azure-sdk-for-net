@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceDatabaseBackupSetting : IUtf8JsonSerializable
+    public partial class AppServiceDatabaseBackupSetting : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceDatabaseBackupSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceDatabaseBackupSetting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceDatabaseBackupSetting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDatabaseBackupSetting>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
@@ -32,11 +40,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceDatabaseBackupSetting DeserializeAppServiceDatabaseBackupSetting(JsonElement element)
+        internal static AppServiceDatabaseBackupSetting DeserializeAppServiceDatabaseBackupSetting(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> name = default;
             Optional<string> connectionStringName = default;
             Optional<string> connectionString = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseType"u8))
@@ -67,8 +90,61 @@ namespace Azure.ResourceManager.AppService.Models
                     connectionString = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceDatabaseBackupSetting(databaseType, name.Value, connectionStringName.Value, connectionString.Value);
+            return new AppServiceDatabaseBackupSetting(databaseType, name.Value, connectionStringName.Value, connectionString.Value, serializedAdditionalRawData);
+        }
+
+        AppServiceDatabaseBackupSetting IModelJsonSerializable<AppServiceDatabaseBackupSetting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDatabaseBackupSetting>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceDatabaseBackupSetting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceDatabaseBackupSetting>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDatabaseBackupSetting>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceDatabaseBackupSetting IModelSerializable<AppServiceDatabaseBackupSetting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDatabaseBackupSetting>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceDatabaseBackupSetting(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceDatabaseBackupSetting"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceDatabaseBackupSetting"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceDatabaseBackupSetting model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceDatabaseBackupSetting"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceDatabaseBackupSetting(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceDatabaseBackupSetting(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

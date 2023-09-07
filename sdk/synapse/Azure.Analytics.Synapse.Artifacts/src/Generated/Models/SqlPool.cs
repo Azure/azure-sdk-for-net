@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A SQL Analytics pool. </summary>
     public partial class SqlPool : TrackedResource
     {
-        /// <summary> Initializes a new instance of SqlPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPool"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public SqlPool(string location) : base(location)
@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(location, nameof(location));
         }
 
-        /// <summary> Initializes a new instance of SqlPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPool"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -48,7 +48,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool's original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// </param>
         /// <param name="creationDate"> Date the SQL pool was created. </param>
-        internal SqlPool(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, string restorePointInTime, CreateMode? createMode, DateTimeOffset? creationDate) : base(id, name, type, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlPool(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, string restorePointInTime, CreateMode? createMode, DateTimeOffset? creationDate, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, type, tags, location, serializedAdditionalRawData)
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
@@ -60,6 +61,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RestorePointInTime = restorePointInTime;
             CreateMode = createMode;
             CreationDate = creationDate;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlPool"/> for deserialization. </summary>
+        internal SqlPool()
+        {
         }
 
         /// <summary> SQL pool SKU. </summary>

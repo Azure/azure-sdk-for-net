@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class JobManifestTasks : IUtf8JsonSerializable
+    internal partial class JobManifestTasks : IUtf8JsonSerializable, IModelJsonSerializable<JobManifestTasks>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobManifestTasks>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobManifestTasks>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JobManifestTasks>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EntityRecognitionTasks))
             {
@@ -21,7 +29,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EntitiesTask>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -31,7 +46,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionPiiTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PiiTask>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +63,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in KeyPhraseExtractionTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KeyPhrasesTask>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +80,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in EntityLinkingTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EntityLinkingTask>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -61,11 +97,173 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in SentimentAnalysisTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SentimentAnalysisTask>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static JobManifestTasks DeserializeJobManifestTasks(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<EntitiesTask>> entityRecognitionTasks = default;
+            Optional<IList<PiiTask>> entityRecognitionPiiTasks = default;
+            Optional<IList<KeyPhrasesTask>> keyPhraseExtractionTasks = default;
+            Optional<IList<EntityLinkingTask>> entityLinkingTasks = default;
+            Optional<IList<SentimentAnalysisTask>> sentimentAnalysisTasks = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("entityRecognitionTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EntitiesTask> array = new List<EntitiesTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EntitiesTask.DeserializeEntitiesTask(item));
+                    }
+                    entityRecognitionTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("entityRecognitionPiiTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PiiTask> array = new List<PiiTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PiiTask.DeserializePiiTask(item));
+                    }
+                    entityRecognitionPiiTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("keyPhraseExtractionTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KeyPhrasesTask> array = new List<KeyPhrasesTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(KeyPhrasesTask.DeserializeKeyPhrasesTask(item));
+                    }
+                    keyPhraseExtractionTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("entityLinkingTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EntityLinkingTask> array = new List<EntityLinkingTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EntityLinkingTask.DeserializeEntityLinkingTask(item));
+                    }
+                    entityLinkingTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("sentimentAnalysisTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SentimentAnalysisTask> array = new List<SentimentAnalysisTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SentimentAnalysisTask.DeserializeSentimentAnalysisTask(item));
+                    }
+                    sentimentAnalysisTasks = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new JobManifestTasks(Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks), serializedAdditionalRawData);
+        }
+
+        JobManifestTasks IModelJsonSerializable<JobManifestTasks>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobManifestTasks>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobManifestTasks(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobManifestTasks>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobManifestTasks>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobManifestTasks IModelSerializable<JobManifestTasks>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobManifestTasks>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobManifestTasks(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JobManifestTasks"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JobManifestTasks"/> to convert. </param>
+        public static implicit operator RequestContent(JobManifestTasks model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JobManifestTasks"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JobManifestTasks(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobManifestTasks(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

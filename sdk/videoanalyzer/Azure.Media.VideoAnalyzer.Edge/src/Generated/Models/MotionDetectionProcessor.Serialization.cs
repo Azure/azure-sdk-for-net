@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class MotionDetectionProcessor : IUtf8JsonSerializable
+    public partial class MotionDetectionProcessor : IUtf8JsonSerializable, IModelJsonSerializable<MotionDetectionProcessor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MotionDetectionProcessor>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MotionDetectionProcessor>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MotionDetectionProcessor>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sensitivity))
             {
@@ -39,14 +46,35 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NodeInput>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MotionDetectionProcessor DeserializeMotionDetectionProcessor(JsonElement element)
+        internal static MotionDetectionProcessor DeserializeMotionDetectionProcessor(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +85,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sensitivity"u8))
@@ -102,8 +131,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     inputs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MotionDetectionProcessor(type, name, inputs, Optional.ToNullable(sensitivity), Optional.ToNullable(outputMotionRegion), eventAggregationWindow.Value);
+            return new MotionDetectionProcessor(type, name, inputs, Optional.ToNullable(sensitivity), Optional.ToNullable(outputMotionRegion), eventAggregationWindow.Value, serializedAdditionalRawData);
+        }
+
+        MotionDetectionProcessor IModelJsonSerializable<MotionDetectionProcessor>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MotionDetectionProcessor>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMotionDetectionProcessor(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MotionDetectionProcessor>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MotionDetectionProcessor>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MotionDetectionProcessor IModelSerializable<MotionDetectionProcessor>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MotionDetectionProcessor>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMotionDetectionProcessor(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MotionDetectionProcessor"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MotionDetectionProcessor"/> to convert. </param>
+        public static implicit operator RequestContent(MotionDetectionProcessor model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MotionDetectionProcessor"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MotionDetectionProcessor(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMotionDetectionProcessor(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapSshPublicKey : IUtf8JsonSerializable
+    public partial class SapSshPublicKey : IUtf8JsonSerializable, IModelJsonSerializable<SapSshPublicKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapSshPublicKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapSshPublicKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SapSshPublicKey>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyData))
             {
                 writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SapSshPublicKey DeserializeSapSshPublicKey(JsonElement element)
+        internal static SapSshPublicKey DeserializeSapSshPublicKey(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> keyData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyData"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     keyData = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SapSshPublicKey(keyData.Value);
+            return new SapSshPublicKey(keyData.Value, serializedAdditionalRawData);
+        }
+
+        SapSshPublicKey IModelJsonSerializable<SapSshPublicKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapSshPublicKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapSshPublicKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapSshPublicKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapSshPublicKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapSshPublicKey IModelSerializable<SapSshPublicKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapSshPublicKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapSshPublicKey(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SapSshPublicKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SapSshPublicKey"/> to convert. </param>
+        public static implicit operator RequestContent(SapSshPublicKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SapSshPublicKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SapSshPublicKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapSshPublicKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

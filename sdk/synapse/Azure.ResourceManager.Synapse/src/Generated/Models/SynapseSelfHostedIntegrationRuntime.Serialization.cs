@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSelfHostedIntegrationRuntime : IUtf8JsonSerializable
+    public partial class SynapseSelfHostedIntegrationRuntime : IUtf8JsonSerializable, IModelJsonSerializable<SynapseSelfHostedIntegrationRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseSelfHostedIntegrationRuntime>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseSelfHostedIntegrationRuntime>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSelfHostedIntegrationRuntime>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
@@ -29,7 +35,14 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo);
+                if (LinkedInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SynapseLinkedIntegrationRuntimeType>)LinkedInfo).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -44,8 +57,10 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseSelfHostedIntegrationRuntime DeserializeSynapseSelfHostedIntegrationRuntime(JsonElement element)
+        internal static SynapseSelfHostedIntegrationRuntime DeserializeSynapseSelfHostedIntegrationRuntime(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +107,54 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseSelfHostedIntegrationRuntime(type, description.Value, additionalProperties, linkedInfo.Value);
+        }
+
+        SynapseSelfHostedIntegrationRuntime IModelJsonSerializable<SynapseSelfHostedIntegrationRuntime>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSelfHostedIntegrationRuntime>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSelfHostedIntegrationRuntime(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseSelfHostedIntegrationRuntime>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSelfHostedIntegrationRuntime>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseSelfHostedIntegrationRuntime IModelSerializable<SynapseSelfHostedIntegrationRuntime>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSelfHostedIntegrationRuntime>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseSelfHostedIntegrationRuntime(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseSelfHostedIntegrationRuntime"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseSelfHostedIntegrationRuntime"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseSelfHostedIntegrationRuntime model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseSelfHostedIntegrationRuntime"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseSelfHostedIntegrationRuntime(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseSelfHostedIntegrationRuntime(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

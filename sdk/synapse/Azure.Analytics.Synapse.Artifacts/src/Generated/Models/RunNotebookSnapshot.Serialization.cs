@@ -9,15 +9,107 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RunNotebookSnapshotConverter))]
-    public partial class RunNotebookSnapshot
+    public partial class RunNotebookSnapshot : IUtf8JsonSerializable, IModelJsonSerializable<RunNotebookSnapshot>
     {
-        internal static RunNotebookSnapshot DeserializeRunNotebookSnapshot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RunNotebookSnapshot>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RunNotebookSnapshot>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RunNotebookSnapshot>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ExitValue))
+            {
+                writer.WritePropertyName("exitValue"u8);
+                writer.WriteStringValue(ExitValue);
+            }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("notebook"u8);
+            writer.WriteStringValue(Notebook);
+            if (Optional.IsDefined(SessionOptions))
+            {
+                writer.WritePropertyName("sessionOptions"u8);
+                if (SessionOptions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RunNotebookSparkSessionOptions>)SessionOptions).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(HonorSessionTimeToLive))
+            {
+                writer.WritePropertyName("honorSessionTimeToLive"u8);
+                writer.WriteBooleanValue(HonorSessionTimeToLive.Value);
+            }
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteNumberValue(SessionId.Value);
+            }
+            if (Optional.IsDefined(SparkPool))
+            {
+                writer.WritePropertyName("sparkPool"u8);
+                writer.WriteStringValue(SparkPool);
+            }
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RunNotebookParameter>)item.Value).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(NotebookContent))
+            {
+                writer.WritePropertyName("notebookContent"u8);
+                if (NotebookContent is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NotebookResource>)NotebookContent).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RunNotebookSnapshot DeserializeRunNotebookSnapshot(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +123,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> sparkPool = default;
             Optional<IReadOnlyDictionary<string, RunNotebookParameter>> parameters = default;
             Optional<NotebookResource> notebookContent = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exitValue"u8))
@@ -103,15 +196,68 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     notebookContent = NotebookResource.DeserializeNotebookResource(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RunNotebookSnapshot(exitValue.Value, id, notebook, sessionOptions.Value, Optional.ToNullable(honorSessionTimeToLive), Optional.ToNullable(sessionId), sparkPool.Value, Optional.ToDictionary(parameters), notebookContent.Value);
+            return new RunNotebookSnapshot(exitValue.Value, id, notebook, sessionOptions.Value, Optional.ToNullable(honorSessionTimeToLive), Optional.ToNullable(sessionId), sparkPool.Value, Optional.ToDictionary(parameters), notebookContent.Value, serializedAdditionalRawData);
+        }
+
+        RunNotebookSnapshot IModelJsonSerializable<RunNotebookSnapshot>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunNotebookSnapshot>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunNotebookSnapshot(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RunNotebookSnapshot>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunNotebookSnapshot>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RunNotebookSnapshot IModelSerializable<RunNotebookSnapshot>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunNotebookSnapshot>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRunNotebookSnapshot(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RunNotebookSnapshot"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RunNotebookSnapshot"/> to convert. </param>
+        public static implicit operator RequestContent(RunNotebookSnapshot model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RunNotebookSnapshot"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RunNotebookSnapshot(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRunNotebookSnapshot(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class RunNotebookSnapshotConverter : JsonConverter<RunNotebookSnapshot>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookSnapshot model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override RunNotebookSnapshot Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

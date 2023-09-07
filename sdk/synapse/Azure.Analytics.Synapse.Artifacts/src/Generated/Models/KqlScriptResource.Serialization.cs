@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(KqlScriptResourceConverter))]
-    public partial class KqlScriptResource : IUtf8JsonSerializable
+    public partial class KqlScriptResource : IUtf8JsonSerializable, IModelJsonSerializable<KqlScriptResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KqlScriptResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KqlScriptResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KqlScriptResource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -36,13 +43,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KqlScript>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static KqlScriptResource DeserializeKqlScriptResource(JsonElement element)
+        internal static KqlScriptResource DeserializeKqlScriptResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<KqlScript> properties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -77,8 +106,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     properties = KqlScript.DeserializeKqlScript(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KqlScriptResource(id.Value, name.Value, type.Value, properties.Value);
+            return new KqlScriptResource(id.Value, name.Value, type.Value, properties.Value, serializedAdditionalRawData);
+        }
+
+        KqlScriptResource IModelJsonSerializable<KqlScriptResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KqlScriptResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKqlScriptResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KqlScriptResource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KqlScriptResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KqlScriptResource IModelSerializable<KqlScriptResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KqlScriptResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKqlScriptResource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KqlScriptResource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KqlScriptResource"/> to convert. </param>
+        public static implicit operator RequestContent(KqlScriptResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KqlScriptResource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KqlScriptResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKqlScriptResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class KqlScriptResourceConverter : JsonConverter<KqlScriptResource>

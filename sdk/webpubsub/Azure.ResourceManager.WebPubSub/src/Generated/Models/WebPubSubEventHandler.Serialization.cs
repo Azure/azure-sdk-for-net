@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class WebPubSubEventHandler : IUtf8JsonSerializable
+    public partial class WebPubSubEventHandler : IUtf8JsonSerializable, IModelJsonSerializable<WebPubSubEventHandler>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebPubSubEventHandler>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebPubSubEventHandler>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebPubSubEventHandler>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
@@ -36,13 +43,34 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth);
+                if (Auth is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<UpstreamAuthSettings>)Auth).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static WebPubSubEventHandler DeserializeWebPubSubEventHandler(JsonElement element)
+        internal static WebPubSubEventHandler DeserializeWebPubSubEventHandler(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +79,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<string> userEventPattern = default;
             Optional<IList<string>> systemEvents = default;
             Optional<UpstreamAuthSettings> auth = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("urlTemplate"u8))
@@ -86,8 +115,61 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     auth = UpstreamAuthSettings.DeserializeUpstreamAuthSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebPubSubEventHandler(urlTemplate, userEventPattern.Value, Optional.ToList(systemEvents), auth.Value);
+            return new WebPubSubEventHandler(urlTemplate, userEventPattern.Value, Optional.ToList(systemEvents), auth.Value, serializedAdditionalRawData);
+        }
+
+        WebPubSubEventHandler IModelJsonSerializable<WebPubSubEventHandler>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebPubSubEventHandler>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebPubSubEventHandler(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebPubSubEventHandler>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebPubSubEventHandler>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebPubSubEventHandler IModelSerializable<WebPubSubEventHandler>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebPubSubEventHandler>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebPubSubEventHandler(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebPubSubEventHandler"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebPubSubEventHandler"/> to convert. </param>
+        public static implicit operator RequestContent(WebPubSubEventHandler model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebPubSubEventHandler"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebPubSubEventHandler(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebPubSubEventHandler(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

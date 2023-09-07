@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class ContinuousWebJobData : IUtf8JsonSerializable
+    public partial class ContinuousWebJobData : IUtf8JsonSerializable, IModelJsonSerializable<ContinuousWebJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContinuousWebJobData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContinuousWebJobData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousWebJobData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -92,11 +98,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContinuousWebJobData DeserializeContinuousWebJobData(JsonElement element)
+        internal static ContinuousWebJobData DeserializeContinuousWebJobData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,6 +136,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> error = default;
             Optional<bool> usingSdk = default;
             Optional<IDictionary<string, BinaryData>> settings = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -249,8 +270,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContinuousWebJobData(id, name, type, systemData.Value, Optional.ToNullable(status), detailedStatus.Value, logUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings), kind.Value);
+            return new ContinuousWebJobData(id, name, type, systemData.Value, Optional.ToNullable(status), detailedStatus.Value, logUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings), kind.Value, serializedAdditionalRawData);
+        }
+
+        ContinuousWebJobData IModelJsonSerializable<ContinuousWebJobData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousWebJobData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContinuousWebJobData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContinuousWebJobData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousWebJobData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContinuousWebJobData IModelSerializable<ContinuousWebJobData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousWebJobData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContinuousWebJobData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContinuousWebJobData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContinuousWebJobData"/> to convert. </param>
+        public static implicit operator RequestContent(ContinuousWebJobData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContinuousWebJobData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContinuousWebJobData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContinuousWebJobData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

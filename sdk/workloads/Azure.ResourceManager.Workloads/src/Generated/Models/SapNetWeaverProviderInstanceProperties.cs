@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the provider properties. </summary>
     public partial class SapNetWeaverProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of SapNetWeaverProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapNetWeaverProviderInstanceProperties"/>. </summary>
         public SapNetWeaverProviderInstanceProperties()
         {
             SapHostFileEntries = new ChangeTrackingList<string>();
             ProviderType = "SapNetWeaver";
         }
 
-        /// <summary> Initializes a new instance of SapNetWeaverProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapNetWeaverProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
         /// <param name="sapHostname"> Gets or sets the target virtual machine IP Address/FQDN. </param>
@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapPortNumber"> Gets or sets the SAP HTTP port number. </param>
         /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the SAP system. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
-        internal SapNetWeaverProviderInstanceProperties(string providerType, string sapSid, string sapHostname, string sapInstanceNr, IList<string> sapHostFileEntries, string sapUsername, string sapPassword, Uri sapPasswordUri, string sapClientId, string sapPortNumber, Uri sslCertificateUri, SapSslPreference? sslPreference) : base(providerType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapNetWeaverProviderInstanceProperties(string providerType, string sapSid, string sapHostname, string sapInstanceNr, IList<string> sapHostFileEntries, string sapUsername, string sapPassword, Uri sapPasswordUri, string sapClientId, string sapPortNumber, Uri sslCertificateUri, SapSslPreference? sslPreference, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(providerType, serializedAdditionalRawData)
         {
             SapSid = sapSid;
             SapHostname = sapHostname;

@@ -6,36 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DatasetDebugResourceConverter))]
-    public partial class DatasetDebugResource : IUtf8JsonSerializable
+    public partial class DatasetDebugResource : IUtf8JsonSerializable, IModelJsonSerializable<DatasetDebugResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatasetDebugResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatasetDebugResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetDebugResource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<Dataset>)Properties).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DatasetDebugResource DeserializeDatasetDebugResource(JsonElement element)
+        internal static DatasetDebugResource DeserializeDatasetDebugResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Dataset properties = default;
             Optional<string> name = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -48,8 +77,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatasetDebugResource(name.Value, properties);
+            return new DatasetDebugResource(name.Value, properties, serializedAdditionalRawData);
+        }
+
+        DatasetDebugResource IModelJsonSerializable<DatasetDebugResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetDebugResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetDebugResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatasetDebugResource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetDebugResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatasetDebugResource IModelSerializable<DatasetDebugResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetDebugResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatasetDebugResource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatasetDebugResource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatasetDebugResource"/> to convert. </param>
+        public static implicit operator RequestContent(DatasetDebugResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatasetDebugResource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatasetDebugResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatasetDebugResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DatasetDebugResourceConverter : JsonConverter<DatasetDebugResource>

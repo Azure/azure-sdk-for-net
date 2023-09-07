@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class TriggerRolloverContent : IUtf8JsonSerializable
+    public partial class TriggerRolloverContent : IUtf8JsonSerializable, IModelJsonSerializable<TriggerRolloverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TriggerRolloverContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TriggerRolloverContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TriggerRolloverContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerCertificate))
             {
@@ -24,7 +32,97 @@ namespace Azure.ResourceManager.StorageSync.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ServerCertificate.ToString()).RootElement);
 #endif
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static TriggerRolloverContent DeserializeTriggerRolloverContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<BinaryData> serverCertificate = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("serverCertificate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverCertificate = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new TriggerRolloverContent(serverCertificate.Value, serializedAdditionalRawData);
+        }
+
+        TriggerRolloverContent IModelJsonSerializable<TriggerRolloverContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TriggerRolloverContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTriggerRolloverContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TriggerRolloverContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TriggerRolloverContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TriggerRolloverContent IModelSerializable<TriggerRolloverContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TriggerRolloverContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTriggerRolloverContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TriggerRolloverContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TriggerRolloverContent"/> to convert. </param>
+        public static implicit operator RequestContent(TriggerRolloverContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TriggerRolloverContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TriggerRolloverContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTriggerRolloverContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

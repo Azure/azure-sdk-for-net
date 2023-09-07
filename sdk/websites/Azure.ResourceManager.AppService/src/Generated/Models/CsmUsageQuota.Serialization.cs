@@ -6,15 +6,74 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CsmUsageQuota
+    public partial class CsmUsageQuota : IUtf8JsonSerializable, IModelJsonSerializable<CsmUsageQuota>
     {
-        internal static CsmUsageQuota DeserializeCsmUsageQuota(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CsmUsageQuota>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CsmUsageQuota>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CsmUsageQuota>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (Optional.IsDefined(NextResetOn))
+            {
+                writer.WritePropertyName("nextResetTime"u8);
+                writer.WriteStringValue(NextResetOn.Value, "O");
+            }
+            if (Optional.IsDefined(CurrentValue))
+            {
+                writer.WritePropertyName("currentValue"u8);
+                writer.WriteNumberValue(CurrentValue.Value);
+            }
+            if (Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                if (Name is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LocalizableString>)Name).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CsmUsageQuota DeserializeCsmUsageQuota(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<LocalizableString> name = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -67,8 +127,61 @@ namespace Azure.ResourceManager.AppService.Models
                     name = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CsmUsageQuota(unit.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            return new CsmUsageQuota(unit.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+        }
+
+        CsmUsageQuota IModelJsonSerializable<CsmUsageQuota>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CsmUsageQuota>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCsmUsageQuota(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CsmUsageQuota>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CsmUsageQuota>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CsmUsageQuota IModelSerializable<CsmUsageQuota>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CsmUsageQuota>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCsmUsageQuota(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CsmUsageQuota"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CsmUsageQuota"/> to convert. </param>
+        public static implicit operator RequestContent(CsmUsageQuota model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CsmUsageQuota"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CsmUsageQuota(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCsmUsageQuota(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

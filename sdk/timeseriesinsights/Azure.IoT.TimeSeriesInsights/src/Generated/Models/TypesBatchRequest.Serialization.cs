@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class TypesBatchRequest : IUtf8JsonSerializable
+    internal partial class TypesBatchRequest : IUtf8JsonSerializable, IModelJsonSerializable<TypesBatchRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TypesBatchRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TypesBatchRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TypesBatchRequest>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Get))
             {
                 writer.WritePropertyName("get"u8);
-                writer.WriteObjectValue(Get);
+                if (Get is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TypesRequestBatchGetOrDelete>)Get).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Put))
             {
@@ -26,16 +41,145 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Put)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TimeSeriesType>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                if (Delete is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TypesRequestBatchGetOrDelete>)Delete).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static TypesBatchRequest DeserializeTypesBatchRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<TypesRequestBatchGetOrDelete> @get = default;
+            Optional<IList<TimeSeriesType>> put = default;
+            Optional<TypesRequestBatchGetOrDelete> delete = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("get"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @get = TypesRequestBatchGetOrDelete.DeserializeTypesRequestBatchGetOrDelete(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("put"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesType> array = new List<TimeSeriesType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesType.DeserializeTimeSeriesType(item));
+                    }
+                    put = array;
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delete = TypesRequestBatchGetOrDelete.DeserializeTypesRequestBatchGetOrDelete(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new TypesBatchRequest(@get.Value, Optional.ToList(put), delete.Value, serializedAdditionalRawData);
+        }
+
+        TypesBatchRequest IModelJsonSerializable<TypesBatchRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypesBatchRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTypesBatchRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TypesBatchRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypesBatchRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TypesBatchRequest IModelSerializable<TypesBatchRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypesBatchRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTypesBatchRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TypesBatchRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TypesBatchRequest"/> to convert. </param>
+        public static implicit operator RequestContent(TypesBatchRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TypesBatchRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TypesBatchRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTypesBatchRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

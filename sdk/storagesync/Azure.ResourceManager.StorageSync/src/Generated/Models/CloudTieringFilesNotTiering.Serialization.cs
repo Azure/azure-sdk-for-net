@@ -8,14 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudTieringFilesNotTiering
+    public partial class CloudTieringFilesNotTiering : IUtf8JsonSerializable, IModelJsonSerializable<CloudTieringFilesNotTiering>
     {
-        internal static CloudTieringFilesNotTiering DeserializeCloudTieringFilesNotTiering(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudTieringFilesNotTiering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudTieringFilesNotTiering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CloudTieringFilesNotTiering>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CloudTieringFilesNotTiering DeserializeCloudTieringFilesNotTiering(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +49,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<long> totalFileCount = default;
             Optional<IReadOnlyList<FilesNotTieringError>> errors = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -57,8 +84,61 @@ namespace Azure.ResourceManager.StorageSync.Models
                     errors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudTieringFilesNotTiering(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalFileCount), Optional.ToList(errors));
+            return new CloudTieringFilesNotTiering(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalFileCount), Optional.ToList(errors), serializedAdditionalRawData);
+        }
+
+        CloudTieringFilesNotTiering IModelJsonSerializable<CloudTieringFilesNotTiering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudTieringFilesNotTiering>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudTieringFilesNotTiering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudTieringFilesNotTiering>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudTieringFilesNotTiering>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudTieringFilesNotTiering IModelSerializable<CloudTieringFilesNotTiering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudTieringFilesNotTiering>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudTieringFilesNotTiering(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudTieringFilesNotTiering"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudTieringFilesNotTiering"/> to convert. </param>
+        public static implicit operator RequestContent(CloudTieringFilesNotTiering model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudTieringFilesNotTiering"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudTieringFilesNotTiering(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudTieringFilesNotTiering(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

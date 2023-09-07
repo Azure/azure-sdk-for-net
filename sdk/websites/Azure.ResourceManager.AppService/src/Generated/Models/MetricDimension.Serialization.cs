@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class MetricDimension
+    public partial class MetricDimension : IUtf8JsonSerializable, IModelJsonSerializable<MetricDimension>
     {
-        internal static MetricDimension DeserializeMetricDimension(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricDimension>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricDimension>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDimension>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(InternalName))
+            {
+                writer.WritePropertyName("internalName"u8);
+                writer.WriteStringValue(InternalName);
+            }
+            if (Optional.IsDefined(IsToBeExportedForShoebox))
+            {
+                writer.WritePropertyName("toBeExportedForShoebox"u8);
+                writer.WriteBooleanValue(IsToBeExportedForShoebox.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MetricDimension DeserializeMetricDimension(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayName = default;
             Optional<string> internalName = default;
             Optional<bool> toBeExportedForShoebox = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -48,8 +97,61 @@ namespace Azure.ResourceManager.AppService.Models
                     toBeExportedForShoebox = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetricDimension(name.Value, displayName.Value, internalName.Value, Optional.ToNullable(toBeExportedForShoebox));
+            return new MetricDimension(name.Value, displayName.Value, internalName.Value, Optional.ToNullable(toBeExportedForShoebox), serializedAdditionalRawData);
+        }
+
+        MetricDimension IModelJsonSerializable<MetricDimension>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDimension>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricDimension(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricDimension>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDimension>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricDimension IModelSerializable<MetricDimension>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDimension>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricDimension(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricDimension"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricDimension"/> to convert. </param>
+        public static implicit operator RequestContent(MetricDimension model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricDimension"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricDimension(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricDimension(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

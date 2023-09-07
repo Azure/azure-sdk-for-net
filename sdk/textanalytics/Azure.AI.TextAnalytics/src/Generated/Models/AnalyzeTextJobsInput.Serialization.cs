@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AnalyzeTextJobsInput : IUtf8JsonSerializable
+    internal partial class AnalyzeTextJobsInput : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeTextJobsInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeTextJobsInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeTextJobsInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextJobsInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
@@ -21,15 +29,132 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(AnalysisInput);
+            if (AnalysisInput is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MultiLanguageAnalysisInput>)AnalysisInput).Serialize(writer, options);
+            }
             writer.WritePropertyName("tasks"u8);
             writer.WriteStartArray();
             foreach (var item in Tasks)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AnalyzeTextLROTask>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AnalyzeTextJobsInput DeserializeAnalyzeTextJobsInput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> displayName = default;
+            MultiLanguageAnalysisInput analysisInput = default;
+            IList<AnalyzeTextLROTask> tasks = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("analysisInput"u8))
+                {
+                    analysisInput = MultiLanguageAnalysisInput.DeserializeMultiLanguageAnalysisInput(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tasks"u8))
+                {
+                    List<AnalyzeTextLROTask> array = new List<AnalyzeTextLROTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AnalyzeTextLROTask.DeserializeAnalyzeTextLROTask(item));
+                    }
+                    tasks = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AnalyzeTextJobsInput(displayName.Value, analysisInput, tasks, serializedAdditionalRawData);
+        }
+
+        AnalyzeTextJobsInput IModelJsonSerializable<AnalyzeTextJobsInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextJobsInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextJobsInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeTextJobsInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextJobsInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeTextJobsInput IModelSerializable<AnalyzeTextJobsInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextJobsInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTextJobsInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalyzeTextJobsInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalyzeTextJobsInput"/> to convert. </param>
+        public static implicit operator RequestContent(AnalyzeTextJobsInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalyzeTextJobsInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalyzeTextJobsInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeTextJobsInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

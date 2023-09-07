@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(JsonFormatConverter))]
-    public partial class JsonFormat : IUtf8JsonSerializable
+    public partial class JsonFormat : IUtf8JsonSerializable, IModelJsonSerializable<JsonFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JsonFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JsonFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JsonFormat>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FilePattern))
             {
@@ -64,8 +70,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static JsonFormat DeserializeJsonFormat(JsonElement element)
+        internal static JsonFormat DeserializeJsonFormat(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,6 +162,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new JsonFormat(type, serializer.Value, deserializer.Value, additionalProperties, filePattern.Value, nestingSeparator.Value, encodingName.Value, jsonNodeReference.Value, jsonPathDefinition.Value);
+        }
+
+        JsonFormat IModelJsonSerializable<JsonFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonFormat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JsonFormat>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonFormat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JsonFormat IModelSerializable<JsonFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonFormat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJsonFormat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JsonFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JsonFormat"/> to convert. </param>
+        public static implicit operator RequestContent(JsonFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JsonFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JsonFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJsonFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class JsonFormatConverter : JsonConverter<JsonFormat>

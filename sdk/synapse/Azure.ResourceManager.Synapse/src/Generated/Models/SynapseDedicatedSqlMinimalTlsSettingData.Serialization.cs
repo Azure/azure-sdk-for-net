@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseDedicatedSqlMinimalTlsSettingData : IUtf8JsonSerializable
+    public partial class SynapseDedicatedSqlMinimalTlsSettingData : IUtf8JsonSerializable, IModelJsonSerializable<SynapseDedicatedSqlMinimalTlsSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseDedicatedSqlMinimalTlsSettingData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseDedicatedSqlMinimalTlsSettingData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseDedicatedSqlMinimalTlsSettingData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStringValue(MinimalTlsVersion);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseDedicatedSqlMinimalTlsSettingData DeserializeSynapseDedicatedSqlMinimalTlsSettingData(JsonElement element)
+        internal static SynapseDedicatedSqlMinimalTlsSettingData DeserializeSynapseDedicatedSqlMinimalTlsSettingData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Synapse
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> minimalTlsVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -91,8 +114,61 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseDedicatedSqlMinimalTlsSettingData(id, name, type, systemData.Value, Optional.ToNullable(location), minimalTlsVersion.Value);
+            return new SynapseDedicatedSqlMinimalTlsSettingData(id, name, type, systemData.Value, Optional.ToNullable(location), minimalTlsVersion.Value, serializedAdditionalRawData);
+        }
+
+        SynapseDedicatedSqlMinimalTlsSettingData IModelJsonSerializable<SynapseDedicatedSqlMinimalTlsSettingData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseDedicatedSqlMinimalTlsSettingData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseDedicatedSqlMinimalTlsSettingData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseDedicatedSqlMinimalTlsSettingData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseDedicatedSqlMinimalTlsSettingData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseDedicatedSqlMinimalTlsSettingData IModelSerializable<SynapseDedicatedSqlMinimalTlsSettingData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseDedicatedSqlMinimalTlsSettingData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseDedicatedSqlMinimalTlsSettingData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseDedicatedSqlMinimalTlsSettingData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseDedicatedSqlMinimalTlsSettingData"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseDedicatedSqlMinimalTlsSettingData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseDedicatedSqlMinimalTlsSettingData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseDedicatedSqlMinimalTlsSettingData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseDedicatedSqlMinimalTlsSettingData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

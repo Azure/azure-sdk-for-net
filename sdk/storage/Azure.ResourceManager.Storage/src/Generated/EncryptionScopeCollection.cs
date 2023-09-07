@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionScopeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionScopeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

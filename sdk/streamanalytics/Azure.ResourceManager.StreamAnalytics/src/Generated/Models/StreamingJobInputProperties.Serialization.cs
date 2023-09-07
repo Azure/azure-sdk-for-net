@@ -5,27 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobInputProperties : IUtf8JsonSerializable
+    public partial class StreamingJobInputProperties : IUtf8JsonSerializable, IModelJsonSerializable<StreamingJobInputProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamingJobInputProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamingJobInputProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobInputProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
             if (Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
-                writer.WriteObjectValue(Serialization);
+                if (Serialization is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StreamAnalyticsDataSerialization>)Serialization).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue(Compression);
+                if (Compression is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StreamingCompression>)Compression).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PartitionKey))
             {
@@ -35,13 +57,34 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
-                writer.WriteObjectValue(WatermarkSettings);
+                if (WatermarkSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StreamingJobInputWatermarkProperties>)WatermarkSettings).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static StreamingJobInputProperties DeserializeStreamingJobInputProperties(JsonElement element)
+        internal static StreamingJobInputProperties DeserializeStreamingJobInputProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,7 +97,128 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     case "Stream": return StreamInputProperties.DeserializeStreamInputProperties(element);
                 }
             }
-            return UnknownInputProperties.DeserializeUnknownInputProperties(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string type = default;
+            Optional<StreamAnalyticsDataSerialization> serialization = default;
+            Optional<StreamingJobDiagnostics> diagnostics = default;
+            Optional<ETag> etag = default;
+            Optional<StreamingCompression> compression = default;
+            Optional<string> partitionKey = default;
+            Optional<StreamingJobInputWatermarkProperties> watermarkSettings = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serialization"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("diagnostics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("compression"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    compression = StreamingCompression.DeserializeStreamingCompression(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("partitionKey"u8))
+                {
+                    partitionKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("watermarkSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownInputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value, serializedAdditionalRawData);
+        }
+
+        StreamingJobInputProperties IModelJsonSerializable<StreamingJobInputProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobInputProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingJobInputProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamingJobInputProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobInputProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamingJobInputProperties IModelSerializable<StreamingJobInputProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobInputProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamingJobInputProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StreamingJobInputProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StreamingJobInputProperties"/> to convert. </param>
+        public static implicit operator RequestContent(StreamingJobInputProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StreamingJobInputProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StreamingJobInputProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamingJobInputProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

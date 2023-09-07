@@ -5,13 +5,150 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class HierarchiesBatchResponse
+    internal partial class HierarchiesBatchResponse : IUtf8JsonSerializable, IModelJsonSerializable<HierarchiesBatchResponse>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HierarchiesBatchResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HierarchiesBatchResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesBatchResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HierarchiesBatchResponse DeserializeHierarchiesBatchResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<TimeSeriesHierarchyOperationResult>> @get = default;
+            Optional<IReadOnlyList<TimeSeriesHierarchyOperationResult>> put = default;
+            Optional<IReadOnlyList<TimeSeriesOperationError>> delete = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("get"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesHierarchyOperationResult> array = new List<TimeSeriesHierarchyOperationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesHierarchyOperationResult.DeserializeTimeSeriesHierarchyOperationResult(item));
+                    }
+                    @get = array;
+                    continue;
+                }
+                if (property.NameEquals("put"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesHierarchyOperationResult> array = new List<TimeSeriesHierarchyOperationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesHierarchyOperationResult.DeserializeTimeSeriesHierarchyOperationResult(item));
+                    }
+                    put = array;
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesOperationError> array = new List<TimeSeriesOperationError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesOperationError.DeserializeTimeSeriesOperationError(item));
+                    }
+                    delete = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HierarchiesBatchResponse(Optional.ToList(@get), Optional.ToList(put), Optional.ToList(delete), serializedAdditionalRawData);
+        }
+
+        HierarchiesBatchResponse IModelJsonSerializable<HierarchiesBatchResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesBatchResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHierarchiesBatchResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HierarchiesBatchResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesBatchResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HierarchiesBatchResponse IModelSerializable<HierarchiesBatchResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesBatchResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHierarchiesBatchResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HierarchiesBatchResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HierarchiesBatchResponse"/> to convert. </param>
+        public static implicit operator RequestContent(HierarchiesBatchResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HierarchiesBatchResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HierarchiesBatchResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHierarchiesBatchResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

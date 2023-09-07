@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareSignedIdentifier : IXmlSerializable
+    public partial class ShareSignedIdentifier : IXmlSerializable, IModelSerializable<ShareSignedIdentifier>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");
@@ -26,8 +30,11 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareSignedIdentifier DeserializeShareSignedIdentifier(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ShareSignedIdentifier DeserializeShareSignedIdentifier(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string id = default;
             ShareAccessPolicy accessPolicy = default;
             if (element.Element("Id") is XElement idElement)
@@ -38,7 +45,57 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 accessPolicy = ShareAccessPolicy.DeserializeShareAccessPolicy(accessPolicyElement);
             }
-            return new ShareSignedIdentifier(id, accessPolicy);
+            return new ShareSignedIdentifier(id, accessPolicy, default);
+        }
+
+        BinaryData IModelSerializable<ShareSignedIdentifier>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ShareSignedIdentifier>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ShareSignedIdentifier IModelSerializable<ShareSignedIdentifier>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ShareSignedIdentifier>(this, options.Format);
+
+            return DeserializeShareSignedIdentifier(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="ShareSignedIdentifier"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ShareSignedIdentifier"/> to convert. </param>
+        public static implicit operator RequestContent(ShareSignedIdentifier model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ShareSignedIdentifier"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ShareSignedIdentifier(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeShareSignedIdentifier(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

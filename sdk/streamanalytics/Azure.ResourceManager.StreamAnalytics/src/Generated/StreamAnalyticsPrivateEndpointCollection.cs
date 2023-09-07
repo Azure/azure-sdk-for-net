@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

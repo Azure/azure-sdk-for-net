@@ -5,16 +5,99 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteCloneability
+    public partial class SiteCloneability : IUtf8JsonSerializable, IModelJsonSerializable<SiteCloneability>
     {
-        internal static SiteCloneability DeserializeSiteCloneability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteCloneability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteCloneability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteCloneability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Result))
+            {
+                writer.WritePropertyName("result"u8);
+                writer.WriteStringValue(Result.Value.ToSerialString());
+            }
+            if (Optional.IsCollectionDefined(BlockingFeatures))
+            {
+                writer.WritePropertyName("blockingFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in BlockingFeatures)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteCloneabilityCriterion>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(UnsupportedFeatures))
+            {
+                writer.WritePropertyName("unsupportedFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in UnsupportedFeatures)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteCloneabilityCriterion>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(BlockingCharacteristics))
+            {
+                writer.WritePropertyName("blockingCharacteristics"u8);
+                writer.WriteStartArray();
+                foreach (var item in BlockingCharacteristics)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteCloneabilityCriterion>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteCloneability DeserializeSiteCloneability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingFeatures = default;
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> unsupportedFeatures = default;
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingCharacteristics = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -76,8 +160,61 @@ namespace Azure.ResourceManager.AppService.Models
                     blockingCharacteristics = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteCloneability(Optional.ToNullable(result), Optional.ToList(blockingFeatures), Optional.ToList(unsupportedFeatures), Optional.ToList(blockingCharacteristics));
+            return new SiteCloneability(Optional.ToNullable(result), Optional.ToList(blockingFeatures), Optional.ToList(unsupportedFeatures), Optional.ToList(blockingCharacteristics), serializedAdditionalRawData);
+        }
+
+        SiteCloneability IModelJsonSerializable<SiteCloneability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteCloneability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteCloneability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteCloneability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteCloneability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteCloneability IModelSerializable<SiteCloneability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteCloneability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteCloneability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteCloneability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteCloneability"/> to convert. </param>
+        public static implicit operator RequestContent(SiteCloneability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteCloneability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteCloneability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteCloneability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

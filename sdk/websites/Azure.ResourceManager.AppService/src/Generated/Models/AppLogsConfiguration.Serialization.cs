@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppLogsConfiguration : IUtf8JsonSerializable
+    public partial class AppLogsConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<AppLogsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppLogsConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppLogsConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppLogsConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Destination))
             {
@@ -23,19 +31,41 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(LogAnalyticsConfiguration))
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(LogAnalyticsConfiguration);
+                if (LogAnalyticsConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogAnalyticsConfiguration>)LogAnalyticsConfiguration).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AppLogsConfiguration DeserializeAppLogsConfiguration(JsonElement element)
+        internal static AppLogsConfiguration DeserializeAppLogsConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> destination = default;
             Optional<LogAnalyticsConfiguration> logAnalyticsConfiguration = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destination"u8))
@@ -52,8 +82,61 @@ namespace Azure.ResourceManager.AppService.Models
                     logAnalyticsConfiguration = LogAnalyticsConfiguration.DeserializeLogAnalyticsConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppLogsConfiguration(destination.Value, logAnalyticsConfiguration.Value);
+            return new AppLogsConfiguration(destination.Value, logAnalyticsConfiguration.Value, serializedAdditionalRawData);
+        }
+
+        AppLogsConfiguration IModelJsonSerializable<AppLogsConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppLogsConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppLogsConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppLogsConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppLogsConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppLogsConfiguration IModelSerializable<AppLogsConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppLogsConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppLogsConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppLogsConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppLogsConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(AppLogsConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppLogsConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppLogsConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppLogsConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

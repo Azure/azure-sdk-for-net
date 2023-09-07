@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolIscsiTargetIscsiTargetsRestClient.CreateListByDiskPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolIscsiTargetIscsiTargetsRestClient.CreateListByDiskPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolIscsiTargetResource(Client, DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(e)), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, "DiskPoolIscsiTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DiskPoolIscsiTargetResource(Client, DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(e)), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, "DiskPoolIscsiTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolIscsiTargetIscsiTargetsRestClient.CreateListByDiskPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolIscsiTargetIscsiTargetsRestClient.CreateListByDiskPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolIscsiTargetResource(Client, DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(e)), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, "DiskPoolIscsiTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DiskPoolIscsiTargetResource(Client, DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(e)), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, "DiskPoolIscsiTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

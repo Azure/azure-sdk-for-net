@@ -5,33 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class LivePipeline : IUtf8JsonSerializable
+    public partial class LivePipeline : IUtf8JsonSerializable, IModelJsonSerializable<LivePipeline>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LivePipeline>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LivePipeline>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LivePipeline>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                if (SystemData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SystemData>)SystemData).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LivePipelineProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static LivePipeline DeserializeLivePipeline(JsonElement element)
+        internal static LivePipeline DeserializeLivePipeline(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +75,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string name = default;
             Optional<SystemData> systemData = default;
             Optional<LivePipelineProperties> properties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,8 +101,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     properties = LivePipelineProperties.DeserializeLivePipelineProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LivePipeline(name, systemData.Value, properties.Value);
+            return new LivePipeline(name, systemData.Value, properties.Value, serializedAdditionalRawData);
+        }
+
+        LivePipeline IModelJsonSerializable<LivePipeline>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LivePipeline>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLivePipeline(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LivePipeline>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LivePipeline>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LivePipeline IModelSerializable<LivePipeline>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LivePipeline>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLivePipeline(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LivePipeline"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LivePipeline"/> to convert. </param>
+        public static implicit operator RequestContent(LivePipeline model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LivePipeline"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LivePipeline(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLivePipeline(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

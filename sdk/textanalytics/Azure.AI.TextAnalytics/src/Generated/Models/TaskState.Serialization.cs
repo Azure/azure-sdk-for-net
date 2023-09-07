@@ -6,32 +6,54 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TaskState : IUtf8JsonSerializable
+    internal partial class TaskState : IUtf8JsonSerializable, IModelJsonSerializable<TaskState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TaskState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TaskState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TaskState>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("lastUpdateDateTime"u8);
             writer.WriteStringValue(LastUpdateDateTime, "O");
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TaskState DeserializeTaskState(JsonElement element)
+        internal static TaskState DeserializeTaskState(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdateDateTime"u8))
@@ -44,8 +66,61 @@ namespace Azure.AI.TextAnalytics.Models
                     status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TaskState(lastUpdateDateTime, status);
+            return new TaskState(lastUpdateDateTime, status, serializedAdditionalRawData);
+        }
+
+        TaskState IModelJsonSerializable<TaskState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TaskState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTaskState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TaskState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TaskState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TaskState IModelSerializable<TaskState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TaskState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTaskState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TaskState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TaskState"/> to convert. </param>
+        public static implicit operator RequestContent(TaskState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TaskState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TaskState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTaskState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

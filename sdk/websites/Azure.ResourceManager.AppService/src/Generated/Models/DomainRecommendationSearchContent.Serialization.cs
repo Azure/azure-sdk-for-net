@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DomainRecommendationSearchContent : IUtf8JsonSerializable
+    public partial class DomainRecommendationSearchContent : IUtf8JsonSerializable, IModelJsonSerializable<DomainRecommendationSearchContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DomainRecommendationSearchContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DomainRecommendationSearchContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DomainRecommendationSearchContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Keywords))
             {
@@ -25,7 +33,103 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("maxDomainRecommendations"u8);
                 writer.WriteNumberValue(MaxDomainRecommendations.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DomainRecommendationSearchContent DeserializeDomainRecommendationSearchContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> keywords = default;
+            Optional<int> maxDomainRecommendations = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("keywords"u8))
+                {
+                    keywords = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxDomainRecommendations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxDomainRecommendations = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DomainRecommendationSearchContent(keywords.Value, Optional.ToNullable(maxDomainRecommendations), serializedAdditionalRawData);
+        }
+
+        DomainRecommendationSearchContent IModelJsonSerializable<DomainRecommendationSearchContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DomainRecommendationSearchContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDomainRecommendationSearchContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DomainRecommendationSearchContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DomainRecommendationSearchContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DomainRecommendationSearchContent IModelSerializable<DomainRecommendationSearchContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DomainRecommendationSearchContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDomainRecommendationSearchContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DomainRecommendationSearchContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DomainRecommendationSearchContent"/> to convert. </param>
+        public static implicit operator RequestContent(DomainRecommendationSearchContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DomainRecommendationSearchContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DomainRecommendationSearchContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDomainRecommendationSearchContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

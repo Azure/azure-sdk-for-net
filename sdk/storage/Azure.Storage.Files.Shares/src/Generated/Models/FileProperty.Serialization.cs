@@ -6,15 +6,67 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileProperty
+    internal partial class FileProperty : IXmlSerializable, IModelSerializable<FileProperty>
     {
-        internal static FileProperty DeserializeFileProperty(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "FileProperty");
+            writer.WriteStartElement("Content-Length");
+            writer.WriteValue(ContentLength);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(CreationTime))
+            {
+                writer.WriteStartElement("CreationTime");
+                writer.WriteValue(CreationTime.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastAccessTime))
+            {
+                writer.WriteStartElement("LastAccessTime");
+                writer.WriteValue(LastAccessTime.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastWriteTime))
+            {
+                writer.WriteStartElement("LastWriteTime");
+                writer.WriteValue(LastWriteTime.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ChangeTime))
+            {
+                writer.WriteStartElement("ChangeTime");
+                writer.WriteValue(ChangeTime.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastModified))
+            {
+                writer.WriteStartElement("Last-Modified");
+                writer.WriteValue(LastModified.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Etag))
+            {
+                writer.WriteStartElement("Etag");
+                writer.WriteValue(Etag);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static FileProperty DeserializeFileProperty(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             long contentLength = default;
             DateTimeOffset? creationTime = default;
             DateTimeOffset? lastAccessTime = default;
@@ -50,7 +102,57 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 etag = (string)etagElement;
             }
-            return new FileProperty(contentLength, creationTime, lastAccessTime, lastWriteTime, changeTime, lastModified, etag);
+            return new FileProperty(contentLength, creationTime, lastAccessTime, lastWriteTime, changeTime, lastModified, etag, default);
+        }
+
+        BinaryData IModelSerializable<FileProperty>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FileProperty>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        FileProperty IModelSerializable<FileProperty>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FileProperty>(this, options.Format);
+
+            return DeserializeFileProperty(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="FileProperty"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FileProperty"/> to convert. </param>
+        public static implicit operator RequestContent(FileProperty model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FileProperty"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FileProperty(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeFileProperty(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

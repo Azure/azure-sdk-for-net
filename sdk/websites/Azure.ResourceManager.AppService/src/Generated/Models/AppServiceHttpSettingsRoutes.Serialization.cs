@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class AppServiceHttpSettingsRoutes : IUtf8JsonSerializable
+    internal partial class AppServiceHttpSettingsRoutes : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceHttpSettingsRoutes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceHttpSettingsRoutes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceHttpSettingsRoutes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceHttpSettingsRoutes>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ApiPrefix))
             {
                 writer.WritePropertyName("apiPrefix"u8);
                 writer.WriteStringValue(ApiPrefix);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceHttpSettingsRoutes DeserializeAppServiceHttpSettingsRoutes(JsonElement element)
+        internal static AppServiceHttpSettingsRoutes DeserializeAppServiceHttpSettingsRoutes(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> apiPrefix = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiPrefix"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.AppService.Models
                     apiPrefix = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceHttpSettingsRoutes(apiPrefix.Value);
+            return new AppServiceHttpSettingsRoutes(apiPrefix.Value, serializedAdditionalRawData);
+        }
+
+        AppServiceHttpSettingsRoutes IModelJsonSerializable<AppServiceHttpSettingsRoutes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceHttpSettingsRoutes>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceHttpSettingsRoutes(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceHttpSettingsRoutes>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceHttpSettingsRoutes>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceHttpSettingsRoutes IModelSerializable<AppServiceHttpSettingsRoutes>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceHttpSettingsRoutes>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceHttpSettingsRoutes(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceHttpSettingsRoutes"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceHttpSettingsRoutes"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceHttpSettingsRoutes model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceHttpSettingsRoutes"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceHttpSettingsRoutes(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceHttpSettingsRoutes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

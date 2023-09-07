@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the PrometheusHaCluster provider properties. </summary>
     public partial class PrometheusHAClusterProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of PrometheusHAClusterProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusHAClusterProviderInstanceProperties"/>. </summary>
         public PrometheusHAClusterProviderInstanceProperties()
         {
             ProviderType = "PrometheusHaCluster";
         }
 
-        /// <summary> Initializes a new instance of PrometheusHAClusterProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusHAClusterProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
         /// <param name="hostname"> Gets or sets the target machine name. </param>
@@ -26,7 +27,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="clusterName"> Gets or sets the clusterName. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
         /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the HA cluster exporter. </param>
-        internal PrometheusHAClusterProviderInstanceProperties(string providerType, Uri prometheusUri, string hostname, string sid, string clusterName, SapSslPreference? sslPreference, Uri sslCertificateUri) : base(providerType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrometheusHAClusterProviderInstanceProperties(string providerType, Uri prometheusUri, string hostname, string sid, string clusterName, SapSslPreference? sslPreference, Uri sslCertificateUri, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(providerType, serializedAdditionalRawData)
         {
             PrometheusUri = prometheusUri;
             Hostname = hostname;

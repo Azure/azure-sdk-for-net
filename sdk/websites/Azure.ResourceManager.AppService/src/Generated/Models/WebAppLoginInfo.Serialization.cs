@@ -5,26 +5,47 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppLoginInfo : IUtf8JsonSerializable
+    public partial class WebAppLoginInfo : IUtf8JsonSerializable, IModelJsonSerializable<WebAppLoginInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebAppLoginInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebAppLoginInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebAppLoginInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes);
+                if (Routes is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LoginRoutes>)Routes).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TokenStore))
             {
                 writer.WritePropertyName("tokenStore"u8);
-                writer.WriteObjectValue(TokenStore);
+                if (TokenStore is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppServiceTokenStore>)TokenStore).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
@@ -44,18 +65,46 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
-                writer.WriteObjectValue(CookieExpiration);
+                if (CookieExpiration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WebAppCookieExpiration>)CookieExpiration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
-                writer.WriteObjectValue(Nonce);
+                if (Nonce is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LoginFlowNonceSettings>)Nonce).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static WebAppLoginInfo DeserializeWebAppLoginInfo(JsonElement element)
+        internal static WebAppLoginInfo DeserializeWebAppLoginInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<string>> allowedExternalRedirectUrls = default;
             Optional<WebAppCookieExpiration> cookieExpiration = default;
             Optional<LoginFlowNonceSettings> nonce = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"u8))
@@ -127,8 +177,61 @@ namespace Azure.ResourceManager.AppService.Models
                     nonce = LoginFlowNonceSettings.DeserializeLoginFlowNonceSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebAppLoginInfo(routes.Value, tokenStore.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value);
+            return new WebAppLoginInfo(routes.Value, tokenStore.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value, serializedAdditionalRawData);
+        }
+
+        WebAppLoginInfo IModelJsonSerializable<WebAppLoginInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebAppLoginInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebAppLoginInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebAppLoginInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebAppLoginInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebAppLoginInfo IModelSerializable<WebAppLoginInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebAppLoginInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebAppLoginInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebAppLoginInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebAppLoginInfo"/> to convert. </param>
+        public static implicit operator RequestContent(WebAppLoginInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebAppLoginInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebAppLoginInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebAppLoginInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

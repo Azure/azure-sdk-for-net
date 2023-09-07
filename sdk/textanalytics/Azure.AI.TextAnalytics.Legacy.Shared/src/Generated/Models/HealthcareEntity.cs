@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The HealthcareEntity. </summary>
     internal partial class HealthcareEntity : HealthcareEntityProperties
     {
-        /// <summary> Initializes a new instance of HealthcareEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Links = new ChangeTrackingList<HealthcareEntityLink>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
@@ -39,11 +39,17 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
-        internal HealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links) : base(text, category, subcategory, offset, length, confidenceScore)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(text, category, subcategory, offset, length, confidenceScore, serializedAdditionalRawData)
         {
             Assertion = assertion;
             Name = name;
             Links = links;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/> for deserialization. </summary>
+        internal HealthcareEntity()
+        {
         }
 
         /// <summary> Gets the assertion. </summary>

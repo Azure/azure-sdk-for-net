@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class RtspSource : IUtf8JsonSerializable
+    public partial class RtspSource : IUtf8JsonSerializable, IModelJsonSerializable<RtspSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RtspSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RtspSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RtspSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Transport))
             {
@@ -21,16 +29,37 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Transport.Value.ToString());
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            if (Endpoint is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EndpointBase>)Endpoint).Serialize(writer, options);
+            }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RtspSource DeserializeRtspSource(JsonElement element)
+        internal static RtspSource DeserializeRtspSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +68,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             EndpointBase endpoint = default;
             string type = default;
             string name = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transport"u8))
@@ -65,8 +95,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RtspSource(type, name, Optional.ToNullable(transport), endpoint);
+            return new RtspSource(type, name, Optional.ToNullable(transport), endpoint, serializedAdditionalRawData);
+        }
+
+        RtspSource IModelJsonSerializable<RtspSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RtspSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRtspSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RtspSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RtspSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RtspSource IModelSerializable<RtspSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RtspSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRtspSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RtspSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RtspSource"/> to convert. </param>
+        public static implicit operator RequestContent(RtspSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RtspSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RtspSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRtspSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

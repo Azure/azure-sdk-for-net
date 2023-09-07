@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LibraryRequirementsConverter))]
-    public partial class LibraryRequirements : IUtf8JsonSerializable
+    public partial class LibraryRequirements : IUtf8JsonSerializable, IModelJsonSerializable<LibraryRequirements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LibraryRequirements>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LibraryRequirements>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LibraryRequirements>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Content))
             {
@@ -28,11 +35,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LibraryRequirements DeserializeLibraryRequirements(JsonElement element)
+        internal static LibraryRequirements DeserializeLibraryRequirements(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset> time = default;
             Optional<string> content = default;
             Optional<string> filename = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -61,8 +83,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     filename = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value);
+            return new LibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value, serializedAdditionalRawData);
+        }
+
+        LibraryRequirements IModelJsonSerializable<LibraryRequirements>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LibraryRequirements>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLibraryRequirements(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LibraryRequirements>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LibraryRequirements>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LibraryRequirements IModelSerializable<LibraryRequirements>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LibraryRequirements>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLibraryRequirements(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LibraryRequirements"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LibraryRequirements"/> to convert. </param>
+        public static implicit operator RequestContent(LibraryRequirements model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LibraryRequirements"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LibraryRequirements(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLibraryRequirements(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class LibraryRequirementsConverter : JsonConverter<LibraryRequirements>

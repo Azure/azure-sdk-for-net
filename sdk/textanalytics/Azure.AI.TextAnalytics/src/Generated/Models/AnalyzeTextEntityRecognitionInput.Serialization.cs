@@ -5,29 +5,157 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AnalyzeTextEntityRecognitionInput : IUtf8JsonSerializable
+    internal partial class AnalyzeTextEntityRecognitionInput : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeTextEntityRecognitionInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeTextEntityRecognitionInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeTextEntityRecognitionInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextEntityRecognitionInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AnalysisInput))
             {
                 writer.WritePropertyName("analysisInput"u8);
-                writer.WriteObjectValue(AnalysisInput);
+                if (AnalysisInput is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MultiLanguageAnalysisInput>)AnalysisInput).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                if (Parameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EntitiesTaskParameters>)Parameters).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AnalyzeTextEntityRecognitionInput DeserializeAnalyzeTextEntityRecognitionInput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<MultiLanguageAnalysisInput> analysisInput = default;
+            Optional<EntitiesTaskParameters> parameters = default;
+            AnalyzeTextTaskKind kind = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("analysisInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    analysisInput = MultiLanguageAnalysisInput.DeserializeMultiLanguageAnalysisInput(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = EntitiesTaskParameters.DeserializeEntitiesTaskParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new AnalyzeTextTaskKind(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AnalyzeTextEntityRecognitionInput(kind, analysisInput.Value, parameters.Value, serializedAdditionalRawData);
+        }
+
+        AnalyzeTextEntityRecognitionInput IModelJsonSerializable<AnalyzeTextEntityRecognitionInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextEntityRecognitionInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextEntityRecognitionInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeTextEntityRecognitionInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextEntityRecognitionInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeTextEntityRecognitionInput IModelSerializable<AnalyzeTextEntityRecognitionInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextEntityRecognitionInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTextEntityRecognitionInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalyzeTextEntityRecognitionInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalyzeTextEntityRecognitionInput"/> to convert. </param>
+        public static implicit operator RequestContent(AnalyzeTextEntityRecognitionInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalyzeTextEntityRecognitionInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalyzeTextEntityRecognitionInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeTextEntityRecognitionInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

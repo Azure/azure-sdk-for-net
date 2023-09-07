@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class StorageTargetData : IUtf8JsonSerializable
+    public partial class StorageTargetData : IUtf8JsonSerializable, IModelJsonSerializable<StorageTargetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageTargetData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageTargetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageTargetData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -26,7 +33,14 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in Junctions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NamespaceJunction>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,29 +57,71 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Nfs3))
             {
                 writer.WritePropertyName("nfs3"u8);
-                writer.WriteObjectValue(Nfs3);
+                if (Nfs3 is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<Nfs3Target>)Nfs3).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Clfs))
             {
                 writer.WritePropertyName("clfs"u8);
-                writer.WriteObjectValue(Clfs);
+                if (Clfs is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClfsTarget>)Clfs).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Unknown))
             {
                 writer.WritePropertyName("unknown"u8);
-                writer.WriteObjectValue(Unknown);
+                if (Unknown is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<UnknownTarget>)Unknown).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(BlobNfs))
             {
                 writer.WritePropertyName("blobNfs"u8);
-                writer.WriteObjectValue(BlobNfs);
+                if (BlobNfs is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BlobNfsTarget>)BlobNfs).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageTargetData DeserializeStorageTargetData(JsonElement element)
+        internal static StorageTargetData DeserializeStorageTargetData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +140,7 @@ namespace Azure.ResourceManager.StorageCache
             Optional<UnknownTarget> unknown = default;
             Optional<BlobNfsTarget> blobNfs = default;
             Optional<int> allocationPercentage = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -217,8 +274,61 @@ namespace Azure.ResourceManager.StorageCache
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageTargetData(id, name, type, systemData.Value, Optional.ToList(junctions), Optional.ToNullable(targetType), Optional.ToNullable(provisioningState), Optional.ToNullable(state), nfs3.Value, clfs.Value, unknown.Value, blobNfs.Value, Optional.ToNullable(allocationPercentage), Optional.ToNullable(location));
+            return new StorageTargetData(id, name, type, systemData.Value, Optional.ToList(junctions), Optional.ToNullable(targetType), Optional.ToNullable(provisioningState), Optional.ToNullable(state), nfs3.Value, clfs.Value, unknown.Value, blobNfs.Value, Optional.ToNullable(allocationPercentage), Optional.ToNullable(location), serializedAdditionalRawData);
+        }
+
+        StorageTargetData IModelJsonSerializable<StorageTargetData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageTargetData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageTargetData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageTargetData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageTargetData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageTargetData IModelSerializable<StorageTargetData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageTargetData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageTargetData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageTargetData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageTargetData"/> to convert. </param>
+        public static implicit operator RequestContent(StorageTargetData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageTargetData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageTargetData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageTargetData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

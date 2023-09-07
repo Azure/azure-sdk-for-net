@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.Workloads.Models
     /// Please note <see cref="SapOSConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SapLinuxConfiguration"/> and <see cref="SapWindowsConfiguration"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownOSConfiguration))]
     public abstract partial class SapOSConfiguration
     {
-        /// <summary> Initializes a new instance of SapOSConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapOSConfiguration"/>. </summary>
         protected SapOSConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SapOSConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOSConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
-        internal SapOSConfiguration(SapOSType osType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapOSConfiguration(SapOSType osType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSType = osType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The OS Type. </summary>

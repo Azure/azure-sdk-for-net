@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDatabricksDeltaLakeSinkConverter))]
-    public partial class AzureDatabricksDeltaLakeSink : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeSink : IUtf8JsonSerializable, IModelJsonSerializable<AzureDatabricksDeltaLakeSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureDatabricksDeltaLakeSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureDatabricksDeltaLakeSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDatabricksDeltaLakeSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreCopyScript))
             {
@@ -27,7 +33,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ImportSettings))
             {
                 writer.WritePropertyName("importSettings"u8);
-                writer.WriteObjectValue(ImportSettings);
+                if (ImportSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AzureDatabricksDeltaLakeImportCommand>)ImportSettings).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -64,8 +77,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDatabricksDeltaLakeSink DeserializeAzureDatabricksDeltaLakeSink(JsonElement element)
+        internal static AzureDatabricksDeltaLakeSink DeserializeAzureDatabricksDeltaLakeSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,6 +169,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDatabricksDeltaLakeSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, preCopyScript.Value, importSettings.Value);
+        }
+
+        AzureDatabricksDeltaLakeSink IModelJsonSerializable<AzureDatabricksDeltaLakeSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDatabricksDeltaLakeSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDatabricksDeltaLakeSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureDatabricksDeltaLakeSink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDatabricksDeltaLakeSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureDatabricksDeltaLakeSink IModelSerializable<AzureDatabricksDeltaLakeSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDatabricksDeltaLakeSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureDatabricksDeltaLakeSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureDatabricksDeltaLakeSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureDatabricksDeltaLakeSink"/> to convert. </param>
+        public static implicit operator RequestContent(AzureDatabricksDeltaLakeSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureDatabricksDeltaLakeSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureDatabricksDeltaLakeSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureDatabricksDeltaLakeSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AzureDatabricksDeltaLakeSinkConverter : JsonConverter<AzureDatabricksDeltaLakeSink>

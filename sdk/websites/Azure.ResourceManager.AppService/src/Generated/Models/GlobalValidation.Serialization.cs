@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class GlobalValidation : IUtf8JsonSerializable
+    public partial class GlobalValidation : IUtf8JsonSerializable, IModelJsonSerializable<GlobalValidation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GlobalValidation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GlobalValidation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalValidation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsAuthenticationRequired))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GlobalValidation DeserializeGlobalValidation(JsonElement element)
+        internal static GlobalValidation DeserializeGlobalValidation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<UnauthenticatedClientActionV2> unauthenticatedClientAction = default;
             Optional<string> redirectToProvider = default;
             Optional<IList<string>> excludedPaths = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requireAuthentication"u8))
@@ -93,8 +115,61 @@ namespace Azure.ResourceManager.AppService.Models
                     excludedPaths = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GlobalValidation(Optional.ToNullable(requireAuthentication), Optional.ToNullable(unauthenticatedClientAction), redirectToProvider.Value, Optional.ToList(excludedPaths));
+            return new GlobalValidation(Optional.ToNullable(requireAuthentication), Optional.ToNullable(unauthenticatedClientAction), redirectToProvider.Value, Optional.ToList(excludedPaths), serializedAdditionalRawData);
+        }
+
+        GlobalValidation IModelJsonSerializable<GlobalValidation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalValidation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGlobalValidation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GlobalValidation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalValidation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GlobalValidation IModelSerializable<GlobalValidation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalValidation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGlobalValidation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GlobalValidation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GlobalValidation"/> to convert. </param>
+        public static implicit operator RequestContent(GlobalValidation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GlobalValidation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GlobalValidation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGlobalValidation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

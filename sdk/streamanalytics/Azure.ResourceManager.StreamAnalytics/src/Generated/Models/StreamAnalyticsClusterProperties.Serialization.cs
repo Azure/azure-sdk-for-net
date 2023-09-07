@@ -6,21 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsClusterProperties : IUtf8JsonSerializable
+    public partial class StreamAnalyticsClusterProperties : IUtf8JsonSerializable, IModelJsonSerializable<StreamAnalyticsClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamAnalyticsClusterProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamAnalyticsClusterProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsClusterProperties>(this, options.Format);
+
             writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamAnalyticsClusterProperties DeserializeStreamAnalyticsClusterProperties(JsonElement element)
+        internal static StreamAnalyticsClusterProperties DeserializeStreamAnalyticsClusterProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<StreamAnalyticsClusterProvisioningState> provisioningState = default;
             Optional<int> capacityAllocated = default;
             Optional<int> capacityAssigned = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDate"u8))
@@ -77,8 +99,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     capacityAssigned = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StreamAnalyticsClusterProperties(Optional.ToNullable(createdDate), Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(capacityAllocated), Optional.ToNullable(capacityAssigned));
+            return new StreamAnalyticsClusterProperties(Optional.ToNullable(createdDate), Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(capacityAllocated), Optional.ToNullable(capacityAssigned), serializedAdditionalRawData);
+        }
+
+        StreamAnalyticsClusterProperties IModelJsonSerializable<StreamAnalyticsClusterProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsClusterProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsClusterProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamAnalyticsClusterProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsClusterProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamAnalyticsClusterProperties IModelSerializable<StreamAnalyticsClusterProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsClusterProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsClusterProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StreamAnalyticsClusterProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StreamAnalyticsClusterProperties"/> to convert. </param>
+        public static implicit operator RequestContent(StreamAnalyticsClusterProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StreamAnalyticsClusterProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StreamAnalyticsClusterProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamAnalyticsClusterProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,27 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlScriptResourceConverter))]
-    public partial class SqlScriptResource : IUtf8JsonSerializable
+    public partial class SqlScriptResource : IUtf8JsonSerializable, IModelJsonSerializable<SqlScriptResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlScriptResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlScriptResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SqlScriptResource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SqlScript>)Properties).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlScriptResource DeserializeSqlScriptResource(JsonElement element)
+        internal static SqlScriptResource DeserializeSqlScriptResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> type = default;
             Optional<string> etag = default;
             SqlScript properties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,8 +92,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     properties = SqlScript.DeserializeSqlScript(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlScriptResource(id.Value, name, type.Value, etag.Value, properties);
+            return new SqlScriptResource(id.Value, name, type.Value, etag.Value, properties, serializedAdditionalRawData);
+        }
+
+        SqlScriptResource IModelJsonSerializable<SqlScriptResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlScriptResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlScriptResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlScriptResource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlScriptResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlScriptResource IModelSerializable<SqlScriptResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlScriptResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlScriptResource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlScriptResource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlScriptResource"/> to convert. </param>
+        public static implicit operator RequestContent(SqlScriptResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlScriptResource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlScriptResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlScriptResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SqlScriptResourceConverter : JsonConverter<SqlScriptResource>

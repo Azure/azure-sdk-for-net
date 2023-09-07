@@ -6,26 +6,47 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class JobRunData : IUtf8JsonSerializable
+    public partial class JobRunData : IUtf8JsonSerializable, IModelJsonSerializable<JobRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobRunData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobRunData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JobRunData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobRunData DeserializeJobRunData(JsonElement element)
+        internal static JobRunData DeserializeJobRunData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +83,7 @@ namespace Azure.ResourceManager.StorageMover
             Optional<BinaryData> jobDefinitionProperties = default;
             Optional<JobRunError> error = default;
             Optional<StorageMoverProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -340,8 +362,61 @@ namespace Azure.ResourceManager.StorageMover
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JobRunData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(scanStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(executionStartTime), Optional.ToNullable(executionEndTime), Optional.ToNullable(lastStatusUpdate), Optional.ToNullable(itemsScanned), Optional.ToNullable(itemsExcluded), Optional.ToNullable(itemsUnsupported), Optional.ToNullable(itemsNoTransferNeeded), Optional.ToNullable(itemsFailed), Optional.ToNullable(itemsTransferred), Optional.ToNullable(bytesScanned), Optional.ToNullable(bytesExcluded), Optional.ToNullable(bytesUnsupported), Optional.ToNullable(bytesNoTransferNeeded), Optional.ToNullable(bytesFailed), Optional.ToNullable(bytesTransferred), sourceName.Value, sourceResourceId.Value, sourceProperties.Value, targetName.Value, targetResourceId.Value, targetProperties.Value, jobDefinitionProperties.Value, error.Value, Optional.ToNullable(provisioningState));
+            return new JobRunData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(scanStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(executionStartTime), Optional.ToNullable(executionEndTime), Optional.ToNullable(lastStatusUpdate), Optional.ToNullable(itemsScanned), Optional.ToNullable(itemsExcluded), Optional.ToNullable(itemsUnsupported), Optional.ToNullable(itemsNoTransferNeeded), Optional.ToNullable(itemsFailed), Optional.ToNullable(itemsTransferred), Optional.ToNullable(bytesScanned), Optional.ToNullable(bytesExcluded), Optional.ToNullable(bytesUnsupported), Optional.ToNullable(bytesNoTransferNeeded), Optional.ToNullable(bytesFailed), Optional.ToNullable(bytesTransferred), sourceName.Value, sourceResourceId.Value, sourceProperties.Value, targetName.Value, targetResourceId.Value, targetProperties.Value, jobDefinitionProperties.Value, error.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        JobRunData IModelJsonSerializable<JobRunData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobRunData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobRunData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobRunData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobRunData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobRunData IModelSerializable<JobRunData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobRunData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobRunData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JobRunData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JobRunData"/> to convert. </param>
+        public static implicit operator RequestContent(JobRunData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JobRunData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JobRunData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobRunData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

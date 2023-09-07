@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class VideoEncoderConfiguration : IUtf8JsonSerializable
+    public partial class VideoEncoderConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<VideoEncoderConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VideoEncoderConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VideoEncoderConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VideoEncoderConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Encoding))
             {
@@ -28,28 +36,70 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                if (Resolution is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VideoResolution>)Resolution).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RateControl))
             {
                 writer.WritePropertyName("rateControl"u8);
-                writer.WriteObjectValue(RateControl);
+                if (RateControl is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RateControl>)RateControl).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(H264))
             {
                 writer.WritePropertyName("h264"u8);
-                writer.WriteObjectValue(H264);
+                if (H264 is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<H264Configuration>)H264).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Mpeg4))
             {
                 writer.WritePropertyName("mpeg4"u8);
-                writer.WriteObjectValue(Mpeg4);
+                if (Mpeg4 is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<Mpeg4Configuration>)Mpeg4).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static VideoEncoderConfiguration DeserializeVideoEncoderConfiguration(JsonElement element)
+        internal static VideoEncoderConfiguration DeserializeVideoEncoderConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +110,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<RateControl> rateControl = default;
             Optional<H264Configuration> h264 = default;
             Optional<Mpeg4Configuration> mpeg4 = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encoding"u8))
@@ -116,8 +167,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     mpeg4 = Mpeg4Configuration.DeserializeMpeg4Configuration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VideoEncoderConfiguration(Optional.ToNullable(encoding), Optional.ToNullable(quality), resolution.Value, rateControl.Value, h264.Value, mpeg4.Value);
+            return new VideoEncoderConfiguration(Optional.ToNullable(encoding), Optional.ToNullable(quality), resolution.Value, rateControl.Value, h264.Value, mpeg4.Value, serializedAdditionalRawData);
+        }
+
+        VideoEncoderConfiguration IModelJsonSerializable<VideoEncoderConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VideoEncoderConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVideoEncoderConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VideoEncoderConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VideoEncoderConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VideoEncoderConfiguration IModelSerializable<VideoEncoderConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VideoEncoderConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVideoEncoderConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VideoEncoderConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VideoEncoderConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(VideoEncoderConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VideoEncoderConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VideoEncoderConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVideoEncoderConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

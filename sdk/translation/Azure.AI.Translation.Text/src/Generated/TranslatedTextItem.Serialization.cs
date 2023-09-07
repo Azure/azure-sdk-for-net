@@ -5,17 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class TranslatedTextItem
+    public partial class TranslatedTextItem : IUtf8JsonSerializable, IModelJsonSerializable<TranslatedTextItem>
     {
-        internal static TranslatedTextItem DeserializeTranslatedTextItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TranslatedTextItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TranslatedTextItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DetectedLanguage))
+            {
+                writer.WritePropertyName("detectedLanguage"u8);
+                if (DetectedLanguage is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DetectedLanguage>)DetectedLanguage).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("translations"u8);
+            writer.WriteStartArray();
+            foreach (var item in Translations)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<Translation>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(SourceText))
+            {
+                writer.WritePropertyName("sourceText"u8);
+                if (SourceText is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SourceText>)SourceText).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TranslatedTextItem DeserializeTranslatedTextItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +87,7 @@ namespace Azure.AI.Translation.Text
             Optional<DetectedLanguage> detectedLanguage = default;
             IReadOnlyList<Translation> translations = default;
             Optional<SourceText> sourceText = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("detectedLanguage"u8))
@@ -53,16 +118,61 @@ namespace Azure.AI.Translation.Text
                     sourceText = SourceText.DeserializeSourceText(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value);
+            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value, serializedAdditionalRawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranslatedTextItem FromResponse(Response response)
+        TranslatedTextItem IModelJsonSerializable<TranslatedTextItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTranslatedTextItem(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTranslatedTextItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TranslatedTextItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TranslatedTextItem IModelSerializable<TranslatedTextItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTranslatedTextItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TranslatedTextItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TranslatedTextItem"/> to convert. </param>
+        public static implicit operator RequestContent(TranslatedTextItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TranslatedTextItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TranslatedTextItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTranslatedTextItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class H264Configuration : IUtf8JsonSerializable
+    public partial class H264Configuration : IUtf8JsonSerializable, IModelJsonSerializable<H264Configuration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<H264Configuration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<H264Configuration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<H264Configuration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GovLength))
             {
@@ -25,17 +33,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static H264Configuration DeserializeH264Configuration(JsonElement element)
+        internal static H264Configuration DeserializeH264Configuration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<float> govLength = default;
             Optional<H264Profile> profile = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("govLength"u8))
@@ -56,8 +79,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     profile = new H264Profile(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new H264Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile));
+            return new H264Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile), serializedAdditionalRawData);
+        }
+
+        H264Configuration IModelJsonSerializable<H264Configuration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<H264Configuration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeH264Configuration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<H264Configuration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<H264Configuration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        H264Configuration IModelSerializable<H264Configuration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<H264Configuration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeH264Configuration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="H264Configuration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="H264Configuration"/> to convert. </param>
+        public static implicit operator RequestContent(H264Configuration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="H264Configuration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator H264Configuration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeH264Configuration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

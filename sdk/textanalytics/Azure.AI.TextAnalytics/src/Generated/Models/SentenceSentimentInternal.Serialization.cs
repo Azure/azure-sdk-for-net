@@ -5,24 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial struct SentenceSentimentInternal : IUtf8JsonSerializable
+    internal partial struct SentenceSentimentInternal : IUtf8JsonSerializable, IModelJsonSerializable<SentenceSentimentInternal>, IModelJsonSerializable<object>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SentenceSentimentInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SentenceSentimentInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SentenceSentimentInternal>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment);
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores);
+            if (ConfidenceScores is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SentimentConfidenceScores>)ConfidenceScores).Serialize(writer, options);
+            }
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
@@ -33,7 +47,14 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SentenceTarget>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,15 +64,107 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Assessments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SentenceAssessment>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SentenceSentimentInternal DeserializeSentenceSentimentInternal(JsonElement element)
+        void IModelJsonSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SentenceSentimentInternal>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("sentiment"u8);
+            writer.WriteStringValue(Sentiment);
+            writer.WritePropertyName("confidenceScores"u8);
+            if (ConfidenceScores is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SentimentConfidenceScores>)ConfidenceScores).Serialize(writer, options);
+            }
+            writer.WritePropertyName("offset"u8);
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length"u8);
+            writer.WriteNumberValue(Length);
+            if (Optional.IsCollectionDefined(Targets))
+            {
+                writer.WritePropertyName("targets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Targets)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SentenceTarget>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Assessments))
+            {
+                writer.WritePropertyName("assessments"u8);
+                writer.WriteStartArray();
+                foreach (var item in Assessments)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SentenceAssessment>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SentenceSentimentInternal DeserializeSentenceSentimentInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             string text = default;
             string sentiment = default;
             SentimentConfidenceScores confidenceScores = default;
@@ -59,6 +172,7 @@ namespace Azure.AI.TextAnalytics.Models
             int length = default;
             Optional<IReadOnlyList<SentenceTarget>> targets = default;
             Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -114,8 +228,76 @@ namespace Azure.AI.TextAnalytics.Models
                     assessments = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SentenceSentimentInternal(text, sentiment, confidenceScores, offset, length, Optional.ToList(targets), Optional.ToList(assessments));
+            return new SentenceSentimentInternal(text, sentiment, confidenceScores, offset, length, Optional.ToList(targets), Optional.ToList(assessments), serializedAdditionalRawData);
+        }
+
+        SentenceSentimentInternal IModelJsonSerializable<SentenceSentimentInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentenceSentimentInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSentenceSentimentInternal(doc.RootElement, options);
+        }
+
+        object IModelJsonSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentenceSentimentInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSentenceSentimentInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SentenceSentimentInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentenceSentimentInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SentenceSentimentInternal IModelSerializable<SentenceSentimentInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentenceSentimentInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSentenceSentimentInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentenceSentimentInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentenceSentimentInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSentenceSentimentInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SentenceSentimentInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SentenceSentimentInternal"/> to convert. </param>
+        public static implicit operator RequestContent(SentenceSentimentInternal model)
+        {
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SentenceSentimentInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SentenceSentimentInternal(Response response)
+        {
+            Argument.AssertNotNull(response, nameof(response));
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSentenceSentimentInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

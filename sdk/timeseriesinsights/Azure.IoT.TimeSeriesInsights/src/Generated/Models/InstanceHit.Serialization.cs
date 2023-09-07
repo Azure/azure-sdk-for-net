@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class InstanceHit
+    internal partial class InstanceHit : IUtf8JsonSerializable, IModelJsonSerializable<InstanceHit>
     {
-        internal static InstanceHit DeserializeInstanceHit(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstanceHit>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InstanceHit>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InstanceHit>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InstanceHit DeserializeInstanceHit(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +51,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<string> typeId = default;
             Optional<IReadOnlyList<string>> hierarchyIds = default;
             Optional<InstanceHitHighlights> highlights = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeSeriesId"u8))
@@ -80,8 +108,61 @@ namespace Azure.IoT.TimeSeriesInsights
                     highlights = InstanceHitHighlights.DeserializeInstanceHitHighlights(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InstanceHit(Optional.ToList(timeSeriesId), name.Value, typeId.Value, Optional.ToList(hierarchyIds), highlights.Value);
+            return new InstanceHit(Optional.ToList(timeSeriesId), name.Value, typeId.Value, Optional.ToList(hierarchyIds), highlights.Value, serializedAdditionalRawData);
+        }
+
+        InstanceHit IModelJsonSerializable<InstanceHit>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstanceHit>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceHit(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InstanceHit>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstanceHit>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InstanceHit IModelSerializable<InstanceHit>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstanceHit>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInstanceHit(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InstanceHit"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InstanceHit"/> to convert. </param>
+        public static implicit operator RequestContent(InstanceHit model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InstanceHit"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InstanceHit(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInstanceHit(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

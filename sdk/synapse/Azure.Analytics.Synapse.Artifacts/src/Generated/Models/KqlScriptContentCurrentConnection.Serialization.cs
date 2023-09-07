@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class KqlScriptContentCurrentConnection : IUtf8JsonSerializable
+    public partial class KqlScriptContentCurrentConnection : IUtf8JsonSerializable, IModelJsonSerializable<KqlScriptContentCurrentConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KqlScriptContentCurrentConnection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KqlScriptContentCurrentConnection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KqlScriptContentCurrentConnection>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -35,11 +43,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KqlScriptContentCurrentConnection DeserializeKqlScriptContentCurrentConnection(JsonElement element)
+        internal static KqlScriptContentCurrentConnection DeserializeKqlScriptContentCurrentConnection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> poolName = default;
             Optional<string> databaseName = default;
             Optional<string> type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -70,8 +93,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KqlScriptContentCurrentConnection(name.Value, poolName.Value, databaseName.Value, type.Value);
+            return new KqlScriptContentCurrentConnection(name.Value, poolName.Value, databaseName.Value, type.Value, serializedAdditionalRawData);
+        }
+
+        KqlScriptContentCurrentConnection IModelJsonSerializable<KqlScriptContentCurrentConnection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KqlScriptContentCurrentConnection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKqlScriptContentCurrentConnection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KqlScriptContentCurrentConnection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KqlScriptContentCurrentConnection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KqlScriptContentCurrentConnection IModelSerializable<KqlScriptContentCurrentConnection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KqlScriptContentCurrentConnection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKqlScriptContentCurrentConnection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KqlScriptContentCurrentConnection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KqlScriptContentCurrentConnection"/> to convert. </param>
+        public static implicit operator RequestContent(KqlScriptContentCurrentConnection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KqlScriptContentCurrentConnection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KqlScriptContentCurrentConnection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKqlScriptContentCurrentConnection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

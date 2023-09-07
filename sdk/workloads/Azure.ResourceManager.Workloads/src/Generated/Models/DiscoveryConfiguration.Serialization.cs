@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DiscoveryConfiguration : IUtf8JsonSerializable
+    public partial class DiscoveryConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<DiscoveryConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiscoveryConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DiscoveryConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DiscoveryConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CentralServerVmId))
             {
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DiscoveryConfiguration DeserializeDiscoveryConfiguration(JsonElement element)
+        internal static DiscoveryConfiguration DeserializeDiscoveryConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> managedRgStorageAccountName = default;
             Optional<AzureLocation> appLocation = default;
             SapConfigurationType configurationType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("centralServerVmId"u8))
@@ -70,8 +93,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     configurationType = new SapConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, managedRgStorageAccountName.Value, Optional.ToNullable(appLocation));
+            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, managedRgStorageAccountName.Value, Optional.ToNullable(appLocation), serializedAdditionalRawData);
+        }
+
+        DiscoveryConfiguration IModelJsonSerializable<DiscoveryConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiscoveryConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiscoveryConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiscoveryConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiscoveryConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiscoveryConfiguration IModelSerializable<DiscoveryConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiscoveryConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiscoveryConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DiscoveryConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DiscoveryConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(DiscoveryConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiscoveryConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DiscoveryConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiscoveryConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

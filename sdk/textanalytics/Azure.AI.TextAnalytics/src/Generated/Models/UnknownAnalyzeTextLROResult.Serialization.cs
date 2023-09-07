@@ -7,15 +7,19 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class UnknownAnalyzeTextLROResult : IUtf8JsonSerializable
+    internal partial class UnknownAnalyzeTextLROResult : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeTextLROResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeTextLROResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeTextLROResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextLROResult>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -28,43 +32,44 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(LastUpdateDateTime, "O");
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAnalyzeTextLROResult DeserializeUnknownAnalyzeTextLROResult(JsonElement element)
+        internal static AnalyzeTextLROResult DeserializeUnknownAnalyzeTextLROResult(JsonElement element, ModelSerializerOptions options = default) => DeserializeAnalyzeTextLROResult(element, options);
+
+        AnalyzeTextLROResult IModelJsonSerializable<AnalyzeTextLROResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            AnalyzeTextLROResultsKind kind = "Unknown";
-            Optional<string> taskName = default;
-            DateTimeOffset lastUpdateDateTime = default;
-            TextAnalyticsOperationStatus status = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new AnalyzeTextLROResultsKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("taskName"u8))
-                {
-                    taskName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastUpdateDateTime"u8))
-                {
-                    lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAnalyzeTextLROResult(lastUpdateDateTime, status, kind, taskName.Value);
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextLROResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAnalyzeTextLROResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeTextLROResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextLROResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeTextLROResult IModelSerializable<AnalyzeTextLROResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeTextLROResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTextLROResult(doc.RootElement, options);
         }
     }
 }

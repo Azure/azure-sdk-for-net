@@ -5,22 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonCountOperation : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonCountOperation : IUtf8JsonSerializable, IModelJsonSerializable<SpatialAnalysisPersonCountOperation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SpatialAnalysisPersonCountOperation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SpatialAnalysisPersonCountOperation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonCountOperation>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("zones"u8);
             writer.WriteStartArray();
             foreach (var item in Zones)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SpatialAnalysisPersonCountZoneEvents>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Debug))
@@ -60,11 +74,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpatialAnalysisPersonCountOperation DeserializeSpatialAnalysisPersonCountOperation(JsonElement element)
+        internal static SpatialAnalysisPersonCountOperation DeserializeSpatialAnalysisPersonCountOperation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +106,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> trackerNodeConfiguration = default;
             Optional<string> enableFaceMaskClassifier = default;
             string type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -130,8 +159,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SpatialAnalysisPersonCountOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, zones);
+            return new SpatialAnalysisPersonCountOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, zones, serializedAdditionalRawData);
+        }
+
+        SpatialAnalysisPersonCountOperation IModelJsonSerializable<SpatialAnalysisPersonCountOperation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonCountOperation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpatialAnalysisPersonCountOperation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SpatialAnalysisPersonCountOperation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonCountOperation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SpatialAnalysisPersonCountOperation IModelSerializable<SpatialAnalysisPersonCountOperation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonCountOperation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSpatialAnalysisPersonCountOperation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SpatialAnalysisPersonCountOperation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SpatialAnalysisPersonCountOperation"/> to convert. </param>
+        public static implicit operator RequestContent(SpatialAnalysisPersonCountOperation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SpatialAnalysisPersonCountOperation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SpatialAnalysisPersonCountOperation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSpatialAnalysisPersonCountOperation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

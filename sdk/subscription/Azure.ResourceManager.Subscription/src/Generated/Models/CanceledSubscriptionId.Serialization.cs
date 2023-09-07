@@ -5,20 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class CanceledSubscriptionId
+    public partial class CanceledSubscriptionId : IUtf8JsonSerializable, IModelJsonSerializable<CanceledSubscriptionId>
     {
-        internal static CanceledSubscriptionId DeserializeCanceledSubscriptionId(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CanceledSubscriptionId>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CanceledSubscriptionId>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CanceledSubscriptionId>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CanceledSubscriptionId DeserializeCanceledSubscriptionId(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> subscriptionId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -26,8 +55,61 @@ namespace Azure.ResourceManager.Subscription.Models
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CanceledSubscriptionId(subscriptionId.Value);
+            return new CanceledSubscriptionId(subscriptionId.Value, serializedAdditionalRawData);
+        }
+
+        CanceledSubscriptionId IModelJsonSerializable<CanceledSubscriptionId>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CanceledSubscriptionId>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCanceledSubscriptionId(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CanceledSubscriptionId>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CanceledSubscriptionId>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CanceledSubscriptionId IModelSerializable<CanceledSubscriptionId>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CanceledSubscriptionId>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCanceledSubscriptionId(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CanceledSubscriptionId"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CanceledSubscriptionId"/> to convert. </param>
+        public static implicit operator RequestContent(CanceledSubscriptionId model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CanceledSubscriptionId"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CanceledSubscriptionId(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCanceledSubscriptionId(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

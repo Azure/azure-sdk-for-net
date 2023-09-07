@@ -5,40 +5,76 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonCountZoneEvents : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonCountZoneEvents : IUtf8JsonSerializable, IModelJsonSerializable<SpatialAnalysisPersonCountZoneEvents>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SpatialAnalysisPersonCountZoneEvents>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SpatialAnalysisPersonCountZoneEvents>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonCountZoneEvents>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("zone"u8);
-            writer.WriteObjectValue(Zone);
+            if (Zone is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<NamedPolygonBase>)Zone).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SpatialAnalysisPersonCountEvent>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SpatialAnalysisPersonCountZoneEvents DeserializeSpatialAnalysisPersonCountZoneEvents(JsonElement element)
+        internal static SpatialAnalysisPersonCountZoneEvents DeserializeSpatialAnalysisPersonCountZoneEvents(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             NamedPolygonBase zone = default;
             Optional<IList<SpatialAnalysisPersonCountEvent>> events = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zone"u8))
@@ -60,8 +96,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     events = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SpatialAnalysisPersonCountZoneEvents(zone, Optional.ToList(events));
+            return new SpatialAnalysisPersonCountZoneEvents(zone, Optional.ToList(events), serializedAdditionalRawData);
+        }
+
+        SpatialAnalysisPersonCountZoneEvents IModelJsonSerializable<SpatialAnalysisPersonCountZoneEvents>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonCountZoneEvents>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpatialAnalysisPersonCountZoneEvents(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SpatialAnalysisPersonCountZoneEvents>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonCountZoneEvents>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SpatialAnalysisPersonCountZoneEvents IModelSerializable<SpatialAnalysisPersonCountZoneEvents>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonCountZoneEvents>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSpatialAnalysisPersonCountZoneEvents(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SpatialAnalysisPersonCountZoneEvents"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SpatialAnalysisPersonCountZoneEvents"/> to convert. </param>
+        public static implicit operator RequestContent(SpatialAnalysisPersonCountZoneEvents model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SpatialAnalysisPersonCountZoneEvents"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SpatialAnalysisPersonCountZoneEvents(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSpatialAnalysisPersonCountZoneEvents(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

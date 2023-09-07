@@ -5,16 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FunctionAppHostKeys
+    public partial class FunctionAppHostKeys : IUtf8JsonSerializable, IModelJsonSerializable<FunctionAppHostKeys>
     {
-        internal static FunctionAppHostKeys DeserializeFunctionAppHostKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FunctionAppHostKeys>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FunctionAppHostKeys>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FunctionAppHostKeys>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MasterKey))
+            {
+                writer.WritePropertyName("masterKey"u8);
+                writer.WriteStringValue(MasterKey);
+            }
+            if (Optional.IsCollectionDefined(FunctionKeys))
+            {
+                writer.WritePropertyName("functionKeys"u8);
+                writer.WriteStartObject();
+                foreach (var item in FunctionKeys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(SystemKeys))
+            {
+                writer.WritePropertyName("systemKeys"u8);
+                writer.WriteStartObject();
+                foreach (var item in SystemKeys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FunctionAppHostKeys DeserializeFunctionAppHostKeys(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> masterKey = default;
             Optional<IReadOnlyDictionary<string, string>> functionKeys = default;
             Optional<IReadOnlyDictionary<string, string>> systemKeys = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("masterKey"u8))
@@ -57,8 +112,61 @@ namespace Azure.ResourceManager.AppService.Models
                     systemKeys = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FunctionAppHostKeys(masterKey.Value, Optional.ToDictionary(functionKeys), Optional.ToDictionary(systemKeys));
+            return new FunctionAppHostKeys(masterKey.Value, Optional.ToDictionary(functionKeys), Optional.ToDictionary(systemKeys), serializedAdditionalRawData);
+        }
+
+        FunctionAppHostKeys IModelJsonSerializable<FunctionAppHostKeys>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FunctionAppHostKeys>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFunctionAppHostKeys(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FunctionAppHostKeys>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FunctionAppHostKeys>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FunctionAppHostKeys IModelSerializable<FunctionAppHostKeys>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FunctionAppHostKeys>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFunctionAppHostKeys(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FunctionAppHostKeys"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FunctionAppHostKeys"/> to convert. </param>
+        public static implicit operator RequestContent(FunctionAppHostKeys model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FunctionAppHostKeys"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FunctionAppHostKeys(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFunctionAppHostKeys(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceBlobStorageHttpLogsConfig : IUtf8JsonSerializable
+    public partial class AppServiceBlobStorageHttpLogsConfig : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceBlobStorageHttpLogsConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceBlobStorageHttpLogsConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceBlobStorageHttpLogsConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceBlobStorageHttpLogsConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SasUri))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceBlobStorageHttpLogsConfig DeserializeAppServiceBlobStorageHttpLogsConfig(JsonElement element)
+        internal static AppServiceBlobStorageHttpLogsConfig DeserializeAppServiceBlobStorageHttpLogsConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<Uri> sasUrl = default;
             Optional<int> retentionInDays = default;
             Optional<bool> enabled = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUrl"u8))
@@ -72,8 +94,61 @@ namespace Azure.ResourceManager.AppService.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceBlobStorageHttpLogsConfig(sasUrl.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(enabled));
+            return new AppServiceBlobStorageHttpLogsConfig(sasUrl.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(enabled), serializedAdditionalRawData);
+        }
+
+        AppServiceBlobStorageHttpLogsConfig IModelJsonSerializable<AppServiceBlobStorageHttpLogsConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceBlobStorageHttpLogsConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceBlobStorageHttpLogsConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceBlobStorageHttpLogsConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceBlobStorageHttpLogsConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceBlobStorageHttpLogsConfig IModelSerializable<AppServiceBlobStorageHttpLogsConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceBlobStorageHttpLogsConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceBlobStorageHttpLogsConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceBlobStorageHttpLogsConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceBlobStorageHttpLogsConfig"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceBlobStorageHttpLogsConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceBlobStorageHttpLogsConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceBlobStorageHttpLogsConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceBlobStorageHttpLogsConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

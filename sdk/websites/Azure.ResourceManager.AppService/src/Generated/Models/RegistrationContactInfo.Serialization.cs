@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RegistrationContactInfo : IUtf8JsonSerializable
+    public partial class RegistrationContactInfo : IUtf8JsonSerializable, IModelJsonSerializable<RegistrationContactInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RegistrationContactInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RegistrationContactInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RegistrationContactInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressMailing))
             {
                 writer.WritePropertyName("addressMailing"u8);
-                writer.WriteObjectValue(AddressMailing);
+                if (AddressMailing is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RegistrationAddressInfo>)AddressMailing).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
@@ -48,11 +63,25 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RegistrationContactInfo DeserializeRegistrationContactInfo(JsonElement element)
+        internal static RegistrationContactInfo DeserializeRegistrationContactInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> nameMiddle = default;
             Optional<string> organization = default;
             string phone = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressMailing"u8))
@@ -117,8 +147,61 @@ namespace Azure.ResourceManager.AppService.Models
                     phone = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone);
+            return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone, serializedAdditionalRawData);
+        }
+
+        RegistrationContactInfo IModelJsonSerializable<RegistrationContactInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegistrationContactInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegistrationContactInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RegistrationContactInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegistrationContactInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RegistrationContactInfo IModelSerializable<RegistrationContactInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegistrationContactInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRegistrationContactInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RegistrationContactInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RegistrationContactInfo"/> to convert. </param>
+        public static implicit operator RequestContent(RegistrationContactInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RegistrationContactInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RegistrationContactInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRegistrationContactInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

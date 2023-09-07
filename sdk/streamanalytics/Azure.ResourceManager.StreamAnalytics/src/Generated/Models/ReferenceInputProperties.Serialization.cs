@@ -5,33 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class ReferenceInputProperties : IUtf8JsonSerializable
+    public partial class ReferenceInputProperties : IUtf8JsonSerializable, IModelJsonSerializable<ReferenceInputProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReferenceInputProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReferenceInputProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReferenceInputProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Datasource))
             {
                 writer.WritePropertyName("datasource"u8);
-                writer.WriteObjectValue(Datasource);
+                if (Datasource is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ReferenceInputDataSource>)Datasource).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
             if (Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
-                writer.WriteObjectValue(Serialization);
+                if (Serialization is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StreamAnalyticsDataSerialization>)Serialization).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue(Compression);
+                if (Compression is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StreamingCompression>)Compression).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PartitionKey))
             {
@@ -41,13 +69,34 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
-                writer.WriteObjectValue(WatermarkSettings);
+                if (WatermarkSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StreamingJobInputWatermarkProperties>)WatermarkSettings).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ReferenceInputProperties DeserializeReferenceInputProperties(JsonElement element)
+        internal static ReferenceInputProperties DeserializeReferenceInputProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +109,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<StreamingCompression> compression = default;
             Optional<string> partitionKey = default;
             Optional<StreamingJobInputWatermarkProperties> watermarkSettings = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasource"u8))
@@ -126,8 +176,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReferenceInputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value, datasource.Value);
+            return new ReferenceInputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value, datasource.Value, serializedAdditionalRawData);
+        }
+
+        ReferenceInputProperties IModelJsonSerializable<ReferenceInputProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReferenceInputProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReferenceInputProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReferenceInputProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReferenceInputProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReferenceInputProperties IModelSerializable<ReferenceInputProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReferenceInputProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReferenceInputProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReferenceInputProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReferenceInputProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ReferenceInputProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReferenceInputProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReferenceInputProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReferenceInputProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

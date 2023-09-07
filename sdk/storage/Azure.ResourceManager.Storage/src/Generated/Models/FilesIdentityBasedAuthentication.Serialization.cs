@@ -5,33 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class FilesIdentityBasedAuthentication : IUtf8JsonSerializable
+    public partial class FilesIdentityBasedAuthentication : IUtf8JsonSerializable, IModelJsonSerializable<FilesIdentityBasedAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FilesIdentityBasedAuthentication>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FilesIdentityBasedAuthentication>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FilesIdentityBasedAuthentication>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("directoryServiceOptions"u8);
             writer.WriteStringValue(DirectoryServiceOptions.ToString());
             if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
-                writer.WriteObjectValue(ActiveDirectoryProperties);
+                if (ActiveDirectoryProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageActiveDirectoryProperties>)ActiveDirectoryProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DefaultSharePermission))
             {
                 writer.WritePropertyName("defaultSharePermission"u8);
                 writer.WriteStringValue(DefaultSharePermission.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FilesIdentityBasedAuthentication DeserializeFilesIdentityBasedAuthentication(JsonElement element)
+        internal static FilesIdentityBasedAuthentication DeserializeFilesIdentityBasedAuthentication(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +68,7 @@ namespace Azure.ResourceManager.Storage.Models
             DirectoryServiceOption directoryServiceOptions = default;
             Optional<StorageActiveDirectoryProperties> activeDirectoryProperties = default;
             Optional<DefaultSharePermission> defaultSharePermission = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoryServiceOptions"u8))
@@ -64,8 +94,61 @@ namespace Azure.ResourceManager.Storage.Models
                     defaultSharePermission = new DefaultSharePermission(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties.Value, Optional.ToNullable(defaultSharePermission));
+            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties.Value, Optional.ToNullable(defaultSharePermission), serializedAdditionalRawData);
+        }
+
+        FilesIdentityBasedAuthentication IModelJsonSerializable<FilesIdentityBasedAuthentication>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FilesIdentityBasedAuthentication>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFilesIdentityBasedAuthentication(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FilesIdentityBasedAuthentication>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FilesIdentityBasedAuthentication>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FilesIdentityBasedAuthentication IModelSerializable<FilesIdentityBasedAuthentication>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FilesIdentityBasedAuthentication>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFilesIdentityBasedAuthentication(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FilesIdentityBasedAuthentication"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FilesIdentityBasedAuthentication"/> to convert. </param>
+        public static implicit operator RequestContent(FilesIdentityBasedAuthentication model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FilesIdentityBasedAuthentication"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FilesIdentityBasedAuthentication(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFilesIdentityBasedAuthentication(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

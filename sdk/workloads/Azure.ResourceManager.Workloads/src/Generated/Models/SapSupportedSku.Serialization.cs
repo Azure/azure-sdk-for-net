@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapSupportedSku
+    public partial class SapSupportedSku : IUtf8JsonSerializable, IModelJsonSerializable<SapSupportedSku>
     {
-        internal static SapSupportedSku DeserializeSapSupportedSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapSupportedSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapSupportedSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SapSupportedSku>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VmSku))
+            {
+                writer.WritePropertyName("vmSku"u8);
+                writer.WriteStringValue(VmSku);
+            }
+            if (Optional.IsDefined(IsAppServerCertified))
+            {
+                writer.WritePropertyName("isAppServerCertified"u8);
+                writer.WriteBooleanValue(IsAppServerCertified.Value);
+            }
+            if (Optional.IsDefined(IsDatabaseCertified))
+            {
+                writer.WritePropertyName("isDatabaseCertified"u8);
+                writer.WriteBooleanValue(IsDatabaseCertified.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SapSupportedSku DeserializeSapSupportedSku(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> vmSku = default;
             Optional<bool> isAppServerCertified = default;
             Optional<bool> isDatabaseCertified = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSku"u8))
@@ -46,8 +90,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     isDatabaseCertified = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SapSupportedSku(vmSku.Value, Optional.ToNullable(isAppServerCertified), Optional.ToNullable(isDatabaseCertified));
+            return new SapSupportedSku(vmSku.Value, Optional.ToNullable(isAppServerCertified), Optional.ToNullable(isDatabaseCertified), serializedAdditionalRawData);
+        }
+
+        SapSupportedSku IModelJsonSerializable<SapSupportedSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapSupportedSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapSupportedSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapSupportedSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapSupportedSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapSupportedSku IModelSerializable<SapSupportedSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapSupportedSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapSupportedSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SapSupportedSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SapSupportedSku"/> to convert. </param>
+        public static implicit operator RequestContent(SapSupportedSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SapSupportedSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SapSupportedSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapSupportedSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
@@ -12,22 +16,28 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// Please note <see cref="EndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointProperties"/>, <see cref="AzureStorageSmbFileShareEndpointProperties"/>, <see cref="NfsMountEndpointProperties"/> and <see cref="SmbMountEndpointProperties"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownEndpointBaseProperties))]
     public abstract partial class EndpointBaseProperties
     {
-        /// <summary> Initializes a new instance of EndpointBaseProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointBaseProperties"/>. </summary>
         protected EndpointBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointBaseProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal EndpointBaseProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointBaseProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointType = endpointType;
             Description = description;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Endpoint resource type. </summary>

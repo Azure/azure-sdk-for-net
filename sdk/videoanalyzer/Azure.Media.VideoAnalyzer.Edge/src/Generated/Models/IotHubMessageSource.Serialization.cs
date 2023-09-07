@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class IotHubMessageSource : IUtf8JsonSerializable
+    public partial class IotHubMessageSource : IUtf8JsonSerializable, IModelJsonSerializable<IotHubMessageSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubMessageSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubMessageSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubMessageSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(HubInputName))
             {
@@ -24,11 +32,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotHubMessageSource DeserializeIotHubMessageSource(JsonElement element)
+        internal static IotHubMessageSource DeserializeIotHubMessageSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> hubInputName = default;
             string type = default;
             string name = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hubInputName"u8))
@@ -53,8 +76,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotHubMessageSource(type, name, hubInputName.Value);
+            return new IotHubMessageSource(type, name, hubInputName.Value, serializedAdditionalRawData);
+        }
+
+        IotHubMessageSource IModelJsonSerializable<IotHubMessageSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubMessageSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubMessageSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubMessageSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubMessageSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubMessageSource IModelSerializable<IotHubMessageSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubMessageSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubMessageSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotHubMessageSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotHubMessageSource"/> to convert. </param>
+        public static implicit operator RequestContent(IotHubMessageSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotHubMessageSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotHubMessageSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubMessageSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

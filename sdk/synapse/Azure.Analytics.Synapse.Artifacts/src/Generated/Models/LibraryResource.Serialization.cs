@@ -6,25 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LibraryResourceConverter))]
-    public partial class LibraryResource : IUtf8JsonSerializable
+    public partial class LibraryResource : IUtf8JsonSerializable, IModelJsonSerializable<LibraryResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LibraryResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LibraryResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LibraryResource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<LibraryResourceProperties>)Properties).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LibraryResource DeserializeLibraryResource(JsonElement element)
+        internal static LibraryResource DeserializeLibraryResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -61,8 +90,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LibraryResource(id.Value, name.Value, type.Value, etag.Value, properties);
+            return new LibraryResource(id.Value, name.Value, type.Value, etag.Value, properties, serializedAdditionalRawData);
+        }
+
+        LibraryResource IModelJsonSerializable<LibraryResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LibraryResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLibraryResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LibraryResource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LibraryResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LibraryResource IModelSerializable<LibraryResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LibraryResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLibraryResource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LibraryResource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LibraryResource"/> to convert. </param>
+        public static implicit operator RequestContent(LibraryResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LibraryResource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LibraryResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLibraryResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class LibraryResourceConverter : JsonConverter<LibraryResource>

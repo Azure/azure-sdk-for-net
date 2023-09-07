@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The HealthcareResultDocumentsItem. </summary>
     internal partial class HealthcareResultDocumentsItem : HealthcareEntitiesDocumentResult
     {
-        /// <summary> Initializes a new instance of HealthcareResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Healthcare entities. </param>
@@ -29,13 +29,19 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(relations, nameof(relations));
         }
 
-        /// <summary> Initializes a new instance of HealthcareResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
-        internal HealthcareResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<HealthcareEntityInternal> entities, IList<HealthcareRelationInternal> relations) : base(id, warnings, statistics, entities, relations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<HealthcareEntityInternal> entities, IList<HealthcareRelationInternal> relations, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, warnings, statistics, entities, relations, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareResultDocumentsItem"/> for deserialization. </summary>
+        internal HealthcareResultDocumentsItem()
         {
         }
     }

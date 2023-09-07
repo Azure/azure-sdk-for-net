@@ -5,19 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class StorageCacheData : IUtf8JsonSerializable
+    public partial class StorageCacheData : IUtf8JsonSerializable, IModelJsonSerializable<StorageCacheData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageCacheData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageCacheData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -27,7 +34,14 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheSkuInfo>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -57,27 +71,62 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                if (UpgradeSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheUpgradeSettings>)UpgradeSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NetworkSettings))
             {
                 writer.WritePropertyName("networkSettings"u8);
-                writer.WriteObjectValue(NetworkSettings);
+                if (NetworkSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheNetworkSettings>)NetworkSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                if (EncryptionSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheEncryptionSettings>)EncryptionSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                if (SecuritySettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheSecuritySettings>)SecuritySettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DirectoryServicesSettings))
             {
                 writer.WritePropertyName("directoryServicesSettings"u8);
-                writer.WriteObjectValue(DirectoryServicesSettings);
+                if (DirectoryServicesSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheDirectorySettings>)DirectoryServicesSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -90,11 +139,25 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageCacheData DeserializeStorageCacheData(JsonElement element)
+        internal static StorageCacheData DeserializeStorageCacheData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -121,6 +184,7 @@ namespace Azure.ResourceManager.StorageCache
             Optional<IList<string>> zones = default;
             Optional<IReadOnlyList<PrimingJob>> primingJobs = default;
             Optional<IReadOnlyList<StorageTargetSpaceAllocation>> spaceAllocation = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -349,8 +413,61 @@ namespace Azure.ResourceManager.StorageCache
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageCacheData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(cacheSizeGB), health.Value, Optional.ToList(mountAddresses), Optional.ToNullable(provisioningState), subnet.Value, upgradeStatus.Value, upgradeSettings.Value, networkSettings.Value, encryptionSettings.Value, securitySettings.Value, directoryServicesSettings.Value, Optional.ToList(zones), Optional.ToList(primingJobs), Optional.ToList(spaceAllocation));
+            return new StorageCacheData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(cacheSizeGB), health.Value, Optional.ToList(mountAddresses), Optional.ToNullable(provisioningState), subnet.Value, upgradeStatus.Value, upgradeSettings.Value, networkSettings.Value, encryptionSettings.Value, securitySettings.Value, directoryServicesSettings.Value, Optional.ToList(zones), Optional.ToList(primingJobs), Optional.ToList(spaceAllocation), serializedAdditionalRawData);
+        }
+
+        StorageCacheData IModelJsonSerializable<StorageCacheData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageCacheData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageCacheData IModelSerializable<StorageCacheData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageCacheData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageCacheData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageCacheData"/> to convert. </param>
+        public static implicit operator RequestContent(StorageCacheData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageCacheData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageCacheData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageCacheData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

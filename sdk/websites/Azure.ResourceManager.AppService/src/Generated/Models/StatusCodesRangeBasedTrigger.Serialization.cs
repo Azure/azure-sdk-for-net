@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StatusCodesRangeBasedTrigger : IUtf8JsonSerializable
+    public partial class StatusCodesRangeBasedTrigger : IUtf8JsonSerializable, IModelJsonSerializable<StatusCodesRangeBasedTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StatusCodesRangeBasedTrigger>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StatusCodesRangeBasedTrigger>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StatusCodesRangeBasedTrigger>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StatusCodes))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StatusCodesRangeBasedTrigger DeserializeStatusCodesRangeBasedTrigger(JsonElement element)
+        internal static StatusCodesRangeBasedTrigger DeserializeStatusCodesRangeBasedTrigger(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> path = default;
             Optional<int> count = default;
             Optional<string> timeInterval = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCodes"u8))
@@ -74,8 +97,61 @@ namespace Azure.ResourceManager.AppService.Models
                     timeInterval = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StatusCodesRangeBasedTrigger(statusCodes.Value, path.Value, Optional.ToNullable(count), timeInterval.Value);
+            return new StatusCodesRangeBasedTrigger(statusCodes.Value, path.Value, Optional.ToNullable(count), timeInterval.Value, serializedAdditionalRawData);
+        }
+
+        StatusCodesRangeBasedTrigger IModelJsonSerializable<StatusCodesRangeBasedTrigger>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StatusCodesRangeBasedTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStatusCodesRangeBasedTrigger(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StatusCodesRangeBasedTrigger>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StatusCodesRangeBasedTrigger>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StatusCodesRangeBasedTrigger IModelSerializable<StatusCodesRangeBasedTrigger>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StatusCodesRangeBasedTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStatusCodesRangeBasedTrigger(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StatusCodesRangeBasedTrigger"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StatusCodesRangeBasedTrigger"/> to convert. </param>
+        public static implicit operator RequestContent(StatusCodesRangeBasedTrigger model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StatusCodesRangeBasedTrigger"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StatusCodesRangeBasedTrigger(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStatusCodesRangeBasedTrigger(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

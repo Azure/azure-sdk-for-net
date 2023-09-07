@@ -5,22 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemArchiveContent : IUtf8JsonSerializable
+    public partial class AmlFileSystemArchiveContent : IUtf8JsonSerializable, IModelJsonSerializable<AmlFileSystemArchiveContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AmlFileSystemArchiveContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AmlFileSystemArchiveContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemArchiveContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FilesystemPath))
             {
                 writer.WritePropertyName("filesystemPath"u8);
                 writer.WriteStringValue(FilesystemPath);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AmlFileSystemArchiveContent DeserializeAmlFileSystemArchiveContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> filesystemPath = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("filesystemPath"u8))
+                {
+                    filesystemPath = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AmlFileSystemArchiveContent(filesystemPath.Value, serializedAdditionalRawData);
+        }
+
+        AmlFileSystemArchiveContent IModelJsonSerializable<AmlFileSystemArchiveContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemArchiveContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmlFileSystemArchiveContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AmlFileSystemArchiveContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemArchiveContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AmlFileSystemArchiveContent IModelSerializable<AmlFileSystemArchiveContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemArchiveContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAmlFileSystemArchiveContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AmlFileSystemArchiveContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AmlFileSystemArchiveContent"/> to convert. </param>
+        public static implicit operator RequestContent(AmlFileSystemArchiveContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AmlFileSystemArchiveContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AmlFileSystemArchiveContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAmlFileSystemArchiveContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

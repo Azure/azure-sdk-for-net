@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// Please note <see cref="ReferenceInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SqlReferenceInputDataSource"/>, <see cref="BlobReferenceInputDataSource"/> and <see cref="RawReferenceInputDataSource"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownReferenceInputDataSource))]
     public abstract partial class ReferenceInputDataSource
     {
-        /// <summary> Initializes a new instance of ReferenceInputDataSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReferenceInputDataSource"/>. </summary>
         protected ReferenceInputDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of ReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferenceInputDataSource"/>. </summary>
         /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
-        internal ReferenceInputDataSource(string referenceInputDataSourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReferenceInputDataSource(string referenceInputDataSourceType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReferenceInputDataSourceType = referenceInputDataSourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </summary>

@@ -8,14 +8,160 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
-    public partial class SparkJob
+    public partial class SparkJob : IUtf8JsonSerializable, IModelJsonSerializable<SparkJob>
     {
-        internal static SparkJob DeserializeSparkJob(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkJob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkJob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SparkJob>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Submitter))
+            {
+                writer.WritePropertyName("submitter"u8);
+                writer.WriteStringValue(Submitter);
+            }
+            if (Optional.IsDefined(Compute))
+            {
+                writer.WritePropertyName("compute"u8);
+                writer.WriteStringValue(Compute);
+            }
+            if (Optional.IsDefined(SparkApplicationId))
+            {
+                writer.WritePropertyName("sparkApplicationId"u8);
+                writer.WriteStringValue(SparkApplicationId);
+            }
+            if (Optional.IsDefined(LivyId))
+            {
+                writer.WritePropertyName("livyId"u8);
+                writer.WriteStringValue(LivyId);
+            }
+            if (Optional.IsCollectionDefined(Timing))
+            {
+                writer.WritePropertyName("timing"u8);
+                writer.WriteStartArray();
+                foreach (var item in Timing)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SparkJobDefinition))
+            {
+                if (SparkJobDefinition != null)
+                {
+                    writer.WritePropertyName("sparkJobDefinition"u8);
+                    writer.WriteStringValue(SparkJobDefinition);
+                }
+                else
+                {
+                    writer.WriteNull("sparkJobDefinition");
+                }
+            }
+            if (Optional.IsCollectionDefined(Pipeline))
+            {
+                if (Pipeline != null)
+                {
+                    writer.WritePropertyName("pipeline"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Pipeline)
+                    {
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<SparkJob>)item).Serialize(writer, options);
+                        }
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("pipeline");
+                }
+            }
+            if (Optional.IsDefined(JobType))
+            {
+                writer.WritePropertyName("jobType"u8);
+                writer.WriteStringValue(JobType);
+            }
+            if (Optional.IsDefined(SubmitTime))
+            {
+                if (SubmitTime != null)
+                {
+                    writer.WritePropertyName("submitTime"u8);
+                    writer.WriteStringValue(SubmitTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("submitTime");
+                }
+            }
+            if (Optional.IsDefined(EndTime))
+            {
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndTime.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
+            }
+            if (Optional.IsDefined(QueuedDuration))
+            {
+                writer.WritePropertyName("queuedDuration"u8);
+                writer.WriteStringValue(QueuedDuration);
+            }
+            if (Optional.IsDefined(RunningDuration))
+            {
+                writer.WritePropertyName("runningDuration"u8);
+                writer.WriteStringValue(RunningDuration);
+            }
+            if (Optional.IsDefined(TotalDuration))
+            {
+                writer.WritePropertyName("totalDuration"u8);
+                writer.WriteStringValue(TotalDuration);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SparkJob DeserializeSparkJob(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +181,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             Optional<string> queuedDuration = default;
             Optional<string> runningDuration = default;
             Optional<string> totalDuration = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -145,8 +292,61 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     totalDuration = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, Optional.ToList(timing), sparkJobDefinition.Value, Optional.ToList(pipeline), jobType.Value, Optional.ToNullable(submitTime), Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value);
+            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, Optional.ToList(timing), sparkJobDefinition.Value, Optional.ToList(pipeline), jobType.Value, Optional.ToNullable(submitTime), Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value, serializedAdditionalRawData);
+        }
+
+        SparkJob IModelJsonSerializable<SparkJob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkJob>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkJob(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkJob>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkJob>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkJob IModelSerializable<SparkJob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkJob>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkJob(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SparkJob"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SparkJob"/> to convert. </param>
+        public static implicit operator RequestContent(SparkJob model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SparkJob"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SparkJob(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkJob(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

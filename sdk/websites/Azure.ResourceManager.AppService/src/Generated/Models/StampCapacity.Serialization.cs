@@ -5,15 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StampCapacity
+    public partial class StampCapacity : IUtf8JsonSerializable, IModelJsonSerializable<StampCapacity>
     {
-        internal static StampCapacity DeserializeStampCapacity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StampCapacity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StampCapacity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StampCapacity>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(AvailableCapacity))
+            {
+                writer.WritePropertyName("availableCapacity"u8);
+                writer.WriteNumberValue(AvailableCapacity.Value);
+            }
+            if (Optional.IsDefined(TotalCapacity))
+            {
+                writer.WritePropertyName("totalCapacity"u8);
+                writer.WriteNumberValue(TotalCapacity.Value);
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (Optional.IsDefined(ComputeMode))
+            {
+                writer.WritePropertyName("computeMode"u8);
+                writer.WriteStringValue(ComputeMode.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(WorkerSize))
+            {
+                writer.WritePropertyName("workerSize"u8);
+                writer.WriteStringValue(WorkerSize.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(WorkerSizeId))
+            {
+                writer.WritePropertyName("workerSizeId"u8);
+                writer.WriteNumberValue(WorkerSizeId.Value);
+            }
+            if (Optional.IsDefined(ExcludeFromCapacityAllocation))
+            {
+                writer.WritePropertyName("excludeFromCapacityAllocation"u8);
+                writer.WriteBooleanValue(ExcludeFromCapacityAllocation.Value);
+            }
+            if (Optional.IsDefined(IsApplicableForAllComputeModes))
+            {
+                writer.WritePropertyName("isApplicableForAllComputeModes"u8);
+                writer.WriteBooleanValue(IsApplicableForAllComputeModes.Value);
+            }
+            if (Optional.IsDefined(SiteMode))
+            {
+                writer.WritePropertyName("siteMode"u8);
+                writer.WriteStringValue(SiteMode);
+            }
+            if (Optional.IsDefined(IsLinux))
+            {
+                writer.WritePropertyName("isLinux"u8);
+                writer.WriteBooleanValue(IsLinux.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StampCapacity DeserializeStampCapacity(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isApplicableForAllComputeModes = default;
             Optional<string> siteMode = default;
             Optional<bool> isLinux = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -118,8 +202,61 @@ namespace Azure.ResourceManager.AppService.Models
                     isLinux = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StampCapacity(name.Value, Optional.ToNullable(availableCapacity), Optional.ToNullable(totalCapacity), unit.Value, Optional.ToNullable(computeMode), Optional.ToNullable(workerSize), Optional.ToNullable(workerSizeId), Optional.ToNullable(excludeFromCapacityAllocation), Optional.ToNullable(isApplicableForAllComputeModes), siteMode.Value, Optional.ToNullable(isLinux));
+            return new StampCapacity(name.Value, Optional.ToNullable(availableCapacity), Optional.ToNullable(totalCapacity), unit.Value, Optional.ToNullable(computeMode), Optional.ToNullable(workerSize), Optional.ToNullable(workerSizeId), Optional.ToNullable(excludeFromCapacityAllocation), Optional.ToNullable(isApplicableForAllComputeModes), siteMode.Value, Optional.ToNullable(isLinux), serializedAdditionalRawData);
+        }
+
+        StampCapacity IModelJsonSerializable<StampCapacity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StampCapacity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStampCapacity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StampCapacity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StampCapacity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StampCapacity IModelSerializable<StampCapacity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StampCapacity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStampCapacity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StampCapacity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StampCapacity"/> to convert. </param>
+        public static implicit operator RequestContent(StampCapacity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StampCapacity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StampCapacity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStampCapacity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
@@ -12,15 +16,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="MethodRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MethodRequestEmptyBodyBase"/>, <see cref="PipelineTopologySetRequestBody"/>, <see cref="RemoteDeviceAdapterSetRequestBody"/>, <see cref="LivePipelineActivateRequest"/>, <see cref="LivePipelineDeactivateRequest"/>, <see cref="LivePipelineDeleteRequest"/>, <see cref="LivePipelineGetRequest"/>, <see cref="LivePipelineListRequest"/>, <see cref="LivePipelineSetRequest"/>, <see cref="OnvifDeviceDiscoverRequest"/>, <see cref="OnvifDeviceGetRequest"/>, <see cref="PipelineTopologyDeleteRequest"/>, <see cref="PipelineTopologyGetRequest"/>, <see cref="PipelineTopologyListRequest"/>, <see cref="PipelineTopologySetRequest"/>, <see cref="RemoteDeviceAdapterDeleteRequest"/>, <see cref="RemoteDeviceAdapterGetRequest"/>, <see cref="RemoteDeviceAdapterListRequest"/>, <see cref="RemoteDeviceAdapterSetRequest"/> and <see cref="LivePipelineSetRequestBody"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownMethodRequest))]
     public abstract partial class MethodRequest
     {
-        /// <summary> Initializes a new instance of MethodRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MethodRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
-        internal MethodRequest(string methodName, string apiVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MethodRequest(string methodName, string apiVersion, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MethodName = methodName;
             ApiVersion = apiVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Video Analyzer API version. </summary>
         public string ApiVersion { get; set; }

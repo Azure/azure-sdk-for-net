@@ -8,14 +8,37 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeNodeMonitoringResult
+    public partial class SynapseIntegrationRuntimeNodeMonitoringResult : IUtf8JsonSerializable, IModelJsonSerializable<SynapseIntegrationRuntimeNodeMonitoringResult>
     {
-        internal static SynapseIntegrationRuntimeNodeMonitoringResult DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseIntegrationRuntimeNodeMonitoringResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseIntegrationRuntimeNodeMonitoringResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeNodeMonitoringResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseIntegrationRuntimeNodeMonitoringResult DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,6 +127,54 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeNodeMonitoringResult(nodeName.Value, Optional.ToNullable(availableMemoryInMB), Optional.ToNullable(cpuUtilization), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(concurrentJobsRunning), Optional.ToNullable(maxConcurrentJobs), Optional.ToNullable(sentBytes), Optional.ToNullable(receivedBytes), additionalProperties);
+        }
+
+        SynapseIntegrationRuntimeNodeMonitoringResult IModelJsonSerializable<SynapseIntegrationRuntimeNodeMonitoringResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeNodeMonitoringResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseIntegrationRuntimeNodeMonitoringResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeNodeMonitoringResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseIntegrationRuntimeNodeMonitoringResult IModelSerializable<SynapseIntegrationRuntimeNodeMonitoringResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeNodeMonitoringResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseIntegrationRuntimeNodeMonitoringResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseIntegrationRuntimeNodeMonitoringResult"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseIntegrationRuntimeNodeMonitoringResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseIntegrationRuntimeNodeMonitoringResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseIntegrationRuntimeNodeMonitoringResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

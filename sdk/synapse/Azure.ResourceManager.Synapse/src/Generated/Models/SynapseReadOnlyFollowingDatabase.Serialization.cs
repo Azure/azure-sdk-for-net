@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseReadOnlyFollowingDatabase : IUtf8JsonSerializable
+    public partial class SynapseReadOnlyFollowingDatabase : IUtf8JsonSerializable, IModelJsonSerializable<SynapseReadOnlyFollowingDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseReadOnlyFollowingDatabase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseReadOnlyFollowingDatabase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseReadOnlyFollowingDatabase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -32,11 +39,25 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseReadOnlyFollowingDatabase DeserializeSynapseReadOnlyFollowingDatabase(JsonElement element)
+        internal static SynapseReadOnlyFollowingDatabase DeserializeSynapseReadOnlyFollowingDatabase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> leaderClusterResourceId = default;
             Optional<string> attachedDatabaseConfigurationName = default;
             Optional<SynapsePrincipalsModificationKind> principalsModificationKind = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -161,8 +183,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind));
+            return new SynapseReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), serializedAdditionalRawData);
+        }
+
+        SynapseReadOnlyFollowingDatabase IModelJsonSerializable<SynapseReadOnlyFollowingDatabase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseReadOnlyFollowingDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseReadOnlyFollowingDatabase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseReadOnlyFollowingDatabase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseReadOnlyFollowingDatabase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseReadOnlyFollowingDatabase IModelSerializable<SynapseReadOnlyFollowingDatabase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseReadOnlyFollowingDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseReadOnlyFollowingDatabase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseReadOnlyFollowingDatabase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseReadOnlyFollowingDatabase"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseReadOnlyFollowingDatabase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseReadOnlyFollowingDatabase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseReadOnlyFollowingDatabase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseReadOnlyFollowingDatabase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

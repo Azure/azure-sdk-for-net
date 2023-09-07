@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(IntegrationRuntimeDataFlowPropertiesConverter))]
-    public partial class IntegrationRuntimeDataFlowProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeDataFlowProperties : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationRuntimeDataFlowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationRuntimeDataFlowProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationRuntimeDataFlowProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationRuntimeDataFlowProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeType))
             {
@@ -47,8 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeDataFlowProperties DeserializeIntegrationRuntimeDataFlowProperties(JsonElement element)
+        internal static IntegrationRuntimeDataFlowProperties DeserializeIntegrationRuntimeDataFlowProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,6 +109,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), additionalProperties);
+        }
+
+        IntegrationRuntimeDataFlowProperties IModelJsonSerializable<IntegrationRuntimeDataFlowProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationRuntimeDataFlowProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeDataFlowProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationRuntimeDataFlowProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationRuntimeDataFlowProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationRuntimeDataFlowProperties IModelSerializable<IntegrationRuntimeDataFlowProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationRuntimeDataFlowProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationRuntimeDataFlowProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationRuntimeDataFlowProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationRuntimeDataFlowProperties"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationRuntimeDataFlowProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationRuntimeDataFlowProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationRuntimeDataFlowProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationRuntimeDataFlowProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class IntegrationRuntimeDataFlowPropertiesConverter : JsonConverter<IntegrationRuntimeDataFlowProperties>

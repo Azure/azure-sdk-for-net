@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseDataMaskingPolicyData : IUtf8JsonSerializable
+    public partial class SynapseDataMaskingPolicyData : IUtf8JsonSerializable, IModelJsonSerializable<SynapseDataMaskingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseDataMaskingPolicyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseDataMaskingPolicyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseDataMaskingPolicyData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStringValue(ExemptPrincipals);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseDataMaskingPolicyData DeserializeSynapseDataMaskingPolicyData(JsonElement element)
+        internal static SynapseDataMaskingPolicyData DeserializeSynapseDataMaskingPolicyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +72,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> exemptPrincipals = default;
             Optional<string> applicationPrincipals = default;
             Optional<string> maskingLevel = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -131,8 +154,61 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseDataMaskingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, managedBy.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value);
+            return new SynapseDataMaskingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, managedBy.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value, serializedAdditionalRawData);
+        }
+
+        SynapseDataMaskingPolicyData IModelJsonSerializable<SynapseDataMaskingPolicyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseDataMaskingPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseDataMaskingPolicyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseDataMaskingPolicyData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseDataMaskingPolicyData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseDataMaskingPolicyData IModelSerializable<SynapseDataMaskingPolicyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseDataMaskingPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseDataMaskingPolicyData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseDataMaskingPolicyData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseDataMaskingPolicyData"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseDataMaskingPolicyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseDataMaskingPolicyData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseDataMaskingPolicyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseDataMaskingPolicyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

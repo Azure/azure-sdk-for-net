@@ -5,23 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapVirtualInstanceData : IUtf8JsonSerializable
+    public partial class SapVirtualInstanceData : IUtf8JsonSerializable, IModelJsonSerializable<SapVirtualInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapVirtualInstanceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapVirtualInstanceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SapVirtualInstanceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                if (Identity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<UserAssignedServiceIdentity>)Identity).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -43,18 +57,46 @@ namespace Azure.ResourceManager.Workloads
             writer.WritePropertyName("sapProduct"u8);
             writer.WriteStringValue(SapProduct.ToString());
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue(Configuration);
+            if (Configuration is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SapConfiguration>)Configuration).Serialize(writer, options);
+            }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                if (ManagedResourceGroupConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedRGConfiguration>)ManagedResourceGroupConfiguration).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SapVirtualInstanceData DeserializeSapVirtualInstanceData(JsonElement element)
+        internal static SapVirtualInstanceData DeserializeSapVirtualInstanceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +117,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<SapVirtualInstanceState> state = default;
             Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
             Optional<SapVirtualInstanceError> errors = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -210,8 +253,61 @@ namespace Azure.ResourceManager.Workloads
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SapVirtualInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, environment, sapProduct, configuration, managedResourceGroupConfiguration.Value, Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(state), Optional.ToNullable(provisioningState), errors.Value);
+            return new SapVirtualInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, environment, sapProduct, configuration, managedResourceGroupConfiguration.Value, Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(state), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+        }
+
+        SapVirtualInstanceData IModelJsonSerializable<SapVirtualInstanceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapVirtualInstanceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapVirtualInstanceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapVirtualInstanceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapVirtualInstanceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapVirtualInstanceData IModelSerializable<SapVirtualInstanceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapVirtualInstanceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapVirtualInstanceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SapVirtualInstanceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SapVirtualInstanceData"/> to convert. </param>
+        public static implicit operator RequestContent(SapVirtualInstanceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SapVirtualInstanceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SapVirtualInstanceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapVirtualInstanceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

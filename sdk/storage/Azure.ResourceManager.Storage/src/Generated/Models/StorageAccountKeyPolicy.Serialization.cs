@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class StorageAccountKeyPolicy : IUtf8JsonSerializable
+    internal partial class StorageAccountKeyPolicy : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountKeyPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountKeyPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountKeyPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountKeyPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyExpirationPeriodInDays"u8);
             writer.WriteNumberValue(KeyExpirationPeriodInDays);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageAccountKeyPolicy DeserializeStorageAccountKeyPolicy(JsonElement element)
+        internal static StorageAccountKeyPolicy DeserializeStorageAccountKeyPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int keyExpirationPeriodInDays = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyExpirationPeriodInDays"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.Storage.Models
                     keyExpirationPeriodInDays = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageAccountKeyPolicy(keyExpirationPeriodInDays);
+            return new StorageAccountKeyPolicy(keyExpirationPeriodInDays, serializedAdditionalRawData);
+        }
+
+        StorageAccountKeyPolicy IModelJsonSerializable<StorageAccountKeyPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountKeyPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountKeyPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountKeyPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountKeyPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountKeyPolicy IModelSerializable<StorageAccountKeyPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountKeyPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountKeyPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageAccountKeyPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageAccountKeyPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(StorageAccountKeyPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageAccountKeyPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageAccountKeyPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageAccountKeyPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

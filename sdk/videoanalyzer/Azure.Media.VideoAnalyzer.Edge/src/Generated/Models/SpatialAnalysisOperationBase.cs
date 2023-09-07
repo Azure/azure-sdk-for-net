@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="SpatialAnalysisOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SpatialAnalysisCustomOperation"/>, <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/>, <see cref="SpatialAnalysisPersonZoneCrossingOperation"/> and <see cref="SpatialAnalysisTypedOperationBase"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownSpatialAnalysisOperationBase))]
     public abstract partial class SpatialAnalysisOperationBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationBase"/>. </summary>
         protected SpatialAnalysisOperationBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
-        internal SpatialAnalysisOperationBase(string type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpatialAnalysisOperationBase(string type, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Type discriminator for the derived types. </summary>

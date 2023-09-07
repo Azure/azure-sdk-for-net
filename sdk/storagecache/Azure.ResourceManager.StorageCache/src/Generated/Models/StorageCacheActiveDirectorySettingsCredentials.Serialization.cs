@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheActiveDirectorySettingsCredentials : IUtf8JsonSerializable
+    public partial class StorageCacheActiveDirectorySettingsCredentials : IUtf8JsonSerializable, IModelJsonSerializable<StorageCacheActiveDirectorySettingsCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageCacheActiveDirectorySettingsCredentials>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageCacheActiveDirectorySettingsCredentials>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheActiveDirectorySettingsCredentials>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageCacheActiveDirectorySettingsCredentials DeserializeStorageCacheActiveDirectorySettingsCredentials(JsonElement element)
+        internal static StorageCacheActiveDirectorySettingsCredentials DeserializeStorageCacheActiveDirectorySettingsCredentials(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string username = default;
             Optional<string> password = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -45,8 +68,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     password = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageCacheActiveDirectorySettingsCredentials(username, password.Value);
+            return new StorageCacheActiveDirectorySettingsCredentials(username, password.Value, serializedAdditionalRawData);
+        }
+
+        StorageCacheActiveDirectorySettingsCredentials IModelJsonSerializable<StorageCacheActiveDirectorySettingsCredentials>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheActiveDirectorySettingsCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheActiveDirectorySettingsCredentials(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageCacheActiveDirectorySettingsCredentials>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheActiveDirectorySettingsCredentials>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageCacheActiveDirectorySettingsCredentials IModelSerializable<StorageCacheActiveDirectorySettingsCredentials>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheActiveDirectorySettingsCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageCacheActiveDirectorySettingsCredentials(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageCacheActiveDirectorySettingsCredentials"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageCacheActiveDirectorySettingsCredentials"/> to convert. </param>
+        public static implicit operator RequestContent(StorageCacheActiveDirectorySettingsCredentials model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageCacheActiveDirectorySettingsCredentials"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageCacheActiveDirectorySettingsCredentials(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageCacheActiveDirectorySettingsCredentials(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

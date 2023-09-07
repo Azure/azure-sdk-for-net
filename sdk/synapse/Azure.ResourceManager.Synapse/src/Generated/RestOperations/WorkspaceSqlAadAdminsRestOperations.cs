@@ -137,9 +137,7 @@ namespace Azure.ResourceManager.Synapse
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }

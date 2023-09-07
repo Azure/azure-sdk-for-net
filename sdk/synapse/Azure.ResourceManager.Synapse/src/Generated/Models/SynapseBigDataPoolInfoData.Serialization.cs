@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseBigDataPoolInfoData : IUtf8JsonSerializable
+    public partial class SynapseBigDataPoolInfoData : IUtf8JsonSerializable, IModelJsonSerializable<SynapseBigDataPoolInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseBigDataPoolInfoData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseBigDataPoolInfoData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseBigDataPoolInfoData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -42,12 +48,26 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                if (AutoScale is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BigDataPoolAutoScaleProperties>)AutoScale).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AutoPause))
             {
                 writer.WritePropertyName("autoPause"u8);
-                writer.WriteObjectValue(AutoPause);
+                if (AutoPause is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BigDataPoolAutoPauseProperties>)AutoPause).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsComputeIsolationEnabled))
             {
@@ -72,7 +92,14 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(DynamicExecutorAllocation))
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
-                writer.WriteObjectValue(DynamicExecutorAllocation);
+                if (DynamicExecutorAllocation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SynapseDynamicExecutorAllocation>)DynamicExecutorAllocation).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SparkEventsFolder))
             {
@@ -87,7 +114,14 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(LibraryRequirements))
             {
                 writer.WritePropertyName("libraryRequirements"u8);
-                writer.WriteObjectValue(LibraryRequirements);
+                if (LibraryRequirements is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BigDataPoolLibraryRequirements>)LibraryRequirements).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(CustomLibraries))
             {
@@ -95,14 +129,28 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in CustomLibraries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BigDataPoolLibraryInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
-                writer.WriteObjectValue(SparkConfigProperties);
+                if (SparkConfigProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BigDataPoolSparkConfigProperties>)SparkConfigProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SparkVersion))
             {
@@ -125,11 +173,25 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStringValue(NodeSizeFamily.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseBigDataPoolInfoData DeserializeSynapseBigDataPoolInfoData(JsonElement element)
+        internal static SynapseBigDataPoolInfoData DeserializeSynapseBigDataPoolInfoData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -159,6 +221,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<BigDataPoolNodeSize> nodeSize = default;
             Optional<BigDataPoolNodeSizeFamily> nodeSizeFamily = default;
             Optional<DateTimeOffset> lastSucceededTimestamp = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -376,8 +439,61 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseBigDataPoolInfoData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(isAutotuneEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp));
+            return new SynapseBigDataPoolInfoData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(isAutotuneEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp), serializedAdditionalRawData);
+        }
+
+        SynapseBigDataPoolInfoData IModelJsonSerializable<SynapseBigDataPoolInfoData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseBigDataPoolInfoData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseBigDataPoolInfoData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseBigDataPoolInfoData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseBigDataPoolInfoData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseBigDataPoolInfoData IModelSerializable<SynapseBigDataPoolInfoData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseBigDataPoolInfoData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseBigDataPoolInfoData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseBigDataPoolInfoData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseBigDataPoolInfoData"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseBigDataPoolInfoData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseBigDataPoolInfoData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseBigDataPoolInfoData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseBigDataPoolInfoData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

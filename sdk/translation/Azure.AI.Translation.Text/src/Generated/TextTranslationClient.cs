@@ -80,7 +80,7 @@ namespace Azure.AI.Translation.Text
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLanguagesAsync(clientTraceId, scope, acceptLanguage, ifNoneMatch, context).ConfigureAwait(false);
-            return Response.FromValue(GetLanguagesResult.FromResponse(response), response);
+            return Response.FromValue((GetLanguagesResult)response, response);
         }
 
         /// <summary> Gets the set of languages currently supported by other operations of the Translator. </summary>
@@ -110,7 +110,7 @@ namespace Azure.AI.Translation.Text
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLanguages(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
-            return Response.FromValue(GetLanguagesResult.FromResponse(response), response);
+            return Response.FromValue((GetLanguagesResult)response, response);
         }
 
         internal HttpMessage CreateGetLanguagesRequest(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)

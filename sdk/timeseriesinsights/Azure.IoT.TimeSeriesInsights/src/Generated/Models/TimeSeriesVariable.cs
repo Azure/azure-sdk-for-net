@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.IoT.TimeSeriesInsights
     /// Please note <see cref="TimeSeriesVariable"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AggregateVariable"/>, <see cref="CategoricalVariable"/> and <see cref="NumericVariable"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownVariable))]
     public abstract partial class TimeSeriesVariable
     {
-        /// <summary> Initializes a new instance of TimeSeriesVariable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesVariable"/>. </summary>
         protected TimeSeriesVariable()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesVariable"/>. </summary>
         /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
-        internal TimeSeriesVariable(string kind, TimeSeriesExpression filter)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesVariable(string kind, TimeSeriesExpression filter, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Filter = filter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </summary>

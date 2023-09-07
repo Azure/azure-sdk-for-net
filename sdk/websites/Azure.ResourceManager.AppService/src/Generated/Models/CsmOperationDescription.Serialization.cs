@@ -5,15 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CsmOperationDescription
+    public partial class CsmOperationDescription : IUtf8JsonSerializable, IModelJsonSerializable<CsmOperationDescription>
     {
-        internal static CsmOperationDescription DeserializeCsmOperationDescription(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CsmOperationDescription>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CsmOperationDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CsmOperationDescription>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(IsDataAction))
+            {
+                writer.WritePropertyName("isDataAction"u8);
+                writer.WriteBooleanValue(IsDataAction.Value);
+            }
+            if (Optional.IsDefined(Display))
+            {
+                writer.WritePropertyName("display"u8);
+                if (Display is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CsmOperationDisplay>)Display).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Origin))
+            {
+                writer.WritePropertyName("origin"u8);
+                writer.WriteStringValue(Origin);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CsmOperationDescriptionProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CsmOperationDescription DeserializeCsmOperationDescription(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<CsmOperationDisplay> display = default;
             Optional<string> origin = default;
             Optional<CsmOperationDescriptionProperties> properties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -62,8 +130,61 @@ namespace Azure.ResourceManager.AppService.Models
                     properties = CsmOperationDescriptionProperties.DeserializeCsmOperationDescriptionProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CsmOperationDescription(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value);
+            return new CsmOperationDescription(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value, serializedAdditionalRawData);
+        }
+
+        CsmOperationDescription IModelJsonSerializable<CsmOperationDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CsmOperationDescription>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCsmOperationDescription(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CsmOperationDescription>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CsmOperationDescription>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CsmOperationDescription IModelSerializable<CsmOperationDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CsmOperationDescription>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCsmOperationDescription(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CsmOperationDescription"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CsmOperationDescription"/> to convert. </param>
+        public static implicit operator RequestContent(CsmOperationDescription model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CsmOperationDescription"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CsmOperationDescription(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCsmOperationDescription(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

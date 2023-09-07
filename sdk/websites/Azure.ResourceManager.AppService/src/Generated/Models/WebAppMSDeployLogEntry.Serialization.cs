@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppMSDeployLogEntry
+    public partial class WebAppMSDeployLogEntry : IUtf8JsonSerializable, IModelJsonSerializable<WebAppMSDeployLogEntry>
     {
-        internal static WebAppMSDeployLogEntry DeserializeWebAppMSDeployLogEntry(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebAppMSDeployLogEntry>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebAppMSDeployLogEntry>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebAppMSDeployLogEntry>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static WebAppMSDeployLogEntry DeserializeWebAppMSDeployLogEntry(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> time = default;
             Optional<WebAppMSDeployLogEntryType> type = default;
             Optional<string> message = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -47,8 +75,61 @@ namespace Azure.ResourceManager.AppService.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebAppMSDeployLogEntry(Optional.ToNullable(time), Optional.ToNullable(type), message.Value);
+            return new WebAppMSDeployLogEntry(Optional.ToNullable(time), Optional.ToNullable(type), message.Value, serializedAdditionalRawData);
+        }
+
+        WebAppMSDeployLogEntry IModelJsonSerializable<WebAppMSDeployLogEntry>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebAppMSDeployLogEntry>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebAppMSDeployLogEntry(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebAppMSDeployLogEntry>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebAppMSDeployLogEntry>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebAppMSDeployLogEntry IModelSerializable<WebAppMSDeployLogEntry>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebAppMSDeployLogEntry>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebAppMSDeployLogEntry(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebAppMSDeployLogEntry"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebAppMSDeployLogEntry"/> to convert. </param>
+        public static implicit operator RequestContent(WebAppMSDeployLogEntry model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebAppMSDeployLogEntry"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebAppMSDeployLogEntry(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebAppMSDeployLogEntry(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

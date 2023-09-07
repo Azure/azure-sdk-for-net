@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class CspWorkspaceAdminProperties : IUtf8JsonSerializable
+    internal partial class CspWorkspaceAdminProperties : IUtf8JsonSerializable, IModelJsonSerializable<CspWorkspaceAdminProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CspWorkspaceAdminProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CspWorkspaceAdminProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CspWorkspaceAdminProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(InitialWorkspaceAdminObjectId))
             {
                 writer.WritePropertyName("initialWorkspaceAdminObjectId"u8);
                 writer.WriteStringValue(InitialWorkspaceAdminObjectId.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CspWorkspaceAdminProperties DeserializeCspWorkspaceAdminProperties(JsonElement element)
+        internal static CspWorkspaceAdminProperties DeserializeCspWorkspaceAdminProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Guid> initialWorkspaceAdminObjectId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initialWorkspaceAdminObjectId"u8))
@@ -42,8 +64,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     initialWorkspaceAdminObjectId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CspWorkspaceAdminProperties(Optional.ToNullable(initialWorkspaceAdminObjectId));
+            return new CspWorkspaceAdminProperties(Optional.ToNullable(initialWorkspaceAdminObjectId), serializedAdditionalRawData);
+        }
+
+        CspWorkspaceAdminProperties IModelJsonSerializable<CspWorkspaceAdminProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CspWorkspaceAdminProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCspWorkspaceAdminProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CspWorkspaceAdminProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CspWorkspaceAdminProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CspWorkspaceAdminProperties IModelSerializable<CspWorkspaceAdminProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CspWorkspaceAdminProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCspWorkspaceAdminProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CspWorkspaceAdminProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CspWorkspaceAdminProperties"/> to convert. </param>
+        public static implicit operator RequestContent(CspWorkspaceAdminProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CspWorkspaceAdminProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CspWorkspaceAdminProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCspWorkspaceAdminProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

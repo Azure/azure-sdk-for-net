@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -15,9 +17,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownInfrastructureConfiguration))]
     public abstract partial class InfrastructureConfiguration
     {
-        /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InfrastructureConfiguration"/>. </summary>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/> is null. </exception>
         protected InfrastructureConfiguration(string appResourceGroup)
@@ -27,13 +33,20 @@ namespace Azure.ResourceManager.Workloads.Models
             AppResourceGroup = appResourceGroup;
         }
 
-        /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfrastructureConfiguration"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
-        internal InfrastructureConfiguration(SapDeploymentType deploymentType, string appResourceGroup)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InfrastructureConfiguration(SapDeploymentType deploymentType, string appResourceGroup, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeploymentType = deploymentType;
             AppResourceGroup = appResourceGroup;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InfrastructureConfiguration"/> for deserialization. </summary>
+        internal InfrastructureConfiguration()
+        {
         }
 
         /// <summary> The type of SAP deployment, single server or Three tier. </summary>

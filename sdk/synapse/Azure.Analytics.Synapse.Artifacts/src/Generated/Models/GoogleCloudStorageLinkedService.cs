@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service for Google Cloud Storage. </summary>
     public partial class GoogleCloudStorageLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of GoogleCloudStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleCloudStorageLinkedService"/>. </summary>
         public GoogleCloudStorageLinkedService()
         {
             Type = "GoogleCloudStorage";
         }
 
-        /// <summary> Initializes a new instance of GoogleCloudStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleCloudStorageLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

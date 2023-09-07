@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class InstancesOperationResult
+    public partial class InstancesOperationResult : IUtf8JsonSerializable, IModelJsonSerializable<InstancesOperationResult>
     {
-        internal static InstancesOperationResult DeserializeInstancesOperationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstancesOperationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InstancesOperationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InstancesOperationResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InstancesOperationResult DeserializeInstancesOperationResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<TimeSeriesInstance> instance = default;
             Optional<TimeSeriesOperationError> error = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instance"u8))
@@ -40,8 +69,61 @@ namespace Azure.IoT.TimeSeriesInsights
                     error = TimeSeriesOperationError.DeserializeTimeSeriesOperationError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InstancesOperationResult(instance.Value, error.Value);
+            return new InstancesOperationResult(instance.Value, error.Value, serializedAdditionalRawData);
+        }
+
+        InstancesOperationResult IModelJsonSerializable<InstancesOperationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstancesOperationResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstancesOperationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InstancesOperationResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstancesOperationResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InstancesOperationResult IModelSerializable<InstancesOperationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstancesOperationResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInstancesOperationResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InstancesOperationResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InstancesOperationResult"/> to convert. </param>
+        public static implicit operator RequestContent(InstancesOperationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InstancesOperationResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InstancesOperationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInstancesOperationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

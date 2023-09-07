@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class GitHubActionWebAppStackSettings
+    public partial class GitHubActionWebAppStackSettings : IUtf8JsonSerializable, IModelJsonSerializable<GitHubActionWebAppStackSettings>
     {
-        internal static GitHubActionWebAppStackSettings DeserializeGitHubActionWebAppStackSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GitHubActionWebAppStackSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GitHubActionWebAppStackSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GitHubActionWebAppStackSettings>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GitHubActionWebAppStackSettings DeserializeGitHubActionWebAppStackSettings(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isSupported = default;
             Optional<string> supportedVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSupported"u8))
@@ -36,8 +65,61 @@ namespace Azure.ResourceManager.AppService.Models
                     supportedVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GitHubActionWebAppStackSettings(Optional.ToNullable(isSupported), supportedVersion.Value);
+            return new GitHubActionWebAppStackSettings(Optional.ToNullable(isSupported), supportedVersion.Value, serializedAdditionalRawData);
+        }
+
+        GitHubActionWebAppStackSettings IModelJsonSerializable<GitHubActionWebAppStackSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GitHubActionWebAppStackSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGitHubActionWebAppStackSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GitHubActionWebAppStackSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GitHubActionWebAppStackSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GitHubActionWebAppStackSettings IModelSerializable<GitHubActionWebAppStackSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GitHubActionWebAppStackSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGitHubActionWebAppStackSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GitHubActionWebAppStackSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GitHubActionWebAppStackSettings"/> to convert. </param>
+        public static implicit operator RequestContent(GitHubActionWebAppStackSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GitHubActionWebAppStackSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GitHubActionWebAppStackSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGitHubActionWebAppStackSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

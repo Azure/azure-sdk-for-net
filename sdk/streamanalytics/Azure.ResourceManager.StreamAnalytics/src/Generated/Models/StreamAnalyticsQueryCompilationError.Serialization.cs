@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsQueryCompilationError
+    public partial class StreamAnalyticsQueryCompilationError : IUtf8JsonSerializable, IModelJsonSerializable<StreamAnalyticsQueryCompilationError>
     {
-        internal static StreamAnalyticsQueryCompilationError DeserializeStreamAnalyticsQueryCompilationError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamAnalyticsQueryCompilationError>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamAnalyticsQueryCompilationError>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsQueryCompilationError>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StreamAnalyticsQueryCompilationError DeserializeStreamAnalyticsQueryCompilationError(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +52,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<int> endLine = default;
             Optional<int> endColumn = default;
             Optional<bool> isGlobal = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -76,8 +105,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     isGlobal = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StreamAnalyticsQueryCompilationError(message.Value, Optional.ToNullable(startLine), Optional.ToNullable(startColumn), Optional.ToNullable(endLine), Optional.ToNullable(endColumn), Optional.ToNullable(isGlobal));
+            return new StreamAnalyticsQueryCompilationError(message.Value, Optional.ToNullable(startLine), Optional.ToNullable(startColumn), Optional.ToNullable(endLine), Optional.ToNullable(endColumn), Optional.ToNullable(isGlobal), serializedAdditionalRawData);
+        }
+
+        StreamAnalyticsQueryCompilationError IModelJsonSerializable<StreamAnalyticsQueryCompilationError>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsQueryCompilationError>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsQueryCompilationError(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamAnalyticsQueryCompilationError>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsQueryCompilationError>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamAnalyticsQueryCompilationError IModelSerializable<StreamAnalyticsQueryCompilationError>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsQueryCompilationError>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsQueryCompilationError(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StreamAnalyticsQueryCompilationError"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StreamAnalyticsQueryCompilationError"/> to convert. </param>
+        public static implicit operator RequestContent(StreamAnalyticsQueryCompilationError model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StreamAnalyticsQueryCompilationError"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StreamAnalyticsQueryCompilationError(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamAnalyticsQueryCompilationError(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

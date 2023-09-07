@@ -6,22 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MetastoreUpdationResponseConverter))]
-    public partial class MetastoreUpdationResponse
+    public partial class MetastoreUpdationResponse : IUtf8JsonSerializable, IModelJsonSerializable<MetastoreUpdationResponse>
     {
-        internal static MetastoreUpdationResponse DeserializeMetastoreUpdationResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetastoreUpdationResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetastoreUpdationResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetastoreUpdationResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MetastoreUpdationResponse DeserializeMetastoreUpdationResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<RequestStatus> status = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -33,15 +66,68 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     status = new RequestStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetastoreUpdationResponse(Optional.ToNullable(status));
+            return new MetastoreUpdationResponse(Optional.ToNullable(status), serializedAdditionalRawData);
+        }
+
+        MetastoreUpdationResponse IModelJsonSerializable<MetastoreUpdationResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetastoreUpdationResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetastoreUpdationResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetastoreUpdationResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetastoreUpdationResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetastoreUpdationResponse IModelSerializable<MetastoreUpdationResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetastoreUpdationResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetastoreUpdationResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetastoreUpdationResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetastoreUpdationResponse"/> to convert. </param>
+        public static implicit operator RequestContent(MetastoreUpdationResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetastoreUpdationResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetastoreUpdationResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetastoreUpdationResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class MetastoreUpdationResponseConverter : JsonConverter<MetastoreUpdationResponse>
         {
             public override void Write(Utf8JsonWriter writer, MetastoreUpdationResponse model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MetastoreUpdationResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

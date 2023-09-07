@@ -5,21 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class EnqueueServerProperties : IUtf8JsonSerializable
+    public partial class EnqueueServerProperties : IUtf8JsonSerializable, IModelJsonSerializable<EnqueueServerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EnqueueServerProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EnqueueServerProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EnqueueServerProperties>(this, options.Format);
+
             writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EnqueueServerProperties DeserializeEnqueueServerProperties(JsonElement element)
+        internal static EnqueueServerProperties DeserializeEnqueueServerProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +50,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> ipAddress = default;
             Optional<long?> port = default;
             Optional<SapHealthState> health = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostname"u8))
@@ -59,8 +82,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     health = new SapHealthState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EnqueueServerProperties(hostname.Value, ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(health));
+            return new EnqueueServerProperties(hostname.Value, ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(health), serializedAdditionalRawData);
+        }
+
+        EnqueueServerProperties IModelJsonSerializable<EnqueueServerProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EnqueueServerProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEnqueueServerProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EnqueueServerProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EnqueueServerProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EnqueueServerProperties IModelSerializable<EnqueueServerProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EnqueueServerProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEnqueueServerProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EnqueueServerProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EnqueueServerProperties"/> to convert. </param>
+        public static implicit operator RequestContent(EnqueueServerProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EnqueueServerProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EnqueueServerProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEnqueueServerProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

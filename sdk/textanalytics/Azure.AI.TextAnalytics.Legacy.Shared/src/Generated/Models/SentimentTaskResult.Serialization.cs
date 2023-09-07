@@ -5,20 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class SentimentTaskResult
+    internal partial class SentimentTaskResult : IUtf8JsonSerializable, IModelJsonSerializable<SentimentTaskResult>
     {
-        internal static SentimentTaskResult DeserializeSentimentTaskResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SentimentTaskResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SentimentTaskResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SentimentTaskResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                if (Results is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SentimentResponse>)Results).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SentimentTaskResult DeserializeSentimentTaskResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SentimentResponse> results = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -30,8 +71,61 @@ namespace Azure.AI.TextAnalytics.Legacy
                     results = SentimentResponse.DeserializeSentimentResponse(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SentimentTaskResult(results.Value);
+            return new SentimentTaskResult(results.Value, serializedAdditionalRawData);
+        }
+
+        SentimentTaskResult IModelJsonSerializable<SentimentTaskResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentimentTaskResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSentimentTaskResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SentimentTaskResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentimentTaskResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SentimentTaskResult IModelSerializable<SentimentTaskResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentimentTaskResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSentimentTaskResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SentimentTaskResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SentimentTaskResult"/> to convert. </param>
+        public static implicit operator RequestContent(SentimentTaskResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SentimentTaskResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SentimentTaskResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSentimentTaskResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

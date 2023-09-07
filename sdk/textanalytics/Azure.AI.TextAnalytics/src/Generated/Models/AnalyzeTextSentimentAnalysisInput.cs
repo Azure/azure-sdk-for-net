@@ -5,15 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The AnalyzeTextSentimentAnalysisInput. </summary>
     internal partial class AnalyzeTextSentimentAnalysisInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextSentimentAnalysisInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSentimentAnalysisInput"/>. </summary>
         public AnalyzeTextSentimentAnalysisInput()
         {
             Kind = AnalyzeTextTaskKind.SentimentAnalysis;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSentimentAnalysisInput"/>. </summary>
+        /// <param name="kind"> Enumeration of supported Text Analysis tasks. </param>
+        /// <param name="analysisInput"></param>
+        /// <param name="parameters"> Supported parameters for a Sentiment Analysis task. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextSentimentAnalysisInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, SentimentAnalysisTaskParameters parameters, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        {
+            AnalysisInput = analysisInput;
+            Parameters = parameters;
+            Kind = kind;
         }
 
         /// <summary> Gets or sets the analysis input. </summary>

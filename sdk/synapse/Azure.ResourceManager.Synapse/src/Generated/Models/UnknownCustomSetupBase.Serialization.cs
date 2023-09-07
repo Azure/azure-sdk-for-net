@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class UnknownCustomSetupBase : IUtf8JsonSerializable
+    internal partial class UnknownCustomSetupBase : IUtf8JsonSerializable, IModelJsonSerializable<SynapseCustomSetupBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseCustomSetupBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseCustomSetupBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseCustomSetupBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CustomSetupBaseType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCustomSetupBase DeserializeUnknownCustomSetupBase(JsonElement element)
+        internal static SynapseCustomSetupBase DeserializeUnknownCustomSetupBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeSynapseCustomSetupBase(element, options);
+
+        SynapseCustomSetupBase IModelJsonSerializable<SynapseCustomSetupBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownCustomSetupBase(type);
+            Core.ModelSerializerHelper.ValidateFormat<SynapseCustomSetupBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCustomSetupBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseCustomSetupBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseCustomSetupBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseCustomSetupBase IModelSerializable<SynapseCustomSetupBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseCustomSetupBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseCustomSetupBase(doc.RootElement, options);
         }
     }
 }

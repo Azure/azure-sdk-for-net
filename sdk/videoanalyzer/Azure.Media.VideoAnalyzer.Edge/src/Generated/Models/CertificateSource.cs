@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="CertificateSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="PemCertificateList"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownCertificateSource))]
     public abstract partial class CertificateSource
     {
-        /// <summary> Initializes a new instance of CertificateSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CertificateSource"/>. </summary>
         protected CertificateSource()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateSource"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
-        internal CertificateSource(string type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateSource(string type, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type discriminator for the derived types. </summary>
