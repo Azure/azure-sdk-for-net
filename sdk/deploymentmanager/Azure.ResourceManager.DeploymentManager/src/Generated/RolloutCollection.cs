@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = await _rolloutRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, rolloutName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentManagerArmOperation<RolloutResource>(new RolloutOperationSource(Client), _rolloutClientDiagnostics, Pipeline, _rolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rolloutName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DeploymentManagerArmOperation<RolloutResource>(new RolloutOperationSource(Client), _rolloutClientDiagnostics, Pipeline, _rolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rolloutName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = _rolloutRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, rolloutName, content, cancellationToken);
-                var operation = new DeploymentManagerArmOperation<RolloutResource>(new RolloutOperationSource(Client), _rolloutClientDiagnostics, Pipeline, _rolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rolloutName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DeploymentManagerArmOperation<RolloutResource>(new RolloutOperationSource(Client), _rolloutClientDiagnostics, Pipeline, _rolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rolloutName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<RolloutResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolloutRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<RolloutResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolloutRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

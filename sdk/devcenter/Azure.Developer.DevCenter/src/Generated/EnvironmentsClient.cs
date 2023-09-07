@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -383,7 +382,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -405,7 +404,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -432,7 +431,7 @@ namespace Azure.Developer.DevCenter
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsByUserRequest(userId, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsByUserNextPageRequest(nextLink, userId, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -459,7 +458,7 @@ namespace Azure.Developer.DevCenter
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsByUserRequest(userId, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsByUserNextPageRequest(nextLink, userId, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentsByUser", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -481,7 +480,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -503,7 +502,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItems", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -530,7 +529,7 @@ namespace Azure.Developer.DevCenter
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemVersionsRequest(catalogItemId, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemVersionsNextPageRequest(nextLink, catalogItemId, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -557,7 +556,7 @@ namespace Azure.Developer.DevCenter
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemVersionsRequest(catalogItemId, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemVersionsNextPageRequest(nextLink, catalogItemId, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetCatalogItemVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -579,7 +578,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -601,7 +600,7 @@ namespace Azure.Developer.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -635,7 +634,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateEnvironmentRequest(userId, environmentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CreateOrUpdateEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CreateOrUpdateEnvironment", Core.OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -675,7 +674,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateEnvironmentRequest(userId, environmentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CreateOrUpdateEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CreateOrUpdateEnvironment", Core.OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -713,7 +712,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteEnvironmentRequest(userId, environmentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeleteEnvironment", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -751,7 +750,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteEnvironmentRequest(userId, environmentName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeleteEnvironment", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -791,7 +790,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeployEnvironmentActionRequest(userId, environmentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeployEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeployEnvironmentAction", Core.OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -831,7 +830,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeployEnvironmentActionRequest(userId, environmentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeployEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.DeployEnvironmentAction", Core.OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -871,7 +870,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateCustomEnvironmentActionRequest(userId, environmentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CustomEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CustomEnvironmentAction", Core.OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -911,7 +910,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateCustomEnvironmentActionRequest(userId, environmentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CustomEnvironmentAction", OperationFinalStateVia.OriginalUri, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "EnvironmentsClient.CustomEnvironmentAction", Core.OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {

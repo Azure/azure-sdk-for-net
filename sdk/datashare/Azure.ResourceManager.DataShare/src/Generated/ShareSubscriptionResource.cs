@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _shareSubscriptionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -318,7 +317,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _shareSubscriptionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -432,7 +431,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _shareSubscriptionRestClient.CancelSynchronizationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateCancelSynchronizationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateCancelSynchronizationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -470,7 +469,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _shareSubscriptionRestClient.CancelSynchronization(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, cancellationToken);
-                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateCancelSynchronizationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateCancelSynchronizationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -502,7 +501,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -525,7 +524,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -554,7 +553,7 @@ namespace Azure.ResourceManager.DataShare
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -583,7 +582,7 @@ namespace Azure.ResourceManager.DataShare
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -608,7 +607,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -633,7 +632,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -662,7 +661,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _shareSubscriptionRestClient.SynchronizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -700,7 +699,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _shareSubscriptionRestClient.Synchronize(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -732,7 +731,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -755,7 +754,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
         }
     }
 }

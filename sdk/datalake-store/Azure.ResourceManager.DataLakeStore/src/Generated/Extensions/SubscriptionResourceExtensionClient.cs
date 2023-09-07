@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeStoreAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeStoreAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeStoreAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeStoreAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.OrderBy, options.Count);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, DataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.DataLakeStore
         public virtual AsyncPageable<DataLakeStoreUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateGetUsageRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataLakeStoreUsage.DeserializeDataLakeStoreUsage, LocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataLakeStoreUsage.DeserializeDataLakeStoreUsage, LocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.DataLakeStore
         public virtual Pageable<DataLakeStoreUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateGetUsageRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataLakeStoreUsage.DeserializeDataLakeStoreUsage, LocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataLakeStoreUsage.DeserializeDataLakeStoreUsage, LocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", null, cancellationToken);
         }
     }
 }

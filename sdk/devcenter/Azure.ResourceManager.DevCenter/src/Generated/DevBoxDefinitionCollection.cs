@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devBoxDefinitionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devBoxDefinitionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devBoxDefinitionRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devBoxDefinitionRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devBoxDefinitionRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devBoxDefinitionRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

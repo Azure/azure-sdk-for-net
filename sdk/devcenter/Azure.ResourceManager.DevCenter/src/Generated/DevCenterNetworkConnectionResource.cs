@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterNetworkConnectionNetworkConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterNetworkConnectionNetworkConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterNetworkConnectionNetworkConnectionsRestClient.RunHealthChecksAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.RunHealthChecks(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -393,7 +392,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionResource.GetOutboundEnvironmentEndpoints", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionResource.GetOutboundEnvironmentEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -416,7 +415,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionResource.GetOutboundEnvironmentEndpoints", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionResource.GetOutboundEnvironmentEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

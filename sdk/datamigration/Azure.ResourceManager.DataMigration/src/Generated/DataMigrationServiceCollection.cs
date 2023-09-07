@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _dataMigrationServiceServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<DataMigrationServiceResource>(new DataMigrationServiceOperationSource(Client), _dataMigrationServiceServicesClientDiagnostics, Pipeline, _dataMigrationServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation<DataMigrationServiceResource>(new DataMigrationServiceOperationSource(Client), _dataMigrationServiceServicesClientDiagnostics, Pipeline, _dataMigrationServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _dataMigrationServiceServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<DataMigrationServiceResource>(new DataMigrationServiceOperationSource(Client), _dataMigrationServiceServicesClientDiagnostics, Pipeline, _dataMigrationServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation<DataMigrationServiceResource>(new DataMigrationServiceOperationSource(Client), _dataMigrationServiceServicesClientDiagnostics, Pipeline, _dataMigrationServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

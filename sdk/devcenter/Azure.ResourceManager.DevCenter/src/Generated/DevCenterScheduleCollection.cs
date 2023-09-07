@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterScheduleSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterScheduleResource>(new DevCenterScheduleOperationSource(Client), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterScheduleResource>(new DevCenterScheduleOperationSource(Client), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterScheduleSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterScheduleResource>(new DevCenterScheduleOperationSource(Client), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterScheduleResource>(new DevCenterScheduleOperationSource(Client), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, _devCenterScheduleSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterScheduleSchedulesRestClient.CreateListByPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterScheduleSchedulesRestClient.CreateListByPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterScheduleResource(Client, DevCenterScheduleData.DeserializeDevCenterScheduleData(e)), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, "DevCenterScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterScheduleResource(Client, DevCenterScheduleData.DeserializeDevCenterScheduleData(e)), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, "DevCenterScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterScheduleSchedulesRestClient.CreateListByPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterScheduleSchedulesRestClient.CreateListByPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterScheduleResource(Client, DevCenterScheduleData.DeserializeDevCenterScheduleData(e)), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, "DevCenterScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterScheduleResource(Client, DevCenterScheduleData.DeserializeDevCenterScheduleData(e)), _devCenterScheduleSchedulesClientDiagnostics, Pipeline, "DevCenterScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = await _privateEndpointConnectionProxyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceUpdateArmOperation<PrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxyOperationSource(Client), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, _privateEndpointConnectionProxyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DeviceUpdateArmOperation<PrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxyOperationSource(Client), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, _privateEndpointConnectionProxyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _privateEndpointConnectionProxyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, data, cancellationToken);
-                var operation = new DeviceUpdateArmOperation<PrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxyOperationSource(Client), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, _privateEndpointConnectionProxyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DeviceUpdateArmOperation<PrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxyOperationSource(Client), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, _privateEndpointConnectionProxyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual AsyncPageable<PrivateEndpointConnectionProxyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionProxyRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual Pageable<PrivateEndpointConnectionProxyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionProxyRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

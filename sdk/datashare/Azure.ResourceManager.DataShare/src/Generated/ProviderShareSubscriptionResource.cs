@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _providerShareSubscriptionRestClient.RevokeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ProviderShareSubscriptionResource>(new ProviderShareSubscriptionOperationSource(Client), _providerShareSubscriptionClientDiagnostics, Pipeline, _providerShareSubscriptionRestClient.CreateRevokeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DataShareArmOperation<ProviderShareSubscriptionResource>(new ProviderShareSubscriptionOperationSource(Client), _providerShareSubscriptionClientDiagnostics, Pipeline, _providerShareSubscriptionRestClient.CreateRevokeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _providerShareSubscriptionRestClient.Revoke(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataShareArmOperation<ProviderShareSubscriptionResource>(new ProviderShareSubscriptionOperationSource(Client), _providerShareSubscriptionClientDiagnostics, Pipeline, _providerShareSubscriptionRestClient.CreateRevokeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DataShareArmOperation<ProviderShareSubscriptionResource>(new ProviderShareSubscriptionOperationSource(Client), _providerShareSubscriptionClientDiagnostics, Pipeline, _providerShareSubscriptionRestClient.CreateRevokeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

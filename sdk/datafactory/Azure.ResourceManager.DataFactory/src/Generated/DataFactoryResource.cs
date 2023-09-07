@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -1218,7 +1217,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _pipelineRunsRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo, _pipelineRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetPipelineRuns", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo, _pipelineRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetPipelineRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1243,7 +1242,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _pipelineRunsRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo, _pipelineRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetPipelineRuns", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo, _pipelineRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetPipelineRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1413,7 +1412,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRunsRestClient.CreateQueryByPipelineRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PipelineActivityRunInformation.DeserializePipelineActivityRunInformation, _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PipelineActivityRunInformation.DeserializePipelineActivityRunInformation, _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1441,7 +1440,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRunsRestClient.CreateQueryByPipelineRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PipelineActivityRunInformation.DeserializePipelineActivityRunInformation, _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PipelineActivityRunInformation.DeserializePipelineActivityRunInformation, _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1466,7 +1465,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryTriggerTriggersRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1491,7 +1490,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryTriggerTriggersRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1516,7 +1515,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _triggerRunsRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun, _triggerRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggerRuns", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun, _triggerRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggerRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1541,7 +1540,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _triggerRunsRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun, _triggerRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggerRuns", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun, _triggerRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggerRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1570,7 +1569,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFlowDebugSessionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryDataFlowCreateDebugSessionResult>(new DataFactoryDataFlowCreateDebugSessionResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryDataFlowCreateDebugSessionResult>(new DataFactoryDataFlowCreateDebugSessionResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1608,7 +1607,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFlowDebugSessionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryDataFlowCreateDebugSessionResult>(new DataFactoryDataFlowCreateDebugSessionResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryDataFlowCreateDebugSessionResult>(new DataFactoryDataFlowCreateDebugSessionResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1639,7 +1638,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _dataFlowDebugSessionClientDiagnostics, Pipeline, "DataFactoryResource.GetDataFlowDebugSessions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _dataFlowDebugSessionClientDiagnostics, Pipeline, "DataFactoryResource.GetDataFlowDebugSessions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1661,7 +1660,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _dataFlowDebugSessionClientDiagnostics, Pipeline, "DataFactoryResource.GetDataFlowDebugSessions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _dataFlowDebugSessionClientDiagnostics, Pipeline, "DataFactoryResource.GetDataFlowDebugSessions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1826,7 +1825,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFlowDebugSessionRestClient.ExecuteCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryDataFlowDebugCommandResult>(new DataFactoryDataFlowDebugCommandResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryDataFlowDebugCommandResult>(new DataFactoryDataFlowDebugCommandResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1864,7 +1863,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFlowDebugSessionRestClient.ExecuteCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryDataFlowDebugCommandResult>(new DataFactoryDataFlowDebugCommandResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryDataFlowDebugCommandResult>(new DataFactoryDataFlowDebugCommandResultOperationSource(), _dataFlowDebugSessionClientDiagnostics, Pipeline, _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1894,7 +1893,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual AsyncPageable<DataFactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "DataFactoryResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "DataFactoryResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1915,7 +1914,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Pageable<DataFactoryPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "DataFactoryResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "DataFactoryResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
