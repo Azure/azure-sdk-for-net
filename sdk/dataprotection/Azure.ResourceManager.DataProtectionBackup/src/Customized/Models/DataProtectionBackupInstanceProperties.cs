@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ProvisioningState = provisioningState;
             DataSourceAuthCredentials = dataSourceAuthCredentials;
             ValidationType = validationType;
-            IdentityDetails = null;
             ObjectType = objectType;
         }
     }
