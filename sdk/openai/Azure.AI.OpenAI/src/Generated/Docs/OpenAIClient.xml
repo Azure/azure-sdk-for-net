@@ -1,43 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetEmbeddingsAsync(string,EmbeddingsOptions,CancellationToken)">
-<example>
-This sample shows how to call GetEmbeddingsAsync with required parameters.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var embeddingsOptions = new EmbeddingsOptions(new string[] 
-{
-    "<null>"
-})
-{
-    User = "<User>",
-};
-var result = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
-]]></code>
-</example>
+    <member name="GetAudioTranscriptionSimpleJsonAsync(string,long,AudioTranscriptionOptionsSimpleJson,CancellationToken)">
     </member>
-    <member name="GetEmbeddings(string,EmbeddingsOptions,CancellationToken)">
-<example>
-This sample shows how to call GetEmbeddings with required parameters.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var embeddingsOptions = new EmbeddingsOptions(new string[] 
-{
-    "<null>"
-})
-{
-    User = "<User>",
-};
-var result = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
-]]></code>
-</example>
+    <member name="GetAudioTranscriptionSimpleJson(string,long,AudioTranscriptionOptionsSimpleJson,CancellationToken)">
     </member>
-    <member name="GetEmbeddingsAsync(string,RequestContent,RequestContext)">
+    <member name="GetAudioTranscriptionSimpleJsonAsync(string,long,RequestContent,RequestContext)">
     </member>
-    <member name="GetEmbeddings(string,RequestContent,RequestContext)">
+    <member name="GetAudioTranscriptionSimpleJson(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionVerboseJsonAsync(string,long,AudioTranscriptionOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionVerboseJson(string,long,AudioTranscriptionOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionVerboseJsonAsync(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionVerboseJson(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionPlainTextAsync(string,long,AudioTranscriptionOptionsPlainText,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionPlainText(string,long,AudioTranscriptionOptionsPlainText,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionPlainTextAsync(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionPlainText(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionSrtAsync(string,long,AudioTranscriptionOptionsSrt,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionSrt(string,long,AudioTranscriptionOptionsSrt,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionSrtAsync(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionSrt(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionVttAsync(string,long,AudioTranscriptionOptionsVtt,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionVtt(string,long,AudioTranscriptionOptionsVtt,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionVttAsync(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionVtt(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationSimpleJsonAsync(string,long,AudioTranslationOptionsSimpleJson,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationSimpleJson(string,long,AudioTranslationOptionsSimpleJson,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationSimpleJsonAsync(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationSimpleJson(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationVerboseJsonAsync(string,long,AudioTranslationOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationVerboseJson(string,long,AudioTranslationOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationVerboseJsonAsync(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationVerboseJson(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationPlainTextAsync(string,long,AudioTranslationOptionsPlainText,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationPlainText(string,long,AudioTranslationOptionsPlainText,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationPlainTextAsync(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationPlainText(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationSrtAsync(string,long,AudioTranslationOptionsSrt,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationSrt(string,long,AudioTranslationOptionsSrt,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationSrtAsync(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationSrt(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationVttAsync(string,long,AudioTranslationOptionsVtt,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationVtt(string,long,AudioTranslationOptionsVtt,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationVttAsync(string,long,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationVtt(string,long,RequestContent,RequestContext)">
     </member>
     <member name="GetCompletionsAsync(string,CompletionsOptions,CancellationToken)">
 <example>
@@ -119,257 +161,43 @@ var result = client.GetCompletions("<deploymentId>", completionsOptions);
     </member>
     <member name="GetChatCompletionsWithAzureExtensions(string,RequestContent,RequestContext)">
     </member>
-    <member name="GetAudioTranscriptionAsync(string,AudioTranscriptionOptions,CancellationToken)">
+    <member name="GetEmbeddingsAsync(string,EmbeddingsOptions,CancellationToken)">
 <example>
-This sample shows how to call GetAudioTranscriptionAsync with required parameters.
+This sample shows how to call GetEmbeddingsAsync with required parameters.
 <code><![CDATA[
 var client = new OpenAIClient("<openAIApiKey>");
 
-var audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromString("<your binary data content>"))
+var embeddingsOptions = new EmbeddingsOptions(new string[] 
 {
-    Prompt = "<Prompt>",
-    ResponseFormat = AudioTranscriptionFormat.Json,
-    Temperature = 3.14f,
-    Language = "<Language>",
-};
-var result = await client.GetAudioTranscriptionAsync("<deploymentId>", audioTranscriptionOptions);
-]]></code>
-</example>
-    </member>
-    <member name="GetAudioTranscription(string,AudioTranscriptionOptions,CancellationToken)">
-<example>
-This sample shows how to call GetAudioTranscription with required parameters.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromString("<your binary data content>"))
+    "<null>"
+})
 {
-    Prompt = "<Prompt>",
-    ResponseFormat = AudioTranscriptionFormat.Json,
-    Temperature = 3.14f,
-    Language = "<Language>",
+    User = "<User>",
 };
-var result = client.GetAudioTranscription("<deploymentId>", audioTranscriptionOptions);
+var result = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
 ]]></code>
 </example>
     </member>
-    <member name="GetAudioTranscriptionAsync(string,RequestContent,RequestContext)">
+    <member name="GetEmbeddings(string,EmbeddingsOptions,CancellationToken)">
 <example>
-This sample shows how to call GetAudioTranscriptionAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call GetEmbeddings with required parameters.
 <code><![CDATA[
 var client = new OpenAIClient("<openAIApiKey>");
 
-var data = new {
-    file = new {},
-};
-
-Response response = await client.GetAudioTranscriptionAsync("<deploymentId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-This sample shows how to call GetAudioTranscriptionAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var data = new {
-    file = new {},
-    prompt = "<prompt>",
-    response_format = "json",
-    temperature = 123.45f,
-    language = "<language>",
-};
-
-Response response = await client.GetAudioTranscriptionAsync("<deploymentId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("task").ToString());
-Console.WriteLine(result.GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("duration").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("start").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("end").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("temperature").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("avg_logprob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("compression_ratio").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("no_speech_prob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("tokens")[0].ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("seek").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="GetAudioTranscription(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call GetAudioTranscription with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var data = new {
-    file = new {},
-};
-
-Response response = client.GetAudioTranscription("<deploymentId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-This sample shows how to call GetAudioTranscription with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var data = new {
-    file = new {},
-    prompt = "<prompt>",
-    response_format = "json",
-    temperature = 123.45f,
-    language = "<language>",
-};
-
-Response response = client.GetAudioTranscription("<deploymentId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("task").ToString());
-Console.WriteLine(result.GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("duration").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("start").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("end").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("temperature").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("avg_logprob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("compression_ratio").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("no_speech_prob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("tokens")[0].ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("seek").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="GetAudioTranslationAsync(string,AudioTranslationOptions,CancellationToken)">
-<example>
-This sample shows how to call GetAudioTranslationAsync with required parameters.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromString("<your binary data content>"))
+var embeddingsOptions = new EmbeddingsOptions(new string[] 
 {
-    Prompt = "<Prompt>",
-    ResponseFormat = AudioTranscriptionFormat.Json,
-    Temperature = 3.14f,
-};
-var result = await client.GetAudioTranslationAsync("<deploymentId>", audioTranslationOptions);
-]]></code>
-</example>
-    </member>
-    <member name="GetAudioTranslation(string,AudioTranslationOptions,CancellationToken)">
-<example>
-This sample shows how to call GetAudioTranslation with required parameters.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromString("<your binary data content>"))
+    "<null>"
+})
 {
-    Prompt = "<Prompt>",
-    ResponseFormat = AudioTranscriptionFormat.Json,
-    Temperature = 3.14f,
+    User = "<User>",
 };
-var result = client.GetAudioTranslation("<deploymentId>", audioTranslationOptions);
+var result = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
 ]]></code>
 </example>
     </member>
-    <member name="GetAudioTranslationAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call GetAudioTranslationAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var data = new {
-    file = new {},
-};
-
-Response response = await client.GetAudioTranslationAsync("<deploymentId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-This sample shows how to call GetAudioTranslationAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var data = new {
-    file = new {},
-    prompt = "<prompt>",
-    response_format = "json",
-    temperature = 123.45f,
-};
-
-Response response = await client.GetAudioTranslationAsync("<deploymentId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("task").ToString());
-Console.WriteLine(result.GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("duration").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("start").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("end").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("temperature").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("avg_logprob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("compression_ratio").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("no_speech_prob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("tokens")[0].ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("seek").ToString());
-]]></code>
-</example>
+    <member name="GetEmbeddingsAsync(string,RequestContent,RequestContext)">
     </member>
-    <member name="GetAudioTranslation(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call GetAudioTranslation with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var data = new {
-    file = new {},
-};
-
-Response response = client.GetAudioTranslation("<deploymentId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-This sample shows how to call GetAudioTranslation with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var data = new {
-    file = new {},
-    prompt = "<prompt>",
-    response_format = "json",
-    temperature = 123.45f,
-};
-
-Response response = client.GetAudioTranslation("<deploymentId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("task").ToString());
-Console.WriteLine(result.GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("duration").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("start").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("end").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("temperature").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("avg_logprob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("compression_ratio").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("no_speech_prob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("tokens")[0].ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("seek").ToString());
-]]></code>
-</example>
+    <member name="GetEmbeddings(string,RequestContent,RequestContext)">
     </member>
     <member name="BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)">
     </member>

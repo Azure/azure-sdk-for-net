@@ -59,18 +59,17 @@ public class AudioTranscriptionsTest : OpenAITestBase
         Assert.That(text, Is.Not.Null.Or.Empty);
 
         if (transcriptionFormat == null
-            || transcriptionFormat == AudioTranscriptionFormat.Json
+            || transcriptionFormat == AudioTranscriptionFormat.SimpleJson
             || transcriptionFormat == AudioTranscriptionFormat.Text)
         {
-            Assert.That(response.Value.Duration, Is.Null);
+            Assert.That(response.Value.Duration, Is.EqualTo(default(TimeSpan)));
             Assert.That(response.Value.Language, Is.Null);
             Assert.That(response.Value.Segments, Is.Null.Or.Empty);
         }
 
         if (transcriptionFormat != null && transcriptionFormat == AudioTranscriptionFormat.VerboseJson)
         {
-            Assert.That(response.Value.Duration, Is.Not.Null);
-            Assert.That(response.Value.Duration.Value, Is.GreaterThan(TimeSpan.FromSeconds(0)));
+            Assert.That(response.Value.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(response.Value.Language, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Segments, Is.Not.Null.Or.Empty);
             AudioTranscriptionSegment firstSegment = response.Value.Segments[0];
@@ -125,18 +124,17 @@ public class AudioTranscriptionsTest : OpenAITestBase
         Assert.That(text, Is.Not.Null.Or.Empty);
 
         if (transcriptionFormat == null
-            || transcriptionFormat == AudioTranscriptionFormat.Json
+            || transcriptionFormat == AudioTranscriptionFormat.SimpleJson
             || transcriptionFormat == AudioTranscriptionFormat.Text)
         {
-            Assert.That(response.Value.Duration, Is.Null);
+            Assert.That(response.Value.Duration, Is.EqualTo(default(TimeSpan)));
             Assert.That(response.Value.Language, Is.Null);
             Assert.That(response.Value.Segments, Is.Null.Or.Empty);
         }
 
         if (transcriptionFormat != null && transcriptionFormat == AudioTranscriptionFormat.VerboseJson)
         {
-            Assert.That(response.Value.Duration, Is.Not.Null);
-            Assert.That(response.Value.Duration.Value, Is.GreaterThan(TimeSpan.FromSeconds(0)));
+            Assert.That(response.Value.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(response.Value.Language, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Segments, Is.Not.Null.Or.Empty);
             AudioTranscriptionSegment firstSegment = response.Value.Segments[0];

@@ -22,20 +22,25 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("prompt"u8);
                 writer.WriteStringValue(Prompt);
             }
-            if (Optional.IsDefined(ResponseFormat))
-            {
-                writer.WritePropertyName("response_format"u8);
-                writer.WriteStringValue(ResponseFormat.Value.ToString());
-            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
+            if (Optional.IsDefined(InternalNonAzureModelName))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(InternalNonAzureModelName);
+            }
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
+            }
+            if (Optional.IsDefined(ResponseFormat))
+            {
+                writer.WritePropertyName("response_format"u8);
+                writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
             writer.WriteEndObject();
         }

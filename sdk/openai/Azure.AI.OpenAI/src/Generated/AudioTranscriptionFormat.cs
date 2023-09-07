@@ -22,21 +22,21 @@ namespace Azure.AI.OpenAI
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string JsonValue = "json";
+        private const string SimpleJsonValue = "json";
         private const string TextValue = "text";
         private const string SrtValue = "srt";
         private const string VerboseJsonValue = "verbose_json";
         private const string VttValue = "vtt";
 
-        /// <summary> JSON format. The translation/transcription response will only contain 'text'. </summary>
-        public static AudioTranscriptionFormat Json { get; } = new AudioTranscriptionFormat(JsonValue);
-        /// <summary> Text format. The translation/transcription response will be of type text/plain. </summary>
+        /// <summary> Lorem ipsum. </summary>
+        public static AudioTranscriptionFormat SimpleJson { get; } = new AudioTranscriptionFormat(SimpleJsonValue);
+        /// <summary> Lorem ipsum. </summary>
         public static AudioTranscriptionFormat Text { get; } = new AudioTranscriptionFormat(TextValue);
-        /// <summary> SRT format. The translation/transcription response will be of type text/plain. </summary>
+        /// <summary> Lorem ipsum. </summary>
         public static AudioTranscriptionFormat Srt { get; } = new AudioTranscriptionFormat(SrtValue);
-        /// <summary> Verbose JSON format.The translation/transcription response will contain additional information. </summary>
+        /// <summary> Lorem ipsum. </summary>
         public static AudioTranscriptionFormat VerboseJson { get; } = new AudioTranscriptionFormat(VerboseJsonValue);
-        /// <summary> VTT format. The translation/transcription response will be of type text/plain. </summary>
+        /// <summary> Lorem ipsum. </summary>
         public static AudioTranscriptionFormat Vtt { get; } = new AudioTranscriptionFormat(VttValue);
         /// <summary> Determines if two <see cref="AudioTranscriptionFormat"/> values are the same. </summary>
         public static bool operator ==(AudioTranscriptionFormat left, AudioTranscriptionFormat right) => left.Equals(right);

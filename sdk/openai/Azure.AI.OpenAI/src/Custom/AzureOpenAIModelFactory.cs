@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -75,6 +76,17 @@ namespace Azure.AI.OpenAI
             List<StreamingChatChoice> streamingChatChoices = null)
         {
             return new StreamingChatCompletions(baseChatCompletions, streamingChatChoices);
+        }
+
+        /// <summary> Initializes a new instance of AudioTranscription. </summary>
+        /// <param name="text"> Transcribed text. </param>
+        /// <param name="language"> Language detected in the source audio file. </param>
+        /// <param name="duration"> Duration. </param>
+        /// <param name="segments"> Segments. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public static AudioTranscription AudioTranscription(string text, string language, TimeSpan duration, IReadOnlyList<AudioTranscriptionSegment> segments)
+        {
+            return new AudioTranscription(text, default, language, duration, segments);
         }
     }
 }

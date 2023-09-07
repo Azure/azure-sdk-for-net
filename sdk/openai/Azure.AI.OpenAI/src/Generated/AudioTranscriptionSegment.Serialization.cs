@@ -20,42 +20,30 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<int> id = default;
-            Optional<float> start = default;
-            Optional<float> end = default;
-            Optional<string> text = default;
-            Optional<float> temperature = default;
-            Optional<float> avgLogprob = default;
-            Optional<float> compressionRatio = default;
-            Optional<float> noSpeechProb = default;
+            int id = default;
+            float start = default;
+            float end = default;
+            string text = default;
+            float temperature = default;
+            float avgLogprob = default;
+            float compressionRatio = default;
+            float noSpeechProb = default;
             IReadOnlyList<int> tokens = default;
             int seek = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("start"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     start = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("end"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     end = property.Value.GetSingle();
                     continue;
                 }
@@ -66,37 +54,21 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("temperature"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     temperature = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("avg_logprob"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     avgLogprob = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("compression_ratio"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     compressionRatio = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("no_speech_prob"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     noSpeechProb = property.Value.GetSingle();
                     continue;
                 }
@@ -116,7 +88,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new AudioTranscriptionSegment(Optional.ToNullable(id), Optional.ToNullable(start), Optional.ToNullable(end), text.Value, Optional.ToNullable(temperature), Optional.ToNullable(avgLogprob), Optional.ToNullable(compressionRatio), Optional.ToNullable(noSpeechProb), tokens, seek);
+            return new AudioTranscriptionSegment(id, start, end, text, temperature, avgLogprob, compressionRatio, noSpeechProb, tokens, seek);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
