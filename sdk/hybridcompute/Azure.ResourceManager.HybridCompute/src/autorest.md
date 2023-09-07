@@ -38,7 +38,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   # 'privateLinkScopeResourceId': 'resource-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

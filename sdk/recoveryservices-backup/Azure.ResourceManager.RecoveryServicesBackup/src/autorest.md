@@ -295,7 +295,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'SubscriptionIdParameter': 'object'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

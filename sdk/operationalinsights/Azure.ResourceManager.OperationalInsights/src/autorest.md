@@ -27,7 +27,7 @@ format-by-name-rules:
   'customerId': 'uuid'
   'azureAsyncOperationId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

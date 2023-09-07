@@ -35,7 +35,7 @@ override-operation-name:
   CalculateRefund_Post: CalculateRefund
   Return_Post: Return
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -250,7 +250,7 @@ format-by-name-rules:
   '*ResourceId': 'arm-id'
   'policyDefinitionId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
