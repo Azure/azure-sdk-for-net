@@ -10,9 +10,6 @@ using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Models;
 
-// Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
-// Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
-
 namespace Azure.ResourceManager.Maintenance
 {
     [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
@@ -62,13 +59,22 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
+            if (Optional.IsDefined(InstallPatches))
+            {
+                writer.WritePropertyName("installPatches"u8);
+                writer.WriteObjectValue(InstallPatches);
+            }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
+            // Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
+            // Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "yyyy-MM-dd hh:mm");
             }
+            // Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
+            // Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
@@ -89,6 +95,7 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("recurEvery"u8);
                 writer.WriteStringValue(RecurEvery);
             }
+
             writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();

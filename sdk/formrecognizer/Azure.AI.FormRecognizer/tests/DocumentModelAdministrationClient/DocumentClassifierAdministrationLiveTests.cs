@@ -160,7 +160,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region Get
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/35243")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task GetDocumentClassifier(bool useTokenCredential)
         {

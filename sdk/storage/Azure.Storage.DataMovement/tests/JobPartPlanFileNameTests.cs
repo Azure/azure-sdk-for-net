@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class JobPartPlanFileNameTests
     {
-        private string schemaVersion = DataMovementConstants.PlanFile.SchemaVersion;
+        private string schemaVersion = DataMovementConstants.JobPartPlanFile.SchemaVersion;
 
         public JobPartPlanFileNameTests()
         {

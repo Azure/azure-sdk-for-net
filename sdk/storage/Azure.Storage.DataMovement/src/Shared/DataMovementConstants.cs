@@ -53,10 +53,42 @@ namespace Azure.Storage.DataMovement
             internal const string Closing = "Closing log ";
         }
 
+        internal const int OneByte = 1;
+        internal const int LongSizeInBytes = 8;
+        internal const int UShortSizeInBytes = 2;
+        internal const int IntSizeInBytes = 4;
+        internal const int GuidSizeInBytes = 16;
+
         /// <summary>
-        /// Constants used for plan job transfer files
+        /// Constants used for job plan files.
         /// </summary>
-        internal static class PlanFile
+        internal static class JobPlanFile
+        {
+            internal const string SchemaVersion_b1 = "b1";
+            internal const string SchemaVersion = SchemaVersion_b1;
+
+            internal const string FileExtension = ".ndm";
+
+            internal const int VersionStrLength = 2;
+            internal const int VersionStrNumBytes = VersionStrLength * 2;
+
+            internal const int VersionIndex = 0;
+            internal const int TransferIdIndex = VersionIndex + VersionStrNumBytes;
+            internal const int CrateTimeIndex = TransferIdIndex + GuidSizeInBytes;
+            internal const int OperationTypeIndex = CrateTimeIndex + LongSizeInBytes;
+            internal const int EnumerationCompleteIndex = OperationTypeIndex + OneByte;
+            internal const int JobStatusIndex = EnumerationCompleteIndex + OneByte;
+            internal const int ParentSourcePathOffsetIndex = JobStatusIndex + IntSizeInBytes;
+            internal const int ParentSourcePathLengthIndex = ParentSourcePathOffsetIndex + IntSizeInBytes;
+            internal const int ParentDestPathOffsetIndex = ParentSourcePathLengthIndex + IntSizeInBytes;
+            internal const int ParentDestPathLengthIndex = ParentDestPathOffsetIndex + IntSizeInBytes;
+            internal const int VariableLengthStartIndex = ParentDestPathLengthIndex + IntSizeInBytes;
+        }
+
+        /// <summary>
+        /// Constants used for job part plan files.
+        /// </summary>
+        internal static class JobPartPlanFile
         {
             internal const string SchemaVersion_b1 = "b1";
             internal const string SchemaVersion_b2 = "b2";
@@ -68,11 +100,6 @@ namespace Azure.Storage.DataMovement
             internal const int JobPartLength = 5;
             internal const int IdSize = 36; // Size of a guid with hyphens
             internal const int CustomHeaderMaxBytes = 256;
-            internal const int Padding = 8;
-
-            internal const int OneByte = 1;
-            internal const int LongSizeInBytes = 8;
-            internal const int UShortSizeInBytes = 2;
 
             // UTF-8 encoding, so 2 bytes per char
             internal const int VersionStrLength = 2;

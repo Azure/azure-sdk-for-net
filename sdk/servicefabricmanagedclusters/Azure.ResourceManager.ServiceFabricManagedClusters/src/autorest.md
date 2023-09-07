@@ -31,7 +31,15 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+models-to-treat-empty-string-as-null:
+  - ManagedClusterSubnet
+  - NodeTypeFrontendConfiguration
+  - ServiceFabricManagedClusterData
+  - ServiceFabricManagedClusterVersion
+  - ServiceFabricManagedNodeTypeData
+  - VmManagedIdentity
+
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

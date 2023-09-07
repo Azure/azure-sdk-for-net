@@ -138,7 +138,7 @@ format-by-name-rules:
 keep-plural-enums:
 - StackPreferredOS
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -364,6 +364,7 @@ rename-mapping:
   AddressResponse.properties.vipMappings: VirtualIPMappings
   CloningInfo.sourceWebAppLocation: -|azure-location
   AzureTableStorageApplicationLogsConfig.sasUrl: SasUriString
+  WebSiteInstanceStatus.properties.healthCheckUrl: healthCheckUrlString
 
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties

@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -730,7 +731,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -751,7 +752,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetFilterRequest(RequestContext context)

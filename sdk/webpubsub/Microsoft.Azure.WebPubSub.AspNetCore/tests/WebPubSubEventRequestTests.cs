@@ -273,9 +273,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
         [TestCase("OPTIONS", true)]
         [TestCase("DELETE", false)]
-        public void TestAbuseProtection(string httpMethod, bool valid)
+        [TestCase("OPTIONS", true, true)]
+        public void TestAbuseProtection(string httpMethod, bool valid, bool multiDomains = false)
         {
-            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, httpMethod: httpMethod);
+            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, httpMethod: httpMethod, multiDomains: multiDomains);
 
             var result = context.Request.IsPreflightRequest(out var requestHosts);
 
@@ -285,6 +286,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             {
                 Assert.NotNull(requestHosts);
                 Assert.AreEqual(TestUri.Host, requestHosts[0]);
+                if (multiDomains)
+                {
+                    Assert.AreEqual(2, requestHosts.Count);
+                }
+                else
+                {
+                    Assert.AreEqual(1, requestHosts.Count);
+                }
             }
         }
 
@@ -309,7 +318,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             string httpMethod = "POST",
             string userId = "testuser",
             string body = null,
-            string contentType = Constants.ContentTypes.PlainTextContentType)
+            string contentType = Constants.ContentTypes.PlainTextContentType,
+            bool multiDomains = false)
         {
             var context = new DefaultHttpContext();
             var services = new ServiceCollection();
@@ -337,7 +347,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             if (!string.IsNullOrEmpty(uri.Host))
             {
                 headers.Add("Host", uri.Host);
-                headers.Add(Constants.Headers.WebHookRequestOrigin, uri.Host);
+                var origins = uri.Host;
+                if (multiDomains)
+                {
+                    origins += ", custom.domain.com";
+                }
+                headers.Add(Constants.Headers.WebHookRequestOrigin, origins);
             }
 
             if (userId != null)
