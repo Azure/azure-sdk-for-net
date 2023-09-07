@@ -8,27 +8,9 @@ param(
 . $PSScriptRoot/Helpers/CommandInvocation-Helpers.ps1
 
 $ErrorActionPreference = 'Stop'
-$showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
 
-$packageFolders = Get-Content $PackageFoldersFile | ConvertFrom-Json
-
-foreach ($folder in $packageFolders) {
-  Push-Location $RepoRoot
-  try {
-    Write-Host 'Generating projects under folder ' -ForegroundColor Green -NoNewline
-    Write-Host "$folder" -ForegroundColor Yellow
-    if ($showSummary) {
-      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$folder`" /v:n /ds eng\service.proj" -GroupOutput
-    }
-    else {
-      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$folder`" eng\service.proj" -GroupOutput
-    }
-    if ($LastExitCode -ne 0) {
-      Write-Error "Generation error in $folder"
-      exit 1
-    }
-  }
-  finally {
-    Pop-Location
-  }
+if (Test-Path "Function:$UpdateGeneratedSdksFn") {
+    &$UpdateGeneratedSdksFn $PackageFoldersFile
+} else {
+    Write-Error "Function $UpdateGeneratedSdksFn not implemented in Language-Settings.ps1"
 }
