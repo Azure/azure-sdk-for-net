@@ -418,7 +418,7 @@ function EnsureCustomSource($package) {
       -AllVersions `
       -AllowPrereleaseVersions
 
-      if (!$? -or !$existingVersions) {
+      if (!$? -or !$existingVersions) { 
         Write-Host "Failed to find package $($package.Name) in custom source $customPackageSource"
         return $package
       }
