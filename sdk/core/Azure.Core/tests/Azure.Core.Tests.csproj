@@ -25,7 +25,6 @@
     <ProjectReference Include="common\Azure.Core.Tests.Common.csproj" />
     <ProjectReference Include="..\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
-    <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\Multipart\*.cs" LinkBase="Shared\Multipart" />
@@ -74,8 +73,12 @@
     <Compile Include="..\src\Shared\XmlWriterContent.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\XmlWriterExtensions.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Core.TestFramework\src\Instrumentation\ZeroPollingStrategy.cs" LinkBase="Shared\TestFramework" />
-    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
+    <Compile Include="..\..\Azure.Core.TestFramework\src\Shared\TestClientOptions.cs" LinkBase="Shared\TestFramework" />
+
+    <!-- Why are these shared source files instead of using the same pattern as, e.g. MockResponse? -->
+    <!--<Compile Include="$(TestFrameworkSupportFiles)TestClientOptions.cs" LinkBase="Shared\TestFramework" />-->
+    <!--<Compile Include="$(TestFrameworkSupportFiles)TestClientOptions.cs" LinkBase="Shared\TestFramework" />-->
+
     <Compile Remove="public/**" />
     <Compile Remove="common/**" />
   </ItemGroup>
