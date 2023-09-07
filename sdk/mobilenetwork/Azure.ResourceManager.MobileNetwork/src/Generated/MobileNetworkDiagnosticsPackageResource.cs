@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<MobileNetworkDiagnosticsPackageResource>(new MobileNetworkDiagnosticsPackageOperationSource(Client), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkDiagnosticsPackageResource>(new MobileNetworkDiagnosticsPackageOperationSource(Client), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MobileNetworkArmOperation<MobileNetworkDiagnosticsPackageResource>(new MobileNetworkDiagnosticsPackageOperationSource(Client), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkDiagnosticsPackageResource>(new MobileNetworkDiagnosticsPackageOperationSource(Client), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

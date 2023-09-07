@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkSiteSitesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkSiteSitesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkSiteSitesRestClient.DeletePacketCoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteDeletePacketCore, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateDeletePacketCoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteDeletePacketCore).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateDeletePacketCoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteDeletePacketCore).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkSiteSitesRestClient.DeletePacketCore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteDeletePacketCore, cancellationToken);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateDeletePacketCoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteDeletePacketCore).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateDeletePacketCoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteDeletePacketCore).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<LogProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<LogProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

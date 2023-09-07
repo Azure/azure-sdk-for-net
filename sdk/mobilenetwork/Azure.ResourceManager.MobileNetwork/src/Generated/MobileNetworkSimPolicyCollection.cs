@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkSimPolicySimPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<MobileNetworkSimPolicyResource>(new MobileNetworkSimPolicyOperationSource(Client), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, _mobileNetworkSimPolicySimPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkSimPolicyResource>(new MobileNetworkSimPolicyOperationSource(Client), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, _mobileNetworkSimPolicySimPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkSimPolicySimPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<MobileNetworkSimPolicyResource>(new MobileNetworkSimPolicyOperationSource(Client), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, _mobileNetworkSimPolicySimPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkSimPolicyResource>(new MobileNetworkSimPolicyOperationSource(Client), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, _mobileNetworkSimPolicySimPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimPolicyResource(Client, MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(e)), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, "MobileNetworkSimPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimPolicyResource(Client, MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(e)), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, "MobileNetworkSimPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimPolicyResource(Client, MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(e)), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, "MobileNetworkSimPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimPolicyResource(Client, MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(e)), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, "MobileNetworkSimPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

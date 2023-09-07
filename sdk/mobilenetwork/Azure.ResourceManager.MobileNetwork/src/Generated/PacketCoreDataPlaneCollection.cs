@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _packetCoreDataPlaneRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<PacketCoreDataPlaneResource>(new PacketCoreDataPlaneOperationSource(Client), _packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<PacketCoreDataPlaneResource>(new PacketCoreDataPlaneOperationSource(Client), _packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _packetCoreDataPlaneRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<PacketCoreDataPlaneResource>(new PacketCoreDataPlaneOperationSource(Client), _packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<PacketCoreDataPlaneResource>(new PacketCoreDataPlaneOperationSource(Client), _packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
