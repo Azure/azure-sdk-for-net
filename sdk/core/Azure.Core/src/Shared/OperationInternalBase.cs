@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -185,6 +186,7 @@ namespace Azure.Core
         public Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken)
             => WaitForCompletionResponseAsync(async: false, pollingInterval, _waitForCompletionResponseScopeName, cancellationToken).EnsureCompleted();
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into scope.Failed has the commonly used properties being preserved with DynamicDependency on the failed method.")]
         protected async ValueTask<Response> WaitForCompletionResponseAsync(bool async, TimeSpan? pollingInterval, string scopeName, CancellationToken cancellationToken)
         {
             // If _responseLock has the value, lockOrValue will contain that value, and no lock is acquired.

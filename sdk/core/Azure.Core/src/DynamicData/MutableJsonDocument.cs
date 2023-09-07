@@ -213,7 +213,7 @@ namespace Azure.Core.Json
         }
 
 #if !NET5_0
-        [RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "This JsonConverter is used with the class MutableJsonDocument, which is already annotated as RequiresUnreferencedCode.")]
 #endif
         private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
         {

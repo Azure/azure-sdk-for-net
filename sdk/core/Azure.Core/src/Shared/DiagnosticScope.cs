@@ -140,8 +140,8 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="exception">The exception to associate with the failed scope.</param>
 #if !NET5_0
-        //[DynamicDependency(nameof(Exception.Message), typeof(Exception))]
-        //[DynamicDependency(nameof(Exception.StackTrace), typeof(Exception))]
+        [DynamicDependency(nameof(Exception.Message), typeof(Exception))]
+        [DynamicDependency(nameof(Exception.StackTrace), typeof(Exception))]
         [RequiresUnreferencedCode("The exception is used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the exception type being passed in using DynamicDependency attributes.")]
 #endif
         public void Failed(Exception? exception = default)
@@ -343,8 +343,8 @@ namespace Azure.Core.Pipeline
             }
 
 #if !NET5_0
-            //[DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Activity))]
-            //[DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(DiagnosticActivity))]
+            [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Activity))]
+            [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(DiagnosticActivity))]
 #endif
             public Activity? Start()
             {

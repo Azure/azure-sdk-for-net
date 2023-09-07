@@ -30,7 +30,6 @@ namespace Azure.Core.Json
             WriteElement(_path, _highWaterMark, _element, writer);
         }
 
-        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         private void WriteElement(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             if (Changes.TryGetChange(path, highWaterMark, out MutableJsonChange change))
@@ -68,7 +67,6 @@ namespace Azure.Core.Json
             element.WriteTo(writer);
         }
 
-        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         private void WriteObject(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -103,7 +101,6 @@ namespace Azure.Core.Json
             writer.WriteEndObject();
         }
 
-        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         private void WriteArray(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             writer.WriteStartArray();

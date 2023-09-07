@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -238,6 +239,7 @@ namespace Azure.Core
             return Response.FromValue(Value, rawResponse);
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into scope.Failed has the commonly used properties being preserved with DynamicDependency on the failed method.")]
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             // If _stateLock has the final state, lockOrValue will contain that state, and no lock is acquired.

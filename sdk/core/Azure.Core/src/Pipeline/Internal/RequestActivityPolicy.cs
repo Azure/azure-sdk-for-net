@@ -137,7 +137,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into scope.Failed has the commonly used properties being preserved with DynamicDependency on the failed method.")]
         private void ScopeFailed(DiagnosticScope scope, Exception? ex = default)
         {
             if (ex == null)

@@ -87,6 +87,7 @@ namespace Azure.Core
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
         [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(SerializationRequiresUnreferencedCode)]
         public static RequestContent Create(object serializable) => Create(serializable, JsonObjectSerializer.Default);
 
         /// <summary>
@@ -112,6 +113,7 @@ namespace Azure.Core
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
         [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(SerializationRequiresUnreferencedCode)]
         public static RequestContent Create(object serializable, ObjectSerializer? serializer) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
 
         /// <summary>
@@ -122,6 +124,7 @@ namespace Azure.Core
         /// <param name="dateTimeFormat">The format to use for DateTime and DateTimeOffset values in the serialized content.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
         [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(SerializationRequiresUnreferencedCode)]
         public static RequestContent Create(object serializable, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
             DynamicDataOptions options = new()

@@ -1,7 +1,13 @@
 param([string]$targetNetFramework)
 
-$rootDirectory = Split-Path $PSScriptRoot -Parent
 $publishOutput = dotnet publish -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
+
+if ($LASTEXITCODE -ne 0)
+{
+    Write-Host "Publish failed."
+    Write-Host $publishOutput
+    Exit 2
+}
 
 $actualWarningCount = 0
 
@@ -16,7 +22,7 @@ foreach ($line in $($publishOutput -split "`r`n"))
 }
 
 Write-Host "Actual warning count is:", $actualWarningCount
-$expectedWarningCount = 43
+$expectedWarningCount = 30
 
 $testPassed = 0
 if ($actualWarningCount -ne $expectedWarningCount)

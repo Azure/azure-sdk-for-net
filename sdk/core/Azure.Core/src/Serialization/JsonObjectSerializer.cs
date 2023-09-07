@@ -19,6 +19,7 @@ namespace Azure.Core.Serialization
 #if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
     [RequiresUnreferencedCode("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
 #endif
+    [RequiresDynamicCode("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
     public class JsonObjectSerializer : ObjectSerializer, IMemberNameConverter
     {
         private const int JsonIgnoreConditionAlways = 1;
