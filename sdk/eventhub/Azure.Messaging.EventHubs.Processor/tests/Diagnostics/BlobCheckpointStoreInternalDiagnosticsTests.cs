@@ -341,7 +341,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var target = new BlobCheckpointStoreInternal(mockContainerClient);
             target.Logger = mockLog.Object;
 
-            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, 4, 6, "", "id", CancellationToken.None), Throws.Exception.EqualTo(expectedException));
+            var checkpoint = new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, "id", EventPosition.FromOffset(4, 6));
+            Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint, CancellationToken.None), Throws.Exception.EqualTo(expectedException));
             mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "id", expectedException.Message));
         }
 
@@ -359,7 +360,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, 999, null, "", "id", CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
+            var checkpoint = new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, "id", EventPosition.FromOffset(999));
+            Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint, CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
             mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "id", ex.Message));
         }
 
