@@ -57,10 +57,9 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        // This method writes HttpMessages and Exceptions to the DiagnosticSource held within DiagnosticScope. These attributes
-        // preserve the public properties on these types so they can be used by ApplicationInsights.
+        // This method writes HttpMessages to the DiagnosticSource held within DiagnosticScope. This attribute
+        // preserves the public properties on this type so it can be used by ApplicationInsights.
         [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(HttpMessage))]
-        [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(Exception))]
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             using var scope = CreateDiagnosticScope(message);
@@ -106,7 +105,7 @@ namespace Azure.Core.Pipeline
             }
             catch (Exception e)
             {
-                ScopeFailed(scope, e);
+                scope.Failed(e);
                 throw;
             }
 
@@ -128,23 +127,13 @@ namespace Azure.Core.Pipeline
             if (message.Response.IsError)
             {
                 scope.AddAttribute("otel.status_code", "ERROR");
-                ScopeFailed(scope);
+                scope.Failed();
             }
             else
             {
                 // Set the status to UNSET so the AppInsights doesn't try to infer it from the status code
                 scope.AddAttribute("otel.status_code",  "UNSET");
             }
-        }
-
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into scope.Failed has the commonly used properties being preserved with DynamicDependency on the failed method.")]
-        private void ScopeFailed(DiagnosticScope scope, Exception? ex = default)
-        {
-            if (ex == null)
-            {
-                scope.Failed();
-            }
-            scope.Failed(ex);
         }
 
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency.")]

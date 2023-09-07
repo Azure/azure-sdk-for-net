@@ -140,9 +140,10 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="exception">The exception to associate with the failed scope.</param>
 #if !NET5_0
-        [DynamicDependency(nameof(Exception.Message), typeof(Exception))]
-        [DynamicDependency(nameof(Exception.StackTrace), typeof(Exception))]
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into scope.Failed has the commonly used properties being preserved with DynamicDependency on the failed method.")]
+        // This method writes Exceptions to the DiagnosticSource held within this class. This attribute
+        // preserves the public properties on this type so it can be used by ApplicationInsights.
+        [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(Exception))]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has the commonly used properties being preserved with DynamicDependency.")]
 #endif
         public void Failed(Exception? exception = default)
         {
