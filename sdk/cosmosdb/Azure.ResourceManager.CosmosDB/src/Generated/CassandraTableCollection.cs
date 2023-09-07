@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CassandraTableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraTableCassandraResourcesRestClient.CreateListCassandraTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraTableResource(Client, CassandraTableData.DeserializeCassandraTableData(e)), _cassandraTableCassandraResourcesClientDiagnostics, Pipeline, "CassandraTableCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraTableResource(Client, CassandraTableData.DeserializeCassandraTableData(e)), _cassandraTableCassandraResourcesClientDiagnostics, Pipeline, "CassandraTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CassandraTableResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraTableCassandraResourcesRestClient.CreateListCassandraTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraTableResource(Client, CassandraTableData.DeserializeCassandraTableData(e)), _cassandraTableCassandraResourcesClientDiagnostics, Pipeline, "CassandraTableCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraTableResource(Client, CassandraTableData.DeserializeCassandraTableData(e)), _cassandraTableCassandraResourcesClientDiagnostics, Pipeline, "CassandraTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

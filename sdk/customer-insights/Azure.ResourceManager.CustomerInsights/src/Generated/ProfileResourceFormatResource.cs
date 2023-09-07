@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -318,7 +317,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual AsyncPageable<KpiDefinition> GetEnrichingKpisAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateGetEnrichingKpisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KpiDefinition.DeserializeKpiDefinition, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KpiDefinition.DeserializeKpiDefinition, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -339,7 +338,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Pageable<KpiDefinition> GetEnrichingKpis(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateGetEnrichingKpisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KpiDefinition.DeserializeKpiDefinition, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KpiDefinition.DeserializeKpiDefinition, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
         }
     }
 }

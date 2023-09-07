@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(Id, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id, filter, orderby, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(Id, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id, filter, orderby, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(Id, filter, expand, skiptoken, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementDimension> GetDimensions(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(Id, filter, expand, skiptoken, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>

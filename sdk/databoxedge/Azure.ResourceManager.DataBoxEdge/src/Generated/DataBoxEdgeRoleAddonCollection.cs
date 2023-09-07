@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
