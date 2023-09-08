@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    public partial class SnapshotSettingFilter : IUtf8JsonSerializable
+    internal partial class SnapshotSettingFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

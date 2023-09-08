@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> The current status of the snapshot. </summary>
-    public readonly partial struct SnapshotStatus : IEquatable<SnapshotStatus>
+    internal readonly partial struct SnapshotStatus : IEquatable<SnapshotStatus>
     {
         private readonly string _value;
 

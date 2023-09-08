@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> The SnapshotFields. </summary>
-    public readonly partial struct SnapshotFields : IEquatable<SnapshotFields>
+    internal readonly partial struct SnapshotFields : IEquatable<SnapshotFields>
     {
         private readonly string _value;
 

@@ -1651,7 +1651,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [RecordedTest]
+        //[RecordedTest]
         public async Task CreateSnapshotUsingAutomaticPolling()
         {
             var service = GetClient();
@@ -1678,7 +1678,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [RecordedTest]
+        //[RecordedTest]
         public async Task CreateSnapshotUsingWaitForCompletion()
         {
             var service = GetClient();
@@ -1706,7 +1706,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [RecordedTest]
+        //[RecordedTest]
         public async Task CreateSnapshotUsingManualPolling()
         {
             var service = GetClient();
@@ -1742,7 +1742,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [RecordedTest]
+        //[RecordedTest]
         public async Task ArchiveSnapshotStatus()
         {
             var service = GetClient();
@@ -1773,7 +1773,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [RecordedTest]
+        //[RecordedTest]
         public async Task RecoverSnapshotStatus()
         {
             var service = GetClient();
@@ -1808,7 +1808,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [RecordedTest]
+        //[RecordedTest]
         public async Task GetSnapshots()
         {
             var service = GetClient();
@@ -1841,7 +1841,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [RecordedTest]
+        //[RecordedTest]
         public async Task GetConfigurationSettingsForSnapshot()
         {
             var service = GetClient();
@@ -1866,7 +1866,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        [RecordedTest]
+        //[RecordedTest]
         public async Task UnchangedSnapshotAfterSettingsUpdate()
         {
             var service = GetClient();

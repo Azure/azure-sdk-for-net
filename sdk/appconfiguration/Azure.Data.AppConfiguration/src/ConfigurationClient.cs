@@ -662,7 +662,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="snapshotName">A filter used to get key-values for a snapshot. The value should be the name of the snapshot.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection containing the retrieved <see cref="ConfigurationSetting"/> entities.</returns>
-        public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
@@ -678,7 +678,7 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="snapshotName">A filter used to get key-values for a snapshot. The value should be the name of the snapshot.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<ConfigurationSetting> GetConfigurationSettingsForSnapshot(string snapshotName, CancellationToken cancellationToken = default)
+        internal virtual Pageable<ConfigurationSetting> GetConfigurationSettingsForSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
@@ -696,7 +696,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="fields">The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection containing the retrieved <see cref="ConfigurationSetting"/> entities.</returns>
-        public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, SettingFields fields, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, SettingFields fields, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
@@ -714,7 +714,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="snapshotName">A filter used to get key-values for a snapshot. The value should be the name of the snapshot.</param>
         /// <param name="fields">The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<ConfigurationSetting> GetConfigurationSettingsForSnapshot(string snapshotName, SettingFields fields, CancellationToken cancellationToken = default)
+        internal virtual Pageable<ConfigurationSetting> GetConfigurationSettingsForSnapshot(string snapshotName, SettingFields fields, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
@@ -730,7 +730,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
         /// <param name="fields"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSettingsSnapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -764,7 +764,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
         /// <param name="fields"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSettingsSnapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -802,7 +802,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the configuration setting snapshot to create. </param>
         /// <param name="snapshot"> The configuration setting snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(WaitUntil wait, string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        internal virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(WaitUntil wait, string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
@@ -842,7 +842,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the configuration setting snapshot to create. </param>
         /// <param name="snapshot"> The configuration setting snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CreateSnapshotOperation CreateSnapshot(WaitUntil wait, string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        internal virtual CreateSnapshotOperation CreateSnapshot(WaitUntil wait, string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
@@ -877,7 +877,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(string name, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -907,7 +907,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -941,7 +941,7 @@ namespace Azure.Data.AppConfiguration
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
         /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -979,7 +979,7 @@ namespace Azure.Data.AppConfiguration
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
         /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -1011,7 +1011,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to recover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(string name, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1041,7 +1041,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to recover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(string name, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1075,7 +1075,7 @@ namespace Azure.Data.AppConfiguration
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
         /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -1111,7 +1111,7 @@ namespace Azure.Data.AppConfiguration
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
         /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        internal virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -1145,7 +1145,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="fields"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="status"> Used to filter returned snapshots by their status property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ConfigurationSettingsSnapshot> GetSnapshotsAsync(string name = null, IEnumerable<SnapshotFields> fields = null, IEnumerable<SnapshotStatus> status = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<ConfigurationSettingsSnapshot> GetSnapshotsAsync(string name = null, IEnumerable<SnapshotFields> fields = null, IEnumerable<SnapshotStatus> status = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             List<string> snapshotFields = null;
@@ -1178,7 +1178,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="fields"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="status"> Used to filter returned snapshots by their status property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ConfigurationSettingsSnapshot> GetSnapshots(string name = null, IEnumerable<SnapshotFields> fields = null, IEnumerable<SnapshotStatus> status = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<ConfigurationSettingsSnapshot> GetSnapshots(string name = null, IEnumerable<SnapshotFields> fields = null, IEnumerable<SnapshotStatus> status = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             List<string> snapshotFields = null;

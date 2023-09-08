@@ -17,7 +17,7 @@ namespace Azure.Data.AppConfiguration
     /// A long-running operation for <see cref="ConfigurationClient.CreateSnapshot(WaitUntil, string, ConfigurationSettingsSnapshot, CancellationToken)"/>
     /// or <see cref="ConfigurationClient.CreateSnapshotAsync(WaitUntil, string, ConfigurationSettingsSnapshot, CancellationToken)"/>.
     /// </summary>
-    public class CreateSnapshotOperation : Operation<ConfigurationSettingsSnapshot>
+    internal class CreateSnapshotOperation : Operation<ConfigurationSettingsSnapshot>
     {
         private readonly ClientDiagnostics _diagnostics;
         private Operation<BinaryData> _operation;
