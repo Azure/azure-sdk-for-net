@@ -17,7 +17,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(endpoint, credential);
             string projectName = null;
-            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
+            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1, context: new()))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 projectName = result.GetProperty("name").ToString();
@@ -32,7 +32,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
             string catalogName = null;
 
-            await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, maxCount: 1))
+            await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, maxCount: 1, context: new()))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 catalogName = result.GetProperty("name").ToString();
@@ -46,7 +46,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             #region Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
             string environmentDefinitionName = null;
-            await foreach (BinaryData data in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName, maxCount: 1))
+            await foreach (BinaryData data in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName, maxCount: 1, context: new()))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 environmentDefinitionName = result.GetProperty("name").ToString();
@@ -60,7 +60,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             #region Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
             string environmentTypeName = null;
-            await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, maxCount: 1))
+            await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, maxCount: 1, context: new()))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 environmentTypeName = result.GetProperty("name").ToString();
@@ -84,6 +84,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(
                 WaitUntil.Completed,
                 projectName,
+                "me",
                 "DevEnvironment",
                 RequestContent.Create(content));
 
@@ -94,7 +95,12 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             // Delete the environment when finished
             #region Snippet:Azure_DevCenter_DeleteEnvironment_Scenario
-            Operation environmentDeleteOperation = await environmentsClient.DeleteEnvironmentAsync(WaitUntil.Completed, projectName, "DevEnvironment");
+            Operation environmentDeleteOperation = await environmentsClient.DeleteEnvironmentAsync(
+                WaitUntil.Completed,
+                projectName,
+                "me",
+                "DevEnvironment",
+                context: new());
             await environmentDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed environment deletion.");
             #endregion

@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(endpoint, credential);
             string targetProjectName = null;
-            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
+            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(maxCount: 1, filter: null, context: new()))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetProjectName = result.GetProperty("name").ToString();
@@ -36,7 +36,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             #region Snippet:Azure_DevCenter_GetPools_Scenario
             var devBoxesClient = new DevBoxesClient(endpoint, credential);
             string targetPoolName = null;
-            await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, filter: null, maxCount: 1))
+            await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, maxCount: 1, filter: null, context: new()))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetPoolName = result.GetProperty("name").ToString();
@@ -58,6 +58,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
                 WaitUntil.Completed,
                 targetProjectName,
+                "me",
                 "MyDevBox",
                 RequestContent.Create(content));
 
@@ -68,14 +69,23 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             // Fetch the web connection URL to access your dev box from the browser
             #region Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
-            Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(targetProjectName, "MyDevBox");
+            Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
+                targetProjectName,
+                "me",
+                "MyDevBox",
+                context: new());
             JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
             Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
             #endregion
 
             // Delete your dev box when finished
             #region Snippet:Azure_DevCenter_DeleteDevBox_Scenario
-            Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(WaitUntil.Completed, targetProjectName, "MyDevBox");
+            Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(
+                WaitUntil.Completed,
+                targetProjectName,
+                "me",
+                "MyDevBox",
+                context: new());
             await devBoxDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed dev box deletion.");
             #endregion

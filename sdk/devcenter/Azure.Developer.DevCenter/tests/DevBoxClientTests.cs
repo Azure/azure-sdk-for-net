@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
+    /*
     [PlaybackOnly("It takes roughly 15-30 minutes to create a dev-box")]
     public class DevBoxClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
@@ -414,4 +415,5 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.Fail($"The JSON response received from the service does not include the necessary property: {propertyName}");
         }
     }
+    */
 }

@@ -33,7 +33,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetProjectsSucceeds()
         {
             var numberOfReturnedProjects = 0;
-            await foreach (BinaryData projectData in _devCenterClient.GetProjectsAsync())
+            await foreach (BinaryData projectData in _devCenterClient.GetProjectsAsync(filter: null, maxCount: 1, context: new()))
             {
                 numberOfReturnedProjects++;
                 JsonElement projectResponseData = JsonDocument.Parse(projectData.ToStream()).RootElement;
@@ -53,7 +53,7 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetProjectSucceeds()
         {
-            Response getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName);
+            Response getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName, context: new());
 
             JsonElement getProjectData = JsonDocument.Parse(getProjectResponse.ContentStream).RootElement;
 
