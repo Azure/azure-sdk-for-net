@@ -25,12 +25,16 @@ namespace Azure.Storage.DataMovement
         /// Adds a new transfer to the checkpointer.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
+        /// <param name="source">The source resource.</param>
+        /// <param name="destination">The destination resource.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
         public abstract Task AddNewJobAsync(
             string transferId,
+            StorageResource source,
+            StorageResource destination,
             CancellationToken cancellationToken = default);
 
         /// <summary>

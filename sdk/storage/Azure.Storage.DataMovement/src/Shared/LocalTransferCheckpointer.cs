@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Stores references to the memory mapped files stored by IDs.
         /// </summary>
-        private Dictionary<string, JobPlanFile> _transferStates2;
+        private Dictionary<string, JobPlanFile> _transferStates;
 
         /// <summary>
         /// Initializes a new instance of <see cref="LocalTransferCheckpointer"/> class.
@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="folderPath">Path to the folder containing the checkpointing information to resume from.</param>
         public LocalTransferCheckpointer(string folderPath)
         {
-            _transferStates2 = new Dictionary<string, JobPlanFile>();
+            _transferStates = new Dictionary<string, JobPlanFile>();
             if (string.IsNullOrEmpty(folderPath))
             {
                 _pathToCheckpointer = Path.Combine(Environment.CurrentDirectory, DataMovementConstants.DefaultCheckpointerPath);
@@ -56,19 +56,34 @@ namespace Azure.Storage.DataMovement
         /// <inheritdoc/>
         public override async Task AddNewJobAsync(
             string transferId,
+            StorageResource source,
+            StorageResource destination,
             CancellationToken cancellationToken = default)
         {
-            if (_transferStates2.ContainsKey(transferId))
+            if (_transferStates.ContainsKey(transferId))
             {
                 throw Errors.CollisionTransferIdCheckpointer(transferId);
             }
 
-            // TODO: Add real job plan header
-            JobPlanFile jobPlanFile = await JobPlanFile.CreateJobPlanFileAsync(
-                _pathToCheckpointer,
+            JobPlanHeader header = new(
+                DataMovementConstants.JobPlanFile.SchemaVersion,
                 transferId,
-                Stream.Null).ConfigureAwait(false);
-            _transferStates2.Add(transferId, jobPlanFile);
+                DateTimeOffset.UtcNow,
+                GetOperationType(source, destination),
+                false, /* enumerationComplete */
+                JobPlanStatus.Queued,
+                source.Uri.AbsoluteUri,
+                destination.Uri.AbsoluteUri);
+
+            using (Stream headerStream = new MemoryStream())
+            {
+                header.Serialize(headerStream);
+                JobPlanFile jobPlanFile = await JobPlanFile.CreateJobPlanFileAsync(
+                    _pathToCheckpointer,
+                    transferId,
+                    headerStream).ConfigureAwait(false);
+                _transferStates.Add(transferId, jobPlanFile);
+            }
         }
 
         /// <inheritdoc/>
@@ -92,9 +107,9 @@ namespace Azure.Storage.DataMovement
                 headerStream).ConfigureAwait(false);
 
             // Add the job part into the current state
-            if (_transferStates2.ContainsKey(transferId))
+            if (_transferStates.ContainsKey(transferId))
             {
-                _transferStates2[transferId].JobParts.Add(partNumber, mappedFile);
+                _transferStates[transferId].JobParts.Add(partNumber, mappedFile);
             }
             else
             {
@@ -110,7 +125,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            if (_transferStates2.TryGetValue(transferId, out var result))
+            if (_transferStates.TryGetValue(transferId, out var result))
             {
                 return Task.FromResult<int>(result.JobParts.Count);
             }
@@ -125,7 +140,7 @@ namespace Azure.Storage.DataMovement
             long readSize,
             CancellationToken cancellationToken = default)
         {
-            if (_transferStates2.TryGetValue(transferId, out JobPlanFile jobPlanFile))
+            if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
             {
                 if (jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile jobPartPlanFile))
                 {
@@ -176,7 +191,7 @@ namespace Azure.Storage.DataMovement
                 throw new ArgumentException("Buffer cannot be empty");
             }
 
-            if (_transferStates2.TryGetValue(transferId, out JobPlanFile jobPlanFile))
+            if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
             {
                 if (jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile jobPartPlanFile))
                 {
@@ -218,7 +233,7 @@ namespace Azure.Storage.DataMovement
 
             List<string> filesToDelete = new List<string>();
 
-            if (_transferStates2.TryGetValue(transferId, out JobPlanFile jobPlanFile))
+            if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
             {
                 filesToDelete.Add(jobPlanFile.FilePath);
             }
@@ -254,14 +269,14 @@ namespace Azure.Storage.DataMovement
                 }
             }
 
-            _transferStates2.Remove(transferId);
+            _transferStates.Remove(transferId);
             return Task.FromResult(result);
         }
 
         /// <inheritdoc/>
         public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(_transferStates2.Keys.ToList());
+            return Task.FromResult(_transferStates.Keys.ToList());
         }
 
         /// <inheritdoc/>
@@ -274,7 +289,7 @@ namespace Azure.Storage.DataMovement
             int offset = DataMovementConstants.JobPartPlanFile.AtomicJobStatusIndex;
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            if (_transferStates2.TryGetValue(transferId, out JobPlanFile jobPlanFile))
+            if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
             {
                 foreach (KeyValuePair<int, JobPartPlanFile> jobPartPair in jobPlanFile.JobParts)
                 {
@@ -317,7 +332,7 @@ namespace Azure.Storage.DataMovement
             int offset = DataMovementConstants.JobPartPlanFile.AtomicPartStatusIndex;
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            if (_transferStates2.TryGetValue(transferId, out JobPlanFile jobPlanFile))
+            if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
             {
                 if (jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile file))
                 {
@@ -367,9 +382,9 @@ namespace Azure.Storage.DataMovement
             {
                 // TODO: Should we check for valid schema version inside file now?
                 JobPlanFile jobPlanFile = JobPlanFile.CreateExistingJobPlanFile(path);
-                if (!_transferStates2.ContainsKey(jobPlanFile.Id))
+                if (!_transferStates.ContainsKey(jobPlanFile.Id))
                 {
-                    _transferStates2.Add(jobPlanFile.Id, jobPlanFile);
+                    _transferStates.Add(jobPlanFile.Id, jobPlanFile);
                 }
                 else
                 {
@@ -387,13 +402,33 @@ namespace Azure.Storage.DataMovement
                 if (JobPartPlanFileName.TryParseJobPartPlanFileName(path, out JobPartPlanFileName partPlanFileName))
                 {
                     // Job plan file should already exist since we already iterated job plan files
-                    if (_transferStates2.TryGetValue(partPlanFileName.Id, out JobPlanFile jobPlanFile))
+                    if (_transferStates.TryGetValue(partPlanFileName.Id, out JobPlanFile jobPlanFile))
                     {
                         jobPlanFile.JobParts.Add(
                             partPlanFileName.JobPartNumber,
                             JobPartPlanFile.CreateExistingPartPlanFile(partPlanFileName));
                     }
                 }
+            }
+        }
+
+        private static JobPlanOperation GetOperationType(StorageResource source, StorageResource destination)
+        {
+            if (source.IsLocalResource() && !destination.IsLocalResource())
+            {
+                return JobPlanOperation.Upload;
+            }
+            else if (!source.IsLocalResource() && destination.IsLocalResource())
+            {
+                return JobPlanOperation.Download;
+            }
+            else if (!source.IsLocalResource() && !destination.IsLocalResource())
+            {
+                return JobPlanOperation.ServiceToService;
+            }
+            else
+            {
+                throw Errors.InvalidSourceDestinationParams();
             }
         }
     }

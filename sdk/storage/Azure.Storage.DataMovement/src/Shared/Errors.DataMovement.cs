@@ -13,8 +13,8 @@ namespace Azure.Storage
     internal partial class Errors
     {
         public static ArgumentException InvalidSourceDestinationParams()
-            => new ArgumentException($"Cannot perform transfer because neither source and destination resource cannot produce a Uri. " +
-                $"Either the source or destination resource, or both resources needs to produce a Uri.");
+            => new ArgumentException($"Cannot perform transfer because neither source nor destination resource are web resources. " +
+                $"Either the source or destination resource, or both resources needs to be a web resource.");
 
         public static ArgumentException InvalidTransferId(string command, string transferId)
             => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". Because " +

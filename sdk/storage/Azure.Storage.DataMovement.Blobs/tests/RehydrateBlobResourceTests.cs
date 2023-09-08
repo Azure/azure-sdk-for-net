@@ -107,9 +107,12 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
 
-            JobPlanOperation fromTo = GetPlanOperation(sourceType, destinationType);
+            JobPlanOperation operationType = GetPlanOperation(sourceType, destinationType);
 
-            await checkpointer.AddNewJobAsync(transferId);
+            // Use dummy resources that don't correspond to correct paths
+            StorageResource source = new MockStorageResource();
+            StorageResource destination = new MockStorageResource();
+            await checkpointer.AddNewJobAsync(transferId, source, destination);
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
@@ -118,7 +121,7 @@ namespace Azure.Storage.DataMovement.Tests
                     partNumber: currentPart,
                     sourcePath: sourcePaths[currentPart],
                     destinationPath: destinationPaths[currentPart],
-                    fromTo: fromTo);
+                    fromTo: operationType);
 
                 using (Stream stream = new MemoryStream())
                 {

@@ -17,5 +17,8 @@ namespace Azure.Storage.DataMovement
                 return new LocalTransferCheckpointer(default);
             }
         }
+
+        internal static bool IsLocalResource(this StorageResource resource)
+            => resource is LocalFileStorageResource || resource is LocalDirectoryStorageResourceContainer;
     }
 }

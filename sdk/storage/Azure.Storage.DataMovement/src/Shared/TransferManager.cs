@@ -460,7 +460,11 @@ namespace Azure.Storage.DataMovement
             transferOptions ??= new DataTransferOptions();
 
             string transferId = Guid.NewGuid().ToString();
-            await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
+            await _checkpointer.AddNewJobAsync(
+                transferId,
+                sourceResource,
+                destinationResource,
+                _cancellationToken).ConfigureAwait(false);
 
             DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
                 sourceResource,
