@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if(property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
