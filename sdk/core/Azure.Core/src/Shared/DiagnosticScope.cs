@@ -137,6 +137,7 @@ namespace Azure.Core.Pipeline
         /// Marks the scope as failed.
         /// </summary>
         /// <param name="exception">The exception to associate with the failed scope.</param>
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has the commonly used properties being preserved with DynamicallyAccessedMemberTypes on the inner method MarkFailed.")]
         public void Failed(Exception? exception = default)
         {
             _activityAdapter?.MarkFailed(exception);
