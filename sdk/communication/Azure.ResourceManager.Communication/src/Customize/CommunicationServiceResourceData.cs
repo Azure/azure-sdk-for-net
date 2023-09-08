@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using Azure.Core;
@@ -17,13 +15,6 @@ namespace Azure.ResourceManager.Communication
     /// </summary>
     public partial class CommunicationServiceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
-        /// <param name="location"> The location. </param>
-        public CommunicationServiceResourceData(AzureLocation location) : base(location)
-        {
-            LinkedDomains = new ChangeTrackingList<string>();
-        }
-
         /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -48,20 +39,5 @@ namespace Azure.ResourceManager.Communication
             ImmutableResourceId = immutableResourceId;
             LinkedDomains = linkedDomains;
         }
-
-        /// <summary> Provisioning state of the resource. </summary>
-        public CommunicationServicesProvisioningState? ProvisioningState { get; }
-        /// <summary> FQDN of the CommunicationService instance. </summary>
-        public string HostName { get; }
-        /// <summary> The location where the communication service stores its data at rest. </summary>
-        public string DataLocation { get; set; }
-        /// <summary> Resource ID of an Azure Notification Hub linked to this resource. </summary>
-        public ResourceIdentifier NotificationHubId { get; }
-        /// <summary> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </summary>
-        public string Version { get; }
-        /// <summary> The immutable resource Id of the communication service. </summary>
-        public Guid? ImmutableResourceId { get; }
-        /// <summary> List of email Domain resource Ids. </summary>
-        public IList<string> LinkedDomains { get; }
     }
 }
