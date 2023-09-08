@@ -28,18 +28,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 FeatureSettings.CrossSubscriptionRestoreState = value;
             }
         }
-
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, FeatureSettings featureSettings)
-        {
-            MonitoringSettings = monitoringSettings;
-            ProvisioningState = provisioningState;
-            ResourceMoveState = resourceMoveState;
-            ResourceMoveDetails = resourceMoveDetails;
-            SecuritySettings = securitySettings;
-            StorageSettings = storageSettings;
-            IsVaultProtectedByResourceGuard = isVaultProtectedByResourceGuard;
-            FeatureSettings = featureSettings;
-            SecureScore = default(SecureScoreLevel);
-        }
     }
 }
