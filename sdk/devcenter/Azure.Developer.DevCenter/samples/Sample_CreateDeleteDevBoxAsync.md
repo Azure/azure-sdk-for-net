@@ -10,7 +10,7 @@ Create a `DevCenterClient` and issue a request to get all projects the signed-in
 var credential = new DefaultAzureCredential();
 var devCenterClient = new DevCenterClient(endpoint, credential);
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
+await foreach (BinaryData data in devCenterClient.GetProjectsAsync(maxCount: 1, filter: null, context: new()))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetProjectName = result.GetProperty("name").ToString();
@@ -24,7 +24,7 @@ Create a `DevBoxesClient` and issue a request to get all pools in a project.
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
 var devBoxesClient = new DevBoxesClient(endpoint, credential);
 string targetPoolName = null;
-await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, filter: null, maxCount: 1))
+await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, maxCount: 1, filter: null, context: new()))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetPoolName = result.GetProperty("name").ToString();
@@ -44,6 +44,7 @@ var content = new
 Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
     WaitUntil.Completed,
     targetProjectName,
+    "me",
     "MyDevBox",
     RequestContent.Create(content));
 
@@ -57,7 +58,11 @@ Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetPr
 Once your dev box is created, issue a request to get URLs for connecting to it via either web or desktop.
 
 ```C# Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
-Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(targetProjectName, "MyDevBox");
+Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
+    targetProjectName,
+    "me",
+    "MyDevBox",
+    context: new());
 JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
 Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
 ```
@@ -67,7 +72,12 @@ Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("web
 Issue a request to delete a dev box.
 
 ```C# Snippet:Azure_DevCenter_DeleteDevBox_Scenario
-Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(WaitUntil.Completed, targetProjectName, "MyDevBox");
+Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(
+    WaitUntil.Completed,
+    targetProjectName,
+    "me",
+    "MyDevBox",
+    context: new());
 await devBoxDeleteOperation.WaitForCompletionResponseAsync();
 Console.WriteLine($"Completed dev box deletion.");
 ```
