@@ -44,7 +44,18 @@
         Text="No Projects found with patttern [..\sdk\$(ServiceDirectory)\$(Project)\*.csproj], please make sure you have passed in the correct ServiceDirectory." />
   </Target>
 
+  <PropertyGroup>
+    <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
+    <EmitterNpmInstallScriptPath Condition="'$(EmitterNpmInstallScriptPath)' == ''">$(MSBuildProjectDirectory)/common/scripts/Invoke-EmitterNpmInstall.ps1</EmitterNpmInstallScriptPath>
+  </PropertyGroup>
+
   <Target Name="GenerateCode">
+    <Exec Condition="'$(SkipNpmInstall)' != 'true'" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(EmitterNpmInstallScriptPath)"/>
+
+    <CreateProperty Condition="'$(SkipNpmInstall)' != 'true'" Value="true" >
+      <Output TaskParameter="Value" PropertyName="SkipNpmInstall" />
+    </CreateProperty>
+
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
              BuildInParallel="$(BuildInParallel)"
