@@ -152,7 +152,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetDevBoxesAsync(TestEnvironment.ProjectName, TestEnvironment.UserId, filter: null, maxCount: 0, context: new()))
+            await foreach (BinaryData devBoxData in _devBoxesClient.GetDevBoxesAsync(TestEnvironment.ProjectName, TestEnvironment.UserId, filter: null, maxCount: null, context: new()))
             {
                 numberOfReturnedDevBoxes++;
                 JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -174,7 +174,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesAsync(filter: null, maxCount: 0, context: new()))
+            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesAsync(filter: null, maxCount: null, context: new()))
             {
                 numberOfReturnedDevBoxes++;
                 JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -196,7 +196,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesByUserAsync(TestEnvironment.UserId, filter: null, maxCount: 0, context: new()))
+            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesByUserAsync(TestEnvironment.UserId, filter: null, maxCount: null, context: new()))
             {
                 numberOfReturnedDevBoxes++;
                 JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -236,7 +236,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetPoolsSucceeds()
         {
             var numberOfReturnedPools = 0;
-            await foreach (BinaryData poolData in _devBoxesClient.GetPoolsAsync(TestEnvironment.ProjectName, maxCount: 0, filter: null, context: new()))
+            await foreach (BinaryData poolData in _devBoxesClient.GetPoolsAsync(TestEnvironment.ProjectName, maxCount: null, filter: null, context: new()))
             {
                 numberOfReturnedPools++;
                 JsonElement getPoolsResponseData = JsonDocument.Parse(poolData.ToStream()).RootElement;
@@ -257,7 +257,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetSchedulesSucceeds()
         {
             var numberOfReturnedSchedules = 0;
-            await foreach (BinaryData scheduleData in _devBoxesClient.GetSchedulesAsync(TestEnvironment.ProjectName, TestEnvironment.PoolName, maxCount: 0, filter: null, context: new()))
+            await foreach (BinaryData scheduleData in _devBoxesClient.GetSchedulesAsync(TestEnvironment.ProjectName, TestEnvironment.PoolName, maxCount: null, filter: null, context: new()))
             {
                 numberOfReturnedSchedules++;
                 JsonElement getSchedulesResponseData = JsonDocument.Parse(scheduleData.ToStream()).RootElement;

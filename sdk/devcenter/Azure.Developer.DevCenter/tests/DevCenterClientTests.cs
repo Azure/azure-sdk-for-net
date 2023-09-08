@@ -33,7 +33,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetProjectsSucceeds()
         {
             var numberOfReturnedProjects = 0;
-            await foreach (BinaryData projectData in _devCenterClient.GetProjectsAsync(filter: null, maxCount: 1, context: new()))
+            await foreach (BinaryData projectData in _devCenterClient.GetProjectsAsync(filter: null, maxCount: null, context: new()))
             {
                 numberOfReturnedProjects++;
                 JsonElement projectResponseData = JsonDocument.Parse(projectData.ToStream()).RootElement;
