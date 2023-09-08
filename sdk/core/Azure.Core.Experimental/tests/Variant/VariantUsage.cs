@@ -39,6 +39,16 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(value, v.ToString());
         }
 
+        [Test]
+        public void VariantDoesntStoreVariant()
+        {
+            Variant a = new("hi");
+            Variant b = new(a);
+
+            Assert.AreEqual(a, b);
+            Assert.AreEqual(typeof(string), b.Type);
+        }
+
         #region Helpers
         public static IEnumerable<Variant[]> VariantValues()
         {
