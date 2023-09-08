@@ -123,6 +123,5 @@ namespace Microsoft.Extensions.Hosting
     {
         public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddServiceBus(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { throw null; }
         public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddServiceBus(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder, System.Action<Microsoft.Azure.WebJobs.ServiceBus.ServiceBusOptions> configure) { throw null; }
-        public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddServiceBusScaleForTrigger(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder, Microsoft.Azure.WebJobs.Host.Scale.TriggerMetadata triggerMetadata) { throw null; }
     }
 }

@@ -1,16 +1,11 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.11.0-beta.1 (2023-09-13)
 
 ### Bugs Fixed
 
 - `ManagedIdentityCredential` will fall through to the next credential in the chain in the case that Docker Desktop returns a 403 response when attempting to access the IMDS endpoint. [#38218](https://github.com/Azure/azure-sdk-for-net/issues/38218)
-
-### Other Changes
+- Fixed an issue where interactive credentials would still prompt on the first GetToken request even when the cache is populated and an AuthenticationRecord is provided. [#38431](https://github.com/Azure/azure-sdk-for-net/issues/38431)
 
 ## 1.10.0 (2023-08-14)
 
