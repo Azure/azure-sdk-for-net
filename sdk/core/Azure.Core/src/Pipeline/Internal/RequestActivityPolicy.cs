@@ -57,9 +57,6 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        // This method writes HttpMessages to the DiagnosticSource held within DiagnosticScope. This attribute
-        // preserves the public properties on this type so it can be used by ApplicationInsights.
-        [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(HttpMessage))]
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             using var scope = CreateDiagnosticScope(message);
@@ -136,13 +133,13 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency.")]
-        private DiagnosticScope CreateDiagnosticScope(HttpMessage message)
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicallyAccessedMembers.")]
+        private DiagnosticScope CreateDiagnosticScope<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(T sourceArgs)
         {
 #if NETCOREAPP2_1
-            return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
+            return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, sourceArgs, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
 #else
-            return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, System.Diagnostics.ActivityKind.Client, false);
+            return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, sourceArgs, s_activitySource, System.Diagnostics.ActivityKind.Client, false);
 #endif
         }
 

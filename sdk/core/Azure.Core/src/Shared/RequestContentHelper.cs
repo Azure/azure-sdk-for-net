@@ -27,8 +27,6 @@ namespace Azure.Core
         }
 
 #if !NET5_0_OR_GREATER
-        // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
-        // The call to JsonSerializer.Serialize is not compatible with trimming, but is only used in NET 5 and below, so don't warn otherwise.
         [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationTrimmingMessage)]
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCode(SerializationTrimmingMessage)]
 #endif

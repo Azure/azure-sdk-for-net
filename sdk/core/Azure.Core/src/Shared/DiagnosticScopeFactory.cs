@@ -50,9 +50,7 @@ namespace Azure.Core.Pipeline
 
         public bool IsActivityEnabled { get; }
 
-#if !NET5_0
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "The DiagnosticScope constructor is marked as RequiresUnreferencedCode because of the usage of the diagnosticSourceArgs parameter. Since we are passing in null here we can suppress this warning.")]
-#endif
 #if NETCOREAPP2_1
         public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
 #else

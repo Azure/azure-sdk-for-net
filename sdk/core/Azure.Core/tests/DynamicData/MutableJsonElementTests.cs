@@ -552,9 +552,8 @@ namespace Azure.Core.Tests
         [Test]
         public void StaticMethodsAreSameAsExpected()
         {
-            var a = Assembly.Load("Azure.Core");
             var expectedMethods = new List<string> { "GetString", "GetFormatExceptionText", "SerializeToJsonElement", "ParseFromBytes", "GetReaderForElement", "GetFirstSegment", "GetLastSegment", "CopyTo" };
-            var actualMethods = a.GetType("Azure.Core.Json.MutableJsonElement").GetMethods(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var actualMethods = Type.GetType("Azure.Core.Json.MutableJsonElement, Azure.Core").GetMethods(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
 
             var message = $"There are {expectedMethods.Count} static methods expected in MutableJsonElement. If adding a new static method, ensure it is compatible with trimming or is annotated correctly.";
 
@@ -568,9 +567,8 @@ namespace Azure.Core.Tests
         [Test]
         public void NestedTypesAreSameAsExpected()
         {
-            var a = Assembly.Load("Azure.Core");
             var expectedNestedTypes = new List<string> { "MutableJsonElementConverter", "ArrayEnumerator", "ObjectEnumerator" };
-            var actualNestedTypes = a.GetType("Azure.Core.Json.MutableJsonElement").GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+            var actualNestedTypes = Type.GetType("Azure.Core.Json.MutableJsonElement, Azure.Core").GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
             var message = $"There are {expectedNestedTypes.Count} nested types expected in MutableJsonElement. If adding a new nested type, ensure it is compatible with trimming or is annotated correctly.";
 
