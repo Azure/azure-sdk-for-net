@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
-    /*
     [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class EnvironmentsClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
@@ -37,7 +36,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetCatalogsSucceeds()
         {
             var numberOfReturnedCatalogs = 0;
-            await foreach (BinaryData catalogData in _environmentsClient.GetCatalogsAsync(TestEnvironment.ProjectName))
+            await foreach (BinaryData catalogData in _environmentsClient.GetCatalogsAsync(TestEnvironment.ProjectName, maxCount: 1, context: new()))
             {
                 numberOfReturnedCatalogs++;
                 JsonElement catalogResponseData = JsonDocument.Parse(catalogData.ToStream()).RootElement;
@@ -57,7 +56,7 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetCatalogSucceeds()
         {
-            Response getCatalogResponse = await _environmentsClient.GetCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName);
+            Response getCatalogResponse = await _environmentsClient.GetCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName, context: new());
             JsonElement getCatalogData = JsonDocument.Parse(getCatalogResponse.ContentStream).RootElement;
 
             if (!getCatalogData.TryGetProperty("name", out var catalogNameJson))
@@ -73,7 +72,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetEnvironmentTypesSucceeds()
         {
             var numberOfEnvTypes = 0;
-            await foreach (BinaryData envTypeData in _environmentsClient.GetEnvironmentTypesAsync(TestEnvironment.ProjectName))
+            await foreach (BinaryData envTypeData in _environmentsClient.GetEnvironmentTypesAsync(TestEnvironment.ProjectName, maxCount: 1, context: new()))
             {
                 numberOfEnvTypes++;
                 JsonElement envTypeResponseData = JsonDocument.Parse(envTypeData.ToStream()).RootElement;
@@ -94,7 +93,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetEnvironmentDefinitionsSucceeds()
         {
             var numberOfEnvDefinitions = 0;
-            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsAsync(TestEnvironment.ProjectName))
+            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsAsync(TestEnvironment.ProjectName, maxCount: 1, context: new()))
             {
                 numberOfEnvDefinitions++;
                 JsonElement envDefinitionsResponseData = JsonDocument.Parse(envDefinitionsData.ToStream()).RootElement;
@@ -115,7 +114,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetEnvironmentDefinitionsByCatalogSucceeds()
         {
             var numberOfEnvDefinitions = 0;
-            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName))
+            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName, maxCount: 1, context: new()))
             {
                 numberOfEnvDefinitions++;
                 JsonElement envDefinitionsResponseData = JsonDocument.Parse(envDefinitionsData.ToStream()).RootElement;
@@ -137,7 +136,11 @@ namespace Azure.Developer.DevCenter.Tests
         {
             await SetUpEnvironmentAsync();
 
-            Response getEnvResponse = await _environmentsClient.GetEnvironmentAsync(TestEnvironment.ProjectName, EnvName);
+            Response getEnvResponse = await _environmentsClient.GetEnvironmentAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.UserId,
+                EnvName,
+                context: new());
             JsonElement getEnvData = JsonDocument.Parse(getEnvResponse.ContentStream).RootElement;
 
             if (!getEnvData.TryGetProperty("name", out var envNameJson))
@@ -186,7 +189,7 @@ namespace Azure.Developer.DevCenter.Tests
         private async Task<int> GetAllEnvironmentsAsync()
         {
             var numberOfEnvironments = 0;
-            await foreach (BinaryData environmentsData in _environmentsClient.GetAllEnvironmentsAsync(TestEnvironment.ProjectName))
+            await foreach (BinaryData environmentsData in _environmentsClient.GetAllEnvironmentsAsync(TestEnvironment.ProjectName, maxCount: 1, context: new()))
             {
                 numberOfEnvironments++;
                 JsonElement environmentsResponseData = JsonDocument.Parse(environmentsData.ToStream()).RootElement;
@@ -206,7 +209,7 @@ namespace Azure.Developer.DevCenter.Tests
         private async Task<int> GetEnvironmentsAsync()
         {
             var numberOfEnvironments = 0;
-            await foreach (BinaryData environmentsData in _environmentsClient.GetEnvironmentsAsync(TestEnvironment.ProjectName))
+            await foreach (BinaryData environmentsData in _environmentsClient.GetEnvironmentsAsync(TestEnvironment.ProjectName, TestEnvironment.UserId, maxCount: 1, context: new()))
             {
                 numberOfEnvironments++;
                 JsonElement environmentsResponseData = JsonDocument.Parse(environmentsData.ToStream()).RootElement;
@@ -227,7 +230,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             string envDefinitionsName = string.Empty;
 
-            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName))
+            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName, maxCount: 1, context: new()))
             {
                 JsonElement envDefinitionsResponseData = JsonDocument.Parse(envDefinitionsData.ToStream()).RootElement;
 
@@ -250,6 +253,7 @@ namespace Azure.Developer.DevCenter.Tests
             Operation<BinaryData> environmentCreateOperation = await _environmentsClient.CreateOrUpdateEnvironmentAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
+                TestEnvironment.UserId,
                 EnvName,
                 RequestContent.Create(content));
 
@@ -265,8 +269,9 @@ namespace Azure.Developer.DevCenter.Tests
             Operation environmentDeleteOperation = await _environmentsClient.DeleteEnvironmentAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
+                TestEnvironment.UserId,
                 EnvName,
-                userId: TestEnvironment.UserId);
+                context: new());
 
             await environmentDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed environment deletion.");
@@ -277,5 +282,4 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.Fail($"The JSON response received from the service does not include the necessary property: {propertyName}");
         }
     }
-    */
 }
