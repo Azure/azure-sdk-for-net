@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class AudioTranslationOptions : IUtf8JsonSerializable
+    internal partial class AudioTranscriptionOptionsPlainText : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,12 +32,25 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(InternalNonAzureModelName);
             }
+            if (Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

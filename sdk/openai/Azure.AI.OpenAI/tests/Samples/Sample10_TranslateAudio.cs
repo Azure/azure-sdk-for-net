@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             AudioTranscription transcription = translationResponse.Value;
 
             // When using Text, Vtt, Json formats, only .Text will be populated
-            Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
+            Console.WriteLine($"Transcription ({transcription.Duration.TotalSeconds}s):");
             // .Text will be translated to English (ISO-639-1 "en")
             Console.WriteLine(transcription.Text);
             #endregion

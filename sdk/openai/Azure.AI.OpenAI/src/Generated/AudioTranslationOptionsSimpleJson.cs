@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Lorem ipsum. </summary>
-    public partial class AudioTranscriptionOptions
+    internal partial class AudioTranslationOptionsSimpleJson
     {
-        /// <summary> Initializes a new instance of AudioTranscriptionOptions. </summary>
+        /// <summary> Initializes a new instance of AudioTranslationOptionsSimpleJson. </summary>
         /// <param name="file"> The audio file object to transcribe. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        public AudioTranscriptionOptions(BinaryData file)
+        public AudioTranslationOptionsSimpleJson(BinaryData file)
         {
             Argument.AssertNotNull(file, nameof(file));
 
             File = file;
         }
 
-        /// <summary> Initializes a new instance of AudioTranscriptionOptions. </summary>
+        /// <summary> Initializes a new instance of AudioTranslationOptionsSimpleJson. </summary>
         /// <param name="file"> The audio file object to transcribe. </param>
         /// <param name="prompt"> An optional text to guide the model's style or continue a previous audio segment. The prompt should match the audio language. </param>
         /// <param name="temperature">
@@ -36,17 +36,33 @@ namespace Azure.AI.OpenAI
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        /// <param name="language"> The language of the input audio. Supplying the input language in ISO-639-1 format will improve accuracy and latency. </param>
         /// <param name="responseFormat"> The format of the transcription output, in one of these options: json, text, srt, verbose_json, or vtt. </param>
-        internal AudioTranscriptionOptions(BinaryData file, string prompt, float? temperature, string internalNonAzureModelName, string language, AudioTranscriptionFormat? responseFormat)
+        internal AudioTranslationOptionsSimpleJson(BinaryData file, string prompt, float? temperature, string internalNonAzureModelName, AudioTranscriptionFormat? responseFormat)
         {
             File = file;
             Prompt = prompt;
             Temperature = temperature;
             InternalNonAzureModelName = internalNonAzureModelName;
-            Language = language;
             ResponseFormat = responseFormat;
         }
+
+        /// <summary>
+        /// The audio file object to transcribe.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData File { get; }
         /// <summary> An optional text to guide the model's style or continue a previous audio segment. The prompt should match the audio language. </summary>
         public string Prompt { get; set; }
         /// <summary>
@@ -55,8 +71,12 @@ namespace Azure.AI.OpenAI
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </summary>
         public float? Temperature { get; set; }
-        /// <summary> The language of the input audio. Supplying the input language in ISO-639-1 format will improve accuracy and latency. </summary>
-        public string Language { get; set; }
+        /// <summary>
+        /// The model name to provide as part of this transcription request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </summary>
+        public string InternalNonAzureModelName { get; set; }
         /// <summary> The format of the transcription output, in one of these options: json, text, srt, verbose_json, or vtt. </summary>
         public AudioTranscriptionFormat? ResponseFormat { get; set; }
     }

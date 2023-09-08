@@ -13,12 +13,24 @@ namespace Azure.AI.OpenAI
         {
             if (response.Headers.ContentType.Contains("text/plain"))
             {
-                return new AudioTranscription(response.Content.ToString());
+                return new AudioTranscription(
+                    text: response.Content.ToString(),
+                    task: null,
+                    language: null,
+                    duration: default,
+                    segments: null);
             }
             else
             {
                 using var document = JsonDocument.Parse(response.Content);
-                return DeserializeAudioTranscription(document.RootElement);
+                AudioTranscriptionVerboseJson verboseTranscription
+                    = AudioTranscriptionVerboseJson.DeserializeAudioTranscriptionVerboseJson(document.RootElement);
+                return new AudioTranscription(
+                    verboseTranscription.Text,
+                    verboseTranscription.Task,
+                    verboseTranscription.Language,
+                    verboseTranscription.Duration,
+                    verboseTranscription.Segments);
             }
         }
     }

@@ -417,7 +417,7 @@ Response<AudioTranscription> transcriptionResponse = await client.GetAudioTransc
 AudioTranscription transcription = transcriptionResponse.Value;
 
 // When using Text, Vtt, Json formats, only .Text will be populated
-Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
+Console.WriteLine($"Transcription ({transcription.Duration.TotalSeconds}s):");
 Console.WriteLine(transcription.Text);
 ```
 
@@ -439,7 +439,7 @@ Response<AudioTranscription> translationResponse = await client.GetAudioTranslat
 AudioTranscription transcription = translationResponse.Value;
 
 // When using Text, Vtt, Json formats, only .Text will be populated
-Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
+Console.WriteLine($"Transcription ({transcription.Duration.TotalSeconds}s):");
 // .Text will be translated to English (ISO-639-1 "en")
 Console.WriteLine(transcription.Text);
 ```

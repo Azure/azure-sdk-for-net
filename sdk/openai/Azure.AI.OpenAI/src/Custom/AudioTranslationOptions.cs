@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -12,6 +13,7 @@ namespace Azure.AI.OpenAI
     /// Requesting format 'json' will result on only the 'text' field being set.
     /// For more output data use 'verbose_json.
     /// </summary>
+    [CodeGenType("AudioTranslationOptionsVerboseJson")]
     public partial class AudioTranslationOptions
     {
         /// <summary>
@@ -36,6 +38,6 @@ namespace Azure.AI.OpenAI
         public AudioTranslationOptions()
         {}
 
-        internal string InternalModelName { get; set; }
+        internal string InternalNonAzureModelName { get; set; }
     }
 }

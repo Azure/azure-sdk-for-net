@@ -21,8 +21,6 @@ namespace Azure.AI.OpenAI
     [CodeGenSuppress("CreateGetCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetChatCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetEmbeddingsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateAudioTranscriptionRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateAudioTranslationRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     public partial class OpenAIClient
     {
         private const int DefaultMaxCompletionsTokens = 100;
@@ -723,12 +721,27 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
 
-            // Custom code: merely linking the deployment ID (== model name) into the request body for non-Azure use
-            audioTranscriptionOptions.InternalModel = deploymentId;
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
+            scope.Start();
 
+            audioTranscriptionOptions.InternalNonAzureModelName = deploymentId;
+
+            RequestContent content = audioTranscriptionOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAudioTranscriptionAsync(deploymentId, audioTranscriptionOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+            Response rawResponse = default;
+
+            try
+            {
+                using HttpMessage message = CreateGetAudioTranscriptionRequest(deploymentId, content, context);
+                rawResponse = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
+            return Response.FromValue(AudioTranscription.FromResponse(rawResponse), rawResponse);
         }
 
         /// <summary> Transcribes audio into the input language. </summary>
@@ -746,12 +759,27 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
 
-            // Custom code: merely linking the deployment ID (== model name) into the request body for non-Azure use
-            audioTranscriptionOptions.InternalModel = deploymentId;
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
+            scope.Start();
 
+            audioTranscriptionOptions.InternalNonAzureModelName = deploymentId;
+
+            RequestContent content = audioTranscriptionOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAudioTranscription(deploymentId, audioTranscriptionOptions.ToRequestContent(), context);
-            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+            Response rawResponse = default;
+
+            try
+            {
+                using HttpMessage message = CreateGetAudioTranscriptionRequest(deploymentId, content, context);
+                rawResponse = _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
+            return Response.FromValue(AudioTranscription.FromResponse(rawResponse), rawResponse);
         }
 
         /// <summary> Transcribes and translates input audio into English text. </summary>
@@ -770,11 +798,29 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
 
             // Custom code: merely linking the deployment ID (== model name) into the request body for non-Azure use
-            audioTranslationOptions.InternalModelName = deploymentId;
+            audioTranslationOptions.InternalNonAzureModelName = deploymentId;
 
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
+            scope.Start();
+
+            audioTranslationOptions.InternalNonAzureModelName = deploymentId;
+
+            RequestContent content = audioTranslationOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAudioTranslationAsync(deploymentId, audioTranslationOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+            Response rawResponse = default;
+
+            try
+            {
+                using HttpMessage message = CreateGetAudioTranslationRequest(deploymentId, content, context);
+                rawResponse = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
+            return Response.FromValue(AudioTranscription.FromResponse(rawResponse), rawResponse);
         }
 
         /// <summary> Transcribes and translates input audio into English text. </summary>
@@ -792,12 +838,27 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
 
-            // Custom code: merely linking the deployment ID (== model name) into the request body for non-Azure use
-            audioTranslationOptions.InternalModelName = deploymentId;
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
+            scope.Start();
 
+            audioTranslationOptions.InternalNonAzureModelName = deploymentId;
+
+            RequestContent content = audioTranslationOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAudioTranslation(deploymentId, audioTranslationOptions.ToRequestContent(), context);
-            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+            Response rawResponse = default;
+
+            try
+            {
+                using HttpMessage message = CreateGetAudioTranslationRequest(deploymentId, content, context);
+                rawResponse = _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
+            return Response.FromValue(AudioTranscription.FromResponse(rawResponse), rawResponse);
         }
 
         internal RequestUriBuilder GetUri(string deploymentOrModelName, string operationPath)
@@ -881,5 +942,58 @@ namespace Azure.AI.OpenAI
             request.Headers.Add("content-type", $"multipart/form-data; boundary={boundary}");
             return message;
         }
+
+        // Code generation note: pending a better suppression solution for the decomposed format handling for audio
+        // transcription, these superfluous stubs prevent emission of per-format methods.
+        internal HttpMessage CreateGetAudioTranscriptionSimpleJsonRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranscriptionSimpleJson(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranscriptionSimpleJsonAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<AudioTranscriptionSimpleJson> GetAudioTranscriptionSimpleJson(string deploymentId, long contentLength, AudioTranscriptionOptionsSimpleJson audioTranscriptionOptionsSimpleJson, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<AudioTranscriptionSimpleJson>> GetAudioTranscriptionSimpleJsonAsync(string deploymentId, long contentLength, AudioTranscriptionOptionsSimpleJson audioTranscriptionOptionsSimpleJson, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<AudioTranscriptionSimpleJson>)).ConfigureAwait(false);
+        internal HttpMessage CreateGetAudioTranscriptionVerboseJsonRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranscriptionVerboseJson(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranscriptionVerboseJsonAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<AudioTranscriptionVerboseJson> GetAudioTranscriptionVerboseJson(string deploymentId, long contentLength, AudioTranscriptionOptions audioTranscriptionOptionsVerboseJson, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<AudioTranscriptionVerboseJson>> GetAudioTranscriptionVerboseJsonAsync(string deploymentId, long contentLength, AudioTranscriptionOptions audioTranscriptionOptionsVerboseJson, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<AudioTranscriptionVerboseJson>)).ConfigureAwait(false);
+        internal HttpMessage CreateGetAudioTranscriptionPlainTextRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranscriptionPlainText(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranscriptionPlainTextAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<string> GetAudioTranscriptionPlainText(string deploymentId, long contentLength, AudioTranscriptionOptionsPlainText audioTranscriptionOptionsPlainText, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<string>> GetAudioTranscriptionPlainTextAsync(string deploymentId, long contentLength, AudioTranscriptionOptionsPlainText audioTranscriptionOptionsPlainText, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<string>)).ConfigureAwait(false);
+        internal HttpMessage CreateGetAudioTranscriptionSrtRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranscriptionSrt(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranscriptionSrtAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<string> GetAudioTranscriptionSrt(string deploymentId, long contentLength, AudioTranscriptionOptionsSrt audioTranscriptionOptionsSrt, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<string>> GetAudioTranscriptionSrtAsync(string deploymentId, long contentLength, AudioTranscriptionOptionsSrt audioTranscriptionOptionsSrt, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<string>)).ConfigureAwait(false);
+        internal HttpMessage CreateGetAudioTranscriptionVttRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranscriptionVtt(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranscriptionVttAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<string> GetAudioTranscriptionVtt(string deploymentId, long contentLength, AudioTranscriptionOptionsVtt audioTranscriptionOptionsVtt, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<string>> GetAudioTranscriptionVttAsync(string deploymentId, long contentLength, AudioTranscriptionOptionsVtt audioTranscriptionOptionsVtt, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<string>)).ConfigureAwait(false);
+        internal HttpMessage CreateGetAudioTranslationSimpleJsonRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranslationSimpleJson(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranslationSimpleJsonAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<AudioTranscriptionSimpleJson> GetAudioTranslationSimpleJson(string deploymentId, long contentLength, AudioTranslationOptionsSimpleJson AudioTranslationOptionsSimpleJson, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<AudioTranscriptionSimpleJson>> GetAudioTranslationSimpleJsonAsync(string deploymentId, long contentLength, AudioTranslationOptionsSimpleJson AudioTranslationOptionsSimpleJson, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<AudioTranscriptionSimpleJson>)).ConfigureAwait(false);
+        internal HttpMessage CreateGetAudioTranslationVerboseJsonRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranslationVerboseJson(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranslationVerboseJsonAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<AudioTranscriptionVerboseJson> GetAudioTranslationVerboseJson(string deploymentId, long contentLength, AudioTranslationOptions AudioTranslationOptionsVerboseJson, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<AudioTranscriptionVerboseJson>> GetAudioTranslationVerboseJsonAsync(string deploymentId, long contentLength, AudioTranslationOptions AudioTranslationOptionsVerboseJson, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<AudioTranscriptionVerboseJson>)).ConfigureAwait(false);
+        internal HttpMessage CreateGetAudioTranslationPlainTextRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranslationPlainText(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranslationPlainTextAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<string> GetAudioTranslationPlainText(string deploymentId, long contentLength, AudioTranslationOptionsPlainText AudioTranslationOptionsPlainText, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<string>> GetAudioTranslationPlainTextAsync(string deploymentId, long contentLength, AudioTranslationOptionsPlainText AudioTranslationOptionsPlainText, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<string>)).ConfigureAwait(false);
+        internal HttpMessage CreateGetAudioTranslationSrtRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranslationSrt(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranslationSrtAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<string> GetAudioTranslationSrt(string deploymentId, long contentLength, AudioTranslationOptionsSrt AudioTranslationOptionsSrt, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<string>> GetAudioTranslationSrtAsync(string deploymentId, long contentLength, AudioTranslationOptionsSrt AudioTranslationOptionsSrt, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<string>)).ConfigureAwait(false);
+        internal HttpMessage CreateGetAudioTranslationVttRequest(string deploymentId, long contentLength, RequestContent content, RequestContext context) => null;
+        internal virtual Response GetAudioTranslationVtt(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => null;
+        internal virtual async Task<Response> GetAudioTranslationVttAsync(string deploymentId, long contentLength, RequestContent content, RequestContext context = null) => await Task.FromResult(default(Response)).ConfigureAwait(false);
+        internal virtual Response<string> GetAudioTranslationVtt(string deploymentId, long contentLength, AudioTranslationOptionsVtt AudioTranslationOptionsVtt, CancellationToken cancellationToken = default) => null;
+        internal virtual async Task<Response<string>> GetAudioTranslationVttAsync(string deploymentId, long contentLength, AudioTranslationOptionsVtt AudioTranslationOptionsVtt, CancellationToken cancellationToken = default) => await Task.FromResult(default(Response<string>)).ConfigureAwait(false);
     }
 }

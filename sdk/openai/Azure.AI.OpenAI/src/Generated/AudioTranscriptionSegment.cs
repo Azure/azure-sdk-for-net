@@ -16,13 +16,30 @@ namespace Azure.AI.OpenAI
     public partial class AudioTranscriptionSegment
     {
         /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
+        /// <param name="id"> Segment identifier. </param>
+        /// <param name="start"> Segment start offset. </param>
+        /// <param name="end"> Segment end offset. </param>
+        /// <param name="text"> Segment text. </param>
+        /// <param name="temperature"> Temperature. </param>
+        /// <param name="averageLogProb"> Average log probability. </param>
+        /// <param name="compressionRatio"> Compression ratio. </param>
+        /// <param name="noSpeechProb"> Probability of 'no speech'. </param>
         /// <param name="tokens"> Tokens in this segment. </param>
         /// <param name="seek"> TODO. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tokens"/> is null. </exception>
-        internal AudioTranscriptionSegment(IEnumerable<int> tokens, int seek)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="tokens"/> is null. </exception>
+        internal AudioTranscriptionSegment(int id, float start, float end, string text, float temperature, float averageLogProb, float compressionRatio, float noSpeechProb, IEnumerable<int> tokens, int seek)
         {
+            Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(tokens, nameof(tokens));
 
+            Id = id;
+            Start = start;
+            End = end;
+            Text = text;
+            Temperature = temperature;
+            AverageLogProb = averageLogProb;
+            CompressionRatio = compressionRatio;
+            NoSpeechProb = noSpeechProb;
             Tokens = tokens.ToList();
             Seek = seek;
         }
@@ -38,7 +55,7 @@ namespace Azure.AI.OpenAI
         /// <param name="noSpeechProb"> Probability of 'no speech'. </param>
         /// <param name="tokens"> Tokens in this segment. </param>
         /// <param name="seek"> TODO. </param>
-        internal AudioTranscriptionSegment(int? id, float? start, float? end, string text, float? temperature, float? averageLogProb, float? compressionRatio, float? noSpeechProb, IReadOnlyList<int> tokens, int seek)
+        internal AudioTranscriptionSegment(int id, float start, float end, string text, float temperature, float averageLogProb, float compressionRatio, float noSpeechProb, IReadOnlyList<int> tokens, int seek)
         {
             Id = id;
             Start = start;
@@ -53,21 +70,21 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Segment identifier. </summary>
-        public int? Id { get; }
+        public int Id { get; }
         /// <summary> Segment start offset. </summary>
-        public float? Start { get; }
+        public float Start { get; }
         /// <summary> Segment end offset. </summary>
-        public float? End { get; }
+        public float End { get; }
         /// <summary> Segment text. </summary>
         public string Text { get; }
         /// <summary> Temperature. </summary>
-        public float? Temperature { get; }
+        public float Temperature { get; }
         /// <summary> Average log probability. </summary>
-        public float? AverageLogProb { get; }
+        public float AverageLogProb { get; }
         /// <summary> Compression ratio. </summary>
-        public float? CompressionRatio { get; }
+        public float CompressionRatio { get; }
         /// <summary> Probability of 'no speech'. </summary>
-        public float? NoSpeechProb { get; }
+        public float NoSpeechProb { get; }
         /// <summary> Tokens in this segment. </summary>
         public IReadOnlyList<int> Tokens { get; }
         /// <summary> TODO. </summary>
