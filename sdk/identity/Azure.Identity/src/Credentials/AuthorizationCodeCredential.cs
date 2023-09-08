@@ -22,8 +22,6 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record;
-        private bool _isCaeEnabledRequestCached = false;
-        private bool _isCaeDisabledRequestCached = false;
         internal MsalConfidentialClient Client { get; }
         private readonly string _redirectUri;
         private readonly string _tenantId;
@@ -138,33 +136,15 @@ namespace Azure.Identity
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(AuthorizationCodeCredential)}.{nameof(GetToken)}", requestContext);
 
+            AccessToken token;
+            string tenantId = null;
             try
             {
-                AccessToken token;
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
-                var isCachePopulated = _record switch
-                {
-                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
-                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
-                    _ => false
-                };
+                tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
-                if (!isCachePopulated)
+                if (_record is null)
                 {
-                    AuthenticationResult result = await Client
-                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
-                        .ConfigureAwait(false);
-                    _record = new AuthenticationRecord(result, _clientId);
-                    if (requestContext.IsCaeEnabled)
-                    {
-                        _isCaeEnabledRequestCached = true;
-                    }
-                    else
-                    {
-                        _isCaeDisabledRequestCached = true;
-                    }
-
-                    token = new AccessToken(result.AccessToken, result.ExpiresOn);
+                    token = await AcquireTokenWithCode(async, requestContext, token, tenantId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -176,10 +156,35 @@ namespace Azure.Identity
 
                 return scope.Succeeded(token);
             }
+            catch (MsalUiRequiredException)
+            {
+                // This occurs when we have an auth record but the cae or ncae cache entry is missing
+                // fall through to the acquire call below
+            }
             catch (Exception e)
             {
                 throw scope.FailWrapAndThrow(e);
             }
+
+            try
+            {
+                token = await AcquireTokenWithCode(async, requestContext, token, tenantId, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(token);
+            }
+            catch (Exception e)
+            {
+                throw scope.FailWrapAndThrow(e);
+            }
+        }
+
+        private async Task<AccessToken> AcquireTokenWithCode(bool async, TokenRequestContext requestContext, AccessToken token, string tenantId, CancellationToken cancellationToken)
+        {
+            AuthenticationResult result = await Client
+                                    .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
+                                    .ConfigureAwait(false);
+            _record = new AuthenticationRecord(result, _clientId);
+            token = new AccessToken(result.AccessToken, result.ExpiresOn);
+            return token;
         }
     }
 }
