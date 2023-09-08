@@ -14,5 +14,6 @@ namespace Azure.Developer.DevCenter.Tests
         public string CatalogName => GetRecordedVariable("DEFAULT_CATALOG_NAME");
         public string EnvironmentTypeName => GetRecordedVariable("DEFAULT_ENVIRONMENT_TYPE_NAME");
         public string UserId => GetRecordedVariable("STATIC_TEST_USER_ID");
+        public string MeUserId => "me";
     }
 }

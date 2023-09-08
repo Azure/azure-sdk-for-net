@@ -138,7 +138,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             Response getEnvResponse = await _environmentsClient.GetEnvironmentAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 EnvName,
                 context: new());
             JsonElement getEnvData = JsonDocument.Parse(getEnvResponse.ContentStream).RootElement;
@@ -209,7 +209,7 @@ namespace Azure.Developer.DevCenter.Tests
         private async Task<int> GetEnvironmentsAsync()
         {
             var numberOfEnvironments = 0;
-            await foreach (BinaryData environmentsData in _environmentsClient.GetEnvironmentsAsync(TestEnvironment.ProjectName, TestEnvironment.UserId, maxCount: null, context: new()))
+            await foreach (BinaryData environmentsData in _environmentsClient.GetEnvironmentsAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, maxCount: null, context: new()))
             {
                 numberOfEnvironments++;
                 JsonElement environmentsResponseData = JsonDocument.Parse(environmentsData.ToStream()).RootElement;
@@ -253,7 +253,7 @@ namespace Azure.Developer.DevCenter.Tests
             Operation<BinaryData> environmentCreateOperation = await _environmentsClient.CreateOrUpdateEnvironmentAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 EnvName,
                 RequestContent.Create(content));
 
@@ -269,7 +269,7 @@ namespace Azure.Developer.DevCenter.Tests
             Operation environmentDeleteOperation = await _environmentsClient.DeleteEnvironmentAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 EnvName,
                 context: new());
 

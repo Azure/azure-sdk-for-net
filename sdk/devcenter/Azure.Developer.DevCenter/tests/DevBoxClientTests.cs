@@ -41,7 +41,7 @@ namespace Azure.Developer.DevCenter.Tests
             Operation devBoxDeleteOperation = await _devBoxesClient.DeleteDevBoxAsync(
                WaitUntil.Completed,
                TestEnvironment.ProjectName,
-               TestEnvironment.UserId,
+               TestEnvironment.MeUserId,
                DevBoxName,
                context: new());
 
@@ -56,7 +56,7 @@ namespace Azure.Developer.DevCenter.Tests
             Operation<BinaryData> devBoxStopOperation = await _devBoxesClient.StopDevBoxAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 DevBoxName,
                 false,
                 context: new());
@@ -76,7 +76,7 @@ namespace Azure.Developer.DevCenter.Tests
             Operation<BinaryData> devBoxStartOperation = await _devBoxesClient.StartDevBoxAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 DevBoxName,
                 context: new());
 
@@ -97,7 +97,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             Response remoteConnectionResponse = await _devBoxesClient.GetRemoteConnectionAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 DevBoxName,
                 context: new());
 
@@ -132,7 +132,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             Response devBoxResponse = await _devBoxesClient.GetDevBoxAsync(
                TestEnvironment.ProjectName,
-               TestEnvironment.UserId,
+               TestEnvironment.MeUserId,
                DevBoxName,
                context: new());
 
@@ -152,7 +152,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetDevBoxesAsync(TestEnvironment.ProjectName, TestEnvironment.UserId, filter: null, maxCount: null, context: new()))
+            await foreach (BinaryData devBoxData in _devBoxesClient.GetDevBoxesAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, filter: null, maxCount: null, context: new()))
             {
                 numberOfReturnedDevBoxes++;
                 JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -196,7 +196,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesByUserAsync(TestEnvironment.UserId, filter: null, maxCount: null, context: new()))
+            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesByUserAsync(TestEnvironment.MeUserId, filter: null, maxCount: null, context: new()))
             {
                 numberOfReturnedDevBoxes++;
                 JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -298,7 +298,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetActionsSucceeds()
         {
             var numberOfReturnedActions = 0;
-            await foreach (BinaryData actionsData in _devBoxesClient.GetActionsAsync(TestEnvironment.ProjectName, TestEnvironment.UserId, DevBoxName, context: new()))
+            await foreach (BinaryData actionsData in _devBoxesClient.GetActionsAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, DevBoxName, context: new()))
             {
                 numberOfReturnedActions++;
                 JsonElement getActionsResponseData = JsonDocument.Parse(actionsData.ToStream()).RootElement;
@@ -320,7 +320,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             Response getActionResponse = await _devBoxesClient.GetActionAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 DevBoxName,
                 "schedule-default",
                 context: new());
@@ -341,7 +341,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             Response skipActionResponse = await _devBoxesClient.SkipActionAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 DevBoxName,
                 "schedule-default",
                 context: new());
@@ -358,7 +358,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             Response delayActionResponse = await _devBoxesClient.DelayActionAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 DevBoxName,
                 "schedule-default",
                 delayUntil,
@@ -385,7 +385,7 @@ namespace Azure.Developer.DevCenter.Tests
             DateTimeOffset delayUntil = DateTimeOffset.Parse("2023-05-02T16:01:53.3821556Z");
             var numberOfReturnedActions = 0;
 
-            await foreach (BinaryData actionsData in _devBoxesClient.DelayAllActionsAsync(TestEnvironment.ProjectName, TestEnvironment.UserId, DevBoxName, delayUntil, context: new()))
+            await foreach (BinaryData actionsData in _devBoxesClient.DelayAllActionsAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, DevBoxName, delayUntil, context: new()))
             {
                 numberOfReturnedActions++;
                 JsonElement getActionsResponseData = JsonDocument.Parse(actionsData.ToStream()).RootElement;
@@ -413,7 +413,7 @@ namespace Azure.Developer.DevCenter.Tests
             Operation<BinaryData> devBoxCreateOperation = await _devBoxesClient.CreateDevBoxAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
-                TestEnvironment.UserId,
+                TestEnvironment.MeUserId,
                 DevBoxName,
                 RequestContent.Create(content),
                 context: new());
