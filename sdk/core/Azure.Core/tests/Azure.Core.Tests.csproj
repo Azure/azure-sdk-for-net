@@ -79,6 +79,7 @@
     
     <Compile Remove="public/**" />
     <Compile Remove="common/**" />
+    <Compile Remove="management/**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />

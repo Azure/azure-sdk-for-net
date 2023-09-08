@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>false</IsTestSupportProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj" />
+    <ProjectReference Include="..\..\src\Azure.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\Azure.Core.TestFramework\src\Shared\IMockOperationInternal.cs" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\Azure.Core.TestFramework\src\Shared\MockOperation.cs" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\Azure.Core.TestFramework\src\Shared\MockOperationOfT.cs" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\Azure.Core.TestFramework\src\Shared\MockOperationInternal.cs" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\Azure.Core.TestFramework\src\Shared\MockOperationInternalOfT.cs" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\Azure.Core.TestFramework\src\Shared\UpdateResult.cs" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\Azure.Core.TestFramework\src\Shared\TestClientOptions.cs" LinkBase="Shared\TestFramework" />
+  </ItemGroup>
+  
+</Project>
