@@ -12,6 +12,9 @@ namespace: Azure.ResourceManager.Chaos
 require: https://github.com/Azure/azure-rest-api-specs/blob/1114a5b1f0831d8b3de07db7248c8a4f38c5bbb7/specification/chaos/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
