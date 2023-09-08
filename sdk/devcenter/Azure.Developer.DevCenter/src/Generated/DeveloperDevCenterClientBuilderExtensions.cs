@@ -12,7 +12,7 @@ using Azure.Developer.DevCenter;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="DevCenterClient"/>, <see cref="DevBoxesClient"/>, <see cref="DeploymentEnvironmentsClient"/> to client builder. </summary>
-    public static partial class DevCenterClientBuilderExtensions
+    public static partial class DeveloperDevCenterClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="DevCenterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
