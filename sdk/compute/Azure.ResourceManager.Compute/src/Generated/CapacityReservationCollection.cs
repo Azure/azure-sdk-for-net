@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="capacityReservationName"> The name of the capacity reservation. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>

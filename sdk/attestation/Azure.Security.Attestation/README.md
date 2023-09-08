@@ -88,7 +88,7 @@ For more information about the Azure Identity APIs and how to use them, see [Azu
 There are four major families of functionality provided in this preview SDK:
 
 * [SGX and TPM enclave attestation.](#attestation)
-* [MAA Attestation Token signing certificate discovery and validation.](#attestation-token-signing-certificate-discovery-and-validation)  
+* [MAA Attestation Token signing certificate discovery and validation.](#attestation-token-signing-certificate-discovery-and-validation)
 * [Attestation Policy management.](#policy-management)
 * [Attestation policy management certificate management](#policy-management-certificate-management) (yes, policy management management).
 
@@ -132,7 +132,7 @@ clients to "roll" the policy management certificates.
 
 ### Isolated Mode and AAD Mode
 
-Each Microsoft Azure Attestation service instance operates in either "AAD" mode or "Isolated" mode. When an MAA instance is operating in AAD mode, it means that the customer which created the attestation instance allows Azure Active Directory and Azure Role Based Access control policies to verify access to the attestation instance.  
+Each Microsoft Azure Attestation service instance operates in either "AAD" mode or "Isolated" mode. When an MAA instance is operating in AAD mode, it means that the customer which created the attestation instance allows Azure Active Directory and Azure Role Based Access control policies to verify access to the attestation instance.
 
 ### *AttestationType*
 
@@ -162,7 +162,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 

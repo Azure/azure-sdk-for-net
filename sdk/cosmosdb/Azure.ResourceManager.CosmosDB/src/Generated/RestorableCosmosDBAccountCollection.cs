@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
+        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
+        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
+        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -136,11 +137,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableCosmosDBAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
+        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription and in a region.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableCosmosDBAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ operationgroup: confidential-ledger
 namespace: Azure.Security.ConfidentialLedger 
 security: AADToken
 security-scopes: "https://confidential-ledger.azure.com/.default"
+keep-non-overloadable-protocol-signature: true
 input-file:
     -  https://github.com/Azure/azure-rest-api-specs/blob/a9e895ccfe29d0646795f7ff1cb78e185bd09529/specification/confidentialledger/data-plane/Microsoft.ConfidentialLedger/stable/2022-05-13/common.json
     -  https://github.com/Azure/azure-rest-api-specs/blob/a9e895ccfe29d0646795f7ff1cb78e185bd09529/specification/confidentialledger/data-plane/Microsoft.ConfidentialLedger/stable/2022-05-13/confidentialledger.json

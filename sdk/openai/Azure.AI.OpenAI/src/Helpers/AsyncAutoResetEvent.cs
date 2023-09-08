@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 namespace Azure.AI.OpenAI
 {
     // Adapted from https://devblogs.microsoft.com/pfxteam/building-async-coordination-primitives-part-2-asyncautoresetevent/
-    internal class AsyncAutoResetEvent
+    internal sealed class AsyncAutoResetEvent
     {
-        private static readonly Task s_completed = Task.FromResult(true);
         private readonly Queue<TaskCompletionSource<bool>> _waits = new Queue<TaskCompletionSource<bool>>();
         private bool _signaled;
 
@@ -21,12 +20,12 @@ namespace Azure.AI.OpenAI
                 if (_signaled)
                 {
                     _signaled = false;
-                    return s_completed;
+                    return Task.CompletedTask;
                 }
                 else
                 {
                     var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                    cancellationToken.Register(() => tcs?.SetCanceled());
+                    cancellationToken.Register(() => tcs?.TrySetCanceled());
                     _waits.Enqueue(tcs);
                     return tcs.Task;
                 }
@@ -43,7 +42,7 @@ namespace Azure.AI.OpenAI
                 else if (!_signaled)
                     _signaled = true;
             }
-            toRelease?.SetResult(true);
+            toRelease?.TrySetResult(true);
         }
     }
 }

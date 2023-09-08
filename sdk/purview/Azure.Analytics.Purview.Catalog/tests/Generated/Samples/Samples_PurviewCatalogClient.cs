@@ -61,10 +61,16 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     assetTypes = new[] {
             "<String>"
         },
+                    facet = new
+                    {
+                        count = 1234,
+                        facet = "<facet>",
+                        sort = new { },
+                    },
                 },
             };
 
-            Response response = client.Search(RequestContent.Create(data), new RequestContext());
+            Response response = client.Search(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -148,10 +154,16 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     assetTypes = new[] {
             "<String>"
         },
+                    facet = new
+                    {
+                        count = 1234,
+                        facet = "<facet>",
+                        sort = new { },
+                    },
                 },
             };
 
-            Response response = await client.SearchAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.SearchAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -224,7 +236,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 filter = new { },
             };
 
-            Response response = client.Suggest(RequestContent.Create(data), new RequestContext());
+            Response response = client.Suggest(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
@@ -277,7 +289,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 filter = new { },
             };
 
-            Response response = await client.SuggestAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.SuggestAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
@@ -331,7 +343,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 offset = 1234,
             };
 
-            Response response = client.Browse(RequestContent.Create(data), new RequestContext());
+            Response response = client.Browse(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -379,7 +391,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 offset = 1234,
             };
 
-            Response response = await client.BrowseAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.BrowseAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -426,7 +438,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 filter = new { },
             };
 
-            Response response = client.AutoComplete(RequestContent.Create(data), new RequestContext());
+            Response response = client.AutoComplete(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
@@ -464,7 +476,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 filter = new { },
             };
 
-            Response response = await client.AutoCompleteAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());

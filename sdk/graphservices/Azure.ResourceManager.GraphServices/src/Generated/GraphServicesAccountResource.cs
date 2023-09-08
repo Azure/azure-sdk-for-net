@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.GraphServices
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _graphServicesAccountResourceAccountClientDiagnostics;
-        private readonly AccountRestOperations _graphServicesAccountResourceAccountRestClient;
+        private readonly ClientDiagnostics _graphServicesAccountResourceAccountsClientDiagnostics;
+        private readonly AccountsRestOperations _graphServicesAccountResourceAccountsRestClient;
         private readonly GraphServicesAccountResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="GraphServicesAccountResource"/> class for mocking. </summary>
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GraphServicesAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _graphServicesAccountResourceAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GraphServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string graphServicesAccountResourceAccountApiVersion);
-            _graphServicesAccountResourceAccountRestClient = new AccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, graphServicesAccountResourceAccountApiVersion);
+            _graphServicesAccountResourceAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GraphServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string graphServicesAccountResourceAccountsApiVersion);
+            _graphServicesAccountResourceAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, graphServicesAccountResourceAccountsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,18 +98,18 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GraphServicesAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.Get");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.Get");
             scope.Start();
             try
             {
-                var response = await _graphServicesAccountResourceAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _graphServicesAccountResourceAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GraphServicesAccountResource(Client, response.Value), response.GetRawResponse());
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GraphServicesAccountResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.Get");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.Get");
             scope.Start();
             try
             {
-                var response = _graphServicesAccountResourceAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _graphServicesAccountResourceAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GraphServicesAccountResource(Client, response.Value), response.GetRawResponse());
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Delete</description>
+        /// <description>Accounts_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.Delete");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.Delete");
             scope.Start();
             try
             {
-                var response = await _graphServicesAccountResourceAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _graphServicesAccountResourceAccountsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new GraphServicesArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Delete</description>
+        /// <description>Accounts_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.Delete");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.Delete");
             scope.Start();
             try
             {
-                var response = _graphServicesAccountResourceAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _graphServicesAccountResourceAccountsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new GraphServicesArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Update</description>
+        /// <description>Accounts_Update</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.Update");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.Update");
             scope.Start();
             try
             {
-                var response = await _graphServicesAccountResourceAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _graphServicesAccountResourceAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GraphServicesAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Update</description>
+        /// <description>Accounts_Update</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.Update");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.Update");
             scope.Start();
             try
             {
-                var response = _graphServicesAccountResourceAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var response = _graphServicesAccountResourceAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new GraphServicesAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.GraphServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.AddTag");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.AddTag");
             scope.Start();
             try
             {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.GraphServices
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _graphServicesAccountResourceAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _graphServicesAccountResourceAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new GraphServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.GraphServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.AddTag");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.AddTag");
             scope.Start();
             try
             {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.GraphServices
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _graphServicesAccountResourceAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _graphServicesAccountResourceAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new GraphServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.SetTags");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.SetTags");
             scope.Start();
             try
             {
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.GraphServices
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _graphServicesAccountResourceAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _graphServicesAccountResourceAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new GraphServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.SetTags");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.SetTags");
             scope.Start();
             try
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.GraphServices
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _graphServicesAccountResourceAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _graphServicesAccountResourceAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new GraphServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.RemoveTag");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.RemoveTag");
             scope.Start();
             try
             {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.GraphServices
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _graphServicesAccountResourceAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _graphServicesAccountResourceAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new GraphServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResource.RemoveTag");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResource.RemoveTag");
             scope.Start();
             try
             {
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.GraphServices
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _graphServicesAccountResourceAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _graphServicesAccountResourceAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new GraphServicesAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

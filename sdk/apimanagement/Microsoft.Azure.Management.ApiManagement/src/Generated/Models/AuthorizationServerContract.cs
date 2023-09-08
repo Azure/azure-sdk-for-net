@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// External OAuth authorization server settings.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AuthorizationServerContract : Resource
+    public partial class AuthorizationServerContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the AuthorizationServerContract
@@ -87,11 +87,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="resourceOwnerPassword">Can be optionally specified
         /// when resource owner password grant type is supported by this
         /// authorization server. Default resource owner password.</param>
+        /// <param name="useInTestConsole">If true, the authorization server
+        /// may be used in the developer portal test console. True by default
+        /// if no value is provided.</param>
+        /// <param name="useInApiDocumentation">If true, the authorization
+        /// server will be used in the API documentation in the developer
+        /// portal. False by default if no value is provided.</param>
         /// <param name="clientSecret">Client or app secret registered with
         /// this authorization server. This property will not be filled on
         /// 'GET' operations! Use '/listSecrets' POST request to get the
         /// value.</param>
-        public AuthorizationServerContract(string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IList<string> grantTypes, string clientId, string id = default(string), string name = default(string), string type = default(string), string description = default(string), IList<AuthorizationMethod?> authorizationMethods = default(IList<AuthorizationMethod?>), IList<string> clientAuthenticationMethod = default(IList<string>), IList<TokenBodyParameterContract> tokenBodyParameters = default(IList<TokenBodyParameterContract>), string tokenEndpoint = default(string), bool? supportState = default(bool?), string defaultScope = default(string), IList<string> bearerTokenSendingMethods = default(IList<string>), string resourceOwnerUsername = default(string), string resourceOwnerPassword = default(string), string clientSecret = default(string))
+        public AuthorizationServerContract(string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IList<string> grantTypes, string clientId, string id = default(string), string name = default(string), string type = default(string), string description = default(string), IList<AuthorizationMethod?> authorizationMethods = default(IList<AuthorizationMethod?>), IList<string> clientAuthenticationMethod = default(IList<string>), IList<TokenBodyParameterContract> tokenBodyParameters = default(IList<TokenBodyParameterContract>), string tokenEndpoint = default(string), bool? supportState = default(bool?), string defaultScope = default(string), IList<string> bearerTokenSendingMethods = default(IList<string>), string resourceOwnerUsername = default(string), string resourceOwnerPassword = default(string), bool? useInTestConsole = default(bool?), bool? useInApiDocumentation = default(bool?), string clientSecret = default(string))
             : base(id, name, type)
         {
             Description = description;
@@ -105,6 +111,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             ResourceOwnerUsername = resourceOwnerUsername;
             ResourceOwnerPassword = resourceOwnerPassword;
             DisplayName = displayName;
+            UseInTestConsole = useInTestConsole;
+            UseInApiDocumentation = useInApiDocumentation;
             ClientRegistrationEndpoint = clientRegistrationEndpoint;
             AuthorizationEndpoint = authorizationEndpoint;
             GrantTypes = grantTypes;
@@ -202,6 +210,22 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, the authorization server may be used in the
+        /// developer portal test console. True by default if no value is
+        /// provided.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useInTestConsole")]
+        public bool? UseInTestConsole { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, the authorization server will be used in the
+        /// API documentation in the developer portal. False by default if no
+        /// value is provided.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useInApiDocumentation")]
+        public bool? UseInApiDocumentation { get; set; }
 
         /// <summary>
         /// Gets or sets optional reference to a page where client or app

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute SKUs for a list of possible values. </param>
         /// <param name="platformFaultDomain"> Fault domain of the dedicated host within a dedicated host group. </param>
-        /// <param name="autoReplaceOnFailure"> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to &apos;true&apos; when not provided. </param>
+        /// <param name="autoReplaceOnFailure"> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </param>
         /// <param name="hostId"> A unique id generated and assigned to the dedicated host by the platform. Does not change throughout the lifetime of the host. </param>
         /// <param name="virtualMachines"> A list of references to all virtual machines in the Dedicated Host. </param>
         /// <param name="licenseType"> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: **None,** **Windows_Server_Hybrid,** **Windows_Server_Perpetual.** The default value is: **None.**. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
         public ComputeSku Sku { get; set; }
         /// <summary> Fault domain of the dedicated host within a dedicated host group. </summary>
         public int? PlatformFaultDomain { get; set; }
-        /// <summary> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to &apos;true&apos; when not provided. </summary>
+        /// <summary> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </summary>
         public bool? AutoReplaceOnFailure { get; set; }
         /// <summary> A unique id generated and assigned to the dedicated host by the platform. Does not change throughout the lifetime of the host. </summary>
         public string HostId { get; }

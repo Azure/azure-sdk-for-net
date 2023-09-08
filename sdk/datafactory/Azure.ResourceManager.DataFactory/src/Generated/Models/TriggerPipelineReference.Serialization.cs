@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<FactoryPipelineReference> pipelineReference = default;
+            Optional<DataFactoryPipelineReference> pipelineReference = default;
             Optional<IDictionary<string, BinaryData>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pipelineReference = FactoryPipelineReference.DeserializeFactoryPipelineReference(property.Value);
+                    pipelineReference = DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

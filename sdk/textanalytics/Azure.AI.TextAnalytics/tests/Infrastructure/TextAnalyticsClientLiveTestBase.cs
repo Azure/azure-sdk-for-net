@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Tests
     TextAnalyticsClientOptions.ServiceVersion.V3_0,
     TextAnalyticsClientOptions.ServiceVersion.V3_1,
     TextAnalyticsClientOptions.ServiceVersion.V2022_05_01,
-    TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+    TextAnalyticsClientOptions.ServiceVersion.V2023_04_01)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
         private const int MaxRetriesCount = 12;
@@ -49,15 +49,19 @@ namespace Azure.AI.TextAnalytics.Tests
                 ? TestEnvironment.StaticEndpoint
                 : TestEnvironment.Endpoint);
 
+            TextAnalyticsAudience audience = TestEnvironment.GetAudience();
+
             options ??= new TextAnalyticsClientOptions(ServiceVersion)
             {
-                Audience = TestEnvironment.GetAudience()
+                Audience = audience
             };
 
-            // While we use a persistent resource for live tests, we need to increase our retries.
-            // We should remove when having dynamic resource again
-            // Issue: https://github.com/Azure/azure-sdk-for-net/issues/25041
-            if (useStaticResource)
+            // We have seen transient timeouts while testing the custom text analysis features which are potentially
+            // related to the use of the static resource.
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/25041.
+            // Similarly, we have also seen transient timeouts when running tests in the China cloud regions which are
+            // likely due to the physical distance between those regions and our CI infrastructure running in the US.
+            if (useStaticResource || audience == TextAnalyticsAudience.AzureChina)
             {
                 options.Retry.MaxRetries = MaxRetriesCount;
             }
@@ -80,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         // This has been added to stop the custom tests to run forever while we
         // get more reliable information on which scenarios cause timeouts.
-        // Issue https://github.com/Azure/azure-sdk-for-net/issues/25152
+        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/25152
         internal static async Task PollUntilTimeout<T>(Operation<T> operation, int timeoutInMinutes = 20)
         {
             TimeSpan pollingInterval = TimeSpan.FromSeconds(10);

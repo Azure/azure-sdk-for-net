@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: Resources
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
@@ -67,7 +66,7 @@ format-by-name-rules:
 keep-plural-enums:
   - ScriptCleanupOptions
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

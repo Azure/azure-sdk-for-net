@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> Describes the input to the &apos;finish&apos; MongoDB migration command. </summary>
+    /// <summary> Describes the input to the 'finish' MongoDB migration command. </summary>
     public partial class MongoDBFinishCommandInput : MongoDBCommandInput
     {
         /// <summary> Initializes a new instance of MongoDBFinishCommandInput. </summary>

@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: OperationalInsights
 namespace: Azure.ResourceManager.OperationalInsights
@@ -28,7 +27,7 @@ format-by-name-rules:
   'customerId': 'uuid'
   'azureAsyncOperationId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

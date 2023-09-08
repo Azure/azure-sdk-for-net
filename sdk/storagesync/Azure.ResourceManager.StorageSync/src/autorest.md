@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: StorageSync
 namespace: Azure.ResourceManager.StorageSync
@@ -34,7 +33,7 @@ format-by-name-rules:
   'lastOperationId': 'uuid'
   'serverCertificate': 'any'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

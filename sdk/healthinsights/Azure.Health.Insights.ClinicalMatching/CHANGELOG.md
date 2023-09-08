@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Introduced model factory `Azure.Health.Insights.ClinicalMatching.AzureHealthInsightsModelFactory` for mocking.
+
 ### Breaking Changes
 
 ### Bugs Fixed

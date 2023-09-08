@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public string OfferId { get; set; }
         /// <summary> Plan id used to get the third party products. </summary>
         public string PlanId { get; set; }
-        /// <summary> May be used to filter by Catalog properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. </summary>
+        /// <summary> May be used to filter by Catalog properties. The filter supports 'eq', 'or', and 'and'. </summary>
         public string Filter { get; set; }
         /// <summary> The number of reservations to skip from the list before returning results. </summary>
         public float? Skip { get; set; }

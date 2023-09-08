@@ -18,22 +18,23 @@ namespace Azure.AI.OpenAI
         private readonly Response _baseResponse;
         private readonly SseReader _baseResponseReader;
         private readonly IList<ChatCompletions> _baseChatCompletions;
-        private readonly object _baseCompletionsLock = new object();
+        private readonly object _baseCompletionsLock = new();
         private readonly IList<StreamingChatChoice> _streamingChatChoices;
-        private readonly object _streamingChoicesLock = new object();
+        private readonly object _streamingChoicesLock = new();
         private readonly AsyncAutoResetEvent _updateAvailableEvent;
         private bool _streamingTaskComplete;
         private bool _disposedValue;
+        private Exception _pumpException;
 
         /// <summary>
         /// Gets the earliest Completion creation timestamp associated with this streamed response.
         /// </summary>
-        public DateTime Created => GetLocked(() => _baseChatCompletions.First().Created);
+        public DateTimeOffset Created => GetLocked(() => _baseChatCompletions.Last().Created);
 
         /// <summary>
         /// Gets the unique identifier associated with this streaming Completions response.
         /// </summary>
-        public string Id => GetLocked(() => _baseChatCompletions.First().Id);
+        public string Id => GetLocked(() => _baseChatCompletions.Last().Id);
 
         internal StreamingChatCompletions(Response response)
         {
@@ -45,66 +46,75 @@ namespace Azure.AI.OpenAI
             _streamingTaskComplete = false;
             _ = Task.Run(async () =>
             {
-                while (true)
+                try
                 {
-                    SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
-                    if (sseEvent == null)
+                    while (true)
                     {
-                        _baseResponse.ContentStream?.Dispose();
-                        break;
-                    }
-
-                    ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
-                    if (!name.Span.SequenceEqual("data".AsSpan()))
-                        throw new InvalidDataException();
-
-                    ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
-                    if (value.Span.SequenceEqual("[DONE]".AsSpan()))
-                    {
-                        _baseResponse.ContentStream?.Dispose();
-                        break;
-                    }
-
-                    JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
-                    ChatCompletions chatCompletionsFromSse = ChatCompletions.DeserializeChatCompletions(sseMessageJson.RootElement);
-
-                    lock (_baseCompletionsLock)
-                    {
-                        _baseChatCompletions.Add(chatCompletionsFromSse);
-                    }
-
-                    foreach (ChatChoice chatChoiceFromSse in chatCompletionsFromSse.Choices)
-                    {
-                        lock (_streamingChoicesLock)
+                        SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
+                        if (sseEvent == null)
                         {
-                            StreamingChatChoice existingStreamingChoice = _streamingChatChoices
-                                .FirstOrDefault(chatChoice => chatChoice.Index == chatChoiceFromSse.Index);
-                            if (existingStreamingChoice == null)
+                            _baseResponse.ContentStream?.Dispose();
+                            break;
+                        }
+
+                        ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
+                        if (!name.Span.SequenceEqual("data".AsSpan()))
+                            throw new InvalidDataException();
+
+                        ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
+                        if (value.Span.SequenceEqual("[DONE]".AsSpan()))
+                        {
+                            _baseResponse.ContentStream?.Dispose();
+                            break;
+                        }
+
+                        JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
+                        ChatCompletions chatCompletionsFromSse = ChatCompletions.DeserializeChatCompletions(sseMessageJson.RootElement);
+
+                        lock (_baseCompletionsLock)
+                        {
+                            _baseChatCompletions.Add(chatCompletionsFromSse);
+                        }
+
+                        foreach (ChatChoice chatChoiceFromSse in chatCompletionsFromSse.Choices)
+                        {
+                            lock (_streamingChoicesLock)
                             {
-                                StreamingChatChoice newStreamingChatChoice = new StreamingChatChoice(chatChoiceFromSse);
-                                _streamingChatChoices.Add(newStreamingChatChoice);
-                                _updateAvailableEvent.Set();
-                            }
-                            else
-                            {
-                                existingStreamingChoice.UpdateFromEventStreamChatChoice(chatChoiceFromSse);
+                                StreamingChatChoice existingStreamingChoice = _streamingChatChoices
+                                    .FirstOrDefault(chatChoice => chatChoice.Index == chatChoiceFromSse.Index);
+                                if (existingStreamingChoice == null)
+                                {
+                                    StreamingChatChoice newStreamingChatChoice = new(chatChoiceFromSse);
+                                    _streamingChatChoices.Add(newStreamingChatChoice);
+                                    _updateAvailableEvent.Set();
+                                }
+                                else
+                                {
+                                    existingStreamingChoice.UpdateFromEventStreamChatChoice(chatChoiceFromSse);
+                                }
                             }
                         }
                     }
                 }
-
-                // Non-Azure OpenAI doesn't always set the FinishReason on streaming choices when multiple prompts are
-                // provided.
-                lock (_streamingChoicesLock)
+                catch (Exception pumpException)
                 {
-                    foreach (StreamingChatChoice streamingChatChoice in _streamingChatChoices)
-                    {
-                        streamingChatChoice.StreamingDoneSignalReceived = true;
-                    }
+                    _pumpException = pumpException;
                 }
-
-                _streamingTaskComplete = true;
-                _updateAvailableEvent.Set();
+                finally
+                {
+                    lock (_streamingChoicesLock)
+                    {
+                        // If anything went wrong and a StreamingChatChoice didn't naturally determine it was complete
+                        // based on a non-null finish reason, ensure that nothing's left incomplete (and potentially
+                        // hanging!) now.
+                        foreach (StreamingChatChoice streamingChatChoice in _streamingChatChoices)
+                        {
+                            streamingChatChoice.EnsureFinishStreaming(_pumpException);
+                        }
+                    }
+                    _streamingTaskComplete = true;
+                    _updateAvailableEvent.Set();
+                }
             });
         }
 
@@ -129,6 +139,11 @@ namespace Azure.AI.OpenAI
                     }
                 }
 
+                if (_pumpException != null)
+                {
+                    throw _pumpException;
+                }
+
                 StreamingChatChoice newChatChoice = null;
                 lock (_streamingChoicesLock)
                 {
@@ -143,6 +158,15 @@ namespace Azure.AI.OpenAI
                     yield return newChatChoice;
                 }
             }
+        }
+
+        internal StreamingChatCompletions(
+            ChatCompletions baseChatCompletions = null,
+            List<StreamingChatChoice> streamingChatChoices = null)
+        {
+            _baseChatCompletions.Add(baseChatCompletions);
+            _streamingChatChoices = streamingChatChoices;
+            _streamingTaskComplete = true;
         }
 
         public void Dispose()

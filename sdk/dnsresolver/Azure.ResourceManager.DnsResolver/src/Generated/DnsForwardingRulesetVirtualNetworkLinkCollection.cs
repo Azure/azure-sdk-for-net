@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(e)), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, "DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(e)), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, "DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(e)), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, "DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(e)), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, "DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: Quota
 namespace: Azure.ResourceManager.Quota
@@ -24,7 +23,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -46,5 +45,31 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  LimitJsonObject: QuotaLimitJsonObject
+  LimitObject: QuotaLimitObject
+  OperationList: QuotaOperationListResult
+  OperationResponse: QuotaOperationResult
+  OperationDisplay: QuotaOperationDisplay
+  ResourceName: QuotaRequestResourceName
+  SubRequest: QuotaSubRequestDetail
+  SubRequest.subRequestId: -|uuid
+  UsagesObject: QuotaUsagesObject
+  UsagesProperties: QuotaUsagesProperties
+  UsagesTypes: QuotaUsagesType
+  UsagesProperties.resourceType: ResourceTypeName
+  QuotaProperties.resourceType: ResourceTypeName
+  SubRequest.resourceType: ResourceTypeName
+  # QuotaRequestStatusDetails.resourceType: ResourceTypeName
+  # quotaRequestOneResourceProperties.resourceType: ResourceTypeName
+
+directive:
+# Correct the type of properties
+  - from: quota.json
+    where: $.definitions
+    transform: >
+      $.QuotaProperties.properties.quotaPeriod['format'] = 'duration';
+      $.UsagesProperties.properties.quotaPeriod['format'] = 'duration';
 
 ```

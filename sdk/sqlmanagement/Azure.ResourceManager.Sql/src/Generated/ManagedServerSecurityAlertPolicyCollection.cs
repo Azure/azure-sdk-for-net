@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a managed server&apos;s threat detection policy.
+        /// Get a managed server's threat detection policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a managed server&apos;s threat detection policy.
+        /// Get a managed server's threat detection policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get the managed server&apos;s threat detection policies.
+        /// Get the managed server's threat detection policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerSecurityAlertPolicyRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerSecurityAlertPolicyRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServerSecurityAlertPolicyResource(Client, ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(e)), _managedServerSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServerSecurityAlertPolicyResource(Client, ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(e)), _managedServerSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get the managed server&apos;s threat detection policies.
+        /// Get the managed server's threat detection policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerSecurityAlertPolicyRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerSecurityAlertPolicyRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServerSecurityAlertPolicyResource(Client, ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(e)), _managedServerSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServerSecurityAlertPolicyResource(Client, ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(e)), _managedServerSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

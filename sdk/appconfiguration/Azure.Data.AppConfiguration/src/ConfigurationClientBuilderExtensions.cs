@@ -6,9 +6,9 @@ using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Data.AppConfiguration;
 
-//TODO: there is no way to only suppress a single memmber of a static class so we need to have everything custom here.
+//TODO: there is no way to only suppress a single member of a static class so we need to have everything custom here.
 //The issue here is that the custom code made one of the constructors internal and we aren't catching ExistingType correctly for low level client
-[assembly: CodeGenSuppressType("ConfigurationClientBuilderExtensions")]
+[assembly: CodeGenSuppressType("DataAppConfigurationClientBuilderExtensions")]
 
 namespace Microsoft.Extensions.Azure
 {

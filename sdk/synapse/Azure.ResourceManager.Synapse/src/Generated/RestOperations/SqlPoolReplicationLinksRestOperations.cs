@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Lists a Sql pool&apos;s replication links. </summary>
+        /// <summary> Lists a Sql pool's replication links. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Lists a Sql pool&apos;s replication links. </summary>
+        /// <summary> Lists a Sql pool's replication links. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Lists a Sql pool&apos;s replication links. </summary>
+        /// <summary> Lists a Sql pool's replication links. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Lists a Sql pool&apos;s replication links. </summary>
+        /// <summary> Lists a Sql pool's replication links. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

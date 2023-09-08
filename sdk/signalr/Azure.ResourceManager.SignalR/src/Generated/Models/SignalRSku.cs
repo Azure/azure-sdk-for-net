@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    /// <summary> Describes an available sku.&quot;. </summary>
+    /// <summary> Describes an available sku.". </summary>
     public partial class SignalRSku
     {
         /// <summary> Initializes a new instance of SignalRSku. </summary>

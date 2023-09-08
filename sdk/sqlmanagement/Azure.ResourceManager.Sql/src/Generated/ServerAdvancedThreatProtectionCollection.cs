@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a server&apos;s Advanced Threat Protection state.
+        /// Get a server's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a server&apos;s Advanced Threat Protection state.
+        /// Get a server's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a list of the server&apos;s Advanced Threat Protection states.
+        /// Get a list of the server's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of the server&apos;s Advanced Threat Protection states.
+        /// Get a list of the server's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

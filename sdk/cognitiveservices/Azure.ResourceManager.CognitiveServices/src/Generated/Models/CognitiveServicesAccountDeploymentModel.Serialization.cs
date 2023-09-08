@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
+            }
             writer.WriteEndObject();
         }
 
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> format = default;
             Optional<string> name = default;
             Optional<string> version = default;
+            Optional<string> source = default;
             Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,6 +66,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("source"u8))
+                {
+                    source = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("callRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -70,7 +81,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountDeploymentModel(format.Value, name.Value, version.Value, callRateLimit.Value);
+            return new CognitiveServicesAccountDeploymentModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value);
         }
     }
 }

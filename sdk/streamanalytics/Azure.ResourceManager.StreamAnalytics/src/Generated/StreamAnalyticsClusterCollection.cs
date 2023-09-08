@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="data"> The definition of the cluster that will be used to create a new cluster or replace the existing one. </param>
         /// <param name="ifMatch"> The ETag of the resource. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="data"> The definition of the cluster that will be used to create a new cluster or replace the existing one. </param>
         /// <param name="ifMatch"> The ETag of the resource. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

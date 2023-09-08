@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> The password of the administrator login. </summary>
         public string AdministratorLoginPassword { get; set; }
+        /// <summary> Server version. </summary>
+        public MySqlFlexibleServerVersion? Version { get; set; }
         /// <summary> Storage related properties of a server. </summary>
         public MySqlFlexibleServerStorage Storage { get; set; }
         /// <summary> Backup related properties of a server. </summary>
@@ -40,5 +42,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
         /// <summary> The Data Encryption for CMK. </summary>
         public MySqlFlexibleServerDataEncryption DataEncryption { get; set; }
+        /// <summary> Network related properties of a server. </summary>
+        public MySqlFlexibleServerNetwork Network { get; set; }
     }
 }

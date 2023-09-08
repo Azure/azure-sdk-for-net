@@ -54,5 +54,7 @@ namespace Azure.Communication.CallAutomation
         public GenderType? VoiceGender { get; set; }
         /// <summary> Voice name to be played. </summary>
         public string VoiceName { get; set; }
+        /// <summary> Endpoint where the custom voice was deployed. </summary>
+        public string CustomVoiceEndpointId { get; set; }
     }
 }

@@ -108,6 +108,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
         public async Task GetServiceStatistics()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);

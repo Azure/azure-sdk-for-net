@@ -34,7 +34,7 @@ namespace Azure.AI.AnomalyDetector
         /// be in ISO 8601 format.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public MultivariateBatchDetectionOptions(string dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
+        public MultivariateBatchDetectionOptions(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
             Argument.AssertNotNull(dataSource, nameof(dataSource));
 
@@ -61,7 +61,7 @@ namespace Azure.AI.AnomalyDetector
         /// End date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
-        internal MultivariateBatchDetectionOptions(string dataSource, int? topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime)
+        internal MultivariateBatchDetectionOptions(Uri dataSource, int? topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime)
         {
             DataSource = dataSource;
             TopContributorCount = topContributorCount;
@@ -77,7 +77,7 @@ namespace Azure.AI.AnomalyDetector
         /// contain at least slidingWindow entries preceding the start time of the data
         /// to be detected.
         /// </summary>
-        public string DataSource { get; set; }
+        public Uri DataSource { get; set; }
         /// <summary> Number of top contributed variables for one anomalous time stamp in the response. </summary>
         public int? TopContributorCount { get; set; }
         /// <summary>

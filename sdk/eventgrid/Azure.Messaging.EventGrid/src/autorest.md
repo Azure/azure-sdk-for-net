@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/a7c1c7c33ac4573a426dcecfa8de076993d6d700/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0d41e635294dce73dfa99b07f3da4b68a9c9e29c/specification/eventgrid/data-plane/readme.md
 generation1-convenience-client: true
 model-factory-for-hlc:
 - MediaJobOutputAsset

@@ -226,6 +226,54 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
+        /// Checks the availability of a Traffic Manager Relative DNS name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckTrafficManagerNameAvailabilityV2Async(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks the availability of a Traffic Manager Relative DNS name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckTrafficManagerNameAvailabilityV2(content, cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
         /// <list type="bullet">
         /// <item>

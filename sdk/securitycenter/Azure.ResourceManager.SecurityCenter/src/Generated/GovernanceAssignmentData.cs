@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing the GovernanceAssignment data model.
-    /// Security GovernanceAssignment over a given scope
+    /// Governance assignment over a given scope
     /// </summary>
     public partial class GovernanceAssignmentData : ResourceData
     {

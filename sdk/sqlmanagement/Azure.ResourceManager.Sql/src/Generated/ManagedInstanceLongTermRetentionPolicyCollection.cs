@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Sets a managed database&apos;s long term retention policy.
+        /// Sets a managed database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Sets a managed database&apos;s long term retention policy.
+        /// Sets a managed database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s long term retention policy.
+        /// Gets a managed database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s long term retention policy.
+        /// Gets a managed database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s long term retention policy.
+        /// Gets a database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceLongTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceLongTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceLongTermRetentionPolicyResource(Client, ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(e)), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedInstanceLongTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceLongTermRetentionPolicyResource(Client, ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(e)), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedInstanceLongTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a database&apos;s long term retention policy.
+        /// Gets a database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceLongTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceLongTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceLongTermRetentionPolicyResource(Client, ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(e)), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedInstanceLongTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceLongTermRetentionPolicyResource(Client, ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(e)), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedInstanceLongTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

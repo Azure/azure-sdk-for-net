@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </summary>
+    /// <summary> Gets the reason for restriction. Possible values include: 'QuotaId', 'NotAvailableForSubscription'. </summary>
     public readonly partial struct AppPlatformSkuRestrictionsReasonCode : IEquatable<AppPlatformSkuRestrictionsReasonCode>
     {
         private readonly string _value;

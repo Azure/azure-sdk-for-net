@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="hostName"> The host name of the frontendEndpoint. Must be a domain name. </param>
-        /// <param name="sessionAffinityEnabledState"> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="sessionAffinityEnabledState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
         /// <param name="sessionAffinityTtlInSeconds"> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each host (if applicable). </param>
         /// <param name="resourceState"> Resource status. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary> The host name of the frontendEndpoint. Must be a domain name. </summary>
         public string HostName { get; set; }
-        /// <summary> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </summary>
         public SessionAffinityEnabledState? SessionAffinityEnabledState { get; set; }
         /// <summary> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </summary>
         public int? SessionAffinityTtlInSeconds { get; set; }

@@ -37,16 +37,18 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="extensionType"> The type of the extensions. </param>
         /// <param name="typeHandlerVersion"> The version of script handler. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        internal BatchVmExtension(string name, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, IList<string> provisionAfterExtensions)
+        internal BatchVmExtension(string name, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, IList<string> provisionAfterExtensions)
         {
             Name = name;
             Publisher = publisher;
             ExtensionType = extensionType;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            EnableAutomaticUpgrade = enableAutomaticUpgrade;
             Settings = settings;
             ProtectedSettings = protectedSettings;
             ProvisionAfterExtensions = provisionAfterExtensions;
@@ -62,6 +64,8 @@ namespace Azure.ResourceManager.Batch.Models
         public string TypeHandlerVersion { get; set; }
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
         public bool? AutoUpgradeMinorVersion { get; set; }
+        /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
+        public bool? EnableAutomaticUpgrade { get; set; }
         /// <summary>
         /// JSON formatted public settings for the extension.
         /// <para>
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         public BinaryData Settings { get; set; }
         /// <summary>
-        /// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. 
+        /// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

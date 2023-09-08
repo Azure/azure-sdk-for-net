@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             PlanIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Plan&apos;s context, e.g. subscription ID, tenant ID. </summary>
+        /// <summary> Plan's context, e.g. subscription ID, tenant ID. </summary>
         public string Context { get; set; }
         /// <summary> List of plan IDs. </summary>
         public IList<string> PlanIds { get; }

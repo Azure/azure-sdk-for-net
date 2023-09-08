@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the instance view of the virtual machine. 'UserData' will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the instance view of the virtual machine. 'UserData' will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'UserData' retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VirtualMachineScaleSetResource>> GetAsync(VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'UserData' retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualMachineScaleSetResource> Get(VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
@@ -652,7 +653,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VirtualMachineScaleSetSku.DeserializeVirtualMachineScaleSetSku, _virtualMachineScaleSetClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VirtualMachineScaleSetSku.DeserializeVirtualMachineScaleSetSku, _virtualMachineScaleSetClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -674,7 +675,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VirtualMachineScaleSetSku.DeserializeVirtualMachineScaleSetSku, _virtualMachineScaleSetClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VirtualMachineScaleSetSku.DeserializeVirtualMachineScaleSetSku, _virtualMachineScaleSetClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -696,7 +697,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetRestClient.CreateGetOSUpgradeHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetRestClient.CreateGetOSUpgradeHistoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, UpgradeOperationHistoricalStatusInfo.DeserializeUpgradeOperationHistoricalStatusInfo, _virtualMachineScaleSetClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetOSUpgradeHistory", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, UpgradeOperationHistoricalStatusInfo.DeserializeUpgradeOperationHistoricalStatusInfo, _virtualMachineScaleSetClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetOSUpgradeHistory", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -718,7 +719,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetRestClient.CreateGetOSUpgradeHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetRestClient.CreateGetOSUpgradeHistoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, UpgradeOperationHistoricalStatusInfo.DeserializeUpgradeOperationHistoricalStatusInfo, _virtualMachineScaleSetClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetOSUpgradeHistory", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, UpgradeOperationHistoricalStatusInfo.DeserializeUpgradeOperationHistoricalStatusInfo, _virtualMachineScaleSetClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetOSUpgradeHistory", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1218,7 +1219,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don&apos;t have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state.
+        /// Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don't have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1253,7 +1254,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don&apos;t have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state.
+        /// Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don't have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

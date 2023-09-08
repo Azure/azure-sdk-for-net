@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
     public partial class TrafficManagerHeatMapQueryExperience
     {
         /// <summary> Initializes a new instance of TrafficManagerHeatMapQueryExperience. </summary>
-        /// <param name="endpointId"> The id of the endpoint from the &apos;endpoints&apos; array which these queries were routed to. </param>
+        /// <param name="endpointId"> The id of the endpoint from the 'endpoints' array which these queries were routed to. </param>
         /// <param name="queryCount"> The number of queries originating from this location. </param>
         public TrafficManagerHeatMapQueryExperience(int endpointId, int queryCount)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> Initializes a new instance of TrafficManagerHeatMapQueryExperience. </summary>
-        /// <param name="endpointId"> The id of the endpoint from the &apos;endpoints&apos; array which these queries were routed to. </param>
+        /// <param name="endpointId"> The id of the endpoint from the 'endpoints' array which these queries were routed to. </param>
         /// <param name="queryCount"> The number of queries originating from this location. </param>
         /// <param name="latency"> The latency experienced by queries originating from this location. </param>
         internal TrafficManagerHeatMapQueryExperience(int endpointId, int queryCount, double? latency)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Latency = latency;
         }
 
-        /// <summary> The id of the endpoint from the &apos;endpoints&apos; array which these queries were routed to. </summary>
+        /// <summary> The id of the endpoint from the 'endpoints' array which these queries were routed to. </summary>
         public int EndpointId { get; set; }
         /// <summary> The number of queries originating from this location. </summary>
         public int QueryCount { get; set; }

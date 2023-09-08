@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    internal partial class PostgreSqlFlexibleServerStorage : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerStorage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
+            }
+            if (Optional.IsDefined(AutoGrow))
+            {
+                writer.WritePropertyName("autoGrow"u8);
+                writer.WriteStringValue(AutoGrow.Value.ToString());
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -30,6 +40,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             Optional<int> storageSizeGB = default;
+            Optional<StorageAutoGrow> autoGrow = default;
+            Optional<PostgreSqlManagedDiskPerformanceTier> tier = default;
+            Optional<int> iops = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageSizeGB"u8))
@@ -41,8 +54,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     storageSizeGB = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("autoGrow"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoGrow = new StorageAutoGrow(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tier"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tier = new PostgreSqlManagedDiskPerformanceTier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("iops"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iops = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB));
+            return new PostgreSqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(autoGrow), Optional.ToNullable(tier), Optional.ToNullable(iops));
         }
     }
 }

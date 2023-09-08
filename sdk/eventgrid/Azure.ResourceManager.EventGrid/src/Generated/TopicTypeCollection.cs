@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<TopicTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TopicTypeResource(Client, TopicTypeData.DeserializeTopicTypeData(e)), _topicTypeClientDiagnostics, Pipeline, "TopicTypeCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TopicTypeResource(Client, TopicTypeData.DeserializeTopicTypeData(e)), _topicTypeClientDiagnostics, Pipeline, "TopicTypeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<TopicTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new TopicTypeResource(Client, TopicTypeData.DeserializeTopicTypeData(e)), _topicTypeClientDiagnostics, Pipeline, "TopicTypeCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new TopicTypeResource(Client, TopicTypeData.DeserializeTopicTypeData(e)), _topicTypeClientDiagnostics, Pipeline, "TopicTypeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

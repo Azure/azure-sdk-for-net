@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Partial update of a Dev Box definition resource. </summary>
-    public partial class DevBoxDefinitionPatch : TrackedResourceUpdate
+    public partial class DevBoxDefinitionPatch : DevCenterTrackedResourceUpdate
     {
         /// <summary> Initializes a new instance of DevBoxDefinitionPatch. </summary>
         public DevBoxDefinitionPatch()
@@ -16,10 +16,12 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Image reference information. </summary>
-        public ImageReference ImageReference { get; set; }
+        public DevCenterImageReference ImageReference { get; set; }
         /// <summary> The SKU for Dev Boxes created using this definition. </summary>
         public DevCenterSku Sku { get; set; }
         /// <summary> The storage type used for the Operating System disk of Dev Boxes created using this definition. </summary>
         public string OSStorageType { get; set; }
+        /// <summary> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </summary>
+        public DevCenterHibernateSupport? HibernateSupport { get; set; }
     }
 }

@@ -8,4 +8,7 @@
     <PackageReference Include="Azure.ResourceManager.KeyVault" VersionOverride="1.0.0" />
     <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" VersionOverride="1.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
 </Project>

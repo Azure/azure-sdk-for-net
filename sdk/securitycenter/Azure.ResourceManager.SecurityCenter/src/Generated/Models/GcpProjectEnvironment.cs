@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of GcpProjectEnvironment. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="organizationalData">
-        /// The Gcp project&apos;s organizational data
+        /// The Gcp project's organizational data
         /// Please note <see cref="GcpOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
         /// </param>
-        /// <param name="projectDetails"> The Gcp project&apos;s details. </param>
+        /// <param name="projectDetails"> The Gcp project's details. </param>
         internal GcpProjectEnvironment(EnvironmentType environmentType, GcpOrganizationalInfo organizationalData, GcpProjectDetails projectDetails) : base(environmentType)
         {
             OrganizationalData = organizationalData;
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary>
-        /// The Gcp project&apos;s organizational data
+        /// The Gcp project's organizational data
         /// Please note <see cref="GcpOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
         /// </summary>
         public GcpOrganizationalInfo OrganizationalData { get; set; }
-        /// <summary> The Gcp project&apos;s details. </summary>
+        /// <summary> The Gcp project's details. </summary>
         public GcpProjectDetails ProjectDetails { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="profileName"> The name of the profile which holds the endpoint. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The name of the profile which holds the endpoint. </summary>
         public string ProfileName { get; }
-        /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
         public EnabledState? EnabledState { get; set; }
         /// <summary> Provisioning status. </summary>
         public FrontDoorProvisioningState? ProvisioningState { get; }

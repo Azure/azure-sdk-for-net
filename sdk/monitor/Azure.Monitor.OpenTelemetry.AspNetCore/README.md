@@ -18,13 +18,12 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK and rel
   * [ASP.NET Core Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/) provides automatic tracing for incoming HTTP requests to ASP.NET Core applications.
   * [HTTP Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/) provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient) and [System.Net.HttpWebRequest](https://docs.microsoft.com/dotnet/api/system.net.httpwebrequest).
   * [SQL Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages.
-  * [Application Insights Sampler](https://www.nuget.org/packages/OpenTelemetry.Extensions.AzureMonitor/) provides a sampling that is compatible with Application Insights sampling.
 
 * Metrics
   * [ASP.NET Core Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/) provides automatic collection of common ASP.NET Core metrics.
   * [HTTP Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/) provides automatic collection of HTTP client metrics.
 
-* [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/docs/logs/getting-started/README.md)
+* [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
 
 * [Azure Monitor Exporter](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/) allows sending traces, metrics, and logs data to Azure Monitor.
 
@@ -152,8 +151,10 @@ builder.Services.Configure<SqlClientInstrumentationOptions>(options =>
 When using the Azure Monitor Distro, the sampling percentage for telemetry data is set to 100% (1.0F) by default. For example, let's say you want to set the sampling percentage to 50%. You can achieve this by modifying the code as follows:
 
 ``` C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.Configure<ApplicationInsightsSamplerOptions>(options => { options.SamplingRatio = 0.5F; });
+builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
+{
+    o.SamplingRatio = 0.5F;
+});
 ```
 
 #### Adding Custom ActivitySource to Traces
@@ -178,6 +179,24 @@ If you need to instrument a library or framework that isn't included in the Azur
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
 builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddGrpcClientInstrumentation());
 ```
+
+#### Enable Azure SDK Instrumentation
+
+Azure SDK instrumentation is supported under the experimental feature flag which can be enabled using one of the following ways:
+
+* Set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true`.
+
+* Set the Azure.Experimental.EnableActivitySource context switch to true in your app’s code:
+    ```csharp
+    AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+    ```
+
+* Add the RuntimeHostConfigurationOption setting to your project file:
+    ```csharp
+    <ItemGroup>
+        <RuntimeHostConfigurationOption Include="Azure.Experimental.EnableActivitySource" Value="true" />
+    </ItemGroup>
+    ```
 
 #### Adding Another Exporter
 
@@ -204,7 +223,6 @@ environmental variables:
 | -------------------------- | -------------------------------------------------- |
 | `OTEL_RESOURCE_ATTRIBUTES` | Key-value pairs to be used as resource attributes. See the [Resource SDK specification](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.5.0/specification/resource/sdk.md#specifying-resource-information-via-an-environment-variable) for more details. |
 | `OTEL_SERVICE_NAME`        | Sets the value of the `service.name` resource attribute. If `service.name` is also provided in `OTEL_RESOURCE_ATTRIBUTES`, then `OTEL_SERVICE_NAME` takes precedence. |
-
 
 ## Key concepts
 

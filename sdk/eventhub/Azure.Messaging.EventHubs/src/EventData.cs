@@ -523,7 +523,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="amqpMessage">The <see cref="AmqpAnnotatedMessage" /> on which to base the event.</param>
         ///
-        internal EventData(AmqpAnnotatedMessage amqpMessage)
+        public EventData(AmqpAnnotatedMessage amqpMessage)
         {
             _amqpMessage = amqpMessage;
         }

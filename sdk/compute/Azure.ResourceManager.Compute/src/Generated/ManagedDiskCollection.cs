@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="data"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="data"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDiskDisksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDiskDisksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDiskDisksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDiskDisksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>

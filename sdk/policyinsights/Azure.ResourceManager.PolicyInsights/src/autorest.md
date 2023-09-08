@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: PolicyInsights
 namespace: Azure.ResourceManager.PolicyInsights
@@ -69,7 +68,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'locations': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -141,6 +140,15 @@ rename-mapping:
   RemediationDeployment.resourceLocation: -|azure-location
   TrackedResourceModificationDetails.deploymentId: -|arm-id
   PolicyTrackedResourcesResourceType: PolicyTrackedResourceType
+
+models-to-treat-empty-string-as-null:
+  - PolicyAssignmentSummary
+  - PolicyDetails
+  - PolicyEvent
+  - PolicyReference
+  - PolicyState
+  - PolicyMetadataData
+  - SlimPolicyMetadata
 
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.

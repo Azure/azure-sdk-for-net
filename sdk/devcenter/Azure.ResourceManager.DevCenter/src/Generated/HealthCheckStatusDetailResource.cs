@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter
     /// A Class representing a HealthCheckStatusDetail along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthCheckStatusDetailResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetHealthCheckStatusDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkConnectionResource" /> using the GetHealthCheckStatusDetail method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterNetworkConnectionResource" /> using the GetHealthCheckStatusDetail method.
     /// </summary>
     public partial class HealthCheckStatusDetailResource : ArmResource
     {

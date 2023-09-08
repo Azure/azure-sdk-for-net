@@ -5,7 +5,6 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 title: communication
 namespace: Azure.ResourceManager.Communication
 # default tag is a preview version
@@ -30,7 +29,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

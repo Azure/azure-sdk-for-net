@@ -138,7 +138,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetByGuidsAsync(IEnumerable{string},bool?,bool?,IEnumerable{string},RequestContext)']/*" />
-        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestContext context = null)
+        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo, bool? ignoreRelationships, IEnumerable<string> excludeRelationshipTypes, RequestContext context)
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetByGuids(IEnumerable{string},bool?,bool?,IEnumerable{string},RequestContext)']/*" />
-        public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestContext context = null)
+        public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo, bool? ignoreRelationships, IEnumerable<string> excludeRelationshipTypes, RequestContext context)
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
@@ -281,7 +281,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteByGuidsAsync(IEnumerable{string},RequestContext)']/*" />
-        public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestContext context = null)
+        public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestContext context)
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
@@ -315,7 +315,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteByGuids(IEnumerable{string},RequestContext)']/*" />
-        public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestContext context = null)
+        public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestContext context)
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
@@ -420,7 +420,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetByGuidAsync(string,bool?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestContext context = null)
+        public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -457,7 +457,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetByGuid(string,bool?,bool?,RequestContext)']/*" />
-        public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestContext context = null)
+        public virtual Response GetByGuid(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -576,7 +576,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteByGuidAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> DeleteByGuidAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -611,7 +611,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteByGuid(string,RequestContext)']/*" />
-        public virtual Response DeleteByGuid(string guid, RequestContext context = null)
+        public virtual Response DeleteByGuid(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -647,7 +647,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetClassificationAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestContext context = null)
+        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
@@ -684,7 +684,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetClassification(string,string,RequestContext)']/*" />
-        public virtual Response GetClassification(string guid, string classificationName, RequestContext context = null)
+        public virtual Response GetClassification(string guid, string classificationName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
@@ -794,7 +794,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetClassificationsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -829,7 +829,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetClassifications(string,RequestContext)']/*" />
-        public virtual Response GetClassifications(string guid, RequestContext context = null)
+        public virtual Response GetClassifications(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -998,7 +998,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary>
         /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -1020,7 +1020,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetByUniqueAttributesAsync(string,bool?,bool?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestContext context = null)
+        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrQualifiedName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -1041,7 +1041,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary>
         /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -1063,7 +1063,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetByUniqueAttributes(string,bool?,bool?,string,RequestContext)']/*" />
-        public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestContext context = null)
+        public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrQualifiedName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -1194,7 +1194,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteByUniqueAttributeAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName = null, RequestContext context = null)
+        public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attrQualifiedName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -1235,7 +1235,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='DeleteByUniqueAttribute(string,string,RequestContext)']/*" />
-        public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName = null, RequestContext context = null)
+        public virtual Response DeleteByUniqueAttribute(string typeName, string attrQualifiedName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -1551,15 +1551,15 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary>
         /// [Protocol Method] Bulk API to retrieve list of entities identified by its unique attributes.
-        /// 
+        ///
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
-        /// 
+        ///
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// 
+        ///
         /// NOTE: The attrName should be an unique attribute for the given entity-type
-        /// 
+        ///
         /// The REST request would look something like this
-        /// 
+        ///
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// <list type="bullet">
         /// <item>
@@ -1579,7 +1579,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetEntitiesByUniqueAttributesAsync(string,bool?,bool?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestContext context = null)
+        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -1599,15 +1599,15 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary>
         /// [Protocol Method] Bulk API to retrieve list of entities identified by its unique attributes.
-        /// 
+        ///
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
-        /// 
+        ///
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// 
+        ///
         /// NOTE: The attrName should be an unique attribute for the given entity-type
-        /// 
+        ///
         /// The REST request would look something like this
-        /// 
+        ///
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// <list type="bullet">
         /// <item>
@@ -1627,7 +1627,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetEntitiesByUniqueAttributes(string,bool?,bool?,string,RequestContext)']/*" />
-        public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestContext context = null)
+        public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
@@ -1662,7 +1662,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetHeaderAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetHeaderAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetHeaderAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -1697,7 +1697,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetHeader(string,RequestContext)']/*" />
-        public virtual Response GetHeader(string guid, RequestContext context = null)
+        public virtual Response GetHeader(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -2027,7 +2027,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetSampleBusinessMetadataTemplateAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetSampleBusinessMetadataTemplateAsync(RequestContext context = null)
+        public virtual async Task<Response> GetSampleBusinessMetadataTemplateAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetSampleBusinessMetadataTemplate");
             scope.Start();
@@ -2057,7 +2057,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewEntities.xml" path="doc/members/member[@name='GetSampleBusinessMetadataTemplate(RequestContext)']/*" />
-        public virtual Response GetSampleBusinessMetadataTemplate(RequestContext context = null)
+        public virtual Response GetSampleBusinessMetadataTemplate(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetSampleBusinessMetadataTemplate");
             scope.Start();
@@ -2352,7 +2352,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. 
+        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -2389,7 +2389,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. 
+        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
         /// <description>

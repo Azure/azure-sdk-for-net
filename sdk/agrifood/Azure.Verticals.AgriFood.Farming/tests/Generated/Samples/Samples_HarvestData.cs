@@ -26,7 +26,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -65,7 +65,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -104,7 +104,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            Response response = client.GetHarvestData("<partyId>", "<harvestDataId>");
+            Response response = client.GetHarvestData("<partyId>", "<harvestDataId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -173,7 +173,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            Response response = await client.GetHarvestDataAsync("<partyId>", "<harvestDataId>");
+            Response response = await client.GetHarvestDataAsync("<partyId>", "<harvestDataId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -292,6 +292,30 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 harvestProductDetails = new[] {
         new {
             productName = "<productName>",
+            area = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalYield = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgYield = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgMoisture = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalWetMass = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgWetMass = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
         }
     },
                 area = new
@@ -313,7 +337,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<harvestDataId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<harvestDataId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
@@ -419,6 +443,30 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 harvestProductDetails = new[] {
         new {
             productName = "<productName>",
+            area = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalYield = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgYield = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgMoisture = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalWetMass = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgWetMass = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
         }
     },
                 area = new
@@ -440,7 +488,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<harvestDataId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<harvestDataId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
@@ -507,7 +555,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<harvestDataId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<harvestDataId>");
             Console.WriteLine(response.Status);
         }
 
@@ -529,7 +577,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<harvestDataId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<harvestDataId>");
             Console.WriteLine(response.Status);
         }
 
@@ -540,7 +588,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            foreach (var item in client.GetAllHarvestData())
+            foreach (var item in client.GetAllHarvestData(3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<harvestDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -611,7 +659,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetAllHarvestDataAsync())
+            await foreach (var item in client.GetAllHarvestDataAsync(3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<harvestDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -682,7 +730,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            foreach (var item in client.GetAllHarvestDataByPartyId("<partyId>"))
+            foreach (var item in client.GetAllHarvestDataByPartyId("<partyId>", 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -753,7 +801,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetAllHarvestDataByPartyIdAsync("<partyId>"))
+            await foreach (var item in client.GetAllHarvestDataByPartyIdAsync("<partyId>", 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -824,7 +872,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>");
+            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -865,7 +913,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>");
+            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

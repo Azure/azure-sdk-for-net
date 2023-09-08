@@ -1,6 +1,6 @@
 # Release History
 
-## 11.5.0-beta.3 (Unreleased)
+## 11.5.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.5.0-beta.4 (2023-08-07)
+
+### Features Added
+- Added the ability to perform multiple vectors query searches.
+- Added support for vector queries over multiple fields.
+
+## 11.5.0-beta.3 (2023-07-11)
+
+### Features Added
+- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
+
+### Bugs Fixed
+- Fixed issue with `QueryCaptionsType.None` in semantic search, resolving an invalid response to the service ([#37164](https://github.com/Azure/azure-sdk-for-net/issues/37164)).
 
 ## 11.5.0-beta.2 (2022-10-11)
 

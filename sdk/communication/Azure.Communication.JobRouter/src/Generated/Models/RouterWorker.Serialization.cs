@@ -102,8 +102,8 @@ namespace Azure.Communication.JobRouter.Models
             Optional<IDictionary<string, object>> labels = default;
             Optional<IDictionary<string, object>> tags = default;
             Optional<IDictionary<string, ChannelConfiguration>> channelConfigurations = default;
-            Optional<IReadOnlyList<JobOffer>> offers = default;
-            Optional<IReadOnlyList<WorkerAssignment>> assignedJobs = default;
+            Optional<IReadOnlyList<RouterJobOffer>> offers = default;
+            Optional<IReadOnlyList<RouterWorkerAssignment>> assignedJobs = default;
             Optional<double> loadRatio = default;
             Optional<bool> availableForOffers = default;
             foreach (var property in element.EnumerateObject())
@@ -214,10 +214,10 @@ namespace Azure.Communication.JobRouter.Models
                     {
                         continue;
                     }
-                    List<JobOffer> array = new List<JobOffer>();
+                    List<RouterJobOffer> array = new List<RouterJobOffer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobOffer.DeserializeJobOffer(item));
+                        array.Add(RouterJobOffer.DeserializeRouterJobOffer(item));
                     }
                     offers = array;
                     continue;
@@ -228,10 +228,10 @@ namespace Azure.Communication.JobRouter.Models
                     {
                         continue;
                     }
-                    List<WorkerAssignment> array = new List<WorkerAssignment>();
+                    List<RouterWorkerAssignment> array = new List<RouterWorkerAssignment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerAssignment.DeserializeWorkerAssignment(item));
+                        array.Add(RouterWorkerAssignment.DeserializeRouterWorkerAssignment(item));
                     }
                     assignedJobs = array;
                     continue;

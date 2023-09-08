@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="state"> State of the task (Active, Resolved etc.). </param>
         /// <param name="createdOn"> The time this task was discovered in UTC. </param>
         /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
-        /// <param name="lastStateChangedOn"> The time this task&apos;s details were last changed in UTC. </param>
+        /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
         internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string state, DateTimeOffset? createdOn, SecurityTaskProperties securityTaskParameters, DateTimeOffset? lastStateChangedOn, string subState) : base(id, name, resourceType, systemData)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
         public SecurityTaskProperties SecurityTaskParameters { get; set; }
-        /// <summary> The time this task&apos;s details were last changed in UTC. </summary>
+        /// <summary> The time this task's details were last changed in UTC. </summary>
         public DateTimeOffset? LastStateChangedOn { get; }
         /// <summary> Additional data on the state of the task. </summary>
         public string SubState { get; }

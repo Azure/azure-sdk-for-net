@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of ReservationPropertiesUtilization. </summary>
         /// <param name="trend"> last 7 day utilization trend for a reservation. </param>
-        /// <param name="aggregates"> The array of aggregates of a reservation&apos;s utilization. </param>
+        /// <param name="aggregates"> The array of aggregates of a reservation's utilization. </param>
         internal ReservationPropertiesUtilization(string trend, IReadOnlyList<ReservationUtilizationAggregates> aggregates)
         {
             Trend = trend;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> last 7 day utilization trend for a reservation. </summary>
         public string Trend { get; }
-        /// <summary> The array of aggregates of a reservation&apos;s utilization. </summary>
+        /// <summary> The array of aggregates of a reservation's utilization. </summary>
         public IReadOnlyList<ReservationUtilizationAggregates> Aggregates { get; }
     }
 }

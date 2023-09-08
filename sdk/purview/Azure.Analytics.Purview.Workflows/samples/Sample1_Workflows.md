@@ -34,6 +34,6 @@ Response createResult = await client.CreateOrReplaceWorkflowAsync(workflowId, Re
 // This workflowId represents an existing workflow. The id can be obtained by calling CreateOrReplaceWorkflowAsync API or list workflows by calling GetWorkflowsAsync API.
 Guid workflowId = new Guid("8af1ecae-16ee-4b2d-8972-00d611dd2f99");
 
-Response getResult = await client.GetWorkflowAsync(workflowId);
+Response getResult = await client.GetWorkflowAsync(workflowId, new());
 ```
 

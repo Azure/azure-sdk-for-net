@@ -11,7 +11,7 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Managed instance&apos;s Start/Stop schedule list result. </summary>
+    /// <summary> Managed instance's Start/Stop schedule list result. </summary>
     internal partial class StartStopManagedInstanceScheduleListResult
     {
         /// <summary> Initializes a new instance of StartStopManagedInstanceScheduleListResult. </summary>

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="deviceVersionNumber"> The current version of the device in format: 1.2.17312.13.&quot;,. </param>
+        /// <param name="deviceVersionNumber"> The current version of the device in format: 1.2.17312.13.",. </param>
         /// <param name="friendlyDeviceVersionName"> The current version of the device in text format. </param>
         /// <param name="deviceLastScannedOn"> The last time when a scan was done on the device. </param>
         /// <param name="lastCompletedScanJobOn"> The time when the last scan job was completed (success/cancelled/failed) on the appliance. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             TotalTimeInMinutes = totalTimeInMinutes;
         }
 
-        /// <summary> The current version of the device in format: 1.2.17312.13.&quot;,. </summary>
+        /// <summary> The current version of the device in format: 1.2.17312.13.",. </summary>
         public string DeviceVersionNumber { get; set; }
         /// <summary> The current version of the device in text format. </summary>
         public string FriendlyDeviceVersionName { get; set; }

@@ -1967,6 +1967,25 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
+        #region NetworkVirtualApplianceConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkVirtualApplianceConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkVirtualApplianceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkVirtualApplianceConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkVirtualApplianceConnectionResource" /> object. </returns>
+        public static NetworkVirtualApplianceConnectionResource GetNetworkVirtualApplianceConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                NetworkVirtualApplianceConnectionResource.ValidateResourceId(id);
+                return new NetworkVirtualApplianceConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region BgpConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="BgpConnectionResource" /> along with the instance operations that can be performed on it but with no data.

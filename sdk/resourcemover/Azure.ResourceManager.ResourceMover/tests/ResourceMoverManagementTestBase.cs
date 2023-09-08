@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         protected ResourceMoverManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         protected ResourceMoverManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         [SetUp]
@@ -54,32 +56,21 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         protected async Task<VirtualNetworkResource> CreareVirtualNetwork(ResourceGroupResource rg, string vnetName)
         {
-            if (Mode == RecordedTestMode.Playback)
+            VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
             {
-                var vnetId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName);
-                return Client.GetVirtualNetworkResource(vnetId);
-            }
-            else
-            {
-                using (Recording.DisableRecording())
+                Location = AzureLocation.EastUS,
+                Subnets =
                 {
-                    VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
+                    new SubnetData()
                     {
-                        Location = AzureLocation.EastUS,
-                        Subnets =
-                        {
-                            new SubnetData()
-                            {
-                                Name = Recording.GenerateAssetName("Subnet-"),
-                                AddressPrefix = "10.0.0.0/24"
-                            }
-                        },
-                        AddressPrefixes = { "10.0.0.0/16" }
-                    };
-                    var lro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
-                    return lro.Value;
-                }
-            }
+                        Name = Recording.GenerateAssetName("Subnet-"),
+                        AddressPrefix = "10.0.0.0/24"
+                    }
+                },
+                AddressPrefixes = { "10.0.0.0/16" }
+            };
+            var lro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
+            return lro.Value;
         }
 
         protected async Task<MoverResource> CreateMoverResource(MoverResourceSetResource moverResourceSet, ResourceIdentifier vnetId, string moverResourceName, string targetVnetName)

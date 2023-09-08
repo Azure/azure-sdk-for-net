@@ -25,10 +25,12 @@ namespace Azure.AI.OpenAI.Samples
         {
             var client = new OpenAIClient("<openAIApiKey>");
 
-            var embeddingsOptions = new EmbeddingsOptions("<input>")
+            var embeddingsOptions = new EmbeddingsOptions(new string[]
+            {
+    "<null>"
+            })
             {
                 User = "<User>",
-                InputType = "<InputType>",
             };
             var result = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
         }
@@ -39,19 +41,14 @@ namespace Azure.AI.OpenAI.Samples
         {
             var client = new OpenAIClient("<openAIApiKey>");
 
-            var completionsOptions = new CompletionsOptions()
+            var completionsOptions = new CompletionsOptions(new string[]
             {
-                Prompts =
-{
-        "<null>"
-    },
+    "<null>"
+            })
+            {
                 MaxTokens = 1234,
                 Temperature = 3.14f,
                 NucleusSamplingFactor = 3.14f,
-                TokenSelectionBiases =
-{
-        [0] = 1234,
-    },
                 User = "<User>",
                 ChoicesPerPrompt = 1234,
                 LogProbabilityCount = 1234,

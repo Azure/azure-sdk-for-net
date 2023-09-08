@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownWebLinkedServiceTypeProperties : WebLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of UnknownWebLinkedServiceTypeProperties. </summary>
-        /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
-        internal UnknownWebLinkedServiceTypeProperties(BinaryData uri, WebAuthenticationType authenticationType) : base(uri, authenticationType)
+        internal UnknownWebLinkedServiceTypeProperties(DataFactoryElement<string> uri, WebAuthenticationType authenticationType) : base(uri, authenticationType)
         {
             AuthenticationType = authenticationType;
         }

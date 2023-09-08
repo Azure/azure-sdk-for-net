@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="name"> Name of the step. </param>
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
-        /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: &apos;Success&apos;, &apos;Error&apos;, &apos;InProgress&apos;, and &apos;Unknown status&apos;. </param>
+        /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
         /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
         /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
         public string Description { get; set; }
         /// <summary> Error message, specified if the step is in a failed state. </summary>
         public string ErrorMessage { get; set; }
-        /// <summary> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: &apos;Success&apos;, &apos;Error&apos;, &apos;InProgress&apos;, and &apos;Unknown status&apos;. </summary>
+        /// <summary> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </summary>
         public string Status { get; set; }
         /// <summary> When the step started, or empty if it has not started executing. </summary>
         public DateTimeOffset? StartTimeUtc { get; set; }

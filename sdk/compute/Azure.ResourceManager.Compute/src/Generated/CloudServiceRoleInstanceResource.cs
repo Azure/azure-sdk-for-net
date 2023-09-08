@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CloudServiceRoleInstanceResource>> GetAsync(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CloudServiceRoleInstanceResource> Get(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {

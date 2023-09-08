@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraphAsync(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
+        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(direction, nameof(direction));
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraph(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
-        public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
+        public virtual Response GetLineageGraph(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(direction, nameof(direction));
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -152,7 +152,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineageAsync(string,string,bool?,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
+        public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(direction, nameof(direction));
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineage(string,string,bool?,int?,int?,RequestContext)']/*" />
-        public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
+        public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(direction, nameof(direction));
@@ -213,11 +213,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary>
         /// [Protocol Method] Returns lineage info about entity.
-        /// 
+        ///
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
-        /// 
+        ///
         /// attr:[attrName]=[attrValue]
-        /// 
+        ///
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName
         /// <list type="bullet">
         /// <item>
@@ -228,7 +228,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
@@ -239,7 +239,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttributeAsync(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetLineageByUniqueAttributeAsync(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
+        public virtual async Task<Response> GetLineageByUniqueAttributeAsync(string typeName, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(direction, nameof(direction));
@@ -260,11 +260,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary>
         /// [Protocol Method] Returns lineage info about entity.
-        /// 
+        ///
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
-        /// 
+        ///
         /// attr:[attrName]=[attrValue]
-        /// 
+        ///
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName
         /// <list type="bullet">
         /// <item>
@@ -275,7 +275,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
@@ -286,7 +286,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttribute(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
-        public virtual Response GetLineageByUniqueAttribute(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
+        public virtual Response GetLineageByUniqueAttribute(string typeName, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(direction, nameof(direction));

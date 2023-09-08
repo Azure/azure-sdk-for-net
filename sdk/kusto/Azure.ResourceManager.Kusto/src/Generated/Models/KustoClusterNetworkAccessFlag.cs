@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct KustoClusterNetworkAccessFlag : IEquatable<KustoClusterNetworkAccessFlag>
     {
         private readonly string _value;

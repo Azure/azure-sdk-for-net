@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="data"/> is null. </exception>
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="data"/> is null. </exception>
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.Dns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsZoneZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Dns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsZoneZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

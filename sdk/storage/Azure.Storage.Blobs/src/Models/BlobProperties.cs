@@ -208,7 +208,7 @@ namespace Azure.Storage.Blobs.Models
         /// For a list of allowed premium page blob tiers, see
         /// <see href="https://docs.microsoft.com/azure/virtual-machines/windows/premium-storage#features" />. For general
         /// purpose v2 and blob storage account types, the valid values are:
-        /// <list>
+        /// <list type="bullet">
         ///  <item><description>Hot</description></item>
         ///  <item><description>Cool</description></item>
         ///  <item><description>Archive</description></item>

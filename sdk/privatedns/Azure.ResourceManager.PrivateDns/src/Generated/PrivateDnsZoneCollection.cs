@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The ETag of the Private DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new Private DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new Private DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> or <paramref name="data"/> is null. </exception>
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The ETag of the Private DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new Private DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new Private DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> or <paramref name="data"/> is null. </exception>
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, "PrivateDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, "PrivateDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, "PrivateDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, "PrivateDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

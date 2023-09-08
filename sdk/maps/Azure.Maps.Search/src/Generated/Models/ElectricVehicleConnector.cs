@@ -36,13 +36,13 @@ namespace Azure.Maps.Search
 
         /// <summary>
         /// These are the standard household connectors for a certain region. They are all AC single phase and the standard Voltage and standard Amperage.
-        /// 
+        ///
         /// See also: [Plug &amp; socket types - World Standards](https://www.worldstandards.eu/electricity/plugs-and-sockets)
         /// </summary>
         public static ElectricVehicleConnector StandardHouseholdCountrySpecific { get; } = new ElectricVehicleConnector(StandardHouseholdCountrySpecificValue);
-        /// <summary> CHAdeMO connector named after an association formed by the Tokyo Electric Power Company and industrial partners. Because of this is is also known as the TEPCO&apos;s connector. It supports fast DC charging. </summary>
+        /// <summary> CHAdeMO connector named after an association formed by the Tokyo Electric Power Company and industrial partners. Because of this is is also known as the TEPCO's connector. It supports fast DC charging. </summary>
         public static ElectricVehicleConnector Chademo { get; } = new ElectricVehicleConnector(ChademoValue);
-        /// <summary> The Tesla connector is the regionally specific Tesla Supercharger connector. I.e. it refers to either Tesla&apos;s proprietary connector, sometimes referred to as Tesla Port mostly limited to North America or the modified Type 2 (DC over Type 2) in Europe. </summary>
+        /// <summary> The Tesla connector is the regionally specific Tesla Supercharger connector. I.e. it refers to either Tesla's proprietary connector, sometimes referred to as Tesla Port mostly limited to North America or the modified Type 2 (DC over Type 2) in Europe. </summary>
         public static ElectricVehicleConnector Tesla { get; } = new ElectricVehicleConnector(TeslaValue);
         /// <summary> Determines if two <see cref="ElectricVehicleConnector"/> values are the same. </summary>
         public static bool operator ==(ElectricVehicleConnector left, ElectricVehicleConnector right) => left.Equals(right);

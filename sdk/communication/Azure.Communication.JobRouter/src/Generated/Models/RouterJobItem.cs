@@ -16,17 +16,15 @@ namespace Azure.Communication.JobRouter.Models
         }
 
         /// <summary> Initializes a new instance of RouterJobItem. </summary>
-        /// <param name="routerJob"> A unit of work to be routed. </param>
+        /// <param name="job"> A unit of work to be routed. </param>
         /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        internal RouterJobItem(RouterJob routerJob, string etag)
+        internal RouterJobItem(RouterJob job, string etag)
         {
-            RouterJob = routerJob;
-            Etag = etag;
+            Job = job;
+            _etag = etag;
         }
 
         /// <summary> A unit of work to be routed. </summary>
-        public RouterJob RouterJob { get; }
-        /// <summary> (Optional) The Concurrency Token. </summary>
-        public string Etag { get; }
+        public RouterJob Job { get; }
     }
 }

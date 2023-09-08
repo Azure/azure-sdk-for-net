@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="mediaSubscriptionId"> SubscriptionId for media streaming. </param>
         /// <param name="sourceCallerIdNumber">
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
         /// </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
@@ -63,7 +63,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> SubscriptionId for media streaming. </summary>
         public string MediaSubscriptionId { get; }
         /// <summary>
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
         /// </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; }

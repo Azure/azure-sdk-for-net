@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="accountInfo"> NewRelic Account Information. </param>
         /// <param name="organizationInfo"> NewRelic Organization Information. </param>
         /// <param name="singleSignOnProperties"> date when plan was applied. </param>
-        internal NewRelicAccountProperties(string userId, AccountInfo accountInfo, OrganizationInfo organizationInfo, NewRelicSingleSignOnProperties singleSignOnProperties)
+        internal NewRelicAccountProperties(string userId, NewRelicObservabilityAccountInfo accountInfo, NewRelicObservabilityOrganizationInfo organizationInfo, NewRelicSingleSignOnProperties singleSignOnProperties)
         {
             UserId = userId;
             AccountInfo = accountInfo;
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> User id. </summary>
         public string UserId { get; set; }
         /// <summary> NewRelic Account Information. </summary>
-        public AccountInfo AccountInfo { get; set; }
+        public NewRelicObservabilityAccountInfo AccountInfo { get; set; }
         /// <summary> NewRelic Organization Information. </summary>
-        internal OrganizationInfo OrganizationInfo { get; set; }
+        internal NewRelicObservabilityOrganizationInfo OrganizationInfo { get; set; }
         /// <summary> Organization id. </summary>
         public string OrganizationId
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             set
             {
                 if (OrganizationInfo is null)
-                    OrganizationInfo = new OrganizationInfo();
+                    OrganizationInfo = new NewRelicObservabilityOrganizationInfo();
                 OrganizationInfo.OrganizationId = value;
             }
         }

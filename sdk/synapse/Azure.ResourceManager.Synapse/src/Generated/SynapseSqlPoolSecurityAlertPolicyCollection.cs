@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create or update a Sql pool&apos;s security alert policy.
+        /// Create or update a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create or update a Sql pool&apos;s security alert policy.
+        /// Create or update a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s security alert policy.
+        /// Get a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s security alert policy.
+        /// Get a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a list of Sql pool&apos;s security alert policies.
+        /// Get a list of Sql pool's security alert policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSecurityAlertPolicyResource(Client, SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(e)), _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics, Pipeline, "SynapseSqlPoolSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSecurityAlertPolicyResource(Client, SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(e)), _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics, Pipeline, "SynapseSqlPoolSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of Sql pool&apos;s security alert policies.
+        /// Get a list of Sql pool's security alert policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSecurityAlertPolicyResource(Client, SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(e)), _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics, Pipeline, "SynapseSqlPoolSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSecurityAlertPolicyResource(Client, SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(e)), _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics, Pipeline, "SynapseSqlPoolSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

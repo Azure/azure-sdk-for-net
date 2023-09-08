@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteRecommendationResource>> GetAsync(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteRecommendationResource> Get(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {

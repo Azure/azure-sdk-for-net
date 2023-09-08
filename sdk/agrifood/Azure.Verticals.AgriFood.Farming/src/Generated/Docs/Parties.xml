@@ -78,7 +78,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<partyId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -124,7 +124,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<partyId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<partyId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -148,7 +148,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>", new RequestContext());
+Response response = await client.DeleteAsync("<partyId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -160,7 +160,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>", new RequestContext());
+Response response = client.Delete("<partyId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -217,18 +217,7 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
     </member>
     <member name="GetPartiesAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetPartiesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
-
-await foreach (var item in client.GetPartiesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetPartiesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetPartiesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
@@ -253,18 +242,7 @@ await foreach (var item in client.GetPartiesAsync(new String[]{"<ids>"}, new Str
     </member>
     <member name="GetParties(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetParties and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");
-
-foreach (var item in client.GetParties())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetParties with all parameters, and how to parse the result.
+This sample shows how to call GetParties with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPartiesClient("2022-11-01-preview");

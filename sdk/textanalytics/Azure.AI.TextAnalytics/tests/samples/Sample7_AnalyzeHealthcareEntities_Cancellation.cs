@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 batchedDocuments.Add(document);
             }
 
-            AnalyzeHealthcareEntitiesOperation operation = client.StartAnalyzeHealthcareEntities(batchedDocuments, "en");
+            AnalyzeHealthcareEntitiesOperation operation = client.AnalyzeHealthcareEntities(WaitUntil.Started, batchedDocuments, "en");
 
             operation.Cancel();
         }

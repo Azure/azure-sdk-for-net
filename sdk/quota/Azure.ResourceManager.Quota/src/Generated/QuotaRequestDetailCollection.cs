@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -130,13 +131,13 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="filter">
-        /// | Field                    | Supported operators  
+        /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
+        ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
         ///  |provisioningState eq {QuotaRequestState}
         ///  |resourceName eq {resourceName}
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListRequest(Id, filter, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id, filter, top, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -163,13 +164,13 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="filter">
-        /// | Field                    | Supported operators  
+        /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
+        ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
         ///  |provisioningState eq {QuotaRequestState}
         ///  |resourceName eq {resourceName}
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListRequest(Id, filter, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id, filter, top, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

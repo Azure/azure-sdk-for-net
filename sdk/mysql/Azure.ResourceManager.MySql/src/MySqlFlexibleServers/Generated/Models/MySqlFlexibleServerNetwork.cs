@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerNetwork. </summary>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is &apos;Disabled&apos; when server has VNet integration. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is 'Disabled' when server has VNet integration. </param>
         /// <param name="delegatedSubnetResourceId"> Delegated subnet resource id used to setup vnet for a server. </param>
         /// <param name="privateDnsZoneResourceId"> Private DNS zone resource id. </param>
         internal MySqlFlexibleServerNetwork(MySqlFlexibleServerEnableStatusEnum? publicNetworkAccess, ResourceIdentifier delegatedSubnetResourceId, ResourceIdentifier privateDnsZoneResourceId)
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             PrivateDnsZoneResourceId = privateDnsZoneResourceId;
         }
 
-        /// <summary> Whether or not public network access is allowed for this server. Value is &apos;Disabled&apos; when server has VNet integration. </summary>
-        public MySqlFlexibleServerEnableStatusEnum? PublicNetworkAccess { get; }
+        /// <summary> Whether or not public network access is allowed for this server. Value is 'Disabled' when server has VNet integration. </summary>
+        public MySqlFlexibleServerEnableStatusEnum? PublicNetworkAccess { get; set; }
         /// <summary> Delegated subnet resource id used to setup vnet for a server. </summary>
         public ResourceIdentifier DelegatedSubnetResourceId { get; set; }
         /// <summary> Private DNS zone resource id. </summary>

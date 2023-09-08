@@ -17,9 +17,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of LinkConnectionLandingZone. </summary>
         /// <param name="linkedService"> Linked service reference. </param>
-        /// <param name="fileSystem"> Landing zone&apos;s file system name. </param>
-        /// <param name="folderPath"> Landing zone&apos;s folder path name. </param>
-        /// <param name="sasToken"> Landing zone&apos;s sas token. </param>
+        /// <param name="fileSystem"> Landing zone's file system name. </param>
+        /// <param name="folderPath"> Landing zone's folder path name. </param>
+        /// <param name="sasToken"> Landing zone's sas token. </param>
         internal LinkConnectionLandingZone(LinkedServiceReference linkedService, string fileSystem, string folderPath, SecureString sasToken)
         {
             LinkedService = linkedService;
@@ -30,11 +30,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Linked service reference. </summary>
         public LinkedServiceReference LinkedService { get; set; }
-        /// <summary> Landing zone&apos;s file system name. </summary>
+        /// <summary> Landing zone's file system name. </summary>
         public string FileSystem { get; set; }
-        /// <summary> Landing zone&apos;s folder path name. </summary>
+        /// <summary> Landing zone's folder path name. </summary>
         public string FolderPath { get; set; }
-        /// <summary> Landing zone&apos;s sas token. </summary>
+        /// <summary> Landing zone's sas token. </summary>
         public SecureString SasToken { get; set; }
     }
 }

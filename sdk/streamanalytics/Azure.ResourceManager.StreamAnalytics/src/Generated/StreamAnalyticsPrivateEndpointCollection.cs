@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="data"> The definition of the private endpoint that will be used to create a new cluster or replace the existing one. </param>
         /// <param name="ifMatch"> The ETag of the resource. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="data"/> is null. </exception>
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="data"> The definition of the private endpoint that will be used to create a new cluster or replace the existing one. </param>
         /// <param name="ifMatch"> The ETag of the resource. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing record set. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="data"/> is null. </exception>
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

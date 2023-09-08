@@ -525,8 +525,25 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal DeviceRegistryOperationWarning() { }
         public string DeviceId { get { throw null; } }
-        public string WarningCode { get { throw null; } }
+        public Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode? WarningCode { get { throw null; } }
         public string WarningStatus { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeviceRegistryOperationWarningCode : System.IEquatable<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeviceRegistryOperationWarningCode(string value) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode DeviceRegisteredWithoutTwin { get { throw null; } }
+        public bool Equals(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode left, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode right) { throw null; }
+        public static implicit operator Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode (string value) { throw null; }
+        public static bool operator !=(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode left, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DevicesStatistics
     {
@@ -621,14 +638,14 @@ namespace Azure.IoT.Hub.Service.Models
         public string InputBlobName { get { throw null; } set { } }
         public string OutputBlobName { get { throw null; } set { } }
     }
-    public static partial class IotHubGatewayServiceAPIsModelFactory
+    public static partial class IoTHubServiceModelFactory
     {
         public static Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse BulkRegistryOperationResponse(bool? isSuccessful = default(bool?), System.Collections.Generic.IEnumerable<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError> errors = null, System.Collections.Generic.IEnumerable<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning> warnings = null) { throw null; }
         public static Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = default(int?), object payload = null) { throw null; }
         public static Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse ConfigurationQueriesTestResponse(string targetConditionError = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customMetricQueryErrors = null) { throw null; }
         public static Azure.IoT.Hub.Service.Models.DeviceJobStatistics DeviceJobStatistics(int? deviceCount = default(int?), int? failedCount = default(int?), int? succeededCount = default(int?), int? runningCount = default(int?), int? pendingCount = default(int?)) { throw null; }
         public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError DeviceRegistryOperationError(string deviceId = null, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode? errorCode = default(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode?), string errorStatus = null, string moduleId = null, string operation = null) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = null, string warningCode = null, string warningStatus = null) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = null, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode? warningCode = default(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode?), string warningStatus = null) { throw null; }
         public static Azure.IoT.Hub.Service.Models.DevicesStatistics DevicesStatistics(long? totalDeviceCount = default(long?), long? enabledDeviceCount = default(long?), long? disabledDeviceCount = default(long?)) { throw null; }
         public static Azure.IoT.Hub.Service.Models.JobResponse JobResponse(string jobId = null, string queryCondition = null, System.DateTimeOffset? createdTime = default(System.DateTimeOffset?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), long? maxExecutionTimeInSeconds = default(long?), Azure.IoT.Hub.Service.Models.JobResponseType? type = default(Azure.IoT.Hub.Service.Models.JobResponseType?), Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest cloudToDeviceMethod = null, Azure.IoT.Hub.Service.Models.TwinData updateTwin = null, Azure.IoT.Hub.Service.Models.JobResponseStatus? status = default(Azure.IoT.Hub.Service.Models.JobResponseStatus?), string failureReason = null, string statusMessage = null, Azure.IoT.Hub.Service.Models.DeviceJobStatistics deviceJobStatistics = null) { throw null; }
         public static Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult PurgeMessageQueueResult(int? totalMessagesPurged = default(int?), string deviceId = null, string moduleId = null) { throw null; }

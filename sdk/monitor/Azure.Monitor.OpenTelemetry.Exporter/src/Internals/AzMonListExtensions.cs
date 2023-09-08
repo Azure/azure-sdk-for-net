@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -239,6 +240,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return target;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string? GetTargetUsingServerAttributes(this AzMonList tagObjects, string defaultPort)
+        {
+            var values = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerSocketAddress, SemanticConventions.AttributeServerPort);
+            string? target = values[0]?.ToString() ?? values[1]?.ToString();
+            var port = values[2]?.ToString();
+            if (!string.IsNullOrWhiteSpace(target) &&  port != null && port != defaultPort)
+            {
+                target = target + ":" + port;
+            }
+
+            return target;
+        }
+
         ///<summary>
         /// Gets Http dependency target from activity tag objects.
         ///</summary>
@@ -287,23 +302,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         ///<summary>
-        /// Gets Database dependency target from activity tag objects.
+        /// Gets Database dependency target and name from activity tag objects.
         ///</summary>
-        internal static string? GetDbDependencyTarget(this AzMonList tagObjects)
+        internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects)
         {
-            string? target = null;
-            string defaultPort = GetDefaultDbPort(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString());
-            var peerService = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributePeerService)?.ToString();
-            if (!string.IsNullOrWhiteSpace(peerService))
-            {
-                target = peerService;
-            }
+            var peerServiceAndDbSystem = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, SemanticConventions.AttributeDbSystem);
+            string? target = peerServiceAndDbSystem[0]?.ToString();
+            var defaultPort = GetDefaultDbPort(peerServiceAndDbSystem[1]?.ToString());
+
             if (string.IsNullOrWhiteSpace(target))
             {
-                target = tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
+                target = tagObjects.GetTargetUsingServerAttributes(defaultPort) ?? tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
-            string? dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
+            var dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
             bool isTargetEmpty = string.IsNullOrWhiteSpace(target);
             bool isDbNameEmpty = string.IsNullOrWhiteSpace(dbName);
             if (!isTargetEmpty && !isDbNameEmpty)
@@ -319,7 +331,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 target = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
             }
 
-            return target;
+            return (DbName: dbName, DbTarget: target);
         }
 
         ///<summary>
@@ -332,7 +344,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case OperationType.Http:
                     return tagObjects.GetHttpDependencyTarget();
                 case OperationType.Db:
-                    return tagObjects.GetDbDependencyTarget();
+                    return tagObjects.GetDbDependencyTargetAndName().DbTarget;
+                case OperationType.Messaging:
+                    return tagObjects.GetMessagingUrlAndSourceOrTarget(ActivityKind.Producer).SourceOrTarget;
                 default:
                     return null;
             }
@@ -381,11 +395,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return "Unknown";
-        }
-
-        internal static string? GetAzNameSpace(this AzMonList tagObjects)
-        {
-            return AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeAzureNameSpace)?.ToString();
         }
     }
 }

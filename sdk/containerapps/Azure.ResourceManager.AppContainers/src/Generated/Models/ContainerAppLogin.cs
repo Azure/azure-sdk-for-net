@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// This is an advanced setting typically only needed by Windows Store application backends.
         /// Note that URLs within the current domain are always implicitly allowed.
         /// </param>
-        /// <param name="cookieExpiration"> The configuration settings of the session cookie&apos;s expiration. </param>
+        /// <param name="cookieExpiration"> The configuration settings of the session cookie's expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
         internal ContainerAppLogin(LoginRoutes routes, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// Note that URLs within the current domain are always implicitly allowed.
         /// </summary>
         public IList<string> AllowedExternalRedirectUrls { get; }
-        /// <summary> The configuration settings of the session cookie&apos;s expiration. </summary>
+        /// <summary> The configuration settings of the session cookie's expiration. </summary>
         public ContainerAppCookieExpiration CookieExpiration { get; set; }
         /// <summary> The configuration settings of the nonce used in the login flow. </summary>
         public ContainerAppLoginNonce Nonce { get; set; }

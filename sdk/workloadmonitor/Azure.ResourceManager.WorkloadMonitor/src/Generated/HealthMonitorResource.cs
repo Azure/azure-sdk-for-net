@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

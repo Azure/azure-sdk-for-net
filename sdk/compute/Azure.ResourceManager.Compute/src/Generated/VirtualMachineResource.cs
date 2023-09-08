@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VirtualMachineResource>> GetAsync(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualMachineResource> Get(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -763,7 +764,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<VirtualMachineSize> GetAvailableSizesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -784,7 +785,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<VirtualMachineSize> GetAvailableSizes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -858,7 +859,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to reapply a virtual machine&apos;s state.
+        /// The operation to reapply a virtual machine's state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -892,7 +893,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to reapply a virtual machine&apos;s state.
+        /// The operation to reapply a virtual machine's state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1130,7 +1131,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Reimages (upgrade the operating system) a virtual machine which don&apos;t have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state. NOTE: The retaining of old OS disk depends on the value of deleteOption of OS disk. If deleteOption is detach, the old OS disk will be preserved after reimage. If deleteOption is delete, the old OS disk will be deleted after reimage. The deleteOption of the OS disk should be updated accordingly before performing the reimage.
+        /// Reimages (upgrade the operating system) a virtual machine which don't have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state. NOTE: The retaining of old OS disk depends on the value of deleteOption of OS disk. If deleteOption is detach, the old OS disk will be preserved after reimage. If deleteOption is delete, the old OS disk will be deleted after reimage. The deleteOption of the OS disk should be updated accordingly before performing the reimage.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1165,7 +1166,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Reimages (upgrade the operating system) a virtual machine which don&apos;t have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state. NOTE: The retaining of old OS disk depends on the value of deleteOption of OS disk. If deleteOption is detach, the old OS disk will be preserved after reimage. If deleteOption is delete, the old OS disk will be deleted after reimage. The deleteOption of the OS disk should be updated accordingly before performing the reimage.
+        /// Reimages (upgrade the operating system) a virtual machine which don't have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state. NOTE: The retaining of old OS disk depends on the value of deleteOption of OS disk. If deleteOption is detach, the old OS disk will be preserved after reimage. If deleteOption is delete, the old OS disk will be deleted after reimage. The deleteOption of the OS disk should be updated accordingly before performing the reimage.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1200,7 +1201,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to retrieve SAS URIs for a virtual machine&apos;s boot diagnostic logs.
+        /// The operation to retrieve SAS URIs for a virtual machine's boot diagnostic logs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1231,7 +1232,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to retrieve SAS URIs for a virtual machine&apos;s boot diagnostic logs.
+        /// The operation to retrieve SAS URIs for a virtual machine's boot diagnostic logs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

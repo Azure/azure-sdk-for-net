@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -67,7 +68,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -102,7 +103,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
-        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
+        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -138,7 +139,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZoneAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetManagementZoneAsync(string partyId, string managementZoneId, RequestContext context = null)
+        public virtual async Task<Response> GetManagementZoneAsync(string partyId, string managementZoneId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
@@ -175,7 +176,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZone(string,string,RequestContext)']/*" />
-        public virtual Response GetManagementZone(string partyId, string managementZoneId, RequestContext context = null)
+        public virtual Response GetManagementZone(string partyId, string managementZoneId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
@@ -365,7 +366,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
@@ -381,11 +382,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZonesAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetManagementZonesAsync(IEnumerable<string> types = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetManagementZonesAsync(IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetManagementZonesRequest(types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetManagementZonesNextPageRequest(nextLink, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZones", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZones", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -407,7 +408,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
@@ -423,11 +424,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZones(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetManagementZones(IEnumerable<string> types = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetManagementZones(IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetManagementZonesRequest(types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetManagementZonesNextPageRequest(nextLink, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZones", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZones", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -450,7 +451,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
@@ -468,13 +469,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZonesByPartyIdAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetManagementZonesByPartyIdAsync(string partyId, IEnumerable<string> types = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetManagementZonesByPartyIdAsync(string partyId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetManagementZonesByPartyIdRequest(partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetManagementZonesByPartyIdNextPageRequest(nextLink, partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZonesByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZonesByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -497,7 +498,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
@@ -515,13 +516,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZonesByPartyId(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetManagementZonesByPartyId(string partyId, IEnumerable<string> types = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetManagementZonesByPartyId(string partyId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetManagementZonesByPartyIdRequest(partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetManagementZonesByPartyIdNextPageRequest(nextLink, partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZonesByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZonesByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -544,7 +545,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string managementZoneId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string managementZoneId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(partyId, nameof(partyId));
@@ -584,7 +585,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string managementZoneId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string managementZoneId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(partyId, nameof(partyId));

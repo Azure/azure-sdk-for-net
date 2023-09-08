@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppHttpRequestInfo. </summary>
-        /// <param name="host"> Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead. </param>
+        /// <param name="host"> Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead. </param>
         /// <param name="httpHeaders"> Custom headers to set in the request. HTTP allows repeated headers. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Scheme = scheme;
         }
 
-        /// <summary> Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead. </summary>
+        /// <summary> Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead. </summary>
         public string Host { get; set; }
         /// <summary> Custom headers to set in the request. HTTP allows repeated headers. </summary>
         public IList<ContainerAppHttpHeaderInfo> HttpHeaders { get; }

@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq '{state}'. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ArmDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.Resources
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentDeploymentsRestClient.CreateListAtScopeRequest(Id, filter, top);
             Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentDeploymentsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq '{state}'. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArmDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.Resources
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentDeploymentsRestClient.CreateListAtScopeRequest(Id, filter, top);
             Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentDeploymentsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

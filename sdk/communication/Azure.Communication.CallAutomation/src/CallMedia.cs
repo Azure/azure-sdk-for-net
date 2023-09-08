@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallAutomation
@@ -186,6 +187,8 @@ namespace Azure.Communication.CallAutomation
                     request.OperationContext = Guid.NewGuid().ToString();
                 }
 
+                request.CallbackUri = options.CallbackUri?.AbsoluteUri;
+
                 return request;
             }
 
@@ -207,6 +210,7 @@ namespace Azure.Communication.CallAutomation
                 PlayOptions playOptions = new PlayOptions(options.PlaySource, Enumerable.Empty<CommunicationIdentifier>());
                 playOptions.OperationContext = options.OperationContext;
                 playOptions.Loop = options.Loop;
+                playOptions.CallbackUri = options.CallbackUri;
                 return await PlayAsync(playOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -252,6 +256,7 @@ namespace Azure.Communication.CallAutomation
                 PlayOptions playOptions = new PlayOptions(options.PlaySource, Enumerable.Empty<CommunicationIdentifier>());
                 playOptions.OperationContext = options.OperationContext;
                 playOptions.Loop = options.Loop;
+                playOptions.CallbackUri = options.CallbackUri;
                 return Play(playOptions, cancellationToken);
             }
             catch (Exception ex)
@@ -414,6 +419,7 @@ namespace Azure.Communication.CallAutomation
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeDtmfOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
+                request.CallbackUri = recognizeOptions.CallbackUri?.AbsoluteUri;
 
                 return request;
             }
@@ -433,11 +439,17 @@ namespace Azure.Communication.CallAutomation
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeChoiceOptions.SpeechLanguage;
                 }
 
+                if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechModelEndpointId))
+                {
+                    recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeChoiceOptions.SpeechModelEndpointId;
+                }
+
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeChoiceOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeChoiceOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
+                request.CallbackUri = recognizeOptions.CallbackUri?.AbsoluteUri;
 
                 return request;
             }
@@ -445,7 +457,7 @@ namespace Azure.Communication.CallAutomation
             {
                 SpeechOptionsInternal speechConfigurations = new SpeechOptionsInternal()
                 {
-                    EndSilenceTimeoutInMs = (long)recognizeSpeechOptions.EndSilenceTimeoutInMs.TotalMilliseconds
+                    EndSilenceTimeoutInMs = (long)recognizeSpeechOptions.EndSilenceTimeout.TotalMilliseconds
                 };
 
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOptions.TargetParticipant))
@@ -455,11 +467,22 @@ namespace Azure.Communication.CallAutomation
                     SpeechOptions = speechConfigurations
                 };
 
+                if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOptions.SpeechLanguage;
+                }
+
+                if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechModelEndpointId))
+                {
+                    recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeSpeechOptions.SpeechModelEndpointId;
+                }
+
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
+                request.CallbackUri = recognizeOptions.CallbackUri?.AbsoluteUri;
 
                 return request;
             }
@@ -467,14 +490,14 @@ namespace Azure.Communication.CallAutomation
             {
                 SpeechOptionsInternal speechConfigurations = new SpeechOptionsInternal()
                 {
-                    EndSilenceTimeoutInMs = (long)recognizeSpeechOrDtmfOptions.EndSilenceTimeoutInMs.TotalMilliseconds
+                    EndSilenceTimeoutInMs = (long)recognizeSpeechOrDtmfOptions.EndSilenceTimeout.TotalMilliseconds
                 };
 
                 DtmfOptionsInternal dtmfConfigurations = new DtmfOptionsInternal()
                 {
                     InterToneTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InterToneTimeout.TotalSeconds,
                     MaxTonesToCollect = recognizeSpeechOrDtmfOptions.MaxTonesToCollect,
-                    StopTones = recognizeSpeechOrDtmfOptions.StopTones
+                    StopTones = recognizeSpeechOrDtmfOptions.StopTones.ToList()
                 };
 
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOrDtmfOptions.TargetParticipant))
@@ -485,11 +508,22 @@ namespace Azure.Communication.CallAutomation
                     DtmfOptions = dtmfConfigurations,
                 };
 
+                if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOrDtmfOptions.SpeechLanguage;
+                }
+
+                if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechModelEndpointId))
+                {
+                    recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeSpeechOrDtmfOptions.SpeechModelEndpointId;
+                }
+
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOrDtmfOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOrDtmfOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
+                request.CallbackUri = recognizeOptions.CallbackUri?.AbsoluteUri;
 
                 return request;
             }
@@ -507,7 +541,7 @@ namespace Azure.Communication.CallAutomation
             {
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
                 sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                sourceInternal.PlaySourceId = fileSource.PlaySourceId;
+                sourceInternal.PlaySourceId = fileSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else if (playSource != null && playSource is TextSource textSource)
@@ -517,14 +551,16 @@ namespace Azure.Communication.CallAutomation
                 sourceInternal.TextSource.SourceLocale = textSource.SourceLocale ?? null;
                 sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.Male;
                 sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
-                sourceInternal.PlaySourceId = textSource.PlaySourceId;
+                sourceInternal.TextSource.CustomVoiceEndpointId = textSource.CustomVoiceEndpointId ?? null;
+                sourceInternal.PlaySourceId = textSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else if (playSource != null && playSource is SsmlSource ssmlSource)
             {
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Ssml);
                 sourceInternal.SsmlSource = new SsmlSourceInternal(ssmlSource.SsmlText);
-                sourceInternal.PlaySourceId = ssmlSource.PlaySourceId;
+                sourceInternal.SsmlSource.CustomVoiceEndpointId = ssmlSource.CustomVoiceEndpointId ?? null;
+                sourceInternal.PlaySourceId = ssmlSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else
@@ -579,7 +615,6 @@ namespace Azure.Communication.CallAutomation
                 };
 
                 return await CallMediaRestClient.StartContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
-                ;
             }
             catch (Exception ex)
             {
@@ -593,9 +628,10 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="targetParticipant">A target participant identifier for stopping continuous Dtmf recognition.</param>
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="callbackUri">The callback URI override for this transfer call request.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 200 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual Response StopContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext = default,
+        public virtual Response StopContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext = default, Uri callbackUri = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognition)}");
@@ -604,7 +640,8 @@ namespace Azure.Communication.CallAutomation
             {
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant))
                 {
-                    OperationContext = operationContext
+                    OperationContext = operationContext,
+                    CallbackUri = callbackUri?.AbsoluteUri
                 };
 
                 return CallMediaRestClient.StopContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
@@ -621,9 +658,10 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="targetParticipant">A target participant identifier for stopping continuous Dtmf recognition.</param>
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="callbackUri">The callback URI override for this transfer call request.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 200 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual async Task<Response> StopContinuousDtmfRecognitionAsync(CommunicationIdentifier targetParticipant, string operationContext = default,
+        public virtual async Task<Response> StopContinuousDtmfRecognitionAsync(CommunicationIdentifier targetParticipant, string operationContext = default, Uri callbackUri = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognition)}");
@@ -632,7 +670,8 @@ namespace Azure.Communication.CallAutomation
             {
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant))
                 {
-                    OperationContext = operationContext
+                    OperationContext = operationContext,
+                    CallbackUri = callbackUri?.AbsoluteUri
                 };
 
                 return await CallMediaRestClient.StopContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
@@ -650,10 +689,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="tones">A list of Tones to be sent.</param>
         /// <param name="targetParticipant">A target participant identifier for starting continuous Dtmf recognition.</param>
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="callbackUri">The callback URI override for this transfer call request.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
         public virtual async Task<Response<SendDtmfResult>> SendDtmfAsync(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
-            string operationContext = default, CancellationToken cancellationToken = default)
+            string operationContext = default, Uri callbackUri = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
@@ -662,6 +702,7 @@ namespace Azure.Communication.CallAutomation
                 SendDtmfRequestInternal request = request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
                 request.OperationContext = operationContext;
+                request.CallbackUri = callbackUri?.AbsoluteUri;
 
                 var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
@@ -683,10 +724,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="tones">A list of Tones to be sent.</param>
         /// <param name="targetParticipant">A target participant identifier for starting continuous Dtmf recognition.</param>
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="callbackUri">The callback URI override for this transfer call request.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
         public virtual Response<SendDtmfResult> SendDtmf(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
-            string operationContext = default, CancellationToken cancellationToken = default)
+            string operationContext = default, Uri callbackUri = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
@@ -695,6 +737,7 @@ namespace Azure.Communication.CallAutomation
                 SendDtmfRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
                 request.OperationContext = operationContext;
+                request.CallbackUri = callbackUri?.AbsoluteUri;
 
                 var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, cancellationToken);
 

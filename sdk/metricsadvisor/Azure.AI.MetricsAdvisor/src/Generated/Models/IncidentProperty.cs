@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
         /// <param name="incidentStatus">
         /// incident status
-        /// 
+        ///
         /// only return for alerting incident result
         /// </param>
         /// <param name="valueOfRootNode"> value of the root node. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
         /// <param name="incidentStatus">
         /// incident status
-        /// 
+        ///
         /// only return for alerting incident result
         /// </param>
         /// <param name="valueOfRootNode"> value of the root node. </param>
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalySeverity MaxSeverity { get; }
         /// <summary>
         /// incident status
-        /// 
+        ///
         /// only return for alerting incident result
         /// </summary>
         public AnomalyIncidentStatus IncidentStatus { get; }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The password name &quot;password1&quot; or &quot;password2&quot;. </summary>
+    /// <summary> The password name "password1" or "password2". </summary>
     public readonly partial struct ContainerRegistryTokenPasswordName : IEquatable<ContainerRegistryTokenPasswordName>
     {
         private readonly string _value;

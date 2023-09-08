@@ -8,10 +8,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/b06a6f45e472dd07c2e0dab06b1e52dfe2684c88/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/cd53bce8cf73f7e7ba6cf5ab32baffbe529ae1fb/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -33,7 +32,7 @@ keep-plural-enums:
 - IntervalInMins
 - VmGuestPatchClassificationForWindows # we have this because the generator will change windows to window which does not make sense
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -65,6 +64,8 @@ rename-rules:
   ZRS: Zrs
   RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
   EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
+  VHD: Vhd
+  VHDX: Vhdx
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{restorePointName} # compute RP did not provide an API for listing this resource
@@ -120,8 +121,8 @@ prepend-rp-prefix:
 - PublicIPAddressSkuTier
 - StatusLevelTypes
 
-#mgmt-debug:
-#    show-serialized-names: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
@@ -263,6 +264,12 @@ rename-mapping:
   SecurityPostureReference: ComputeSecurityPostureReference
   RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
   SecurityPostureReference.id: -|arm-id
+  CommunityGalleryImage.properties.identifier: ImageIdentifier
+  GalleryTargetExtendedLocation.storageAccountType: GalleryStorageAccountType
+  FileFormat: DiskImageFileFormat
+  CreationData.elasticSanResourceId: -|arm-id
+  NetworkInterfaceAuxiliarySku: ComputeNetworkInterfaceAuxiliarySku
+  NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

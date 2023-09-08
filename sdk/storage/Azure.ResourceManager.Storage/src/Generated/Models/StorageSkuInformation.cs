@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageSkuInformation. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
-        /// <param name="resourceType"> The type of the resource, usually it is &apos;storageAccounts&apos;. </param>
+        /// <param name="resourceType"> The type of the resource, usually it is 'storageAccounts'. </param>
         /// <param name="kind"> Indicates the type of storage account. </param>
         /// <param name="locations"> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </param>
         /// <param name="capabilities"> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageSkuName Name { get; }
         /// <summary> The SKU tier. This is based on the SKU name. </summary>
         public StorageSkuTier? Tier { get; }
-        /// <summary> The type of the resource, usually it is &apos;storageAccounts&apos;. </summary>
+        /// <summary> The type of the resource, usually it is 'storageAccounts'. </summary>
         public string ResourceType { get; }
         /// <summary> Indicates the type of storage account. </summary>
         public StorageKind? Kind { get; }

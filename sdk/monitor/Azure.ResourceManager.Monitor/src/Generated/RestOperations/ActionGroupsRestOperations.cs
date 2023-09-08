@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Updates an existing action group&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing action group's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Updates an existing action group&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing action group's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Enable a receiver in an action group. This changes the receiver&apos;s status from Disabled to Enabled. This operation is only supported for Email or SMS receivers. </summary>
+        /// <summary> Enable a receiver in an action group. This changes the receiver's status from Disabled to Enabled. This operation is only supported for Email or SMS receivers. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Enable a receiver in an action group. This changes the receiver&apos;s status from Disabled to Enabled. This operation is only supported for Email or SMS receivers. </summary>
+        /// <summary> Enable a receiver in an action group. This changes the receiver's status from Disabled to Enabled. This operation is only supported for Email or SMS receivers. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>

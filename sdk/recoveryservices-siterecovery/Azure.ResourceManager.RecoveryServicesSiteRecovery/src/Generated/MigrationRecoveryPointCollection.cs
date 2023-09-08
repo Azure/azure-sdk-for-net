@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="MigrationRecoveryPointResource" /> and their operations.
-    /// Each <see cref="MigrationRecoveryPointResource" /> in the collection will belong to the same instance of <see cref="MigrationItemResource" />.
-    /// To get a <see cref="MigrationRecoveryPointCollection" /> instance call the GetMigrationRecoveryPoints method from an instance of <see cref="MigrationItemResource" />.
+    /// Each <see cref="MigrationRecoveryPointResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryMigrationItemResource" />.
+    /// To get a <see cref="MigrationRecoveryPointCollection" /> instance call the GetMigrationRecoveryPoints method from an instance of <see cref="SiteRecoveryMigrationItemResource" />.
     /// </summary>
     public partial class MigrationRecoveryPointCollection : ArmCollection, IEnumerable<MigrationRecoveryPointResource>, IAsyncEnumerable<MigrationRecoveryPointResource>
     {
@@ -48,8 +49,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MigrationItemResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MigrationItemResource.ResourceType), nameof(id));
+            if (id.ResourceType != SiteRecoveryMigrationItemResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryMigrationItemResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Logic.Models
                             {
                                 continue;
                             }
-                            created = property0.Value.GetDateTimeOffset("U");
+                            created = DateTimeOffset.FromUnixTimeSeconds(property0.Value.GetInt64());
                             continue;
                         }
                         if (property0.NameEquals("updated"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
                             {
                                 continue;
                             }
-                            updated = property0.Value.GetDateTimeOffset("U");
+                            updated = DateTimeOffset.FromUnixTimeSeconds(property0.Value.GetInt64());
                             continue;
                         }
                     }

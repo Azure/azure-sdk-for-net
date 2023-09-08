@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = &apos;Microsoft.KeyVault&apos;. Possible values (case-insensitive) are: &apos;Microsoft.NetApp, Microsoft.KeyVault&apos;. </summary>
+    /// <summary> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </summary>
     public readonly partial struct NetAppEncryptionKeySource : IEquatable<NetAppEncryptionKeySource>
     {
         private readonly string _value;

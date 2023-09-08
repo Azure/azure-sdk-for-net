@@ -4,6 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
+    SDKType: client
     MaxParallel: 5
     TimeoutInMinutes: 240
     SupportedClouds: 'Public,UsGov,China,Canary'
@@ -15,7 +16,7 @@ extends:
             - ArmTemplateParameters=^(?!.*enableHsm.*true)
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'eastus2euap'
+        Location: 'centraluseuap'
         # Managed HSM test resources are expensive and provisioning has not been reliable.
         # Given test coverage of non-canary regions we probably don't need to test in canary.
         MatrixFilters:

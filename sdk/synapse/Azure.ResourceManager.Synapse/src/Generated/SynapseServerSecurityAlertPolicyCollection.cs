@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create or Update a workspace managed sql server&apos;s threat detection policy.
+        /// Create or Update a workspace managed sql server's threat detection policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create or Update a workspace managed sql server&apos;s threat detection policy.
+        /// Create or Update a workspace managed sql server's threat detection policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace managed sql server&apos;s security alert policy.
+        /// Get a workspace managed sql server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workspace managed sql server&apos;s security alert policy.
+        /// Get a workspace managed sql server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s threat detection policies.
+        /// Get workspace managed sql server's threat detection policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseServerSecurityAlertPolicyResource(Client, SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(e)), _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyClientDiagnostics, Pipeline, "SynapseServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseServerSecurityAlertPolicyResource(Client, SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(e)), _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyClientDiagnostics, Pipeline, "SynapseServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s threat detection policies.
+        /// Get workspace managed sql server's threat detection policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseServerSecurityAlertPolicyResource(Client, SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(e)), _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyClientDiagnostics, Pipeline, "SynapseServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseServerSecurityAlertPolicyResource(Client, SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(e)), _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyClientDiagnostics, Pipeline, "SynapseServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

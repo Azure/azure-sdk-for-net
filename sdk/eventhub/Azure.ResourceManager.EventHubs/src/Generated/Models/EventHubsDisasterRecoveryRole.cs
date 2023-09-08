@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </summary>
+    /// <summary> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </summary>
     public enum EventHubsDisasterRecoveryRole
     {
         /// <summary> Primary. </summary>

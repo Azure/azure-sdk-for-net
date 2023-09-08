@@ -10,9 +10,9 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Sql.Tests.Scenario
+namespace Azure.ResourceManager.Sql.Tests
 {
-    public class ManagedInstancePrivateEndpointConnectionTest : SqlManagementClientBase
+    public class ManagedInstancePrivateEndpointConnectionTest : SqlManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task ManagedInstancePrivateEndpointConnectioApiTests()
         {

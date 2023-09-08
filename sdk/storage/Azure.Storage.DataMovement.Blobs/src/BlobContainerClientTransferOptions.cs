@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
+using Azure.Storage.Blobs;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// Options applying to data transfer uploads and downloads using the <see cref="BlobContainerClient"/> extension methods
@@ -14,11 +13,6 @@ namespace Azure.Storage.Blobs.Models
     public class BlobContainerClientTransferOptions
     {
         /// <summary>
-        /// Optionally specifies the directory prefix to upload files to, or download files from.
-        /// </summary>
-        public string BlobDirectoryPrefix { get; set; }
-
-        /// <summary>
         /// Options pertaining to the blob storage container used in the data transfer.
         /// </summary>
         public BlobStorageResourceContainerOptions BlobContainerOptions { get; set; }
@@ -26,6 +20,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Options pertaining to the data tranfer.
         /// </summary>
-        public TransferOptions TransferOptions { get; set; }
+        public DataTransferOptions TransferOptions { get; set; }
     }
 }

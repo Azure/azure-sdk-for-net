@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppCorsPolicy
     {
         /// <summary> Initializes a new instance of ContainerAppCorsPolicy. </summary>
-        /// <param name="allowedOrigins"> allowed origins. </param>
+        /// <param name="allowedOrigins"> Specifies the content for the access-control-allow-origins header. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
         public ContainerAppCorsPolicy(IEnumerable<string> allowedOrigins)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppCorsPolicy. </summary>
-        /// <param name="allowedOrigins"> allowed origins. </param>
-        /// <param name="allowedMethods"> allowed HTTP methods. </param>
-        /// <param name="allowedHeaders"> allowed HTTP headers. </param>
-        /// <param name="exposeHeaders"> expose HTTP headers. </param>
-        /// <param name="maxAge"> max time client can cache the result. </param>
-        /// <param name="allowCredentials"> allow credential or not. </param>
+        /// <param name="allowedOrigins"> Specifies the content for the access-control-allow-origins header. </param>
+        /// <param name="allowedMethods"> Specifies the content for the access-control-allow-methods header. </param>
+        /// <param name="allowedHeaders"> Specifies the content for the access-control-allow-headers header. </param>
+        /// <param name="exposeHeaders"> Specifies the content for the access-control-expose-headers header. </param>
+        /// <param name="maxAge"> Specifies the content for the access-control-max-age header. </param>
+        /// <param name="allowCredentials"> Specifies whether the resource allows credentials. </param>
         internal ContainerAppCorsPolicy(IList<string> allowedOrigins, IList<string> allowedMethods, IList<string> allowedHeaders, IList<string> exposeHeaders, int? maxAge, bool? allowCredentials)
         {
             AllowedOrigins = allowedOrigins;
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             AllowCredentials = allowCredentials;
         }
 
-        /// <summary> allowed origins. </summary>
+        /// <summary> Specifies the content for the access-control-allow-origins header. </summary>
         public IList<string> AllowedOrigins { get; }
-        /// <summary> allowed HTTP methods. </summary>
+        /// <summary> Specifies the content for the access-control-allow-methods header. </summary>
         public IList<string> AllowedMethods { get; }
-        /// <summary> allowed HTTP headers. </summary>
+        /// <summary> Specifies the content for the access-control-allow-headers header. </summary>
         public IList<string> AllowedHeaders { get; }
-        /// <summary> expose HTTP headers. </summary>
+        /// <summary> Specifies the content for the access-control-expose-headers header. </summary>
         public IList<string> ExposeHeaders { get; }
-        /// <summary> max time client can cache the result. </summary>
+        /// <summary> Specifies the content for the access-control-max-age header. </summary>
         public int? MaxAge { get; set; }
-        /// <summary> allow credential or not. </summary>
+        /// <summary> Specifies whether the resource allows credentials. </summary>
         public bool? AllowCredentials { get; set; }
     }
 }

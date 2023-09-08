@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,11 +20,6 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(HnswParameters))
-            {
-                writer.WritePropertyName("hnswParameters"u8);
-                writer.WriteObjectValue(HnswParameters);
-            }
             writer.WriteEndObject();
         }
 
@@ -33,32 +29,14 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            string name = default;
-            string kind = default;
-            Optional<HnswParameters> hnswParameters = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
-                if (property.NameEquals("name"u8))
+                switch (discriminator.GetString())
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("hnswParameters"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hnswParameters = HnswParameters.DeserializeHnswParameters(property.Value);
-                    continue;
+                    case "hnsw": return HnswVectorSearchAlgorithmConfiguration.DeserializeHnswVectorSearchAlgorithmConfiguration(element);
                 }
             }
-            return new VectorSearchAlgorithmConfiguration(name, kind, hnswParameters.Value);
+            return UnknownVectorSearchAlgorithmConfiguration.DeserializeUnknownVectorSearchAlgorithmConfiguration(element);
         }
     }
 }

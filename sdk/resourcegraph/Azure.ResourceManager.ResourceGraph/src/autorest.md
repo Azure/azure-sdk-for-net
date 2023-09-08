@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: ResourceGraph
 namespace: Azure.ResourceManager.ResourceGraph
@@ -36,7 +35,7 @@ override-operation-name:
   Resources: GetResources
   ResourcesHistory: GetResourceHistory
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

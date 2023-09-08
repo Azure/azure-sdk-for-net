@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates the managed instance&apos;s Start/Stop schedule.
+        /// Creates or updates the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates the managed instance&apos;s Start/Stop schedule.
+        /// Creates or updates the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the managed instance&apos;s Start/Stop schedule.
+        /// Gets the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the managed instance&apos;s Start/Stop schedule.
+        /// Gets the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Lists the managed instance&apos;s Start/Stop schedules.
+        /// Lists the managed instance's Start/Stop schedules.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceStartStopScheduleResource(Client, ManagedInstanceStartStopScheduleData.DeserializeManagedInstanceStartStopScheduleData(e)), _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics, Pipeline, "ManagedInstanceStartStopScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceStartStopScheduleResource(Client, ManagedInstanceStartStopScheduleData.DeserializeManagedInstanceStartStopScheduleData(e)), _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics, Pipeline, "ManagedInstanceStartStopScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists the managed instance&apos;s Start/Stop schedules.
+        /// Lists the managed instance's Start/Stop schedules.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceStartStopScheduleResource(Client, ManagedInstanceStartStopScheduleData.DeserializeManagedInstanceStartStopScheduleData(e)), _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics, Pipeline, "ManagedInstanceStartStopScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceStartStopScheduleResource(Client, ManagedInstanceStartStopScheduleData.DeserializeManagedInstanceStartStopScheduleData(e)), _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics, Pipeline, "ManagedInstanceStartStopScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

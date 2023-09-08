@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a managed database&apos;s Advanced Threat Protection state.
+        /// Creates or updates a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a managed database&apos;s Advanced Threat Protection state.
+        /// Creates or updates a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Gets a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Gets a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of managed database&apos;s Advanced Threat Protection states.
+        /// Gets a list of managed database's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseAdvancedThreatProtectionResource(Client, ManagedDatabaseAdvancedThreatProtectionData.DeserializeManagedDatabaseAdvancedThreatProtectionData(e)), _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedDatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseAdvancedThreatProtectionResource(Client, ManagedDatabaseAdvancedThreatProtectionData.DeserializeManagedDatabaseAdvancedThreatProtectionData(e)), _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedDatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of managed database&apos;s Advanced Threat Protection states.
+        /// Gets a list of managed database's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseAdvancedThreatProtectionResource(Client, ManagedDatabaseAdvancedThreatProtectionData.DeserializeManagedDatabaseAdvancedThreatProtectionData(e)), _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedDatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseAdvancedThreatProtectionResource(Client, ManagedDatabaseAdvancedThreatProtectionData.DeserializeManagedDatabaseAdvancedThreatProtectionData(e)), _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedDatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

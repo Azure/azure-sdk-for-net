@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
             Optional<IntegrationRuntimeEdition> edition = default;
             Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
-            Optional<IList<IntegrationRuntimeSsisPackageStore>> packageStores = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<IList<DataFactoryPackageStore>> packageStores = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<IntegrationRuntimeSsisPackageStore> array = new List<IntegrationRuntimeSsisPackageStore>();
+                    List<DataFactoryPackageStore> array = new List<DataFactoryPackageStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeSsisPackageStore.DeserializeIntegrationRuntimeSsisPackageStore(item));
+                        array.Add(DataFactoryPackageStore.DeserializeDataFactoryPackageStore(item));
                     }
                     packageStores = array;
                     continue;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="networkConnectionId"> The resource ID of the NetworkConnection you want to attach. </param>
-        /// <param name="networkConnectionLocation"> The geo-location where the NetworkConnection resource specified in &apos;networkConnectionResourceId&apos; property lives. </param>
+        /// <param name="networkConnectionLocation"> The geo-location where the NetworkConnection resource specified in 'networkConnectionResourceId' property lives. </param>
         /// <param name="healthCheckStatus"> Health check status values. </param>
         /// <param name="domainJoinType"> AAD Join type of the network. This is populated based on the referenced Network Connection. </param>
-        internal AttachedNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string networkConnectionId, string networkConnectionLocation, HealthCheckStatus? healthCheckStatus, DomainJoinType? domainJoinType) : base(id, name, resourceType, systemData)
+        internal AttachedNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterProvisioningState? provisioningState, ResourceIdentifier networkConnectionId, AzureLocation? networkConnectionLocation, DevCenterHealthCheckStatus? healthCheckStatus, DomainJoinType? domainJoinType) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             NetworkConnectionId = networkConnectionId;
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState { get; }
         /// <summary> The resource ID of the NetworkConnection you want to attach. </summary>
-        public string NetworkConnectionId { get; set; }
-        /// <summary> The geo-location where the NetworkConnection resource specified in &apos;networkConnectionResourceId&apos; property lives. </summary>
-        public string NetworkConnectionLocation { get; }
+        public ResourceIdentifier NetworkConnectionId { get; set; }
+        /// <summary> The geo-location where the NetworkConnection resource specified in 'networkConnectionResourceId' property lives. </summary>
+        public AzureLocation? NetworkConnectionLocation { get; }
         /// <summary> Health check status values. </summary>
-        public HealthCheckStatus? HealthCheckStatus { get; }
+        public DevCenterHealthCheckStatus? HealthCheckStatus { get; }
         /// <summary> AAD Join type of the network. This is populated based on the referenced Network Connection. </summary>
         public DomainJoinType? DomainJoinType { get; }
     }

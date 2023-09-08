@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Initializes a new instance of CmkKekIdentity. </summary>
-        /// <param name="useSystemAssignedIdentity"> Indicate that system assigned identity should be used. Mutually exclusive with &apos;userAssignedIdentity&apos; field. </param>
+        /// <param name="useSystemAssignedIdentity"> Indicate that system assigned identity should be used. Mutually exclusive with 'userAssignedIdentity' field. </param>
         /// <param name="userAssignedIdentity"> The user assigned identity to be used to grant permissions in case the type of identity used is UserAssigned. </param>
         internal CmkKekIdentity(bool? useSystemAssignedIdentity, ResourceIdentifier userAssignedIdentity)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             UserAssignedIdentity = userAssignedIdentity;
         }
 
-        /// <summary> Indicate that system assigned identity should be used. Mutually exclusive with &apos;userAssignedIdentity&apos; field. </summary>
+        /// <summary> Indicate that system assigned identity should be used. Mutually exclusive with 'userAssignedIdentity' field. </summary>
         public bool? UseSystemAssignedIdentity { get; set; }
         /// <summary> The user assigned identity to be used to grant permissions in case the type of identity used is UserAssigned. </summary>
         public ResourceIdentifier UserAssignedIdentity { get; set; }

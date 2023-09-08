@@ -78,6 +78,34 @@ public static class CloudEventBindingFunction
 }
 ```
 
+It is also possible to use Azure Identity with the output binding. To do so, set the `Connection` property to the name of your app setting that contains your Event Grid Topic endpoint along with a set of optional Identity information that is described in detail [here](https://learn.microsoft.com/azure/azure-functions/functions-reference?tabs=blob#configure-an-identity-based-connection). When setting the `Connection` property, the `TopicEndpointUri` and `TopicKeySetting` properties should NOT be set.
+
+```C# Snippet:CloudEventBindingFunctionWithIdentity
+public static class CloudEventOutputBindingWithIdentityFunction
+{
+    [FunctionName("CloudEventOutputBindingWithIdentityFunction")]
+    public static async Task<IActionResult> RunAsync(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+        [EventGrid(Connection = "MyConnection")] IAsyncCollector<CloudEvent> eventCollector)
+    {
+        CloudEvent e = new CloudEvent("IncomingRequest", "IncomingRequest", await req.ReadAsStringAsync());
+        await eventCollector.AddAsync(e);
+        return new OkResult();
+    }
+}
+```
+
+For local development, use the `local.settings.json` file to store the connection information:
+```json
+{
+  "Values": {
+    "myConnection__topicEndpointUri": "{topicEndpointUri}"
+  }
+}
+```
+
+When deployed, use the [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to store this information.
+
 You can also output a string or JObject and the extension will attempt to parse into the correct strongly typed event.
 
 ### Functions that uses Event Grid trigger

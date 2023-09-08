@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Creates/Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Creates/Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Creates/Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Creates/Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

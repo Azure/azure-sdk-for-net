@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition).
+        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -152,11 +153,11 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition).
+        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -90,6 +90,30 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     displayText = "<displayText>",
                     entityStatus = "ACTIVE",
                     relationshipType = "<relationshipType>",
+                    relationshipAttributes = new
+                    {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
                     relationshipGuid = "<relationshipGuid>",
                     relationshipStatus = "ACTIVE",
                     guid = "<guid>",
@@ -115,7 +139,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 lastModifiedTS = "<lastModifiedTS>",
             };
 
-            Response response = client.Create(RequestContent.Create(data), new RequestContext());
+            Response response = client.Create(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -210,6 +234,30 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     displayText = "<displayText>",
                     entityStatus = "ACTIVE",
                     relationshipType = "<relationshipType>",
+                    relationshipAttributes = new
+                    {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
                     relationshipGuid = "<relationshipGuid>",
                     relationshipStatus = "ACTIVE",
                     guid = "<guid>",
@@ -235,7 +283,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 lastModifiedTS = "<lastModifiedTS>",
             };
 
-            Response response = await client.CreateAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -330,6 +378,30 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     displayText = "<displayText>",
                     entityStatus = "ACTIVE",
                     relationshipType = "<relationshipType>",
+                    relationshipAttributes = new
+                    {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
                     relationshipGuid = "<relationshipGuid>",
                     relationshipStatus = "ACTIVE",
                     guid = "<guid>",
@@ -355,7 +427,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 lastModifiedTS = "<lastModifiedTS>",
             };
 
-            Response response = client.Update(RequestContent.Create(data), new RequestContext());
+            Response response = client.Update(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -450,6 +522,30 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     displayText = "<displayText>",
                     entityStatus = "ACTIVE",
                     relationshipType = "<relationshipType>",
+                    relationshipAttributes = new
+                    {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
                     relationshipGuid = "<relationshipGuid>",
                     relationshipStatus = "ACTIVE",
                     guid = "<guid>",
@@ -475,7 +571,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 lastModifiedTS = "<lastModifiedTS>",
             };
 
-            Response response = await client.UpdateAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.UpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createTime").ToString());
@@ -507,7 +603,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = client.GetPurviewRelationship("<guid>");
+            Response response = client.GetPurviewRelationship("<guid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -584,7 +680,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = await client.GetPurviewRelationshipAsync("<guid>");
+            Response response = await client.GetPurviewRelationshipAsync("<guid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -673,7 +769,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = client.Delete("<guid>", new RequestContext());
+            Response response = client.Delete("<guid>");
             Console.WriteLine(response.Status);
         }
 
@@ -697,7 +793,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = await client.DeleteAsync("<guid>", new RequestContext());
+            Response response = await client.DeleteAsync("<guid>");
             Console.WriteLine(response.Status);
         }
     }

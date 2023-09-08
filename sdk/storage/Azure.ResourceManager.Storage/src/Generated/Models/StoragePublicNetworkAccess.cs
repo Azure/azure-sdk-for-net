@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct StoragePublicNetworkAccess : IEquatable<StoragePublicNetworkAccess>
     {
         private readonly string _value;

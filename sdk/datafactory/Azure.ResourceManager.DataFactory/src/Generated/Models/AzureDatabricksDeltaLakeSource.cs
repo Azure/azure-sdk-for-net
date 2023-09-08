@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -28,44 +29,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> Azure Databricks Delta Lake Sql query. Type: string (or Expression with resultType string). </param>
         /// <param name="exportSettings"> Azure Databricks Delta Lake export settings. </param>
-        internal AzureDatabricksDeltaLakeSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, AzureDatabricksDeltaLakeExportCommand exportSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureDatabricksDeltaLakeSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> query, AzureDatabricksDeltaLakeExportCommand exportSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
             ExportSettings = exportSettings;
             CopySourceType = copySourceType ?? "AzureDatabricksDeltaLakeSource";
         }
 
-        /// <summary>
-        /// Azure Databricks Delta Lake Sql query. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Query { get; set; }
+        /// <summary> Azure Databricks Delta Lake Sql query. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Query { get; set; }
         /// <summary> Azure Databricks Delta Lake export settings. </summary>
         public AzureDatabricksDeltaLakeExportCommand ExportSettings { get; set; }
     }

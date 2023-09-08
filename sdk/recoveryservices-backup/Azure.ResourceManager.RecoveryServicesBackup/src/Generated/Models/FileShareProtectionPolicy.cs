@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
-        /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </param>
+        /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         internal FileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
         {
             WorkLoadType = workLoadType;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </summary>
         public BackupRetentionPolicy RetentionPolicy { get; set; }
-        /// <summary> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </summary>
+        /// <summary> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </summary>
         public string TimeZone { get; set; }
     }
 }

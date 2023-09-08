@@ -82,20 +82,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task ExtractKeyPhrasesWithWarningTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
-
-            ExtractKeyPhrasesResultCollection keyPhrasesCollection = await client.ExtractKeyPhrasesBatchAsync(new List<string> { document }, "es", new TextAnalyticsRequestOptions() { ModelVersion = "2020-07-01" });
-            KeyPhraseCollection keyPhrases = keyPhrasesCollection.FirstOrDefault().KeyPhrases;
-
-            ValidateInDocumenResult(keyPhrases, 1);
-
-            Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
-        }
-
-        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -258,30 +244,6 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationExtractKeyPhrasesWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            List<string> documents = batchConvenienceDocuments;
-            TextAnalyticsActions actions = new()
-            {
-                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() }
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<ExtractKeyPhrasesActionResult> actionResults = resultCollection.ExtractKeyPhrasesResults;
-            Assert.IsNotNull(actionResults);
-
-            ExtractKeyPhrasesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateBatchDocumentsResult(results, isLanguageAutoDetected: true);
-        }
-
         private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)
         {
             Assert.IsNotNull(keyPhrases.Warnings);
@@ -291,8 +253,7 @@ namespace Azure.AI.TextAnalytics.Tests
         private void ValidateBatchDocumentsResult(
             ExtractKeyPhrasesResultCollection results,
             int minKeyPhrasesCount = default,
-            bool includeStatistics = default,
-            bool isLanguageAutoDetected = default)
+            bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -324,21 +285,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
-                }
-
-                if (isLanguageAutoDetected)
-                {
-                    Assert.IsNotNull(result.DetectedLanguage);
-                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
-                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
-                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
-                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
-                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
-                }
-                else
-                {
-                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 ValidateInDocumenResult(result.KeyPhrases, minKeyPhrasesCount);

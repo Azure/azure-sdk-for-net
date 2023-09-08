@@ -28,11 +28,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static SignInSettingsGetEntityTagHeaders GetEntityTag(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName)
             {
                 return operations.GetEntityTagAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -53,6 +54,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task<SignInSettingsGetEntityTagHeaders> GetEntityTagAsync(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
@@ -68,11 +70,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static PortalSigninSettings Get(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName)
             {
                 return operations.GetAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
@@ -85,7 +88,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -93,6 +96,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task<PortalSigninSettings> GetAsync(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
@@ -108,7 +112,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -121,6 +125,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static void Update(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, PortalSigninSettings parameters, string ifMatch)
             {
                 operations.UpdateAsync(resourceGroupName, serviceName, parameters, ifMatch).GetAwaiter().GetResult();
@@ -133,7 +138,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -149,6 +154,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task UpdateAsync(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, PortalSigninSettings parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
@@ -161,7 +167,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -173,6 +179,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static PortalSigninSettings CreateOrUpdate(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, PortalSigninSettings parameters, string ifMatch = default(string))
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, parameters, ifMatch).GetAwaiter().GetResult();
@@ -185,7 +192,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -200,6 +207,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task<PortalSigninSettings> CreateOrUpdateAsync(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, PortalSigninSettings parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))

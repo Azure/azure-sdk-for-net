@@ -14,7 +14,7 @@ namespace Azure.Data.Tables.Models
     public partial class TableCorsRule
     {
         /// <summary> Initializes a new instance of TableCorsRule. </summary>
-        /// <param name="allowedOrigins"> The origin domains that are permitted to make a request against the service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character &apos;*&apos; to allow all origin domains to make requests via CORS. </param>
+        /// <param name="allowedOrigins"> The origin domains that are permitted to make a request against the service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS. </param>
         /// <param name="allowedMethods"> The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated). </param>
         /// <param name="allowedHeaders"> The request headers that the origin domain may specify on the CORS request. </param>
         /// <param name="exposedHeaders"> The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer. </param>
@@ -34,7 +34,7 @@ namespace Azure.Data.Tables.Models
             MaxAgeInSeconds = maxAgeInSeconds;
         }
 
-        /// <summary> The origin domains that are permitted to make a request against the service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character &apos;*&apos; to allow all origin domains to make requests via CORS. </summary>
+        /// <summary> The origin domains that are permitted to make a request against the service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS. </summary>
         public string AllowedOrigins { get; set; }
         /// <summary> The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated). </summary>
         public string AllowedMethods { get; set; }

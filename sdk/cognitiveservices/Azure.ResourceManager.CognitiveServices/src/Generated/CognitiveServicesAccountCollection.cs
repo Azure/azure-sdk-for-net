@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It&apos;s also the resource type for billing.
+        /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It's also the resource type for billing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It&apos;s also the resource type for billing.
+        /// Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It's also the resource type for billing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

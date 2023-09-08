@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.3 (2023-09-05)
+
+### Bugs Fixed
+
+- Fix the missing `MaintenanceConfigurationData.InstallPatches` serialization issue.
+
+## 1.2.0-beta.2 (2023-07-24)
+
+### Features Added
+
+- Bump the api-version to `2023-04-01`.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.34.0.
+- Upgraded dependent Azure.ResourceManager to 1.7.0.
+
+## 1.2.0-beta.1 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.1.2 (2023-03-11)
 

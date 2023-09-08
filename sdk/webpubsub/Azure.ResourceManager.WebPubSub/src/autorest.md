@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: WebPubSub
 namespace: Azure.ResourceManager.WebPubSub
 require: https://github.com/Azure/azure-rest-api-specs/blob/1be09531e4c6edeafde41d6562371566d39669e8/specification/webpubsub/resource-manager/readme.md
@@ -24,7 +23,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationDomainResource(Client, CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(e)), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, "CommunicationDomainResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationDomainResource(Client, CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(e)), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, "CommunicationDomainResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationDomainResource(Client, CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(e)), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, "CommunicationDomainResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationDomainResource(Client, CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(e)), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, "CommunicationDomainResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

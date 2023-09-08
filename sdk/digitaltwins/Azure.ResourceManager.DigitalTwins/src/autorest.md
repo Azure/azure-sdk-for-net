@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: DigitalTwins
 namespace: Azure.ResourceManager.DigitalTwins
@@ -15,6 +14,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 rename-mapping:
   AzureDataExplorerConnectionProperties.adxResourceId: -|arm-id
@@ -53,7 +53,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

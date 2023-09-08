@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="publisher"> The image publisher. </param>
         /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
         /// <param name="sku"> The image SKU. </param>
-        /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or &apos;latest&apos;. Major, Minor, and Build are decimal numbers. Specify &apos;latest&apos; to use the latest version of an image available at deploy time. Even if you use &apos;latest&apos;, the VM image will not automatically update after deploy time even if a new version becomes available. </param>
+        /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or 'latest'. Major, Minor, and Build are decimal numbers. Specify 'latest' to use the latest version of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update after deploy time even if a new version becomes available. </param>
         internal SapImageReference(string publisher, string offer, string sku, string version)
         {
             Publisher = publisher;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public string Offer { get; set; }
         /// <summary> The image SKU. </summary>
         public string Sku { get; set; }
-        /// <summary> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or &apos;latest&apos;. Major, Minor, and Build are decimal numbers. Specify &apos;latest&apos; to use the latest version of an image available at deploy time. Even if you use &apos;latest&apos;, the VM image will not automatically update after deploy time even if a new version becomes available. </summary>
+        /// <summary> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or 'latest'. Major, Minor, and Build are decimal numbers. Specify 'latest' to use the latest version of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update after deploy time even if a new version becomes available. </summary>
         public string Version { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a database&apos;s security alert policy.
+        /// Creates or updates a database's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a database&apos;s security alert policy.
+        /// Creates or updates a database's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s security alert policy.
+        /// Gets a database's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s security alert policy.
+        /// Gets a database's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of database&apos;s security alert policies.
+        /// Gets a list of database's security alert policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSecurityAlertPolicyResource(Client, SqlDatabaseSecurityAlertPolicyData.DeserializeSqlDatabaseSecurityAlertPolicyData(e)), _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSecurityAlertPolicyResource(Client, SqlDatabaseSecurityAlertPolicyData.DeserializeSqlDatabaseSecurityAlertPolicyData(e)), _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of database&apos;s security alert policies.
+        /// Gets a list of database's security alert policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSecurityAlertPolicyResource(Client, SqlDatabaseSecurityAlertPolicyData.DeserializeSqlDatabaseSecurityAlertPolicyData(e)), _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSecurityAlertPolicyResource(Client, SqlDatabaseSecurityAlertPolicyData.DeserializeSqlDatabaseSecurityAlertPolicyData(e)), _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

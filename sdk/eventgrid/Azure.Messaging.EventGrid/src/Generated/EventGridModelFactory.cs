@@ -261,7 +261,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of IotHubDeviceCreatedEventData. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
+        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceCreatedEventData"/> instance for mocking. </returns>
@@ -271,7 +271,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of DeviceLifeCycleEventProperties. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
+        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceLifeCycleEventProperties"/> instance for mocking. </returns>
@@ -334,7 +334,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of IotHubDeviceDeletedEventData. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
+        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceDeletedEventData"/> instance for mocking. </returns>
@@ -344,8 +344,8 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of IotHubDeviceConnectedEventData. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
-        /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
+        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
+        /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="deviceConnectionStateEventInfo"> Information about the device connection state event. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceConnectedEventData"/> instance for mocking. </returns>
@@ -355,8 +355,8 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of DeviceConnectionStateEventProperties. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
-        /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
+        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
+        /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="deviceConnectionStateEventInfo"> Information about the device connection state event. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceConnectionStateEventProperties"/> instance for mocking. </returns>
@@ -374,8 +374,8 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of IotHubDeviceDisconnectedEventData. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
-        /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
+        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
+        /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="deviceConnectionStateEventInfo"> Information about the device connection state event. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceDisconnectedEventData"/> instance for mocking. </returns>
@@ -565,10 +565,10 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of ServiceBusActiveMessagesAvailableWithNoListenersEventData. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
-        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of &apos;queue&apos; or &apos;subscriber&apos;. </param>
-        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type &apos;subscriber&apos;, then this value will be null. </param>
-        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
-        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic&apos;s subscription. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
+        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
+        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </param>
+        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
+        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
         /// <returns> A new <see cref="SystemEvents.ServiceBusActiveMessagesAvailableWithNoListenersEventData"/> instance for mocking. </returns>
         public static ServiceBusActiveMessagesAvailableWithNoListenersEventData ServiceBusActiveMessagesAvailableWithNoListenersEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null)
         {
@@ -578,10 +578,10 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of ServiceBusDeadletterMessagesAvailableWithNoListenersEventData. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
-        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of &apos;queue&apos; or &apos;subscriber&apos;. </param>
-        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type &apos;subscriber&apos;, then this value will be null. </param>
-        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
-        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic&apos;s subscription. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
+        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
+        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </param>
+        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
+        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
         /// <returns> A new <see cref="SystemEvents.ServiceBusDeadletterMessagesAvailableWithNoListenersEventData"/> instance for mocking. </returns>
         public static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null)
         {
@@ -591,10 +591,10 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
-        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of &apos;queue&apos; or &apos;subscriber&apos;. </param>
-        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type &apos;subscriber&apos;, then this value will be null. </param>
-        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
-        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic&apos;s subscription. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
+        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
+        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </param>
+        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
+        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
         /// <returns> A new <see cref="SystemEvents.ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/> instance for mocking. </returns>
         public static ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null)
         {
@@ -604,10 +604,10 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
-        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of &apos;queue&apos; or &apos;subscriber&apos;. </param>
-        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type &apos;subscriber&apos;, then this value will be null. </param>
-        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
-        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic&apos;s subscription. If the entity type is of type &apos;queue&apos;, then this value will be null. </param>
+        /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
+        /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </param>
+        /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
+        /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
         /// <returns> A new <see cref="SystemEvents.ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData"/> instance for mocking. </returns>
         public static ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null)
         {
@@ -944,8 +944,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="typeOfStreamWithMinLastTimestamp"> Gets the type of stream with minimum last timestamp. </param>
         /// <param name="maxLastTimestamp"> Gets the maximum timestamp among all the tracks (audio or video). </param>
         /// <param name="typeOfStreamWithMaxLastTimestamp"> Gets the type of stream with maximum last timestamp. </param>
-        /// <param name="timescaleOfMinLastTimestamp"> Gets the timescale in which &quot;MinLastTimestamp&quot; is represented. </param>
-        /// <param name="timescaleOfMaxLastTimestamp"> Gets the timescale in which &quot;MaxLastTimestamp&quot; is represented. </param>
+        /// <param name="timescaleOfMinLastTimestamp"> Gets the timescale in which "MinLastTimestamp" is represented. </param>
+        /// <param name="timescaleOfMaxLastTimestamp"> Gets the timescale in which "MaxLastTimestamp" is represented. </param>
         /// <returns> A new <see cref="SystemEvents.MediaLiveEventIncomingStreamsOutOfSyncEventData"/> instance for mocking. </returns>
         public static MediaLiveEventIncomingStreamsOutOfSyncEventData MediaLiveEventIncomingStreamsOutOfSyncEventData(string minLastTimestamp = null, string typeOfStreamWithMinLastTimestamp = null, string maxLastTimestamp = null, string typeOfStreamWithMaxLastTimestamp = null, string timescaleOfMinLastTimestamp = null, string timescaleOfMaxLastTimestamp = null)
         {
@@ -1623,7 +1623,7 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
         /// <param name="isAnonymous"> True if the Microsoft Teams user is anonymous. By default false if missing. </param>
-        /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default &apos;public&apos; if missing. </param>
+        /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </param>
         /// <returns> A new <see cref="SystemEvents.MicrosoftTeamsUserIdentifierModel"/> instance for mocking. </returns>
         public static MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUserIdentifierModel(string userId = null, bool? isAnonymous = null, CommunicationCloudEnvironmentModel? cloud = null)
         {
@@ -2167,6 +2167,62 @@ namespace Azure.Messaging.EventGrid
         public static ContainerServiceNewKubernetesVersionAvailableEventData ContainerServiceNewKubernetesVersionAvailableEventData(string latestSupportedKubernetesVersion = null, string latestStableKubernetesVersion = null, string lowestMinorKubernetesVersion = null, string latestPreviewKubernetesVersion = null)
         {
             return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion, latestStableKubernetesVersion, lowestMinorKubernetesVersion, latestPreviewKubernetesVersion);
+        }
+
+        /// <summary> Initializes a new instance of ContainerServiceClusterSupportEndedEventData. </summary>
+        /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerServiceClusterSupportEndedEventData"/> instance for mocking. </returns>
+        public static ContainerServiceClusterSupportEndedEventData ContainerServiceClusterSupportEndedEventData(string kubernetesVersion = null)
+        {
+            return new ContainerServiceClusterSupportEndedEventData(kubernetesVersion);
+        }
+
+        /// <summary> Initializes a new instance of ContainerServiceClusterSupportEventData. </summary>
+        /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerServiceClusterSupportEventData"/> instance for mocking. </returns>
+        public static ContainerServiceClusterSupportEventData ContainerServiceClusterSupportEventData(string kubernetesVersion = null)
+        {
+            return new ContainerServiceClusterSupportEventData(kubernetesVersion);
+        }
+
+        /// <summary> Initializes a new instance of ContainerServiceClusterSupportEndingEventData. </summary>
+        /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerServiceClusterSupportEndingEventData"/> instance for mocking. </returns>
+        public static ContainerServiceClusterSupportEndingEventData ContainerServiceClusterSupportEndingEventData(string kubernetesVersion = null)
+        {
+            return new ContainerServiceClusterSupportEndingEventData(kubernetesVersion);
+        }
+
+        /// <summary> Initializes a new instance of ContainerServiceNodePoolRollingStartedEventData. </summary>
+        /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerServiceNodePoolRollingStartedEventData"/> instance for mocking. </returns>
+        public static ContainerServiceNodePoolRollingStartedEventData ContainerServiceNodePoolRollingStartedEventData(string nodePoolName = null)
+        {
+            return new ContainerServiceNodePoolRollingStartedEventData(nodePoolName);
+        }
+
+        /// <summary> Initializes a new instance of ContainerServiceNodePoolRollingEventData. </summary>
+        /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerServiceNodePoolRollingEventData"/> instance for mocking. </returns>
+        public static ContainerServiceNodePoolRollingEventData ContainerServiceNodePoolRollingEventData(string nodePoolName = null)
+        {
+            return new ContainerServiceNodePoolRollingEventData(nodePoolName);
+        }
+
+        /// <summary> Initializes a new instance of ContainerServiceNodePoolRollingSucceededEventData. </summary>
+        /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerServiceNodePoolRollingSucceededEventData"/> instance for mocking. </returns>
+        public static ContainerServiceNodePoolRollingSucceededEventData ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName = null)
+        {
+            return new ContainerServiceNodePoolRollingSucceededEventData(nodePoolName);
+        }
+
+        /// <summary> Initializes a new instance of ContainerServiceNodePoolRollingFailedEventData. </summary>
+        /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerServiceNodePoolRollingFailedEventData"/> instance for mocking. </returns>
+        public static ContainerServiceNodePoolRollingFailedEventData ContainerServiceNodePoolRollingFailedEventData(string nodePoolName = null)
+        {
+            return new ContainerServiceNodePoolRollingFailedEventData(nodePoolName);
         }
 
         /// <summary> Initializes a new instance of ApiManagementUserCreatedEventData. </summary>

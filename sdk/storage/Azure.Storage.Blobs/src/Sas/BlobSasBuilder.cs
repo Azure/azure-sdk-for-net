@@ -143,17 +143,17 @@ namespace Azure.Storage.Sas
         public string ContentDisposition { get; set; }
 
         /// <summary>
-        /// Override the value returned for Cache-Encoding response header.
+        /// Override the value returned for Content-Encoding response header.
         /// </summary>
         public string ContentEncoding { get; set; }
 
         /// <summary>
-        /// Override the value returned for Cache-Language response header.
+        /// Override the value returned for Content-Language response header.
         /// </summary>
         public string ContentLanguage { get; set; }
 
         /// <summary>
-        /// Override the value returned for Cache-Type response header.
+        /// Override the value returned for Content-Type response header.
         /// </summary>
         public string ContentType { get; set; }
 

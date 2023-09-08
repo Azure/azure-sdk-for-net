@@ -7,10 +7,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
-using Microsoft.Azure.Management.EventHub;
-using Microsoft.Azure.Management.EventHub.Models;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Rest;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -25,9 +21,6 @@ namespace Azure.Messaging.EventHubs.Tests
     {
         /// <summary>The manager for common live test resource operations.</summary>
         private static readonly LiveResourceManager ResourceManager = new LiveResourceManager();
-
-        /// <summary>The location of the Azure Resource Manager for the active cloud environment.</summary>
-        private static readonly Uri AzureResourceManagerUri = new Uri(EventHubsTestEnvironment.Instance.ResourceManagerUrl);
 
         /// <summary>Serves as a sentinel flag to denote when the instance has been disposed.</summary>
         private volatile bool _disposed = false;
@@ -86,14 +79,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 return;
             }
 
-            var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
-            var eventHubNamespace = EventHubsTestEnvironment.Instance.EventHubsNamespace;
-            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
-            var client = new EventHubManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId };
-
             try
             {
-                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.EventHubs.DeleteAsync(resourceGroup, eventHubNamespace, EventHubName)).ConfigureAwait(false);
+                await ResourceManager.DeleteEventHubAsync(EventHubName).ConfigureAwait(false);
             }
             catch
             {
@@ -103,10 +91,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 //
                 // If an Event Hub fails to be deleted, removing of the associated namespace at the end of the
                 // test run will also remove the orphan.
-            }
-            finally
-            {
-                client?.Dispose();
             }
 
             _disposed = true;
@@ -135,25 +119,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public static Task<EventHubScope> CreateAsync(int partitionCount,
                                                       IEnumerable<string> consumerGroups,
                                                       [CallerMemberName] string caller = "") => BuildScope(partitionCount, consumerGroups, caller);
-
-        /// <summary>
-        ///   Performs the tasks needed to remove an ephemeral Event Hubs namespace used as a container for Event Hub instances
-        ///   for a specific test run.
-        /// </summary>
-        ///
-        /// <param name="namespaceName">The name of the namespace to delete.</param>
-        ///
-        public static async Task DeleteNamespaceAsync(string namespaceName)
-        {
-            var subscription = EventHubsTestEnvironment.Instance.SubscriptionId;
-            var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
-            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
-
-            using (var client = new EventHubManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = subscription })
-            {
-                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName)).ConfigureAwait(false);
-            }
-        }
 
         /// <summary>
         ///   Builds a new scope based on the Event Hub that is named using <see cref="EventHubsTestEnvironment.Instance.EventHubName" />, if specified.  If not,
@@ -189,22 +154,11 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The <see cref="EventHubScope" /> that will be used in a given test run.</returns>
         ///
-        private static async Task<EventHubScope> BuildScopeFromExistingEventHub()
-        {
-            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
-
-            using (var client = new EventHubManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId })
-            {
-                var consumerGroups = client.ConsumerGroups.ListByEventHub
-                (
-                    EventHubsTestEnvironment.Instance.ResourceGroup,
-                    EventHubsTestEnvironment.Instance.EventHubsNamespace,
-                    EventHubsTestEnvironment.Instance.EventHubNameOverride
-                 );
-
-                return new EventHubScope(EventHubsTestEnvironment.Instance.EventHubNameOverride, consumerGroups.Select(c => c.Name).ToList(), shouldRemoveEventHubAtScopeCompletion: false);
-            }
-        }
+        private static Task<EventHubScope> BuildScopeFromExistingEventHub() => Task.FromResult(
+            new EventHubScope(
+                EventHubsTestEnvironment.Instance.EventHubNameOverride,
+                ResourceManager.QueryEventHubConsumerGroupNames(EventHubsTestEnvironment.Instance.EventHubNameOverride),
+                shouldRemoveEventHubAtScopeCompletion: false));
 
         /// <summary>
         ///   Performs the tasks needed to create a new Event Hub instance with the requested
@@ -221,34 +175,29 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                            IEnumerable<string> consumerGroups,
                                                                            [CallerMemberName] string caller = "")
         {
+            // Use the name of the test along with some randomization as the name of the ephemeral Event Hub.  This
+            // allows us to identify which test is associated with it, while preventing test run failures when cleanup
+            // fails.
+
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
-            var groups = (consumerGroups ?? Enumerable.Empty<string>()).ToList();
-            var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
-            var eventHubNamespace = EventHubsTestEnvironment.Instance.EventHubsNamespace;
-            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
+            var eventHubName = $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+            var groups = consumerGroups?.ToList() ?? new List<string>();
+            var eventHub = await ResourceManager.CreateEventHubAsync(eventHubName, partitionCount, groups).ConfigureAwait(false);
 
-            string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+            // There is a race condition in which ARM has created the new Event Hub but it is not yet visible to the Event Hubs
+            // service.  Introduce a short delay to allow for the service to get access to the new resource.
 
-            using (var client = new EventHubManagementClient(AzureResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId })
-            {
-                var eventHub = new Eventhub(partitionCount: partitionCount);
-                eventHub = await ResourceManager.CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub)).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
 
-                var consumerPolicy = ResourceManager.CreateRetryPolicy<ConsumerGroup>();
+            // The default consumer group is always present; include it as part of the scope.
 
-                await Task.WhenAll
-                (
-                    consumerGroups.Select(groupName =>
-                    {
-                        var group = new ConsumerGroup(name: groupName);
-                        return consumerPolicy.ExecuteAsync(() => client.ConsumerGroups.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, eventHub.Name, groupName, group));
-                    })
-                ).ConfigureAwait(false);
+            groups.Insert(0, EventHubConsumerClient.DefaultConsumerGroupName);
 
-                groups.Insert(0, EventHubConsumerClient.DefaultConsumerGroupName);
-                return new EventHubScope(eventHub.Name, groups, shouldRemoveEventHubAtScopeCompletion: true);
-            }
+            return new EventHubScope(
+                eventHubName,
+                groups,
+                shouldRemoveEventHubAtScopeCompletion: true);
         }
     }
 }

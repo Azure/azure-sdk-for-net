@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> or <paramref name="data"/> is null. </exception>
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> or <paramref name="data"/> is null. </exception>
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

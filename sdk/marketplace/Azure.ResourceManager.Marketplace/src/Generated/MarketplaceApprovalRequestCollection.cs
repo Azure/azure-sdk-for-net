@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<MarketplaceApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceApprovalRequestPrivateStoreRestClient.CreateGetApprovalRequestsListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MarketplaceApprovalRequestResource(Client, MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(e)), _marketplaceApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceApprovalRequestCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MarketplaceApprovalRequestResource(Client, MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(e)), _marketplaceApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<MarketplaceApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceApprovalRequestPrivateStoreRestClient.CreateGetApprovalRequestsListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MarketplaceApprovalRequestResource(Client, MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(e)), _marketplaceApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceApprovalRequestCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MarketplaceApprovalRequestResource(Client, MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(e)), _marketplaceApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

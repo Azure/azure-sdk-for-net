@@ -49,6 +49,7 @@ namespace Azure.Identity
         private readonly bool _logAccountDetails;
         internal string TenantId { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
+        internal bool _isChainedCredential;
 
         /// <summary>
         /// Create an instance of CliCredential class.
@@ -67,7 +68,7 @@ namespace Azure.Identity
 
         internal AzureCliCredential(CredentialPipeline pipeline, IProcessService processService, AzureCliCredentialOptions options = null)
         {
-            _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
@@ -75,6 +76,7 @@ namespace Azure.Identity
             TenantId = options?.TenantId;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
+            _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <summary>
@@ -132,7 +134,14 @@ namespace Azure.Identity
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
-                throw new AuthenticationFailedException(AzureCliTimeoutError);
+                if (_isChainedCredential)
+                {
+                    throw new CredentialUnavailableException(AzureCliTimeoutError);
+                }
+                else
+                {
+                    throw new AuthenticationFailedException(AzureCliTimeoutError);
+                }
             }
             catch (InvalidOperationException exception)
             {
@@ -163,7 +172,14 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(InteractiveLoginRequired);
                 }
 
-                throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
+                if (_isChainedCredential)
+                {
+                    throw new CredentialUnavailableException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
+                }
+                else
+                {
+                    throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
+                }
             }
 
             AccessToken token = DeserializeOutput(output);
@@ -199,7 +215,7 @@ namespace Azure.Identity
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe");
-                argument = $"/c \"{command}\"";
+                argument = $"/d /c \"{command}\"";
             }
             else
             {

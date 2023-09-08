@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: &apos;System&apos;, &apos;LB&apos;, &apos;User&apos;. Default is &apos;User&apos;. </summary>
+    /// <summary> Mode - AgentPoolMode represents mode of an agent pool. Possible values include: 'System', 'LB', 'User'. Default is 'User'. </summary>
     public readonly partial struct Mode : IEquatable<Mode>
     {
         private readonly string _value;

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -149,7 +150,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.GetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.GetSessionStateActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             BinaryData sessionState;
@@ -193,7 +194,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.SetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.SetSessionStateActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             try
@@ -237,7 +238,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.RenewSessionLockStart(Identifier, SessionId);
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.RenewSessionLockActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             try

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageSkuRestriction. </summary>
         /// <param name="restrictionType"> The type of restrictions. As of now only possible value for this is location. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
-        /// <param name="reasonCode"> The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The &quot;NotAvailableForSubscription&quot; is related to capacity at DC. </param>
+        /// <param name="reasonCode"> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The "NotAvailableForSubscription" is related to capacity at DC. </param>
         internal StorageSkuRestriction(string restrictionType, IReadOnlyList<string> values, StorageRestrictionReasonCode? reasonCode)
         {
             RestrictionType = restrictionType;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
         public string RestrictionType { get; }
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         public IReadOnlyList<string> Values { get; }
-        /// <summary> The reason for the restriction. As of now this can be &quot;QuotaId&quot; or &quot;NotAvailableForSubscription&quot;. Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The &quot;NotAvailableForSubscription&quot; is related to capacity at DC. </summary>
+        /// <summary> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The "NotAvailableForSubscription" is related to capacity at DC. </summary>
         public StorageRestrictionReasonCode? ReasonCode { get; }
     }
 }

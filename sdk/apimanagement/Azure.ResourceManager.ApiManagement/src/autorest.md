@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
@@ -56,7 +55,7 @@ format-by-name-rules:
   'PrivateIPAddresses': 'ip-address'
   'PublicIPAddresses': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -267,6 +266,7 @@ rename-mapping:
   HostnameConfiguration.keyVaultId: keyVaultSecretUri
   ParameterContract.required: IsRequired
   SchemaType: ApiSchemaType
+  ApiRevisionContract.privateUrl: privateUrlString
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'

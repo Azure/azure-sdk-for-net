@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchField("descriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
                     {
                         IsSearchable = true,
-                        Dimensions = 1536,
+                        VectorSearchDimensions = 1536,
                         VectorSearchConfiguration = "my-vector-config"
                     },
                     new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
@@ -83,7 +83,25 @@ namespace Azure.Search.Documents.Tests
                 {
                     AlgorithmConfigurations =
                     {
-                        new VectorSearchAlgorithmConfiguration( "my-vector-config", "hnsw")
+                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                    }
+                },
+                SemanticSettings = new()
+                {
+                    Configurations =
+                    {
+                       new SemanticConfiguration("my-semantic-config", new()
+                       {
+                           TitleField = new(){ FieldName = "hotelName" },
+                           ContentFields =
+                           {
+                               new() { FieldName = "description" }
+                           },
+                           KeywordFields =
+                           {
+                               new() { FieldName = "category" }
+                           }
+                       })
                     }
                 },
                 Suggesters =
@@ -343,7 +361,7 @@ namespace Azure.Search.Documents.Tests
         public string DescriptionFr { get; set; }
 
         [JsonPropertyName("descriptionVector")]
-        public IReadOnlyList<float> DescriptionVector { get; set; }
+        public IReadOnlyList<float> DescriptionVector { get; set; } = VectorSearchEmbeddings.DefaultVectorizeDescription; // Default DescriptionVector: "Hotel"
 
         [JsonPropertyName("category")]
         public string Category { get; set; }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob&apos;s Shared Access Signature (SAS) URL as the &apos;contentLink&apos; property value.
+        /// Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob's Shared Access Signature (SAS) URL as the 'contentLink' property value.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob&apos;s Shared Access Signature (SAS) URL as the &apos;contentLink&apos; property value.
+        /// Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob's Shared Access Signature (SAS) URL as the 'contentLink' property value.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

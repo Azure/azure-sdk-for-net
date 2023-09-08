@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway&apos;s display name. </param>
+        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway&apos;s display name. </param>
+        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkGatewayResource(Client, WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(e)), _workloadNetworkGatewayWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkGatewayResource(Client, WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(e)), _workloadNetworkGatewayWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkGatewayResource(Client, WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(e)), _workloadNetworkGatewayWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkGatewayResource(Client, WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(e)), _workloadNetworkGatewayWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway&apos;s display name. </param>
+        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway&apos;s display name. </param>
+        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
-        /// Gets Azure services&apos; emerging issues.
+        /// Gets Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
-        /// Gets Azure services&apos; emerging issues.
+        /// Gets Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
-        /// Lists Azure services&apos; emerging issues.
+        /// Lists Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -139,11 +140,11 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEmergingIssueResource(Client, ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e)), _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEmergingIssueResource(Client, ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e)), _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists Azure services&apos; emerging issues.
+        /// Lists Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEmergingIssueResource(Client, ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e)), _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEmergingIssueResource(Client, ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e)), _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

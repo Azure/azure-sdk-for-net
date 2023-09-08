@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="DelimitedTextReadSettings"/>.
         /// </param>
-        internal GetDatasetMetadataActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DatasetReference dataset, IList<BinaryData> fieldList, StoreReadSettings storeSettings, FormatReadSettings formatSettings) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal GetDatasetMetadataActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DatasetReference dataset, IList<BinaryData> fieldList, StoreReadSettings storeSettings, FormatReadSettings formatSettings) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Dataset = dataset;
             FieldList = fieldList;

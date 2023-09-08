@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid', '[Category](#category)'] with operators ['eq', 'and', 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and ResourceGroup eq 'MyResourceGroup'. </param>
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Advisor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties [&apos;ResourceId&apos;, &apos;ResourceGroup&apos;, &apos;RecommendationTypeGuid&apos;, &apos;[Category](#category)&apos;] with operators [&apos;eq&apos;, &apos;and&apos;, &apos;or&apos;].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq &apos;Cost&apos; and ResourceGroup eq &apos;MyResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply to the recommendations.&lt;br&gt;Filter can be applied to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid', '[Category](#category)'] with operators ['eq', 'and', 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and ResourceGroup eq 'MyResourceGroup'. </param>
         /// <param name="top"> The number of recommendations per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Advisor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

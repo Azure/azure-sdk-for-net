@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Creates or updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Creates or updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Creates or updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Creates or updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceNamespacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceNamespacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceResource(Client, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e)), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceResource(Client, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e)), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceNamespacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceNamespacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceResource(Client, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e)), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceResource(Client, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e)), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

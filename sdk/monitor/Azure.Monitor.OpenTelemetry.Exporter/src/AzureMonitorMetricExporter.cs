@@ -5,12 +5,13 @@ using System;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class AzureMonitorMetricExporter : BaseExporter<Metric>
+    internal sealed class AzureMonitorMetricExporter : BaseExporter<Metric>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
@@ -46,11 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, MetricResource, _instrumentationKey);
                     if (telemetryItems.Count > 0)
                     {
-                        if (MetricResource?.MetricTelemetry != null)
-                        {
-                            telemetryItems.Add(MetricResource.MetricTelemetry);
-                        }
-                        exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                        exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorMetricExporter, false, CancellationToken.None).EnsureCompleted();
                     }
                 }
                 else
@@ -60,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
+                AzureMonitorExporterEventSource.Log.FailedToExport(nameof(AzureMonitorMetricExporter), _instrumentationKey, ex);
             }
 
             return exportResult;
@@ -72,6 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (disposing)
                 {
+                    AzureMonitorExporterEventSource.Log.DisposedObject(nameof(AzureMonitorMetricExporter));
                     _transmitter?.Dispose();
                 }
 

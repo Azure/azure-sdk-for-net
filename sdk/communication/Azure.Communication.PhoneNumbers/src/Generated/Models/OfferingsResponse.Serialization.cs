@@ -13,37 +13,5 @@ namespace Azure.Communication.PhoneNumbers
 {
     internal partial class OfferingsResponse
     {
-        internal static OfferingsResponse DeserializeOfferingsResponse(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<IReadOnlyList<PhoneNumberOffering>> phoneNumberOfferings = default;
-            Optional<string> nextLink = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("phoneNumberOfferings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PhoneNumberOffering> array = new List<PhoneNumberOffering>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PhoneNumberOffering.DeserializePhoneNumberOffering(item));
-                    }
-                    phoneNumberOfferings = array;
-                    continue;
-                }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new OfferingsResponse(Optional.ToList(phoneNumberOfferings), nextLink.Value);
-        }
     }
 }

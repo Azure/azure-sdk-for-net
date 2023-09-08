@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,45 +63,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Server);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Server.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Server);
             writer.WritePropertyName("systemNumber"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SystemNumber);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemNumber.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, SystemNumber);
             writer.WritePropertyName("clientId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ClientId);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ClientId);
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UserName);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -126,12 +107,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData server = default;
-            BinaryData systemNumber = default;
-            BinaryData clientId = default;
-            Optional<BinaryData> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> encryptedCredential = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<string> systemNumber = default;
+            DataFactoryElement<string> clientId = default;
+            Optional<DataFactoryElement<string>> userName = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,17 +182,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("server"u8))
                         {
-                            server = BinaryData.FromString(property0.Value.GetRawText());
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemNumber"u8))
                         {
-                            systemNumber = BinaryData.FromString(property0.Value.GetRawText());
+                            systemNumber = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
                         {
-                            clientId = BinaryData.FromString(property0.Value.GetRawText());
+                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
@@ -220,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            userName = BinaryData.FromString(property0.Value.GetRawText());
+                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -229,16 +210,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -247,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapBWLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, systemNumber, clientId, userName.Value, password.Value, encryptedCredential.Value);
+            return new SapBWLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, systemNumber, clientId, userName.Value, password, encryptedCredential.Value);
         }
     }
 }
