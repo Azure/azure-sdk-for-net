@@ -6,11 +6,6 @@ Push-Location $RepoRoot
 try {
     $currentDur = Resolve-Path "."
 
-    if (Test-Path "node_modules") {
-        Write-Host "node_modules folder already exists. Skipping npm install."
-        exit 0
-    }
-
     Write-Host "Installing npm dependencies in $currentDur"
 
     if (Test-Path "package.json") {
