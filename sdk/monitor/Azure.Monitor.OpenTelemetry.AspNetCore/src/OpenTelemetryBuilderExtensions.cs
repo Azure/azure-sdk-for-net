@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
+using OpenTelemetry.Instrumentation.Http;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.ResourceDetectors.Azure;
@@ -98,20 +99,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             builder.WithTracing(b => b
                             .AddSource("Azure.*")
                             .AddAspNetCoreInstrumentation()
-                            .AddHttpClientInstrumentation(o => o.FilterHttpRequestMessage = (_) =>
+                            .AddHttpClientInstrumentation(new HttpClientInstrumentationOptions()
                             {
-                                // Azure SDKs create their own client span before calling the service using HttpClient
-                                // In this case, we would see two spans corresponding to the same operation
-                                // 1) created by Azure SDK 2) created by HttpClient
-                                // To prevent this duplication we are filtering the span from HttpClient
-                                // as span from Azure SDK contains all relevant information needed.
-                                var parentActivity = Activity.Current?.Parent;
-                                if (parentActivity != null && parentActivity.Source.Name.Equals("Azure.Core.Http"))
+                                FilterHttpRequestMessage = (_) =>
                                 {
-                                    return false;
-                                }
+                                    // Azure SDKs create their own client span before calling the service using HttpClient
+                                    // In this case, we would see two spans corresponding to the same operation
+                                    // 1) created by Azure SDK 2) created by HttpClient
+                                    // To prevent this duplication we are filtering the span from HttpClient
+                                    // as span from Azure SDK contains all relevant information needed.
+                                    var parentActivity = Activity.Current?.Parent;
+                                    if (parentActivity != null && parentActivity.Source.Name.Equals("Azure.Core.Http"))
+                                    {
+                                        return false;
+                                    }
 
-                                return true;
+                                    return true;
+                                }
                             })
                             .AddSqlClientInstrumentation()
                             .AddAzureMonitorTraceExporter());
