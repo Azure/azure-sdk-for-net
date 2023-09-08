@@ -137,12 +137,6 @@ namespace Azure.Core.Pipeline
         /// Marks the scope as failed.
         /// </summary>
         /// <param name="exception">The exception to associate with the failed scope.</param>
-#if !NET5_0
-        // This method writes Exceptions to the DiagnosticSource held within this class. This attribute
-        // preserves the public properties on this type so it can be used by ApplicationInsights.
-        [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(Exception))]
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has the commonly used properties being preserved with DynamicDependency.")]
-#endif
         public void Failed(Exception? exception = default)
         {
             _activityAdapter?.MarkFailed(exception);
@@ -341,8 +335,8 @@ namespace Azure.Core.Pipeline
                 _links.Add(linkedActivity);
             }
 
-            [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Activity))]
-            [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(DiagnosticActivity))]
+            [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.PublicMethods, typeof(Activity))]
+            [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.PublicMethods, typeof(DiagnosticActivity))]
             public Activity? Start()
             {
                 _currentActivity = StartActivitySourceActivity();
@@ -502,8 +496,8 @@ namespace Azure.Core.Pipeline
                 _currentActivity?.SetStartTime(startTime);
             }
 
-            [RequiresUnreferencedCode("The exception is used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the exception type being passed in using DynamicDependency attributes.")]
-            public void MarkFailed(Exception? exception)
+            [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has the commonly used properties being preserved with DynamicallyAccessedMemberTypes.")]
+            public void MarkFailed<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]T>(T exception)
             {
                 if (exception != null)
                 {
