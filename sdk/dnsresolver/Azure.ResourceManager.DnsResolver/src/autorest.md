@@ -10,6 +10,7 @@ namespace: Azure.ResourceManager.DnsResolver
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
+  sample: false #true
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true

@@ -6,9 +6,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 arm-core: true
 clear-output-folder: true
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: true
 skip-csproj: true
 model-namespace: false
 public-clients: false
