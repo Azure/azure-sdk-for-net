@@ -18,9 +18,9 @@ var defaultMarketplaceDefinition = 'sdk-devboxdefinition-${uniqueString('devboxd
 var defaultCatalogName = 'sdk-default-catalog'
 var defaultScheduleName = 'default'
 var defaultEnvironmentTypeName = 'sdk-environment-type-${uniqueString('environment-type', '2022-11-11-preview', baseName, resourceGroup().name)}'
-var devBoxSkuName = 'general_a_8c32gb_v1'
+var devBoxSkuName = 'general_i_16c64gb1024ssd_v2'
 var devBoxStorage = 'ssd_1024gb'
-var marketplaceImageName = 'MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365'
+var marketplaceImageName = 'microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2'
 var gitUri = 'https://github.com/Azure/deployment-environments.git'
 
 resource devcenter 'Microsoft.DevCenter/devcenters@2022-11-11-preview' = {
