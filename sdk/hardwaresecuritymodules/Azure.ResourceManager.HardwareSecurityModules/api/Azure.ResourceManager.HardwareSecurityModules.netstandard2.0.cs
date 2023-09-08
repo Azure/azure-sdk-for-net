@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static Azure.ResourceManager.HardwareSecurityModules.Models.EndpointDetail EndpointDetail(string ipAddress = null, int? port = default(int?), string protocol = null, string description = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.HardwareSecurityModulesPrivateEndpointConnectionData HardwareSecurityModulesPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModulesPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModulesPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModulesPrivateEndpointConnectionProvisioningState?), System.Collections.Generic.IEnumerable<string> groupIds = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModulesPrivateLinkResource HardwareSecurityModulesPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
-        public static Azure.ResourceManager.HardwareSecurityModules.Models.NetworkInterface NetworkInterface(string id = null, string privateIPAddress = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.NetworkInterface NetworkInterface(Azure.Core.ResourceIdentifier id = null, string privateIPAddress = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.OutboundEnvironmentEndpoint OutboundEnvironmentEndpoint(string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.EndpointDependency> endpoints = null) { throw null; }
     }
     public partial class CloudHsmClusterPatch
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public partial class NetworkInterface
     {
         public NetworkInterface() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } set { } }
     }
     public partial class NetworkProfile
