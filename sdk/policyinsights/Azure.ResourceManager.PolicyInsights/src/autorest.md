@@ -15,6 +15,23 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+  - PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
+  - PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment
+  - PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment
+  - PolicyEvents_ListQueryResultsForPolicySetDefinition
+  - PolicyEvents_ListQueryResultsForPolicyDefinition
+  - PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment
+  - PolicyStates_ListQueryResultsForPolicySetDefinition
+  - PolicyStates_SummarizeForPolicySetDefinition
+  - PolicyStates_ListQueryResultsForPolicyDefinition
+  - PolicyStates_SummarizeForPolicyDefinition
+  - PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment
+  - PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment
+  - PolicyEvents_ListQueryResultsForResource
+  - PolicyStates_ListQueryResultsForResource
+  - PolicyStates_SummarizeForResource
+  - PolicyTrackedResources_ListQueryResultsForResource
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

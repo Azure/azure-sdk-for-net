@@ -14,6 +14,11 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+  - InformationProtectionPolicies_CreateOrUpdate
+  - InformationProtectionPolicies_List
+  - SubAssessments_ListAll
+  - Assessments_List
 tag: package-dotnet-sdk
 skip-csproj: true
 modelerfour:

@@ -14,6 +14,8 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+  - MarketplaceAgreements_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

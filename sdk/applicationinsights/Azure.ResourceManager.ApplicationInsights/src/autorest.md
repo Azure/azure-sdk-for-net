@@ -14,6 +14,10 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+  - LiveToken_Get
+  - WorkItemConfigurations_Create
+  - WorkItemConfigurations_UpdateItem
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

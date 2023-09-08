@@ -15,6 +15,14 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+    # The discriminator value is incorrect
+    - ReplicationFabrics_Create 
+    - ReplicationProtectionContainers_Create
+    - ReplicationProtectedItems_Delete
+    - ReplicationProtectionContainerMappings_Create
+    # Missing requried parameter
+    - ReplicationJobs_Export
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

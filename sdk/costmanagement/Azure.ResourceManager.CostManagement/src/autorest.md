@@ -13,6 +13,12 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+  - BenefitRecommendations_List 
+  - Forecast_Usage
+  - Dimensions_List
+  - Query_Usage
+  - ScheduledActions_CheckNameAvailabilityByScope
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

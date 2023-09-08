@@ -14,6 +14,11 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+  - MetricDefinitions_List
+  - Metrics_List
+  - Baselines_List
+  - MetricNamespaces_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
