@@ -3,6 +3,7 @@
 ## 12.16.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added support for DataLakeClientOptions.Audience
 
 ### Breaking Changes
 

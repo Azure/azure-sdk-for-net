@@ -3,6 +3,7 @@
 ## 12.18.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added support for BlobClientOptions.Audience
 
 ### Breaking Changes
 

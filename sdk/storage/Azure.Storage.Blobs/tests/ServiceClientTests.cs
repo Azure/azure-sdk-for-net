@@ -235,14 +235,14 @@ namespace Azure.Storage.Blobs.Test
             // Act - Create new blob client with the OAuth Credential and Audience
             BlobClientOptions options = GetOptionsWithAudience(new BlobAudience("https://badaudience.blob.core.windows.net"));
 
-            BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
+            BlobServiceClient aadContainer = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
                 Tenants.GetOAuthCredential(),
                 options));
 
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
-                aadContainer.ExistsAsync(),
+                aadContainer.GetPropertiesAsync(),
                 e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
         }
 
