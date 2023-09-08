@@ -63,7 +63,7 @@ prepend-rp-prefix:
 - VmHostsListResponse
 - VmInfo
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

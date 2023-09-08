@@ -278,6 +278,25 @@ namespace Azure.ResourceManager.DataFactory
         }
         #endregion
 
+        #region DataFactoryChangeDataCaptureResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataFactoryChangeDataCaptureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataFactoryChangeDataCaptureResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryChangeDataCaptureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataFactoryChangeDataCaptureResource" /> object. </returns>
+        public static DataFactoryChangeDataCaptureResource GetDataFactoryChangeDataCaptureResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DataFactoryChangeDataCaptureResource.ValidateResourceId(id);
+                return new DataFactoryChangeDataCaptureResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         /// <summary> Gets a collection of DataFactoryResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataFactoryResources and their operations over a DataFactoryResource. </returns>
@@ -393,14 +412,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
-        /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
+        /// <param name="content"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryRepoUpdate"/> is null. </exception>
-        public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ConfigureFactoryRepoInformationAsync(locationId, factoryRepoUpdate, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ConfigureFactoryRepoInformationAsync(locationId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -418,14 +437,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
-        /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
+        /// <param name="content"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryRepoUpdate"/> is null. </exception>
-        public static Response<DataFactoryResource> ConfigureFactoryRepoInformation(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<DataFactoryResource> ConfigureFactoryRepoInformation(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ConfigureFactoryRepoInformation(locationId, factoryRepoUpdate, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).ConfigureFactoryRepoInformation(locationId, content, cancellationToken);
         }
 
         /// <summary>

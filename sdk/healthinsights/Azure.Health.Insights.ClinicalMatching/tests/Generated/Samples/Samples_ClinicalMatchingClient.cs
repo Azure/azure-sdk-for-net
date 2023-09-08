@@ -561,6 +561,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
                     AcceptedAgeRange = new AcceptedAgeRange()
 {
                         MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                        MaximumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
                     },
                 },
             }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string managedVirtualNetworkName = "exampleManagedVirtualNetworkName";
-            DataFactoryManagedVirtualNetworkData data = new DataFactoryManagedVirtualNetworkData(new ManagedVirtualNetwork());
+            DataFactoryManagedVirtualNetworkData data = new DataFactoryManagedVirtualNetworkData(new DataFactoryManagedVirtualNetworkProperties());
             ArmOperation<DataFactoryManagedVirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, managedVirtualNetworkName, data);
             DataFactoryManagedVirtualNetworkResource result = lro.Value;
 

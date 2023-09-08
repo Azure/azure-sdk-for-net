@@ -43,8 +43,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartDeleteSnapshotsOption _testDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption _testPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType _testRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
-        internal const StorageTransferStatus _testJobStatus = StorageTransferStatus.Queued;
-        internal const StorageTransferStatus _testPartStatus = StorageTransferStatus.Queued;
+        internal const DataTransferStatus _testJobStatus = DataTransferStatus.Queued;
+        internal const DataTransferStatus _testPartStatus = DataTransferStatus.Queued;
 
         private string _checkpointerPath;
 
@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement.Tests
             string checkpointerPath,
             string transferId,
             int jobPartCount,
-            StorageTransferStatus status = StorageTransferStatus.Queued,
+            DataTransferStatus status = DataTransferStatus.Queued,
             List<string> sourcePaths = default,
             List<string> destinationPaths = default,
             string sourceResourceId = "LocalFile",
@@ -132,7 +132,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 JobPartPlanFileName fileName = new JobPartPlanFileName(checkpointerPath, transferId, partNumber);
 
-                using (FileStream stream = File.Create(fileName.FullPath, DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
+                using (FileStream stream = File.Create(fileName.FullPath, DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
                 {
                     header.Serialize(stream);
                 }
@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         internal JobPartPlanHeader CreateDefaultJobPartHeader(
-            string version = DataMovementConstants.PlanFile.SchemaVersion,
+            string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
             DateTimeOffset startTime = default,
             string transferId = _testTransferId,
             long partNumber = _testPartNumber,
@@ -185,8 +185,8 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartDeleteSnapshotsOption deleteSnapshotsOption = _testDeleteSnapshotsOption,
             JobPartPermanentDeleteOption permanentDeleteOption = _testPermanentDeleteOption,
             JobPartPlanRehydratePriorityType rehydratePriorityType = _testRehydratePriorityType,
-            StorageTransferStatus atomicJobStatus = _testJobStatus,
-            StorageTransferStatus atomicPartStatus = _testPartStatus)
+            DataTransferStatus atomicJobStatus = _testJobStatus,
+            DataTransferStatus atomicPartStatus = _testPartStatus)
         {
             if (startTime == default)
             {

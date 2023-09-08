@@ -34,15 +34,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 
             if (platform.IsOSPlatform(OSPlatform.Windows))
             {
-                if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars["LOCALAPPDATA"]?.ToString(), createdDirectoryPath: out dirPath)
-                    || TryCreateTelemetryDirectory(platform: platform, path: environmentVars["TEMP"]?.ToString(), createdDirectoryPath: out dirPath))
+                if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars[EnvironmentVariableConstants.LOCALAPPDATA]?.ToString(), createdDirectoryPath: out dirPath)
+                    || TryCreateTelemetryDirectory(platform: platform, path: environmentVars[EnvironmentVariableConstants.TEMP]?.ToString(), createdDirectoryPath: out dirPath))
                 {
                     return dirPath;
                 }
             }
             else
             {
-                if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars["TMPDIR"]?.ToString(), createdDirectoryPath: out dirPath)
+                if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars[EnvironmentVariableConstants.TMPDIR]?.ToString(), createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: "/var/tmp/", createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: "/tmp/", createdDirectoryPath: out dirPath))
                 {

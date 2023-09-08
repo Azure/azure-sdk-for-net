@@ -15,7 +15,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-#mgmt-debug: 
+# mgmt-debug: 
 #  show-serialized-names: true
 
 # 'tenantId': 'uuid' cannot be used globally as it break our list clusters API where tenantId sometimes is an empty string
@@ -129,8 +129,9 @@ prepend-rp-prefix:
   - TrunkedNetwork
   - VirtualMachine
   - Volume
+  - OperationStatusResult
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

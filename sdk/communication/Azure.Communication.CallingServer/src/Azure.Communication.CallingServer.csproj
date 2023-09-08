@@ -27,8 +27,7 @@
     <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <!-- <PackageReference Include="Azure.Core" /> -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Communication.Common" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

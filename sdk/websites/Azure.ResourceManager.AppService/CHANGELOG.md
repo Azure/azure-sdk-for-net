@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -8,10 +8,17 @@
 
 ### Bugs Fixed
 
-- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebAppBackupData`.
-- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebSiteInstanceStatusData`.
+- Due to `HealthCheckUri` not being a valid URI, add a new property `HealthCheckUriString` to replace it in order to fix the URI format issue.
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2023-09-06)
+
+### Bugs Fixed
+
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebAppBackupData`.
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebSiteInstanceStatusData`.
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `AppServiceTableStorageApplicationLogsConfig`.
 
 ## 1.1.0-beta.1 (2023-05-31)
 

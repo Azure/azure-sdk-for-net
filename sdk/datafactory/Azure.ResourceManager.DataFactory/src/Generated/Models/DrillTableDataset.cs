@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Drill server dataset. </summary>
-    public partial class DrillTableDataset : DataFactoryDatasetDefinition
+    public partial class DrillTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of DrillTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

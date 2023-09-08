@@ -1,23 +1,26 @@
 # Release History
 
-## 1.10.0-beta.2 (Unreleased)
+## 1.11.0-beta.1 (2023-09-13)
+
+### Bugs Fixed
+
+- `ManagedIdentityCredential` will fall through to the next credential in the chain in the case that Docker Desktop returns a 403 response when attempting to access the IMDS endpoint. [#38218](https://github.com/Azure/azure-sdk-for-net/issues/38218)
+
+## 1.10.0 (2023-08-14)
 
 ### Features Added
-- Add `BrowserCustomizedOptions` to `InteractiveBrowserCredential` to enable web view customization for interactive authentication.
-
-### Breaking Changes
+- Added `BrowserCustomization` property to `InteractiveBrowserCredential` to enable web view customization for interactive authentication.
 
 ### Bugs Fixed
 
 - ManagedIdentityCredential will no longer attempt to parse invalid json payloads on responses from the managed identity endpoint.
-
-### Other Changes
+- Fixed an issue where AzurePowerShellCredential fails to parse the token response from Azure PowerShell. [#22638](https://github.com/Azure/azure-sdk-for-net/issues/22638)
 
 ## 1.10.0-beta.1 (2023-07-17)
 
 ### Features Added
 - Continuous Access Evaluation (CAE) is now configurable per-request by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor.
-- Added `IsSupportLoggingEnabled` property to `TokenCredentialOptions` which equates to passing 'true' for the `enablePiiLogging` parameter to the 'WithLogging' method on the MSAL client builder.
+- Added `IsUnsafeSupportLoggingEnabled` property to `TokenCredentialOptions` which equates to passing 'true' for the `enablePiiLogging` parameter to the 'WithLogging' method on the MSAL client builder.
 
 ### Bugs Fixed
 - Fixed an issue with `TokenCachePersistenceOptions` where credentials in the same process would share the same cache, even if they had different configured names.
