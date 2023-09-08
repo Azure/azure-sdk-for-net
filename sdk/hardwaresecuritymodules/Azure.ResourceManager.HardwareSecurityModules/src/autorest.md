@@ -25,7 +25,11 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+rename-mapping:
+  NetworkInterface.id: -|arm-id
+  OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
+
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Collection of OutboundEnvironmentEndpoint. </summary>
-    internal partial class OutboundEnvironmentEndpointCollection
+    internal partial class OutboundEnvironmentEndpointListResult
     {
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>
+        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointListResult. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal OutboundEnvironmentEndpointCollection(IEnumerable<OutboundEnvironmentEndpoint> value)
+        internal OutboundEnvironmentEndpointListResult(IEnumerable<OutboundEnvironmentEndpoint> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>
+        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointListResult. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal OutboundEnvironmentEndpointCollection(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink)
+        internal OutboundEnvironmentEndpointListResult(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
