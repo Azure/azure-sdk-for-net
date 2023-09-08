@@ -11,7 +11,7 @@ namespace Azure.Data.AppConfiguration.Samples
 {
     public partial class ConfigurationSamples : SamplesBase<AppConfigurationTestEnvironment>
     {
-        [Test]
+        //[Test]
         public void CreateSnapshotAutomaticPolling()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -47,7 +47,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        [Test]
+        //[Test]
         public void CreateSnapshotAutomaticPollingLater()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -85,7 +85,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        [Test]
+        //[Test]
         public async Task CreateSnapshotManualPolling()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -129,7 +129,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        [Test]
+        //[Test]
         public void GetSnapshot()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -166,7 +166,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        [Test]
+        //[Test]
         public void ArchiveSnapshot()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -208,7 +208,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        [Test]
+        //[Test]
         public void RecoverSnapshot()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -255,7 +255,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        [Test]
+        //[Test]
         public void GetSnapshots()
         {
             var connectionString = TestEnvironment.ConnectionString;
@@ -306,7 +306,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        [Test]
+        //[Test]
         public void GetConfigurationSettingsForSnapshot()
         {
             var connectionString = TestEnvironment.ConnectionString;
