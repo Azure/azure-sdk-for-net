@@ -12,6 +12,9 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/a436672b07fb1fe276c2
 tag: package-2022-04-01
 output-folder: Generated/
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 
 rename-mapping:
