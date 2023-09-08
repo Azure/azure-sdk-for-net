@@ -28,7 +28,7 @@ namespace Azure.Data.AppConfiguration
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
