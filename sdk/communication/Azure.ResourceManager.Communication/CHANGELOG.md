@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2023-09-07)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for System Assigned, User Assigned and SystemAndUserAssigned Managed Identity
 
 ## 1.2.0-beta.1 (2023-05-29)
 
@@ -118,7 +114,7 @@ Guidance to migrate from previous version of Azure Management SDK
 Example: Create A Communication Service Instance:
 
 Before upgrade:
-```C# 
+```C#
 using Azure.Identity;
 using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Communication.Models;
@@ -131,7 +127,7 @@ var resourceGroupName = "myResourceGroupName";
 var resourceName = "myResource";
 var resource = new CommunicationServiceResource { Location = "Global", DataLocation = "UnitedStates" };
 var operation = await communicationServiceClient.CommunicationService.StartCreateOrUpdateAsync(resourceGroupName, resourceName, resource);
-await operation.WaitForCompletionAsync(); 
+await operation.WaitForCompletionAsync();
 ```
 
 After upgrade:
@@ -161,7 +157,7 @@ CommunicationService communicationService = communicationServiceLro.Value;
 ```
 
 ## 1.0.0 (2021-03-29)
-This release is the first stable release of the management library for Azure Communication Services. 
+This release is the first stable release of the management library for Azure Communication Services.
 
 Minor changes since the public preview release:
 - CheckNameAvailability has been added
