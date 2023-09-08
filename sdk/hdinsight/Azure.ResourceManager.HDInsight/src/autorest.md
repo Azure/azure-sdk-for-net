@@ -26,7 +26,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'privateIPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

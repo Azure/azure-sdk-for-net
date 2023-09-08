@@ -110,7 +110,7 @@ format-by-name-rules:
   'aadTenantId': 'uuid'
   'identityClientId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

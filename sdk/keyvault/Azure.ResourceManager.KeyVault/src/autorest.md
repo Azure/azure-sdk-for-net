@@ -35,7 +35,7 @@ format-by-name-rules:
 no-property-type-replacement:
 - ManagedHsmVirtualNetworkRule
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

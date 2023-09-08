@@ -29,7 +29,7 @@ format-by-name-rules:
   'sourceResourceId': 'arm-id'
   'sourceLocation': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

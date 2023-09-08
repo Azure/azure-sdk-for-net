@@ -116,7 +116,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'sourceId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

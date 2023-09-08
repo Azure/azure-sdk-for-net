@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateListEventHubConsumerGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateListEventHubConsumerGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubConsumerGroupInfoResource(Client, EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(e)), _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics, Pipeline, "EventHubConsumerGroupInfoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubConsumerGroupInfoResource(Client, EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(e)), _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics, Pipeline, "EventHubConsumerGroupInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateListEventHubConsumerGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateListEventHubConsumerGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubConsumerGroupInfoResource(Client, EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(e)), _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics, Pipeline, "EventHubConsumerGroupInfoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubConsumerGroupInfoResource(Client, EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(e)), _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics, Pipeline, "EventHubConsumerGroupInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

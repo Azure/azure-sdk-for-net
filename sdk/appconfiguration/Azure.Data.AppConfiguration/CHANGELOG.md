@@ -1,14 +1,18 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.1 (2023-09-13)
 
 ### Bugs Fixed
 
-### Other Changes
+- `FeatureFlagConfigurationSetting` and `SecretReferenceConfigurationSetting` will now retain custom attributes in the setting value.  Previously, only attributes that were defined in the associated JSON schema were allowed and unknown attributes were discarded.
+
+- Added the ability to create `FeatureFlagConfigurationSetting` and `SecretReferenceConfigurationSetting` instances with an ETag, matching `ConfigurationSetting`.  This allows all setting types to use the [GetConfigurationSettingAsync](https://learn.microsoft.com/dotnet/api/azure.data.appconfiguration.configurationclient.getconfigurationsettingasync?view=azure-dotnet#azure-data-appconfiguration-configurationclient-getconfigurationsettingasync(azure-data-appconfiguration-configurationsetting-system-boolean-system-threading-cancellationtoken)) overload that accepts `onlyIfUnchanged.`  Previously, this was not possible for specialized settings types.
+
+- Added the ability to create `FeatureFlagConfigurationSetting` and `SecretReferenceConfigurationSetting` instances for testing purposes using the `ConfigurationModelFactory`. It was previously not possible to populate service-owned fields when testing.
+
+- Marked a constructor overload of `ConfigurationSetting` that was intended for testing purposes as non-visible, as the `ConfigurationModelFactory` should instead be used.
+
+- Fixed a bug where a disposed content stream was used to attempt deserialization in some scenarios, such as using a custom `HttpMessageHandler` that returns `StringContent`.
 
 ## 1.3.0-beta.2 (2023-07-11)
 
@@ -77,7 +81,7 @@
 
 #### New Features
 
-- Added `SecretReferenceConfigurationSetting` type to represent a configuration setting that references a KeyVault Secret. 
+- Added `SecretReferenceConfigurationSetting` type to represent a configuration setting that references a KeyVault Secret.
 - Added `FeatureFlagConfigurationSetting` type to represent a configuration setting that controls a feature flag.
 - Added `AddSyncToken` to `ConfigurationClient` to be able to provide external synchronization tokens.
 
@@ -89,7 +93,7 @@
 
 - Update the tag list for the AzConfig package
 
-## 1.0.0 
+## 1.0.0
 
 ### Breaking changes
 
@@ -99,11 +103,11 @@
 
 - Fixed multiple issues with connection string parsing in `ConfigurationClient`.
 
-## 1.0.0-preview.6 
+## 1.0.0-preview.6
 
 - Bugfixes: [#8920](https://github.com/Azure/azure-sdk-for-net/issues/8920)
 
-## 1.0.0-preview.5 
+## 1.0.0-preview.5
 
 ### Breaking changes
 
@@ -116,7 +120,7 @@
 - Added new overload for the method `ConfigurationClient.GetRevisions` that accepts key and optional label.
 - Added new overload for the method `ConfigurationClient.GetConfigurationSetting` that accepts `ConfigurationSetting` and its datetime stamp.
 
-## 1.0.0-preview.4 
+## 1.0.0-preview.4
 
 ### Breaking changes
 
@@ -135,11 +139,11 @@
 - Made `ConfigurationSetting` serializable by `System.Text.Json` serializers.
 - Updated documentation and samples.
 
-## 1.0.0-preview.3 
+## 1.0.0-preview.3
 
 - Fixed an issue where special characters were escaped incorrectly.
 
-## 1.0.0-preview.2 
+## 1.0.0-preview.2
 
 - Enabled conditional requests.
 - Added support for setting `x-ms-client-request-id`, `x-ms-correlation-request-id`, and `correlation-context` headers.

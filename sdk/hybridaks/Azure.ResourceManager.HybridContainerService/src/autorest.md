@@ -29,7 +29,7 @@ format-by-name-rules:
 rename-mapping:
   ProvisionedClustersResponse: ProvisionedCluster
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

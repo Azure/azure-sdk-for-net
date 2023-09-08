@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HealthBotBotsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthBotBotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), HealthBotBotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHealthBots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), HealthBotBotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHealthBots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HealthBotBotsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthBotBotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), HealthBotBotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHealthBots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), HealthBotBotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHealthBots", "value", "nextLink", cancellationToken);
         }
     }
 }

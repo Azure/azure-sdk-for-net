@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlMigrationResource(Client, PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(e)), _postgreSqlMigrationMigrationsClientDiagnostics, Pipeline, "PostgreSqlMigrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlMigrationResource(Client, PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(e)), _postgreSqlMigrationMigrationsClientDiagnostics, Pipeline, "PostgreSqlMigrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlMigrationResource(Client, PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(e)), _postgreSqlMigrationMigrationsClientDiagnostics, Pipeline, "PostgreSqlMigrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlMigrationResource(Client, PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(e)), _postgreSqlMigrationMigrationsClientDiagnostics, Pipeline, "PostgreSqlMigrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

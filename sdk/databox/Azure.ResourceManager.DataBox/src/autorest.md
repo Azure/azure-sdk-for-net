@@ -33,7 +33,7 @@ format-by-name-rules:
   'resourceGroupId': 'arm-id'
   'meterId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

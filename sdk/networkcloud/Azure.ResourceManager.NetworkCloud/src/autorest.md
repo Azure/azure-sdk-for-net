@@ -134,7 +134,7 @@ prepend-rp-prefix:
   - Volume
   - OperationStatusResult
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

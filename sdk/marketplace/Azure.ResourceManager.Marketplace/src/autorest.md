@@ -93,7 +93,7 @@ override-operation-name:
   PrivateStore_BulkCollectionsAction: PerformActionOnBulkCollections
   PrivateStore_CollectionsToSubscriptionsMapping: FetchCollectionsToSubscriptionsMapping
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

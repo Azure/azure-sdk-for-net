@@ -31,7 +31,7 @@ format-by-name-rules:
   '*ApplicationObjectId': 'uuid'
   '*ServicePrincipalObjectId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -39,7 +39,7 @@ format-by-name-rules:
   'ResourceType': 'resource-type'
   '*IPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -162,7 +162,7 @@ format-by-name-rules:
   'ResourceType': 'resource-type'
   '*IPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

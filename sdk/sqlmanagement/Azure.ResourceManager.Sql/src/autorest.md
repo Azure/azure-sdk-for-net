@@ -56,7 +56,7 @@ keep-plural-enums:
 keep-plural-resource-data:
 - MaintenanceWindows
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -30,7 +30,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'UniqueIdentifier': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

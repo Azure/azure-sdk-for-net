@@ -35,7 +35,7 @@ format-by-name-rules:
   'clusterExtensionId': 'arm-id'
   'HostResourceId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

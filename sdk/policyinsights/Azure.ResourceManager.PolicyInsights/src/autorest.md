@@ -71,7 +71,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'locations': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
