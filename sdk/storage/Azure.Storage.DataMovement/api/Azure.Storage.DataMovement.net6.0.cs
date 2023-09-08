@@ -70,25 +70,25 @@ namespace Azure.Storage.DataMovement
         public virtual string SourceTypeId { get { throw null; } }
         public virtual string TransferId { get { throw null; } }
     }
+    public enum DataTransferState
+    {
+        None = 0,
+        Queued = 1,
+        InProgress = 2,
+        Pausing = 3,
+        Stopping = 4,
+        Paused = 5,
+        Completed = 6,
+    }
     public partial class DataTransferStatus : System.IEquatable<Azure.Storage.DataMovement.DataTransferStatus>
     {
         protected internal DataTransferStatus() { }
-        protected internal DataTransferStatus(Azure.Storage.DataMovement.DataTransferStatus.TransferState state, bool hasFailureItems, bool hasSkippedItems) { }
+        protected internal DataTransferStatus(Azure.Storage.DataMovement.DataTransferState state, bool hasFailureItems, bool hasSkippedItems) { }
         public bool HasCompletedSuccessfully { get { throw null; } }
         public bool HasFailedItems { get { throw null; } }
         public bool HasSkippedItems { get { throw null; } }
-        public Azure.Storage.DataMovement.DataTransferStatus.TransferState State { get { throw null; } }
+        public Azure.Storage.DataMovement.DataTransferState State { get { throw null; } }
         public bool Equals(Azure.Storage.DataMovement.DataTransferStatus other) { throw null; }
-        public enum TransferState
-        {
-            None = 0,
-            Queued = 1,
-            InProgress = 2,
-            Pausing = 3,
-            Stopping = 4,
-            Paused = 5,
-            Completed = 6,
-        }
     }
     public partial class LocalDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
