@@ -55,7 +55,7 @@ for ($i = 0; $i -lt $batches.Length; $i++) {
   $batch = $batches[$i]
   $firstPrefix = $batch[0].ServiceArea.Substring(0, 2)
   $lastPrefix = $batch[-1].ServiceArea.Substring(0, 2)
-  $key = "Batch_$i`_$firstPrefix`_$lastPrefix"
+  $key = "$firstPrefix`_$lastPrefix`_$i"
   $fileName = "$i.json"
   $batch.PackageFolder | ConvertTo-Json -AsArray | Out-File "$OutputDirectory/$fileName"
   $matrix[$key] = [ordered]@{ "JobKey" = $key; "FolderList" = $fileName }
