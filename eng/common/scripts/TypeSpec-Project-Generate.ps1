@@ -11,77 +11,9 @@ param (
 
 $ErrorActionPreference = "Stop"
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
+. $PSScriptRoot/Helpers/CommandInvocation-Helpers.ps1
 . $PSScriptRoot/common.ps1
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
-
-function NpmInstallForProject([string]$workingDirectory) {
-    Push-Location $workingDirectory
-    try {
-        $currentDur = Resolve-Path "."
-        Write-Host "Generating from $currentDur"
-
-        if (Test-Path "package.json") {
-            Remove-Item -Path "package.json" -Force
-        }
-
-        if (Test-Path ".npmrc") {
-            Remove-Item -Path ".npmrc" -Force
-        }
-
-        if (Test-Path "node_modules") {
-            Remove-Item -Path "node_modules" -Force -Recurse
-        }
-
-        if (Test-Path "package-lock.json") {
-            Remove-Item -Path "package-lock.json" -Force
-        }
-
-        #default to root/eng/emitter-package.json but you can override by writing
-        #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
-        $replacementPackageJson = Join-Path $PSScriptRoot "../../emitter-package.json"
-        if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
-            $replacementPackageJson = &$GetEmitterPackageJsonPathFn
-        }
-
-        Write-Host("Copying package.json from $replacementPackageJson")
-        Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
-
-        #default to root/eng/emitter-package-lock.json but you can override by writing
-        #Get-${Language}-EmitterPackageLockPath in your Language-Settings.ps1
-        $emitterPackageLock = Join-Path $PSScriptRoot "../../emitter-package-lock.json"
-        if (Test-Path "Function:$GetEmitterPackageLockPathFn") {
-            $emitterPackageLock = &$GetEmitterPackageLockPathFn
-        }
-
-        $usingLockFile = Test-Path $emitterPackageLock
-
-        if ($usingLockFile) {
-            Write-Host("Copying package-lock.json from $emitterPackageLock")
-            Copy-Item -Path $emitterPackageLock -Destination "package-lock.json" -Force
-        }
-
-        $useAlphaNpmRegistry = (Get-Content $replacementPackageJson -Raw).Contains("-alpha.")
-
-        if($useAlphaNpmRegistry) {
-            Write-Host "Package.json contains '-alpha.' in the version, Creating .npmrc using public/azure-sdk-for-js-test-autorest feed."
-            "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/ `n`nalways-auth=true" | Out-File '.npmrc'
-        }
-
-        if ($usingLockFile) {
-            Write-Host "> npm ci"
-            npm ci
-        }
-        else {
-            Write-Host "> npm install"
-            npm install
-        }
-
-        if ($LASTEXITCODE) { exit $LASTEXITCODE }
-    }
-    finally {
-        Pop-Location
-    }
-}
 
 $resolvedProjectDirectory = Resolve-Path $ProjectDirectory
 $emitterName = &$GetEmitterNameFn
@@ -97,9 +29,9 @@ $tempFolder = "$ProjectDirectory/TempTypeSpecFiles"
 $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
 $mainTypeSpecFile = If (Test-Path "$npmWorkingDir/client.*") { Resolve-Path "$npmWorkingDir/client.*" } Else { Resolve-Path "$npmWorkingDir/main.*"}
 
+Push-Location $npmWorkingDir
 try {
-    Push-Location $npmWorkingDir
-    NpmInstallForProject $npmWorkingDir
+    . $PSScriptRoot/Invoke-NpmInstall.ps1
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
@@ -109,7 +41,7 @@ try {
             $emitterAdditionalOptions = " $emitterAdditionalOptions"
         }
     }
-    $typespecCompileCommand = "npx tsp compile $mainTypeSpecFile --emit $emitterName$emitterAdditionalOptions"
+    $typespecCompileCommand = "npx --no tsp compile $mainTypeSpecFile --emit $emitterName$emitterAdditionalOptions"
     if ($TypespecAdditionalOptions) {
         $options = $TypespecAdditionalOptions.Split(";");
         foreach ($option in $options) {
@@ -121,8 +53,7 @@ try {
         $typespecCompileCommand += " --option $emitterName.save-inputs=true"
     }
 
-    Write-Host($typespecCompileCommand)
-    Invoke-Expression $typespecCompileCommand
+    Invoke-LoggedCommand $typespecCompileCommand
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }

@@ -11,47 +11,9 @@ param (
 
 $ErrorActionPreference = "Stop"
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
+. $PSScriptRoot/Helpers/CommandInvocation-Helpers.ps1
 . $PSScriptRoot/common.ps1
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
-
-function NpmInstallForProject([string]$workingDirectory) {
-    Push-Location $workingDirectory
-    try {
-        $currentDur = Resolve-Path "."
-        Write-Host "Generating from $currentDur"
-
-        if (Test-Path "package.json") {
-            Remove-Item -Path "package.json" -Force
-        }
-
-        if (Test-Path ".npmrc") {
-            Remove-Item -Path ".npmrc" -Force
-        }
-
-        if (Test-Path "node_modules") {
-            Remove-Item -Path "node_modules" -Force -Recurse
-        }
-
-        if (Test-Path "package-lock.json") {
-            Remove-Item -Path "package-lock.json" -Force
-        }
-
-        #default to root/eng/emitter-package.json but you can override by writing
-        #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
-        $replacementPackageJson = "$PSScriptRoot/../../emitter-package.json"
-        if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
-            $replacementPackageJson = &$GetEmitterPackageJsonPathFn
-        }
-
-        Write-Host("Copying package.json from $replacementPackageJson")
-        Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
-        npm install --no-lock-file
-        if ($LASTEXITCODE) { exit $LASTEXITCODE }
-    }
-    finally {
-        Pop-Location
-    }
-}
 
 $resolvedProjectDirectory = Resolve-Path $ProjectDirectory
 $emitterName = &$GetEmitterNameFn
@@ -67,9 +29,9 @@ $tempFolder = "$ProjectDirectory/TempCadlFiles"
 $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
 $mainCadlFile = If (Test-Path "$npmWorkingDir/client.cadl") { Resolve-Path "$npmWorkingDir/client.cadl" } Else { Resolve-Path "$npmWorkingDir/main.cadl"}
 
+Push-Location $npmWorkingDir
 try {
-    Push-Location $npmWorkingDir
-    NpmInstallForProject $npmWorkingDir
+    . $PSScriptRoot/Invoke-NpmInstall.ps1
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
@@ -79,15 +41,15 @@ try {
             $emitterAdditionalOptions = " $emitterAdditionalOptions"
         }
     }
-    $cadlCompileCommand = "npx cadl compile $mainCadlFile --emit $emitterName$emitterAdditionalOptions"
+    $cadlCompileCommand = "npx --no cadl compile $mainCadlFile --emit $emitterName$emitterAdditionalOptions"
     if ($CadlAdditionalOptions) {
         $options = $CadlAdditionalOptions.Split(";");
         foreach ($option in $options) {
             $cadlCompileCommand += " --option $emitterName.$option"
         }
     }
-    Write-Host($cadlCompileCommand)
-    Invoke-Expression $cadlCompileCommand
+
+    Invoke-LoggedCommand $cadlCompileCommand
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
