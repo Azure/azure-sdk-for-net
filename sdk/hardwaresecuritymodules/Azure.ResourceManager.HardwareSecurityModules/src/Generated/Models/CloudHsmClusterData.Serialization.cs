@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WritePropertyName("securityDomain"u8);
                 writer.WriteObjectValue(SecurityDomain);
             }
-            if (Optional.IsCollectionDefined(HsmProperties))
+            if (Optional.IsCollectionDefined(Hsms))
             {
                 writer.WritePropertyName("hsms"u8);
                 writer.WriteStartArray();
-                foreach (var item in HsmProperties)
+                foreach (var item in Hsms)
                 {
                     writer.WriteObjectValue(item);
                 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    internal partial class OutboundEnvironmentEndpointGroup
+    internal partial class OutboundEnvironmentEndpointCollection
     {
-        internal static OutboundEnvironmentEndpointGroup DeserializeOutboundEnvironmentEndpointGroup(JsonElement element)
+        internal static OutboundEnvironmentEndpointCollection DeserializeOutboundEnvironmentEndpointCollection(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     continue;
                 }
             }
-            return new OutboundEnvironmentEndpointGroup(value, nextLink.Value);
+            return new OutboundEnvironmentEndpointCollection(value, nextLink.Value);
         }
     }
 }
