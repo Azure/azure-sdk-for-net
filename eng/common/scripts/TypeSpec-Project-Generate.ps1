@@ -6,7 +6,8 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $ProjectDirectory,
     [string] $TypespecAdditionalOptions = $null, ## addtional typespec emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
-    [switch] $SaveInputs = $false ## saves the temporary files during execution, default false
+    [switch] $SaveInputs = $false, ## saves the temporary files during execution, default false
+    [switch] $SkipNpmInstall = $false ## skips npm install, default false
 )
 
 $ErrorActionPreference = "Stop"
@@ -31,9 +32,10 @@ $mainTypeSpecFile = If (Test-Path "$npmWorkingDir/client.*") { Resolve-Path "$np
 
 Push-Location $npmWorkingDir
 try {
-    . $PSScriptRoot/Invoke-NpmInstall.ps1
-
-    if ($LASTEXITCODE) { exit $LASTEXITCODE }
+    if (!$SkipNpmInstall) {
+      . $PSScriptRoot/Invoke-EmitterNpmInstall.ps1
+      if ($LASTEXITCODE) { exit $LASTEXITCODE }
+    }
 
     if (Test-Path "Function:$GetEmitterAdditionalOptionsFn") {
         $emitterAdditionalOptions = &$GetEmitterAdditionalOptionsFn $resolvedProjectDirectory
