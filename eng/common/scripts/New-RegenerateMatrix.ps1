@@ -38,21 +38,15 @@ function Split-Items([array]$Items) {
 # ensure the output directory exists
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 
-if (Test-Path "Function:$GetFoldersForGenerationFn") {
-  $foldersForGeneration = &$GetFoldersForGenerationFn
-} else {
-  $foldersForGeneration = Get-ChildItem "$RepoRoot/sdk" -Directory | Get-ChildItem -Directory
-}
-
-[array]$packageFolders = $foldersForGeneration
-  | Sort-Object -Property FullName
-  | ForEach-Object {
-    [ordered]@{
-      "PackageFolder"   = "$($_.Parent.Name)/$($_.Name)"
-      "ServiceArea" = $_.Parent.Name
-    }
+[array]$packageFolders = Get-ChildItem "$RepoRoot/sdk" -Directory
+| Get-ChildItem -Directory
+| Sort-Object -Property FullName
+| ForEach-Object {
+  [ordered]@{
+    "PackageFolder"   = "$($_.Parent.Name)/$($_.Name)"
+    "ServiceArea" = $_.Parent.Name
   }
-
+}
 
 $batches = Split-Items -Items $packageFolders
 
@@ -61,7 +55,7 @@ for ($i = 0; $i -lt $batches.Length; $i++) {
   $batch = $batches[$i]
   $firstPrefix = $batch[0].ServiceArea.Substring(0, 2)
   $lastPrefix = $batch[-1].ServiceArea.Substring(0, 2)
-  $key = "Batch_$i`_$firstPrefix`_$lastPrefix"
+  $key = "$firstPrefix`_$lastPrefix`_$i"
   $fileName = "$i.json"
   $batch.PackageFolder | ConvertTo-Json -AsArray | Out-File "$OutputDirectory/$fileName"
   $matrix[$key] = [ordered]@{ "JobKey" = $key; "FolderList" = $fileName }
