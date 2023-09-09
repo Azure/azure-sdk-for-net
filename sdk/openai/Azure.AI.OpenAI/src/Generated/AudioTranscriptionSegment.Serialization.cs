@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -21,8 +22,8 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             int id = default;
-            float start = default;
-            float end = default;
+            TimeSpan start = default;
+            TimeSpan end = default;
             string text = default;
             float temperature = default;
             float avgLogprob = default;
@@ -39,12 +40,12 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("start"u8))
                 {
-                    start = property.Value.GetSingle();
+                    start = TimeSpan.FromSeconds(property.Value.GetDouble());
                     continue;
                 }
                 if (property.NameEquals("end"u8))
                 {
-                    end = property.Value.GetSingle();
+                    end = TimeSpan.FromSeconds(property.Value.GetDouble());
                     continue;
                 }
                 if (property.NameEquals("text"u8))

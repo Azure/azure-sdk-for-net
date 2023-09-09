@@ -3,10 +3,12 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Audio transcription task type. </summary>
-    internal readonly partial struct AudioTranscriptionTask
+    internal readonly partial struct AudioTaskLabel
     {
     }
 }

@@ -13,24 +13,33 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class AudioTranscriptionVerboseJson
+    public partial class AudioTranscription
     {
-        internal static AudioTranscriptionVerboseJson DeserializeAudioTranscriptionVerboseJson(JsonElement element)
+        internal static AudioTranscription DeserializeAudioTranscription(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AudioTranscriptionTask task = default;
-            string language = default;
-            TimeSpan duration = default;
-            IReadOnlyList<AudioTranscriptionSegment> segments = default;
             string text = default;
+            Optional<AudioTaskLabel> task = default;
+            Optional<string> language = default;
+            Optional<TimeSpan> duration = default;
+            Optional<IReadOnlyList<AudioTranscriptionSegment>> segments = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("text"u8))
+                {
+                    text = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("task"u8))
                 {
-                    task = new AudioTranscriptionTask(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    task = new AudioTaskLabel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("language"u8))
@@ -40,11 +49,19 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("duration"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     duration = TimeSpan.FromSeconds(property.Value.GetDouble());
                     continue;
                 }
                 if (property.NameEquals("segments"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<AudioTranscriptionSegment> array = new List<AudioTranscriptionSegment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -53,21 +70,8 @@ namespace Azure.AI.OpenAI
                     segments = array;
                     continue;
                 }
-                if (property.NameEquals("text"u8))
-                {
-                    text = property.Value.GetString();
-                    continue;
-                }
             }
-            return new AudioTranscriptionVerboseJson(text, task, language, duration, segments);
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AudioTranscriptionVerboseJson FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAudioTranscriptionVerboseJson(document.RootElement);
+            return new AudioTranscription(text, Optional.ToNullable(task), language.Value, Optional.ToNullable(duration), Optional.ToList(segments));
         }
     }
 }

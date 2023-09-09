@@ -16,7 +16,17 @@ namespace Azure.AI.OpenAI
         {
             writer.WriteStartObject();
             writer.WritePropertyName("file"u8);
-            writer.WriteBase64StringValue(File.ToArray(), "D");
+            writer.WriteBase64StringValue(AudioData.ToArray(), "D");
+            if (Optional.IsDefined(ResponseFormat))
+            {
+                writer.WritePropertyName("response_format"u8);
+                writer.WriteStringValue(ResponseFormat.Value.ToString());
+            }
+            if (Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
             if (Optional.IsDefined(Prompt))
             {
                 writer.WritePropertyName("prompt"u8);
@@ -31,16 +41,6 @@ namespace Azure.AI.OpenAI
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(InternalNonAzureModelName);
-            }
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language);
-            }
-            if (Optional.IsDefined(ResponseFormat))
-            {
-                writer.WritePropertyName("response_format"u8);
-                writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
             writer.WriteEndObject();
         }

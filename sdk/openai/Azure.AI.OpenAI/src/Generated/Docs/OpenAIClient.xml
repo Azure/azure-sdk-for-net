@@ -1,85 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetAudioTranscriptionSimpleJsonAsync(string,long,AudioTranscriptionOptionsSimpleJson,CancellationToken)">
+    <member name="GetEmbeddingsAsync(string,EmbeddingsOptions,CancellationToken)">
+<example>
+This sample shows how to call GetEmbeddingsAsync with required parameters.
+<code><![CDATA[
+var client = new OpenAIClient("<openAIApiKey>");
+
+var embeddingsOptions = new EmbeddingsOptions(new string[] 
+{
+    "<null>"
+})
+{
+    User = "<User>",
+};
+var result = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
+]]></code>
+</example>
     </member>
-    <member name="GetAudioTranscriptionSimpleJson(string,long,AudioTranscriptionOptionsSimpleJson,CancellationToken)">
+    <member name="GetEmbeddings(string,EmbeddingsOptions,CancellationToken)">
+<example>
+This sample shows how to call GetEmbeddings with required parameters.
+<code><![CDATA[
+var client = new OpenAIClient("<openAIApiKey>");
+
+var embeddingsOptions = new EmbeddingsOptions(new string[] 
+{
+    "<null>"
+})
+{
+    User = "<User>",
+};
+var result = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
+]]></code>
+</example>
     </member>
-    <member name="GetAudioTranscriptionSimpleJsonAsync(string,long,RequestContent,RequestContext)">
+    <member name="GetEmbeddingsAsync(string,RequestContent,RequestContext)">
     </member>
-    <member name="GetAudioTranscriptionSimpleJson(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranscriptionVerboseJsonAsync(string,long,AudioTranscriptionOptions,CancellationToken)">
-    </member>
-    <member name="GetAudioTranscriptionVerboseJson(string,long,AudioTranscriptionOptions,CancellationToken)">
-    </member>
-    <member name="GetAudioTranscriptionVerboseJsonAsync(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranscriptionVerboseJson(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranscriptionPlainTextAsync(string,long,AudioTranscriptionOptionsPlainText,CancellationToken)">
-    </member>
-    <member name="GetAudioTranscriptionPlainText(string,long,AudioTranscriptionOptionsPlainText,CancellationToken)">
-    </member>
-    <member name="GetAudioTranscriptionPlainTextAsync(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranscriptionPlainText(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranscriptionSrtAsync(string,long,AudioTranscriptionOptionsSrt,CancellationToken)">
-    </member>
-    <member name="GetAudioTranscriptionSrt(string,long,AudioTranscriptionOptionsSrt,CancellationToken)">
-    </member>
-    <member name="GetAudioTranscriptionSrtAsync(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranscriptionSrt(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranscriptionVttAsync(string,long,AudioTranscriptionOptionsVtt,CancellationToken)">
-    </member>
-    <member name="GetAudioTranscriptionVtt(string,long,AudioTranscriptionOptionsVtt,CancellationToken)">
-    </member>
-    <member name="GetAudioTranscriptionVttAsync(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranscriptionVtt(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationSimpleJsonAsync(string,long,AudioTranslationOptionsSimpleJson,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationSimpleJson(string,long,AudioTranslationOptionsSimpleJson,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationSimpleJsonAsync(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationSimpleJson(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationVerboseJsonAsync(string,long,AudioTranslationOptions,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationVerboseJson(string,long,AudioTranslationOptions,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationVerboseJsonAsync(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationVerboseJson(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationPlainTextAsync(string,long,AudioTranslationOptionsPlainText,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationPlainText(string,long,AudioTranslationOptionsPlainText,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationPlainTextAsync(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationPlainText(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationSrtAsync(string,long,AudioTranslationOptionsSrt,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationSrt(string,long,AudioTranslationOptionsSrt,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationSrtAsync(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationSrt(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationVttAsync(string,long,AudioTranslationOptionsVtt,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationVtt(string,long,AudioTranslationOptionsVtt,CancellationToken)">
-    </member>
-    <member name="GetAudioTranslationVttAsync(string,long,RequestContent,RequestContext)">
-    </member>
-    <member name="GetAudioTranslationVtt(string,long,RequestContent,RequestContext)">
+    <member name="GetEmbeddings(string,RequestContent,RequestContext)">
     </member>
     <member name="GetCompletionsAsync(string,CompletionsOptions,CancellationToken)">
 <example>
@@ -161,43 +119,37 @@ var result = client.GetCompletions("<deploymentId>", completionsOptions);
     </member>
     <member name="GetChatCompletionsWithAzureExtensions(string,RequestContent,RequestContext)">
     </member>
-    <member name="GetEmbeddingsAsync(string,EmbeddingsOptions,CancellationToken)">
-<example>
-This sample shows how to call GetEmbeddingsAsync with required parameters.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var embeddingsOptions = new EmbeddingsOptions(new string[] 
-{
-    "<null>"
-})
-{
-    User = "<User>",
-};
-var result = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
-]]></code>
-</example>
+    <member name="GetAudioTranscriptionAsResponseObjectAsync(string,AudioTranscriptionOptions,CancellationToken)">
     </member>
-    <member name="GetEmbeddings(string,EmbeddingsOptions,CancellationToken)">
-<example>
-This sample shows how to call GetEmbeddings with required parameters.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var embeddingsOptions = new EmbeddingsOptions(new string[] 
-{
-    "<null>"
-})
-{
-    User = "<User>",
-};
-var result = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
-]]></code>
-</example>
+    <member name="GetAudioTranscriptionAsResponseObject(string,AudioTranscriptionOptions,CancellationToken)">
     </member>
-    <member name="GetEmbeddingsAsync(string,RequestContent,RequestContext)">
+    <member name="GetAudioTranscriptionAsResponseObjectAsync(string,RequestContent,RequestContext)">
     </member>
-    <member name="GetEmbeddings(string,RequestContent,RequestContext)">
+    <member name="GetAudioTranscriptionAsResponseObject(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionAsPlainTextAsync(string,AudioTranscriptionOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionAsPlainText(string,AudioTranscriptionOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranscriptionAsPlainTextAsync(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranscriptionAsPlainText(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationAsResponseObjectAsync(string,AudioTranslationOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationAsResponseObject(string,AudioTranslationOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationAsResponseObjectAsync(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationAsResponseObject(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationAsPlainTextAsync(string,AudioTranslationOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationAsPlainText(string,AudioTranslationOptions,CancellationToken)">
+    </member>
+    <member name="GetAudioTranslationAsPlainTextAsync(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetAudioTranslationAsPlainText(string,RequestContent,RequestContext)">
     </member>
     <member name="BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)">
     </member>

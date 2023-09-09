@@ -4,20 +4,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary>
-    /// Transcription request.
-    /// Requesting format 'json' will result on only the 'text' field being set.
-    /// For more output data use 'verbose_json.
-    /// </summary>
-    [CodeGenType("AudioTranscriptionOptionsVerboseJson")]
     public partial class AudioTranscriptionOptions
     {
         /// <summary>
-        /// The audio file object to transcribe.
+        /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
+        /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
         /// <para>
         /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
         /// The byte[] will be serialized to a Base64 encoded string.
@@ -32,7 +26,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData File { get; set; }
+        public BinaryData AudioData { get; set; }
 
         /// <summary> Initializes a new instance of AudioTranscriptionOptions. </summary>
         public AudioTranscriptionOptions()

@@ -26,7 +26,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
 
             var transcriptionOptions = new AudioTranscriptionOptions()
             {
-                File = BinaryData.FromStream(audioStreamFromFile),
+                AudioData = BinaryData.FromStream(audioStreamFromFile),
                 ResponseFormat = AudioTranscriptionFormat.VerboseJson,
             };
 
@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             AudioTranscription transcription = transcriptionResponse.Value;
 
             // When using Text, Vtt, Json formats, only .Text will be populated
-            Console.WriteLine($"Transcription ({transcription.Duration.TotalSeconds}s):");
+            Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
             Console.WriteLine(transcription.Text);
             #endregion
         }

@@ -3,7 +3,7 @@ namespace Azure.AI.OpenAI
     public partial class AudioTranscription
     {
         internal AudioTranscription() { }
-        public System.TimeSpan Duration { get { throw null; } }
+        public System.TimeSpan? Duration { get { throw null; } }
         public string Language { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.AudioTranscriptionSegment> Segments { get { throw null; } }
         public string Text { get { throw null; } }
@@ -14,11 +14,11 @@ namespace Azure.AI.OpenAI
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AudioTranscriptionFormat(string value) { throw null; }
+        public static Azure.AI.OpenAI.AudioTranscriptionFormat PlainText { get { throw null; } }
         public static Azure.AI.OpenAI.AudioTranscriptionFormat SimpleJson { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat Srt { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat Text { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranscriptionFormat SubRipText { get { throw null; } }
         public static Azure.AI.OpenAI.AudioTranscriptionFormat VerboseJson { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat Vtt { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranscriptionFormat WebVideoTextTracksText { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.AudioTranscriptionFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -32,8 +32,8 @@ namespace Azure.AI.OpenAI
     public partial class AudioTranscriptionOptions
     {
         public AudioTranscriptionOptions() { }
-        public AudioTranscriptionOptions(System.BinaryData file) { }
-        public System.BinaryData File { get { throw null; } set { } }
+        public AudioTranscriptionOptions(System.BinaryData audioData) { }
+        public System.BinaryData AudioData { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
         public string Prompt { get { throw null; } set { } }
         public Azure.AI.OpenAI.AudioTranscriptionFormat? ResponseFormat { get { throw null; } set { } }
@@ -42,13 +42,13 @@ namespace Azure.AI.OpenAI
     public partial class AudioTranscriptionSegment
     {
         internal AudioTranscriptionSegment() { }
-        public float AverageLogProb { get { throw null; } }
+        public float AverageLogProbability { get { throw null; } }
         public float CompressionRatio { get { throw null; } }
-        public float End { get { throw null; } }
+        public System.TimeSpan End { get { throw null; } }
         public int Id { get { throw null; } }
-        public float NoSpeechProb { get { throw null; } }
+        public float NoSpeechProbability { get { throw null; } }
         public int Seek { get { throw null; } }
-        public float Start { get { throw null; } }
+        public System.TimeSpan Start { get { throw null; } }
         public float Temperature { get { throw null; } }
         public string Text { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<int> Tokens { get { throw null; } }
@@ -56,8 +56,8 @@ namespace Azure.AI.OpenAI
     public partial class AudioTranslationOptions
     {
         public AudioTranslationOptions() { }
-        public AudioTranslationOptions(System.BinaryData file) { }
-        public System.BinaryData File { get { throw null; } set { } }
+        public AudioTranslationOptions(System.BinaryData audioData) { }
+        public System.BinaryData AudioData { get { throw null; } set { } }
         public string Prompt { get { throw null; } set { } }
         public Azure.AI.OpenAI.AudioTranscriptionFormat? ResponseFormat { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
@@ -146,7 +146,7 @@ namespace Azure.AI.OpenAI
     public static partial class AzureOpenAIModelFactory
     {
         public static Azure.AI.OpenAI.AudioTranscription AudioTranscription(string text, string language, System.TimeSpan duration, System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.AudioTranscriptionSegment> segments) { throw null; }
-        public static Azure.AI.OpenAI.AudioTranscriptionSegment AudioTranscriptionSegment(int id = 0, float start = 0f, float end = 0f, string text = null, float temperature = 0f, float averageLogProb = 0f, float compressionRatio = 0f, float noSpeechProb = 0f, System.Collections.Generic.IEnumerable<int> tokens = null, int seek = 0) { throw null; }
+        public static Azure.AI.OpenAI.AudioTranscriptionSegment AudioTranscriptionSegment(int id = 0, System.TimeSpan start = default(System.TimeSpan), System.TimeSpan end = default(System.TimeSpan), string text = null, float temperature = 0f, float averageLogProbability = 0f, float compressionRatio = 0f, float noSpeechProbability = 0f, System.Collections.Generic.IEnumerable<int> tokens = null, int seek = 0) { throw null; }
         public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason), Azure.AI.OpenAI.ChatMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null) { throw null; }
         public static Azure.AI.OpenAI.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatChoice> choices = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.PromptFilterResult> promptFilterResults = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?)) { throw null; }

@@ -23,14 +23,7 @@ namespace Azure.AI.OpenAI
             else
             {
                 using var document = JsonDocument.Parse(response.Content);
-                AudioTranscriptionVerboseJson verboseTranscription
-                    = AudioTranscriptionVerboseJson.DeserializeAudioTranscriptionVerboseJson(document.RootElement);
-                return new AudioTranscription(
-                    verboseTranscription.Text,
-                    verboseTranscription.Task,
-                    verboseTranscription.Language,
-                    verboseTranscription.Duration,
-                    verboseTranscription.Segments);
+                return DeserializeAudioTranscription(document.RootElement);
             }
         }
     }

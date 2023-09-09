@@ -15,23 +15,38 @@ namespace Azure.AI.OpenAI
     /// <summary> Model factory for models. </summary>
     public static partial class AzureOpenAIModelFactory
     {
-        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
-        /// <param name="id"> Segment identifier. </param>
-        /// <param name="start"> Segment start offset. </param>
-        /// <param name="end"> Segment end offset. </param>
-        /// <param name="text"> Segment text. </param>
-        /// <param name="temperature"> Temperature. </param>
-        /// <param name="averageLogProb"> Average log probability. </param>
-        /// <param name="compressionRatio"> Compression ratio. </param>
-        /// <param name="noSpeechProb"> Probability of 'no speech'. </param>
-        /// <param name="tokens"> Tokens in this segment. </param>
-        /// <param name="seek"> TODO. </param>
-        /// <returns> A new <see cref="OpenAI.AudioTranscriptionSegment"/> instance for mocking. </returns>
-        public static AudioTranscriptionSegment AudioTranscriptionSegment(int id = default, float start = default, float end = default, string text = null, float temperature = default, float averageLogProb = default, float compressionRatio = default, float noSpeechProb = default, IEnumerable<int> tokens = null, int seek = default)
+        /// <summary> Initializes a new instance of Embeddings. </summary>
+        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
+        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
+        /// <returns> A new <see cref="OpenAI.Embeddings"/> instance for mocking. </returns>
+        public static Embeddings Embeddings(IEnumerable<EmbeddingItem> data = null, EmbeddingsUsage usage = null)
         {
-            tokens ??= new List<int>();
+            data ??= new List<EmbeddingItem>();
 
-            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProb, compressionRatio, noSpeechProb, tokens?.ToList(), seek);
+            return new Embeddings(data?.ToList(), usage);
+        }
+
+        /// <summary> Initializes a new instance of EmbeddingItem. </summary>
+        /// <param name="embedding">
+        /// List of embeddings value for the input prompt. These represent a measurement of the
+        /// vector-based relatedness of the provided input.
+        /// </param>
+        /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
+        /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
+        public static EmbeddingItem EmbeddingItem(IEnumerable<float> embedding = null, int index = default)
+        {
+            embedding ??= new List<float>();
+
+            return new EmbeddingItem(embedding?.ToList(), index);
+        }
+
+        /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
+        /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
+        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
+        /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
+        public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
+        {
+            return new EmbeddingsUsage(promptTokens, totalTokens);
         }
 
         /// <summary> Initializes a new instance of Completions. </summary>
@@ -176,40 +191,6 @@ namespace Azure.AI.OpenAI
             return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage);
         }
 
-        /// <summary> Initializes a new instance of Embeddings. </summary>
-        /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
-        /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
-        /// <returns> A new <see cref="OpenAI.Embeddings"/> instance for mocking. </returns>
-        public static Embeddings Embeddings(IEnumerable<EmbeddingItem> data = null, EmbeddingsUsage usage = null)
-        {
-            data ??= new List<EmbeddingItem>();
-
-            return new Embeddings(data?.ToList(), usage);
-        }
-
-        /// <summary> Initializes a new instance of EmbeddingItem. </summary>
-        /// <param name="embedding">
-        /// List of embeddings value for the input prompt. These represent a measurement of the
-        /// vector-based relatedness of the provided input.
-        /// </param>
-        /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
-        /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
-        public static EmbeddingItem EmbeddingItem(IEnumerable<float> embedding = null, int index = default)
-        {
-            embedding ??= new List<float>();
-
-            return new EmbeddingItem(embedding?.ToList(), index);
-        }
-
-        /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
-        /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
-        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
-        /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
-        public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
-        {
-            return new EmbeddingsUsage(promptTokens, totalTokens);
-        }
-
         /// <summary> Initializes a new instance of ImageGenerations. </summary>
         /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
         /// <param name="data"> The images generated by the operator. </param>
@@ -233,6 +214,31 @@ namespace Azure.AI.OpenAI
             }
 
             return new ImageLocation(url);
+        }
+
+        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
+        /// <param name="id"> The 0-based index of this segment within a transcription. </param>
+        /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
+        /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
+        /// <param name="text"> The transcribed text that was part of this audio segment. </param>
+        /// <param name="temperature"> The temperature score associated with this audio segment. </param>
+        /// <param name="averageLogProbability"> The average log probability associated with this audio segment. </param>
+        /// <param name="compressionRatio"> The compression ratio of this audio segment. </param>
+        /// <param name="noSpeechProbability"> The probability of no speech detection within this audio segment. </param>
+        /// <param name="tokens"> The token IDs matching the transcribed text in this audio segment. </param>
+        /// <param name="seek">
+        /// The seek position associated with the processing of this audio segment.
+        /// Seek positions are expressed as hundredths of seconds.
+        /// The model may process several segments from a single seek position, so while the seek position will never represent
+        /// a later time than the segment's start, the segment's start may represent a significantly later time than the
+        /// segment's associated seek position.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.AudioTranscriptionSegment"/> instance for mocking. </returns>
+        public static AudioTranscriptionSegment AudioTranscriptionSegment(int id = default, TimeSpan start = default, TimeSpan end = default, string text = null, float temperature = default, float averageLogProbability = default, float compressionRatio = default, float noSpeechProbability = default, IEnumerable<int> tokens = null, int seek = default)
+        {
+            tokens ??= new List<int>();
+
+            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
         }
     }
 }

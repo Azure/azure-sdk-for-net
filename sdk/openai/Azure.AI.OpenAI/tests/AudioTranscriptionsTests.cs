@@ -42,7 +42,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
 
         var requestOptions = new AudioTranscriptionOptions()
         {
-            File = BinaryData.FromStream(audioFileStream),
+            AudioData = BinaryData.FromStream(audioFileStream),
             Temperature = (float)0.25,
         };
 
@@ -60,11 +60,11 @@ public class AudioTranscriptionsTest : OpenAITestBase
 
         if (transcriptionFormat == null
             || transcriptionFormat == AudioTranscriptionFormat.SimpleJson
-            || transcriptionFormat == AudioTranscriptionFormat.Text)
+            || transcriptionFormat == AudioTranscriptionFormat.PlainText)
         {
-            Assert.That(response.Value.Duration, Is.EqualTo(default(TimeSpan)));
+            Assert.That(response.Value.Duration, Is.Null);
             Assert.That(response.Value.Language, Is.Null);
-            Assert.That(response.Value.Segments, Is.Null.Or.Empty);
+            Assert.That(response.Value.Segments, Is.Not.Null.Or.Empty);
         }
 
         if (transcriptionFormat != null && transcriptionFormat == AudioTranscriptionFormat.VerboseJson)
@@ -107,7 +107,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
 
         var requestOptions = new AudioTranslationOptions()
         {
-            File = BinaryData.FromStream(audioFileStream),
+            AudioData = BinaryData.FromStream(audioFileStream),
             Temperature = (float)0.25,
         };
 
@@ -125,7 +125,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
 
         if (transcriptionFormat == null
             || transcriptionFormat == AudioTranscriptionFormat.SimpleJson
-            || transcriptionFormat == AudioTranscriptionFormat.Text)
+            || transcriptionFormat == AudioTranscriptionFormat.PlainText)
         {
             Assert.That(response.Value.Duration, Is.EqualTo(default(TimeSpan)));
             Assert.That(response.Value.Language, Is.Null);

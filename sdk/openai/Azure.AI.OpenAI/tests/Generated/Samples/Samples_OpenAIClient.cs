@@ -21,6 +21,22 @@ namespace Azure.AI.OpenAI.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEmbeddings_Convenience_Async()
+        {
+            var client = new OpenAIClient("<openAIApiKey>");
+
+            var embeddingsOptions = new EmbeddingsOptions(new string[]
+            {
+    "<null>"
+            })
+            {
+                User = "<User>",
+            };
+            var result = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCompletions_Convenience_Async()
         {
             var client = new OpenAIClient("<openAIApiKey>");
@@ -46,22 +62,6 @@ namespace Azure.AI.OpenAI.Samples
                 GenerationSampleCount = 1234,
             };
             var result = await client.GetCompletionsAsync("<deploymentId>", completionsOptions);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEmbeddings_Convenience_Async()
-        {
-            var client = new OpenAIClient("<openAIApiKey>");
-
-            var embeddingsOptions = new EmbeddingsOptions(new string[]
-            {
-    "<null>"
-            })
-            {
-                User = "<User>",
-            };
-            var result = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Defines the format of the output. </summary>
+    /// <summary> Defines available options for the underlying response format of output transcription information. </summary>
     public readonly partial struct AudioTranscriptionFormat : IEquatable<AudioTranscriptionFormat>
     {
         private readonly string _value;
@@ -23,21 +23,10 @@ namespace Azure.AI.OpenAI
         }
 
         private const string SimpleJsonValue = "json";
-        private const string TextValue = "text";
-        private const string SrtValue = "srt";
         private const string VerboseJsonValue = "verbose_json";
-        private const string VttValue = "vtt";
-
-        /// <summary> Lorem ipsum. </summary>
-        public static AudioTranscriptionFormat SimpleJson { get; } = new AudioTranscriptionFormat(SimpleJsonValue);
-        /// <summary> Lorem ipsum. </summary>
-        public static AudioTranscriptionFormat Text { get; } = new AudioTranscriptionFormat(TextValue);
-        /// <summary> Lorem ipsum. </summary>
-        public static AudioTranscriptionFormat Srt { get; } = new AudioTranscriptionFormat(SrtValue);
-        /// <summary> Lorem ipsum. </summary>
-        public static AudioTranscriptionFormat VerboseJson { get; } = new AudioTranscriptionFormat(VerboseJsonValue);
-        /// <summary> Lorem ipsum. </summary>
-        public static AudioTranscriptionFormat Vtt { get; } = new AudioTranscriptionFormat(VttValue);
+        private const string PlainTextValue = "text";
+        private const string SubRipTextValue = "srt";
+        private const string WebVideoTextTracksTextValue = "vtt";
         /// <summary> Determines if two <see cref="AudioTranscriptionFormat"/> values are the same. </summary>
         public static bool operator ==(AudioTranscriptionFormat left, AudioTranscriptionFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AudioTranscriptionFormat"/> values are not the same. </summary>

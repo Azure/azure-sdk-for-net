@@ -12,22 +12,32 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Transcription segment. </summary>
+    /// <summary>
+    /// Extended information about a single segment of transcribed audio data.
+    /// Segments generally represent roughly 5-10 seconds of speech. Segment boundaries typically occur between words but not
+    /// necessarily sentences.
+    /// </summary>
     public partial class AudioTranscriptionSegment
     {
         /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
-        /// <param name="id"> Segment identifier. </param>
-        /// <param name="start"> Segment start offset. </param>
-        /// <param name="end"> Segment end offset. </param>
-        /// <param name="text"> Segment text. </param>
-        /// <param name="temperature"> Temperature. </param>
-        /// <param name="averageLogProb"> Average log probability. </param>
-        /// <param name="compressionRatio"> Compression ratio. </param>
-        /// <param name="noSpeechProb"> Probability of 'no speech'. </param>
-        /// <param name="tokens"> Tokens in this segment. </param>
-        /// <param name="seek"> TODO. </param>
+        /// <param name="id"> The 0-based index of this segment within a transcription. </param>
+        /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
+        /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
+        /// <param name="text"> The transcribed text that was part of this audio segment. </param>
+        /// <param name="temperature"> The temperature score associated with this audio segment. </param>
+        /// <param name="averageLogProbability"> The average log probability associated with this audio segment. </param>
+        /// <param name="compressionRatio"> The compression ratio of this audio segment. </param>
+        /// <param name="noSpeechProbability"> The probability of no speech detection within this audio segment. </param>
+        /// <param name="tokens"> The token IDs matching the transcribed text in this audio segment. </param>
+        /// <param name="seek">
+        /// The seek position associated with the processing of this audio segment.
+        /// Seek positions are expressed as hundredths of seconds.
+        /// The model may process several segments from a single seek position, so while the seek position will never represent
+        /// a later time than the segment's start, the segment's start may represent a significantly later time than the
+        /// segment's associated seek position.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="tokens"/> is null. </exception>
-        internal AudioTranscriptionSegment(int id, float start, float end, string text, float temperature, float averageLogProb, float compressionRatio, float noSpeechProb, IEnumerable<int> tokens, int seek)
+        internal AudioTranscriptionSegment(int id, TimeSpan start, TimeSpan end, string text, float temperature, float averageLogProbability, float compressionRatio, float noSpeechProbability, IEnumerable<int> tokens, int seek)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(tokens, nameof(tokens));
@@ -37,57 +47,69 @@ namespace Azure.AI.OpenAI
             End = end;
             Text = text;
             Temperature = temperature;
-            AverageLogProb = averageLogProb;
+            AverageLogProbability = averageLogProbability;
             CompressionRatio = compressionRatio;
-            NoSpeechProb = noSpeechProb;
+            NoSpeechProbability = noSpeechProbability;
             Tokens = tokens.ToList();
             Seek = seek;
         }
 
         /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
-        /// <param name="id"> Segment identifier. </param>
-        /// <param name="start"> Segment start offset. </param>
-        /// <param name="end"> Segment end offset. </param>
-        /// <param name="text"> Segment text. </param>
-        /// <param name="temperature"> Temperature. </param>
-        /// <param name="averageLogProb"> Average log probability. </param>
-        /// <param name="compressionRatio"> Compression ratio. </param>
-        /// <param name="noSpeechProb"> Probability of 'no speech'. </param>
-        /// <param name="tokens"> Tokens in this segment. </param>
-        /// <param name="seek"> TODO. </param>
-        internal AudioTranscriptionSegment(int id, float start, float end, string text, float temperature, float averageLogProb, float compressionRatio, float noSpeechProb, IReadOnlyList<int> tokens, int seek)
+        /// <param name="id"> The 0-based index of this segment within a transcription. </param>
+        /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
+        /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
+        /// <param name="text"> The transcribed text that was part of this audio segment. </param>
+        /// <param name="temperature"> The temperature score associated with this audio segment. </param>
+        /// <param name="averageLogProbability"> The average log probability associated with this audio segment. </param>
+        /// <param name="compressionRatio"> The compression ratio of this audio segment. </param>
+        /// <param name="noSpeechProbability"> The probability of no speech detection within this audio segment. </param>
+        /// <param name="tokens"> The token IDs matching the transcribed text in this audio segment. </param>
+        /// <param name="seek">
+        /// The seek position associated with the processing of this audio segment.
+        /// Seek positions are expressed as hundredths of seconds.
+        /// The model may process several segments from a single seek position, so while the seek position will never represent
+        /// a later time than the segment's start, the segment's start may represent a significantly later time than the
+        /// segment's associated seek position.
+        /// </param>
+        internal AudioTranscriptionSegment(int id, TimeSpan start, TimeSpan end, string text, float temperature, float averageLogProbability, float compressionRatio, float noSpeechProbability, IReadOnlyList<int> tokens, int seek)
         {
             Id = id;
             Start = start;
             End = end;
             Text = text;
             Temperature = temperature;
-            AverageLogProb = averageLogProb;
+            AverageLogProbability = averageLogProbability;
             CompressionRatio = compressionRatio;
-            NoSpeechProb = noSpeechProb;
+            NoSpeechProbability = noSpeechProbability;
             Tokens = tokens;
             Seek = seek;
         }
 
-        /// <summary> Segment identifier. </summary>
+        /// <summary> The 0-based index of this segment within a transcription. </summary>
         public int Id { get; }
-        /// <summary> Segment start offset. </summary>
-        public float Start { get; }
-        /// <summary> Segment end offset. </summary>
-        public float End { get; }
-        /// <summary> Segment text. </summary>
+        /// <summary> The time at which this segment started relative to the beginning of the transcribed audio. </summary>
+        public TimeSpan Start { get; }
+        /// <summary> The time at which this segment ended relative to the beginning of the transcribed audio. </summary>
+        public TimeSpan End { get; }
+        /// <summary> The transcribed text that was part of this audio segment. </summary>
         public string Text { get; }
-        /// <summary> Temperature. </summary>
+        /// <summary> The temperature score associated with this audio segment. </summary>
         public float Temperature { get; }
-        /// <summary> Average log probability. </summary>
-        public float AverageLogProb { get; }
-        /// <summary> Compression ratio. </summary>
+        /// <summary> The average log probability associated with this audio segment. </summary>
+        public float AverageLogProbability { get; }
+        /// <summary> The compression ratio of this audio segment. </summary>
         public float CompressionRatio { get; }
-        /// <summary> Probability of 'no speech'. </summary>
-        public float NoSpeechProb { get; }
-        /// <summary> Tokens in this segment. </summary>
+        /// <summary> The probability of no speech detection within this audio segment. </summary>
+        public float NoSpeechProbability { get; }
+        /// <summary> The token IDs matching the transcribed text in this audio segment. </summary>
         public IReadOnlyList<int> Tokens { get; }
-        /// <summary> TODO. </summary>
+        /// <summary>
+        /// The seek position associated with the processing of this audio segment.
+        /// Seek positions are expressed as hundredths of seconds.
+        /// The model may process several segments from a single seek position, so while the seek position will never represent
+        /// a later time than the segment's start, the segment's start may represent a significantly later time than the
+        /// segment's associated seek position.
+        /// </summary>
         public int Seek { get; }
     }
 }
