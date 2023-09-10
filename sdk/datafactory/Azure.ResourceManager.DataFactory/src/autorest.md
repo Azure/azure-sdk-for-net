@@ -242,6 +242,9 @@ rename-mapping:
   VariableType: PipelineVariableType
   WranglingDataFlow: DataFactoryWranglingDataFlowProperties
   XmlDataset.typeProperties.location: DataLocation
+  SelfHostedIntegrationRuntimeStatus.typeProperties.updateDelayOffset: updateDelayOffset | duration
+  SelfHostedIntegrationRuntimeStatus.typeProperties.localTimeZoneOffset: localTimeZoneOffset | duration
+  UpdateIntegrationRuntimeRequest.updateDelayOffset: updateDelayOffset | duration
 
 prepend-rp-prefix:
   - BlobEventsTrigger
@@ -303,18 +306,12 @@ directive:
   - from: datafactory.json
     where: $.definitions
     transform: >
-      $.UpdateIntegrationRuntimeRequest.properties.updateDelayOffset['format'] = 'duration';
       $.LinkedServiceReference.properties.type['x-ms-enum']['name'] = 'LinkedServiceReferenceType';
 #  - from: Pipeline.json
 #    where: $.definitions
 #    transform: >
 #      $.PipelineElapsedTimeMetricPolicy.properties.duration['type'] = 'string';
 #      $.PipelineElapsedTimeMetricPolicy.properties.duration['format'] = 'duration';
-  - from: IntegrationRuntime.json
-    where: $.definitions
-    transform: >
-      $.SelfHostedIntegrationRuntimeStatusTypeProperties.properties.updateDelayOffset['format'] = 'duration';
-      $.SelfHostedIntegrationRuntimeStatusTypeProperties.properties.localTimeZoneOffset['format'] = 'duration';
   # The definition of userAssignedIdentities is not same as the ManagedServiceIdentity, but the actual json text is same, so remove this property here to normalize with shared ManagedServiceIdentity.
   - from: datafactory.json
     where: $.definitions
