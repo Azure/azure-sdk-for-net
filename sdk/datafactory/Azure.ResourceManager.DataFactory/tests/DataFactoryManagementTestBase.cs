@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -72,6 +73,63 @@ namespace Azure.ResourceManager.DataFactory.Tests
             var storage = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, data);
             var key = await storage.Value.GetKeysAsync().FirstOrDefaultAsync(_ => true);
             return key.Value;
+        }
+
+        protected async Task<DataFactoryLinkedServiceResource> CreateAzureDBLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string connectionString)
+        {
+            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString(connectionString)));
+            var linkedService = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
+            return linkedService.Value;
+        }
+
+        protected async Task<DataFactoryDatasetResource> CreateAzureDBDataSet(DataFactoryResource dataFactory, string dataSetName, string linkedServiceName, string tableName)
+        {
+            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
+            DataFactoryDatasetData dataFactoryDatasetData = new DataFactoryDatasetData(new AzureSqlTableDataset(dataFactoryLinkedServiceReference)
+            {
+                Table = tableName,
+                SchemaTypePropertiesSchema = DataFactoryElement<string>.FromLiteral("dbo"),
+                Schema = new List<DatasetSchemaDataElement>()
+                {
+                    new DatasetSchemaDataElement(){ SchemaColumnName = "SampleId",SchemaColumnType="int"},
+                    new DatasetSchemaDataElement(){ SchemaColumnName = "SampleDetail",SchemaColumnType="varchar"}
+                }
+            });
+
+            var dataSet = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, dataFactoryDatasetData);
+            return dataSet.Value;
+        }
+
+        protected async Task<DataFactoryPipelineResource> CreateCopyDataPipeline(DataFactoryResource dataFactory, string pipelineName, string copyTaskName, string dataSetSourceName, string dataSetSinkName)
+        {
+            DataFactoryPipelineData pipelineData = new DataFactoryPipelineData()
+            {
+                Activities =
+                {
+                    new CopyActivity(copyTaskName,new CopyActivitySource(),new CopySink())
+                    {
+                        State = PipelineActivityState.Active,
+                        Source = new AzureSqlSource()
+                        {
+                            SourceRetryCount = 10,
+                            QueryTimeout = "02:00:00"
+                        },
+                        Sink = new AzureSqlSink()
+                        {
+                        },
+                        Inputs =
+                        {
+                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetSourceName)
+                        },
+                        Outputs =
+                        {
+                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetSinkName)
+                        }
+                    }
+                }
+            };
+            var pipeline = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(Azure.WaitUntil.Completed, pipelineName, pipelineData);
+            return pipeline.Value;
         }
     }
 }

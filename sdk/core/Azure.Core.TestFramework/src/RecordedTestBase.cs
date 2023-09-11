@@ -347,7 +347,6 @@ namespace Azure.Core.TestFramework
         /// </summary>
         [OneTimeTearDown]
         public void TearDownRecordedTestClass()
-        {
             Logger?.Dispose();
             Logger = null;
 
