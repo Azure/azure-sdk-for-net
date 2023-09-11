@@ -58,7 +58,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
-                false,
+                hibernate: null,
                 context: new());
 
             BinaryData devBoxData = await devBoxStopOperation.WaitForCompletionAsync();
