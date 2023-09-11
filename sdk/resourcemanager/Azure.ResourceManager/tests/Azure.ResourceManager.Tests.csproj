@@ -30,10 +30,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="TestFramework\TestClients\" />
-    <Folder Include="TestFramework\Tests\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
   </ItemGroup>
 
