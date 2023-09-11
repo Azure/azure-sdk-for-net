@@ -24,14 +24,12 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             foreach (var systemEvent in Assembly.GetAssembly(typeof(EventGridEvent)).GetTypes().Where(t => t.Name.EndsWith("EventData")))
             {
-                // skip base types
-                if (systemEvent == typeof(ContainerRegistryArtifactEventData) ||
-                    systemEvent == typeof(ContainerRegistryEventData) ||
-                    systemEvent == typeof(ContainerServiceClusterSupportEventData) ||
-                    systemEvent == typeof(ContainerServiceNodePoolRollingEventData))
+                // skip types that have no public constructors, e.g. base types
+                if (systemEvent.GetConstructors().Length == 0)
                 {
                     continue;
                 }
+
                 ValidateName(systemEvent.Name);
                 Assert.IsTrue(
                     SystemEventExtensions.s_systemEventDeserializers.Values.Any(
