@@ -77,7 +77,17 @@ namespace Azure
         }
 
         [DoesNotReturn]
-        private static void ThrowInvalidCast() => throw new InvalidCastException();
+        private static void ThrowInvalidCast(Type? source, Type target)
+        {
+            if (source is null)
+            {
+                throw new InvalidCastException($"Unable to cast null Variant to type '{target}'.");
+            }
+            else
+            {
+                throw new InvalidCastException($"Unable to cast Variant of type '{source}' to type '{target}'.");
+            }
+        }
 
         [DoesNotReturn]
         private static void ThrowArgumentNull(string paramName) => throw new ArgumentNullException(paramName);
@@ -1381,9 +1391,9 @@ namespace Azure
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly T As<T>()
         {
-            if (!TryGetValue<T>(out T value))
+            if (!TryGetValue(out T value))
             {
-                ThrowInvalidCast();
+                ThrowInvalidCast(Type, typeof(T));
             }
 
             return value;

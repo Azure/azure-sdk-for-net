@@ -107,6 +107,26 @@ namespace Azure.Core.Experimental.Tests
             Assert.IsNull(listVariant.As<string>());
         }
 
+        [Test]
+        public void NonNullableValueTypesCannotBeNull()
+        {
+            int? i = null;
+            Variant intVariant = new(i);
+
+            Assert.AreEqual(Variant.Null, intVariant);
+            Assert.Throws<InvalidCastException>(() => intVariant.As<int>());
+        }
+
+        [Test]
+        public void NullableValueTypesCanBeNull()
+        {
+            int? i = null;
+            Variant intVariant = new(i);
+
+            Assert.AreEqual(Variant.Null, intVariant);
+            Assert.IsNull(intVariant.As<int?>());
+        }
+
         #region Helpers
         public static IEnumerable<Variant[]> VariantValues()
         {
