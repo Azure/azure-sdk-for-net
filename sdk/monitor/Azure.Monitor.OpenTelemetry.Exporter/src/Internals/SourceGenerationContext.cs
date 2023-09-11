@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 #if NET6_0_OR_GREATER
-// Exploring "Source Generation" as a mitigation for AOT IL3050:RequiresDynamicCode and IL2026:RequiresUnreferencedCode
+// "Source Generation" is a mitigation for AOT IL3050:RequiresDynamicCode and IL2026:RequiresUnreferencedCode
 // https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation
 [JsonSerializable(typeof(VmMetadataResponse))]
 [JsonSerializable(typeof(string))]
