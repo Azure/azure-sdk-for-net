@@ -22,8 +22,16 @@ namespace Azure
         /// <param name="value"></param>
         public Variant(object? value)
         {
-            _object = value;
-            _union = default;
+            if (value is Variant variant)
+            {
+                _object = variant._object;
+                _union = variant._union;
+            }
+            else
+            {
+                _object = value;
+                _union = default;
+            }
         }
 
         /// <summary>
