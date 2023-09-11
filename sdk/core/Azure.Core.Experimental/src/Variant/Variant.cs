@@ -1296,11 +1296,12 @@ namespace Azure
         {
             // Single return has a significant performance benefit.
 
-            bool result = false;
+            bool result;
 
             if (_object is null)
             {
                 value = default!;
+                result = true;
             }
             else if (typeof(T) == typeof(char[]))
             {
