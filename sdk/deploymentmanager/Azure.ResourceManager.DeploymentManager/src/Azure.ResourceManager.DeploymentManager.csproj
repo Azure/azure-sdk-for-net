@@ -1,8 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Version>1.0.0-beta.4</Version>
-    <PackageId>Azure.ResourceManager.DeploymentManager</PackageId>
-    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DeploymentManager.</Description>
-    <PackageTags>azure;management;arm;resource manager;deploymentmanager</PackageTags>
-  </PropertyGroup>
-</Project>
