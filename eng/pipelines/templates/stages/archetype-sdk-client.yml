@@ -24,6 +24,9 @@ parameters:
 - name: TargetDocRepoOwner
   type: string
   default: Azure
+- name: ValidateAOT
+  type: boolean
+  default: false
 - name: TargetDocRepoName
   type: string
   default: azure-docs-sdk-dotnet
@@ -82,6 +85,7 @@ stages:
         LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
         BuildSnippets: ${{ parameters.BuildSnippets }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
+        ValidateAOT: ${{ paramters.ValidateAOT }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
         MatrixConfigs:
           - ${{ each config in parameters.MatrixConfigs }}:

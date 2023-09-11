@@ -1,0 +1,14 @@
+parameters:
+  ServiceDirectory: ''
+  PackageName: ''
+
+steps:
+- task: Powershell@2
+  displayName: Check for AOT compatibility regressions
+  inputs:
+    targetType: filepath
+    filePath: eng/common/scripts/check-AOT-compat-regression.ps1
+    arguments: >-
+      -ServiceDirectory ${{ parameters.ServiceDirectory }}
+      -PackageName ${{ parameters.PackageName }}
+    workingDirectory: $(Build.SourcesDirectory)

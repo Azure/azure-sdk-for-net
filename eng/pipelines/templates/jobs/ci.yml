@@ -17,6 +17,9 @@ parameters:
 - name: BuildSnippets
   type: boolean
   default: true
+- name: ValidateAOT
+  type: boolean
+  default: false
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -139,6 +142,12 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
+
+      - ${{ if eq(parameters.ValidateAOT, 'true') }}:
+        - template: /eng/common/pipelines/templates/steps/aot-compat.yml
+          parameters:
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            PackageName: ${{ parameters.ArtifactName }}
 
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
