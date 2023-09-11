@@ -26,10 +26,6 @@ namespace Azure.Core
             return content;
         }
 
-#if !NET5_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationTrimmingMessage)]
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCode(SerializationTrimmingMessage)]
-#endif
         public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
             var content = new Utf8JsonRequestContent();

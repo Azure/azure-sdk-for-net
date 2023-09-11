@@ -137,7 +137,9 @@ namespace Azure.Core.Pipeline
         /// Marks the scope as failed.
         /// </summary>
         /// <param name="exception">The exception to associate with the failed scope.</param>
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has the commonly used properties being preserved with DynamicallyAccessedMemberTypes on the inner method MarkFailed.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has public properties preserved on the inner method MarkFailed." +
+            "The public property System.Exception.TargetSite.get is not compatible with trimming and produces a warning when preserving all public properties. Since we do not use this property, and" +
+            "use of this property by Application Insights cannot be supported with trimming, we can suppress the warning coming from the inner method.")]
         public void Failed(Exception? exception = default)
         {
             _activityAdapter?.MarkFailed(exception);
