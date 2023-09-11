@@ -46,6 +46,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlobClientConfiguration"/>.
         /// </summary>
         internal virtual BlobClientConfiguration ClientConfiguration => _clientConfiguration;
+        /// <summary>
+        ///
+        /// </summary>
+        protected static BlobClientConfiguration GetClientConfiguration(BlobBaseClient client) => client.ClientConfiguration;
 
         /// <summary>
         /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.

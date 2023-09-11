@@ -64,6 +64,10 @@ namespace Azure.Storage.Blobs
         /// <see cref="BlobClientConfiguration"/>.
         /// </summary>
         internal virtual BlobClientConfiguration ClientConfiguration => _clientConfiguration;
+        /// <summary>
+        ///
+        /// </summary>
+        protected static BlobClientConfiguration GetClientConfiguration(BlobContainerClient client) => client.ClientConfiguration;
 
         /// <summary>
         /// The authentication policy for our ClientConfiguration.Pipeline.  We cache it here in

@@ -49,6 +49,18 @@ namespace Azure.Storage.Blobs
         public new Azure.Storage.Blobs.BlobClient WithSnapshot(string snapshot) { throw null; }
         public new Azure.Storage.Blobs.BlobClient WithVersion(string versionId) { throw null; }
     }
+    public partial class BlobClientConfiguration
+    {
+        internal BlobClientConfiguration() { }
+        public virtual Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
+        public virtual Azure.AzureSasCredential SasCredential { get { throw null; } }
+        public virtual Azure.Storage.StorageSharedKeyCredential SharedKeyCredential { get { throw null; } }
+        public virtual Azure.Core.TokenCredential TokenCredential { get { throw null; } }
+        public virtual Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
+        public bool TrimBlobNameSlashes { get { throw null; } }
+        public virtual Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { get { throw null; } }
+    }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
         public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2023_08_03) { }
@@ -136,6 +148,7 @@ namespace Azure.Storage.Blobs
         public virtual Azure.Pageable<Azure.Storage.Blobs.Models.BlobHierarchyItem> GetBlobsByHierarchy(Azure.Storage.Blobs.Models.BlobTraits traits = Azure.Storage.Blobs.Models.BlobTraits.None, Azure.Storage.Blobs.Models.BlobStates states = Azure.Storage.Blobs.Models.BlobStates.None, string delimiter = null, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Blobs.Models.BlobHierarchyItem> GetBlobsByHierarchyAsync(Azure.Storage.Blobs.Models.BlobTraits traits = Azure.Storage.Blobs.Models.BlobTraits.None, Azure.Storage.Blobs.Models.BlobStates states = Azure.Storage.Blobs.Models.BlobStates.None, string delimiter = null, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal virtual Azure.Storage.Blobs.Specialized.BlockBlobClient GetBlockBlobClientCore(string blobName) { throw null; }
+        protected static Azure.Storage.Blobs.BlobClientConfiguration GetClientConfiguration(Azure.Storage.Blobs.BlobContainerClient client) { throw null; }
         protected internal virtual Azure.Storage.Blobs.Specialized.PageBlobClient GetPageBlobClientCore(string blobName) { throw null; }
         protected internal virtual Azure.Storage.Blobs.BlobServiceClient GetParentBlobServiceClientCore() { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContainerProperties> GetProperties(Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1595,6 +1608,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.BlobSasBuilder builder) { throw null; }
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.BlobSasPermissions permissions, System.DateTimeOffset expiresOn) { throw null; }
         protected internal virtual Azure.Storage.Blobs.Specialized.BlobLeaseClient GetBlobLeaseClientCore(string leaseId) { throw null; }
+        protected static Azure.Storage.Blobs.BlobClientConfiguration GetClientConfiguration(Azure.Storage.Blobs.Specialized.BlobBaseClient client) { throw null; }
         protected static System.Threading.Tasks.Task<Azure.HttpAuthorization> GetCopyAuthorizationHeaderAsync(Azure.Storage.Blobs.Specialized.BlobBaseClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal virtual Azure.Storage.Blobs.BlobContainerClient GetParentBlobContainerClientCore() { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> GetProperties(Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

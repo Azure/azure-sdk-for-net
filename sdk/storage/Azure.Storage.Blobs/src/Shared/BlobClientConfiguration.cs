@@ -1,21 +1,36 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
     /// <summary>
     /// Provides the configurations to connecting to the Blob Service and to create the Blob Clients
     /// </summary>
-    internal class BlobClientConfiguration : StorageClientConfiguration
+    public class BlobClientConfiguration
     {
+        internal virtual HttpPipeline Pipeline { get; set; }
+
+        internal virtual ClientDiagnostics ClientDiagnostics { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public virtual StorageSharedKeyCredential SharedKeyCredential { get; internal set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public virtual TokenCredential TokenCredential { get; internal set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public virtual AzureSasCredential SasCredential { get; internal set; }
+
         /// <summary>
         /// The versions of Azure Blob Storage supported by this client
         /// library.  For more, see
@@ -29,17 +44,26 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public virtual CustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
+        /// <summary>
+        /// Options for validating transfer integrity.
+        /// </summary>
         public virtual TransferValidationOptions TransferValidation { get; internal set; }
 
+        /// <summary>
+        /// Encryption scope used for operations.
+        /// </summary>
         public string EncryptionScope { get; internal set; }
 
+        /// <summary>
+        /// Enables blob name trimm
+        /// </summary>
         public bool TrimBlobNameSlashes { get; internal set; }
 
         /// <summary>
         /// Create a <see cref="BlobClientConfiguration"/> with token authentication.
         /// </summary>
 
-        public BlobClientConfiguration(
+        internal BlobClientConfiguration(
             HttpPipeline pipeline,
             TokenCredential tokenCredential,
             ClientDiagnostics clientDiagnostics,
@@ -48,7 +72,6 @@ namespace Azure.Storage.Blobs
             TransferValidationOptions transferValidation,
             string encryptionScope,
             bool trimBlobNameSlashes)
-            : base(pipeline, tokenCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
@@ -60,7 +83,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Create a <see cref="BlobClientConfiguration"/> with shared key authentication.
         /// </summary>
-        public BlobClientConfiguration(
+        internal BlobClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
@@ -69,7 +92,6 @@ namespace Azure.Storage.Blobs
             TransferValidationOptions transferValidation,
             string encryptionScope,
             bool trimBlobNameSlashes)
-            : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
@@ -81,7 +103,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Create a <see cref="BlobClientConfiguration"/> with SAS authentication.
         /// </summary>
-        public BlobClientConfiguration(
+        internal BlobClientConfiguration(
             HttpPipeline pipeline,
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
@@ -90,7 +112,6 @@ namespace Azure.Storage.Blobs
             TransferValidationOptions transferValidation,
             string encryptionScope,
             bool trimBlobNameSlashes)
-            : base(pipeline, sasCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
@@ -104,7 +125,7 @@ namespace Azure.Storage.Blobs
         /// or with SAS that was provided as part of the URL.
         /// </summary>
 
-        public BlobClientConfiguration(
+        internal BlobClientConfiguration(
             HttpPipeline pipeline,
             ClientDiagnostics clientDiagnostics,
             BlobClientOptions.ServiceVersion version,
@@ -112,7 +133,6 @@ namespace Azure.Storage.Blobs
             TransferValidationOptions transferValidation,
             string encryptionScope,
             bool trimBlobNameSlashes)
-            : base(pipeline, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
@@ -135,7 +155,6 @@ namespace Azure.Storage.Blobs
             TransferValidationOptions transferValidation,
             string encryptionScope,
             bool trimBlobNameSlashes)
-            : base(pipeline, sharedKeyCredential, sasCredential, tokenCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;

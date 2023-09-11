@@ -124,7 +124,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.IsNotNull(resource);
             Assert.AreEqual(uri, resource.Uri.ToString());
             Assert.AreEqual(uri, resource.BlobContainerClient.Uri.ToString());
-            AssertCredPresent(resource.BlobContainerClient.ClientConfiguration, credType);
+            AssertCredPresent(resource.BlobContainerClient.GetConfiguration(), credType);
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             AssertBlobStorageResourceType(resource, blobType, out BlobBaseClient underlyingClient);
             Assert.AreEqual(uri, resource.Uri.ToString());
             Assert.AreEqual(uri, underlyingClient.Uri.ToString());
-            AssertCredPresent(underlyingClient.ClientConfiguration, credType);
+            AssertCredPresent(underlyingClient.GetConfiguration(), credType);
         }
     }
 }
