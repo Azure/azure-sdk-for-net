@@ -30,11 +30,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\FeatureCollectionTests\" />
-    <Folder Include="SessionRecords\LocationExpandedTests\" />
-    <Folder Include="SessionRecords\ResourceGroupOperationsTests\" />
-    <Folder Include="SessionRecords\RestApiCollectionTests\" />
-    <Folder Include="SessionRecords\SubscriptionOperationsTests\" />
+    <Folder Include="TestFramework\TestClients\" />
+    <Folder Include="TestFramework\Tests\" />
   </ItemGroup>
 
 </Project>
