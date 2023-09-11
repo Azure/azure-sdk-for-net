@@ -10,6 +10,15 @@ namespace: Azure.ResourceManager.CostManagement
 require: https://github.com/Azure/azure-rest-api-specs/blob/20e9229b38b94c8975386b75c652b75e6d691995/specification/cost-management/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - BenefitRecommendations_List 
+  - Forecast_Usage
+  - Dimensions_List
+  - Query_Usage
+  - ScheduledActions_CheckNameAvailabilityByScope
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

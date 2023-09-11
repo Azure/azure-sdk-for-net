@@ -12,6 +12,11 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e
 tag: package-2021-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - Assignments_CreateOrUpdate
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
