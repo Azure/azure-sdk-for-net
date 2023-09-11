@@ -27,7 +27,7 @@ namespace Azure.ResourceManager
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             var obj = Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null);
 
-            if (typeof(T).GetInterface(nameof(IModelSerializable<object>)) is not null)
+            if (typeof(T).GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IModelJsonSerializable<>)))
             {
                 IOperationSource<T> source = new GenericOperationSource<T>();
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
