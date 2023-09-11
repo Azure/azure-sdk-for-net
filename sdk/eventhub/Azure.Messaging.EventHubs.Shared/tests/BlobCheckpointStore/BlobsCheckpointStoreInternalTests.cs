@@ -682,7 +682,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, "Id", EventPosition.FromOffset(long.MinValue));
 
             Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint, CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
-            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "id", ex.Message));
+            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "Id", ex.Message));
         }
 
         /// <summary>

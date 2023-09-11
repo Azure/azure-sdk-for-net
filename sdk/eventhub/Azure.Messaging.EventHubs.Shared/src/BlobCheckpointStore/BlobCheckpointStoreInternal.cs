@@ -371,7 +371,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 { BlobMetadataKey.Offset, checkpoint.StartingPosition.Offset },
                 { BlobMetadataKey.SequenceNumber, (checkpoint.StartingPosition.SequenceNumber ?? long.MinValue).ToString(CultureInfo.InvariantCulture) },
                 { BlobMetadataKey.ClientAuthorIdentifier, checkpoint.ClientAuthorIdentifier },
-                { BlobMetadataKey.ReplicationSegment,  checkpoint.StartingPosition.ReplicationSegment }
+                { BlobMetadataKey.ReplicationSegment,  checkpoint.StartingPosition.ReplicationSegment ?? "-1" }
             };
 
             try
