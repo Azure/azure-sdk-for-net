@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.TestFramework
 {
-    internal class TestResourceOperation : Operation<TestResource>, IOperationSource<TestResource>
+    public class TestResourceOperation : Operation<TestResource>, IOperationSource<TestResource>
     {
         private TestResource _value;
         private bool _exceptionOnWait;

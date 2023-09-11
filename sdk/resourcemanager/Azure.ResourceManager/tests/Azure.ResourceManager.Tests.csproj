@@ -30,6 +30,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
     <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
   </ItemGroup>
 
