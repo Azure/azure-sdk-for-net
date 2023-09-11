@@ -11,6 +11,9 @@ namespace: Azure.ResourceManager.Communication
 require: https://github.com/Azure/azure-rest-api-specs/blob/bbee55edb05169aba6d8d1944c0e2bc2b9408943/specification/communication/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -29,7 +32,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

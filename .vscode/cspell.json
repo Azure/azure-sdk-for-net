@@ -490,6 +490,14 @@
       ]
     },
     {
+      "filename": "**/sdk/hardwaresecuritymodules/**/*.cs",
+      "words": [
+        "fips",
+        "klmk",
+        "hsma"
+      ]
+    },
+    {
       "filename": "**/sdk/hdinsight/**/*.cs",
       "words": [
         "aadds",

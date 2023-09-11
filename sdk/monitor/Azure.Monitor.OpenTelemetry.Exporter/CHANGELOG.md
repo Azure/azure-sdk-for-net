@@ -12,6 +12,8 @@
 
 * Update OpenTelemetry dependencies
   ([#38430](https://github.com/Azure/azure-sdk-for-net/pull/38430))
+  ([#38568](https://github.com/Azure/azure-sdk-for-net/pull/38568))
+  - OpenTelemetry 1.6.0
   - OpenTelemetry.PersistentStorage.FileSystem 1.0.0
 
 ## 1.0.0-beta.14 (2023-08-09)

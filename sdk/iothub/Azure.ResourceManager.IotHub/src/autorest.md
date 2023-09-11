@@ -11,6 +11,9 @@ namespace: Azure.ResourceManager.IotHub
 require: https://github.com/Azure/azure-rest-api-specs/blob/1df6d6f671dc5059016fbc2c0a624e01f0b2972c/specification/iothub/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -111,7 +114,7 @@ format-by-name-rules:
   'certificate': 'any'
   'UserAssignedIdentity': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
