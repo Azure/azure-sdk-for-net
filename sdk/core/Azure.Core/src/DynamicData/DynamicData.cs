@@ -147,12 +147,12 @@ namespace Azure.Core.Serialization
             if (_options.PropertyNameFormat == JsonPropertyNames.UseExact ||
                 _element.TryGetProperty(name, out MutableJsonElement _))
             {
-                _element = _element.SetProperty(name, value);
+                SetPropertyInternal(name, value);
                 return null;
             }
 
             // The dynamic content has a specified property name format.
-            _element = _element.SetProperty(FormatPropertyName(name), value);
+            SetPropertyInternal(FormatPropertyName(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;
@@ -166,11 +166,8 @@ namespace Azure.Core.Serialization
             _ => false
         };
 
-        private object ConvertType(object value)
-        {
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _serializerOptions);
-            return JsonDocument.Parse(bytes);
-        }
+        private JsonElement ConvertType(object value) =>
+            MutableJsonElement.SerializeToJsonElement(value, _serializerOptions);
 
         private object? SetViaIndexer(object index, object value)
         {
@@ -179,15 +176,145 @@ namespace Azure.Core.Serialization
             switch (index)
             {
                 case string propertyName:
-                    _element = _element.SetProperty(propertyName, value);
+                    SetPropertyInternal(propertyName, value);
                     return null;
                 case int arrayIndex:
                     MutableJsonElement element = _element.GetIndexElement(arrayIndex);
-                    element.Set(value);
+                    SetInternal(ref element, value);
                     return new DynamicData(element, _options);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
+        }
+
+        private void SetPropertyInternal(string name, object value)
+        {
+            switch (value)
+            {
+                case bool b:
+                    _element = _element.SetProperty(name, b);
+                    break;
+                case string s:
+                    _element = _element.SetProperty(name, s);
+                    break;
+                case byte b:
+                    _element = _element.SetProperty(name, b);
+                    break;
+                case sbyte sb:
+                    _element = _element.SetProperty(name, sb);
+                    break;
+                case short sh:
+                    _element = _element.SetProperty(name, sh);
+                    break;
+                case ushort us:
+                    _element = _element.SetProperty(name, us);
+                    break;
+                case int i:
+                    _element = _element.SetProperty(name, i);
+                    break;
+                case uint u:
+                    _element = _element.SetProperty(name, u);
+                    break;
+                case long l:
+                    _element = _element.SetProperty(name, l);
+                    break;
+                case ulong ul:
+                    _element = _element.SetProperty(name, ul);
+                    break;
+                case float f:
+                    _element = _element.SetProperty(name, f);
+                    break;
+                case double d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case decimal d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case DateTime d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case DateTimeOffset d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case Guid g:
+                    _element = _element.SetProperty(name, g);
+                    break;
+                case null:
+                    _element = _element.SetPropertyNull(name);
+                    break;
+                case JsonElement e:
+                    _element = _element.SetProperty(name, e);
+                    break;
+                default:
+                    JsonElement element = ConvertType(value);
+                    _element = _element.SetProperty(name, element);
+                    break;
+            }
+        }
+
+        private void SetInternal(ref MutableJsonElement element, object value)
+        {
+            switch (value)
+            {
+                case bool b:
+                    element.Set(b);
+                    break;
+                case string s:
+                    element.Set(s);
+                    break;
+                case byte b:
+                    element.Set(b);
+                    break;
+                case sbyte sb:
+                    element.Set(sb);
+                    break;
+                case short sh:
+                    element.Set(sh);
+                    break;
+                case ushort us:
+                    element.Set(us);
+                    break;
+                case int i:
+                    element.Set(i);
+                    break;
+                case uint u:
+                    element.Set(u);
+                    break;
+                case long l:
+                    element.Set(l);
+                    break;
+                case ulong ul:
+                    element.Set(ul);
+                    break;
+                case float f:
+                    element.Set(f);
+                    break;
+                case double d:
+                    element.Set(d);
+                    break;
+                case decimal d:
+                    element.Set(d);
+                    break;
+                case DateTime d:
+                    element.Set(d);
+                    break;
+                case DateTimeOffset d:
+                    element.Set(d);
+                    break;
+                case Guid g:
+                    element.Set(g);
+                    break;
+                case null:
+                    element.SetNull();
+                    break;
+                case JsonElement e:
+                    element.Set(e);
+                    break;
+                default:
+                    JsonElement jsonElement = ConvertType(value);
+                    element.Set(jsonElement);
+                    break;
+            }
         }
 
         private T? ConvertTo<T>()

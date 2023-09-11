@@ -270,7 +270,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelWithLabelsAndSelectionMarks()
+        public async Task AnalyzeDocumentWithCustomModelWithSelectionMarks()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -308,7 +308,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageForm(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageDocument(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -364,7 +364,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageFormWithBlankPage(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageDocumentWithBlankPage(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -413,7 +413,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelCanParseDifferentTypeOfForm()
+        public async Task AnalyzeDocumentWithCustomModelCanParseDifferentTypeOfDocument()
         {
             var client = CreateDocumentAnalysisClient();
             var modelId = Recording.GenerateId();
@@ -545,7 +545,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentPage page = result.Pages.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
-            // values present in the form. We are not testing the service here, but the SDK.
+            // values present in the document. We are not testing the service here, but the SDK.
 
             Assert.AreEqual(DocumentPageLengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
@@ -1028,7 +1028,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentPage page = result.Pages.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
-            // values present in the form. We are not testing the service here, but the SDK.
+            // values present in the document. We are not testing the service here, but the SDK.
 
             Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
@@ -1235,7 +1235,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentPage page = result.Pages.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
-            // values present in the form. We are not testing the service here, but the SDK.
+            // values present in the document. We are not testing the service here, but the SDK.
 
             Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);

@@ -37,6 +37,8 @@ namespace Azure.AI.OpenAI
 
         private bool _isFinishedStreaming { get; set; } = false;
 
+        private Exception _pumpException { get; set; }
+
         /// <summary>
         /// Gets the log probabilities associated with tokens in this Choice.
         /// </summary>
@@ -93,6 +95,11 @@ namespace Azure.AI.OpenAI
                     }
                 }
 
+                if (_pumpException != null)
+                {
+                    throw _pumpException;
+                }
+
                 string newText = string.Empty;
                 lock (_baseChoicesLock)
                 {
@@ -109,11 +116,12 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        internal void EnsureFinishStreaming()
+        internal void EnsureFinishStreaming(Exception pumpException = null)
         {
             if (!_isFinishedStreaming)
             {
                 _isFinishedStreaming = true;
+                _pumpException = pumpException;
                 _updateAvailableEvent.Set();
             }
         }

@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-The script is to generate service level readme if it is missing. 
+The script is to generate service level readme if it is missing.
 For exist ones, we do 2 things here:
 1. Generate the client but not import to the existing service level readme.
 2. Update the metadata of service level readme
 
 .DESCRIPTION
-Given a doc repo location, and the credential for fetching the ms.author. 
+Given a doc repo location, and the credential for fetching the ms.author.
 Generate missing service level readme and updating metadata of the existing ones.
 
 .PARAMETER DocRepoLocation
@@ -53,9 +53,9 @@ $fullMetadata = Get-CSVMetadata
 $monikers = @("latest", "preview")
 foreach($moniker in $monikers) {
   # The onboarded packages return is key-value pair, which key is the package index, and value is the package info from {metadata}.json
-  # E.g. 
+  # E.g.
   # Key as: @azure/storage-blob
-  # Value as: 
+  # Value as:
   # {
   #   "Name": "@azure/storage-blob",
   #   "Version": "12.10.0-beta.1",
@@ -73,22 +73,38 @@ foreach($moniker in $monikers) {
   $onboardedPackages = &$GetOnboardedDocsMsPackagesForMonikerFn `
     -DocRepoLocation $DocRepoLocation -moniker $moniker
   $csvMetadata = @()
+
   foreach($metadataEntry in $fullMetadata) {
     if ($metadataEntry.Package -and $metadataEntry.Hide -ne 'true') {
       $pkgKey = GetPackageKey $metadataEntry
-      if($onboardedPackages.ContainsKey($pkgKey)) {
-        if ($onboardedPackages[$pkgKey] -and $onboardedPackages[$pkgKey].DirectoryPath) {
-          if (!($metadataEntry.PSObject.Members.Name -contains "DirectoryPath")) {
-            Add-Member -InputObject $metadataEntry `
-              -MemberType NoteProperty `
-              -Name DirectoryPath `
-              -Value $onboardedPackages[$pkgKey].DirectoryPath
-          }
-        }
-        $csvMetadata += $metadataEntry
+
+      if (!$onboardedPackages.ContainsKey($pkgKey)) {
+        continue
       }
+
+      $package = $onboardedPackages[$pkgKey]
+
+      if (!$package) {
+        $csvMetadata += $metadataEntry
+        continue
+      }
+
+      # If the metadata JSON entry has a DirectoryPath, but the CSV entry
+      # does not, add the DirectoryPath to the CSV entry
+      if (($package.PSObject.Members.Name -contains 'DirectoryPath') `
+        -and !($metadataEntry.PSObject.Members.Name -contains "DirectoryPath") ) {
+
+        Add-Member -InputObject $metadataEntry `
+          -MemberType NoteProperty `
+          -Name DirectoryPath `
+          -Value $package.DirectoryPath
+      }
+
+      $csvMetadata += $metadataEntry
+
     }
   }
+
   $packagesForService = @{}
   $allPackages = GetPackageLookup $csvMetadata
   foreach ($metadataKey in $allPackages.Keys) {

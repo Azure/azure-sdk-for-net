@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArmTemplateResource(Client, DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(e)), _devTestLabArmTemplateArmTemplatesClientDiagnostics, Pipeline, "DevTestLabArmTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArmTemplateResource(Client, DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(e)), _devTestLabArmTemplateArmTemplatesClientDiagnostics, Pipeline, "DevTestLabArmTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArmTemplateResource(Client, DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(e)), _devTestLabArmTemplateArmTemplatesClientDiagnostics, Pipeline, "DevTestLabArmTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArmTemplateResource(Client, DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(e)), _devTestLabArmTemplateArmTemplatesClientDiagnostics, Pipeline, "DevTestLabArmTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

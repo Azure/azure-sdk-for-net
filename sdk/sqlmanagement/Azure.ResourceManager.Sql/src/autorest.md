@@ -9,6 +9,14 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/eba34b9c764e87719378
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - ManagedDatabaseSensitivityLabels_CreateOrUpdate
+  - ManagedDatabaseSensitivityLabels_Delete
+  - SensitivityLabels_CreateOrUpdate
+  - SensitivityLabels_Delete
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -53,7 +61,7 @@ keep-plural-enums:
 keep-plural-resource-data:
 - MaintenanceWindows
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
