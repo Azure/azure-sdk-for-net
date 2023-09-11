@@ -164,6 +164,76 @@ namespace Microsoft.Azure.Management.Maintenance
             }
 
             /// <summary>
+            /// Apply Updates to resource
+            /// </summary>
+            /// <remarks>
+            /// Apply maintenance updates to resource
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name
+            /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource type
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identifier
+            /// </param>
+            /// <param name='applyUpdateName'>
+            /// ApplyUpdate name
+            /// </param>
+            /// <param name='applyUpdate'>
+            /// The ApplyUpdate
+            /// </param>
+            public static ApplyUpdate CreateOrUpdateOrCancel(this IApplyUpdatesOperations operations, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, ApplyUpdate applyUpdate)
+            {
+                return operations.CreateOrUpdateOrCancelAsync(resourceGroupName, providerName, resourceType, resourceName, applyUpdateName, applyUpdate).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Apply Updates to resource
+            /// </summary>
+            /// <remarks>
+            /// Apply maintenance updates to resource
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name
+            /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource type
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identifier
+            /// </param>
+            /// <param name='applyUpdateName'>
+            /// ApplyUpdate name
+            /// </param>
+            /// <param name='applyUpdate'>
+            /// The ApplyUpdate
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplyUpdate> CreateOrUpdateOrCancelAsync(this IApplyUpdatesOperations operations, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, ApplyUpdate applyUpdate, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateOrCancelWithHttpMessagesAsync(resourceGroupName, providerName, resourceType, resourceName, applyUpdateName, applyUpdate, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Apply Updates to resource with parent
             /// </summary>
             /// <remarks>

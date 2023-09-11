@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <param name="impactType">The impact type. Possible values include:
         /// 'None', 'Freeze', 'Restart', 'Redeploy'</param>
         /// <param name="status">The status. Possible values include:
-        /// 'Pending', 'InProgress', 'Completed', 'RetryNow',
-        /// 'RetryLater'</param>
+        /// 'Pending', 'InProgress', 'Completed', 'RetryNow', 'RetryLater',
+        /// 'NoUpdatesPending', 'Cancel', 'Cancelled'</param>
         /// <param name="impactDurationInSec">Duration of impact in
         /// seconds</param>
         /// <param name="notBefore">Time when Azure will start force updates if
@@ -78,7 +78,8 @@ namespace Microsoft.Azure.Management.Maintenance.Models
 
         /// <summary>
         /// Gets or sets the status. Possible values include: 'Pending',
-        /// 'InProgress', 'Completed', 'RetryNow', 'RetryLater'
+        /// 'InProgress', 'Completed', 'RetryNow', 'RetryLater',
+        /// 'NoUpdatesPending', 'Cancel', 'Cancelled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

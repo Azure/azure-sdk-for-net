@@ -36,5 +36,20 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// Updates installation failed and should be retried later.
         /// </summary>
         public const string RetryLater = "RetryLater";
+        /// <summary>
+        /// No updates are pending.
+        /// </summary>
+        public const string NoUpdatesPending = "NoUpdatesPending";
+        /// <summary>
+        /// Cancel the schedule and stop creating PMR for resources part of it.
+        /// Applicable to Maintenance Configuration resource type only.
+        /// </summary>
+        public const string Cancel = "Cancel";
+        /// <summary>
+        /// Send the Cancelled response to the user if request came to cancel
+        /// the schedule. Applicable to Maintenance Configuration resource type
+        /// only.
+        /// </summary>
+        public const string Cancelled = "Cancelled";
     }
 }

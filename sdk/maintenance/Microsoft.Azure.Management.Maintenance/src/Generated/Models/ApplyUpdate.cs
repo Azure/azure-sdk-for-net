@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <param name="systemData">Azure Resource Manager metadata containing
         /// createdBy and modifiedBy information.</param>
         /// <param name="status">The status. Possible values include:
-        /// 'Pending', 'InProgress', 'Completed', 'RetryNow',
-        /// 'RetryLater'</param>
+        /// 'Pending', 'InProgress', 'Completed', 'RetryNow', 'RetryLater',
+        /// 'NoUpdatesPending', 'Cancel', 'Cancelled'</param>
         /// <param name="resourceId">The resourceId</param>
         /// <param name="lastUpdateTime">Last Update time</param>
         public ApplyUpdate(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string status = default(string), string resourceId = default(string), System.DateTime? lastUpdateTime = default(System.DateTime?))
@@ -58,7 +58,8 @@ namespace Microsoft.Azure.Management.Maintenance.Models
 
         /// <summary>
         /// Gets or sets the status. Possible values include: 'Pending',
-        /// 'InProgress', 'Completed', 'RetryNow', 'RetryLater'
+        /// 'InProgress', 'Completed', 'RetryNow', 'RetryLater',
+        /// 'NoUpdatesPending', 'Cancel', 'Cancelled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; set; }

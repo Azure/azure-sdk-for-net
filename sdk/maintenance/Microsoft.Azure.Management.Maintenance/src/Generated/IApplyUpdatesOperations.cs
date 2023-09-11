@@ -104,6 +104,46 @@ namespace Microsoft.Azure.Management.Maintenance
         /// </exception>
         Task<AzureOperationResponse<ApplyUpdate>> GetWithHttpMessagesAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Apply Updates to resource
+        /// </summary>
+        /// <remarks>
+        /// Apply maintenance updates to resource
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Resource group name
+        /// </param>
+        /// <param name='providerName'>
+        /// Resource provider name
+        /// </param>
+        /// <param name='resourceType'>
+        /// Resource type
+        /// </param>
+        /// <param name='resourceName'>
+        /// Resource identifier
+        /// </param>
+        /// <param name='applyUpdateName'>
+        /// ApplyUpdate name
+        /// </param>
+        /// <param name='applyUpdate'>
+        /// The ApplyUpdate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="MaintenanceErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ApplyUpdate>> CreateOrUpdateOrCancelWithHttpMessagesAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, ApplyUpdate applyUpdate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Apply Updates to resource with parent
         /// </summary>
         /// <remarks>

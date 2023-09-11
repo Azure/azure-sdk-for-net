@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.Maintenance
             Operations = new Operations(this);
             Updates = new UpdatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2023-04-01";
+            ApiVersion = "2023-09-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
