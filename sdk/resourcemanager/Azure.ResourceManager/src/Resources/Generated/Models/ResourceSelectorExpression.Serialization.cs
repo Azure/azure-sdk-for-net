@@ -8,15 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceSelectorExpression : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class ResourceSelectorExpression : IUtf8JsonSerializable, IModelJsonSerializable<ResourceSelectorExpression>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceSelectorExpression>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceSelectorExpression>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceSelectorExpression>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -43,19 +48,25 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeResourceSelectorExpression(JsonDocument.Parse(data).RootElement);
-
-        internal static ResourceSelectorExpression DeserializeResourceSelectorExpression(JsonElement element)
+        internal static ResourceSelectorExpression DeserializeResourceSelectorExpression(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ResourceSelectorKind> kind = default;
             Optional<IList<string>> @in = default;
             Optional<IList<string>> notIn = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -102,8 +114,61 @@ namespace Azure.ResourceManager.Resources.Models
                     notIn = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceSelectorExpression(Optional.ToNullable(kind), Optional.ToList(@in), Optional.ToList(notIn));
+            return new ResourceSelectorExpression(Optional.ToNullable(kind), Optional.ToList(@in), Optional.ToList(notIn), serializedAdditionalRawData);
+        }
+
+        ResourceSelectorExpression IModelJsonSerializable<ResourceSelectorExpression>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceSelectorExpression>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceSelectorExpression(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceSelectorExpression>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceSelectorExpression>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceSelectorExpression IModelSerializable<ResourceSelectorExpression>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceSelectorExpression>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceSelectorExpression(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceSelectorExpression"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceSelectorExpression"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceSelectorExpression model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceSelectorExpression"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceSelectorExpression(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceSelectorExpression(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

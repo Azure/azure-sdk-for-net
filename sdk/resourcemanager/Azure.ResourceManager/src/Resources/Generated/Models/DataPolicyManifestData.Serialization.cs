@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
@@ -15,14 +16,131 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class DataPolicyManifestData : IModelSerializable
+    public partial class DataPolicyManifestData : IUtf8JsonSerializable, IModelJsonSerializable<DataPolicyManifestData>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataPolicyManifestData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDataPolicyManifestData(JsonDocument.Parse(data).RootElement);
-
-        internal static DataPolicyManifestData DeserializeDataPolicyManifestData(JsonElement element)
+        void IModelJsonSerializable<DataPolicyManifestData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataPolicyManifestData>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Namespaces))
+            {
+                writer.WritePropertyName("namespaces"u8);
+                writer.WriteStartArray();
+                foreach (var item in Namespaces)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PolicyMode))
+            {
+                writer.WritePropertyName("policyMode"u8);
+                writer.WriteStringValue(PolicyMode);
+            }
+            if (Optional.IsDefined(IsBuiltInOnly))
+            {
+                writer.WritePropertyName("isBuiltInOnly"u8);
+                writer.WriteBooleanValue(IsBuiltInOnly.Value);
+            }
+            if (Optional.IsCollectionDefined(ResourceTypeAliases))
+            {
+                writer.WritePropertyName("resourceTypeAliases"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceTypeAliases)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceTypeAliases>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Effects))
+            {
+                writer.WritePropertyName("effects"u8);
+                writer.WriteStartArray();
+                foreach (var item in Effects)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataPolicyManifestEffect>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(FieldValues))
+            {
+                writer.WritePropertyName("fieldValues"u8);
+                writer.WriteStartArray();
+                foreach (var item in FieldValues)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("resourceFunctions"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Standard))
+            {
+                writer.WritePropertyName("standard"u8);
+                writer.WriteStartArray();
+                foreach (var item in Standard)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(CustomDefinitions))
+            {
+                writer.WritePropertyName("custom"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomDefinitions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataManifestCustomResourceFunctionDefinition>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataPolicyManifestData DeserializeDataPolicyManifestData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +157,7 @@ namespace Azure.ResourceManager.Resources
             Optional<IReadOnlyList<string>> fieldValues = default;
             Optional<IReadOnlyList<string>> standard = default;
             Optional<IReadOnlyList<DataManifestCustomResourceFunctionDefinition>> custom = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -187,8 +306,61 @@ namespace Azure.ResourceManager.Resources
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataPolicyManifestData(id, name, type, systemData.Value, Optional.ToList(namespaces), policyMode.Value, Optional.ToNullable(isBuiltInOnly), Optional.ToList(resourceTypeAliases), Optional.ToList(effects), Optional.ToList(fieldValues), Optional.ToList(standard), Optional.ToList(custom));
+            return new DataPolicyManifestData(id, name, type, systemData.Value, Optional.ToList(namespaces), policyMode.Value, Optional.ToNullable(isBuiltInOnly), Optional.ToList(resourceTypeAliases), Optional.ToList(effects), Optional.ToList(fieldValues), Optional.ToList(standard), Optional.ToList(custom), serializedAdditionalRawData);
+        }
+
+        DataPolicyManifestData IModelJsonSerializable<DataPolicyManifestData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataPolicyManifestData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataPolicyManifestData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataPolicyManifestData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataPolicyManifestData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataPolicyManifestData IModelSerializable<DataPolicyManifestData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataPolicyManifestData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataPolicyManifestData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataPolicyManifestData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataPolicyManifestData"/> to convert. </param>
+        public static implicit operator RequestContent(DataPolicyManifestData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataPolicyManifestData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataPolicyManifestData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataPolicyManifestData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

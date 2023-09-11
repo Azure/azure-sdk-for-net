@@ -53,9 +53,7 @@ namespace Azure.Core.TestFramework
             request.Uri = CreateStartPlaybackRequestUri(body);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            request.Content = body;
             return message;
         }
 
@@ -202,9 +200,7 @@ namespace Azure.Core.TestFramework
             request.Method = RequestMethod.Post;
             request.Uri = CreateStartRecordRequestUri(body);
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            request.Content = body;
             return message;
         }
 
@@ -360,9 +356,7 @@ namespace Azure.Core.TestFramework
             request.Uri = CreateSetRecordingTransportOptionsRequestUri(xRecordingId, proxyOptions);
             request.Headers.Add("x-recording-id", xRecordingId);
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(proxyOptions);
-            request.Content = content;
+            request.Content = proxyOptions;
             return message;
         }
 
@@ -440,9 +434,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sanitizer);
-            request.Content = content;
+            request.Content = sanitizer;
             return message;
         }
 
@@ -514,9 +506,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sanitizer);
-            request.Content = content;
+            request.Content = sanitizer;
             return message;
         }
 
@@ -588,9 +578,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sanitizer);
-            request.Content = content;
+            request.Content = sanitizer;
             return message;
         }
 
@@ -660,9 +648,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sanitizer);
-            request.Content = content;
+            request.Content = sanitizer;
             return message;
         }
 
@@ -786,9 +772,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(matcher);
-            request.Content = content;
+            request.Content = matcher;
             return message;
         }
 
@@ -858,9 +842,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(transform);
-            request.Content = content;
+            request.Content = transform;
             return message;
         }
 
