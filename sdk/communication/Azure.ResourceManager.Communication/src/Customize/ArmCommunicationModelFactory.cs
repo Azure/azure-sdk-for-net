@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
         /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
-        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CommunicationServicesProvisioningState? provisioningState = null, string hostName = null, string dataLocation = null, ResourceIdentifier notificationHubId = null, string version = null, Guid? immutableResourceId = null, IEnumerable<string> linkedDomains = null)
+        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CommunicationServicesProvisioningState? provisioningState = null, string hostName = null, string dataLocation = null, ResourceIdentifier notificationHubId = null, string version = null, Guid? immutableResourceId = null, IEnumerable<string> linkedDomains = null)
         {
             tags ??= new Dictionary<string, string>();
             linkedDomains ??= new List<string>();
