@@ -31,16 +31,14 @@ namespace Azure.ResourceManager
         private T CreateResult(Response response)
         {
             object data;
-            Type dataType = typeof(T).GetProperty("Data").PropertyType;
-            var model = Activator.CreateInstance(dataType, true) as IModelSerializable;
             MemoryStream memoryStream = response.ContentStream as MemoryStream;
             if (memoryStream == null)
             {
-                data = model!.Deserialize(BinaryData.FromStream(memoryStream), new ModelSerializerOptions());
+                data = ModelSerializer.Deserialize(BinaryData.FromStream(memoryStream), typeof(T), new ModelSerializerOptions());
             }
             else
             {
-                data = model!.Deserialize(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)), new ModelSerializerOptions());
+                data = ModelSerializer.Deserialize(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)), typeof(T), new ModelSerializerOptions());
             }
             return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
         }

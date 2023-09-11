@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<PolicyDefinitionReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyDefinitionReference>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             writer.WritePropertyName("policyDefinitionId"u8);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         PolicyDefinitionReference IModelJsonSerializable<PolicyDefinitionReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyDefinitionReference>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializePolicyDefinitionReference(doc.RootElement, options);
@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<PolicyDefinitionReference>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyDefinitionReference>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         PolicyDefinitionReference IModelSerializable<PolicyDefinitionReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyDefinitionReference>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializePolicyDefinitionReference(doc.RootElement, options);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<AvailabilityZoneMappings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<AvailabilityZoneMappings>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         AvailabilityZoneMappings IModelJsonSerializable<AvailabilityZoneMappings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<AvailabilityZoneMappings>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeAvailabilityZoneMappings(doc.RootElement, options);
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<AvailabilityZoneMappings>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<AvailabilityZoneMappings>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         AvailabilityZoneMappings IModelSerializable<AvailabilityZoneMappings>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<AvailabilityZoneMappings>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeAvailabilityZoneMappings(doc.RootElement, options);

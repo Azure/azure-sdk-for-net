@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<PolicyDefinitionGroup>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyDefinitionGroup>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         PolicyDefinitionGroup IModelJsonSerializable<PolicyDefinitionGroup>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyDefinitionGroup>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializePolicyDefinitionGroup(doc.RootElement, options);
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<PolicyDefinitionGroup>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyDefinitionGroup>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         PolicyDefinitionGroup IModelSerializable<PolicyDefinitionGroup>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyDefinitionGroup>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializePolicyDefinitionGroup(doc.RootElement, options);

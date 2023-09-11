@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<ResourceGroupProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ResourceGroupProperties>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         ResourceGroupProperties IModelJsonSerializable<ResourceGroupProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ResourceGroupProperties>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceGroupProperties(doc.RootElement, options);
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<ResourceGroupProperties>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ResourceGroupProperties>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ResourceGroupProperties IModelSerializable<ResourceGroupProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ResourceGroupProperties>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceGroupProperties(doc.RootElement, options);

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<PolicySetDefinitionListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicySetDefinitionListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         PolicySetDefinitionListResult IModelJsonSerializable<PolicySetDefinitionListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicySetDefinitionListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializePolicySetDefinitionListResult(doc.RootElement, options);
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<PolicySetDefinitionListResult>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicySetDefinitionListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         PolicySetDefinitionListResult IModelSerializable<PolicySetDefinitionListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicySetDefinitionListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializePolicySetDefinitionListResult(doc.RootElement, options);

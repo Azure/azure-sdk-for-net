@@ -18,7 +18,7 @@ using Azure.Core.Serialization;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>
-    public partial class GenericResource : ArmResource, IJsonModelSerializable
+    public partial class GenericResource : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _resourcesRestClient;
@@ -439,26 +439,6 @@ namespace Azure.ResourceManager.Resources
                 throw new InvalidOperationException($"An invalid resource id was given {Id}");
             }
             return version;
-        }
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
-        {
-            throw new NotImplementedException();
         }
     }
 }

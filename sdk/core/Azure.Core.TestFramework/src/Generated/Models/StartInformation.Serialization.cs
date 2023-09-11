@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework.Models
 
         void IModelJsonSerializable<StartInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<StartInformation>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             writer.WritePropertyName("x-recording-file"u8);
@@ -79,7 +79,7 @@ namespace Azure.Core.TestFramework.Models
 
         StartInformation IModelJsonSerializable<StartInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<StartInformation>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeStartInformation(doc.RootElement, options);
@@ -87,14 +87,14 @@ namespace Azure.Core.TestFramework.Models
 
         BinaryData IModelSerializable<StartInformation>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<StartInformation>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         StartInformation IModelSerializable<StartInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<StartInformation>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeStartInformation(doc.RootElement, options);

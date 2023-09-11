@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
 
         void IModelJsonSerializable<PolicyAssignmentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyAssignmentData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Resources
 
         PolicyAssignmentData IModelJsonSerializable<PolicyAssignmentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyAssignmentData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializePolicyAssignmentData(doc.RootElement, options);
@@ -370,14 +370,14 @@ namespace Azure.ResourceManager.Resources
 
         BinaryData IModelSerializable<PolicyAssignmentData>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyAssignmentData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         PolicyAssignmentData IModelSerializable<PolicyAssignmentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PolicyAssignmentData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializePolicyAssignmentData(doc.RootElement, options);

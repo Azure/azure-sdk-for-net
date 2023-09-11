@@ -13,6 +13,7 @@ using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.Resources
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetTenantResource method.
     /// </summary>
+    [DeserializationProxy(typeof(TenantData))]
     public partial class TenantResource : ArmResource, ResourceManager.IResource
     {
         private readonly ClientDiagnostics _tenantClientDiagnostics;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         void IModelJsonSerializable<ManagementGroupChildOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupChildOptions>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         ManagementGroupChildOptions IModelJsonSerializable<ManagementGroupChildOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupChildOptions>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeManagementGroupChildOptions(doc.RootElement, options);
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         BinaryData IModelSerializable<ManagementGroupChildOptions>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupChildOptions>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ManagementGroupChildOptions IModelSerializable<ManagementGroupChildOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupChildOptions>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeManagementGroupChildOptions(doc.RootElement, options);

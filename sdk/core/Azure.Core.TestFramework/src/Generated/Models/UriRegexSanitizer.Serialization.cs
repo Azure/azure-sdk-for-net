@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework.Models
 
         void IModelJsonSerializable<UriRegexSanitizer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<UriRegexSanitizer>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             writer.WritePropertyName("regex"u8);
@@ -87,7 +87,7 @@ namespace Azure.Core.TestFramework.Models
 
         UriRegexSanitizer IModelJsonSerializable<UriRegexSanitizer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<UriRegexSanitizer>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeUriRegexSanitizer(doc.RootElement, options);
@@ -95,14 +95,14 @@ namespace Azure.Core.TestFramework.Models
 
         BinaryData IModelSerializable<UriRegexSanitizer>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<UriRegexSanitizer>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         UriRegexSanitizer IModelSerializable<UriRegexSanitizer>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<UriRegexSanitizer>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeUriRegexSanitizer(doc.RootElement, options);

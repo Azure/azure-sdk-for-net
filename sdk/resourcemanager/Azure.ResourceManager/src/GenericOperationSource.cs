@@ -23,7 +23,7 @@ namespace Azure.ResourceManager
         private static T CreateResult(Response response)
         {
             MemoryStream memoryStream = response.ContentStream as MemoryStream;
-            var model = Activator.CreateInstance(typeof(T), true) as IModelSerializable;
+            var model = Activator.CreateInstance(typeof(T), true) as IModelSerializable<T>;
             if (memoryStream == null)
             {
                 return (T)model!.Deserialize(BinaryData.FromStream(response.ContentStream), new ModelSerializerOptions());

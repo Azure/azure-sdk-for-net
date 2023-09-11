@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<DataManifestCustomResourceFunctionDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<DataManifestCustomResourceFunctionDefinition>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         DataManifestCustomResourceFunctionDefinition IModelJsonSerializable<DataManifestCustomResourceFunctionDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<DataManifestCustomResourceFunctionDefinition>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeDataManifestCustomResourceFunctionDefinition(doc.RootElement, options);
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<DataManifestCustomResourceFunctionDefinition>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<DataManifestCustomResourceFunctionDefinition>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         DataManifestCustomResourceFunctionDefinition IModelSerializable<DataManifestCustomResourceFunctionDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<DataManifestCustomResourceFunctionDefinition>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeDataManifestCustomResourceFunctionDefinition(doc.RootElement, options);

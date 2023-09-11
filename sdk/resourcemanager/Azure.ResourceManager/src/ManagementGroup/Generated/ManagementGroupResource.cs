@@ -13,6 +13,7 @@ using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Resources;
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.ManagementGroups
     /// from an instance of <see cref="ArmClient" /> using the GetManagementGroupResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetManagementGroup method.
     /// </summary>
+    [DeserializationProxy(typeof(ManagementGroupData))]
     public partial class ManagementGroupResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupResource"/> instance. </summary>

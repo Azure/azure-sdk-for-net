@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework.Models
 
         void IModelJsonSerializable<ProxyOptionsTransportCertificatesItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ProxyOptionsTransportCertificatesItem>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PemValue))
@@ -82,7 +82,7 @@ namespace Azure.Core.TestFramework.Models
 
         ProxyOptionsTransportCertificatesItem IModelJsonSerializable<ProxyOptionsTransportCertificatesItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ProxyOptionsTransportCertificatesItem>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeProxyOptionsTransportCertificatesItem(doc.RootElement, options);
@@ -90,14 +90,14 @@ namespace Azure.Core.TestFramework.Models
 
         BinaryData IModelSerializable<ProxyOptionsTransportCertificatesItem>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ProxyOptionsTransportCertificatesItem>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ProxyOptionsTransportCertificatesItem IModelSerializable<ProxyOptionsTransportCertificatesItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ProxyOptionsTransportCertificatesItem>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeProxyOptionsTransportCertificatesItem(doc.RootElement, options);

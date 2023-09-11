@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<TenantListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<TenantListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         TenantListResult IModelJsonSerializable<TenantListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<TenantListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeTenantListResult(doc.RootElement, options);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<TenantListResult>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<TenantListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         TenantListResult IModelSerializable<TenantListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<TenantListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeTenantListResult(doc.RootElement, options);

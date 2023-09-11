@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Models
 
         void IModelJsonSerializable<EncryptionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<EncryptionProperties>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Models
 
         EncryptionProperties IModelJsonSerializable<EncryptionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<EncryptionProperties>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeEncryptionProperties(doc.RootElement, options);
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Models
 
         BinaryData IModelSerializable<EncryptionProperties>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<EncryptionProperties>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         EncryptionProperties IModelSerializable<EncryptionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<EncryptionProperties>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeEncryptionProperties(doc.RootElement, options);

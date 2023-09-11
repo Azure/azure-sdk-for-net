@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
 
         void IModelJsonSerializable<GenericResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Plan))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Resources
 
         GenericResourceData IModelJsonSerializable<GenericResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeGenericResourceData(doc.RootElement, options);
@@ -266,14 +266,14 @@ namespace Azure.ResourceManager.Resources
 
         BinaryData IModelSerializable<GenericResourceData>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         GenericResourceData IModelSerializable<GenericResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeGenericResourceData(doc.RootElement, options);

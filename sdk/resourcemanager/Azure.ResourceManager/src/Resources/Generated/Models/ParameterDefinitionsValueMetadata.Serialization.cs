@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<ParameterDefinitionsValueMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ParameterDefinitionsValueMetadata>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         ParameterDefinitionsValueMetadata IModelJsonSerializable<ParameterDefinitionsValueMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ParameterDefinitionsValueMetadata>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeParameterDefinitionsValueMetadata(doc.RootElement, options);
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<ParameterDefinitionsValueMetadata>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ParameterDefinitionsValueMetadata>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ParameterDefinitionsValueMetadata IModelSerializable<ParameterDefinitionsValueMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ParameterDefinitionsValueMetadata>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeParameterDefinitionsValueMetadata(doc.RootElement, options);

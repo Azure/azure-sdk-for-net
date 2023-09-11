@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<PredefinedTagValue>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PredefinedTagValue>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(TagValue))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         PredefinedTagValue IModelJsonSerializable<PredefinedTagValue>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PredefinedTagValue>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializePredefinedTagValue(doc.RootElement, options);
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<PredefinedTagValue>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PredefinedTagValue>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         PredefinedTagValue IModelSerializable<PredefinedTagValue>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<PredefinedTagValue>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializePredefinedTagValue(doc.RootElement, options);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         void IModelJsonSerializable<CreateManagementGroupDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<CreateManagementGroupDetails>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Parent))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         CreateManagementGroupDetails IModelJsonSerializable<CreateManagementGroupDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<CreateManagementGroupDetails>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeCreateManagementGroupDetails(doc.RootElement, options);
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         BinaryData IModelSerializable<CreateManagementGroupDetails>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<CreateManagementGroupDetails>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         CreateManagementGroupDetails IModelSerializable<CreateManagementGroupDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<CreateManagementGroupDetails>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeCreateManagementGroupDetails(doc.RootElement, options);

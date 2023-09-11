@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
 
         void IModelJsonSerializable<FeatureData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<FeatureData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources
 
         FeatureData IModelJsonSerializable<FeatureData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<FeatureData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeFeatureData(doc.RootElement, options);
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.Resources
 
         BinaryData IModelSerializable<FeatureData>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<FeatureData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         FeatureData IModelSerializable<FeatureData>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<FeatureData>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeFeatureData(doc.RootElement, options);

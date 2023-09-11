@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<FeatureOperationsListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<FeatureOperationsListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         FeatureOperationsListResult IModelJsonSerializable<FeatureOperationsListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<FeatureOperationsListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeFeatureOperationsListResult(doc.RootElement, options);
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<FeatureOperationsListResult>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<FeatureOperationsListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         FeatureOperationsListResult IModelSerializable<FeatureOperationsListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<FeatureOperationsListResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeFeatureOperationsListResult(doc.RootElement, options);

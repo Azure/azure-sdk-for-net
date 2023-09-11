@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         void IModelJsonSerializable<ManagementGroupCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupCreateOrUpdateContent>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         ManagementGroupCreateOrUpdateContent IModelJsonSerializable<ManagementGroupCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupCreateOrUpdateContent>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeManagementGroupCreateOrUpdateContent(doc.RootElement, options);
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         BinaryData IModelSerializable<ManagementGroupCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupCreateOrUpdateContent>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ManagementGroupCreateOrUpdateContent IModelSerializable<ManagementGroupCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupCreateOrUpdateContent>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeManagementGroupCreateOrUpdateContent(doc.RootElement, options);

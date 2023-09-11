@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework.Models
 
         void IModelJsonSerializable<BodyKeySanitizer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<BodyKeySanitizer>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(JsonPath))
@@ -101,7 +101,7 @@ namespace Azure.Core.TestFramework.Models
 
         BodyKeySanitizer IModelJsonSerializable<BodyKeySanitizer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<BodyKeySanitizer>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeBodyKeySanitizer(doc.RootElement, options);
@@ -109,14 +109,14 @@ namespace Azure.Core.TestFramework.Models
 
         BinaryData IModelSerializable<BodyKeySanitizer>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<BodyKeySanitizer>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         BodyKeySanitizer IModelSerializable<BodyKeySanitizer>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<BodyKeySanitizer>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeBodyKeySanitizer(doc.RootElement, options);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<ExportTemplate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ExportTemplate>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Resources))
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ExportTemplate DeserializeExportTemplate(JsonElement element, ModelSerializerOptions options = default)
+        internal static ExportTemplate DeserializeExportTemplate(JsonElement element, ModelSerializerOptions serializerOptions = default)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            serializerOptions ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
                     options = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (serializerOptions.Format == ModelSerializerFormat.Json)
                 {
                     serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                     continue;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         ExportTemplate IModelJsonSerializable<ExportTemplate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ExportTemplate>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeExportTemplate(doc.RootElement, options);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<ExportTemplate>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ExportTemplate>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ExportTemplate IModelSerializable<ExportTemplate>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ExportTemplate>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeExportTemplate(doc.RootElement, options);

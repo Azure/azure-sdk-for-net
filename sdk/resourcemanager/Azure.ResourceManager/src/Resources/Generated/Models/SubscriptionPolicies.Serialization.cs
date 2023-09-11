@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<SubscriptionPolicies>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<SubscriptionPolicies>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         SubscriptionPolicies IModelJsonSerializable<SubscriptionPolicies>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<SubscriptionPolicies>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeSubscriptionPolicies(doc.RootElement, options);
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<SubscriptionPolicies>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<SubscriptionPolicies>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         SubscriptionPolicies IModelSerializable<SubscriptionPolicies>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<SubscriptionPolicies>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeSubscriptionPolicies(doc.RootElement, options);

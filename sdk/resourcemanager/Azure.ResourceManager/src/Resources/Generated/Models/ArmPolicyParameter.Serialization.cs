@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<ArmPolicyParameter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ArmPolicyParameter>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ParameterType))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         ArmPolicyParameter IModelJsonSerializable<ArmPolicyParameter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ArmPolicyParameter>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeArmPolicyParameter(doc.RootElement, options);
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<ArmPolicyParameter>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ArmPolicyParameter>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ArmPolicyParameter IModelSerializable<ArmPolicyParameter>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ArmPolicyParameter>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeArmPolicyParameter(doc.RootElement, options);

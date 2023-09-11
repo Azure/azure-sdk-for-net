@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<ExtendedLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ExtendedLocation>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocationType))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         ExtendedLocation IModelJsonSerializable<ExtendedLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ExtendedLocation>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeExtendedLocation(doc.RootElement, options);
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<ExtendedLocation>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ExtendedLocation>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ExtendedLocation IModelSerializable<ExtendedLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ExtendedLocation>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeExtendedLocation(doc.RootElement, options);

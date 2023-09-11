@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<NonComplianceMessage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<NonComplianceMessage>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         NonComplianceMessage IModelJsonSerializable<NonComplianceMessage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<NonComplianceMessage>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeNonComplianceMessage(doc.RootElement, options);
@@ -87,14 +87,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<NonComplianceMessage>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<NonComplianceMessage>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         NonComplianceMessage IModelSerializable<NonComplianceMessage>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<NonComplianceMessage>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeNonComplianceMessage(doc.RootElement, options);

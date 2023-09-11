@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<TagResourcePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<TagResourcePatch>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PatchMode))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         TagResourcePatch IModelJsonSerializable<TagResourcePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<TagResourcePatch>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeTagResourcePatch(doc.RootElement, options);
@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<TagResourcePatch>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<TagResourcePatch>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         TagResourcePatch IModelSerializable<TagResourcePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<TagResourcePatch>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeTagResourcePatch(doc.RootElement, options);

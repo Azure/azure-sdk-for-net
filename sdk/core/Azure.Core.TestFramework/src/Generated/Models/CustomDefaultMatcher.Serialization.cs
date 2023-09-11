@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework.Models
 
         void IModelJsonSerializable<CustomDefaultMatcher>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<CustomDefaultMatcher>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ExcludedHeaders))
@@ -108,7 +108,7 @@ namespace Azure.Core.TestFramework.Models
 
         CustomDefaultMatcher IModelJsonSerializable<CustomDefaultMatcher>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<CustomDefaultMatcher>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeCustomDefaultMatcher(doc.RootElement, options);
@@ -116,14 +116,14 @@ namespace Azure.Core.TestFramework.Models
 
         BinaryData IModelSerializable<CustomDefaultMatcher>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<CustomDefaultMatcher>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         CustomDefaultMatcher IModelSerializable<CustomDefaultMatcher>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<CustomDefaultMatcher>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeCustomDefaultMatcher(doc.RootElement, options);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class TrackedResourceExtendedData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+        internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TrackedResourceExtendedData"/>. </summary>
         /// <param name="location"> The location. </param>

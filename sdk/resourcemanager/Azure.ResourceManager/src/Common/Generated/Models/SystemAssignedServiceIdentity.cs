@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SystemAssignedServiceIdentity(Guid? principalId, Guid? tenantId, SystemAssignedServiceIdentityType systemAssignedServiceIdentityType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PrincipalId = principalId;
-            TenantId = tenantId;
+            //PrincipalId = principalId;
+            //TenantId = tenantId;
             SystemAssignedServiceIdentityType = systemAssignedServiceIdentityType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }

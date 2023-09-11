@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Models
 
         void IModelJsonSerializable<ArmPlan>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ArmPlan>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Models
 
         ArmPlan IModelJsonSerializable<ArmPlan>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ArmPlan>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeArmPlan(doc.RootElement, options);
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.Models
 
         BinaryData IModelSerializable<ArmPlan>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ArmPlan>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ArmPlan IModelSerializable<ArmPlan>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ArmPlan>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeArmPlan(doc.RootElement, options);

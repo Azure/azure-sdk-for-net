@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Models
 
         void IModelJsonSerializable<SystemAssignedServiceIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<SystemAssignedServiceIdentity>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Models
 
         SystemAssignedServiceIdentity IModelJsonSerializable<SystemAssignedServiceIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<SystemAssignedServiceIdentity>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeSystemAssignedServiceIdentity(doc.RootElement, options);
@@ -98,14 +98,14 @@ namespace Azure.ResourceManager.Models
 
         BinaryData IModelSerializable<SystemAssignedServiceIdentity>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<SystemAssignedServiceIdentity>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         SystemAssignedServiceIdentity IModelSerializable<SystemAssignedServiceIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<SystemAssignedServiceIdentity>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeSystemAssignedServiceIdentity(doc.RootElement, options);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<ResourceSelectorExpression>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ResourceSelectorExpression>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         ResourceSelectorExpression IModelJsonSerializable<ResourceSelectorExpression>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ResourceSelectorExpression>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceSelectorExpression(doc.RootElement, options);
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<ResourceSelectorExpression>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ResourceSelectorExpression>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ResourceSelectorExpression IModelSerializable<ResourceSelectorExpression>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ResourceSelectorExpression>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceSelectorExpression(doc.RootElement, options);

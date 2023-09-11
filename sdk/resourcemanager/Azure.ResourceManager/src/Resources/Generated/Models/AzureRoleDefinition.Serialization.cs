@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IModelJsonSerializable<AzureRoleDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<AzureRoleDefinition>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         AzureRoleDefinition IModelJsonSerializable<AzureRoleDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<AzureRoleDefinition>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureRoleDefinition(doc.RootElement, options);
@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         BinaryData IModelSerializable<AzureRoleDefinition>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<AzureRoleDefinition>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         AzureRoleDefinition IModelSerializable<AzureRoleDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<AzureRoleDefinition>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeAzureRoleDefinition(doc.RootElement, options);

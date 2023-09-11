@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework.Models
 
         void IModelJsonSerializable<ProxyOptionsTransport>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ProxyOptionsTransport>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowAutoRedirect))
@@ -118,7 +118,7 @@ namespace Azure.Core.TestFramework.Models
 
         ProxyOptionsTransport IModelJsonSerializable<ProxyOptionsTransport>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ProxyOptionsTransport>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeProxyOptionsTransport(doc.RootElement, options);
@@ -126,14 +126,14 @@ namespace Azure.Core.TestFramework.Models
 
         BinaryData IModelSerializable<ProxyOptionsTransport>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ProxyOptionsTransport>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         ProxyOptionsTransport IModelSerializable<ProxyOptionsTransport>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<ProxyOptionsTransport>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeProxyOptionsTransport(doc.RootElement, options);

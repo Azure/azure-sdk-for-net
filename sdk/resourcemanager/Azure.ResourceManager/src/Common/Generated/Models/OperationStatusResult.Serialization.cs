@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Models
 
         void IModelJsonSerializable<OperationStatusResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<OperationStatusResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             writer.WriteStartObject();
             if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Models
 
         OperationStatusResult IModelJsonSerializable<OperationStatusResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<OperationStatusResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeOperationStatusResult(doc.RootElement, options);
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Models
 
         BinaryData IModelSerializable<OperationStatusResult>.Serialize(ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<OperationStatusResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
         OperationStatusResult IModelSerializable<OperationStatusResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            Core.ModelSerializerHelper.ValidateFormat<OperationStatusResult>(this, options.Format);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeOperationStatusResult(doc.RootElement, options);
