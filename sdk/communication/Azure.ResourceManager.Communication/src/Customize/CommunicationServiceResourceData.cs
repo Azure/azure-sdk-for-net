@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
-        public CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains) : base(id, name, resourceType, systemData, tags, location)
+        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;
