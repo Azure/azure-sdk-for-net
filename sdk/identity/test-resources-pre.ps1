@@ -5,6 +5,13 @@ param (
     $RemainingArguments
 )
 
+Import-Module -Name $PSScriptRoot/../../eng/common/scripts/X509Certificate2 -Verbose
+
+ssh-keygen -t rsa -b 4096 -f $PSScriptRoot/sshKey -N '' -C ''
+$sshKey = Get-Content $PSScriptRoot/sshKey.pub
+
+$templateFileParameters['sshPubKey'] = $sshKey
+
 if (!$CI) {
     # TODO: Remove this once auto-cloud config downloads are supported locally
     Write-Host "Skipping cert setup in local testing mode"
