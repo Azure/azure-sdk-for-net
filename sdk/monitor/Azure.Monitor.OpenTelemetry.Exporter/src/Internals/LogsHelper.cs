@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
@@ -129,6 +130,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We handle the null condition and call ToString() instead.")]
         internal static string GetProblemId(Exception exception)
         {
             string methodName = "UnknownMethod";
@@ -142,7 +144,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 MethodBase? methodBase = exceptionStackFrame.GetMethod();
 
-                if (methodBase != null)
+                if (methodBase == null)
+                {
+                    // In an AOT scenario GetMethod() will return null.
+                    // Instead, call ToString() which gives a string like this:
+                    // "MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0"
+                    methodName = exceptionStackFrame.ToString();
+                }
+                else
                 {
                     methodName = (methodBase.DeclaringType?.FullName ?? "Global") + "." + methodBase.Name;
                     methodOffset = exceptionStackFrame.GetILOffset();
