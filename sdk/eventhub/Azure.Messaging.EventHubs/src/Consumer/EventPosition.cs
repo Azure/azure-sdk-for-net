@@ -283,7 +283,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 {
                     Offset = offset,
                     IsInclusive = isInclusive,
-                    SequenceNumber = informationalSequenceNumber
+                    InformationalSequenceNumber = informationalSequenceNumber.ToString()
                 };
             }
 
