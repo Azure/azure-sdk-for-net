@@ -19,7 +19,6 @@
     <Compile Include="..\..\Azure.Core\src\Shared\ForwardsClientCallsAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="..\..\Azure.Core\src\Shared\PageResponseEnumerator.cs" LinkBase="Shared\Core" />
     <Compile Include="..\..\Azure.Core\src\Shared\AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
   </ItemGroup>
 

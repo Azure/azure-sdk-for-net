@@ -74,7 +74,6 @@
     <Compile Include="..\src\Shared\XmlWriterExtensions.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Core.TestFramework\src\Instrumentation\ZeroPollingStrategy.cs" LinkBase="Shared\TestFramework" />
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
     <Compile Remove="public/**" />
     <Compile Remove="common/**" />
   </ItemGroup>
