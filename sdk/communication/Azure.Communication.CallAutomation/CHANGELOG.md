@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.1.0 (2023-10-15)
+## 1.1.0 (Unreleased)
 - Dependency versions updated.
 
 ## 1.1.0-beta.1 (2023-08-17)
