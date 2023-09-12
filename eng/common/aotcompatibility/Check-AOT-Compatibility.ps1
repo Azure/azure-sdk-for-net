@@ -1,6 +1,4 @@
-param([string]$serviceDirectory)
-param([string]$packageName)
-param([int]$numExpectedWarnings)
+param([string]$serviceDirectory, [string]$packageName, [int]$numExpectedWarnings=0)
 
 Write-Host "Creating a test app to publish."
 
@@ -8,22 +6,28 @@ $csprojFile = "aotcompatibility.csproj"
 
 $csprojContent = @"
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
+    <PublishAot>true</PublishAot>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\sdk\$serviceDirectory\$packageName\src\$packageName.csproj" />
-    <TrimmerRootAssembly Include="$packageName" />
+      <TrimmerRootAssembly Include="$packageName" />
   </ItemGroup>
 
-  <!-- Update this dependency to its latest, which has all the annotations -->
-  <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-preview.7.23375.6" />
+  <ItemGroup>
+    <!-- Update this dependency to its latest, which has all the annotations -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-preview.7.23375.6" />
+  </ItemGroup>
 
 </Project>
 "@
+
+$csprojContent | Set-Content -Path $csprojFile
 
 $programFile = "Program.cs"
 
@@ -43,13 +47,11 @@ namespace AotCompatibility
 }
 "@
 
-$csprojContent | Set-Content -Path $csprojFile
 $programFileContent | Set-Content -Path $programFile
 
-Write-Host "Validating the number of expected IL trimming warnings."
-Write-Host "Attempting to publish the console app located at: azure-sdk-for-net/sdk/", $serviceDirectory, "/" $artifact, "/aotcompatibility"
+Write-Host "Validating the number of expected IL trimming warnings.\n"
 
-$publishOutput = dotnet publish -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
+$publishOutput = dotnet clean && dotnet restore && dotnet publish -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
 
 if ($LASTEXITCODE -ne 0)
 {
@@ -70,14 +72,23 @@ foreach ($line in $($publishOutput -split "`r`n"))
     }
 }
 
-Write-Host "Looking for expected number of warnings"
+Write-Host "\nChecking against expected number of warnings"
 
 
 $testPassed = 0
 if ($actualWarningCount -ne $numExpectedWarnings)
 {
     $testPassed = 1
-    Write-Host "Actual warning count:", actualWarningCount, "is not as expected. Expected warning count is:", $expectedWarningCount
+    Write-Host "Actual warning count:", $actualWarningCount, "is not as expected. Expected warning count is:", $numExpectedWarnings
 }
+else 
+{
+    Write-Host "Warning count was:", $actualWarningCount
+}
+
+Write-Host "Deleting test app files."
+
+Remove-Item -Path $csprojFile
+Remove-Item -Path $programFile
 
 Exit $testPassed
