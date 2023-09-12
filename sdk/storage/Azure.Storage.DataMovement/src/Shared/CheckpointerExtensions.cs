@@ -18,7 +18,6 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal static bool IsLocalResource(this StorageResource resource)
-            => resource is LocalFileStorageResource || resource is LocalDirectoryStorageResourceContainer;
+        internal static bool IsLocalResource(this StorageResource resource) => resource.Uri.IsFile;
     }
 }
