@@ -1,16 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.11.1 (2023-09-11)
+## 1.11.2 (2023-09-12)
 
 ### Bugs Fixed
 * Fixed the issue when using customized server endpoint with Azure AD credential.
