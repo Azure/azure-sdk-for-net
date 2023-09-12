@@ -30,13 +30,13 @@ $tempFolder = "$ProjectDirectory/TempTypeSpecFiles"
 $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
 $mainTypeSpecFile = If (Test-Path "$npmWorkingDir/client.*") { Resolve-Path "$npmWorkingDir/client.*" } Else { Resolve-Path "$npmWorkingDir/main.*"}
 
+if (!$SkipNpmInstall) {
+  . $PSScriptRoot/Invoke-EmitterNpmInstall.ps1
+  if ($LASTEXITCODE) { exit $LASTEXITCODE }
+}
+
 Push-Location $npmWorkingDir
 try {
-    if (!$SkipNpmInstall) {
-      . $PSScriptRoot/Invoke-EmitterNpmInstall.ps1
-      if ($LASTEXITCODE) { exit $LASTEXITCODE }
-    }
-
     if (Test-Path "Function:$GetEmitterAdditionalOptionsFn") {
         $emitterAdditionalOptions = &$GetEmitterAdditionalOptionsFn $resolvedProjectDirectory
         if ($emitterAdditionalOptions.Length -gt 0) {

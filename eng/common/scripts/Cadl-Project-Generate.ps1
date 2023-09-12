@@ -31,7 +31,7 @@ $mainCadlFile = If (Test-Path "$npmWorkingDir/client.cadl") { Resolve-Path "$npm
 
 Push-Location $npmWorkingDir
 try {
-    . $PSScriptRoot/Invoke-NpmInstall.ps1
+    . $PSScriptRoot/Invoke-EmitterNpmInstall.ps1
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
