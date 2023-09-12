@@ -5,12 +5,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 
 [assembly: CodeGenSuppressType("GenericResourceFilter")]
 [assembly: CodeGenSuppressType("GenericResource")]

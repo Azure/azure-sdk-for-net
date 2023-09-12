@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.Buffers;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources

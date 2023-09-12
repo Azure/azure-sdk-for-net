@@ -26,18 +26,17 @@ namespace Azure.ResourceManager
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             var obj = Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null);
-
-            if (typeof(T).GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IModelJsonSerializable<>)))
+            if (obj is IResource)
             {
-                IOperationSource<T> source = new GenericOperationSource<T>();
+                IOperationSource<T> source = new GenericResourceOperationSource<T>(client);
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
                 // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
                 var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
                 _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, null, operationTypeName: null);
             }
-            else if (typeof(T).GetInterface(nameof(IResource)) is not null)
+            else if (obj is IModelJsonSerializable<object>)
             {
-                IOperationSource<T> source = new GenericResourceOperationSource<T>(client);
+                IOperationSource<T> source = new GenericOperationSource<T>();
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
                 // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
                 var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
