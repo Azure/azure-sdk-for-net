@@ -6,20 +6,52 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RegionalSharingStatus : IModelSerializable
+    public partial class RegionalSharingStatus : IUtf8JsonSerializable, IModelJsonSerializable<RegionalSharingStatus>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RegionalSharingStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeRegionalSharingStatus(JsonDocument.Parse(data).RootElement);
-
-        internal static RegionalSharingStatus DeserializeRegionalSharingStatus(JsonElement element)
+        void IModelJsonSerializable<RegionalSharingStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region);
+            }
+            if (Optional.IsDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStringValue(Details);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RegionalSharingStatus DeserializeRegionalSharingStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> region = default;
             Optional<SharingState> state = default;
             Optional<string> details = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("region"u8))
@@ -48,8 +81,61 @@ namespace Azure.ResourceManager.Compute.Models
                     details = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RegionalSharingStatus(region.Value, Optional.ToNullable(state), details.Value);
+            return new RegionalSharingStatus(region.Value, Optional.ToNullable(state), details.Value, serializedAdditionalRawData);
+        }
+
+        RegionalSharingStatus IModelJsonSerializable<RegionalSharingStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegionalSharingStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RegionalSharingStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RegionalSharingStatus IModelSerializable<RegionalSharingStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRegionalSharingStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RegionalSharingStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RegionalSharingStatus"/> to convert. </param>
+        public static implicit operator RequestContent(RegionalSharingStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RegionalSharingStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RegionalSharingStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRegionalSharingStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineInstallPatchesContent : IUtf8JsonSerializable
+    public partial class VirtualMachineInstallPatchesContent : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineInstallPatchesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineInstallPatchesContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineInstallPatchesContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaximumDuration))
             {
@@ -25,14 +33,144 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters);
+                if (WindowsParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WindowsParameters>)WindowsParameters).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters);
+                if (LinuxParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinuxParameters>)LinuxParameters).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static VirtualMachineInstallPatchesContent DeserializeVirtualMachineInstallPatchesContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<TimeSpan> maximumDuration = default;
+            VmGuestPatchRebootSetting rebootSetting = default;
+            Optional<WindowsParameters> windowsParameters = default;
+            Optional<LinuxParameters> linuxParameters = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("maximumDuration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maximumDuration = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("rebootSetting"u8))
+                {
+                    rebootSetting = new VmGuestPatchRebootSetting(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("windowsParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    windowsParameters = WindowsParameters.DeserializeWindowsParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("linuxParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linuxParameters = LinuxParameters.DeserializeLinuxParameters(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VirtualMachineInstallPatchesContent(Optional.ToNullable(maximumDuration), rebootSetting, windowsParameters.Value, linuxParameters.Value, serializedAdditionalRawData);
+        }
+
+        VirtualMachineInstallPatchesContent IModelJsonSerializable<VirtualMachineInstallPatchesContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineInstallPatchesContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineInstallPatchesContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineInstallPatchesContent IModelSerializable<VirtualMachineInstallPatchesContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineInstallPatchesContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineInstallPatchesContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineInstallPatchesContent"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineInstallPatchesContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineInstallPatchesContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineInstallPatchesContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineInstallPatchesContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

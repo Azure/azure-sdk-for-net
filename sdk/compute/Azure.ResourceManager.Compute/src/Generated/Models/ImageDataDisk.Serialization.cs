@@ -6,17 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ImageDataDisk : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class ImageDataDisk : IUtf8JsonSerializable, IModelJsonSerializable<ImageDataDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageDataDisk>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImageDataDisk>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ImageDataDisk>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
@@ -55,19 +61,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeImageDataDisk(JsonDocument.Parse(data).RootElement);
-
-        internal static ImageDataDisk DeserializeImageDataDisk(JsonElement element)
+        internal static ImageDataDisk DeserializeImageDataDisk(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> diskSizeGB = default;
             Optional<StorageAccountType> storageAccountType = default;
             Optional<WritableSubResource> diskEncryptionSet = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -150,8 +163,61 @@ namespace Azure.ResourceManager.Compute.Models
                     diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImageDataDisk(snapshot, managedDisk, blobUri.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(storageAccountType), diskEncryptionSet, lun);
+            return new ImageDataDisk(snapshot, managedDisk, blobUri.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(storageAccountType), diskEncryptionSet, lun, serializedAdditionalRawData);
+        }
+
+        ImageDataDisk IModelJsonSerializable<ImageDataDisk>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ImageDataDisk>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageDataDisk(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImageDataDisk>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ImageDataDisk>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImageDataDisk IModelSerializable<ImageDataDisk>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ImageDataDisk>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImageDataDisk(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImageDataDisk"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImageDataDisk"/> to convert. </param>
+        public static implicit operator RequestContent(ImageDataDisk model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImageDataDisk"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImageDataDisk(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImageDataDisk(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

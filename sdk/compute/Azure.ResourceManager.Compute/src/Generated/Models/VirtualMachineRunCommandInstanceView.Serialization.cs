@@ -8,19 +8,92 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineRunCommandInstanceView : IModelSerializable
+    public partial class VirtualMachineRunCommandInstanceView : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineRunCommandInstanceView>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineRunCommandInstanceView>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineRunCommandInstanceView(JsonDocument.Parse(data).RootElement);
-
-        internal static VirtualMachineRunCommandInstanceView DeserializeVirtualMachineRunCommandInstanceView(JsonElement element)
+        void IModelJsonSerializable<VirtualMachineRunCommandInstanceView>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ExecutionState))
+            {
+                writer.WritePropertyName("executionState"u8);
+                writer.WriteStringValue(ExecutionState.Value.ToString());
+            }
+            if (Optional.IsDefined(ExecutionMessage))
+            {
+                writer.WritePropertyName("executionMessage"u8);
+                writer.WriteStringValue(ExecutionMessage);
+            }
+            if (Optional.IsDefined(ExitCode))
+            {
+                writer.WritePropertyName("exitCode"u8);
+                writer.WriteNumberValue(ExitCode.Value);
+            }
+            if (Optional.IsDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStringValue(Output);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteStringValue(Error);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Statuses))
+            {
+                writer.WritePropertyName("statuses"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statuses)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InstanceViewStatus>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VirtualMachineRunCommandInstanceView DeserializeVirtualMachineRunCommandInstanceView(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("executionState"u8))
@@ -100,8 +174,61 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineRunCommandInstanceView(Optional.ToNullable(executionState), executionMessage.Value, Optional.ToNullable(exitCode), output.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(statuses));
+            return new VirtualMachineRunCommandInstanceView(Optional.ToNullable(executionState), executionMessage.Value, Optional.ToNullable(exitCode), output.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(statuses), serializedAdditionalRawData);
+        }
+
+        VirtualMachineRunCommandInstanceView IModelJsonSerializable<VirtualMachineRunCommandInstanceView>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineRunCommandInstanceView(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineRunCommandInstanceView>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineRunCommandInstanceView IModelSerializable<VirtualMachineRunCommandInstanceView>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineRunCommandInstanceView(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineRunCommandInstanceView"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineRunCommandInstanceView"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineRunCommandInstanceView model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineRunCommandInstanceView"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineRunCommandInstanceView(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineRunCommandInstanceView(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

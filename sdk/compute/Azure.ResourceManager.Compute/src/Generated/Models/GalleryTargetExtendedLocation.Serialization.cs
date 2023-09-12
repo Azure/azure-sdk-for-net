@@ -6,16 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryTargetExtendedLocation : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class GalleryTargetExtendedLocation : IUtf8JsonSerializable, IModelJsonSerializable<GalleryTargetExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GalleryTargetExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GalleryTargetExtendedLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -25,7 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                if (ExtendedLocation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GalleryExtendedLocation>)ExtendedLocation).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
@@ -40,21 +53,34 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                if (Encryption is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EncryptionImages>)Encryption).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeGalleryTargetExtendedLocation(JsonDocument.Parse(data).RootElement);
-
-        internal static GalleryTargetExtendedLocation DeserializeGalleryTargetExtendedLocation(JsonElement element)
+        internal static GalleryTargetExtendedLocation DeserializeGalleryTargetExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> extendedLocationReplicaCount = default;
             Optional<EdgeZoneStorageAccountType> storageAccountType = default;
             Optional<EncryptionImages> encryption = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -107,8 +134,61 @@ namespace Azure.ResourceManager.Compute.Models
                     encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GalleryTargetExtendedLocation(name.Value, extendedLocation.Value, Optional.ToNullable(extendedLocationReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value);
+            return new GalleryTargetExtendedLocation(name.Value, extendedLocation.Value, Optional.ToNullable(extendedLocationReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, serializedAdditionalRawData);
+        }
+
+        GalleryTargetExtendedLocation IModelJsonSerializable<GalleryTargetExtendedLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryTargetExtendedLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GalleryTargetExtendedLocation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GalleryTargetExtendedLocation IModelSerializable<GalleryTargetExtendedLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGalleryTargetExtendedLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GalleryTargetExtendedLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GalleryTargetExtendedLocation"/> to convert. </param>
+        public static implicit operator RequestContent(GalleryTargetExtendedLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GalleryTargetExtendedLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GalleryTargetExtendedLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGalleryTargetExtendedLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

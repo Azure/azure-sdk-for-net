@@ -8,19 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PatchInstallationDetail : IModelSerializable
+    public partial class PatchInstallationDetail : IUtf8JsonSerializable, IModelJsonSerializable<PatchInstallationDetail>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PatchInstallationDetail>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializePatchInstallationDetail(JsonDocument.Parse(data).RootElement);
-
-        internal static PatchInstallationDetail DeserializePatchInstallationDetail(JsonElement element)
+        void IModelJsonSerializable<PatchInstallationDetail>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PatchInstallationDetail DeserializePatchInstallationDetail(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> kbId = default;
             Optional<IReadOnlyList<string>> classifications = default;
             Optional<PatchInstallationState> installationState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchId"u8))
@@ -76,8 +98,61 @@ namespace Azure.ResourceManager.Compute.Models
                     installationState = new PatchInstallationState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PatchInstallationDetail(patchId.Value, name.Value, version.Value, kbId.Value, Optional.ToList(classifications), Optional.ToNullable(installationState));
+            return new PatchInstallationDetail(patchId.Value, name.Value, version.Value, kbId.Value, Optional.ToList(classifications), Optional.ToNullable(installationState), serializedAdditionalRawData);
+        }
+
+        PatchInstallationDetail IModelJsonSerializable<PatchInstallationDetail>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePatchInstallationDetail(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PatchInstallationDetail>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PatchInstallationDetail IModelSerializable<PatchInstallationDetail>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePatchInstallationDetail(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PatchInstallationDetail"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PatchInstallationDetail"/> to convert. </param>
+        public static implicit operator RequestContent(PatchInstallationDetail model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PatchInstallationDetail"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PatchInstallationDetail(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePatchInstallationDetail(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

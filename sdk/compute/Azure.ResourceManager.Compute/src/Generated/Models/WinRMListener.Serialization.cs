@@ -6,16 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class WinRMListener : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class WinRMListener : IUtf8JsonSerializable, IModelJsonSerializable<WinRMListener>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WinRMListener>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WinRMListener>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
@@ -27,25 +33,32 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("certificateUrl"u8);
                 writer.WriteStringValue(CertificateUri.AbsoluteUri);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeWinRMListener(JsonDocument.Parse(data).RootElement);
-
-        internal static WinRMListener DeserializeWinRMListener(JsonElement element)
+        internal static WinRMListener DeserializeWinRMListener(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<WinRMListenerProtocolType> protocol = default;
             Optional<Uri> certificateUrl = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"u8))
@@ -66,8 +79,61 @@ namespace Azure.ResourceManager.Compute.Models
                     certificateUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WinRMListener(Optional.ToNullable(protocol), certificateUrl.Value);
+            return new WinRMListener(Optional.ToNullable(protocol), certificateUrl.Value, serializedAdditionalRawData);
+        }
+
+        WinRMListener IModelJsonSerializable<WinRMListener>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWinRMListener(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WinRMListener>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WinRMListener IModelSerializable<WinRMListener>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWinRMListener(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WinRMListener"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WinRMListener"/> to convert. </param>
+        public static implicit operator RequestContent(WinRMListener model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WinRMListener"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WinRMListener(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWinRMListener(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

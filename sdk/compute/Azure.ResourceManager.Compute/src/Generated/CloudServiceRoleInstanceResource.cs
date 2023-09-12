@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetCloudServiceRoleInstanceResource method.
     /// Otherwise you can get one from its parent resource <see cref="CloudServiceResource" /> using the GetCloudServiceRoleInstance method.
     /// </summary>
+    [DeserializationProxy(typeof(CloudServiceRoleInstanceData))]
     public partial class CloudServiceRoleInstanceResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceRoleInstanceResource"/> instance. </summary>

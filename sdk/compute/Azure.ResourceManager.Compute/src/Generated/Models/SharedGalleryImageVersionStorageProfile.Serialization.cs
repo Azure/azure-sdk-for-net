@@ -8,25 +8,76 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharedGalleryImageVersionStorageProfile : IModelSerializable
+    public partial class SharedGalleryImageVersionStorageProfile : IUtf8JsonSerializable, IModelJsonSerializable<SharedGalleryImageVersionStorageProfile>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SharedGalleryImageVersionStorageProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeSharedGalleryImageVersionStorageProfile(JsonDocument.Parse(data).RootElement);
-
-        internal static SharedGalleryImageVersionStorageProfile DeserializeSharedGalleryImageVersionStorageProfile(JsonElement element)
+        void IModelJsonSerializable<SharedGalleryImageVersionStorageProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OSDiskImage))
+            {
+                writer.WritePropertyName("osDiskImage"u8);
+                if (OSDiskImage is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SharedGalleryOSDiskImage>)OSDiskImage).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(DataDiskImages))
+            {
+                writer.WritePropertyName("dataDiskImages"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataDiskImages)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SharedGalleryDataDiskImage>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SharedGalleryImageVersionStorageProfile DeserializeSharedGalleryImageVersionStorageProfile(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SharedGalleryOSDiskImage> osDiskImage = default;
             Optional<IReadOnlyList<SharedGalleryDataDiskImage>> dataDiskImages = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDiskImage"u8))
@@ -52,8 +103,61 @@ namespace Azure.ResourceManager.Compute.Models
                     dataDiskImages = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SharedGalleryImageVersionStorageProfile(osDiskImage.Value, Optional.ToList(dataDiskImages));
+            return new SharedGalleryImageVersionStorageProfile(osDiskImage.Value, Optional.ToList(dataDiskImages), serializedAdditionalRawData);
+        }
+
+        SharedGalleryImageVersionStorageProfile IModelJsonSerializable<SharedGalleryImageVersionStorageProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharedGalleryImageVersionStorageProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SharedGalleryImageVersionStorageProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SharedGalleryImageVersionStorageProfile IModelSerializable<SharedGalleryImageVersionStorageProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSharedGalleryImageVersionStorageProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SharedGalleryImageVersionStorageProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SharedGalleryImageVersionStorageProfile"/> to convert. </param>
+        public static implicit operator RequestContent(SharedGalleryImageVersionStorageProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SharedGalleryImageVersionStorageProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SharedGalleryImageVersionStorageProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSharedGalleryImageVersionStorageProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

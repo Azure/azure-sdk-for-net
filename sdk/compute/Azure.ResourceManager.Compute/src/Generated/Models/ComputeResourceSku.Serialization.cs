@@ -8,19 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeResourceSku : IModelSerializable
+    public partial class ComputeResourceSku : IUtf8JsonSerializable, IModelJsonSerializable<ComputeResourceSku>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComputeResourceSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeComputeResourceSku(JsonDocument.Parse(data).RootElement);
-
-        internal static ComputeResourceSku DeserializeComputeResourceSku(JsonElement element)
+        void IModelJsonSerializable<ComputeResourceSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ComputeResourceSku DeserializeComputeResourceSku(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
             Optional<IReadOnlyList<ComputeResourceSkuCapabilities>> capabilities = default;
             Optional<IReadOnlyList<ComputeResourceSkuRestrictions>> restrictions = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -163,8 +185,61 @@ namespace Azure.ResourceManager.Compute.Models
                     restrictions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ComputeResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions));
+            return new ComputeResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions), serializedAdditionalRawData);
+        }
+
+        ComputeResourceSku IModelJsonSerializable<ComputeResourceSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeResourceSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ComputeResourceSku>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ComputeResourceSku IModelSerializable<ComputeResourceSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeComputeResourceSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ComputeResourceSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ComputeResourceSku"/> to convert. </param>
+        public static implicit operator RequestContent(ComputeResourceSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ComputeResourceSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ComputeResourceSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeComputeResourceSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

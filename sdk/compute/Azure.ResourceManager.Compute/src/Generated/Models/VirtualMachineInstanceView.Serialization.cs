@@ -8,19 +8,174 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineInstanceView : IModelSerializable
+    public partial class VirtualMachineInstanceView : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineInstanceView>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineInstanceView>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineInstanceView(JsonDocument.Parse(data).RootElement);
-
-        internal static VirtualMachineInstanceView DeserializeVirtualMachineInstanceView(JsonElement element)
+        void IModelJsonSerializable<VirtualMachineInstanceView>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PlatformUpdateDomain))
+            {
+                writer.WritePropertyName("platformUpdateDomain"u8);
+                writer.WriteNumberValue(PlatformUpdateDomain.Value);
+            }
+            if (Optional.IsDefined(PlatformFaultDomain))
+            {
+                writer.WritePropertyName("platformFaultDomain"u8);
+                writer.WriteNumberValue(PlatformFaultDomain.Value);
+            }
+            if (Optional.IsDefined(ComputerName))
+            {
+                writer.WritePropertyName("computerName"u8);
+                writer.WriteStringValue(ComputerName);
+            }
+            if (Optional.IsDefined(OSName))
+            {
+                writer.WritePropertyName("osName"u8);
+                writer.WriteStringValue(OSName);
+            }
+            if (Optional.IsDefined(OSVersion))
+            {
+                writer.WritePropertyName("osVersion"u8);
+                writer.WriteStringValue(OSVersion);
+            }
+            if (Optional.IsDefined(HyperVGeneration))
+            {
+                writer.WritePropertyName("hyperVGeneration"u8);
+                writer.WriteStringValue(HyperVGeneration.Value.ToString());
+            }
+            if (Optional.IsDefined(RdpThumbPrint))
+            {
+                writer.WritePropertyName("rdpThumbPrint"u8);
+                writer.WriteStringValue(RdpThumbPrint);
+            }
+            if (Optional.IsDefined(VmAgent))
+            {
+                writer.WritePropertyName("vmAgent"u8);
+                if (VmAgent is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachineAgentInstanceView>)VmAgent).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(MaintenanceRedeployStatus))
+            {
+                writer.WritePropertyName("maintenanceRedeployStatus"u8);
+                if (MaintenanceRedeployStatus is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MaintenanceRedeployStatus>)MaintenanceRedeployStatus).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Disks))
+            {
+                writer.WritePropertyName("disks"u8);
+                writer.WriteStartArray();
+                foreach (var item in Disks)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DiskInstanceView>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Extensions))
+            {
+                writer.WritePropertyName("extensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extensions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VirtualMachineExtensionInstanceView>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(BootDiagnostics))
+            {
+                writer.WritePropertyName("bootDiagnostics"u8);
+                if (BootDiagnostics is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BootDiagnosticsInstanceView>)BootDiagnostics).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Statuses))
+            {
+                writer.WritePropertyName("statuses"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statuses)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InstanceViewStatus>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PatchStatus))
+            {
+                writer.WritePropertyName("patchStatus"u8);
+                if (PatchStatus is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachinePatchStatus>)PatchStatus).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VirtualMachineInstanceView DeserializeVirtualMachineInstanceView(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,6 +196,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> assignedHost = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             Optional<VirtualMachinePatchStatus> patchStatus = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformUpdateDomain"u8))
@@ -182,8 +338,61 @@ namespace Azure.ResourceManager.Compute.Models
                     patchStatus = VirtualMachinePatchStatus.DeserializeVirtualMachinePatchStatus(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, assignedHost.Value, Optional.ToList(statuses), patchStatus.Value);
+            return new VirtualMachineInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, assignedHost.Value, Optional.ToList(statuses), patchStatus.Value, serializedAdditionalRawData);
+        }
+
+        VirtualMachineInstanceView IModelJsonSerializable<VirtualMachineInstanceView>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineInstanceView(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineInstanceView>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineInstanceView IModelSerializable<VirtualMachineInstanceView>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineInstanceView(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineInstanceView"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineInstanceView"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineInstanceView model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineInstanceView"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineInstanceView(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineInstanceView(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

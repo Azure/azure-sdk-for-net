@@ -6,26 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostAllocatableVm : IModelSerializable
+    public partial class DedicatedHostAllocatableVm : IUtf8JsonSerializable, IModelJsonSerializable<DedicatedHostAllocatableVm>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DedicatedHostAllocatableVm>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDedicatedHostAllocatableVm(JsonDocument.Parse(data).RootElement);
-
-        internal static DedicatedHostAllocatableVm DeserializeDedicatedHostAllocatableVm(JsonElement element)
+        void IModelJsonSerializable<DedicatedHostAllocatableVm>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DedicatedHostAllocatableVm DeserializeDedicatedHostAllocatableVm(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> vmSize = default;
             Optional<double> count = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"u8))
@@ -42,8 +75,61 @@ namespace Azure.ResourceManager.Compute.Models
                     count = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DedicatedHostAllocatableVm(vmSize.Value, Optional.ToNullable(count));
+            return new DedicatedHostAllocatableVm(vmSize.Value, Optional.ToNullable(count), serializedAdditionalRawData);
+        }
+
+        DedicatedHostAllocatableVm IModelJsonSerializable<DedicatedHostAllocatableVm>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedHostAllocatableVm(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DedicatedHostAllocatableVm>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DedicatedHostAllocatableVm IModelSerializable<DedicatedHostAllocatableVm>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDedicatedHostAllocatableVm(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DedicatedHostAllocatableVm"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DedicatedHostAllocatableVm"/> to convert. </param>
+        public static implicit operator RequestContent(DedicatedHostAllocatableVm model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DedicatedHostAllocatableVm"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DedicatedHostAllocatableVm(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDedicatedHostAllocatableVm(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

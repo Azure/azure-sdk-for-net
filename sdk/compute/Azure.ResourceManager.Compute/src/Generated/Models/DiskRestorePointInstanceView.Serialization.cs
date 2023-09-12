@@ -6,26 +6,66 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskRestorePointInstanceView : IModelSerializable
+    public partial class DiskRestorePointInstanceView : IUtf8JsonSerializable, IModelJsonSerializable<DiskRestorePointInstanceView>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiskRestorePointInstanceView>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDiskRestorePointInstanceView(JsonDocument.Parse(data).RootElement);
-
-        internal static DiskRestorePointInstanceView DeserializeDiskRestorePointInstanceView(JsonElement element)
+        void IModelJsonSerializable<DiskRestorePointInstanceView>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ReplicationStatus))
+            {
+                writer.WritePropertyName("replicationStatus"u8);
+                if (ReplicationStatus is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DiskRestorePointReplicationStatus>)ReplicationStatus).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DiskRestorePointInstanceView DeserializeDiskRestorePointInstanceView(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> id = default;
             Optional<DiskRestorePointReplicationStatus> replicationStatus = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -42,8 +82,61 @@ namespace Azure.ResourceManager.Compute.Models
                     replicationStatus = DiskRestorePointReplicationStatus.DeserializeDiskRestorePointReplicationStatus(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DiskRestorePointInstanceView(id.Value, replicationStatus.Value);
+            return new DiskRestorePointInstanceView(id.Value, replicationStatus.Value, serializedAdditionalRawData);
+        }
+
+        DiskRestorePointInstanceView IModelJsonSerializable<DiskRestorePointInstanceView>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskRestorePointInstanceView(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiskRestorePointInstanceView>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiskRestorePointInstanceView IModelSerializable<DiskRestorePointInstanceView>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiskRestorePointInstanceView(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DiskRestorePointInstanceView"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DiskRestorePointInstanceView"/> to convert. </param>
+        public static implicit operator RequestContent(DiskRestorePointInstanceView model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiskRestorePointInstanceView"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DiskRestorePointInstanceView(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiskRestorePointInstanceView(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

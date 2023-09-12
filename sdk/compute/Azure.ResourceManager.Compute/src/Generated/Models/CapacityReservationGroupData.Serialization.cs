@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
@@ -16,10 +17,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class CapacityReservationGroupData : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class CapacityReservationGroupData : IUtf8JsonSerializable, IModelJsonSerializable<CapacityReservationGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CapacityReservationGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CapacityReservationGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -47,19 +52,25 @@ namespace Azure.ResourceManager.Compute
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCapacityReservationGroupData(JsonDocument.Parse(data).RootElement);
-
-        internal static CapacityReservationGroupData DeserializeCapacityReservationGroupData(JsonElement element)
+        internal static CapacityReservationGroupData DeserializeCapacityReservationGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +85,7 @@ namespace Azure.ResourceManager.Compute
             Optional<IReadOnlyList<SubResource>> capacityReservations = default;
             Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
             Optional<CapacityReservationGroupInstanceView> instanceView = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -182,8 +194,61 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CapacityReservationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToList(capacityReservations), Optional.ToList(virtualMachinesAssociated), instanceView.Value);
+            return new CapacityReservationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToList(capacityReservations), Optional.ToList(virtualMachinesAssociated), instanceView.Value, serializedAdditionalRawData);
+        }
+
+        CapacityReservationGroupData IModelJsonSerializable<CapacityReservationGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCapacityReservationGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CapacityReservationGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CapacityReservationGroupData IModelSerializable<CapacityReservationGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCapacityReservationGroupData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CapacityReservationGroupData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CapacityReservationGroupData"/> to convert. </param>
+        public static implicit operator RequestContent(CapacityReservationGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CapacityReservationGroupData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CapacityReservationGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCapacityReservationGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

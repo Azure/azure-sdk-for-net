@@ -6,16 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineGalleryApplication : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class VirtualMachineGalleryApplication : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineGalleryApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineGalleryApplication>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineGalleryApplication>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Tags))
             {
@@ -44,19 +50,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineGalleryApplication(JsonDocument.Parse(data).RootElement);
-
-        internal static VirtualMachineGalleryApplication DeserializeVirtualMachineGalleryApplication(JsonElement element)
+        internal static VirtualMachineGalleryApplication DeserializeVirtualMachineGalleryApplication(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> configurationReference = default;
             Optional<bool> treatFailureAsDeploymentFailure = default;
             Optional<bool> enableAutomaticUpgrade = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -111,8 +124,61 @@ namespace Azure.ResourceManager.Compute.Models
                     enableAutomaticUpgrade = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value, Optional.ToNullable(treatFailureAsDeploymentFailure), Optional.ToNullable(enableAutomaticUpgrade));
+            return new VirtualMachineGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value, Optional.ToNullable(treatFailureAsDeploymentFailure), Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
+        }
+
+        VirtualMachineGalleryApplication IModelJsonSerializable<VirtualMachineGalleryApplication>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineGalleryApplication(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineGalleryApplication>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineGalleryApplication IModelSerializable<VirtualMachineGalleryApplication>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineGalleryApplication(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineGalleryApplication"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineGalleryApplication"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineGalleryApplication model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineGalleryApplication"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineGalleryApplication(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineGalleryApplication(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

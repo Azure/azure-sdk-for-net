@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
@@ -16,10 +17,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DedicatedHostGroupData : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class DedicatedHostGroupData : IUtf8JsonSerializable, IModelJsonSerializable<DedicatedHostGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DedicatedHostGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DedicatedHostGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -59,22 +64,35 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities);
+                if (AdditionalCapabilities is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>)AdditionalCapabilities).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDedicatedHostGroupData(JsonDocument.Parse(data).RootElement);
-
-        internal static DedicatedHostGroupData DeserializeDedicatedHostGroupData(JsonElement element)
+        internal static DedicatedHostGroupData DeserializeDedicatedHostGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +109,7 @@ namespace Azure.ResourceManager.Compute
             Optional<DedicatedHostGroupInstanceView> instanceView = default;
             Optional<bool> supportAutomaticPlacement = default;
             Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -212,8 +231,61 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DedicatedHostGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value);
+            return new DedicatedHostGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value, serializedAdditionalRawData);
+        }
+
+        DedicatedHostGroupData IModelJsonSerializable<DedicatedHostGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedHostGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DedicatedHostGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DedicatedHostGroupData IModelSerializable<DedicatedHostGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDedicatedHostGroupData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DedicatedHostGroupData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DedicatedHostGroupData"/> to convert. </param>
+        public static implicit operator RequestContent(DedicatedHostGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DedicatedHostGroupData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DedicatedHostGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDedicatedHostGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

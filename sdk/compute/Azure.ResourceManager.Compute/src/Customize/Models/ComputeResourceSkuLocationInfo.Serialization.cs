@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<ComputeResourceSkuZoneDetails>> zoneDetails = default;
             Optional<IReadOnlyList<string>> extendedLocations = default;
             Optional<Azure.ResourceManager.Resources.Models.ExtendedLocationType> type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -87,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputeResourceSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type));
+            return new ComputeResourceSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type), new Dictionary<string, BinaryData>());
         }
     }
 }

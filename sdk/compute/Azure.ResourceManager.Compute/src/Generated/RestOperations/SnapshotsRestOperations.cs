@@ -59,9 +59,7 @@ namespace Azure.ResourceManager.Compute
             request.Uri = CreateCreateOrUpdateRequestUri(subscriptionId, resourceGroupName, snapshotName, data);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -142,9 +140,7 @@ namespace Azure.ResourceManager.Compute
             request.Uri = CreateUpdateRequestUri(subscriptionId, resourceGroupName, snapshotName, patch);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             _userAgent.Apply(message);
             return message;
         }
@@ -539,9 +535,7 @@ namespace Azure.ResourceManager.Compute
             request.Uri = CreateGrantAccessRequestUri(subscriptionId, resourceGroupName, snapshotName, data);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }

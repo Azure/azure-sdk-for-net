@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CommunityGalleryImageData : PirCommunityGalleryResourceData
     {
-        /// <summary> Initializes a new instance of CommunityGalleryImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageData"/>. </summary>
         internal CommunityGalleryImageData()
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -41,7 +41,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
         /// <param name="privacyStatementUri"> Privacy statement uri for the current community gallery image. </param>
         /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
-        internal CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula) : base(name, location, resourceType, uniqueId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(name, location, resourceType, uniqueId, serializedAdditionalRawData)
         {
             OSType = osType;
             OSState = osState;

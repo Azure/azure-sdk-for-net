@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
@@ -16,10 +17,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DiskImageData : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class DiskImageData : IUtf8JsonSerializable, IModelJsonSerializable<DiskImageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiskImageData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DiskImageData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -49,7 +54,14 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                if (StorageProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ImageStorageProfile>)StorageProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
@@ -57,19 +69,25 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDiskImageData(JsonDocument.Parse(data).RootElement);
-
-        internal static DiskImageData DeserializeDiskImageData(JsonElement element)
+        internal static DiskImageData DeserializeDiskImageData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,6 +103,7 @@ namespace Azure.ResourceManager.Compute
             Optional<ImageStorageProfile> storageProfile = default;
             Optional<string> provisioningState = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -183,8 +202,61 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DiskImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
+            return new DiskImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration), serializedAdditionalRawData);
+        }
+
+        DiskImageData IModelJsonSerializable<DiskImageData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskImageData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiskImageData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiskImageData IModelSerializable<DiskImageData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiskImageData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DiskImageData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DiskImageData"/> to convert. </param>
+        public static implicit operator RequestContent(DiskImageData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiskImageData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DiskImageData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiskImageData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,17 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineDiskSecurityProfile : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class VirtualMachineDiskSecurityProfile : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineDiskSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineDiskSecurityProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineDiskSecurityProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SecurityEncryptionType))
             {
@@ -28,25 +34,32 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineDiskSecurityProfile(JsonDocument.Parse(data).RootElement);
-
-        internal static VirtualMachineDiskSecurityProfile DeserializeVirtualMachineDiskSecurityProfile(JsonElement element)
+        internal static VirtualMachineDiskSecurityProfile DeserializeVirtualMachineDiskSecurityProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SecurityEncryptionType> securityEncryptionType = default;
             Optional<WritableSubResource> diskEncryptionSet = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securityEncryptionType"u8))
@@ -67,8 +80,61 @@ namespace Azure.ResourceManager.Compute.Models
                     diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineDiskSecurityProfile(Optional.ToNullable(securityEncryptionType), diskEncryptionSet);
+            return new VirtualMachineDiskSecurityProfile(Optional.ToNullable(securityEncryptionType), diskEncryptionSet, serializedAdditionalRawData);
+        }
+
+        VirtualMachineDiskSecurityProfile IModelJsonSerializable<VirtualMachineDiskSecurityProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineDiskSecurityProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineDiskSecurityProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineDiskSecurityProfile IModelSerializable<VirtualMachineDiskSecurityProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineDiskSecurityProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineDiskSecurityProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineDiskSecurityProfile"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineDiskSecurityProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineDiskSecurityProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineDiskSecurityProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineDiskSecurityProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

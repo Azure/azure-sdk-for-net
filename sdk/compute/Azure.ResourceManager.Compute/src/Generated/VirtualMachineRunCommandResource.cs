@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetVirtualMachineRunCommandResource method.
     /// Otherwise you can get one from its parent resource <see cref="VirtualMachineResource" /> using the GetVirtualMachineRunCommand method.
     /// </summary>
+    [DeserializationProxy(typeof(VirtualMachineRunCommandData))]
     public partial class VirtualMachineRunCommandResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineRunCommandResource"/> instance. </summary>

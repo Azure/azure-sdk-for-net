@@ -6,21 +6,46 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class CloudServiceOSVersionData : IModelSerializable
+    public partial class CloudServiceOSVersionData : IUtf8JsonSerializable, IModelJsonSerializable<CloudServiceOSVersionData>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudServiceOSVersionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCloudServiceOSVersionData(JsonDocument.Parse(data).RootElement);
-
-        internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element)
+        void IModelJsonSerializable<CloudServiceOSVersionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +61,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> label = default;
             Optional<bool> isDefault = default;
             Optional<bool> isActive = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -121,8 +147,61 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudServiceOSVersionData(id, name, type, systemData.Value, Optional.ToNullable(location), family.Value, familyLabel.Value, version.Value, label.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isActive));
+            return new CloudServiceOSVersionData(id, name, type, systemData.Value, Optional.ToNullable(location), family.Value, familyLabel.Value, version.Value, label.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isActive), serializedAdditionalRawData);
+        }
+
+        CloudServiceOSVersionData IModelJsonSerializable<CloudServiceOSVersionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudServiceOSVersionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudServiceOSVersionData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudServiceOSVersionData IModelSerializable<CloudServiceOSVersionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudServiceOSVersionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudServiceOSVersionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudServiceOSVersionData"/> to convert. </param>
+        public static implicit operator RequestContent(CloudServiceOSVersionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudServiceOSVersionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudServiceOSVersionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudServiceOSVersionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

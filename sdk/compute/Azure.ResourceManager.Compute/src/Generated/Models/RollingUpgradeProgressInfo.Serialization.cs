@@ -6,20 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RollingUpgradeProgressInfo : IModelSerializable
+    public partial class RollingUpgradeProgressInfo : IUtf8JsonSerializable, IModelJsonSerializable<RollingUpgradeProgressInfo>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RollingUpgradeProgressInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeRollingUpgradeProgressInfo(JsonDocument.Parse(data).RootElement);
-
-        internal static RollingUpgradeProgressInfo DeserializeRollingUpgradeProgressInfo(JsonElement element)
+        void IModelJsonSerializable<RollingUpgradeProgressInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RollingUpgradeProgressInfo DeserializeRollingUpgradeProgressInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> failedInstanceCount = default;
             Optional<int> inProgressInstanceCount = default;
             Optional<int> pendingInstanceCount = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successfulInstanceCount"u8))
@@ -66,8 +89,61 @@ namespace Azure.ResourceManager.Compute.Models
                     pendingInstanceCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RollingUpgradeProgressInfo(Optional.ToNullable(successfulInstanceCount), Optional.ToNullable(failedInstanceCount), Optional.ToNullable(inProgressInstanceCount), Optional.ToNullable(pendingInstanceCount));
+            return new RollingUpgradeProgressInfo(Optional.ToNullable(successfulInstanceCount), Optional.ToNullable(failedInstanceCount), Optional.ToNullable(inProgressInstanceCount), Optional.ToNullable(pendingInstanceCount), serializedAdditionalRawData);
+        }
+
+        RollingUpgradeProgressInfo IModelJsonSerializable<RollingUpgradeProgressInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRollingUpgradeProgressInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RollingUpgradeProgressInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RollingUpgradeProgressInfo IModelSerializable<RollingUpgradeProgressInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRollingUpgradeProgressInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RollingUpgradeProgressInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RollingUpgradeProgressInfo"/> to convert. </param>
+        public static implicit operator RequestContent(RollingUpgradeProgressInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RollingUpgradeProgressInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RollingUpgradeProgressInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRollingUpgradeProgressInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

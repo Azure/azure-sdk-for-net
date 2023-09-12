@@ -8,23 +8,35 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachinePublicIPAddressConfiguration : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class VirtualMachinePublicIPAddressConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachinePublicIPAddressConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachinePublicIPAddressConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachinePublicIPAddressConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ComputePublicIPAddressSku>)Sku).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -41,7 +53,14 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                if (DnsSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachinePublicIPAddressDnsSettingsConfiguration>)DnsSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(IPTags))
             {
@@ -49,7 +68,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VirtualMachineIPTag>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -69,19 +95,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(PublicIPAllocationMethod.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachinePublicIPAddressConfiguration(JsonDocument.Parse(data).RootElement);
-
-        internal static VirtualMachinePublicIPAddressConfiguration DeserializeVirtualMachinePublicIPAddressConfiguration(JsonElement element)
+        internal static VirtualMachinePublicIPAddressConfiguration DeserializeVirtualMachinePublicIPAddressConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> publicIPPrefix = default;
             Optional<IPVersion> publicIPAddressVersion = default;
             Optional<PublicIPAllocationMethod> publicIPAllocationMethod = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -191,8 +224,61 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachinePublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(deleteOption), dnsSettings.Value, Optional.ToList(ipTags), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(publicIPAllocationMethod));
+            return new VirtualMachinePublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(deleteOption), dnsSettings.Value, Optional.ToList(ipTags), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(publicIPAllocationMethod), serializedAdditionalRawData);
+        }
+
+        VirtualMachinePublicIPAddressConfiguration IModelJsonSerializable<VirtualMachinePublicIPAddressConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachinePublicIPAddressConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachinePublicIPAddressConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachinePublicIPAddressConfiguration IModelSerializable<VirtualMachinePublicIPAddressConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachinePublicIPAddressConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachinePublicIPAddressConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachinePublicIPAddressConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachinePublicIPAddressConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachinePublicIPAddressConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachinePublicIPAddressConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachinePublicIPAddressConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

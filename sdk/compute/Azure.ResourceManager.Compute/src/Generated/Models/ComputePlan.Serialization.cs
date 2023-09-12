@@ -6,16 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputePlan : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class ComputePlan : IUtf8JsonSerializable, IModelJsonSerializable<ComputePlan>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComputePlan>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ComputePlan>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -37,19 +43,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeComputePlan(JsonDocument.Parse(data).RootElement);
-
-        internal static ComputePlan DeserializeComputePlan(JsonElement element)
+        internal static ComputePlan DeserializeComputePlan(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> publisher = default;
             Optional<string> product = default;
             Optional<string> promotionCode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -80,8 +93,61 @@ namespace Azure.ResourceManager.Compute.Models
                     promotionCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ComputePlan(name.Value, publisher.Value, product.Value, promotionCode.Value);
+            return new ComputePlan(name.Value, publisher.Value, product.Value, promotionCode.Value, serializedAdditionalRawData);
+        }
+
+        ComputePlan IModelJsonSerializable<ComputePlan>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputePlan(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ComputePlan>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ComputePlan IModelSerializable<ComputePlan>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeComputePlan(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ComputePlan"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ComputePlan"/> to convert. </param>
+        public static implicit operator RequestContent(ComputePlan model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ComputePlan"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ComputePlan(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeComputePlan(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,16 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class AutomaticOSUpgradePolicy : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class AutomaticOSUpgradePolicy : IUtf8JsonSerializable, IModelJsonSerializable<AutomaticOSUpgradePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomaticOSUpgradePolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomaticOSUpgradePolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableAutomaticOSUpgrade))
             {
@@ -32,19 +38,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("useRollingUpgradePolicy"u8);
                 writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeAutomaticOSUpgradePolicy(JsonDocument.Parse(data).RootElement);
-
-        internal static AutomaticOSUpgradePolicy DeserializeAutomaticOSUpgradePolicy(JsonElement element)
+        internal static AutomaticOSUpgradePolicy DeserializeAutomaticOSUpgradePolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enableAutomaticOSUpgrade = default;
             Optional<bool> disableAutomaticRollback = default;
             Optional<bool> useRollingUpgradePolicy = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableAutomaticOSUpgrade"u8))
@@ -81,8 +94,61 @@ namespace Azure.ResourceManager.Compute.Models
                     useRollingUpgradePolicy = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomaticOSUpgradePolicy(Optional.ToNullable(enableAutomaticOSUpgrade), Optional.ToNullable(disableAutomaticRollback), Optional.ToNullable(useRollingUpgradePolicy));
+            return new AutomaticOSUpgradePolicy(Optional.ToNullable(enableAutomaticOSUpgrade), Optional.ToNullable(disableAutomaticRollback), Optional.ToNullable(useRollingUpgradePolicy), serializedAdditionalRawData);
+        }
+
+        AutomaticOSUpgradePolicy IModelJsonSerializable<AutomaticOSUpgradePolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomaticOSUpgradePolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomaticOSUpgradePolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomaticOSUpgradePolicy IModelSerializable<AutomaticOSUpgradePolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomaticOSUpgradePolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutomaticOSUpgradePolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutomaticOSUpgradePolicy"/> to convert. </param>
+        public static implicit operator RequestContent(AutomaticOSUpgradePolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutomaticOSUpgradePolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutomaticOSUpgradePolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomaticOSUpgradePolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

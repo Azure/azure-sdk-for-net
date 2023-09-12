@@ -6,26 +6,49 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RecoveryWalkResponse : IModelSerializable
+    public partial class RecoveryWalkResponse : IUtf8JsonSerializable, IModelJsonSerializable<RecoveryWalkResponse>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecoveryWalkResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeRecoveryWalkResponse(JsonDocument.Parse(data).RootElement);
-
-        internal static RecoveryWalkResponse DeserializeRecoveryWalkResponse(JsonElement element)
+        void IModelJsonSerializable<RecoveryWalkResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RecoveryWalkResponse DeserializeRecoveryWalkResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> walkPerformed = default;
             Optional<int> nextPlatformUpdateDomain = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("walkPerformed"u8))
@@ -46,8 +69,61 @@ namespace Azure.ResourceManager.Compute.Models
                     nextPlatformUpdateDomain = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RecoveryWalkResponse(Optional.ToNullable(walkPerformed), Optional.ToNullable(nextPlatformUpdateDomain));
+            return new RecoveryWalkResponse(Optional.ToNullable(walkPerformed), Optional.ToNullable(nextPlatformUpdateDomain), serializedAdditionalRawData);
+        }
+
+        RecoveryWalkResponse IModelJsonSerializable<RecoveryWalkResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryWalkResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecoveryWalkResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecoveryWalkResponse IModelSerializable<RecoveryWalkResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecoveryWalkResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RecoveryWalkResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RecoveryWalkResponse"/> to convert. </param>
+        public static implicit operator RequestContent(RecoveryWalkResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RecoveryWalkResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RecoveryWalkResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecoveryWalkResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

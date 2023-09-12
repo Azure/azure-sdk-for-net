@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetSharedGalleryImageVersionResource method.
     /// Otherwise you can get one from its parent resource <see cref="SharedGalleryImageResource" /> using the GetSharedGalleryImageVersion method.
     /// </summary>
+    [DeserializationProxy(typeof(SharedGalleryImageVersionData))]
     public partial class SharedGalleryImageVersionResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SharedGalleryImageVersionResource"/> instance. </summary>

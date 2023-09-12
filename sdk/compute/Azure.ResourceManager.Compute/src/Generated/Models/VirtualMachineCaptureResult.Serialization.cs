@@ -8,34 +8,45 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineCaptureResult : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class VirtualMachineCaptureResult : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineCaptureResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineCaptureResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineCaptureResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VirtualMachineCaptureResult>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineCaptureResult(JsonDocument.Parse(data).RootElement);
-
-        internal static VirtualMachineCaptureResult DeserializeVirtualMachineCaptureResult(JsonElement element)
+        internal static VirtualMachineCaptureResult DeserializeVirtualMachineCaptureResult(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<BinaryData> parameters = default;
             Optional<IReadOnlyList<BinaryData>> resources = default;
             Optional<ResourceIdentifier> id = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$schema"u8))
@@ -96,8 +108,61 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineCaptureResult(id.Value, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources));
+            return new VirtualMachineCaptureResult(id.Value, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources), serializedAdditionalRawData);
+        }
+
+        VirtualMachineCaptureResult IModelJsonSerializable<VirtualMachineCaptureResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualMachineCaptureResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineCaptureResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineCaptureResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualMachineCaptureResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineCaptureResult IModelSerializable<VirtualMachineCaptureResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualMachineCaptureResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineCaptureResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineCaptureResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineCaptureResult"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineCaptureResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineCaptureResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineCaptureResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineCaptureResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

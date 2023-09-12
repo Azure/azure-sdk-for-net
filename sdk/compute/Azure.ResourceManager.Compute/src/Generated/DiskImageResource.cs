@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetDiskImageResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDiskImage method.
     /// </summary>
+    [DeserializationProxy(typeof(DiskImageData))]
     public partial class DiskImageResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskImageResource"/> instance. </summary>

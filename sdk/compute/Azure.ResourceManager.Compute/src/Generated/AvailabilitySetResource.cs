@@ -14,6 +14,7 @@ using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetAvailabilitySetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAvailabilitySet method.
     /// </summary>
+    [DeserializationProxy(typeof(AvailabilitySetData))]
     public partial class AvailabilitySetResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvailabilitySetResource"/> instance. </summary>

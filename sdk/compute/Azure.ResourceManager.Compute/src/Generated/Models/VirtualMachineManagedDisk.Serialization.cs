@@ -6,17 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineManagedDisk : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class VirtualMachineManagedDisk : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineManagedDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineManagedDisk>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineManagedDisk>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VirtualMachineManagedDisk>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountType))
             {
@@ -31,26 +37,39 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                if (SecurityProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachineDiskSecurityProfile>)SecurityProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineManagedDisk(JsonDocument.Parse(data).RootElement);
-
-        internal static VirtualMachineManagedDisk DeserializeVirtualMachineManagedDisk(JsonElement element)
+        internal static VirtualMachineManagedDisk DeserializeVirtualMachineManagedDisk(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> diskEncryptionSet = default;
             Optional<VirtualMachineDiskSecurityProfile> securityProfile = default;
             Optional<ResourceIdentifier> id = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"u8))
@@ -97,8 +117,61 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineManagedDisk(id.Value, Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
+            return new VirtualMachineManagedDisk(id.Value, Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value, serializedAdditionalRawData);
+        }
+
+        VirtualMachineManagedDisk IModelJsonSerializable<VirtualMachineManagedDisk>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualMachineManagedDisk>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineManagedDisk(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineManagedDisk>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualMachineManagedDisk>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineManagedDisk IModelSerializable<VirtualMachineManagedDisk>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VirtualMachineManagedDisk>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineManagedDisk(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineManagedDisk"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineManagedDisk"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineManagedDisk model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineManagedDisk"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineManagedDisk(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineManagedDisk(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

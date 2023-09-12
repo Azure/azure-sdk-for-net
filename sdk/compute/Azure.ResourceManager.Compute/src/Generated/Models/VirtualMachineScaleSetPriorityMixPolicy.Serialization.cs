@@ -6,16 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetPriorityMixPolicy : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class VirtualMachineScaleSetPriorityMixPolicy : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineScaleSetPriorityMixPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineScaleSetPriorityMixPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineScaleSetPriorityMixPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseRegularPriorityCount))
             {
@@ -27,25 +33,32 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("regularPriorityPercentageAboveBase"u8);
                 writer.WriteNumberValue(RegularPriorityPercentageAboveBase.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineScaleSetPriorityMixPolicy(JsonDocument.Parse(data).RootElement);
-
-        internal static VirtualMachineScaleSetPriorityMixPolicy DeserializeVirtualMachineScaleSetPriorityMixPolicy(JsonElement element)
+        internal static VirtualMachineScaleSetPriorityMixPolicy DeserializeVirtualMachineScaleSetPriorityMixPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> baseRegularPriorityCount = default;
             Optional<int> regularPriorityPercentageAboveBase = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseRegularPriorityCount"u8))
@@ -66,8 +79,61 @@ namespace Azure.ResourceManager.Compute.Models
                     regularPriorityPercentageAboveBase = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetPriorityMixPolicy(Optional.ToNullable(baseRegularPriorityCount), Optional.ToNullable(regularPriorityPercentageAboveBase));
+            return new VirtualMachineScaleSetPriorityMixPolicy(Optional.ToNullable(baseRegularPriorityCount), Optional.ToNullable(regularPriorityPercentageAboveBase), serializedAdditionalRawData);
+        }
+
+        VirtualMachineScaleSetPriorityMixPolicy IModelJsonSerializable<VirtualMachineScaleSetPriorityMixPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineScaleSetPriorityMixPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineScaleSetPriorityMixPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineScaleSetPriorityMixPolicy IModelSerializable<VirtualMachineScaleSetPriorityMixPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineScaleSetPriorityMixPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineScaleSetPriorityMixPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineScaleSetPriorityMixPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineScaleSetPriorityMixPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineScaleSetPriorityMixPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineScaleSetPriorityMixPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineScaleSetPriorityMixPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

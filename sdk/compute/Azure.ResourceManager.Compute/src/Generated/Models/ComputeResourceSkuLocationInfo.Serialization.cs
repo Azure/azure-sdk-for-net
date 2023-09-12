@@ -8,16 +8,168 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeResourceSkuLocationInfo : IModelSerializable
+    public partial class ComputeResourceSkuLocationInfo : IUtf8JsonSerializable, IModelJsonSerializable<ComputeResourceSkuLocationInfo>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComputeResourceSkuLocationInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeComputeResourceSkuLocationInfo(JsonDocument.Parse(data).RootElement);
+        void IModelJsonSerializable<ComputeResourceSkuLocationInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ComputeResourceSkuLocationInfo DeserializeComputeResourceSkuLocationInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyList<string>> zones = default;
+            Optional<IReadOnlyList<ComputeResourceSkuZoneDetails>> zoneDetails = default;
+            Optional<IReadOnlyList<string>> extendedLocations = default;
+            Optional<ExtendedLocationType> type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
+                if (property.NameEquals("zoneDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ComputeResourceSkuZoneDetails> array = new List<ComputeResourceSkuZoneDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComputeResourceSkuZoneDetails.DeserializeComputeResourceSkuZoneDetails(item));
+                    }
+                    zoneDetails = array;
+                    continue;
+                }
+                if (property.NameEquals("extendedLocations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    extendedLocations = array;
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ExtendedLocationType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ComputeResourceSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type), serializedAdditionalRawData);
+        }
+
+        ComputeResourceSkuLocationInfo IModelJsonSerializable<ComputeResourceSkuLocationInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeResourceSkuLocationInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ComputeResourceSkuLocationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ComputeResourceSkuLocationInfo IModelSerializable<ComputeResourceSkuLocationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeComputeResourceSkuLocationInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ComputeResourceSkuLocationInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ComputeResourceSkuLocationInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ComputeResourceSkuLocationInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ComputeResourceSkuLocationInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ComputeResourceSkuLocationInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeComputeResourceSkuLocationInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

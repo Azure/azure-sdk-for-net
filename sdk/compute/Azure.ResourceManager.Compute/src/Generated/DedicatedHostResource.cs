@@ -14,6 +14,7 @@ using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetDedicatedHostResource method.
     /// Otherwise you can get one from its parent resource <see cref="DedicatedHostGroupResource" /> using the GetDedicatedHost method.
     /// </summary>
+    [DeserializationProxy(typeof(DedicatedHostData))]
     public partial class DedicatedHostResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DedicatedHostResource"/> instance. </summary>
@@ -385,7 +387,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<string> GetAvailableSizesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHostRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -406,7 +408,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<string> GetAvailableSizes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHostRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>

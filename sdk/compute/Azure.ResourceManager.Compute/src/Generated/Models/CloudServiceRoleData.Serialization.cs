@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
@@ -14,14 +16,49 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class CloudServiceRoleData : IModelSerializable
+    public partial class CloudServiceRoleData : IUtf8JsonSerializable, IModelJsonSerializable<CloudServiceRoleData>
     {
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudServiceRoleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCloudServiceRoleData(JsonDocument.Parse(data).RootElement);
-
-        internal static CloudServiceRoleData DeserializeCloudServiceRoleData(JsonElement element)
+        void IModelJsonSerializable<CloudServiceRoleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CloudServiceRoleSku>)Sku).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CloudServiceRoleData DeserializeCloudServiceRoleData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +70,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> uniqueId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -94,8 +132,61 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudServiceRoleData(id, name, type, systemData.Value, Optional.ToNullable(location), sku.Value, uniqueId.Value);
+            return new CloudServiceRoleData(id, name, type, systemData.Value, Optional.ToNullable(location), sku.Value, uniqueId.Value, serializedAdditionalRawData);
+        }
+
+        CloudServiceRoleData IModelJsonSerializable<CloudServiceRoleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudServiceRoleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudServiceRoleData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudServiceRoleData IModelSerializable<CloudServiceRoleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudServiceRoleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudServiceRoleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudServiceRoleData"/> to convert. </param>
+        public static implicit operator RequestContent(CloudServiceRoleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudServiceRoleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudServiceRoleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudServiceRoleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
