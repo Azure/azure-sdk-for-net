@@ -7,16 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDatabaseData : IUtf8JsonSerializable
+    public partial class SqlDatabaseData : IUtf8JsonSerializable, IModelJsonSerializable<SqlDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -209,8 +213,10 @@ namespace Azure.ResourceManager.Sql
             writer.WriteEndObject();
         }
 
-        internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element)
+        internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -751,6 +757,44 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone));
+        }
+
+        void IModelJsonSerializable<SqlDatabaseData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        SqlDatabaseData IModelJsonSerializable<SqlDatabaseData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDatabaseData(document.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlDatabaseData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        {
+            "J" or "W" => ModelSerializer.SerializeCore(this, options),
+            "bicep" => SerializeBicep(),
+            _ => throw new FormatException($"Unsupported format {options.Format}")
+        };
+
+        SqlDatabaseData IModelSerializable<SqlDatabaseData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.Parse(data);
+            return DeserializeSqlDatabaseData(document.RootElement, options);
+        }
+
+        private BinaryData SerializeBicep()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"  name: '{Name}'");
+            sb.AppendLine($"  location: '{Location}'");
+            if (Optional.IsCollectionDefined(Tags) && Tags.Count > 0)
+            {
+                sb.AppendLine($"  tags: {{");
+                foreach (var kv in Tags)
+                {
+                    sb.AppendLine($"    '{kv.Key}': '{kv.Value}'");
+                }
+                sb.AppendLine($"  }}");
+            }
+            return BinaryData.FromString(sb.ToString());
         }
     }
 }

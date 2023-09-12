@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Resources
                 sb.AppendLine($"  tags: {{");
                 foreach(var kv in Tags)
                 {
-                    sb.AppendLine($"    {kv.Key}: '{kv.Value}'");
+                    sb.AppendLine($"    '{kv.Key}': '{kv.Value}'");
                 }
                 sb.AppendLine($"  }}");
             }

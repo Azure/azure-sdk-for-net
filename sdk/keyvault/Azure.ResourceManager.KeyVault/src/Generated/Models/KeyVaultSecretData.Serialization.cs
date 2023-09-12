@@ -126,7 +126,9 @@ namespace Azure.ResourceManager.KeyVault
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");
-            sb.AppendChildObject(Properties, options);
+            sb.AppendLine($"  properties: {{");
+            sb.AppendChildObject(Properties, options, spaces: 4);
+            sb.AppendLine($"  }}");
             return BinaryData.FromString(sb.ToString());
         }
     }

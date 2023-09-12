@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Sql
                 sb.AppendLine($"  tags: {{");
                 foreach (var kv in Tags)
                 {
-                    sb.AppendLine($"    {kv.Key}: '{kv.Value}'");
+                    sb.AppendLine($"    '{kv.Key}': '{kv.Value}'");
                 }
                 sb.AppendLine($"  }}");
             }
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Sql
             sb.AppendLine($"    administratorLoginPassword: '{AdministratorLoginPassword}'");
             sb.AppendLine($"    version: '{Version}'");
             sb.AppendLine($"    minimalTlsVersion: '{MinimalTlsVersion}'");
-            sb.AppendLine($"}}");
+            sb.AppendLine($"  }}");
             return BinaryData.FromString(sb.ToString());
         }
     }
