@@ -34,6 +34,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         [Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventMetadataAttribute(typeof(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.TokenIssuanceStartRequest), "microsoft.graph.authenticationEvent.TokenIssuanceStart", "TokenIssuanceStart", "CloudEventActionableTemplate.json")]
         TokenIssuanceStart = 0,
     }
+    public static partial class EventTriggerMetrics
+    {
+        public static string Platform { get { throw null; } set { } }
+        public static string ProductVersion { get { throw null; } set { } }
+        public static string RunTime { get { throw null; } set { } }
+    }
     public enum EventType
     {
         OnTokenIssuanceStart = 0,

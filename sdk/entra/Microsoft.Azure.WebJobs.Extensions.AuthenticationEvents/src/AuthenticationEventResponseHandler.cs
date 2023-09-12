@@ -23,9 +23,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>The response property.</summary>
         internal const string EventResponseProperty = "$event$response";
 
+        private AuthenticationEventResponse _response;
+
         /// <summary>Gets or sets the action result.</summary>
         /// <value>The action result.</value>
-        public AuthenticationEventResponse Response { get; internal set; }
+        public AuthenticationEventResponse Response
+        {
+            get => _response;
+            internal set
+            {
+                if (value != null)
+                {
+                    _response = value;
+
+                    // Set metrics on the headers for the response
+                    EventTriggerMetrics.SetMetricHeaders(_response);
+                }
+            }
+        }
 
         /// <summary>Gets the type.</summary>
         /// <value>The type.</value>
