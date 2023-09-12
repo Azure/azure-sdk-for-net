@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -376,7 +377,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual AsyncPageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmPrivateLinkResourcesRestClient.CreateListByManagedHsmResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -397,7 +398,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Pageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmPrivateLinkResourcesRestClient.CreateListByManagedHsmResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -419,7 +420,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmRegionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mhsmRegionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion, _mhsmRegionsClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMRegionsByResource", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion, _mhsmRegionsClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMRegionsByResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -441,7 +442,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmRegionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mhsmRegionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion, _mhsmRegionsClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMRegionsByResource", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion, _mhsmRegionsClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMRegionsByResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

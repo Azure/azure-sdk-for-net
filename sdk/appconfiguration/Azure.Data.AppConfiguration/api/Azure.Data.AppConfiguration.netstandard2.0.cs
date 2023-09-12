@@ -60,10 +60,10 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisions(string keyFilter, string labelFilter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisionsAsync(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisionsAsync(string keyFilter, string labelFilter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot> GetSnapshot(string name, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot>> GetSnapshotAsync(string name, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot> GetSnapshots(string name = null, string after = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> select = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotStatus> status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot> GetSnapshotsAsync(string name = null, string after = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> select = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotStatus> status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot> GetSnapshot(string name, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> fields = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot>> GetSnapshotAsync(string name, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> fields = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot> GetSnapshots(string name = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> fields = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotStatus> status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot> GetSnapshotsAsync(string name = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> fields = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotStatus> status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot> RecoverSnapshot(Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot> RecoverSnapshot(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -94,6 +94,8 @@ namespace Azure.Data.AppConfiguration
     public static partial class ConfigurationModelFactory
     {
         public static Azure.Data.AppConfiguration.ConfigurationSetting ConfigurationSetting(string key, string value, string label = null, string contentType = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
+        public static Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
+        public static Azure.Data.AppConfiguration.SecretReferenceConfigurationSetting SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
     }
     public partial class ConfigurationSetting
     {
@@ -118,16 +120,15 @@ namespace Azure.Data.AppConfiguration
     {
         public ConfigurationSettingsSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotSettingFilter> filters) { }
         public Azure.Data.AppConfiguration.CompositionType? CompositionType { get { throw null; } set { } }
-        public System.DateTimeOffset? Created { get { throw null; } }
-        public Azure.ETag Etag { get { throw null; } }
-        public System.DateTimeOffset? Expires { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SnapshotSettingFilter> Filters { get { throw null; } }
         public long? ItemCount { get { throw null; } }
         public string Name { get { throw null; } }
         public System.TimeSpan? RetentionPeriod { get { throw null; } set { } }
         public long? Size { get { throw null; } }
         public Azure.Data.AppConfiguration.SnapshotStatus? Status { get { throw null; } }
-        public int? StatusCode { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class CreateSnapshotOperation : Azure.Operation<Azure.Data.AppConfiguration.ConfigurationSettingsSnapshot>
@@ -146,6 +147,7 @@ namespace Azure.Data.AppConfiguration
     public partial class FeatureFlagConfigurationSetting : Azure.Data.AppConfiguration.ConfigurationSetting
     {
         public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null) : base (default(string), default(string), default(string)) { }
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label, Azure.ETag etag) : base (default(string), default(string), default(string)) { }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagFilter> ClientFilters { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -163,6 +165,7 @@ namespace Azure.Data.AppConfiguration
     public partial class SecretReferenceConfigurationSetting : Azure.Data.AppConfiguration.ConfigurationSetting
     {
         public SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null) : base (default(string), default(string), default(string)) { }
+        public SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label, Azure.ETag etag) : base (default(string), default(string), default(string)) { }
         public System.Uri SecretId { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
@@ -200,16 +203,15 @@ namespace Azure.Data.AppConfiguration
         private readonly int _dummyPrimitive;
         public SnapshotFields(string value) { throw null; }
         public static Azure.Data.AppConfiguration.SnapshotFields CompositionType { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields Created { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields Etag { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields Expires { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields CreatedOn { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields ETag { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields ExpiresOn { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Filters { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields ItemsCount { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields ItemCount { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Name { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields RetentionPeriod { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Size { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Status { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields StatusCode { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Tags { get { throw null; } }
         public bool Equals(Azure.Data.AppConfiguration.SnapshotFields other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

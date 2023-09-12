@@ -65,6 +65,7 @@
     <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyPipelinePolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageResponseClassifier.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageTelemetryPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />

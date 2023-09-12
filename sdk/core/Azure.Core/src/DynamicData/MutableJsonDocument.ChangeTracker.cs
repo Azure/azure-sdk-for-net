@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text.Json;
+
+#nullable enable
 
 namespace Azure.Core.Json
 {
@@ -12,13 +13,7 @@ namespace Azure.Core.Json
     {
         internal class ChangeTracker
         {
-            public ChangeTracker(JsonSerializerOptions options)
-            {
-                _options = options;
-            }
-
             private List<MutableJsonChange>? _changes;
-            private JsonSerializerOptions _options;
 
             internal const char Delimiter = (char)1;
 
@@ -100,7 +95,7 @@ namespace Azure.Core.Json
 
                 int index = _changes.Count;
 
-                _changes.Add(new MutableJsonChange(path, index, value, _options, changeKind, addedPropertyName));
+                _changes.Add(new MutableJsonChange(path, index, value, changeKind, addedPropertyName));
 
                 return index;
             }

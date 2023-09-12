@@ -3,9 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
 using Azure.Core.Json;
 using NUnit.Framework;
 
@@ -40,7 +37,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanGetSortedChanges()
         {
-            MutableJsonDocument.ChangeTracker changeTracker = new(null);
+            MutableJsonDocument.ChangeTracker changeTracker = new();
             char delimiter = MutableJsonDocument.ChangeTracker.Delimiter;
 
             changeTracker.AddChange("a", 1);
@@ -69,7 +66,7 @@ namespace Azure.Core.Tests
         #region Helpers
         private MutableJsonChange CreateChange(string name)
         {
-            return new MutableJsonChange(name, -1, null, null, MutableJsonChangeKind.PropertyUpdate, null);
+            return new MutableJsonChange(name, -1, null, MutableJsonChangeKind.PropertyUpdate, null);
         }
         #endregion
     }

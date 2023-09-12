@@ -87,7 +87,7 @@ format-by-name-rules:
   'partitionId': 'uuid'
   'instanceId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

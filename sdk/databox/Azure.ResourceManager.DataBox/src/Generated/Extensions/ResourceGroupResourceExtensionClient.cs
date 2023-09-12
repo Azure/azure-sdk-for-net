@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.DataBox
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.DataBox
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

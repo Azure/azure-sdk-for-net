@@ -174,6 +174,12 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(InternalNonAzureModelName);
             }
+            if (AzureExtensionsOptions != null)
+            {
+                // CUSTOM CODE NOTE: Extensions options currently deserialize directly into the payload (not as a
+                //                      property value therein)
+                ((IUtf8JsonSerializable)AzureExtensionsOptions).Write(writer);
+            }
             writer.WriteEndObject();
         }
     }
