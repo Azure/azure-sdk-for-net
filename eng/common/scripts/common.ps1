@@ -60,6 +60,7 @@ $GetPackageLevelReadmeFn = "Get-${Language}-PackageLevelReadme"
 $GetRepositoryLinkFn = "Get-${Language}-RepositoryLink"
 $GetEmitterAdditionalOptionsFn = "Get-${Language}-EmitterAdditionalOptions"
 $GetEmitterNameFn = "Get-${Language}-EmitterName"
+$GetFoldersForGenerationFn = "Get-${Language}-FoldersForGeneration"
 $UpdateGeneratedSdksFn = "Update-${Language}-GeneratedSdks"
 
 # Expected to be set in eng/scripts/docs/Docs-Onboarding.ps1
