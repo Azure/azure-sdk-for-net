@@ -509,7 +509,7 @@ new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
 new ResourceIdentifier("xzphvxvfmvjrnsgyns")
 },
             };
-            await foreach (NewRelicObservabilityVmInfo item in newRelicMonitorResource.GetHostsAsync(content))
+            await foreach (VmInfo item in newRelicMonitorResource.GetHostsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -546,7 +546,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
 new ResourceIdentifier("xzphvxvfmvjrnsgyns")
 },
             };
-            await foreach (NewRelicObservabilityVmInfo item in newRelicMonitorResource.GetHostsAsync(content))
+            await foreach (VmInfo item in newRelicMonitorResource.GetHostsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -636,7 +636,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            NewRelicObservabilityVmExtensionPayload result = await newRelicMonitorResource.VmHostPayloadAsync();
+            VmExtensionPayload result = await newRelicMonitorResource.VmHostPayloadAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -663,7 +663,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            NewRelicObservabilityVmExtensionPayload result = await newRelicMonitorResource.VmHostPayloadAsync();
+            VmExtensionPayload result = await newRelicMonitorResource.VmHostPayloadAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
