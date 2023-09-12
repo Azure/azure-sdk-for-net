@@ -13,8 +13,8 @@ To create a snapshot, you need to create an instance of `ConfigurationSettingsSn
 ### Automatic Polling
 
 ```C# Snippet:AzConfigSample11_CreateSnapshot_AutomaticPolling
-var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter("some_key") });
-var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
+var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -25,8 +25,8 @@ Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Nam
 ### Automatic Polling with `WaitForCompletion`
 
 ```C# Snippet:AzConfigSample11_CreateSnapshot_AutomaticPollingLater
-var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter("some_key") });
-var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
+var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -39,8 +39,8 @@ Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Nam
 ### Manual Polling
 
 ```C# Snippet:AzConfigSample11_CreateSnapshot_ManualPolling
-var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter("some_key") });
-var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
+var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -62,7 +62,7 @@ After creating a configuration setting snapshot, you can retrieve it using the `
 
 ```C# Snippet:AzConfigSample11_GetSnapshot
 var snapshotName = "some_snapshot";
-ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
+ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
 Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
 ```
 
@@ -72,7 +72,7 @@ To archive a snapshot, you can use the `ArchiveSnapshot` method. This operation 
 
 ```C# Snippet:AzConfigSample11_ArchiveSnapshot
 var snapshotName = "some_snapshot";
-ConfigurationSettingsSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
+ConfigurationSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
 Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
 ```
 
@@ -82,7 +82,7 @@ To recover an archived snapshot, you can use the `RecoverSnapshot` method. This 
 
 ```C# Snippet:AzConfigSample11_RecoverSnapshot
 var snapshotName = "some_snapshot";
-ConfigurationSettingsSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
+ConfigurationSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
 Console.WriteLine($"Recovered configuration setting snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
 ```
 
@@ -92,7 +92,7 @@ To retrieve all snapshots, you can use the `GetSnapshots` method.
 
 ```C# Snippet:AzConfigSample11_GetSnapshots
 var count = 0;
-foreach (var item in client.GetSnapshots())
+foreach (var item in client.GetSnapshots(new SnapshotSelector()))
 {
     count++;
     Console.WriteLine($"Retrieved configuration setting snapshot: {item.Name}, status {item.Status}");
@@ -111,8 +111,8 @@ client.AddConfigurationSetting(firstSetting);
 var secondSetting = new ConfigurationSetting("second_key", "second_value");
 client.AddConfigurationSetting(secondSetting);
 
-var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key), new SnapshotSettingFilter(secondSetting.Key) });
-var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter(firstSetting.Key), new SnapshotSettingFilter(secondSetting.Key) };
+var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);

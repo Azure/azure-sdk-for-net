@@ -23,8 +23,8 @@ namespace Azure.Data.AppConfiguration.Samples
                 client.AddConfigurationSetting(setting);
 
                 #region Snippet:AzConfigSample11_CreateSnapshot_AutomaticPolling
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter("some_key") });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var snapshotName = "some_snapshot";
 #if !SNIPPET
@@ -35,7 +35,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
                 #endregion
 
-                ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
+                ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
                 Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(retrievedSnapshot);
@@ -59,8 +59,8 @@ namespace Azure.Data.AppConfiguration.Samples
                 client.AddConfigurationSetting(setting);
 
                 #region Snippet:AzConfigSample11_CreateSnapshot_AutomaticPollingLater
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter("some_key") });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var snapshotName = "some_snapshot";
 #if !SNIPPET
@@ -73,7 +73,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
                 #endregion
 
-                ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
+                ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
                 Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(retrievedSnapshot);
@@ -97,8 +97,8 @@ namespace Azure.Data.AppConfiguration.Samples
                 client.AddConfigurationSetting(setting);
 
                 #region Snippet:AzConfigSample11_CreateSnapshot_ManualPolling
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter("some_key") });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var snapshotName = "some_snapshot";
 #if !SNIPPET
@@ -117,7 +117,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
                 #endregion
 
-                ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
+                ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
                 Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(retrievedSnapshot);
@@ -140,8 +140,8 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 client.AddConfigurationSetting(setting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter(setting.Key) };
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var configSnapshotName = GenerateSnapshotName();
                 var operation = client.CreateSnapshot(WaitUntil.Completed, configSnapshotName, settingsSnapshot);
@@ -153,7 +153,7 @@ namespace Azure.Data.AppConfiguration.Samples
 #if !SNIPPET
                 snapshotName = configSnapshotName;
 #endif
-                ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
+                ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
                 Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
                 #endregion
 
@@ -177,8 +177,8 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 client.AddConfigurationSetting(setting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter(setting.Key) };
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var configSnapshotName = GenerateSnapshotName();
 
@@ -188,19 +188,19 @@ namespace Azure.Data.AppConfiguration.Samples
 
                 Assert.NotNull(createdSnapshot);
                 Assert.AreEqual(configSnapshotName, createdSnapshot.Name);
-                Assert.AreEqual(SnapshotStatus.Ready, createdSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Ready, createdSnapshot.Status);
 
                 #region Snippet:AzConfigSample11_ArchiveSnapshot
                 var snapshotName = "some_snapshot";
 #if !SNIPPET
                 snapshotName = configSnapshotName;
 #endif
-                ConfigurationSettingsSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
+                ConfigurationSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
                 Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
                 #endregion
 
                 Assert.NotNull(archivedSnapshot);
-                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
             }
             finally
             {
@@ -219,8 +219,8 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 client.AddConfigurationSetting(setting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter(setting.Key) };
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var configSnapshotName = GenerateSnapshotName();
 
@@ -230,24 +230,24 @@ namespace Azure.Data.AppConfiguration.Samples
 
                 Assert.NotNull(createdSnapshot);
                 Assert.AreEqual(configSnapshotName, createdSnapshot.Name);
-                Assert.AreEqual(SnapshotStatus.Ready, createdSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Ready, createdSnapshot.Status);
 
-                ConfigurationSettingsSnapshot archivedSnapshot = client.ArchiveSnapshot(configSnapshotName);
+                ConfigurationSnapshot archivedSnapshot = client.ArchiveSnapshot(configSnapshotName);
                 Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
 
-                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
 
                 #region Snippet:AzConfigSample11_RecoverSnapshot
                 var snapshotName = "some_snapshot";
 #if !SNIPPET
                 snapshotName = configSnapshotName;
 #endif
-                ConfigurationSettingsSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
+                ConfigurationSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
                 Console.WriteLine($"Recovered configuration setting snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
                 #endregion
 
                 Assert.NotNull(recoveredSnapshot);
-                Assert.AreEqual(SnapshotStatus.Ready, recoveredSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Ready, recoveredSnapshot.Status);
             }
             finally
             {
@@ -269,18 +269,18 @@ namespace Azure.Data.AppConfiguration.Samples
                 client.AddConfigurationSetting(firstSetting);
                 client.AddConfigurationSetting(secondSetting);
 
-                var firstSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key) });
+                var firstSnapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter(firstSetting.Key) };
                 var firstSnapshotName = GenerateSnapshotName("first_snapshot");
-                var firstOperation = client.CreateSnapshot(WaitUntil.Completed, firstSnapshotName, new ConfigurationSettingsSnapshot(firstSnapshotFilter));
+                var firstOperation = client.CreateSnapshot(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter));
                 var createdFirstSnapshot = firstOperation.Value;
                 Console.WriteLine($"Created configuration setting snapshot: {createdFirstSnapshot.Name}, status: {createdFirstSnapshot.Status}");
 
                 Assert.NotNull(createdFirstSnapshot);
                 Assert.AreEqual(firstSnapshotName, createdFirstSnapshot.Name);
 
-                var secondSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(secondSetting.Key) });
+                var secondSnapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter(secondSetting.Key) };
                 var secondSnapshotName = GenerateSnapshotName("second_snapshot");
-                var secondOperation = client.CreateSnapshot(WaitUntil.Completed, secondSnapshotName, new ConfigurationSettingsSnapshot(secondSnapshotFilter));
+                var secondOperation = client.CreateSnapshot(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter));
                 var createdSecondSnapshot = secondOperation.Value;
                 Console.WriteLine($"Created configuration setting snapshot: {createdSecondSnapshot.Name}, status: {createdFirstSnapshot.Status}");
 
@@ -289,7 +289,7 @@ namespace Azure.Data.AppConfiguration.Samples
 
                 #region Snippet:AzConfigSample11_GetSnapshots
                 var count = 0;
-                foreach (var item in client.GetSnapshots())
+                foreach (var item in client.GetSnapshots(new SnapshotSelector()))
                 {
                     count++;
                     Console.WriteLine($"Retrieved configuration setting snapshot: {item.Name}, status {item.Status}");
@@ -321,8 +321,8 @@ namespace Azure.Data.AppConfiguration.Samples
                 var secondSetting = new ConfigurationSetting("second_key", "second_value");
                 client.AddConfigurationSetting(secondSetting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key), new SnapshotSettingFilter(secondSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter(firstSetting.Key), new SnapshotSettingFilter(secondSetting.Key) };
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var snapshotName = "some_snapshot";
 #if !SNIPPET

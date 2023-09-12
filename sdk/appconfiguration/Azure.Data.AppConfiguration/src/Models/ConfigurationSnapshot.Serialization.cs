@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    public partial class ConfigurationSettingsSnapshot : IUtf8JsonSerializable
+    public partial class ConfigurationSnapshot : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,12 +44,12 @@ namespace Azure.Data.AppConfiguration
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationSettingsSnapshot DeserializeSnapshot(JsonElement element)
+        internal static ConfigurationSnapshot DeserializeSnapshot(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<SnapshotStatus> status = default;
+            Optional<ConfigurationSnapshotStatus> status = default;
             IList<SnapshotSettingFilter> filters = default;
-            Optional<CompositionType> compositionType = default;
+            Optional<SnapshotComposition> compositionType = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset?> expires = default;
             Optional<long> retentionPeriod = default;
@@ -71,7 +71,7 @@ namespace Azure.Data.AppConfiguration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new SnapshotStatus(property.Value.GetString());
+                    status = new ConfigurationSnapshotStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filters"))
@@ -91,7 +91,7 @@ namespace Azure.Data.AppConfiguration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    compositionType = new CompositionType(property.Value.GetString());
+                    compositionType = new SnapshotComposition(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("created"))
@@ -165,18 +165,18 @@ namespace Azure.Data.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationSettingsSnapshot(name.Value, Optional.ToNullable(status), filters, Optional.ToNullable(compositionType), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), new ETag(etag.Value));
+            return new ConfigurationSnapshot(name.Value, Optional.ToNullable(status), filters, Optional.ToNullable(compositionType), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), new ETag(etag.Value));
         }
 
         // Mapping raw response to model
-        internal static ConfigurationSettingsSnapshot FromResponse(Response response)
+        internal static ConfigurationSnapshot FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeSnapshot(document.RootElement);
         }
 
         // Mapping model to raw request
-        internal static RequestContent ToRequestContent(ConfigurationSettingsSnapshot snapshot)
+        internal static RequestContent ToRequestContent(ConfigurationSnapshot snapshot)
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(snapshot);
