@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeStatus. </summary>
-        /// <param name="runtimeType"> Type of integration runtime. </param>
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SynapseIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal SynapseIntegrationRuntimeStatus(IntegrationRuntimeType integrationRuntimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
-            RuntimeType = runtimeType;
+            IntegrationRuntimeType = integrationRuntimeType;
             DataFactoryName = dataFactoryName;
             State = state;
             AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Type of integration runtime. </summary>
-        internal IntegrationRuntimeType RuntimeType { get; set; }
+        internal IntegrationRuntimeType IntegrationRuntimeType { get; set; }
         /// <summary> The workspace name which the integration runtime belong to. </summary>
         public string DataFactoryName { get; }
         /// <summary> The state of integration runtime. </summary>

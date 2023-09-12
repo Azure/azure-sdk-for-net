@@ -16,7 +16,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
-    public partial class Sample_SynapseIPFirewallRuleInfoCollection
+    public partial class Sample_IPFirewallRuleInfoCollection
     {
         // List IP firewall rules in a workspace
         [NUnit.Framework.Test]
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.Synapse.Samples
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             SynapseWorkspaceResource synapseWorkspace = client.GetSynapseWorkspaceResource(synapseWorkspaceResourceId);
 
-            // get the collection of this SynapseIPFirewallRuleInfoResource
-            SynapseIPFirewallRuleInfoCollection collection = synapseWorkspace.GetSynapseIPFirewallRuleInfos();
+            // get the collection of this IPFirewallRuleInfoResource
+            IPFirewallRuleInfoCollection collection = synapseWorkspace.GetIPFirewallRuleInfos();
 
             // invoke the operation and iterate over the result
-            await foreach (SynapseIPFirewallRuleInfoResource item in collection.GetAllAsync())
+            await foreach (IPFirewallRuleInfoResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SynapseIPFirewallRuleInfoData resourceData = item.Data;
+                IPFirewallRuleInfoData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -76,22 +76,22 @@ namespace Azure.ResourceManager.Synapse.Samples
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             SynapseWorkspaceResource synapseWorkspace = client.GetSynapseWorkspaceResource(synapseWorkspaceResourceId);
 
-            // get the collection of this SynapseIPFirewallRuleInfoResource
-            SynapseIPFirewallRuleInfoCollection collection = synapseWorkspace.GetSynapseIPFirewallRuleInfos();
+            // get the collection of this IPFirewallRuleInfoResource
+            IPFirewallRuleInfoCollection collection = synapseWorkspace.GetIPFirewallRuleInfos();
 
             // invoke the operation
             string ruleName = "ExampleIpFirewallRule";
-            SynapseIPFirewallRuleInfoData info = new SynapseIPFirewallRuleInfoData()
+            IPFirewallRuleInfoData info = new IPFirewallRuleInfoData()
             {
                 EndIPAddress = IPAddress.Parse("10.0.0.254"),
                 StartIPAddress = IPAddress.Parse("10.0.0.0"),
             };
-            ArmOperation<SynapseIPFirewallRuleInfoResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, info);
-            SynapseIPFirewallRuleInfoResource result = lro.Value;
+            ArmOperation<IPFirewallRuleInfoResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, info);
+            IPFirewallRuleInfoResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SynapseIPFirewallRuleInfoData resourceData = result.Data;
+            IPFirewallRuleInfoData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Synapse.Samples
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             SynapseWorkspaceResource synapseWorkspace = client.GetSynapseWorkspaceResource(synapseWorkspaceResourceId);
 
-            // get the collection of this SynapseIPFirewallRuleInfoResource
-            SynapseIPFirewallRuleInfoCollection collection = synapseWorkspace.GetSynapseIPFirewallRuleInfos();
+            // get the collection of this IPFirewallRuleInfoResource
+            IPFirewallRuleInfoCollection collection = synapseWorkspace.GetIPFirewallRuleInfos();
 
             // invoke the operation
             string ruleName = "ExampleIpFirewallRule";
-            SynapseIPFirewallRuleInfoResource result = await collection.GetAsync(ruleName);
+            IPFirewallRuleInfoResource result = await collection.GetAsync(ruleName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SynapseIPFirewallRuleInfoData resourceData = result.Data;
+            IPFirewallRuleInfoData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             SynapseWorkspaceResource synapseWorkspace = client.GetSynapseWorkspaceResource(synapseWorkspaceResourceId);
 
-            // get the collection of this SynapseIPFirewallRuleInfoResource
-            SynapseIPFirewallRuleInfoCollection collection = synapseWorkspace.GetSynapseIPFirewallRuleInfos();
+            // get the collection of this IPFirewallRuleInfoResource
+            IPFirewallRuleInfoCollection collection = synapseWorkspace.GetIPFirewallRuleInfos();
 
             // invoke the operation
             string ruleName = "ExampleIpFirewallRule";
