@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExtendedLocationType))
+            if (Optional.IsDefined(ProviderHubExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ExtendedLocationType.Value.ToSerialString());
+                writer.WriteStringValue(ProviderHubExtendedLocationType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

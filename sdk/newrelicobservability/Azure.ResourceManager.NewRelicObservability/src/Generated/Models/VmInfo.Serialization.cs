@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicObservabilityVmInfo
+    public partial class VmInfo
     {
-        internal static NewRelicObservabilityVmInfo DeserializeNewRelicObservabilityVmInfo(JsonElement element)
+        internal static VmInfo DeserializeVmInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicObservabilityVmInfo(vmId.Value, agentVersion.Value, agentStatus.Value);
+            return new VmInfo(vmId.Value, agentVersion.Value, agentStatus.Value);
         }
     }
 }
