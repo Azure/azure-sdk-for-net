@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterResource> GetDevCentersAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterResource> GetDevCenters(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterProjectResource> GetDevCenterProjects(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnectionsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
         /// <param name="etag"> Resource etag. </param>
-        /// <param name="applicationId"> The unique ID of your application. This field mirrors the &apos;Name&apos; field and cannot be changed. </param>
+        /// <param name="applicationId"> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </param>
         /// <param name="appId"> Application Insights Unique ID for your Application. </param>
         /// <param name="namePropertiesName"> Application name. </param>
         /// <param name="applicationType"> Type of application being monitored. </param>
-        /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to &apos;Bluefield&apos; when creating/updating a component via the REST API. </param>
-        /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default &apos;rest&apos;. </param>
+        /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </param>
+        /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </param>
         /// <param name="instrumentationKey"> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </param>
         /// <param name="createdOn"> Creation Date for the Application Insights component, in ISO 8601 format. </param>
         /// <param name="tenantId"> Azure Tenant Id. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentExportConfiguration. </summary>
         /// <param name="exportId"> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </param>
         /// <param name="instrumentationKey"> The instrumentation key of the Application Insights component. </param>
-        /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;. </param>
+        /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </param>
         /// <param name="applicationName"> The name of the Application Insights component. </param>
         /// <param name="subscriptionId"> The subscription of the Application Insights component. </param>
         /// <param name="resourceGroup"> The resource group of the Application Insights component. </param>
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="destinationStorageLocationId"> The destination account location ID. </param>
         /// <param name="destinationAccountId"> The name of destination account. </param>
         /// <param name="destinationType"> The destination type. </param>
-        /// <param name="isUserEnabled"> This will be &apos;true&apos; if the Continuous Export configuration is enabled, otherwise it will be &apos;false&apos;. </param>
+        /// <param name="isUserEnabled"> This will be 'true' if the Continuous Export configuration is enabled, otherwise it will be 'false'. </param>
         /// <param name="lastUserUpdate"> Last time the Continuous Export configuration was updated. </param>
         /// <param name="notificationQueueEnabled"> Deprecated. </param>
-        /// <param name="exportStatus"> This indicates current Continuous Export configuration status. The possible values are &apos;Preparing&apos;, &apos;Success&apos;, &apos;Failure&apos;. </param>
+        /// <param name="exportStatus"> This indicates current Continuous Export configuration status. The possible values are 'Preparing', 'Success', 'Failure'. </param>
         /// <param name="lastSuccessTime"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
         /// <param name="lastGapTime"> The last time the Continuous Export configuration started failing. </param>
-        /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be &apos;AzureStorageNotFound&apos; or &apos;AzureStorageAccessDenied&apos;. </param>
+        /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </param>
         /// <param name="storageName"> The name of the destination storage account. </param>
         /// <param name="containerName"> The name of the destination storage container. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentExportConfiguration"/> instance for mocking. </returns>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentFeature. </summary>
         /// <param name="featureName"> The pricing feature name. </param>
         /// <param name="meterId"> The meter id used for the feature. </param>
-        /// <param name="meterRateFrequency"> The meter rate for the feature&apos;s meter. </param>
+        /// <param name="meterRateFrequency"> The meter rate for the feature's meter. </param>
         /// <param name="resourceId"> Reserved, not used now. </param>
         /// <param name="isHidden"> Reserved, not used now. </param>
         /// <param name="capabilities"> A list of Application Insights component feature capability. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentFavorite. </summary>
         /// <param name="name"> The user-defined name of the favorite. </param>
         /// <param name="config"> Configuration of this particular favorite, which are driven by the Azure portal UX. Configuration data is a string containing valid JSON. </param>
-        /// <param name="version"> This instance&apos;s version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </param>
+        /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </param>
         /// <param name="favoriteId"> Internally assigned unique id of the favorite definition. </param>
         /// <param name="favoriteType"> Enum indicating if this favorite definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
         /// <param name="sourceType"> The source of the favorite definition. </param>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="id"> Internally assigned unique id of the item definition. </param>
         /// <param name="name"> The user-defined name of the item. </param>
         /// <param name="content"> The content of this item. </param>
-        /// <param name="version"> This instance&apos;s version of the data model. This can change as new features are added. </param>
+        /// <param name="version"> This instance's version of the data model. This can change as new features are added. </param>
         /// <param name="scope"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
         /// <param name="itemType"> Enum indicating the type of the Analytics item. </param>
         /// <param name="timeCreated"> Date and time in UTC when this item was created. </param>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="displayName"> The user-defined name of the private workbook. </param>
         /// <param name="serializedData"> Configuration of this particular private workbook. Configuration data is a string containing valid JSON. </param>
-        /// <param name="version"> This instance&apos;s version of the data model. This can change as new features are added that can be marked private workbook. </param>
+        /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked private workbook. </param>
         /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this private workbook definition. </param>
         /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this private workbook. </param>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="location"> The location. </param>
         /// <param name="displayName"> The user-defined name (display name) of the workbook. </param>
         /// <param name="serializedData"> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </param>
-        /// <param name="version"> Workbook schema version format, like &apos;Notebook/1.0&apos;, which should match the workbook in serializedData. </param>
+        /// <param name="version"> Workbook schema version format, like 'Notebook/1.0', which should match the workbook in serializedData. </param>
         /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this workbook definition. </param>
         /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this workbook. </param>

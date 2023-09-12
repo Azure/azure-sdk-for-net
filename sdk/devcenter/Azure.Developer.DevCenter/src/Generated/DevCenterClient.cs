@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -77,7 +78,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context = null)
+        public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -112,7 +113,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProject(string,RequestContext)']/*" />
-        public virtual Response GetProject(string projectName, RequestContext context = null)
+        public virtual Response GetProject(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -141,16 +142,16 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(string filter, int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -164,16 +165,16 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetProjects(string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetProjects(string filter, int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -187,16 +188,16 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(string filter, int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -210,16 +211,16 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxes(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllDevBoxes(string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllDevBoxes(string filter, int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -232,22 +233,22 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. The default value is "me". </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(string,string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId, string filter, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -260,22 +261,22 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userId"> The AAD object id of the user. If value is &apos;me&apos;, the identity is taken from the authentication context. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. The default value is "me". </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: &apos;top=10&apos;. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(string,string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId, string filter, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetProjectsRequest(string filter, int? maxCount, RequestContext context)

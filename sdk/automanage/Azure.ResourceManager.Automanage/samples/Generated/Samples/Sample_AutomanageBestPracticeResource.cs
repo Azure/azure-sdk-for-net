@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 {
     public partial class Sample_AutomanageBestPracticeResource
     {
-        // Get an Automanage best practice 
+        // Get an Automanage best practice
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAnAutomanageBestPractice()

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageClassificationResource" /> and their operations.
-    /// Each <see cref="StorageClassificationResource" /> in the collection will belong to the same instance of <see cref="FabricResource" />.
-    /// To get a <see cref="StorageClassificationCollection" /> instance call the GetStorageClassifications method from an instance of <see cref="FabricResource" />.
+    /// Each <see cref="StorageClassificationResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryFabricResource" />.
+    /// To get a <see cref="StorageClassificationCollection" /> instance call the GetStorageClassifications method from an instance of <see cref="SiteRecoveryFabricResource" />.
     /// </summary>
     public partial class StorageClassificationCollection : ArmCollection, IEnumerable<StorageClassificationResource>, IAsyncEnumerable<StorageClassificationResource>
     {
@@ -48,8 +49,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != FabricResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, FabricResource.ResourceType), nameof(id));
+            if (id.ResourceType != SiteRecoveryFabricResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryFabricResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -39,9 +39,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="sncMode"> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </param>
-        /// <param name="sncMyName"> Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncPartnerName"> Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncLibraryPath"> External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="sncMyName"> Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="sncPartnerName"> Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="sncLibraryPath"> External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
         /// <param name="sncQop"> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </param>
         /// <param name="x509CertificatePath"> SNC X509 certificate file path. Type: string (or Expression with resultType string). </param>
         /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
@@ -94,11 +94,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object MessageServerService { get; set; }
         /// <summary> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </summary>
         public object SncMode { get; set; }
-        /// <summary> Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public object SncMyName { get; set; }
-        /// <summary> Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public object SncPartnerName { get; set; }
-        /// <summary> External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary> External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public object SncLibraryPath { get; set; }
         /// <summary> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </summary>
         public object SncQop { get; set; }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> description = default;
             Optional<IList<NetworkManagerSecurityGroupItem>> appliesToGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -126,11 +128,20 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("resourceGuid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new AdminRuleGroupData(id, name, type, systemData.Value, description.Value, Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(etag));
+            return new AdminRuleGroupData(id, name, type, systemData.Value, description.Value, Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag));
         }
     }
 }

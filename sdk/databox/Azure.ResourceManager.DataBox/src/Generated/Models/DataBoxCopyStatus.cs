@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
         private const string DriveCorruptedValue = "DriveCorrupted";
         private const string MetadataFilesModifiedOrRemovedValue = "MetadataFilesModifiedOrRemoved";
 
-        /// <summary> Data copy hasn&apos;t started yet. </summary>
+        /// <summary> Data copy hasn't started yet. </summary>
         public static DataBoxCopyStatus NotStarted { get; } = new DataBoxCopyStatus(NotStartedValue);
         /// <summary> Data copy is in progress. </summary>
         public static DataBoxCopyStatus InProgress { get; } = new DataBoxCopyStatus(InProgressValue);

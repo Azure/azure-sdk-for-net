@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the cost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=labCostDetails)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the cost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=labCostDetails)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>

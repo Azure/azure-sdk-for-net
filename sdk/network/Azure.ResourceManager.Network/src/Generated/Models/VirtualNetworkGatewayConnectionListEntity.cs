@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionMode"> The connection mode for this connection. </param>
         /// <param name="sharedKey"> The IPSec shared key. </param>
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
-        /// <param name="tunnelConnectionStatus"> Collection of all tunnels&apos; connection health status. </param>
+        /// <param name="tunnelConnectionStatus"> Collection of all tunnels' connection health status. </param>
         /// <param name="egressBytesTransferred"> The egress bytes transferred in this connection. </param>
         /// <param name="ingressBytesTransferred"> The ingress bytes transferred in this connection. </param>
         /// <param name="peer"> The reference to peerings resource. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
         public string SharedKey { get; set; }
         /// <summary> Virtual Network Gateway connection status. </summary>
         public VirtualNetworkGatewayConnectionStatus? ConnectionStatus { get; }
-        /// <summary> Collection of all tunnels&apos; connection health status. </summary>
+        /// <summary> Collection of all tunnels' connection health status. </summary>
         public IReadOnlyList<TunnelConnectionHealth> TunnelConnectionStatus { get; }
         /// <summary> The egress bytes transferred in this connection. </summary>
         public long? EgressBytesTransferred { get; }

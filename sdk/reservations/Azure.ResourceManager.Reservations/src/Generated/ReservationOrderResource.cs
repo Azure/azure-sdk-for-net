@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -145,7 +145,7 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName, Optional.ToNullable(slidingWindow), alignPolicy, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo);
+            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName.Value, Optional.ToNullable(slidingWindow), alignPolicy.Value, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

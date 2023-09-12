@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create Or Update a Sql pool&apos;s workload group.
+        /// Create Or Update a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create Or Update a Sql pool&apos;s workload group.
+        /// Create Or Update a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s workload group.
+        /// Get a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s workload group.
+        /// Get a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get list of  Sql pool&apos;s workload groups.
+        /// Get list of  Sql pool's workload groups.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -227,11 +228,11 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get list of  Sql pool&apos;s workload groups.
+        /// Get list of  Sql pool's workload groups.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

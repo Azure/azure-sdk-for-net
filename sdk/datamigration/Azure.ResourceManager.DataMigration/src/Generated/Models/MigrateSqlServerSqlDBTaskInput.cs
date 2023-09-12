@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="validationOptions">
-        /// Options for enabling various post migration validations. Available options, 
-        ///  1.) Data Integrity Check: Performs a checksum based comparison on source and target tables after the migration to ensure the correctness of the data. 
+        /// Options for enabling various post migration validations. Available options,
+        ///  1.) Data Integrity Check: Performs a checksum based comparison on source and target tables after the migration to ensure the correctness of the data.
         ///  2.) Schema Validation: Performs a thorough schema comparison between the source and target tables and provides a list of differences between the source and target database, 3.) Query Analysis: Executes a set of queries picked up automatically either from the Query Plan Cache or Query Store and execute them and compares the execution time between the source and target database.
         /// </param>
         /// <param name="startedOn"> Date and time relative to UTC when the migration was started on. </param>
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Databases to migrate. </summary>
         public IList<MigrateSqlServerSqlDBDatabaseInput> SelectedDatabases { get; }
         /// <summary>
-        /// Options for enabling various post migration validations. Available options, 
-        ///  1.) Data Integrity Check: Performs a checksum based comparison on source and target tables after the migration to ensure the correctness of the data. 
+        /// Options for enabling various post migration validations. Available options,
+        ///  1.) Data Integrity Check: Performs a checksum based comparison on source and target tables after the migration to ensure the correctness of the data.
         ///  2.) Schema Validation: Performs a thorough schema comparison between the source and target tables and provides a list of differences between the source and target database, 3.) Query Analysis: Executes a set of queries picked up automatically either from the Query Plan Cache or Query Store and execute them and compares the execution time between the source and target database.
         /// </summary>
         public MigrationValidationOptions ValidationOptions { get; set; }

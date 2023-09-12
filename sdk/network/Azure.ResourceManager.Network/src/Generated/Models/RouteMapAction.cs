@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of RouteMapAction. </summary>
-        /// <param name="actionType"> Type of action to be taken. Supported types are &apos;Remove&apos;, &apos;Add&apos;, &apos;Replace&apos;, and &apos;Drop.&apos;. </param>
+        /// <param name="actionType"> Type of action to be taken. Supported types are 'Remove', 'Add', 'Replace', and 'Drop.'. </param>
         /// <param name="parameters"> List of parameters relevant to the action.For instance if type is drop then parameters has list of prefixes to be dropped.If type is add, parameters would have list of ASN numbers to be added. </param>
         internal RouteMapAction(RouteMapActionType? actionType, IList<RouteMapActionParameter> parameters)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             Parameters = parameters;
         }
 
-        /// <summary> Type of action to be taken. Supported types are &apos;Remove&apos;, &apos;Add&apos;, &apos;Replace&apos;, and &apos;Drop.&apos;. </summary>
+        /// <summary> Type of action to be taken. Supported types are 'Remove', 'Add', 'Replace', and 'Drop.'. </summary>
         public RouteMapActionType? ActionType { get; set; }
         /// <summary> List of parameters relevant to the action.For instance if type is drop then parameters has list of prefixes to be dropped.If type is add, parameters would have list of ASN numbers to be added. </summary>
         public IList<RouteMapActionParameter> Parameters { get; }

@@ -47,6 +47,8 @@ trigger:
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
+    - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql
+    - sdk/costmanagement/Azure.ResourceManager.CostManagement
     - sdk/customer-insights/Azure.ResourceManager.CustomerInsights
     - sdk/databox/Azure.ResourceManager.DataBox
     - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge
@@ -79,7 +81,9 @@ trigger:
     - sdk/grafana/Azure.ResourceManager.Grafana
     - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
+    - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
@@ -87,6 +91,7 @@ trigger:
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybriddatamanager/Azure.ResourceManager.HybridData
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
+    - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
     - sdk/keyvault/Azure.ResourceManager.KeyVault
@@ -99,6 +104,7 @@ trigger:
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
     - sdk/maintenance/Azure.ResourceManager.Maintenance
     - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork
+    - sdk/managednetworkfabric/Azure.ResourceManager.ManagedNetworkFabric
     - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities
     - sdk/managedservices/Azure.ResourceManager.ManagedServices
     - sdk/managementpartner/Azure.ResourceManager.ManagementPartner
@@ -153,6 +159,7 @@ trigger:
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
+    - sdk/sphere/Azure.ResourceManager.Sphere
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
@@ -219,6 +226,8 @@ pr:
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
+    - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql
+    - sdk/costmanagement/Azure.ResourceManager.CostManagement
     - sdk/customer-insights/Azure.ResourceManager.CustomerInsights
     - sdk/databox/Azure.ResourceManager.DataBox
     - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge
@@ -251,7 +260,9 @@ pr:
     - sdk/grafana/Azure.ResourceManager.Grafana
     - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
+    - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
@@ -259,6 +270,7 @@ pr:
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybriddatamanager/Azure.ResourceManager.HybridData
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
+    - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
     - sdk/keyvault/Azure.ResourceManager.KeyVault
@@ -271,6 +283,7 @@ pr:
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
     - sdk/maintenance/Azure.ResourceManager.Maintenance
     - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork
+    - sdk/managednetworkfabric/Azure.ResourceManager.ManagedNetworkFabric
     - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities
     - sdk/managedservices/Azure.ResourceManager.ManagedServices
     - sdk/managementpartner/Azure.ResourceManager.ManagementPartner
@@ -325,6 +338,7 @@ pr:
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
+    - sdk/sphere/Azure.ResourceManager.Sphere
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage

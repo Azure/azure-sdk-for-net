@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        /// <summary> Lists developer portal&apos;s revisions. </summary>
+        /// <summary> Lists developer portal's revisions. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter">
         /// | Field       | Supported operators    | Supported functions               |
         /// |-------------|------------------------|-----------------------------------|
-        /// 
+        ///
         /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |isCurrent | eq, ne |    |
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
@@ -110,18 +110,18 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Lists developer portal&apos;s revisions. </summary>
+        /// <summary> Lists developer portal's revisions. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter">
         /// | Field       | Supported operators    | Supported functions               |
         /// |-------------|------------------------|-----------------------------------|
-        /// 
+        ///
         /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |isCurrent | eq, ne |    |
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        /// <summary> Gets the developer portal&apos;s revision specified by its identifier. </summary>
+        /// <summary> Gets the developer portal's revision specified by its identifier. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Gets the developer portal&apos;s revision specified by its identifier. </summary>
+        /// <summary> Gets the developer portal's revision specified by its identifier. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        /// <summary> Creates a new developer portal&apos;s revision by running the portal&apos;s publishing. The `isCurrent` property indicates if the revision is publicly accessible. </summary>
+        /// <summary> Creates a new developer portal's revision by running the portal's publishing. The `isCurrent` property indicates if the revision is publicly accessible. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Creates a new developer portal&apos;s revision by running the portal&apos;s publishing. The `isCurrent` property indicates if the revision is publicly accessible. </summary>
+        /// <summary> Creates a new developer portal's revision by running the portal's publishing. The `isCurrent` property indicates if the revision is publicly accessible. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        /// <summary> Lists developer portal&apos;s revisions. </summary>
+        /// <summary> Lists developer portal's revisions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter">
         /// | Field       | Supported operators    | Supported functions               |
         /// |-------------|------------------------|-----------------------------------|
-        /// 
+        ///
         /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |isCurrent | eq, ne |    |
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Lists developer portal&apos;s revisions. </summary>
+        /// <summary> Lists developer portal's revisions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
@@ -563,11 +563,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter">
         /// | Field       | Supported operators    | Supported functions               |
         /// |-------------|------------------------|-----------------------------------|
-        /// 
+        ///
         /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |isCurrent | eq, ne |    |
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>

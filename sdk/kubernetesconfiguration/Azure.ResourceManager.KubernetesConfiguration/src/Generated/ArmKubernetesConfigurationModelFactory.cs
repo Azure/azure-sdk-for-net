@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="plan"> The plan information. </param>
         /// <param name="extensionType"> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </param>
         /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
-        /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is &apos;true&apos;. </param>
-        /// <param name="version"> User-specified version of the extension for this extension to &apos;pin&apos;. To use &apos;version&apos;, autoUpgradeMinorVersion must be &apos;false&apos;. </param>
+        /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </param>
+        /// <param name="version"> User-specified version of the extension for this extension to 'pin'. To use 'version', autoUpgradeMinorVersion must be 'false'. </param>
         /// <param name="scope"> Scope at which the extension is installed. </param>
         /// <param name="configurationSettings"> Configuration settings, as name-value pairs for configuring this extension. </param>
         /// <param name="configurationProtectedSettings"> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </param>

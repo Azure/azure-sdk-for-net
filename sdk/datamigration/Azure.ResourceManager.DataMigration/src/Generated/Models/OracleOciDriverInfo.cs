@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="driverSize"> The size in bytes of the driver package. </param>
         /// <param name="archiveChecksum"> The MD5 Base64 encoded checksum for the driver package. </param>
         /// <param name="oracleChecksum"> The checksum for the driver package provided by Oracle. </param>
-        /// <param name="assemblyVersion"> Version listed in the OCI assembly &apos;oci.dll&apos;. </param>
+        /// <param name="assemblyVersion"> Version listed in the OCI assembly 'oci.dll'. </param>
         /// <param name="supportedOracleVersions"> List of Oracle database versions supported by this driver. Only major minor of the version is listed. </param>
         internal OracleOciDriverInfo(string driverName, string driverSize, string archiveChecksum, string oracleChecksum, string assemblyVersion, IReadOnlyList<string> supportedOracleVersions)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string ArchiveChecksum { get; }
         /// <summary> The checksum for the driver package provided by Oracle. </summary>
         public string OracleChecksum { get; }
-        /// <summary> Version listed in the OCI assembly &apos;oci.dll&apos;. </summary>
+        /// <summary> Version listed in the OCI assembly 'oci.dll'. </summary>
         public string AssemblyVersion { get; }
         /// <summary> List of Oracle database versions supported by this driver. Only major minor of the version is listed. </summary>
         public IReadOnlyList<string> SupportedOracleVersions { get; }

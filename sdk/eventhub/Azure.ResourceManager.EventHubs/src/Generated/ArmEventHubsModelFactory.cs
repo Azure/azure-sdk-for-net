@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmEventHubsModelFactory
     {
-
         /// <summary> Initializes a new instance of AvailableCluster. </summary>
         /// <param name="location"> Location fo the Available Cluster. </param>
         /// <returns> A new <see cref="Models.AvailableCluster"/> instance for mocking. </returns>
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of sku resource. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
         /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
         /// <param name="status"> Status of the Namespace. </param>
         /// <param name="createdOn"> The time the Namespace was created. </param>
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="isAutoInflateEnabled"> Value that indicates whether AutoInflate is enabled for eventhub namespace. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="maximumThroughputUnits"> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( &apos;0&apos; if AutoInflateEnabled = true). </param>
+        /// <param name="maximumThroughputUnits"> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </param>
         /// <param name="kafkaEnabled"> Value that indicates whether Kafka is enabled for eventhub namespace. </param>
         /// <param name="zoneRedundant"> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </param>
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile&apos;s access rules. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile's access rules. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsNetworkRuleSetData"/> instance for mocking. </returns>
         public static EventHubsNetworkRuleSetData EventHubsNetworkRuleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? trustedServiceAccessEnabled = null, EventHubsNetworkRuleSetDefaultAction? defaultAction = null, IEnumerable<EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = null, IEnumerable<EventHubsNetworkRuleSetIPRules> ipRules = null, EventHubsPublicNetworkAccessFlag? publicNetworkAccess = null, AzureLocation? location = null)
@@ -294,10 +293,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </param>
+        /// <param name="provisioningState"> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </param>
         /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
-        /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
+        /// <param name="role"> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsDisasterRecoveryData"/> instance for mocking. </returns>

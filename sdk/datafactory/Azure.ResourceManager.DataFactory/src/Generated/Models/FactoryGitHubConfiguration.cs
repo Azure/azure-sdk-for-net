@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Factory&apos;s GitHub repo information. </summary>
+    /// <summary> Factory's GitHub repo information. </summary>
     public partial class FactoryGitHubConfiguration : FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of FactoryGitHubConfiguration. </summary>
@@ -36,10 +36,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="collaborationBranch"> Collaboration branch. </param>
         /// <param name="rootFolder"> Root folder. </param>
         /// <param name="lastCommitId"> Last commit id. </param>
+        /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
         /// <param name="hostName"> GitHub Enterprise host name. For example: `https://github.mydomain.com`. </param>
         /// <param name="clientId"> GitHub bring your own app client id. </param>
         /// <param name="clientSecret"> GitHub bring your own app client secret information. </param>
-        internal FactoryGitHubConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, string hostName, string clientId, GitHubClientSecret clientSecret) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
+        internal FactoryGitHubConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, string hostName, string clientId, FactoryGitHubClientSecret clientSecret) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
         {
             HostName = hostName;
             ClientId = clientId;
@@ -52,6 +53,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> GitHub bring your own app client id. </summary>
         public string ClientId { get; set; }
         /// <summary> GitHub bring your own app client secret information. </summary>
-        public GitHubClientSecret ClientSecret { get; set; }
+        public FactoryGitHubClientSecret ClientSecret { get; set; }
     }
 }

@@ -206,6 +206,7 @@ namespace Azure.ResourceManager.Kusto
             Optional<KustoClusterPublicIPType> publicIPType = default;
             Optional<string> virtualClusterGraduationProperties = default;
             Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<MigrationClusterProperties> migrationCluster = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -530,11 +531,20 @@ namespace Azure.ResourceManager.Kusto
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("migrationCluster"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            migrationCluster = MigrationClusterProperties.DeserializeMigrationClusterProperties(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new KustoClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(zones), identity, Optional.ToNullable(etag), Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, Optional.ToList(trustedExternalTenants), optimizedAutoscale.Value, Optional.ToNullable(enableDiskEncryption), Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(enableDoubleEncryption), Optional.ToNullable(publicNetworkAccess), Optional.ToList(allowedIPRangeList), Optional.ToNullable(engineType), Optional.ToList(acceptedAudiences), Optional.ToNullable(enableAutoStop), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, Optional.ToList(privateEndpointConnections));
+            return new KustoClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(zones), identity, Optional.ToNullable(etag), Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, Optional.ToList(trustedExternalTenants), optimizedAutoscale.Value, Optional.ToNullable(enableDiskEncryption), Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(enableDoubleEncryption), Optional.ToNullable(publicNetworkAccess), Optional.ToList(allowedIPRangeList), Optional.ToNullable(engineType), Optional.ToList(acceptedAudiences), Optional.ToNullable(enableAutoStop), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, Optional.ToList(privateEndpointConnections), migrationCluster.Value);
         }
     }
 }

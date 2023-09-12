@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchTaskContainerSettings
     {
         /// <summary> Initializes a new instance of BatchTaskContainerSettings. </summary>
-        /// <param name="imageName"> This is the full image reference, as would be specified to &quot;docker pull&quot;. If no tag is provided as part of the image name, the tag &quot;:latest&quot; is used as a default. </param>
+        /// <param name="imageName"> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public BatchTaskContainerSettings(string imageName)
         {
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of BatchTaskContainerSettings. </summary>
-        /// <param name="containerRunOptions"> These additional options are supplied as arguments to the &quot;docker create&quot; command, in addition to those controlled by the Batch Service. </param>
-        /// <param name="imageName"> This is the full image reference, as would be specified to &quot;docker pull&quot;. If no tag is provided as part of the image name, the tag &quot;:latest&quot; is used as a default. </param>
+        /// <param name="containerRunOptions"> These additional options are supplied as arguments to the "docker create" command, in addition to those controlled by the Batch Service. </param>
+        /// <param name="imageName"> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </param>
         /// <param name="registry"> This setting can be omitted if was already provided at pool creation. </param>
-        /// <param name="workingDirectory"> A flag to indicate where the container task working directory is. The default is &apos;taskWorkingDirectory&apos;. </param>
+        /// <param name="workingDirectory"> A flag to indicate where the container task working directory is. The default is 'taskWorkingDirectory'. </param>
         internal BatchTaskContainerSettings(string containerRunOptions, string imageName, BatchVmContainerRegistry registry, BatchContainerWorkingDirectory? workingDirectory)
         {
             ContainerRunOptions = containerRunOptions;
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.Batch.Models
             WorkingDirectory = workingDirectory;
         }
 
-        /// <summary> These additional options are supplied as arguments to the &quot;docker create&quot; command, in addition to those controlled by the Batch Service. </summary>
+        /// <summary> These additional options are supplied as arguments to the "docker create" command, in addition to those controlled by the Batch Service. </summary>
         public string ContainerRunOptions { get; set; }
-        /// <summary> This is the full image reference, as would be specified to &quot;docker pull&quot;. If no tag is provided as part of the image name, the tag &quot;:latest&quot; is used as a default. </summary>
+        /// <summary> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </summary>
         public string ImageName { get; set; }
         /// <summary> This setting can be omitted if was already provided at pool creation. </summary>
         public BatchVmContainerRegistry Registry { get; set; }
-        /// <summary> A flag to indicate where the container task working directory is. The default is &apos;taskWorkingDirectory&apos;. </summary>
+        /// <summary> A flag to indicate where the container task working directory is. The default is 'taskWorkingDirectory'. </summary>
         public BatchContainerWorkingDirectory? WorkingDirectory { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmResourcesModelFactory
     {
-
         /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="identityType"> The identity type. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </param>
+        /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <returns> A new <see cref="Models.ArmApplicationManagedIdentity"/> instance for mocking. </returns>
         public static ArmApplicationManagedIdentity ArmApplicationManagedIdentity(Guid? principalId = null, Guid? tenantId = null, ArmApplicationManagedIdentityType? identityType = null, IDictionary<string, ArmApplicationUserAssignedIdentity> userAssignedIdentities = null)
         {
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="notificationEndpoints"> The managed application notification policy. </param>
         /// <param name="lockingPolicy"> The managed application locking policy. </param>
         /// <param name="deploymentMode"> The managed application deployment policy. </param>
-        /// <param name="managementMode"> The managed application management policy that determines publisher&apos;s access to the managed resource group. </param>
+        /// <param name="managementMode"> The managed application management policy that determines publisher's access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
         /// <returns> A new <see cref="Resources.ArmApplicationDefinitionData"/> instance for mocking. </returns>
         public static ArmApplicationDefinitionData ArmApplicationDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string managedBy = null, ArmApplicationSku sku = null, ArmApplicationLockLevel lockLevel = default, string displayName = null, bool? isEnabled = null, IEnumerable<ArmApplicationAuthorization> authorizations = null, IEnumerable<ArmApplicationDefinitionArtifact> artifacts = null, string description = null, Uri packageFileUri = null, BinaryData mainTemplate = null, BinaryData createUiDefinition = null, IEnumerable<ArmApplicationNotificationEndpoint> notificationEndpoints = null, ArmApplicationPackageLockingPolicy lockingPolicy = null, ArmApplicationDeploymentMode? deploymentMode = null, ArmApplicationManagementMode? managementMode = null, IEnumerable<ArmApplicationPolicy> policies = null)
@@ -492,7 +491,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="description"> Template Spec description. </param>
         /// <param name="displayName"> Template Spec display name. </param>
         /// <param name="metadata"> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
-        /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to &apos;versions&apos;. </param>
+        /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to 'versions'. </param>
         /// <returns> A new <see cref="Resources.TemplateSpecData"/> instance for mocking. </returns>
         public static TemplateSpecData TemplateSpecData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, IDictionary<string, string> tags = null, string description = null, string displayName = null, BinaryData metadata = null, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions = null)
         {
@@ -571,14 +570,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="containerGroupName"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
-        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </param>
+        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
         /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
         /// <param name="status"> Contains the results of script execution. </param>
         /// <param name="outputs"> List of script outputs. </param>
         /// <param name="primaryScriptUri"> Uri for the script. This is the entry point for the external script. </param>
         /// <param name="supportingScriptUris"> Supporting files for the external script. </param>
         /// <param name="scriptContent"> Script body. </param>
-        /// <param name="arguments"> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </param>
+        /// <param name="arguments"> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location 'West US 2'. </param>
         /// <param name="environmentVariables"> The environment variables to pass over to the script. </param>
         /// <param name="forceUpdateTag"> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
@@ -617,14 +616,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="containerGroupName"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
-        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </param>
+        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
         /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
         /// <param name="status"> Contains the results of script execution. </param>
         /// <param name="outputs"> List of script outputs. </param>
         /// <param name="primaryScriptUri"> Uri for the script. This is the entry point for the external script. </param>
         /// <param name="supportingScriptUris"> Supporting files for the external script. </param>
         /// <param name="scriptContent"> Script body. </param>
-        /// <param name="arguments"> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </param>
+        /// <param name="arguments"> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location 'West US 2'. </param>
         /// <param name="environmentVariables"> The environment variables to pass over to the script. </param>
         /// <param name="forceUpdateTag"> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>

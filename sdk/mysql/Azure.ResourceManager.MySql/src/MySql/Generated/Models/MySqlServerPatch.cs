@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.Models
         public MySqlSslEnforcementEnum? SslEnforcement { get; set; }
         /// <summary> Enforce a minimal Tls version for the server. </summary>
         public MySqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
-        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public MySqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> The replication role of the server. </summary>
         public string ReplicationRole { get; set; }

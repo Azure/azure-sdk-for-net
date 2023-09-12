@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container. 
+        /// Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container. 
+        /// Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Gets properties of a specified container. 
+        /// Gets properties of a specified container.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Gets properties of a specified container. 
+        /// Gets properties of a specified container.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

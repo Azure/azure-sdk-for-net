@@ -33,7 +33,7 @@ namespace Azure.Developer.DevCenter.Tests
             EnvironmentsClient environmentsClient = GetEnvironmentsClient();
             string catalogItemName = null;
 
-            await foreach (BinaryData catalogItemData in environmentsClient.GetCatalogItemsAsync())
+            await foreach (BinaryData catalogItemData in environmentsClient.GetCatalogItemsAsync(null, new RequestContext()))
             {
                 JsonElement catalogItem = JsonDocument.Parse(catalogItemData.ToStream()).RootElement;
                 catalogItemName = catalogItem.GetProperty("name").ToString();
@@ -46,7 +46,7 @@ namespace Azure.Developer.DevCenter.Tests
                 environmentType = TestEnvironment.EnvironmentTypeName,
             };
 
-            Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "DevTestEnv", RequestContent.Create(content));
+            Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "me", "DevTestEnv", RequestContent.Create(content));
             BinaryData environmentData = await environmentCreateOperation.WaitForCompletionAsync();
             JsonElement environment = JsonDocument.Parse(environmentData.ToStream()).RootElement;
             Console.WriteLine($"Started provisioning for environment with status {environment.GetProperty("provisioningState")}.");
@@ -55,7 +55,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.IsTrue(environment.GetProperty("provisioningState").ToString().Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
 
             // Delete the dev box
-            Operation environmentDeleteOperation = await environmentsClient.DeleteEnvironmentAsync(WaitUntil.Started, "DevTestEnv");
+            Operation environmentDeleteOperation = await environmentsClient.DeleteEnvironmentAsync(WaitUntil.Started, "me", "DevTestEnv");
             await environmentDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed environment deletion.");
         }

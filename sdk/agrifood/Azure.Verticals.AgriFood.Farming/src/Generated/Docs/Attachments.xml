@@ -64,7 +64,7 @@ var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-pr
 
 var data = File.OpenRead("<filePath>");
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -93,7 +93,7 @@ var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-pr
 
 var data = File.OpenRead("<filePath>");
 
-Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -120,7 +120,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>", "<attachmentId>", new RequestContext());
+Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -132,7 +132,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>", "<attachmentId>", new RequestContext());
+Response response = client.Delete("<partyId>", "<attachmentId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -180,17 +180,6 @@ This sample shows how to call GetAttachmentsByPartyIdAsync with required paramet
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAttachmentsByPartyIdAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
-
 await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -215,17 +204,6 @@ await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>", new 
     <member name="GetAttachmentsByPartyId(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetAttachmentsByPartyId with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
-
-foreach (var item in client.GetAttachmentsByPartyId("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAttachmentsByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");

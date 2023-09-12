@@ -10,9 +10,16 @@ title: CdnManagementClient
 require: https://github.com/Azure/azure-rest-api-specs/blob/236c7ce93e9bcb875e1fbe1db8602a3a159ee2ae/specification/cdn/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - LogAnalytics_GetLogAnalyticsMetrics
+  - LogAnalytics_GetWafLogAnalyticsMetrics
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 operation-id-mappings:
   CdnEndpoint:
@@ -31,7 +38,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -62,7 +69,7 @@ rename-rules:
   SHA256: Sha256
   EndpointPropertiesUpdateParametersDeliveryPolicy: EndpointDeliveryPolicy
 
-no-property-type-replacement: 
+no-property-type-replacement:
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
@@ -90,7 +97,7 @@ rename-mapping:
   CacheLevel: CdnCacheLevel
   SslProtocol: DeliveryRuleSslProtocol
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
-  
+
 directive:
   - from: swagger-document
     where: $.definitions..parameters

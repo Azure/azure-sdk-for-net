@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Updates an existing PrivateLinkScope&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing PrivateLinkScope's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Updates an existing PrivateLinkScope&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing PrivateLinkScope's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>

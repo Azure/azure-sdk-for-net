@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Subnet and it&apos;s custom security rules. </summary>
+    /// <summary> Subnet and it's custom security rules. </summary>
     public partial class SubnetAssociation
     {
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>

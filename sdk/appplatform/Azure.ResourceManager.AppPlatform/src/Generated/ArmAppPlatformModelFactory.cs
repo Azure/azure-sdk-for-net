@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
         /// <param name="isPublic"> Indicates whether the App exposes public endpoint. </param>
-        /// <param name="uri"> URL of the App. </param>
+        /// <param name="uriString"> URL of the App. </param>
         /// <param name="addonConfigs"> Collection of addons. </param>
         /// <param name="provisioningState"> Provisioning state of the App. </param>
         /// <param name="fqdn"> Fully qualified dns Name. </param>
@@ -524,13 +524,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="vnetAddons"> Additional App settings in vnet injection instance. </param>
         /// <param name="ingressSettings"> App ingress settings payload. </param>
         /// <returns> A new <see cref="Models.AppPlatformAppProperties"/> instance for mocking. </returns>
-        public static AppPlatformAppProperties AppPlatformAppProperties(bool? isPublic = null, Uri uri = null, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = null, AppPlatformAppProvisioningState? provisioningState = null, string fqdn = null, bool? isHttpsOnly = null, AppTemporaryDisk temporaryDisk = null, AppPersistentDisk persistentDisk = null, IEnumerable<AppCustomPersistentDisk> customPersistentDisks = null, bool? isEndToEndTlsEnabled = null, IEnumerable<AppLoadedCertificate> loadedCertificates = null, AppVnetAddons vnetAddons = null, AppIngressSettings ingressSettings = null)
+        public static AppPlatformAppProperties AppPlatformAppProperties(bool? isPublic = null, string uriString = null, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = null, AppPlatformAppProvisioningState? provisioningState = null, string fqdn = null, bool? isHttpsOnly = null, AppTemporaryDisk temporaryDisk = null, AppPersistentDisk persistentDisk = null, IEnumerable<AppCustomPersistentDisk> customPersistentDisks = null, bool? isEndToEndTlsEnabled = null, IEnumerable<AppLoadedCertificate> loadedCertificates = null, AppVnetAddons vnetAddons = null, AppIngressSettings ingressSettings = null)
         {
             addonConfigs ??= new Dictionary<string, IDictionary<string, BinaryData>>();
             customPersistentDisks ??= new List<AppCustomPersistentDisk>();
             loadedCertificates ??= new List<AppLoadedCertificate>();
 
-            return new AppPlatformAppProperties(isPublic, uri, addonConfigs, provisioningState, fqdn, isHttpsOnly, temporaryDisk, persistentDisk, customPersistentDisks?.ToList(), isEndToEndTlsEnabled, loadedCertificates?.ToList(), vnetAddons, ingressSettings);
+            return new AppPlatformAppProperties(isPublic, uriString, addonConfigs, provisioningState, fqdn, isHttpsOnly, temporaryDisk, persistentDisk, customPersistentDisks?.ToList(), isEndToEndTlsEnabled, loadedCertificates?.ToList(), vnetAddons, ingressSettings);
         }
 
         /// <summary> Initializes a new instance of AppPersistentDisk. </summary>
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of AppPlatformSupportedRuntimeVersion. </summary>
         /// <param name="value"> The raw value which could be passed to deployment CRUD operations. </param>
-        /// <param name="platform"> The platform of this runtime version (possible values: &quot;Java&quot; or &quot;.NET&quot;). </param>
+        /// <param name="platform"> The platform of this runtime version (possible values: "Java" or ".NET"). </param>
         /// <param name="version"> The detailed version (major.minor) of the platform. </param>
         /// <returns> A new <see cref="Models.AppPlatformSupportedRuntimeVersion"/> instance for mocking. </returns>
         public static AppPlatformSupportedRuntimeVersion AppPlatformSupportedRuntimeVersion(AppPlatformSupportedRuntimeValue? value = null, AppPlatformSupportedRuntimePlatform? platform = null, string version = null)
@@ -824,13 +824,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
-        /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </param>
+        /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </param>
         /// <param name="values">
         /// Gets the value of restrictions. If the restriction type is set to
         /// location. This would be different locations where the SKU is restricted.
         /// </param>
         /// <param name="restrictionInfo"> Gets the information about the restriction where the SKU cannot be used. </param>
-        /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </param>
+        /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: 'QuotaId', 'NotAvailableForSubscription'. </param>
         /// <returns> A new <see cref="Models.AppPlatformSkuRestrictions"/> instance for mocking. </returns>
         public static AppPlatformSkuRestrictions AppPlatformSkuRestrictions(AppPlatformSkuRestrictionsType? restrictionsType = null, IEnumerable<string> values = null, AppPlatformSkuRestrictionInfo restrictionInfo = null, AppPlatformSkuRestrictionsReasonCode? reasonCode = null)
         {
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformGatewayProperties. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway. </param>
         /// <param name="isPublic"> Indicates whether the Spring Cloud Gateway exposes endpoint. </param>
-        /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when &apos;public&apos; is true. </param>
+        /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when 'public' is true. </param>
         /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="apiMetadataProperties"> API metadata property for Spring Cloud Gateway. </param>
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
         /// <param name="provisioningState"> State of the API portal. </param>
         /// <param name="isPublic"> Indicates whether the API portal exposes endpoint. </param>
-        /// <param name="uri"> URL of the API portal, exposed when &apos;public&apos; is true. </param>
+        /// <param name="uri"> URL of the API portal, exposed when 'public' is true. </param>
         /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="gatewayIds"> The array of resource Ids of gateway to integrate with API portal. </param>
         /// <param name="sourceUris"> Collection of OpenAPI source URL locations. </param>

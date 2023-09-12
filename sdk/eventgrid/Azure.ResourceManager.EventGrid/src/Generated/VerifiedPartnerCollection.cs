@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VerifiedPartnerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _verifiedPartnerRestClient.CreateListRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _verifiedPartnerRestClient.CreateListNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VerifiedPartnerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _verifiedPartnerRestClient.CreateListRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _verifiedPartnerRestClient.CreateListNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

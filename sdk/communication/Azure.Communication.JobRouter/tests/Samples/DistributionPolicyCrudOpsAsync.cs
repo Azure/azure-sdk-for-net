@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         public async Task DistributionPolicyCrud()
         {
             // create a client
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateDistributionPolicy_Async
 
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
-                    offerTtl: TimeSpan.FromMinutes(1),
+                    offerExpiresAfter: TimeSpan.FromMinutes(1),
                     mode: new LongestIdleMode())
                 {
                     Name = "My distribution policy"

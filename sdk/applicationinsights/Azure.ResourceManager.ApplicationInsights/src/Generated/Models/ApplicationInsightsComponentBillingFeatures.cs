@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentBillingFeatures. </summary>
         /// <param name="dataVolumeCap"> An Application Insights component daily data volume cap. </param>
-        /// <param name="currentBillingFeatures"> Current enabled pricing plan. When the component is in the Enterprise plan, this will list both &apos;Basic&apos; and &apos;Application Insights Enterprise&apos;. </param>
+        /// <param name="currentBillingFeatures"> Current enabled pricing plan. When the component is in the Enterprise plan, this will list both 'Basic' and 'Application Insights Enterprise'. </param>
         internal ApplicationInsightsComponentBillingFeatures(ApplicationInsightsComponentDataVolumeCap dataVolumeCap, IList<string> currentBillingFeatures)
         {
             DataVolumeCap = dataVolumeCap;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> An Application Insights component daily data volume cap. </summary>
         public ApplicationInsightsComponentDataVolumeCap DataVolumeCap { get; set; }
-        /// <summary> Current enabled pricing plan. When the component is in the Enterprise plan, this will list both &apos;Basic&apos; and &apos;Application Insights Enterprise&apos;. </summary>
+        /// <summary> Current enabled pricing plan. When the component is in the Enterprise plan, this will list both 'Basic' and 'Application Insights Enterprise'. </summary>
         public IList<string> CurrentBillingFeatures { get; }
     }
 }

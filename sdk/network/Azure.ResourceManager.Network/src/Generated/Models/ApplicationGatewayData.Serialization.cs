@@ -377,6 +377,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> forceFirewallPolicyAssociation = default;
             Optional<IList<ApplicationGatewayLoadDistributionPolicy>> loadDistributionPolicies = default;
             Optional<ApplicationGatewayGlobalConfiguration> globalConfiguration = default;
+            Optional<ApplicationGatewaySslPolicyName> defaultPredefinedSslPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -896,11 +897,20 @@ namespace Azure.ResourceManager.Network
                             globalConfiguration = ApplicationGatewayGlobalConfiguration.DeserializeApplicationGatewayGlobalConfiguration(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("defaultPredefinedSslPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultPredefinedSslPolicy = new ApplicationGatewaySslPolicyName(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(backendSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(listeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(routingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation), Optional.ToList(loadDistributionPolicies), globalConfiguration.Value);
+            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(backendSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(listeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(routingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation), Optional.ToList(loadDistributionPolicies), globalConfiguration.Value, Optional.ToNullable(defaultPredefinedSslPolicy));
         }
     }
 }

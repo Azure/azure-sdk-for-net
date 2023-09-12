@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDnsRecordManagementReady">
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and 
+        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
         ///  it is hosted on name servers Azure has programmatic access to.
         /// </param>
         /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DomainControlCenterSsoRequestInfo. </summary>
         /// <param name="uri"> URL where the single sign-on request is to be made. </param>
         /// <param name="postParameterKey"> Post parameter key. </param>
-        /// <param name="postParameterValue"> Post parameter value. Client should use &apos;application/x-www-form-urlencoded&apos; encoding for this value. </param>
+        /// <param name="postParameterValue"> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </param>
         /// <returns> A new <see cref="Models.DomainControlCenterSsoRequestInfo"/> instance for mocking. </returns>
         public static DomainControlCenterSsoRequestInfo DomainControlCenterSsoRequestInfo(Uri uri = null, string postParameterKey = null, string postParameterValue = null)
         {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isReadyForDnsRecordManagement">
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and 
+        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
         ///  it is hosted on name servers Azure has programmatic access to.
         /// </param>
         /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
         /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
-        /// <param name="multiSize"> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </param>
+        /// <param name="multiSize"> Front-end VM size, e.g. "Medium", "Large". </param>
         /// <param name="multiRoleCount"> Number of front-end instances. </param>
         /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
         /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
         /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
-        /// <param name="multiSize"> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </param>
+        /// <param name="multiSize"> Front-end VM size, e.g. "Medium", "Large". </param>
         /// <param name="multiRoleCount"> Number of front-end instances. </param>
         /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
         /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
         /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
-        /// <param name="multiSize"> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </param>
+        /// <param name="multiSize"> Front-end VM size, e.g. "Medium", "Large". </param>
         /// <param name="multiRoleCount"> Number of front-end instances. </param>
         /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
         /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="computeMode"> Shared/dedicated workers. </param>
         /// <param name="workerSize"> Size of the machines. </param>
         /// <param name="workerSizeId">
-        /// Size ID of machines: 
+        /// Size ID of machines:
         /// 0 - Small
         /// 1 - Medium
         /// 2 - Large
@@ -1023,8 +1023,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// the app is not served on those hostnames.
         /// </param>
         /// <param name="availabilityState"> Management information availability state for the app. </param>
-        /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app&apos;s hostnames. </param>
-        /// <param name="appServicePlanId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
+        /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
+        /// <param name="appServicePlanId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
         /// <param name="isReserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="tagsRequiringAuth">
         /// Gets or sets a JSON string containing a list of tags that require user authentication to be used in the push registration endpoint.
         /// Tags can consist of alphanumeric characters and the following:
-        /// &apos;_&apos;, &apos;@&apos;, &apos;#&apos;, &apos;.&apos;, &apos;:&apos;, &apos;-&apos;. 
+        /// '_', '@', '#', '.', ':', '-'.
         /// Validation should be performed at the PushRequestHandler.
         /// </param>
         /// <param name="dynamicTagsJson"> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </param>
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="accountName"> Name of the storage account. </param>
         /// <param name="shareName"> Name of the file share (container name, for Blob storage). </param>
         /// <param name="accessKey"> Access key for the storage account. </param>
-        /// <param name="mountPath"> Path to mount the storage within the site&apos;s runtime environment. </param>
+        /// <param name="mountPath"> Path to mount the storage within the site's runtime environment. </param>
         /// <param name="state"> State of the storage account. </param>
         /// <returns> A new <see cref="Models.AppServiceStorageAccessInfo"/> instance for mocking. </returns>
         public static AppServiceStorageAccessInfo AppServiceStorageAccessInfo(AppServiceStorageType? storageType = null, string accountName = null, string shareName = null, string accessKey = null, string mountPath = null, AppServiceStorageAccountState? state = null)
@@ -1356,10 +1356,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="vnetResourceId"> The Virtual Network&apos;s resource ID. </param>
+        /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
@@ -1376,10 +1376,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkProperties. </summary>
-        /// <param name="vnetResourceId"> The Virtual Network&apos;s resource ID. </param>
+        /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
@@ -1406,8 +1406,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
         /// INHERITED - Routes inherited from the real Virtual Network routes
         /// STATIC - Static route set on the app only
-        /// 
-        /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
+        ///
+        /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceVirtualNetworkRoute"/> instance for mocking. </returns>
@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultId"> Key Vault Csm resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="keyVaultSecretStatus"> Status of the Key Vault secret. </param>
-        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
+        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="kind"> Kind of resource. </param>
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultId"> Key Vault Csm resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="keyVaultSecretStatus"> Status of the Key Vault secret. </param>
-        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
+        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="kind"> Kind of resource. </param>
@@ -1605,7 +1605,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="startOn"> Start time of the period. </param>
         /// <param name="endOn"> End time of the period. </param>
         /// <param name="issueDetected"> Flag representing Issue was detected. </param>
-        /// <param name="detectorDefinition"> Detector&apos;s definition. </param>
+        /// <param name="detectorDefinition"> Detector's definition. </param>
         /// <param name="metrics"> Metrics provided by the detector. </param>
         /// <param name="abnormalTimePeriods"> List of Correlated events found by the detector. </param>
         /// <param name="data"> Additional Data that detector wants to send. </param>
@@ -1654,7 +1654,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="appLogsConfiguration">
         /// Cluster configuration which enables the log daemon to export
-        /// app logs to a destination. Currently only &quot;log-analytics&quot; is
+        /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </param>
         /// <param name="aksResourceId"></param>
@@ -1684,7 +1684,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="appLogsConfiguration">
         /// Cluster configuration which enables the log daemon to export
-        /// app logs to a destination. Currently only &quot;log-analytics&quot; is
+        /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </param>
         /// <param name="aksResourceId"></param>
@@ -1935,13 +1935,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="channels"> List of channels that this recommendation can apply. </param>
         /// <param name="categoryTags"> The list of category tags that this recommendation belongs to. </param>
         /// <param name="actionName"> Name of action recommended by this object. </param>
-        /// <param name="enabled"> True if this recommendation is still valid (i.e. &quot;actionable&quot;). False if it is invalid. </param>
-        /// <param name="states"> The list of states of this recommendation. If it&apos;s null then it should be considered &quot;Active&quot;. </param>
+        /// <param name="enabled"> True if this recommendation is still valid (i.e. "actionable"). False if it is invalid. </param>
+        /// <param name="states"> The list of states of this recommendation. If it's null then it should be considered "Active". </param>
         /// <param name="startOn"> The beginning time in UTC of a range that the recommendation refers to. </param>
         /// <param name="endOn"> The end time in UTC of a range that the recommendation refers to. </param>
         /// <param name="nextNotificationOn"> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </param>
         /// <param name="notificationExpirationOn"> Date and time in UTC when this notification expires. </param>
-        /// <param name="notifiedOn"> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn&apos;t been notified yet. </param>
+        /// <param name="notifiedOn"> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn't been notified yet. </param>
         /// <param name="score"> A metric value measured by the rule. </param>
         /// <param name="isDynamic"> True if this is associated with a dynamically added rule. </param>
         /// <param name="extensionName"> Extension name of the portal if exists. </param>
@@ -1967,7 +1967,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="message"> Localized name of the rule (Good for UI). </param>
         /// <param name="recommendationId">
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
-        /// If such an object doesn&apos;t exist, it is set to null.
+        /// If such an object doesn't exist, it is set to null.
         /// </param>
         /// <param name="description"> Localized detailed description of the rule. </param>
         /// <param name="actionName"> Name of action that is recommended by this rule in string. </param>
@@ -2272,7 +2272,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="repositoryUri"> URL for the repository of the static site. </param>
         /// <param name="branch"> The target branch in the repository. </param>
         /// <param name="customDomains"> The custom domains associated with this static site. </param>
-        /// <param name="repositoryToken"> A user&apos;s github repository token. This is used to setup the Github Actions workflow file and API secrets. </param>
+        /// <param name="repositoryToken"> A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. </param>
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections. </param>
         /// <param name="stagingEnvironmentPolicy"> State indicating whether staging environments are allowed or not allowed for a static web app. </param>
@@ -2371,7 +2371,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="repositoryUri"> URL for the repository of the static site. </param>
         /// <param name="branch"> The target branch in the repository. </param>
         /// <param name="customDomains"> The custom domains associated with this static site. </param>
-        /// <param name="repositoryToken"> A user&apos;s github repository token. This is used to setup the Github Actions workflow file and API secrets. </param>
+        /// <param name="repositoryToken"> A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. </param>
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections. </param>
         /// <param name="stagingEnvironmentPolicy"> State indicating whether staging environments are allowed or not allowed for a static web app. </param>
@@ -2582,8 +2582,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// the app is not served on those hostnames.
         /// </param>
         /// <param name="availabilityState"> Management information availability state for the app. </param>
-        /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app&apos;s hostnames. </param>
-        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
+        /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
+        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
         /// <param name="isReserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
@@ -2655,7 +2655,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="customDomainVerificationFailureInfo"> Raw failure information if DNS verification fails. </param>
         /// <param name="hasConflictOnScaleUnit"> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hasConflictAcrossSubscription"> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="conflictingAppResourceId"> Name of the conflicting app on scale unit if it&apos;s within the same subscription. </param>
+        /// <param name="conflictingAppResourceId"> Name of the conflicting app on scale unit if it's within the same subscription. </param>
         /// <param name="cNameRecords"> CName records controller can see for this hostname. </param>
         /// <param name="txtRecords"> TXT records controller can see for this hostname. </param>
         /// <param name="aRecords"> A records controller can see for this hostname. </param>
@@ -2745,8 +2745,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="siteName"> Name of an app. </param>
         /// <param name="databases"> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </param>
         /// <param name="ignoreConflictingHostNames">
-        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to 
-        /// the app&apos;s object when it is being restored, but that might fail due to conflicts during the operation.
+        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to
+        /// the app's object when it is being restored, but that might fail due to conflicts during the operation.
         /// </param>
         /// <param name="ignoreDatabases"> Ignore the databases and only restore the site content. </param>
         /// <param name="appServicePlan"> Specify app service plan that will own restored site. </param>
@@ -2900,7 +2900,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="defaultProvider">
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
-        /// action is set to &quot;RedirectToLoginPage&quot;.
+        /// action is set to "RedirectToLoginPage".
         /// </param>
         /// <param name="tokenRefreshExtensionHours">
         /// The number of hours after session token expiration that a session token can be used to
@@ -2908,7 +2908,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="clientId">
         /// The Client ID of this relying party application, known as the client_id.
-        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or 
+        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </param>
@@ -2931,13 +2931,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="validateIssuer"> Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such. </param>
         /// <param name="allowedAudiences">
-        /// Allowed audience values to consider when validating JWTs issued by 
+        /// Allowed audience values to consider when validating JWTs issued by
         /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
         /// allowed audience, regardless of this setting.
         /// </param>
         /// <param name="additionalLoginParams">
         /// Login parameters to send to the OpenID Connect authorization endpoint when
-        /// a user logs in. Each parameter must be in the form &quot;key=value&quot;.
+        /// a user logs in. Each parameter must be in the form "key=value".
         /// </param>
         /// <param name="aadClaimsAuthorization"> Gets a JSON string containing the Azure AD Acl settings. </param>
         /// <param name="googleClientId">
@@ -2951,12 +2951,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </param>
         /// <param name="googleClientSecretSettingName">
-        /// The app setting name that contains the client secret associated with 
+        /// The app setting name that contains the client secret associated with
         /// the Google web application.
         /// </param>
         /// <param name="googleOAuthScopes">
         /// The OAuth 2.0 scopes that will be requested as part of Google Sign-In authentication.
-        /// This setting is optional. If not specified, &quot;openid&quot;, &quot;profile&quot;, and &quot;email&quot; are used as default scopes.
+        /// This setting is optional. If not specified, "openid", "profile", and "email" are used as default scopes.
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </param>
         /// <param name="facebookAppId">
@@ -3021,16 +3021,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="microsoftAccountOAuthScopes">
         /// The OAuth 2.0 scopes that will be requested as part of Microsoft Account authentication.
-        /// This setting is optional. If not specified, &quot;wl.basic&quot; is used as the default scope.
+        /// This setting is optional. If not specified, "wl.basic" is used as the default scope.
         /// Microsoft Account Scopes and permissions documentation: https://msdn.microsoft.com/en-us/library/dn631845.aspx
         /// </param>
         /// <param name="isAuthFromFile">
-        /// &quot;true&quot; if the auth config settings should be read from a file,
-        /// &quot;false&quot; otherwise
+        /// "true" if the auth config settings should be read from a file,
+        /// "false" otherwise
         /// </param>
         /// <param name="authFilePath">
         /// The path of the config file containing auth settings.
-        /// If the path is relative, base will the site&apos;s root directory.
+        /// If the path is relative, base will the site's root directory.
         /// </param>
         /// <param name="configVersion">
         /// The ConfigVersion of the Authentication / Authorization feature in use for the current app.
@@ -3381,15 +3381,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
         /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
         /// <param name="consoleUri"> Link to the console to web app instance. </param>
-        /// <param name="healthCheckUri"> Link to the console to web app instance. </param>
+        /// <param name="healthCheckUrlString"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.WebSiteInstanceStatusData"/> instance for mocking. </returns>
-        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRuntimeState? state = null, Uri statusUri = null, Uri detectorUri = null, Uri consoleUri = null, Uri healthCheckUri = null, IDictionary<string, ContainerInfo> containers = null, string kind = null)
+        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRuntimeState? state = null, Uri statusUri = null, Uri detectorUri = null, Uri consoleUri = null, string healthCheckUrlString = null, IDictionary<string, ContainerInfo> containers = null, string kind = null)
         {
             containers ??= new Dictionary<string, ContainerInfo>();
 
-            return new WebSiteInstanceStatusData(id, name, resourceType, systemData, state, statusUri, detectorUri, consoleUri, healthCheckUri, containers, kind);
+            return new WebSiteInstanceStatusData(id, name, resourceType, systemData, state, statusUri, detectorUri, consoleUri, healthCheckUrlString, containers, kind);
         }
 
         /// <summary> Initializes a new instance of ProcessInfoData. </summary>
@@ -3583,7 +3583,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="subnetResourceId"> The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
+        /// <param name="subnetResourceId"> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
         /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.SwiftVirtualNetworkData"/> instance for mocking. </returns>
@@ -3751,7 +3751,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="recoverConfiguration"> If true, deleted site configuration, in addition to content, will be restored. </param>
         /// <param name="snapshotTime">
-        /// Point in time to restore the deleted app from, formatted as a DateTime string. 
+        /// Point in time to restore the deleted app from, formatted as a DateTime string.
         /// If unspecified, default value is the time that the app was deleted.
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>

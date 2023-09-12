@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/> or <paramref name="modelVersion"/> is null. </exception>
-        public PreBuiltResult(IEnumerable<InputError> errors, string modelVersion)
+        public PreBuiltResult(IEnumerable<DocumentError> errors, string modelVersion)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal PreBuiltResult(IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion)
+        internal PreBuiltResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion)
         {
             Errors = errors;
             Statistics = statistics;
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Errors by document id. </summary>
-        public IList<InputError> Errors { get; }
+        public IList<DocumentError> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public TextDocumentBatchStatistics Statistics { get; set; }
         /// <summary> This field indicates which model is used for scoring. </summary>

@@ -22,14 +22,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [SetUp]
         public async Task ClearChallengeCacheforRecord()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
                 await Initialize().ConfigureAwait(false);
-            }
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/37421")]
         public async Task PrivateEndpointConnectionCreateAndUpdate()
         {
             IgnoreTestInLiveMode();
@@ -112,20 +109,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
             //VirtualNetworkCollection networks = ResourceGroupResource.GetVirtualNetworks();
             //return await networks.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
             ResourceIdentifier subnetID;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                subnetID = SubnetResource.CreateResourceIdentifier(ResourceGroupResource.Id.SubscriptionId, ResourceGroupResource.Id.Name, vnetName, "default");
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    var vnetResource = await ResourceGroupResource.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
-                    var subnetCollection = vnetResource.Value.GetSubnets();
-                    //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
-                    subnetID = vnetResource.Value.Data.Subnets[0].Id;
-                }
-            };
+            var vnetResource = await ResourceGroupResource.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var subnetCollection = vnetResource.Value.GetSubnets();
+            subnetID = vnetResource.Value.Data.Subnets[0].Id;
             return subnetID;
         }
 

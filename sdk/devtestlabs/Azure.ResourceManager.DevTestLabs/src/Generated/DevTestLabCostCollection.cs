@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the cost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=labCostDetails)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the cost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=labCostDetails)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the cost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=labCostDetails)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the cost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=labCostDetails)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

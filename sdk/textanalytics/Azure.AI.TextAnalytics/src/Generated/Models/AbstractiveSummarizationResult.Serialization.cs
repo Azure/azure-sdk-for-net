@@ -47,18 +47,18 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            IList<InputError> errors = default;
+            IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
-            IList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents = default;
+            IList<AbstractiveSummaryDocumentResult> documents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errors"u8))
                 {
-                    List<InputError> array = new List<InputError>();
+                    List<DocumentError> array = new List<DocumentError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputError.DeserializeInputError(item));
+                        array.Add(DocumentError.DeserializeDocumentError(item));
                     }
                     errors = array;
                     continue;
@@ -79,10 +79,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("documents"u8))
                 {
-                    List<AbstractiveSummaryDocumentResultWithDetectedLanguage> array = new List<AbstractiveSummaryDocumentResultWithDetectedLanguage>();
+                    List<AbstractiveSummaryDocumentResult> array = new List<AbstractiveSummaryDocumentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummaryDocumentResultWithDetectedLanguage.DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(item));
+                        array.Add(AbstractiveSummaryDocumentResult.DeserializeAbstractiveSummaryDocumentResult(item));
                     }
                     documents = array;
                     continue;

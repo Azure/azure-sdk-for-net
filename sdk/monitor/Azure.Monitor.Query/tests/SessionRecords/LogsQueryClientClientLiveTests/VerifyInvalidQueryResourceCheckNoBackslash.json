@@ -1,9 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2023-05-19T15:39:40.4592002-07:00",
-    "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "SECONDARY_WORKSPACE_ID": "b6d63b0c-87b0-4d0d-a094-e0fda86b12a3"
-  }
-}

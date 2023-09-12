@@ -56,7 +56,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -112,7 +112,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -138,7 +138,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-            Response response = client.GetSensorMapping("<sensorMappingId>");
+            Response response = client.GetSensorMapping("<sensorMappingId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -177,7 +177,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-            Response response = await client.GetSensorMappingAsync("<sensorMappingId>");
+            Response response = await client.GetSensorMappingAsync("<sensorMappingId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -227,7 +227,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<sensorMappingId>", new RequestContext());
+            Response response = client.Delete("<sensorMappingId>");
             Console.WriteLine(response.Status);
         }
 
@@ -249,7 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<sensorMappingId>", new RequestContext());
+            Response response = await client.DeleteAsync("<sensorMappingId>");
             Console.WriteLine(response.Status);
         }
 
@@ -260,7 +260,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetSensorMappings())
+            foreach (var item in client.GetSensorMappings(new string[] { "<sensorIds>" }, new string[] { "<sensorPartnerIds>" }, new string[] { "<partyIds>" }, new string[] { "<boundaryIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -301,7 +301,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetSensorMappingsAsync())
+            await foreach (var item in client.GetSensorMappingsAsync(new string[] { "<sensorIds>" }, new string[] { "<sensorPartnerIds>" }, new string[] { "<partyIds>" }, new string[] { "<boundaryIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());

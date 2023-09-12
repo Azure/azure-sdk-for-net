@@ -5,93 +5,132 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
+internal static class ResourceExtensions
 {
-    internal static class ResourceExtensions
+    private const string AiSdkPrefixKey = "ai.sdk.prefix";
+    private const string TelemetryDistroNameKey = "telemetry.distro.name";
+    private const string DefaultServiceName = "unknown_service";
+    private const int Version = 2;
+
+    internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey = null)
     {
-        private const string s_AiSdkPrefixKey = "ai.sdk.prefix";
-        private const int Version = 2;
-
-        internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey = null)
+        if (resource == null)
         {
-            if (resource == null)
-            {
-                return null;
-            }
-
-            AzureMonitorResource azureMonitorResource = new AzureMonitorResource();
-            MetricsData? metricsData = null;
-            string? serviceName = null;
-            string? serviceNamespace = null;
-
-            if (instrumentationKey != null && resource.Attributes.Count() > 0)
-            {
-                metricsData = new MetricsData(Version);
-            }
-
-            foreach (var attribute in resource.Attributes)
-            {
-                switch (attribute.Key)
-                {
-                    case SemanticConventions.AttributeServiceName when attribute.Value is string _serviceName:
-                        serviceName = _serviceName;
-                        break;
-                    case SemanticConventions.AttributeServiceNamespace when attribute.Value is string _serviceNamespace:
-                        serviceNamespace = $"[{_serviceNamespace}]";
-                        break;
-                    case SemanticConventions.AttributeServiceInstance when attribute.Value is string _serviceInstance:
-                        azureMonitorResource.RoleInstance = _serviceInstance;
-                        break;
-                    case s_AiSdkPrefixKey when attribute.Value is string _aiSdkPrefixValue:
-                        SdkVersionUtils.SdkVersionPrefix = _aiSdkPrefixValue;
-                        continue;
-                }
-
-                if (metricsData != null && attribute.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && attribute.Value != null)
-                {
-                    // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
-                    metricsData.Properties.Add(new KeyValuePair<string, string>(attribute.Key, attribute.Value.ToString().Truncate(SchemaConstants.MetricsData_Properties_MaxValueLength) ?? "null"));
-                }
-            }
-
-            // TODO: Check if service.name as unknown_service should be sent.
-            if (serviceName != null && serviceNamespace != null)
-            {
-                azureMonitorResource.RoleName = string.Concat(serviceNamespace, "/", serviceName);
-            }
-            else
-            {
-                azureMonitorResource.RoleName = serviceName;
-            }
-
-            if (azureMonitorResource.RoleInstance == null)
-            {
-                try
-                {
-                    azureMonitorResource.RoleInstance = Dns.GetHostName();
-                }
-                catch (Exception ex)
-                {
-                    AzureMonitorExporterEventSource.Log.WriteError("ErrorInitializingRoleInstanceToHostName", ex);
-                }
-            }
-
-            if (metricsData != null)
-            {
-                azureMonitorResource.MetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!)
-                {
-                    Data = new MonitorBase
-                    {
-                        BaseType = "MetricData",
-                        BaseData = metricsData
-                    }
-                };
-            }
-
-            return azureMonitorResource;
+            return null;
         }
+
+        AzureMonitorResource azureMonitorResource = new AzureMonitorResource();
+        MetricsData? metricsData = null;
+        AksResourceProcessor? aksResourceProcessor = null;
+        string? serviceName = null;
+        string? serviceNamespace = null;
+        string? serviceInstance = null;
+        bool? hasDefaultServiceName = null;
+
+        if (instrumentationKey != null && resource.Attributes.Any())
+        {
+            metricsData = new MetricsData(Version);
+        }
+
+        foreach (var attribute in resource.Attributes)
+        {
+            switch (attribute.Key)
+            {
+                case SemanticConventions.AttributeServiceName when attribute.Value is string _serviceName:
+                    serviceName = _serviceName;
+                    if (serviceName.StartsWith(DefaultServiceName))
+                    {
+                        hasDefaultServiceName = true;
+                        break;
+                    }
+
+                    hasDefaultServiceName = false;
+                    break;
+                case SemanticConventions.AttributeServiceNamespace when attribute.Value is string _serviceNamespace:
+                    serviceNamespace = $"[{_serviceNamespace}]";
+                    break;
+                case SemanticConventions.AttributeServiceInstance when attribute.Value is string _serviceInstance:
+                    serviceInstance = _serviceInstance;
+                    break;
+                case AiSdkPrefixKey when attribute.Value is string _aiSdkPrefixValue:
+                    SdkVersionUtils.SdkVersionPrefix = _aiSdkPrefixValue;
+                    continue;
+                case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
+                    if (_aiSdkDistroValue == "Azure.Monitor.OpenTelemetry.AspNetCore")
+                    {
+                        SdkVersionUtils.IsDistro = true;
+                    }
+                    continue;
+                default:
+                    if (attribute.Key.StartsWith("k8s"))
+                    {
+                        aksResourceProcessor = aksResourceProcessor ?? new AksResourceProcessor();
+                        aksResourceProcessor.MapAttributeToProperty(attribute);
+                    }
+                    break;
+            }
+
+            if (metricsData != null && attribute.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && attribute.Value != null)
+            {
+                // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
+                metricsData.Properties.Add(new KeyValuePair<string, string>(attribute.Key, attribute.Value.ToString().Truncate(SchemaConstants.MetricsData_Properties_MaxValueLength) ?? "null"));
+            }
+        }
+
+        // TODO: Check if service.name as unknown_service should be sent.
+        // (2023-07) we need to drop the "unknown_service."
+        if (serviceName != null && serviceNamespace != null)
+        {
+            azureMonitorResource.RoleName = string.Concat(serviceNamespace, "/", serviceName);
+        }
+        else
+        {
+            azureMonitorResource.RoleName = serviceName;
+        }
+
+        try
+        {
+            azureMonitorResource.RoleInstance = serviceInstance ?? Dns.GetHostName();
+        }
+        catch (Exception ex)
+        {
+            AzureMonitorExporterEventSource.Log.ErrorInitializingRoleInstanceToHostName(ex);
+        }
+
+        if (aksResourceProcessor != null)
+        {
+            var aksRoleName = aksResourceProcessor.GetRoleName();
+            var aksRoleInstanceName = aksResourceProcessor.GetRoleInstance();
+
+            if (hasDefaultServiceName != false && aksRoleName != null)
+            {
+                azureMonitorResource.RoleName = aksRoleName;
+            }
+
+            if (serviceInstance == null && aksRoleInstanceName != null)
+            {
+                azureMonitorResource.RoleInstance = aksRoleInstanceName;
+            }
+        }
+
+        if (metricsData != null)
+        {
+            azureMonitorResource.MetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!)
+            {
+                Data = new MonitorBase
+                {
+                    BaseType = "MetricData",
+                    BaseData = metricsData
+                }
+            };
+        }
+
+        return azureMonitorResource;
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,89 +63,53 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Host);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Host.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Host);
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Port);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Port.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Port);
             }
             if (Optional.IsDefined(HttpPath))
             {
                 writer.WritePropertyName("httpPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(HttpPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(HttpPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, HttpPath);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Username);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableSsl);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableSsl.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, EnableSsl);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TrustedCertPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TrustedCertPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, TrustedCertPath);
             }
             if (Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AllowHostNameCNMismatch);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowHostNameCNMismatch.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AllowHostNameCNMismatch);
             }
             if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AllowSelfSignedServerCert);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AllowSelfSignedServerCert.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AllowSelfSignedServerCert);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -170,17 +135,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData host = default;
-            Optional<BinaryData> port = default;
-            Optional<BinaryData> httpPath = default;
+            DataFactoryElement<string> host = default;
+            Optional<DataFactoryElement<int>> port = default;
+            Optional<DataFactoryElement<string>> httpPath = default;
             HBaseAuthenticationType authenticationType = default;
-            Optional<BinaryData> username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> enableSsl = default;
-            Optional<BinaryData> trustedCertPath = default;
-            Optional<BinaryData> allowHostNameCNMismatch = default;
-            Optional<BinaryData> allowSelfSignedServerCert = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<DataFactoryElement<string>> username = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<DataFactoryElement<bool>> enableSsl = default;
+            Optional<DataFactoryElement<string>> trustedCertPath = default;
+            Optional<DataFactoryElement<bool>> allowHostNameCNMismatch = default;
+            Optional<DataFactoryElement<bool>> allowSelfSignedServerCert = default;
+            Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("host"u8))
                         {
-                            host = BinaryData.FromString(property0.Value.GetRawText());
+                            host = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("port"u8))
@@ -259,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            port = BinaryData.FromString(property0.Value.GetRawText());
+                            port = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("httpPath"u8))
@@ -268,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            httpPath = BinaryData.FromString(property0.Value.GetRawText());
+                            httpPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -282,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            username = BinaryData.FromString(property0.Value.GetRawText());
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -291,7 +256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableSsl"u8))
@@ -300,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            enableSsl = BinaryData.FromString(property0.Value.GetRawText());
+                            enableSsl = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"u8))
@@ -309,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            trustedCertPath = BinaryData.FromString(property0.Value.GetRawText());
+                            trustedCertPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("allowHostNameCNMismatch"u8))
@@ -318,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            allowHostNameCNMismatch = BinaryData.FromString(property0.Value.GetRawText());
+                            allowHostNameCNMismatch = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("allowSelfSignedServerCert"u8))
@@ -327,16 +292,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            allowSelfSignedServerCert = BinaryData.FromString(property0.Value.GetRawText());
+                            allowSelfSignedServerCert = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -345,7 +306,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HBaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, httpPath.Value, authenticationType, username.Value, password.Value, enableSsl.Value, trustedCertPath.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new HBaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, httpPath.Value, authenticationType, username.Value, password, enableSsl.Value, trustedCertPath.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
         }
     }
 }

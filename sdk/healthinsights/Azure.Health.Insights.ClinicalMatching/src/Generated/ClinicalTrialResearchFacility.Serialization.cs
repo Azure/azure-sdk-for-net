@@ -66,7 +66,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     continue;
                 }
             }
-            return new ClinicalTrialResearchFacility(name, city, state, countryOrRegion);
+            return new ClinicalTrialResearchFacility(name, city.Value, state.Value, countryOrRegion);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

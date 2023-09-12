@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             PlanIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The offer&apos;s publisher id. </summary>
+        /// <summary> The offer's publisher id. </summary>
         public string PublisherId { get; set; }
         /// <summary> Current plans list. </summary>
         public IList<string> PlanIds { get; }

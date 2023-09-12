@@ -368,6 +368,43 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanRaiseLockLostOnMockProcessor()
+        {
+            var mockProcessor = new MockProcessor();
+            bool processMessageCalled = false;
+            var mockReceiver = new Mock<ServiceBusReceiver>();
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1");
+            var processArgs = new ProcessMessageEventArgs(
+                message,
+                mockReceiver.Object,
+                CancellationToken.None);
+
+            bool lockLostEventRaised = false;
+            mockProcessor.ProcessMessageAsync += args =>
+            {
+                args.MessageLockLostAsync += (lockLostArgs) =>
+                {
+                    lockLostEventRaised = true;
+                    Assert.IsNull(lockLostArgs.Exception);
+                    return Task.CompletedTask;
+                };
+                processMessageCalled = true;
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessErrorAsync += _ => Task.CompletedTask;
+
+            await mockProcessor.OnProcessMessageAsync(processArgs);
+            Assert.IsFalse(lockLostEventRaised);
+            await processArgs.OnMessageLockLostAsync(new MessageLockLostEventArgs(message, null));
+            Assert.IsTrue(lockLostEventRaised);
+
+            Assert.IsTrue(processMessageCalled);
+        }
+
+        [Test]
         public async Task CannotStartProcessorWhenProcessorIsDisposed()
         {
             var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();

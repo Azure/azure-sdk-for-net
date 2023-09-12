@@ -3394,7 +3394,10 @@ namespace Azure.ResourceManager.AppService
         public System.Uri ConsoleUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.ContainerInfo> Containers { get { throw null; } }
         public System.Uri DetectorUri { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use `HealthCheckUriString` instead", false)]
         public System.Uri HealthCheckUri { get { throw null; } set { } }
+        public string HealthCheckUrlString { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SiteRuntimeState? State { get { throw null; } set { } }
         public System.Uri StatusUri { get { throw null; } set { } }
@@ -3612,6 +3615,9 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobResource>> GetWebSiteSlotTriggeredWebJobAsync(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobCollection GetWebSiteSlotTriggeredWebJobs() { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteSourceControlResource GetWebSiteSourceControl() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteTriggeredwebJobResource> GetWebSiteTriggeredwebJob(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteTriggeredwebJobResource>> GetWebSiteTriggeredwebJobAsync(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WebSiteTriggeredwebJobCollection GetWebSiteTriggeredwebJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteWebJobResource> GetWebSiteWebJob(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteWebJobResource>> GetWebSiteWebJobAsync(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteWebJobCollection GetWebSiteWebJobs() { throw null; }
@@ -4084,6 +4090,9 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.ResourceManager.AppService.WebSiteSlotPublicCertificateCollection GetWebSiteSlotPublicCertificates() { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadata() { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteSlotSourceControlResource GetWebSiteSlotSourceControl() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobResource> GetWebSiteSlotTriggeredWebJob(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobResource>> GetWebSiteSlotTriggeredWebJobAsync(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobCollection GetWebSiteSlotTriggeredWebJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotWebJobResource> GetWebSiteSlotWebJob(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotWebJobResource>> GetWebSiteSlotWebJobAsync(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteSlotWebJobCollection GetWebSiteSlotWebJobs() { throw null; }
@@ -4202,8 +4211,10 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.ResourceManager.AppService.TriggeredJobHistoryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName, string id) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, string id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobHistoryCollection GetWebSiteSlotTriggeredWebJobHistories() { throw null; }
     }
     public partial class WebSiteSlotTriggeredWebJobResource : Azure.ResourceManager.ArmResource
     {
@@ -4212,6 +4223,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.ResourceManager.AppService.TriggeredWebJobData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4221,6 +4233,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotTriggeredWebJobHistoryResource>> GetWebSiteSlotTriggeredWebJobHistoryAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Run(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RunTriggeredWebJobSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RunTriggeredWebJobSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WebSiteSlotWebJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WebSiteSlotWebJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WebSiteSlotWebJobResource>, System.Collections.IEnumerable
     {
@@ -4293,6 +4307,7 @@ namespace Azure.ResourceManager.AppService
         protected WebSiteTriggeredWebJobHistoryResource() { }
         public virtual Azure.ResourceManager.AppService.TriggeredJobHistoryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName, string id) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, string id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteTriggeredWebJobHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteTriggeredWebJobHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4303,6 +4318,7 @@ namespace Azure.ResourceManager.AppService
         protected WebSiteTriggeredwebJobResource() { }
         public virtual Azure.ResourceManager.AppService.TriggeredWebJobData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4311,6 +4327,8 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.ResourceManager.AppService.WebSiteTriggeredWebJobHistoryCollection GetWebSiteTriggeredWebJobHistories() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteTriggeredWebJobHistoryResource> GetWebSiteTriggeredWebJobHistory(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteTriggeredWebJobHistoryResource>> GetWebSiteTriggeredWebJobHistoryAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RunTriggeredWebJob(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RunTriggeredWebJobAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RunTriggeredWebJobSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunTriggeredWebJobSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -5151,9 +5169,15 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AppServiceTableStorageApplicationLogsConfig
     {
-        public AppServiceTableStorageApplicationLogsConfig(System.Uri sasUri) { }
+        public AppServiceTableStorageApplicationLogsConfig(string sasUriString) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
+        public AppServiceTableStorageApplicationLogsConfig(System.Uri SasUri) { }
         public Azure.ResourceManager.AppService.Models.WebAppLogLevel? Level { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
         public System.Uri SasUri { get { throw null; } set { } }
+        public string SasUriString { get { throw null; } set { } }
     }
     public partial class AppServiceTokenStore
     {
@@ -5483,7 +5507,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.WebJobData WebJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string runCommand = null, System.Uri uri = null, System.Uri extraInfoUri = null, Azure.ResourceManager.AppService.Models.WebJobType? webJobType = default(Azure.ResourceManager.AppService.Models.WebJobType?), string error = null, bool? isUsingSdk = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.WebSiteAnalysisDefinitionData WebSiteAnalysisDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.WebSiteData WebSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, string state = null, System.Collections.Generic.IEnumerable<string> hostNames = null, string repositorySiteName = null, Azure.ResourceManager.AppService.Models.AppServiceUsageState? usageState = default(Azure.ResourceManager.AppService.Models.AppServiceUsageState?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> enabledHostNames = null, Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState? availabilityState = default(Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.HostNameSslState> hostNameSslStates = null, Azure.Core.ResourceIdentifier appServicePlanId = null, bool? isReserved = default(bool?), bool? isXenon = default(bool?), bool? isHyperV = default(bool?), System.DateTimeOffset? lastModifiedTimeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.SiteConfigProperties siteConfig = null, System.Collections.Generic.IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = default(bool?), string targetSwapSlot = null, Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = default(bool?), bool? isClientCertEnabled = default(bool?), Azure.ResourceManager.AppService.Models.ClientCertMode? clientCertMode = default(Azure.ResourceManager.AppService.Models.ClientCertMode?), string clientCertExclusionPaths = null, bool? isHostNameDisabled = default(bool?), string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTimeOffset? suspendOn = default(System.DateTimeOffset?), int? maxNumberOfWorkers = default(int?), Azure.ResourceManager.AppService.Models.CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = default(bool?), string defaultHostName = null, Azure.ResourceManager.AppService.Models.SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = default(bool?), Azure.ResourceManager.AppService.Models.RedundancyMode? redundancyMode = default(Azure.ResourceManager.AppService.Models.RedundancyMode?), System.Guid? inProgressOperationId = default(System.Guid?), bool? isStorageAccountRequired = default(bool?), string keyVaultReferenceIdentity = null, Azure.Core.ResourceIdentifier virtualNetworkSubnetId = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.WebSiteInstanceStatusData WebSiteInstanceStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.SiteRuntimeState? state = default(Azure.ResourceManager.AppService.Models.SiteRuntimeState?), System.Uri statusUri = null, System.Uri detectorUri = null, System.Uri consoleUri = null, System.Uri healthCheckUri = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.ContainerInfo> containers = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.WebSiteInstanceStatusData WebSiteInstanceStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.SiteRuntimeState? state = default(Azure.ResourceManager.AppService.Models.SiteRuntimeState?), System.Uri statusUri = null, System.Uri detectorUri = null, System.Uri consoleUri = null, string healthCheckUrlString = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.ContainerInfo> containers = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.WindowsJavaContainerSettings WindowsJavaContainerSettings(string javaContainer = null, string javaContainerVersion = null, bool? isPreview = default(bool?), bool? isDeprecated = default(bool?), bool? isHidden = default(bool?), System.DateTimeOffset? endOfLifeOn = default(System.DateTimeOffset?), bool? isAutoUpdate = default(bool?), bool? isEarlyAccess = default(bool?)) { throw null; }
     }
     public enum ArtifactStorageType

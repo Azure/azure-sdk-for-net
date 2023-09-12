@@ -58,7 +58,7 @@ namespace Azure.AI.ContentSafety.Samples
                 breakByBlocklists = true,
             };
 
-            Response response = client.AnalyzeText(RequestContent.Create(data), new RequestContext());
+            Response response = client.AnalyzeText(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blocklistName").ToString());
@@ -115,7 +115,7 @@ namespace Azure.AI.ContentSafety.Samples
                 breakByBlocklists = true,
             };
 
-            Response response = await client.AnalyzeTextAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.AnalyzeTextAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blocklistName").ToString());
@@ -195,7 +195,7 @@ namespace Azure.AI.ContentSafety.Samples
     },
             };
 
-            Response response = client.AnalyzeImage(RequestContent.Create(data), new RequestContext());
+            Response response = client.AnalyzeImage(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("hateResult").GetProperty("category").ToString());
@@ -247,7 +247,7 @@ namespace Azure.AI.ContentSafety.Samples
     },
             };
 
-            Response response = await client.AnalyzeImageAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.AnalyzeImageAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("hateResult").GetProperty("category").ToString());
@@ -268,7 +268,7 @@ namespace Azure.AI.ContentSafety.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ContentSafetyClient(endpoint, credential);
 
-            var body = new AnalyzeImageOptions(new ImageData()
+            var body = new AnalyzeImageOptions(new ContentSafetyImageData()
             {
                 Content = BinaryData.FromString("<your binary data content>"),
                 BlobUrl = new Uri("http://localhost:3000"),
@@ -384,7 +384,7 @@ namespace Azure.AI.ContentSafety.Samples
                 description = "<description>",
             };
 
-            Response response = client.CreateOrUpdateTextBlocklist("<blocklistName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateTextBlocklist("<blocklistName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("blocklistName").ToString());
@@ -424,7 +424,7 @@ namespace Azure.AI.ContentSafety.Samples
                 description = "<description>",
             };
 
-            Response response = await client.CreateOrUpdateTextBlocklistAsync("<blocklistName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateTextBlocklistAsync("<blocklistName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("blocklistName").ToString());
@@ -451,7 +451,7 @@ namespace Azure.AI.ContentSafety.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ContentSafetyClient(endpoint, credential);
 
-            Response response = client.DeleteTextBlocklist("<blocklistName>", new RequestContext());
+            Response response = client.DeleteTextBlocklist("<blocklistName>");
             Console.WriteLine(response.Status);
         }
 
@@ -475,7 +475,7 @@ namespace Azure.AI.ContentSafety.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ContentSafetyClient(endpoint, credential);
 
-            Response response = await client.DeleteTextBlocklistAsync("<blocklistName>", new RequestContext());
+            Response response = await client.DeleteTextBlocklistAsync("<blocklistName>");
             Console.WriteLine(response.Status);
         }
 
@@ -520,7 +520,7 @@ namespace Azure.AI.ContentSafety.Samples
     },
             };
 
-            Response response = client.AddBlockItems("<blocklistName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.AddBlockItems("<blocklistName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("blockItemId").ToString());
@@ -569,7 +569,7 @@ namespace Azure.AI.ContentSafety.Samples
     },
             };
 
-            Response response = await client.AddBlockItemsAsync("<blocklistName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddBlockItemsAsync("<blocklistName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("blockItemId").ToString());
@@ -629,7 +629,7 @@ namespace Azure.AI.ContentSafety.Samples
     },
             };
 
-            Response response = client.RemoveBlockItems("<blocklistName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.RemoveBlockItems("<blocklistName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -667,7 +667,7 @@ namespace Azure.AI.ContentSafety.Samples
     },
             };
 
-            Response response = await client.RemoveBlockItemsAsync("<blocklistName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.RemoveBlockItemsAsync("<blocklistName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 

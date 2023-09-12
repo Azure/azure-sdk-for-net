@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="description"> The description of the bot. </param>
         /// <param name="iconUri"> The Icon Url of the bot. </param>
-        /// <param name="endpoint"> The bot&apos;s endpoint. </param>
-        /// <param name="endpointVersion"> The bot&apos;s endpoint version. </param>
+        /// <param name="endpoint"> The bot's endpoint. </param>
+        /// <param name="endpointVersion"> The bot's endpoint version. </param>
         /// <param name="allSettings"> Contains resource all settings defined as key/value pairs. </param>
         /// <param name="parameters"> Contains resource parameters defined as key/value pairs. </param>
-        /// <param name="manifestUri"> The bot&apos;s manifest url. </param>
+        /// <param name="manifestUri"> The bot's manifest url. </param>
         /// <param name="msaAppType"> Microsoft App Type for the bot. </param>
         /// <param name="msaAppId"> Microsoft App Id for the bot. </param>
         /// <param name="msaAppTenantId"> Microsoft App Tenant Id for the bot. </param>

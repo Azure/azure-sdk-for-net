@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("fileshare"u8);
                 writer.WriteStringValue(Fileshare);
             }
+            if (Optional.IsDefined(EnableSecureChannel))
+            {
+                writer.WritePropertyName("enableSecureChannel"u8);
+                writer.WriteBooleanValue(EnableSecureChannel.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -92,6 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<ResourceIdentifier> msiResourceId = default;
             Optional<string> saskey = default;
             Optional<string> fileshare = default;
+            Optional<bool> enableSecureChannel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -153,8 +159,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                     fileshare = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("enableSecureChannel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableSecureChannel = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new HDInsightStorageAccountInfo(name.Value, Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value);
+            return new HDInsightStorageAccountInfo(name.Value, Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value, Optional.ToNullable(enableSecureChannel));
         }
     }
 }

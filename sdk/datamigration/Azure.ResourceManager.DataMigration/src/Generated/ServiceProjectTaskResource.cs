@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it&apos;s running.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it's running.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it&apos;s running.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it's running.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it&apos;s currently queued or running.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it's currently queued or running.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it&apos;s currently queued or running.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it's currently queued or running.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

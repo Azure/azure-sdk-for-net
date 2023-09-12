@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public AlertSeverity? Severity { get; set; }
         /// <summary> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The list of resource id&apos;s that this scheduled query rule is scoped to. </summary>
+        /// <summary> The list of resource id's that this scheduled query rule is scoped to. </summary>
         public IList<string> Scopes { get; }
         /// <summary> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </summary>
         public TimeSpan? EvaluationFrequency { get; set; }
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public TimeSpan? MuteActionsDuration { get; set; }
         /// <summary> Actions to invoke when the alert fires. </summary>
         public ScheduledQueryRuleActions Actions { get; set; }
-        /// <summary> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer&apos;s storage. The default is false. </summary>
+        /// <summary> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer's storage. The default is false. </summary>
         public bool? IsWorkspaceAlertsStorageConfigured { get; }
-        /// <summary> The flag which indicates whether this scheduled query rule should be stored in the customer&apos;s storage. The default is false. Relevant only for rules of the kind LogAlert. </summary>
+        /// <summary> The flag which indicates whether this scheduled query rule should be stored in the customer's storage. The default is false. Relevant only for rules of the kind LogAlert. </summary>
         public bool? CheckWorkspaceAlertsStorageConfigured { get; set; }
         /// <summary> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </summary>
         public bool? SkipQueryValidation { get; set; }

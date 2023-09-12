@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
-    /// The specification of data sources. 
+    /// The specification of data sources.
     /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
     /// </summary>
     public partial class DataCollectionRuleDataSources : DataSourcesSpec

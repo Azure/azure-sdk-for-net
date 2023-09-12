@@ -52,11 +52,5 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         [CodeGenMember("TransactionsCount")]
         public long TransactionCount { get; }
-
-        /// <summary>
-        /// Gets the additional properties
-        /// </summary>
-        [CodeGenMember("AdditionalProperties")]
-        internal IDictionary<string, object> AdditionalProperties { get; }
     }
 }

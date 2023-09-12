@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Specify which proxy mode to use (&apos;IPTABLES&apos; or &apos;IPVS&apos;). </summary>
+    /// <summary> Specify which proxy mode to use ('IPTABLES' or 'IPVS'). </summary>
     public readonly partial struct ContainerServiceNetworkProfileKubeProxyMode : IEquatable<ContainerServiceNetworkProfileKubeProxyMode>
     {
         private readonly string _value;

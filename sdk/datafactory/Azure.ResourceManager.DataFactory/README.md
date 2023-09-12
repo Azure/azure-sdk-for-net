@@ -47,6 +47,77 @@ Documentation is available to help you learn how to use this package:
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
+### Examples using `DataFactoryElement`
+#### Assign `DataFactoryElement` with different literal types
+- int
+ ```C# Snippet:Readme_DataFactoryElementInt
+var policy = new PipelineActivityPolicy
+{
+    Retry = DataFactoryElement<int>.FromLiteral(1),
+};
+```
+
+- bool
+```C# Snippet:Readme_DataFactoryElementBoolean
+var service = new AmazonS3CompatibleLinkedService
+{
+    ForcePathStyle = DataFactoryElement<bool>.FromLiteral(true),
+};
+```
+
+- list
+```C# Snippet:Readme_DataFactoryElementList
+var source = new Office365Source()
+{
+    AllowedGroups = DataFactoryElement<IList<string>>.FromLiteral(new List<string> { "a", "b" }),
+};
+```
+
+- Dictionary
+```C# Snippet:Readme_DataFactoryElementDictionary
+Dictionary<string, string> DictionaryValue = new()
+{
+    { "key1", "value1" },
+    { "key2", "value2" }
+};
+var activity = new AzureMLExecutePipelineActivity("name")
+{
+    MLPipelineParameters = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue),
+};
+```
+
+- BinaryData
+```C# Snippet:Readme_DataFactoryElementBinaryData
+var varActivity = new SetVariableActivity("name")
+{
+    Value = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("a")),
+};
+```
+
+#### Assign `DataFactoryElement` from expression
+```C# Snippet:Readme_DataFactoryElementFromExpression
+var service = new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}"));
+```
+
+#### Assign `DataFactoryElement` from masked string
+```C# Snippet:Readme_DataFactoryElementFromMaskedString
+var service = new AmazonS3CompatibleLinkedService()
+{
+    ServiceUri = DataFactoryElement<string>.FromSecretString("some/secret/path"),
+};
+```
+
+#### Assign `DataFactoryElement` from KeyVault secret reference
+```C# Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
+var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+    "referenceName");
+var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "secretName");
+var service = new AmazonS3CompatibleLinkedService()
+{
+    AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference),
+};
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

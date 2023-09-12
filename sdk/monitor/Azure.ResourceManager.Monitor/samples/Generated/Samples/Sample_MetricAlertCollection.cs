@@ -910,7 +910,7 @@ WebHookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an alert rule on Subscription 
+        // Create or update an alert rule on Subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRuleOnSubscription()

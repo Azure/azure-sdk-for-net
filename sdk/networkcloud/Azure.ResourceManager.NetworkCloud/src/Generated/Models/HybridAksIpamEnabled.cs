@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </summary>
+    /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </summary>
     public readonly partial struct HybridAksIpamEnabled : IEquatable<HybridAksIpamEnabled>
     {
         private readonly string _value;

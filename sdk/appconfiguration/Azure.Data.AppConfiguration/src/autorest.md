@@ -19,7 +19,7 @@ directive:
   transform: $.format = "url"
   ```
 
-  ### Modify operation names
+### Modify operation names
 ``` yaml
 directive:
 - rename-operation:
@@ -45,7 +45,7 @@ directive:
     to: UpdateSnapshotStatus
 ```
 
-## Internalize operations
+### Internalize protocol methods
 ``` yaml
 directive:
   from: swagger-document

@@ -49,6 +49,10 @@ namespace Azure.Communication.ShortCodes.Models
         public static bool operator !=(Azure.Communication.ShortCodes.Models.BillingFrequency left, Azure.Communication.ShortCodes.Models.BillingFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class CommunicationShortCodesModelFactory
+    {
+        public static Azure.Communication.ShortCodes.Models.ShortCode ShortCode(string number = null, Azure.Communication.ShortCodes.Models.NumberType? numberType = default(Azure.Communication.ShortCodes.Models.NumberType?), string countryCode = null, System.Collections.Generic.IEnumerable<string> programBriefIds = null, System.DateTimeOffset? purchaseDate = default(System.DateTimeOffset?)) { throw null; }
+    }
     public partial class CompanyInformation
     {
         public CompanyInformation() { }
@@ -321,10 +325,6 @@ namespace Azure.Communication.ShortCodes.Models
         public double Amount { get { throw null; } set { } }
         public Azure.Communication.ShortCodes.Models.BillingFrequency BillingFrequency { get { throw null; } set { } }
         public string CurrencyCode { get { throw null; } set { } }
-    }
-    public static partial class ShortCodesNumbersModelFactory
-    {
-        public static Azure.Communication.ShortCodes.Models.ShortCode ShortCode(string number = null, Azure.Communication.ShortCodes.Models.NumberType? numberType = default(Azure.Communication.ShortCodes.Models.NumberType?), string countryCode = null, System.Collections.Generic.IEnumerable<string> programBriefIds = null, System.DateTimeOffset? purchaseDate = default(System.DateTimeOffset?)) { throw null; }
     }
     public partial class TrafficDetails
     {

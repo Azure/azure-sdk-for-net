@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s Advanced Threat Protection state.
+        /// Gets a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s Advanced Threat Protection state.
+        /// Gets a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a database&apos;s Advanced Threat Protection state.
+        /// Creates or updates a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a database&apos;s Advanced Threat Protection state.
+        /// Creates or updates a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

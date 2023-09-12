@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkProperties. </summary>
-        /// <param name="vnetResourceId"> The Virtual Network&apos;s resource ID. </param>
+        /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.AppService.Models
             IsSwift = isSwift;
         }
 
-        /// <summary> The Virtual Network&apos;s resource ID. </summary>
+        /// <summary> The Virtual Network's resource ID. </summary>
         public ResourceIdentifier VnetResourceId { get; }
         /// <summary> The client certificate thumbprint. </summary>
         public string CertThumbprintString { get; }
         /// <summary>
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </summary>
         public string CertBlob { get; }

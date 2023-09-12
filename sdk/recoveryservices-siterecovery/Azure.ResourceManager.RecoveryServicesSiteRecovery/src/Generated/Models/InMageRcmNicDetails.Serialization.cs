@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> nicId = default;
             Optional<string> isPrimaryNic = default;
             Optional<string> isSelectedForFailover = default;
-            Optional<string> sourceIPAddress = default;
-            Optional<EthernetAddressType> sourceIPAddressType = default;
-            Optional<string> sourceNetworkId = default;
+            Optional<IPAddress> sourceIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
+            Optional<ResourceIdentifier> sourceNetworkId = default;
             Optional<string> sourceSubnetName = default;
-            Optional<string> targetIPAddress = default;
-            Optional<EthernetAddressType> targetIPAddressType = default;
+            Optional<IPAddress> targetIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
             Optional<string> targetSubnetName = default;
             Optional<string> testSubnetName = default;
-            Optional<string> testIPAddress = default;
-            Optional<EthernetAddressType> testIPAddressType = default;
+            Optional<IPAddress> testIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nicId"u8))
@@ -50,7 +51,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("sourceIPAddress"u8))
                 {
-                    sourceIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceIPAddressType"u8))
@@ -59,12 +64,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    sourceIPAddressType = new EthernetAddressType(property.Value.GetString());
+                    sourceIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceNetworkId"u8))
                 {
-                    sourceNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceSubnetName"u8))
@@ -74,7 +83,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetIPAddress"u8))
                 {
-                    targetIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetIPAddressType"u8))
@@ -83,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetIPAddressType = new EthernetAddressType(property.Value.GetString());
+                    targetIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetSubnetName"u8))
@@ -98,7 +111,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("testIPAddress"u8))
                 {
-                    testIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("testIPAddressType"u8))
@@ -107,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    testIPAddressType = new EthernetAddressType(property.Value.GetString());
+                    testIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
             }

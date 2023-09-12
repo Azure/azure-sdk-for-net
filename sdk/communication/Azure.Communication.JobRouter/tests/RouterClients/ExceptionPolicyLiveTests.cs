@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         public async Task CreateExceptionPolicyTest_QueueLength_Cancel()
         {
-            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
 
             var exceptionPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyTest_QueueLength_Cancel)}");
 
@@ -90,7 +90,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         public async Task CreateExceptionPolicyTest_WaitTime()
         {
-            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
 
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateExceptionPolicyTest_WaitTime));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateExceptionPolicyTest_WaitTime));
@@ -101,7 +101,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
-                    PrioritizationRule = new StaticRule(new LabelValue(1))
+                    PrioritizationRule = new StaticRouterRule(new LabelValue(1))
                 });
             var exceptionPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyTest_WaitTime)}");
 
@@ -123,7 +123,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                         {
                             QueueId = createQueueResponse.Value.Id,
                             Priority = 1,
-                            WorkerSelectors = { new WorkerSelector("abc", LabelOperator.Equal, new LabelValue(1)) }
+                            WorkerSelectors = { new RouterWorkerSelector("abc", LabelOperator.Equal, new LabelValue(1)) }
                         }
                     }
                 )
@@ -182,7 +182,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         public async Task CreateExceptionPolicyAndRemoveProperty()
         {
-            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
 
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateExceptionPolicyAndRemoveProperty));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateExceptionPolicyAndRemoveProperty));
@@ -193,7 +193,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
-                    PrioritizationRule = new StaticRule(new LabelValue(1))
+                    PrioritizationRule = new StaticRouterRule(new LabelValue(1))
                 });
             var exceptionPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyAndRemoveProperty)}");
 
@@ -215,7 +215,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                         {
                             QueueId = createQueueResponse.Value.Id,
                             Priority = 1,
-                            WorkerSelectors = { new WorkerSelector("abc", LabelOperator.Equal, new LabelValue(1)) }
+                            WorkerSelectors = { new RouterWorkerSelector("abc", LabelOperator.Equal, new LabelValue(1)) }
                         }
                     }
                 )

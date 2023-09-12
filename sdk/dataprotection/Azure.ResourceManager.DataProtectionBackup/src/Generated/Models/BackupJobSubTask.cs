@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Details of Job&apos;s Sub Task. </summary>
+    /// <summary> Details of Job's Sub Task. </summary>
     public partial class BackupJobSubTask
     {
         /// <summary> Initializes a new instance of BackupJobSubTask. </summary>

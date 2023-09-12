@@ -18,10 +18,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// If the reoffer time is not provided, then this job will not be re-offered to the worker who declined this job unless
-        /// the worker is de-registered and re-registered.  If a reoffer time is provided, then the job will be re-matched to
-        /// eligible workers after the reoffer time.  The worker that declined the job will also be eligible for the job at that time.
+        /// If the RetryOfferAt is not provided, then this job will not be offered again to the worker who declined this job unless
+        /// the worker is de-registered and re-registered.  If a RetryOfferAt time is provided, then the job will be re-matched to
+        /// eligible workers at the retry time in UTC.  The worker that declined the job will also be eligible for the job at that time.
         /// </summary>
-        public DateTimeOffset? ReofferTimeUtc { get; set; }
+        public DateTimeOffset? RetryOfferAt { get; set; }
     }
 }

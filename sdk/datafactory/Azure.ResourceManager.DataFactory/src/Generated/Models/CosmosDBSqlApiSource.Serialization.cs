@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,38 +21,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Query);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Query.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Query);
             }
             if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PageSize);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PageSize.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PageSize);
             }
             if (Optional.IsDefined(PreferredRegions))
             {
                 writer.WritePropertyName("preferredRegions"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PreferredRegions);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PreferredRegions.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PreferredRegions);
             }
             if (Optional.IsDefined(DetectDatetime))
             {
                 writer.WritePropertyName("detectDatetime"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DetectDatetime);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DetectDatetime.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DetectDatetime);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -67,38 +52,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -118,16 +87,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> query = default;
-            Optional<BinaryData> pageSize = default;
-            Optional<BinaryData> preferredRegions = default;
-            Optional<BinaryData> detectDatetime = default;
+            Optional<DataFactoryElement<string>> query = default;
+            Optional<DataFactoryElement<int>> pageSize = default;
+            Optional<DataFactoryElement<IList<string>>> preferredRegions = default;
+            Optional<DataFactoryElement<bool>> detectDatetime = default;
             Optional<BinaryData> additionalColumns = default;
             string type = default;
-            Optional<BinaryData> sourceRetryCount = default;
-            Optional<BinaryData> sourceRetryWait = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            Optional<DataFactoryElement<int>> sourceRetryCount = default;
+            Optional<DataFactoryElement<string>> sourceRetryWait = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    query = BinaryData.FromString(property.Value.GetRawText());
+                    query = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("pageSize"u8))
@@ -147,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pageSize = BinaryData.FromString(property.Value.GetRawText());
+                    pageSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("preferredRegions"u8))
@@ -156,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    preferredRegions = BinaryData.FromString(property.Value.GetRawText());
+                    preferredRegions = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("detectDatetime"u8))
@@ -165,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    detectDatetime = BinaryData.FromString(property.Value.GetRawText());
+                    detectDatetime = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -188,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"u8))
@@ -197,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -206,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -215,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

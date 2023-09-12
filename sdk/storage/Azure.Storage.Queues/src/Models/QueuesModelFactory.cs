@@ -11,7 +11,7 @@ namespace Azure.Storage.Queues.Models
     /// <summary>
     /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    [CodeGenType("AzureQueueStorageModelFactory")]
+    [CodeGenType("StorageQueuesModelFactory")]
     public static partial class QueuesModelFactory
     {
         /// <summary>

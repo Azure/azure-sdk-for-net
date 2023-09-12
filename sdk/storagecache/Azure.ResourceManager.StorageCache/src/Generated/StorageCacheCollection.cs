@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Create or update a Cache.
+        /// Create or update a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -67,8 +68,8 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
-        /// <param name="data"> Object containing the user-selectable properties of the new Cache. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="data"> Object containing the user-selectable properties of the new cache. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Create or update a Cache.
+        /// Create or update a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -108,8 +109,8 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
-        /// <param name="data"> Object containing the user-selectable properties of the new Cache. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="data"> Object containing the user-selectable properties of the new cache. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Cache.
+        /// Returns a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Cache.
+        /// Returns a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns all Caches the user has access to under a resource group.
+        /// Returns all caches the user has access to under a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,11 +229,11 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageCacheCachesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageCacheCachesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Returns all Caches the user has access to under a resource group.
+        /// Returns all caches the user has access to under a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageCacheCachesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageCacheCachesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>

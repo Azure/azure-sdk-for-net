@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
+        /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> PurgeContentAsync(WaitUntil waitUntil, FrontDoorEndpointPurgeContent content, CancellationToken cancellationToken = default)
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
+        /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation PurgeContent(WaitUntil waitUntil, FrontDoorEndpointPurgeContent content, CancellationToken cancellationToken = default)

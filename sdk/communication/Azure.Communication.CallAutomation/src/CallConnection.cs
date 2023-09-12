@@ -19,6 +19,7 @@ namespace Azure.Communication.CallAutomation
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CallConnectionRestClient RestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
+        internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
@@ -26,11 +27,12 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
+        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient,CallDialogRestClient callDialogRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
             CallMediaRestClient = callCallMediaRestClient;
+            CallDialogRestClient = callDialogRestClient;
             _clientDiagnostics = clientDiagnostics;
             EventProcessor = eventProcessor;
         }
@@ -100,13 +102,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (forEveryone)
                 {
-                    var repeatabilityHeaders = new RepeatabilityHeaders();
-                    return await RestClient.TerminateCallAsync(
-                        CallConnectionId,
-                        repeatabilityHeaders.RepeatabilityRequestId,
-                        repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                        cancellationToken
-                        ).ConfigureAwait(false);
+                    return await RestClient.TerminateCallAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -135,13 +131,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (forEveryone)
                 {
-                    var repeatabilityHeaders = new RepeatabilityHeaders();
-                    return RestClient.TerminateCall(
-                        CallConnectionId,
-                        repeatabilityHeaders.RepeatabilityRequestId,
-                        repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                        cancellationToken
-                        );
+                    return RestClient.TerminateCall(CallConnectionId, cancellationToken);
                 }
                 else
                 {
@@ -206,15 +196,8 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = await RestClient.TransferToParticipantAsync(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken
-                    ).ConfigureAwait(false);
+                var response = await RestClient.TransferToParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = response.Value;
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -276,15 +259,8 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = RestClient.TransferToParticipant(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken
-                    );
+                var response = RestClient.TransferToParticipant(CallConnectionId, request, cancellationToken);
 
                 var result = response.Value;
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -303,18 +279,17 @@ namespace Azure.Communication.CallAutomation
             TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.Target));
 
             request.CustomContext = new CustomContextInternal(
-                options.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.SipHeaders,
-                options.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.VoipHeaders);
+                options.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.SipHeaders,
+                options.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.VoipHeaders);
 
-            if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+            request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+
+            if (options.Transferee != null)
             {
-                throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-            }
-            else
-            {
-                request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+                request.Transferee = CommunicationIdentifierSerializer.Serialize(options.Transferee);
             }
 
+            request.CallbackUri = options.CallbackUri?.AbsoluteUri;
             return request;
         }
 
@@ -346,15 +321,8 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 AddParticipantRequestInternal request = CreateAddParticipantRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = await RestClient.AddParticipantAsync(
-                    callConnectionId: CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
+                var response = await RestClient.AddParticipantAsync(callConnectionId: CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var result = new AddParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -394,15 +362,8 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 AddParticipantRequestInternal request = CreateAddParticipantRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = RestClient.AddParticipant(
-                    callConnectionId: CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken: cancellationToken
-                    );
+                var response = RestClient.AddParticipant(callConnectionId: CallConnectionId, request, cancellationToken: cancellationToken);
 
                 var result = new AddParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -430,20 +391,12 @@ namespace Azure.Communication.CallAutomation
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext
             };
 
-            if (options.InvitationTimeoutInSeconds != null &&
-                (options.InvitationTimeoutInSeconds < CallAutomationConstants.InputValidation.MinInvitationTimeoutInSeconds ||
-                options.InvitationTimeoutInSeconds > CallAutomationConstants.InputValidation.MaxInvitationTimeoutInSeconds))
-            {
-                throw new ArgumentException(CallAutomationErrorMessages.InvalidInvitationTimeoutInSeconds);
-            }
-            else
-            {
-                request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
-            }
+            request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
+            request.CallbackUri = options.CallbackUri?.AbsoluteUri;
 
             request.CustomContext = new CustomContextInternal(
-                options.ParticipantToAdd.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.SipHeaders,
-                options.ParticipantToAdd.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.VoipHeaders);
+                options.ParticipantToAdd.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.SipHeaders,
+                options.ParticipantToAdd.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.VoipHeaders);
 
             return request;
         }
@@ -588,22 +541,11 @@ namespace Azure.Communication.CallAutomation
                 Argument.AssertNotNull(options.ParticipantToRemove, nameof(options.ParticipantToRemove));
 
                 RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
-                }
 
-                var response = await RestClient.RemoveParticipantAsync(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken).ConfigureAwait(false);
+                request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+
+                request.CallbackUri = options.CallbackUri?.AbsoluteUri;
+                var response = await RestClient.RemoveParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = new RemoveParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -648,23 +590,11 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
-                }
+                options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
 
-                var response = RestClient.RemoveParticipant(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken);
+                request.CallbackUri = options.CallbackUri?.AbsoluteUri;
+                var response = RestClient.RemoveParticipant(CallConnectionId, request, cancellationToken);
 
                 var result = new RemoveParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -694,6 +624,22 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary> Initializes a new instance of CallDialog. <see cref="CallDialog"/></summary>
+        public virtual CallDialog GetCallDialog()
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCallDialog)}");
+            scope.Start();
+            try
+            {
+                return new CallDialog(CallConnectionId, CallDialogRestClient, _clientDiagnostics, EventProcessor);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary>
         /// Mute participant from the call.
         /// Only Acs Users are currently supported.
@@ -703,8 +649,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
-        /// <returns>A Response containing MuteParticipantsResponse.</returns>
-        public virtual Response<MuteParticipantsResponse> MuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        /// <returns>A Response containing MuteParticipantsResult.</returns>
+        public virtual Response<MuteParticipantsResult> MuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
         {
             var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
             {
@@ -722,8 +668,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns>A Response containing MuteParticipantsResponse. </returns>
-        public virtual Response<MuteParticipantsResponse> MuteParticipants(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        /// <returns>A Response containing MuteParticipantsResult. </returns>
+        public virtual Response<MuteParticipantsResult> MuteParticipants(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
             scope.Start();
@@ -734,23 +680,10 @@ namespace Azure.Communication.CallAutomation
 
                 MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = options.OperationContext;
-                }
+                request.OperationContext = options.OperationContext;
 
-                return RestClient.Mute(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken);
+                return RestClient.Mute(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -769,7 +702,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<UnmuteParticipantsResult> UnmuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
         {
             var options = new UnmuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
             {
@@ -788,7 +721,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipants(UnmuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<UnmuteParticipantsResult> UnmuteParticipants(UnmuteParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipants)}");
             scope.Start();
@@ -796,22 +729,10 @@ namespace Azure.Communication.CallAutomation
             {
                 UnmuteParticipantsRequestInternal request = new UnmuteParticipantsRequestInternal(
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)).ToList());
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = options.OperationContext;
-                }
 
-                return RestClient.Unmute(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken);
+                request.OperationContext = options.OperationContext;
+
+                return RestClient.Unmute(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -830,7 +751,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResult>> MuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
         {
             var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
             {
@@ -848,7 +769,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResult>> MuteParticipantsAsync(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
             scope.Start();
@@ -859,23 +780,10 @@ namespace Azure.Communication.CallAutomation
 
                 MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = options.OperationContext;
-                }
+                request.OperationContext = options.OperationContext;
 
-                return await RestClient.MuteAsync(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken).ConfigureAwait(false);
+                return await RestClient.MuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -893,7 +801,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UnmuteParticipantsResult>> UnmuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
         {
             var options = new UnmuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
             {
@@ -913,7 +821,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(UnmuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UnmuteParticipantsResult>> UnmuteParticipantsAsync(UnmuteParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipants)}");
             scope.Start();
@@ -921,22 +829,10 @@ namespace Azure.Communication.CallAutomation
             {
                 UnmuteParticipantsRequestInternal request = new UnmuteParticipantsRequestInternal(
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)).ToList());
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = options.OperationContext;
-                }
 
-                return await RestClient.UnmuteAsync(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken).ConfigureAwait(false);
+                request.OperationContext = options.OperationContext;
+
+                return await RestClient.UnmuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

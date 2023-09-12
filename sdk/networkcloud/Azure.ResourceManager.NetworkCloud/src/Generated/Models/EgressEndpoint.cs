@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class EgressEndpoint
     {
         /// <summary> Initializes a new instance of EgressEndpoint. </summary>
-        /// <param name="category"> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category &apos;default&apos;. </param>
+        /// <param name="category"> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category 'default'. </param>
         /// <param name="endpoints"> The list of endpoint dependencies. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> or <paramref name="endpoints"/> is null. </exception>
         public EgressEndpoint(string category, IEnumerable<EndpointDependency> endpoints)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of EgressEndpoint. </summary>
-        /// <param name="category"> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category &apos;default&apos;. </param>
+        /// <param name="category"> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category 'default'. </param>
         /// <param name="endpoints"> The list of endpoint dependencies. </param>
         internal EgressEndpoint(string category, IList<EndpointDependency> endpoints)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Endpoints = endpoints;
         }
 
-        /// <summary> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category &apos;default&apos;. </summary>
+        /// <summary> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category 'default'. </summary>
         public string Category { get; set; }
         /// <summary> The list of endpoint dependencies. </summary>
         public IList<EndpointDependency> Endpoints { get; }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// Lists all the Azure services available for support ticket creation. For **Technical** issues, select the Service Id that maps to the Azure service/product as displayed in the **Services** drop-down list on the Azure portal&apos;s [New support request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview) page. Always use the service and its corresponding problem classification(s) obtained programmatically for support ticket creation. This practice ensures that you always have the most recent set of service and problem classification Ids.
+        /// Lists all the Azure services available for support ticket creation. For **Technical** issues, select the Service Id that maps to the Azure service/product as displayed in the **Services** drop-down list on the Azure portal's [New support request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview) page. Always use the service and its corresponding problem classification(s) obtained programmatically for support ticket creation. This practice ensures that you always have the most recent set of service and problem classification Ids.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -145,11 +146,11 @@ namespace Azure.ResourceManager.Support
         public virtual AsyncPageable<SupportAzureServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportAzureServiceServicesRestClient.CreateListRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all the Azure services available for support ticket creation. For **Technical** issues, select the Service Id that maps to the Azure service/product as displayed in the **Services** drop-down list on the Azure portal&apos;s [New support request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview) page. Always use the service and its corresponding problem classification(s) obtained programmatically for support ticket creation. This practice ensures that you always have the most recent set of service and problem classification Ids.
+        /// Lists all the Azure services available for support ticket creation. For **Technical** issues, select the Service Id that maps to the Azure service/product as displayed in the **Services** drop-down list on the Azure portal's [New support request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview) page. Always use the service and its corresponding problem classification(s) obtained programmatically for support ticket creation. This practice ensures that you always have the most recent set of service and problem classification Ids.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Support
         public virtual Pageable<SupportAzureServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportAzureServiceServicesRestClient.CreateListRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

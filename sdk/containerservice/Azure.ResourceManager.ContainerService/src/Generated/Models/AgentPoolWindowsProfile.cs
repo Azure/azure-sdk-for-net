@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The Windows agent pool&apos;s specific profile. </summary>
+    /// <summary> The Windows agent pool's specific profile. </summary>
     internal partial class AgentPoolWindowsProfile
     {
         /// <summary> Initializes a new instance of AgentPoolWindowsProfile. </summary>

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The data source properties in raw json format, each kind of data source have it&apos;s own schema. </param>
+        /// <param name="properties"> The data source properties in raw json format, each kind of data source have it's own schema. </param>
         /// <param name="etag"> The ETag of the data source. </param>
         /// <param name="kind"> The kind of the DataSource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="unit"> The units used for the metric. </param>
         /// <param name="currentValue"> The current value of the metric. </param>
         /// <param name="limit"> The quota limit for the metric. </param>
-        /// <param name="nextResetOn"> The time that the metric&apos;s value will reset. </param>
+        /// <param name="nextResetOn"> The time that the metric's value will reset. </param>
         /// <param name="quotaPeriod"> The quota period that determines the length of time between value resets. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsUsageMetric"/> instance for mocking. </returns>
         public static OperationalInsightsUsageMetric OperationalInsightsUsageMetric(OperationalInsightsMetricName name = null, string unit = null, double? currentValue = null, double? limit = null, DateTimeOffset? nextResetOn = null, string quotaPeriod = null)
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the saved search. To override an existing saved search, use &quot;*&quot; or specify the current Etag. </param>
+        /// <param name="etag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
         /// <param name="category"> The category of the saved search. This helps the user to find a saved search faster. </param>
         /// <param name="displayName"> Saved search display name. </param>
         /// <param name="query"> The query expression for the saved search. </param>
         /// <param name="functionAlias"> The function alias if query serves as a function. </param>
-        /// <param name="functionParameters"> The optional function parameters if query serves as a function. Value should be in the following format: &apos;param-name1:type1 = default_value1, param-name2:type2 = default_value2&apos;. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </param>
+        /// <param name="functionParameters"> The optional function parameters if query serves as a function. Value should be in the following format: 'param-name1:type1 = default_value1, param-name2:type2 = default_value2'. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </param>
         /// <param name="version"> The version number of the query language. The current version is 2 and is the default. </param>
         /// <param name="tags"> The tags attached to the saved search. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/> instance for mocking. </returns>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="sku"> The sku properties. </param>
         /// <param name="clusterId"> The ID associated with the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
-        /// <param name="isDoubleEncryptionEnabled"> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is &apos;true&apos;. </param>
-        /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is &apos;true&apos; if region supports Availability Zones. </param>
-        /// <param name="billingType"> The cluster&apos;s billing type. </param>
+        /// <param name="isDoubleEncryptionEnabled"> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is 'true'. </param>
+        /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </param>
+        /// <param name="billingType"> The cluster's billing type. </param>
         /// <param name="keyVaultProperties"> The associated key properties. </param>
         /// <param name="lastModifiedOn"> The last time the cluster was updated. </param>
         /// <param name="createdOn"> The cluster creation time. </param>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="plan"> Instruct the system how to handle and charge the logs ingested to this table. </param>
         /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
         /// <param name="schema"> Table schema. </param>
-        /// <param name="provisioningState"> Table&apos;s current provisioning state. If set to &apos;updating&apos;, indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
+        /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
         /// <param name="retentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
         /// <param name="totalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
@@ -487,8 +487,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="standardColumns"> A list of table standard columns. </param>
         /// <param name="categories"> Table category. </param>
         /// <param name="labels"> Table labels. </param>
-        /// <param name="source"> Table&apos;s creator. </param>
-        /// <param name="tableType"> Table&apos;s creator. </param>
+        /// <param name="source"> Table's creator. </param>
+        /// <param name="tableType"> Table's creator. </param>
         /// <param name="tableSubType"> The subtype describes what APIs can be used to interact with the table, and what features are available against it. </param>
         /// <param name="solutions"> List of solutions the table is affiliated with. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsSchema"/> instance for mocking. </returns>

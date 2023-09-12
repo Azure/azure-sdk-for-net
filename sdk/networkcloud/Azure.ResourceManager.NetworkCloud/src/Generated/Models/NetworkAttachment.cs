@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="ipv4Address">
         /// The IPv4 address of the virtual machine.
-        /// 
+        ///
         /// This field is used only if the attached network has IPAllocationType of IPV4 or DualStack.
-        /// 
+        ///
         /// If IPAllocationMethod is:
         /// Static - this field must contain a user specified IPv4 address from within the subnet specified in the attached network.
         /// Dynamic - this field is read-only, but will be populated with an address from within the subnet specified in the attached network.
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="ipv6Address">
         /// The IPv6 address of the virtual machine.
-        /// 
+        ///
         /// This field is used only if the attached network has IPAllocationType of IPV6 or DualStack.
-        /// 
+        ///
         /// If IPAllocationMethod is:
         /// Static - this field must contain an IPv6 address range from within the range specified in the attached network.
         /// Dynamic - this field is read-only, but will be populated with an range from within the subnet specified in the attached network.
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="macAddress"> The MAC address of the interface for the virtual machine that corresponds to this network attachment. </param>
         /// <param name="networkAttachmentName">
-        /// The associated network&apos;s interface name.
+        /// The associated network's interface name.
         /// If specified, the network attachment name has a maximum length of 15 characters and must be unique to this virtual machine.
         /// If the user doesn’t specify this value, the default interface name of the network resource will be used.
         /// For a CloudServicesNetwork resource, this name will be ignored.
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public VirtualMachineIPAllocationMethod IPAllocationMethod { get; set; }
         /// <summary>
         /// The IPv4 address of the virtual machine.
-        /// 
+        ///
         /// This field is used only if the attached network has IPAllocationType of IPV4 or DualStack.
-        /// 
+        ///
         /// If IPAllocationMethod is:
         /// Static - this field must contain a user specified IPv4 address from within the subnet specified in the attached network.
         /// Dynamic - this field is read-only, but will be populated with an address from within the subnet specified in the attached network.
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string IPv4Address { get; set; }
         /// <summary>
         /// The IPv6 address of the virtual machine.
-        /// 
+        ///
         /// This field is used only if the attached network has IPAllocationType of IPV6 or DualStack.
-        /// 
+        ///
         /// If IPAllocationMethod is:
         /// Static - this field must contain an IPv6 address range from within the range specified in the attached network.
         /// Dynamic - this field is read-only, but will be populated with an range from within the subnet specified in the attached network.
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The MAC address of the interface for the virtual machine that corresponds to this network attachment. </summary>
         public string MacAddress { get; }
         /// <summary>
-        /// The associated network&apos;s interface name.
+        /// The associated network's interface name.
         /// If specified, the network attachment name has a maximum length of 15 characters and must be unique to this virtual machine.
         /// If the user doesn’t specify this value, the default interface name of the network resource will be used.
         /// For a CloudServicesNetwork resource, this name will be ignored.

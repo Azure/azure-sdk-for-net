@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of ReservationMergeProperties. </summary>
         /// <param name="mergeDestination"> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <param name="mergeSources"> Resource ids of the source reservation&apos;s merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="mergeSources"> Resource ids of the source reservation's merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         internal ReservationMergeProperties(string mergeDestination, IReadOnlyList<string> mergeSources)
         {
             MergeDestination = mergeDestination;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
         public string MergeDestination { get; }
-        /// <summary> Resource ids of the source reservation&apos;s merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
+        /// <summary> Resource ids of the source reservation's merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
         public IReadOnlyList<string> MergeSources { get; }
     }
 }

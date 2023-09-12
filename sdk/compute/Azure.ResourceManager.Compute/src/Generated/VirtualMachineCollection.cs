@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
@@ -225,15 +226,15 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
-        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
+        /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'. </param>
+        /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,15 +250,15 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
-        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
+        /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'. </param>
+        /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineResource> GetAll(string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
@@ -310,7 +311,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>

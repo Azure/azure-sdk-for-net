@@ -11,9 +11,13 @@ namespace: Azure.ResourceManager.ResourceMover
 require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/resourcemover/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 rename-mapping:
   AffectedMoveResource.id: -|arm-id
@@ -112,7 +116,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'sourceId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

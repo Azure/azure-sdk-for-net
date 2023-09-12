@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryImportSource. </summary>
         /// <param name="sourceImage">
         /// Repository name of the source image.
-        /// Specify an image by repository (&apos;hello-world&apos;). This will use the &apos;latest&apos; tag.
-        /// Specify an image by tag (&apos;hello-world:latest&apos;).
-        /// Specify an image by sha256-based manifest digest (&apos;hello-world@sha256:abc123&apos;).
+        /// Specify an image by repository ('hello-world'). This will use the 'latest' tag.
+        /// Specify an image by tag ('hello-world:latest').
+        /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceImage"/> is null. </exception>
         public ContainerRegistryImportSource(string sourceImage)
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The resource identifier of the source Azure Container Registry. </summary>
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> The address of the source registry (e.g. &apos;mcr.microsoft.com&apos;). </summary>
+        /// <summary> The address of the source registry (e.g. 'mcr.microsoft.com'). </summary>
         public string RegistryAddress { get; set; }
         /// <summary> Credentials used when importing from a registry uri. </summary>
         public ContainerRegistryImportSourceCredentials Credentials { get; set; }
         /// <summary>
         /// Repository name of the source image.
-        /// Specify an image by repository (&apos;hello-world&apos;). This will use the &apos;latest&apos; tag.
-        /// Specify an image by tag (&apos;hello-world:latest&apos;).
-        /// Specify an image by sha256-based manifest digest (&apos;hello-world@sha256:abc123&apos;).
+        /// Specify an image by repository ('hello-world'). This will use the 'latest' tag.
+        /// Specify an image by tag ('hello-world:latest').
+        /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
         /// </summary>
         public string SourceImage { get; }
     }

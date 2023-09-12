@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Checks if the peering service provider is present within 1000 miles of customer&apos;s location
+        /// Checks if the peering service provider is present within 1000 miles of customer's location
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Checks if the peering service provider is present within 1000 miles of customer&apos;s location
+        /// Checks if the peering service provider is present within 1000 miles of customer's location
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

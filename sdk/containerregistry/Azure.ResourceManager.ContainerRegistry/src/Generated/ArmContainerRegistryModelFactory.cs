@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the replication at the time the operation was called. </param>
         /// <param name="status"> The status of the replication at the time the operation was called. </param>
-        /// <param name="isRegionEndpointEnabled"> Specifies whether the replication&apos;s regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </param>
+        /// <param name="isRegionEndpointEnabled"> Specifies whether the replication's regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </param>
         /// <param name="zoneRedundancy"> Whether or not zone redundancy is enabled for this container registry replication. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryReplicationData"/> instance for mocking. </returns>
         public static ContainerRegistryReplicationData ContainerRegistryReplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerRegistryProvisioningState? provisioningState = null, ContainerRegistryResourceStatus status = null, bool? isRegionEndpointEnabled = null, ContainerRegistryZoneRedundancy? zoneRedundancy = null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryTokenPassword. </summary>
         /// <param name="createdOn"> The creation datetime of the password. </param>
         /// <param name="expireOn"> The expiry datetime of the password. </param>
-        /// <param name="name"> The password name &quot;password1&quot; or &quot;password2&quot;. </param>
+        /// <param name="name"> The password name "password1" or "password2". </param>
         /// <param name="value"> The password value. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTokenPassword"/> instance for mocking. </returns>
         public static ContainerRegistryTokenPassword ContainerRegistryTokenPassword(DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, ContainerRegistryTokenPasswordName? name = null, string value = null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="status"> The status of the webhook at the time the operation was called. </param>
-        /// <param name="scope"> The scope of repositories where the event can be triggered. For example, &apos;foo:*&apos; means events for all tags under repository &apos;foo&apos;. &apos;foo:bar&apos; means events for &apos;foo:bar&apos; only. &apos;foo&apos; is equivalent to &apos;foo:latest&apos;. Empty means all events. </param>
+        /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
         /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
         /// <param name="provisioningState"> The provisioning state of the webhook at the time the operation was called. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryWebhookData"/> instance for mocking. </returns>

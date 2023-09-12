@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="family"> SKU family. </param>
         /// <param name="size"> SKU size. </param>
-        /// <param name="tier"> The tier of the SKU, such as &quot;Basic&quot;, &quot;General Purpose&quot;, or &quot;Business Critical&quot;. </param>
+        /// <param name="tier"> The tier of the SKU, such as "Basic", "General Purpose", or "Business Critical". </param>
         internal AvailableServiceSkuSku(string name, string family, string size, string tier)
         {
             Name = name;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string Family { get; }
         /// <summary> SKU size. </summary>
         public string Size { get; }
-        /// <summary> The tier of the SKU, such as &quot;Basic&quot;, &quot;General Purpose&quot;, or &quot;Business Critical&quot;. </summary>
+        /// <summary> The tier of the SKU, such as "Basic", "General Purpose", or "Business Critical". </summary>
         public string Tier { get; }
     }
 }

@@ -7,6 +7,7 @@ To begin, please ensure that you're familiar with the items discussed in the [Ge
 ## Table of contents
 
 - [Choosing the number of processors for the consumer group](#choosing-the-number-of-processors-for-the-consumer-group)
+- [Configuring the Azure Storage account](#configuring-the-azure-storage-account)
 - [Influencing load balancing behavior](#influencing-load-balancing-behavior)
     - [Load balancing strategy](#load-balancing-strategy)
     - [Load balancing intervals](#load-balancing-intervals)
@@ -26,6 +27,10 @@ The `EventProcessorClient` will coordinate with other instances using the same c
 When a processor owns too many partitions, it will often experience contention in the thread pool, potentially leading to starvation. During this time, activities will stall causing delays in `EventProcessorClient` operations. Because there is no fairness guarantee in scheduling, some partitions may appear to stop processing or load balancing may not be able to update ownership, causing partitions to "bounce" between owners.
 
 Because of this, it is important to carefully consider how many `EventProcessorClient` instances are needed in the consumer group for your application.  Generally, it is recommended each processor own no more than 3 partitions for every 1 CPU core of the host. Since the ratio will vary for each application, it is often helpful to start with using 1.5 partitions for each CPU core and test increasing the number of owned partitions gradually to measure what works best for your application.
+
+## Configuring the Azure Storage account
+
+As part of its normal operation, an `EventProcessorClient` needs to enumerate the blobs in its container on a recurring basis.  In order to guarantee that this performs well and doesn't interfere with the processor's operation, it is strongly recommended that you disable blob versioning and soft delete on the Azure Storage account used by the `EventProcessorClient`.  It is also recommended that you use a unique blob container for each Event Hub and consumer group; this container should not contain other blobs nor be shared with processors working in a different context.
 
 ## Influencing load balancing behavior
 

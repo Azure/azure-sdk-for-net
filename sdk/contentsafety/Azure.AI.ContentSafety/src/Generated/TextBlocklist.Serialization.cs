@@ -34,7 +34,7 @@ namespace Azure.AI.ContentSafety
                     continue;
                 }
             }
-            return new TextBlocklist(blocklistName, description);
+            return new TextBlocklist(blocklistName, description.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

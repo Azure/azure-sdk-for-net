@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> Permission information for the metadata call, includes apps/workspaces/resource the user didn&apos;t have access to. </summary>
+    /// <summary> Permission information for the metadata call, includes apps/workspaces/resource the user didn't have access to. </summary>
     internal partial class MetadataPermissions
     {
         /// <summary> Initializes a new instance of MetadataPermissions. </summary>

@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningBatchEndpointProperties. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningEndpointProperties. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
@@ -805,15 +805,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="build"> Configuration settings for Docker build context. </param>
         /// <param name="condaFile">
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
-        /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
+        /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
         /// </param>
         /// <param name="environmentType">
         /// Environment type is either user managed or curated by the Azure ML service
-        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
+        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments" /&gt;
         /// </param>
         /// <param name="image">
         /// Name of the image that will be used for the environment.
-        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
+        /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </param>
         /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
         /// <param name="osType"> The OS type of the environment. </param>
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
-        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningOnlineEndpointProperties. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// optional
         /// </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
-        /// <param name="publicNetworkAccess"> Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled. </param>
+        /// <param name="publicNetworkAccess"> Set to "Enabled" for endpoints that should allow public access when Private Link is enabled. </param>
         /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
         /// <returns> A new <see cref="Models.MachineLearningOnlineEndpointProperties"/> instance for mocking. </returns>
         public static MachineLearningOnlineEndpointProperties MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode = default, string description = null, MachineLearningEndpointAuthKeys keys = null, IDictionary<string, string> properties = null, Uri scoringUri = null, Uri swaggerUri = null, string compute = null, MachineLearningEndpointProvisioningState? provisioningState = null, MachineLearningPublicNetworkAccessType? publicNetworkAccess = null, IDictionary<string, int> traffic = null)
@@ -1287,7 +1287,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sshPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </param>
         /// <param name="adminUserName"> Describes the admin user name. </param>
         /// <param name="sshPort"> Describes the port for connecting through SSH. </param>
-        /// <param name="adminPublicKey"> Specifies the SSH rsa public key file as a string. Use &quot;ssh-keygen -t rsa -b 2048&quot; to generate your SSH key pairs. </param>
+        /// <param name="adminPublicKey"> Specifies the SSH rsa public key file as a string. Use "ssh-keygen -t rsa -b 2048" to generate your SSH key pairs. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceSshSettings"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceSshSettings MachineLearningComputeInstanceSshSettings(MachineLearningSshPublicAccess? sshPublicAccess = null, string adminUserName = null, int? sshPort = null, string adminPublicKey = null)
         {
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceApplication. </summary>
         /// <param name="displayName"> Name of the ComputeInstance application. </param>
-        /// <param name="endpointUri"> Application&apos; endpoint URI. </param>
+        /// <param name="endpointUri"> Application' endpoint URI. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceApplication"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceApplication MachineLearningComputeInstanceApplication(string displayName = null, Uri endpointUri = null)
         {
@@ -1314,7 +1314,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceCreatedBy. </summary>
         /// <param name="userName"> Name of the user. </param>
-        /// <param name="userOrgId"> Uniquely identifies user&apos; Azure Active Directory organization. </param>
+        /// <param name="userOrgId"> Uniquely identifies user' Azure Active Directory organization. </param>
         /// <param name="userId"> Uniquely identifies the user within his/her organization. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceCreatedBy"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceCreatedBy MachineLearningComputeInstanceCreatedBy(string userName = null, string userOrgId = null, string userId = null)
@@ -1574,7 +1574,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
-        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
@@ -1629,7 +1629,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="containerName"> Storage account container name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureBlobDatastore"/> instance for mocking. </returns>
         public static MachineLearningAzureBlobDatastore MachineLearningAzureBlobDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, bool? isDefault = null, string accountName = null, string containerName = null, string endpoint = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
         {
@@ -1649,7 +1649,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen1Datastore"/> instance for mocking. </returns>
         public static MachineLearningAzureDataLakeGen1Datastore MachineLearningAzureDataLakeGen1Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, bool? isDefault = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string storeName = null)
@@ -1674,7 +1674,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen2Datastore"/> instance for mocking. </returns>
         public static MachineLearningAzureDataLakeGen2Datastore MachineLearningAzureDataLakeGen2Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, bool? isDefault = null, string accountName = null, string endpoint = null, string filesystem = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
         {
@@ -1698,7 +1698,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="fileShareName"> [Required] The name of the Azure file share that the datastore points to. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureFileDatastore"/> instance for mocking. </returns>
         public static MachineLearningAzureFileDatastore MachineLearningAzureFileDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, bool? isDefault = null, string accountName = null, string endpoint = null, string fileShareName = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
         {
@@ -1715,7 +1715,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
-        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
@@ -1729,7 +1729,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="status"> Status of the job. </param>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
-        /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="distribution">
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
         /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -1835,7 +1835,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
-        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
@@ -1881,7 +1881,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
-        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
@@ -1959,7 +1959,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="primaryMetric">
         /// Primary metric for Text-NER task.
-        /// Only &apos;Accuracy&apos; is supported for Text-NER, so user need not set this explicitly.
+        /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </param>
         /// <param name="featurizationDatasetLanguage"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>

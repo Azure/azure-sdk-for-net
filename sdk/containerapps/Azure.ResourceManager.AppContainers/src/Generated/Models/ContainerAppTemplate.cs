@@ -23,25 +23,32 @@ namespace Azure.ResourceManager.AppContainers.Models
             InitContainers = new ChangeTrackingList<ContainerAppInitContainer>();
             Containers = new ChangeTrackingList<ContainerAppContainer>();
             Volumes = new ChangeTrackingList<ContainerAppVolume>();
+            ServiceBinds = new ChangeTrackingList<ContainerAppServiceBind>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppTemplate. </summary>
         /// <param name="revisionSuffix"> User friendly suffix that is appended to the revision name. </param>
+        /// <param name="terminationGracePeriodSeconds"> Optional duration in seconds the Container App Instance needs to terminate gracefully. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). If this value is nil, the default grace period will be used instead. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds. </param>
         /// <param name="initContainers"> List of specialized containers that run before app containers. </param>
         /// <param name="containers"> List of container definitions for the Container App. </param>
         /// <param name="scale"> Scaling properties for the Container App. </param>
         /// <param name="volumes"> List of volume definitions for the Container App. </param>
-        internal ContainerAppTemplate(string revisionSuffix, IList<ContainerAppInitContainer> initContainers, IList<ContainerAppContainer> containers, ContainerAppScale scale, IList<ContainerAppVolume> volumes)
+        /// <param name="serviceBinds"> List of container app services bound to the app. </param>
+        internal ContainerAppTemplate(string revisionSuffix, long? terminationGracePeriodSeconds, IList<ContainerAppInitContainer> initContainers, IList<ContainerAppContainer> containers, ContainerAppScale scale, IList<ContainerAppVolume> volumes, IList<ContainerAppServiceBind> serviceBinds)
         {
             RevisionSuffix = revisionSuffix;
+            TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             InitContainers = initContainers;
             Containers = containers;
             Scale = scale;
             Volumes = volumes;
+            ServiceBinds = serviceBinds;
         }
 
         /// <summary> User friendly suffix that is appended to the revision name. </summary>
         public string RevisionSuffix { get; set; }
+        /// <summary> Optional duration in seconds the Container App Instance needs to terminate gracefully. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). If this value is nil, the default grace period will be used instead. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds. </summary>
+        public long? TerminationGracePeriodSeconds { get; set; }
         /// <summary> List of specialized containers that run before app containers. </summary>
         public IList<ContainerAppInitContainer> InitContainers { get; }
         /// <summary> List of container definitions for the Container App. </summary>
@@ -50,5 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public ContainerAppScale Scale { get; set; }
         /// <summary> List of volume definitions for the Container App. </summary>
         public IList<ContainerAppVolume> Volumes { get; }
+        /// <summary> List of container app services bound to the app. </summary>
+        public IList<ContainerAppServiceBind> ServiceBinds { get; }
     }
 }

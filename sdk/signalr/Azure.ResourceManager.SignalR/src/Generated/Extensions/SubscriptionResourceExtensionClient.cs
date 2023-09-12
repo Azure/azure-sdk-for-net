@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SignalRRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SignalRRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), SignalRClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSignalRs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), SignalRClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSignalRs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SignalRRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SignalRRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), SignalRClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSignalRs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRResource(Client, SignalRData.DeserializeSignalRData(e)), SignalRClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSignalRs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,14 +169,14 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the location like &quot;eastus&quot;. </param>
+        /// <param name="location"> the location like "eastus". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SignalRUsage.DeserializeSignalRUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SignalRUsage.DeserializeSignalRUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,14 +192,14 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the location like &quot;eastus&quot;. </param>
+        /// <param name="location"> the location like "eastus". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SignalRUsage.DeserializeSignalRUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SignalRUsage.DeserializeSignalRUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public long InstanceCount { get; set; }
         /// <summary> Gets or sets the disk configuration. </summary>
         internal DiskConfiguration DiskConfiguration { get; set; }
-        /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: [&apos;hana/data&apos;, &apos;hana/log&apos;, hana/shared&apos;, &apos;usr/sap&apos;, &apos;os&apos;], Optional volume : [&apos;backup&apos;]. </summary>
+        /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </summary>
         public IDictionary<string, DiskVolumeConfiguration> DiskVolumeConfigurations
         {
             get

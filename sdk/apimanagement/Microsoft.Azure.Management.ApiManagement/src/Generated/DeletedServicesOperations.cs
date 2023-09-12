@@ -81,9 +81,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -279,9 +293,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (location == null)
             {
@@ -445,10 +473,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DeletedServiceContract>> PurgeWithHttpMessagesAsync(string serviceName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeletedServiceContract,DeletedServicesPurgeHeaders>> PurgeWithHttpMessagesAsync(string serviceName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<DeletedServiceContract> _response = await BeginPurgeWithHttpMessagesAsync(serviceName, location, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DeletedServiceContract,DeletedServicesPurgeHeaders> _response = await BeginPurgeWithHttpMessagesAsync(serviceName, location, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -482,7 +510,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DeletedServiceContract>> BeginPurgeWithHttpMessagesAsync(string serviceName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeletedServiceContract,DeletedServicesPurgeHeaders>> BeginPurgeWithHttpMessagesAsync(string serviceName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (serviceName == null)
             {
@@ -507,9 +535,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (location == null)
             {
@@ -626,7 +668,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<DeletedServiceContract>();
+            var _result = new AzureOperationResponse<DeletedServiceContract,DeletedServicesPurgeHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -650,6 +692,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<DeletedServicesPurgeHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

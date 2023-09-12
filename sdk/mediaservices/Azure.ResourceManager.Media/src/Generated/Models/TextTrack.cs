@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="fileName"> The file name to the source file. This file is located in the storage container of the asset. </param>
         /// <param name="displayName"> The display name of the text track on a video player. In HLS, this maps to the NAME attribute of EXT-X-MEDIA. </param>
         /// <param name="languageCode"> The RFC5646 language code for the text track. </param>
-        /// <param name="playerVisibility"> When PlayerVisibility is set to &quot;Visible&quot;, the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to &quot;Hidden&quot;, the text will not be available to the client. The default value is &quot;Visible&quot;. </param>
+        /// <param name="playerVisibility"> When PlayerVisibility is set to "Visible", the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to "Hidden", the text will not be available to the client. The default value is "Visible". </param>
         /// <param name="hlsSettings"> The HLS specific setting for the text track. </param>
         internal TextTrack(string odataType, string fileName, string displayName, string languageCode, PlayerVisibility? playerVisibility, HlsSettings hlsSettings) : base(odataType)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
         public string DisplayName { get; set; }
         /// <summary> The RFC5646 language code for the text track. </summary>
         public string LanguageCode { get; }
-        /// <summary> When PlayerVisibility is set to &quot;Visible&quot;, the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to &quot;Hidden&quot;, the text will not be available to the client. The default value is &quot;Visible&quot;. </summary>
+        /// <summary> When PlayerVisibility is set to "Visible", the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to "Hidden", the text will not be available to the client. The default value is "Visible". </summary>
         public PlayerVisibility? PlayerVisibility { get; set; }
         /// <summary> The HLS specific setting for the text track. </summary>
         public HlsSettings HlsSettings { get; set; }

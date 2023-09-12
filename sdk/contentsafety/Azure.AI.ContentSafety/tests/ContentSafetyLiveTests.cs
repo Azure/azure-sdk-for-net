@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -60,7 +61,7 @@ namespace Azure.AI.ContentSafety.Tests
         {
             var client = CreateContentSafetyClient();
 
-            var image = new ImageData()
+            var image = new ContentSafetyImageData()
             {
                 Content = BinaryData.FromBytes(File.ReadAllBytes(TestData.TestImageLocation))
             };
@@ -68,7 +69,30 @@ namespace Azure.AI.ContentSafety.Tests
             var response = await client.AnalyzeImageAsync(request);
 
             Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value.ViolenceResult);
             Assert.Greater(response.Value.ViolenceResult.Severity, 0);
+            Assert.IsNotNull(response.Value.HateResult);
+            Assert.IsNotNull(response.Value.SexualResult);
+            Assert.IsNotNull(response.Value.SelfHarmResult);
+        }
+
+        [RecordedTest]
+        public async Task TestCreateOrUpdateBlocklist()
+        {
+            var client = CreateContentSafetyClient();
+
+            var blocklistName = "TestBlocklist";
+            var blocklistDescription = "Test blocklist management";
+
+            var data = new
+            {
+                description = blocklistDescription,
+            };
+
+            Response response = await client.CreateOrUpdateTextBlocklistAsync(blocklistName, RequestContent.Create(data));
+
+            Assert.IsNotNull(response);
+            Assert.GreaterOrEqual(response.Status, 200);
         }
     }
 }

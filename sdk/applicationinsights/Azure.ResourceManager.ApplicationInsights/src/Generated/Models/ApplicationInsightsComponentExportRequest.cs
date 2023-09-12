@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         {
         }
 
-        /// <summary> The document types to be exported, as comma separated values. Allowed values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;. </summary>
+        /// <summary> The document types to be exported, as comma separated values. Allowed values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </summary>
         public string RecordTypes { get; set; }
-        /// <summary> The Continuous Export destination type. This has to be &apos;Blob&apos;. </summary>
+        /// <summary> The Continuous Export destination type. This has to be 'Blob'. </summary>
         public string DestinationType { get; set; }
         /// <summary> The SAS URL for the destination storage container. It must grant write permission. </summary>
         public string DestinationAddress { get; set; }
-        /// <summary> Set to &apos;true&apos; to create a Continuous Export configuration as enabled, otherwise set it to &apos;false&apos;. </summary>
+        /// <summary> Set to 'true' to create a Continuous Export configuration as enabled, otherwise set it to 'false'. </summary>
         public string IsEnabled { get; set; }
         /// <summary> Deprecated. </summary>
         public string NotificationQueueEnabled { get; set; }

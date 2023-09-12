@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="administrators"> Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier. </param>
         /// <param name="kdcIP"> kdc server IP addresses for the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
         /// <param name="adName"> Name of the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
-        /// <param name="serverRootCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service&apos;s self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </param>
+        /// <param name="serverRootCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </param>
         /// <param name="isAesEncryptionEnabled"> If enabled, AES encryption will be enabled for SMB communication. </param>
         /// <param name="isLdapSigningEnabled"> Specifies whether or not the LDAP traffic needs to be signed. </param>
         /// <param name="securityOperators"> Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public IPAddress KdcIP { get; set; }
         /// <summary> Name of the active directory machine. This optional parameter is used only while creating kerberos volume. </summary>
         public string AdName { get; set; }
-        /// <summary> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service&apos;s self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </summary>
+        /// <summary> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </summary>
         public string ServerRootCACertificate { get; set; }
         /// <summary> If enabled, AES encryption will be enabled for SMB communication. </summary>
         public bool? IsAesEncryptionEnabled { get; set; }

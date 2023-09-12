@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> LoadBalancerSku - The load balancer sku for the provisioned cluster. Possible values: &apos;unstacked-haproxy&apos;, &apos;stacked-kube-vip&apos;, &apos;stacked-metallb&apos;, &apos;unmanaged&apos;. The default is &apos;unmanaged&apos;. </summary>
+    /// <summary> LoadBalancerSku - The load balancer sku for the provisioned cluster. Possible values: 'unstacked-haproxy', 'stacked-kube-vip', 'stacked-metallb', 'unmanaged'. The default is 'unmanaged'. </summary>
     public readonly partial struct LoadBalancerSku : IEquatable<LoadBalancerSku>
     {
         private readonly string _value;

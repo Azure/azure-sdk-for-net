@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection.
+        /// Approve or reject a private endpoint connection under disk access resource, this can't be used to create a new private endpoint connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection.
+        /// Approve or reject a private endpoint connection under disk access resource, this can't be used to create a new private endpoint connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComputePrivateEndpointConnectionResource(Client, ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(e)), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, "ComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComputePrivateEndpointConnectionResource(Client, ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(e)), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, "ComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComputePrivateEndpointConnectionResource(Client, ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(e)), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, "ComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComputePrivateEndpointConnectionResource(Client, ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(e)), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, "ComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

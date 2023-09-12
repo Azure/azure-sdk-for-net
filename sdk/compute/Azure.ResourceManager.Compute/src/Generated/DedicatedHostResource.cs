@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated host. 'UserData' is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DedicatedHostResource>> GetAsync(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated host. 'UserData' is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DedicatedHostResource> Get(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -384,7 +385,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<string> GetAvailableSizesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHostRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -405,7 +406,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<string> GetAvailableSizes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHostRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _dedicatedHostClientDiagnostics, Pipeline, "DedicatedHostResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>

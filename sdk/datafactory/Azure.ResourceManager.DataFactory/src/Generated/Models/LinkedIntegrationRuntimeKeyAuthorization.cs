@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>
         /// <param name="key"> The key used for authorization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public LinkedIntegrationRuntimeKeyAuthorization(FactorySecretString key)
+        public LinkedIntegrationRuntimeKeyAuthorization(DataFactorySecretString key)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -27,13 +28,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="key"> The key used for authorization. </param>
-        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, FactorySecretString key) : base(authorizationType)
+        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, DataFactorySecretString key) : base(authorizationType)
         {
             Key = key;
             AuthorizationType = authorizationType ?? "Key";
         }
 
         /// <summary> The key used for authorization. </summary>
-        public FactorySecretString Key { get; set; }
+        public DataFactorySecretString Key { get; set; }
     }
 }

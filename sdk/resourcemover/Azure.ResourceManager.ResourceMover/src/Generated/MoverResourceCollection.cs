@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -221,14 +222,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq &apos;Succeeded&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MoverResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceMoveResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _moverResourceMoveResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,14 +245,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq &apos;Succeeded&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MoverResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceMoveResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _moverResourceMoveResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="data"> The Fleet member to create or update. </param>
         /// <param name="ifMatch"> Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created and prevent updating an existing resource. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created and prevent updating an existing resource. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="data"> The Fleet member to create or update. </param>
         /// <param name="ifMatch"> Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created and prevent updating an existing resource. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created and prevent updating an existing resource. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>

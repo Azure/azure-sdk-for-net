@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="ReplicationProtectedItemResource" /> and their operations.
-    /// Each <see cref="ReplicationProtectedItemResource" /> in the collection will belong to the same instance of <see cref="ProtectionContainerResource" />.
-    /// To get a <see cref="ReplicationProtectedItemCollection" /> instance call the GetReplicationProtectedItems method from an instance of <see cref="ProtectionContainerResource" />.
+    /// Each <see cref="ReplicationProtectedItemResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource" />.
+    /// To get a <see cref="ReplicationProtectedItemCollection" /> instance call the GetReplicationProtectedItems method from an instance of <see cref="SiteRecoveryProtectionContainerResource" />.
     /// </summary>
     public partial class ReplicationProtectedItemCollection : ArmCollection, IEnumerable<ReplicationProtectedItemResource>, IAsyncEnumerable<ReplicationProtectedItemResource>
     {
@@ -49,8 +50,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProtectionContainerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProtectionContainerResource.ResourceType), nameof(id));
+            if (id.ResourceType != SiteRecoveryProtectionContainerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryProtectionContainerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), _replicationProtectedItemClientDiagnostics, Pipeline, "ReplicationProtectedItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), _replicationProtectedItemClientDiagnostics, Pipeline, "ReplicationProtectedItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), _replicationProtectedItemClientDiagnostics, Pipeline, "ReplicationProtectedItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), _replicationProtectedItemClientDiagnostics, Pipeline, "ReplicationProtectedItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

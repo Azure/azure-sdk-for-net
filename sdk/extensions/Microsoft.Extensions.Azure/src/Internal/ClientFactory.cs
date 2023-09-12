@@ -95,6 +95,7 @@ namespace Microsoft.Extensions.Azure
             var certificateStoreName = configuration["clientCertificateStoreName"];
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
             var additionallyAllowedTenants = configuration["additionallyAllowedTenants"];
+            var tokenFilePath = configuration["tokenFilePath"];
             IEnumerable<string> additionallyAllowedTenantsList = null;
             if (!string.IsNullOrWhiteSpace(additionallyAllowedTenants))
             {
@@ -108,7 +109,7 @@ namespace Microsoft.Extensions.Azure
             {
                 if (!string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(resourceId))
                 {
-                    throw new ArgumentException("Cannot specify both 'clientId' and 'UserAssignedManagedIdentityResourceId'");
+                    throw new ArgumentException("Cannot specify both 'clientId' and 'managedIdentityResourceId'");
                 }
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
@@ -117,6 +118,36 @@ namespace Microsoft.Extensions.Azure
                 }
 
                 return new ManagedIdentityCredential(clientId);
+            }
+
+            if (string.Equals(credentialType, "workloadidentity", StringComparison.OrdinalIgnoreCase))
+            {
+                // The WorkloadIdentityCredentialOptions object initialization populates its instance members
+                // from the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_FEDERATED_TOKEN_FILE
+                var workloadIdentityOptions = new WorkloadIdentityCredentialOptions();
+                if (!string.IsNullOrWhiteSpace(tenantId))
+                {
+                    workloadIdentityOptions.TenantId = tenantId;
+                }
+
+                if (!string.IsNullOrWhiteSpace(clientId))
+                {
+                    workloadIdentityOptions.ClientId = clientId;
+                }
+
+                if (!string.IsNullOrWhiteSpace(tokenFilePath))
+                {
+                    workloadIdentityOptions.TokenFilePath = tokenFilePath;
+                }
+
+                if (!string.IsNullOrWhiteSpace(workloadIdentityOptions.TenantId) &&
+                    !string.IsNullOrWhiteSpace(workloadIdentityOptions.ClientId) &&
+                    !string.IsNullOrWhiteSpace(workloadIdentityOptions.TokenFilePath))
+                {
+                    return new WorkloadIdentityCredential(workloadIdentityOptions);
+                }
+
+                throw new ArgumentException("For workload identity, 'tenantId', 'clientId', and 'tokenFilePath' must be specified via environment variables or the configuration.");
             }
 
             if (!string.IsNullOrWhiteSpace(tenantId) &&

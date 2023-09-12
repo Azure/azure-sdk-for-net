@@ -1,6 +1,6 @@
-# Running multiple actions
+# Perform multiple text analysis actions
 
-This sample demonstrates how to run multiple actions in one or more documents. Actions include:
+This sample demonstrates how to perform multiple text analysis actions on one or more documents. These actions can include:
 
 - Named Entities Recognition
 - PII Entities Recognition
@@ -23,9 +23,9 @@ TextAnalyticsClient client = new(endpoint, credential);
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-## Running multiple actions in multiple documents
+## Perform multiple actions on one or more text documents
 
-To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` on the documents.  The result is a Long Running operation of type `AnalyzeActionsOperation` which polls for the results from the API.
+To perform multiple actions on one or more text documents, call `AnalyzeActionsAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `AnalyzeActionsOperation`. Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the text analysis actions, including any errors that might have occurred.
 
 ```C# Snippet:AnalyzeOperationConvenienceAsync
     string documentA =
@@ -49,25 +49,33 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
 
     TextAnalyticsActions actions = new()
     {
-        ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
-        RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
+        ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() { ActionName = "ExtractKeyPhrasesSample" } },
+        RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() { ActionName = "RecognizeEntitiesSample" } },
         DisplayName = "AnalyzeOperationSample"
     };
 
     // Perform the text analysis operation.
-    AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
-    await operation.WaitForCompletionAsync();
+    AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, batchedDocuments, actions);
 
-    Console.WriteLine($"Status: {operation.Status}");
-    Console.WriteLine($"Created On: {operation.CreatedOn}");
-    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
-    Console.WriteLine($"Last modified: {operation.LastModified}");
+    // View the operation status.
+    Console.WriteLine($"Created On   : {operation.CreatedOn}");
+    Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+    Console.WriteLine($"Id           : {operation.Id}");
+    Console.WriteLine($"Status       : {operation.Status}");
+    Console.WriteLine($"Last Modified: {operation.LastModified}");
+    Console.WriteLine();
+
     if (!string.IsNullOrEmpty(operation.DisplayName))
+    {
         Console.WriteLine($"Display name: {operation.DisplayName}");
+        Console.WriteLine();
+    }
+
     Console.WriteLine($"Total actions: {operation.ActionsTotal}");
     Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
     Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
     Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
+    Console.WriteLine();
 
     await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     {
@@ -79,6 +87,7 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
         foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
         {
             Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
+            Console.WriteLine();
             foreach (RecognizeEntitiesResult documentResult in entitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
@@ -86,21 +95,24 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
 
                 foreach (CategorizedEntity entity in documentResult.Entities)
                 {
-                    Console.WriteLine($"  Entity: {entity.Text}");
-                    Console.WriteLine($"  Category: {entity.Category}");
-                    Console.WriteLine($"  Offset: {entity.Offset}");
-                    Console.WriteLine($"  Length: {entity.Length}");
-                    Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                    Console.WriteLine();
+                    Console.WriteLine($"    Entity: {entity.Text}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                    Console.WriteLine($"    SubCategory: {entity.SubCategory}");
                 }
                 Console.WriteLine();
             }
         }
 
-        Console.WriteLine("Key Phrases");
+        Console.WriteLine("Extracted Key Phrases");
         docNumber = 1;
         foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
         {
+            Console.WriteLine($" Action name: {keyPhrasesActionResult.ActionName}");
+            Console.WriteLine();
             foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
@@ -108,7 +120,7 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
 
                 foreach (string keyphrase in documentResults.KeyPhrases)
                 {
-                    Console.WriteLine($"  {keyphrase}");
+                    Console.WriteLine($"    {keyphrase}");
                 }
                 Console.WriteLine();
             }

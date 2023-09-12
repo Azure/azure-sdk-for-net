@@ -75,7 +75,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.GetWeatherData(RequestContent.Create(data), new RequestContext());
+            Response response = client.GetWeatherData(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
@@ -196,7 +196,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.GetWeatherDataAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.GetWeatherDataAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());

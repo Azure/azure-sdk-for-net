@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 batchedDocuments.Add(document);
             }
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments, "en");
+            AnalyzeHealthcareEntitiesOperation operation = await client.AnalyzeHealthcareEntitiesAsync(WaitUntil.Started, batchedDocuments, "en");
 
             await operation.CancelAsync();
         }

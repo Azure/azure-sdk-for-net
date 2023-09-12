@@ -32,15 +32,15 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            IList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents = default;
+            IList<AbstractiveSummaryDocumentResult> documents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"u8))
                 {
-                    List<AbstractiveSummaryDocumentResultWithDetectedLanguage> array = new List<AbstractiveSummaryDocumentResultWithDetectedLanguage>();
+                    List<AbstractiveSummaryDocumentResult> array = new List<AbstractiveSummaryDocumentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummaryDocumentResultWithDetectedLanguage.DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(item));
+                        array.Add(AbstractiveSummaryDocumentResult.DeserializeAbstractiveSummaryDocumentResult(item));
                     }
                     documents = array;
                     continue;

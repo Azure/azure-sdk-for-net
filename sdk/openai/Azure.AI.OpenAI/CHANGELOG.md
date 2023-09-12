@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,33 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.7 (2023-08-25)
+
+### Features Added
+
+- The Azure OpenAI "using your own data" feature is now supported. See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.com/azure/ai-services/openai/use-your-data-quickstart) for conceptual background and detailed setup instructions.
+  - Azure OpenAI chat extensions are configured via a new `AzureChatExtensionsOptions` property on `ChatCompletionsOptions`. When an `AzureChatExtensionsOptions` is provided, configured requests will only work with clients configured to use the Azure OpenAI service, as the capabilities are unique to that service target.
+  - `AzureChatExtensionsOptions` then has `AzureChatExtensionConfiguration` instances added to its `Extensions` property, with these instances representing the supplementary information needed for Azure OpenAI to use desired data sources to supplement chat completions behavior.
+  - `ChatChoice` instances on a `ChatCompletions` response value that used chat extensions will then also have their `Message` property supplemented by an `AzureChatExtensionMessageContext` instance. This context contains a collection of supplementary `Messages` that describe the behavior of extensions that were used and supplementary response data, such as citations, provided along with the response.
+  - See the README sample snippet for a simplified example of request/response use with "using your own data"
+
+## 1.0.0-beta.6 (2023-07-19)
+
+### Features Added
+
+- DALL-E image generation is now supported. See [the Azure OpenAI quickstart](https://learn.microsoft.com/azure/cognitive-services/openai/dall-e-quickstart) for conceptual background and detailed setup instructions.
+  - `OpenAIClient` gains a new `GetImageGenerations` method that accepts an `ImageGenerationOptions` and produces an `ImageGenerations` via its response. This response object encapsulates the temporary storage location of generated images for future retrieval.
+  - In contrast to other capabilities, DALL-E image generation does not require explicit creation or specification of a deployment or model. Its surface as such does not include this concept.
+- Functions for chat completions are now supported: see [OpenAI's blog post on the topic](https://openai.com/blog/function-calling-and-other-api-updates) for much more detail.
+  - A list of `FunctionDefinition` objects may be populated on `ChatCompletionsOptions` via its `Functions` property. These definitions include a name and description together with a serialized JSON Schema representation of its parameters; these parameters can be generated easily via `BinaryData.FromObjectAsJson` with dynamic objects -- see the README for example usage.
+  - **NOTE**: Chat Functions requires a minimum of the `-0613` model versions for `gpt-4` and `gpt-3.5-turbo`/`gpt-35-turbo`. Please ensure you're using these later model versions, as Functions are not supported with older model revisions. For Azure OpenAI, you can update a deployment's model version or create a new model deployment with an updated version via the Azure AI Studio interface, also accessible through Azure Portal.
+- (Azure OpenAI specific) Completions and Chat Completions responses now include embedded content filter annotations for prompts and responses
+- A new `Azure.AI.OpenAI.AzureOpenAIModelFactory` is now present for mocking.
+
+### Breaking Changes
+
+- `ChatMessage`'s one-parameter constructor has been replaced with a no-parameter constructor. Please replace any hybrid construction with one of these two options that either completely rely on property setting or completely rely on constructor parameters.
 
 ## 1.0.0-beta.5 (2023-03-22)
 

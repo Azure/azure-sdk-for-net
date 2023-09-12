@@ -1,5 +1,25 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0 (2023-06-24)
+
+### Features Added
+
+- Enable Persistence(aof/rdb) on storage account in a different subscription than the cache via Managed Identity Auth Type. RedisConfiguration has a new property storage-subscription-id.
+
+### Bugs Fixed
+
+- Updated validation to ensure access to storage account while enabling persistence.
+
 ## 1.2.0-beta.1 (2023-05-31)
 
 ### Features Added

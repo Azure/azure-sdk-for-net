@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
         }
 
-        private async Task<FactoryVirtualNetworkResource> CreateDefaultManagedVirtualNetworkResource(string managedVirtualNetworkName)
+        private async Task<DataFactoryManagedVirtualNetworkResource> CreateDefaultManagedVirtualNetworkResource(string managedVirtualNetworkName)
         {
-            ManagedVirtualNetwork properties = new ManagedVirtualNetwork();
-            FactoryVirtualNetworkData data = new FactoryVirtualNetworkData(properties);
-            var managedVirtualNetwork = await _dataFactory.GetFactoryVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, managedVirtualNetworkName, data);
+            DataFactoryManagedVirtualNetworkProperties properties = new DataFactoryManagedVirtualNetworkProperties();
+            DataFactoryManagedVirtualNetworkData data = new DataFactoryManagedVirtualNetworkData(properties);
+            var managedVirtualNetwork = await _dataFactory.GetDataFactoryManagedVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, managedVirtualNetworkName, data);
             return managedVirtualNetwork.Value;
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task Exist()
         {
             await CreateDefaultManagedVirtualNetworkResource(_managedVirtualNetworkName);
-            bool flag = await _dataFactory.GetFactoryVirtualNetworks().ExistsAsync(_managedVirtualNetworkName);
+            bool flag = await _dataFactory.GetDataFactoryManagedVirtualNetworks().ExistsAsync(_managedVirtualNetworkName);
             Assert.IsTrue(flag);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task Get()
         {
             await CreateDefaultManagedVirtualNetworkResource(_managedVirtualNetworkName);
-            var managedVirtualNetwork = await _dataFactory.GetFactoryVirtualNetworks().GetAsync(_managedVirtualNetworkName);
+            var managedVirtualNetwork = await _dataFactory.GetDataFactoryManagedVirtualNetworks().GetAsync(_managedVirtualNetworkName);
             Assert.IsNotNull(managedVirtualNetwork);
             Assert.AreEqual(_managedVirtualNetworkName, managedVirtualNetwork.Value.Data.Name);
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task GetAll()
         {
             await CreateDefaultManagedVirtualNetworkResource(_managedVirtualNetworkName);
-            var list = await _dataFactory.GetFactoryVirtualNetworks().GetAllAsync().ToEnumerableAsync();
+            var list = await _dataFactory.GetDataFactoryManagedVirtualNetworks().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(1,list.Count);
         }

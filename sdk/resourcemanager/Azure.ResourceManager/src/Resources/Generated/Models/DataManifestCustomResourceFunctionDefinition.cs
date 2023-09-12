@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>
-        /// <param name="name"> The function name as it will appear in the policy rule. eg - &apos;vault&apos;. </param>
-        /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - &apos;Microsoft.KeyVault/vaults&apos;. </param>
-        /// <param name="defaultProperties"> The top-level properties that can be selected on the function&apos;s output. eg - [ &quot;name&quot;, &quot;location&quot; ] if vault().name and vault().location are supported. </param>
-        /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault(&apos;2019-06-01&apos;). </param>
+        /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
+        /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
+        /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </param>
+        /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </param>
         internal DataManifestCustomResourceFunctionDefinition(string name, ResourceType? fullyQualifiedResourceType, IReadOnlyList<string> defaultProperties, bool? allowCustomProperties)
         {
             Name = name;
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Resources.Models
             AllowCustomProperties = allowCustomProperties;
         }
 
-        /// <summary> The function name as it will appear in the policy rule. eg - &apos;vault&apos;. </summary>
+        /// <summary> The function name as it will appear in the policy rule. eg - 'vault'. </summary>
         public string Name { get; }
-        /// <summary> The fully qualified control plane resource type that this function represents. eg - &apos;Microsoft.KeyVault/vaults&apos;. </summary>
+        /// <summary> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </summary>
         public ResourceType? FullyQualifiedResourceType { get; }
-        /// <summary> The top-level properties that can be selected on the function&apos;s output. eg - [ &quot;name&quot;, &quot;location&quot; ] if vault().name and vault().location are supported. </summary>
+        /// <summary> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </summary>
         public IReadOnlyList<string> DefaultProperties { get; }
-        /// <summary> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault(&apos;2019-06-01&apos;). </summary>
+        /// <summary> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </summary>
         public bool? AllowCustomProperties { get; }
     }
 }

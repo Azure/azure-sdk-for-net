@@ -9,36 +9,26 @@ using NUnit.Framework;
 
 namespace Azure.AI.ContentSafety.Tests.Samples
 {
-    //TODO: Commenting unused snippets until they are used in readme
     public partial class ContentSafetySamples: SamplesBase<ContentSafetyClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
         public void AnalyzeText()
         {
-            //#region Snippet:CreateContentSafetyClient
+            #region Snippet:Azure_AI_ContentSafety_CreateClient
 
             string endpoint = TestEnvironment.Endpoint;
             string key = TestEnvironment.Key;
 
             ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
 
-            //#endregion
+            #endregion Snippet:Azure_AI_ContentSafety_CreateClient
 
-            //#region Snippet:ReadTextData
+            #region Snippet:Azure_AI_ContentSafety_AnalyzeText
 
-            string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "text.txt");
-            string text = File.ReadAllText(datapath);
-
-            //#endregion
-
-            //#region Snippet:CreateRequest
+            string text = "You are an idiot";
 
             var request = new AnalyzeTextOptions(text);
-
-            //#endregion
-
-            //#region Snippet:AnalyzeText
 
             Response<AnalyzeTextResult> response;
             try
@@ -47,32 +37,16 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(String.Format("Analyze text failed: {0}", ex.Message));
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(String.Format("Analyze text error: {0}", ex.Message));
+                Console.WriteLine("Analyze text failed.\nStatus code: {0}, Error code: {1}, Error message: {2}", ex.Status, ex.ErrorCode, ex.Message);
                 throw;
             }
 
-            if (response.Value.HateResult != null)
-            {
-                Console.WriteLine(String.Format("Hate severity: {0}", response.Value.HateResult.Severity));
-            }
-            if (response.Value.SelfHarmResult != null)
-            {
-                Console.WriteLine(String.Format("SelfHarm severity: {0}", response.Value.SelfHarmResult.Severity));
-            }
-            if (response.Value.SexualResult != null)
-            {
-                Console.WriteLine(String.Format("Sexual severity: {0}", response.Value.SexualResult.Severity));
-            }
-            if (response.Value.ViolenceResult != null)
-            {
-                Console.WriteLine(String.Format("Violence severity: {0}", response.Value.ViolenceResult.Severity));
-            }
-            //#endregion
+            Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
+            Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
+            Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
+            Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
+
+            #endregion Snippet:Azure_AI_ContentSafety_AnalyzeText
         }
     }
 }

@@ -13,13 +13,13 @@ namespace Azure.Analytics.Purview.Sharing
     /// <summary> Client options for PurviewShareClient library clients. </summary>
     public partial class PurviewShareClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_02_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2023_05_30_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2023-02-15-preview". </summary>
-            V2023_02_15_Preview = 1,
+            /// <summary> Service version "2023-05-30-preview". </summary>
+            V2023_05_30_Preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.Sharing
         {
             Version = version switch
             {
-                ServiceVersion.V2023_02_15_Preview => "2023-02-15-preview",
+                ServiceVersion.V2023_05_30_Preview => "2023-05-30-preview",
                 _ => throw new NotSupportedException()
             };
         }

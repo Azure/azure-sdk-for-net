@@ -344,6 +344,133 @@ namespace Azure.Messaging.EventGrid.Tests
         }
         #endregion
 
+        #region Container service events
+        [Test]
+        public void ConsumeContainerServiceSupportEndedEvent()
+        {
+            string requestContent = @"
+            {
+                ""topic"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""eventType"": ""Microsoft.ContainerService.ClusterSupportEnded"",
+                ""eventTime"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""kubernetesVersion"": ""1.23.15""
+                },
+                ""dataVersion"": ""1"",
+                ""metadataVersion"": ""1""
+            }";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("1.23.15", (eventData as ContainerServiceClusterSupportEventData).KubernetesVersion);
+            Assert.AreEqual("1.23.15", (eventData as ContainerServiceClusterSupportEndedEventData).KubernetesVersion);
+        }
+
+        [Test]
+        public void ConsumeContainerServiceSupportEndingEvent()
+        {
+            string requestContent = @"
+            {
+                ""topic"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""eventType"": ""Microsoft.ContainerService.ClusterSupportEnding"",
+                ""eventTime"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""kubernetesVersion"": ""1.23.15""
+                },
+                ""dataVersion"": ""1"",
+                ""metadataVersion"": ""1""
+            }";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("1.23.15", (eventData as ContainerServiceClusterSupportEventData).KubernetesVersion);
+            Assert.AreEqual("1.23.15", (eventData as ContainerServiceClusterSupportEndingEventData).KubernetesVersion);
+        }
+
+        [Test]
+        public void ConsumeContainerServiceNodePoolRollingFailed()
+        {
+            string requestContent = @"
+            {
+                ""topic"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""eventType"": ""Microsoft.ContainerService.NodePoolRollingFailed"",
+                ""eventTime"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""nodePoolName"": ""nodepool1""
+                },
+                ""dataVersion"": ""1"",
+                ""metadataVersion"": ""1""
+            }";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingEventData).NodePoolName);
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingFailedEventData).NodePoolName);
+        }
+
+        [Test]
+        public void ConsumeContainerServiceNodePoolRollingStarted()
+        {
+            string requestContent = @"
+            {
+                ""topic"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""eventType"": ""Microsoft.ContainerService.NodePoolRollingStarted"",
+                ""eventTime"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""nodePoolName"": ""nodepool1""
+                },
+                ""dataVersion"": ""1"",
+                ""metadataVersion"": ""1""
+            }";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingEventData).NodePoolName);
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingStartedEventData).NodePoolName);
+        }
+
+        [Test]
+        public void ConsumeContainerServiceNodePoolRollingSucceeded()
+        {
+            string requestContent = @"
+            {
+                ""topic"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""eventType"": ""Microsoft.ContainerService.NodePoolRollingSucceeded"",
+                ""eventTime"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""nodePoolName"": ""nodepool1""
+                },
+                ""dataVersion"": ""1"",
+                ""metadataVersion"": ""1""
+            }";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingEventData).NodePoolName);
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingSucceededEventData).NodePoolName);
+        }
+        #endregion
+
         #region IoTHub Device events
         [Test]
         public void ConsumeIoTHubDeviceCreatedEvent()
@@ -2227,6 +2354,128 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("mediatype1", (eventData as ContainerRegistryChartPushedEventData).Target.MediaType);
+        }
+        #endregion
+
+        #region Container service events
+        [Test]
+        public void ConsumeCloudEventContainerServiceSupportEndedEvent()
+        {
+            string requestContent = @"
+            {
+                ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""type"": ""Microsoft.ContainerService.ClusterSupportEnded"",
+                ""time"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""kubernetesVersion"": ""1.23.15""
+                },
+                ""specversion"": ""1.0""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("1.23.15", (eventData as ContainerServiceClusterSupportEventData).KubernetesVersion);
+            Assert.AreEqual("1.23.15", (eventData as ContainerServiceClusterSupportEndedEventData).KubernetesVersion);
+        }
+
+        [Test]
+        public void ConsumeCloudEventContainerServiceSupportEndingEvent()
+        {
+            string requestContent = @"
+            {
+                ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""type"": ""Microsoft.ContainerService.ClusterSupportEnding"",
+                ""time"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""kubernetesVersion"": ""1.23.15""
+                },
+                ""specversion"": ""1.0""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("1.23.15", (eventData as ContainerServiceClusterSupportEventData).KubernetesVersion);
+            Assert.AreEqual("1.23.15", (eventData as ContainerServiceClusterSupportEndingEventData).KubernetesVersion);
+        }
+
+        [Test]
+        public void ConsumeCloudEventContainerServiceNodePoolRollingFailed()
+        {
+            string requestContent = @"
+            {
+                ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""type"": ""Microsoft.ContainerService.NodePoolRollingFailed"",
+                ""time"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""nodePoolName"": ""nodepool1""
+                },
+                ""specversion"": ""1.0""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingEventData).NodePoolName);
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingFailedEventData).NodePoolName);
+        }
+
+        [Test]
+        public void ConsumeCloudEventContainerServiceNodePoolRollingStarted()
+        {
+            string requestContent = @"
+            {
+                ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""type"": ""Microsoft.ContainerService.NodePoolRollingStarted"",
+                ""time"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""nodePoolName"": ""nodepool1""
+                },
+                ""specversion"": ""1.0""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingEventData).NodePoolName);
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingStartedEventData).NodePoolName);
+        }
+
+        [Test]
+        public void ConsumeCloudEventContainerServiceNodePoolRollingSucceeded()
+        {
+            string requestContent = @"
+            {
+                ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.ContainerService/managedClusters/{cluster}"",
+                ""subject"": ""{cluster}"",
+                ""type"": ""Microsoft.ContainerService.NodePoolRollingSucceeded"",
+                ""time"": ""2023-03-29T18:00:00.0000000Z"",
+                ""id"": ""1234567890abcdef1234567890abcdef12345678"",
+                ""data"": {
+                    ""nodePoolName"": ""nodepool1""
+                },
+                ""specversion"": ""1.0""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingEventData).NodePoolName);
+            Assert.AreEqual("nodepool1", (eventData as ContainerServiceNodePoolRollingSucceededEventData).NodePoolName);
         }
         #endregion
 

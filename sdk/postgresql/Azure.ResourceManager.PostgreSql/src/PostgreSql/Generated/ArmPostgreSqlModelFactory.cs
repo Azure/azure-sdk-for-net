@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPostgreSqlModelFactory
     {
-
         /// <summary> Initializes a new instance of PostgreSqlServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="version"> Server version. </param>
         /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
         /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="replicationRole"> The replication role of the server. </param>
         /// <param name="masterServerId"> The master server id of a replica server. </param>
         /// <param name="replicaCapacity"> The maximum number of replicas that a master server can have. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
         /// <returns> A new <see cref="PostgreSql.PostgreSqlServerData"/> instance for mocking. </returns>
         public static PostgreSqlServerData PostgreSqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, PostgreSqlSku sku = null, string administratorLogin = null, PostgreSqlServerVersion? version = null, PostgreSqlSslEnforcementEnum? sslEnforcement = null, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = null, string byokEnforcement = null, PostgreSqlInfrastructureEncryption? infrastructureEncryption = null, PostgreSqlServerState? userVisibleState = null, string fullyQualifiedDomainName = null, DateTimeOffset? earliestRestoreOn = null, PostgreSqlStorageProfile storageProfile = null, string replicationRole = null, ResourceIdentifier masterServerId = null, int? replicaCapacity = null, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = null, IEnumerable<PostgreSqlServerPrivateEndpointConnection> privateEndpointConnections = null)
@@ -302,7 +301,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector used to protect the key. </param>
-        /// <param name="serverKeyType"> The key type like &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The key type like 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the key. </param>
         /// <param name="createdOn"> The key creation date. </param>
         /// <returns> A new <see cref="PostgreSql.PostgreSqlServerKeyData"/> instance for mocking. </returns>

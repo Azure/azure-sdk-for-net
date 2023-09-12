@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="scenarioName"> Scenario name. </param>
         /// <param name="jobId"> ARM Id of the job being executed. </param>
         /// <param name="startOn"> Start time of the workflow. </param>
-        internal CurrentScenarioDetails(string scenarioName, string jobId, DateTimeOffset? startOn)
+        internal CurrentScenarioDetails(string scenarioName, ResourceIdentifier jobId, DateTimeOffset? startOn)
         {
             ScenarioName = scenarioName;
             JobId = jobId;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Scenario name. </summary>
         public string ScenarioName { get; }
         /// <summary> ARM Id of the job being executed. </summary>
-        public string JobId { get; }
+        public ResourceIdentifier JobId { get; }
         /// <summary> Start time of the workflow. </summary>
         public DateTimeOffset? StartOn { get; }
     }

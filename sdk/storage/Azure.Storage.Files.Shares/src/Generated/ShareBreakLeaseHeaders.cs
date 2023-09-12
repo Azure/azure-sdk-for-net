@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.Shares
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> Approximate time remaining in the lease period, in seconds. </summary>
         public int? LeaseTime => _response.Headers.TryGetValue("x-ms-lease-time", out int? value) ? value : null;
-        /// <summary> Uniquely identifies a share&apos;s lease. </summary>
+        /// <summary> Uniquely identifies a share's lease. </summary>
         public string LeaseId => _response.Headers.TryGetValue("x-ms-lease-id", out string value) ? value : null;
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;

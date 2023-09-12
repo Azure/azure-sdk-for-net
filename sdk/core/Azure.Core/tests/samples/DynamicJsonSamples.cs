@@ -3,8 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Dynamic;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Core.Samples
@@ -45,7 +46,8 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            // Retrieves `name` value from JSON `{ "name" : "Widget" }`
             string name = widget.Name;
             #endregion
 
@@ -59,7 +61,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetDynamicJsonProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
@@ -74,7 +76,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonArrayValue
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 #if !SNIPPET
             widget.Values = new int[] { 1, 2, 3 };
 #endif
@@ -97,7 +99,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonOptionalProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 
@@ -117,7 +119,7 @@ namespace Azure.Core.Samples
             WidgetsClient client = GetMockClient();
 
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             bool threw = false;
 
@@ -146,7 +148,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreEnumerateDynamicJsonObject
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
             foreach (dynamic property in widget.Details)
@@ -165,7 +167,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreCastDynamicJsonToPOCO
             Response response = client.GetWidget();
-            dynamic content = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic content = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // JSON is `{ "id" : "123", "name" : "Widget" }`
             Widget widget = (Widget)content;
@@ -203,19 +205,20 @@ namespace Azure.Core.Samples
         }
 
         [Test]
-        public void SetPropertyWithoutCaseMapping()
+        public void SetPropertyWithoutCaseMappingPerProperty()
         {
             WidgetsClient client = GetMockClient();
 
-            #region Snippet:AzureCoreSetPropertyWithoutCaseMapping
+            #region Snippet:AzureCoreSetPropertyWithoutCaseMappingPerProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             widget.details["IPAddress"] = "127.0.0.1";
             // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
             #endregion
 
             Assert.IsTrue(widget.details.IPAddress == "127.0.0.1");
+            Assert.IsTrue(widget.details["IPAddress"] == "127.0.0.1");
         }
 
         [Test]
@@ -252,7 +255,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreRoundTripDynamicJson
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
@@ -266,7 +269,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreDisposeDynamicJson
             Response response = client.GetLargeWidget();
-            using (dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel))
+            using (dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase))
             {
 #if !SNIPPET
                 details = widget.Details;

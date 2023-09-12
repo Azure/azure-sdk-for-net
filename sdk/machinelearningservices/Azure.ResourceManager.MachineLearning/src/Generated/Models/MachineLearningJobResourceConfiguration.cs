@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
         /// <param name="properties"> Additional properties bag. </param>
         /// <param name="dockerArgs"> Extra arguments to pass to the Docker run command. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types. </param>
-        /// <param name="shmSize"> Size of the docker container&apos;s shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes). </param>
+        /// <param name="shmSize"> Size of the docker container's shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes). </param>
         internal MachineLearningJobResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties, string dockerArgs, string shmSize) : base(instanceCount, instanceType, properties)
         {
             DockerArgs = dockerArgs;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Extra arguments to pass to the Docker run command. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types. </summary>
         public string DockerArgs { get; set; }
-        /// <summary> Size of the docker container&apos;s shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes). </summary>
+        /// <summary> Size of the docker container's shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes). </summary>
         public string ShmSize { get; set; }
     }
 }

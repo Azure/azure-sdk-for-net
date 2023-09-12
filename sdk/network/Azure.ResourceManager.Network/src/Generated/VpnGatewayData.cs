@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="virtualHub"> The VirtualHub to which the gateway belongs. </param>
         /// <param name="connections"> List of all vpn connections to the gateway. </param>
-        /// <param name="bgpSettings"> Local network gateway&apos;s BGP speaker settings. </param>
+        /// <param name="bgpSettings"> Local network gateway's BGP speaker settings. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN gateway resource. </param>
         /// <param name="vpnGatewayScaleUnit"> The scale unit for this vpn gateway. </param>
         /// <param name="ipConfigurations"> List of all IPs configured on the gateway. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> List of all vpn connections to the gateway. </summary>
         public IList<VpnConnectionData> Connections { get; }
-        /// <summary> Local network gateway&apos;s BGP speaker settings. </summary>
+        /// <summary> Local network gateway's BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The provisioning state of the VPN gateway resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }

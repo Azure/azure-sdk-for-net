@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <param name="provisioningState"> Provisioning state of the Azure Dev Spaces Controller. </param>
         /// <param name="hostSuffix"> DNS suffix for public endpoints running in the Azure Dev Spaces Controller. </param>
         /// <param name="dataPlaneFqdn"> DNS name for accessing DataPlane services. </param>
-        /// <param name="targetContainerHostApiServerFqdn"> DNS of the target container host&apos;s API server. </param>
+        /// <param name="targetContainerHostApiServerFqdn"> DNS of the target container host's API server. </param>
         /// <param name="targetContainerHostResourceId"> Resource ID of the target container host. </param>
         /// <param name="targetContainerHostCredentialsBase64"> Credentials of the target container host (base64). </param>
         /// <returns> A new <see cref="DevSpaces.ControllerData"/> instance for mocking. </returns>

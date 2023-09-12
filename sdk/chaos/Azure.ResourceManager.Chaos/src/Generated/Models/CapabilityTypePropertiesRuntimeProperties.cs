@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of CapabilityTypePropertiesRuntimeProperties. </summary>
-        /// <param name="kind"> String of the kind of the resource&apos;s action type (continuous or discrete). </param>
+        /// <param name="kind"> String of the kind of the resource's action type (continuous or discrete). </param>
         internal CapabilityTypePropertiesRuntimeProperties(string kind)
         {
             Kind = kind;
         }
 
-        /// <summary> String of the kind of the resource&apos;s action type (continuous or discrete). </summary>
+        /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
         public string Kind { get; }
     }
 }

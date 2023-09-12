@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Use this method to get IoT security Analytics metrics in an array. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Use this method to get IoT security Analytics metrics in an array. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Use this method to get IoT Security Analytics metrics. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Use this method to get IoT Security Analytics metrics. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is null. </exception>

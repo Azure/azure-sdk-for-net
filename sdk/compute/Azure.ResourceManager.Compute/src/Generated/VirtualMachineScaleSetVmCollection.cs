@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the instance view of the virtual machine. 'UserData' will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the instance view of the virtual machine. 'UserData' will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
@@ -224,16 +225,16 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply to the operation. Allowed values are &apos;startswith(instanceView/statuses/code, &apos;PowerState&apos;) eq true&apos;, &apos;properties/latestModelApplied eq true&apos;, &apos;properties/latestModelApplied eq false&apos;. </param>
-        /// <param name="select"> The list parameters. Allowed values are &apos;instanceView&apos;, &apos;instanceView/statuses&apos;. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
+        /// <param name="filter"> The filter to apply to the operation. Allowed values are 'startswith(instanceView/statuses/code, 'PowerState') eq true', 'properties/latestModelApplied eq true', 'properties/latestModelApplied eq false'. </param>
+        /// <param name="select"> The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineScaleSetVmResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineScaleSetVmResource> GetAllAsync(string filter = null, string select = null, string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVmVirtualMachineScaleSetVmsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, select, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVmVirtualMachineScaleSetVmsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, select, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetVmResource(Client, VirtualMachineScaleSetVmData.DeserializeVirtualMachineScaleSetVmData(e)), _virtualMachineScaleSetVmVirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetVmResource(Client, VirtualMachineScaleSetVmData.DeserializeVirtualMachineScaleSetVmData(e)), _virtualMachineScaleSetVmVirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,16 +250,16 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply to the operation. Allowed values are &apos;startswith(instanceView/statuses/code, &apos;PowerState&apos;) eq true&apos;, &apos;properties/latestModelApplied eq true&apos;, &apos;properties/latestModelApplied eq false&apos;. </param>
-        /// <param name="select"> The list parameters. Allowed values are &apos;instanceView&apos;, &apos;instanceView/statuses&apos;. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
+        /// <param name="filter"> The filter to apply to the operation. Allowed values are 'startswith(instanceView/statuses/code, 'PowerState') eq true', 'properties/latestModelApplied eq true', 'properties/latestModelApplied eq false'. </param>
+        /// <param name="select"> The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetVmResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineScaleSetVmResource> GetAll(string filter = null, string select = null, string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVmVirtualMachineScaleSetVmsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, select, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVmVirtualMachineScaleSetVmsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, select, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetVmResource(Client, VirtualMachineScaleSetVmData.DeserializeVirtualMachineScaleSetVmData(e)), _virtualMachineScaleSetVmVirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetVmResource(Client, VirtualMachineScaleSetVmData.DeserializeVirtualMachineScaleSetVmData(e)), _virtualMachineScaleSetVmVirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the instance view of the virtual machine. 'UserData' will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the instance view of the virtual machine. 'UserData' will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>

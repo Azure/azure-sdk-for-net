@@ -31,95 +31,88 @@ namespace Azure.ResourceManager.NetworkCloud
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of BareMetalMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of BareMetalMachineResources and their operations over a BareMetalMachineResource. </returns>
-        public virtual BareMetalMachineCollection GetBareMetalMachines()
+        /// <summary> Gets a collection of NetworkCloudBareMetalMachineResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudBareMetalMachineResources and their operations over a NetworkCloudBareMetalMachineResource. </returns>
+        public virtual NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines()
         {
-            return GetCachedClient(Client => new BareMetalMachineCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudBareMetalMachineCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CloudServicesNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CloudServicesNetworkResources and their operations over a CloudServicesNetworkResource. </returns>
-        public virtual CloudServicesNetworkCollection GetCloudServicesNetworks()
+        /// <summary> Gets a collection of NetworkCloudCloudServicesNetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudCloudServicesNetworkResources and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
+        public virtual NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks()
         {
-            return GetCachedClient(Client => new CloudServicesNetworkCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudCloudServicesNetworkCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ClusterManagerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ClusterManagerResources and their operations over a ClusterManagerResource. </returns>
-        public virtual ClusterManagerCollection GetClusterManagers()
+        /// <summary> Gets a collection of NetworkCloudClusterManagerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudClusterManagerResources and their operations over a NetworkCloudClusterManagerResource. </returns>
+        public virtual NetworkCloudClusterManagerCollection GetNetworkCloudClusterManagers()
         {
-            return GetCachedClient(Client => new ClusterManagerCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudClusterManagerCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of NetworkCloudClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudClusterResources and their operations over a NetworkCloudClusterResource. </returns>
+        public virtual NetworkCloudClusterCollection GetNetworkCloudClusters()
         {
-            return GetCachedClient(Client => new ClusterCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DefaultCniNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DefaultCniNetworkResources and their operations over a DefaultCniNetworkResource. </returns>
-        public virtual DefaultCniNetworkCollection GetDefaultCniNetworks()
+        /// <summary> Gets a collection of NetworkCloudKubernetesClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudKubernetesClusterResources and their operations over a NetworkCloudKubernetesClusterResource. </returns>
+        public virtual NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClusters()
         {
-            return GetCachedClient(Client => new DefaultCniNetworkCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudKubernetesClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of HybridAksClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HybridAksClusterResources and their operations over a HybridAksClusterResource. </returns>
-        public virtual HybridAksClusterCollection GetHybridAksClusters()
+        /// <summary> Gets a collection of NetworkCloudL2NetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudL2NetworkResources and their operations over a NetworkCloudL2NetworkResource. </returns>
+        public virtual NetworkCloudL2NetworkCollection GetNetworkCloudL2Networks()
         {
-            return GetCachedClient(Client => new HybridAksClusterCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudL2NetworkCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of L2NetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of L2NetworkResources and their operations over a L2NetworkResource. </returns>
-        public virtual L2NetworkCollection GetL2Networks()
+        /// <summary> Gets a collection of NetworkCloudL3NetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudL3NetworkResources and their operations over a NetworkCloudL3NetworkResource. </returns>
+        public virtual NetworkCloudL3NetworkCollection GetNetworkCloudL3Networks()
         {
-            return GetCachedClient(Client => new L2NetworkCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudL3NetworkCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of L3NetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of L3NetworkResources and their operations over a L3NetworkResource. </returns>
-        public virtual L3NetworkCollection GetL3Networks()
+        /// <summary> Gets a collection of NetworkCloudRackResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudRackResources and their operations over a NetworkCloudRackResource. </returns>
+        public virtual NetworkCloudRackCollection GetNetworkCloudRacks()
         {
-            return GetCachedClient(Client => new L3NetworkCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudRackCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of RackResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of RackResources and their operations over a RackResource. </returns>
-        public virtual RackCollection GetRacks()
+        /// <summary> Gets a collection of NetworkCloudStorageApplianceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudStorageApplianceResources and their operations over a NetworkCloudStorageApplianceResource. </returns>
+        public virtual NetworkCloudStorageApplianceCollection GetNetworkCloudStorageAppliances()
         {
-            return GetCachedClient(Client => new RackCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudStorageApplianceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of StorageApplianceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StorageApplianceResources and their operations over a StorageApplianceResource. </returns>
-        public virtual StorageApplianceCollection GetStorageAppliances()
+        /// <summary> Gets a collection of NetworkCloudTrunkedNetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudTrunkedNetworkResources and their operations over a NetworkCloudTrunkedNetworkResource. </returns>
+        public virtual NetworkCloudTrunkedNetworkCollection GetNetworkCloudTrunkedNetworks()
         {
-            return GetCachedClient(Client => new StorageApplianceCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudTrunkedNetworkCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of TrunkedNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of TrunkedNetworkResources and their operations over a TrunkedNetworkResource. </returns>
-        public virtual TrunkedNetworkCollection GetTrunkedNetworks()
+        /// <summary> Gets a collection of NetworkCloudVirtualMachineResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudVirtualMachineResources and their operations over a NetworkCloudVirtualMachineResource. </returns>
+        public virtual NetworkCloudVirtualMachineCollection GetNetworkCloudVirtualMachines()
         {
-            return GetCachedClient(Client => new TrunkedNetworkCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudVirtualMachineCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines()
+        /// <summary> Gets a collection of NetworkCloudVolumeResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudVolumeResources and their operations over a NetworkCloudVolumeResource. </returns>
+        public virtual NetworkCloudVolumeCollection GetNetworkCloudVolumes()
         {
-            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of VolumeResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VolumeResources and their operations over a VolumeResource. </returns>
-        public virtual VolumeCollection GetVolumes()
-        {
-            return GetCachedClient(Client => new VolumeCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudVolumeCollection(Client, Id));
         }
     }
 }

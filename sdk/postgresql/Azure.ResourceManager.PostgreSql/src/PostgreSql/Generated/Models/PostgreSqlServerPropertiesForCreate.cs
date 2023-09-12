@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
         /// <summary> Status showing whether the server enabled infrastructure encryption. </summary>
         public PostgreSqlInfrastructureEncryption? InfrastructureEncryption { get; set; }
-        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> Storage profile of a server. </summary>
         public PostgreSqlStorageProfile StorageProfile { get; set; }

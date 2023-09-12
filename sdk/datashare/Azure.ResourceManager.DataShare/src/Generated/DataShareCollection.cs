@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a share 
+        /// Create a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a share 
+        /// Create a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Get a share 
+        /// Get a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Get a share 
+        /// Get a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <summary> Initializes a new instance of LogicWsdlService. </summary>
         /// <param name="qualifiedName"> The qualified name. </param>
-        /// <param name="endpointQualifiedNames"> The list of endpoints&apos; qualified names. </param>
+        /// <param name="endpointQualifiedNames"> The list of endpoints' qualified names. </param>
         /// <returns> A new <see cref="Models.LogicWsdlService"/> instance for mocking. </returns>
         public static LogicWsdlService LogicWsdlService(string qualifiedName = null, IEnumerable<string> endpointQualifiedNames = null)
         {

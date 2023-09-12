@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="name"> Entity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
         /// <param name="language"> Language used in the data source. </param>
-        /// <param name="url"> URL for the entity&apos;s page from the data source. </param>
+        /// <param name="url"> URL for the entity's page from the data source. </param>
         /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="matches"/>, <paramref name="language"/>, <paramref name="url"/> or <paramref name="dataSource"/> is null. </exception>
         internal LinkedEntity(string name, IEnumerable<Match> matches, string language, string url, string dataSource)
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="matches"> List of instances this entity appears in the text. </param>
         /// <param name="language"> Language used in the data source. </param>
         /// <param name="id"> Unique identifier of the recognized entity from the data source. </param>
-        /// <param name="url"> URL for the entity&apos;s page from the data source. </param>
+        /// <param name="url"> URL for the entity's page from the data source. </param>
         /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
         /// <param name="bingId"> Bing Entity Search API unique identifier of the recognized entity. </param>
         internal LinkedEntity(string name, IReadOnlyList<Match> matches, string language, string id, string url, string dataSource, string bingId)
@@ -64,7 +64,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         public string Language { get; }
         /// <summary> Unique identifier of the recognized entity from the data source. </summary>
         public string Id { get; }
-        /// <summary> URL for the entity&apos;s page from the data source. </summary>
+        /// <summary> URL for the entity's page from the data source. </summary>
         public string Url { get; }
         /// <summary> Data source used to extract entity linking, such as Wiki/Bing etc. </summary>
         public string DataSource { get; }

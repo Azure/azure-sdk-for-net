@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The amount plus currency .
-    /// Serialized Name: Amount
-    /// </summary>
+    /// <summary> The amount plus currency . </summary>
     public partial class ConsumptionAmount
     {
         /// <summary> Initializes a new instance of ConsumptionAmount. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionAmount. </summary>
-        /// <param name="currency">
-        /// Amount currency.
-        /// Serialized Name: Amount.currency
-        /// </param>
-        /// <param name="value">
-        /// Amount.
-        /// Serialized Name: Amount.value
-        /// </param>
+        /// <param name="currency"> Amount currency. </param>
+        /// <param name="value"> Amount. </param>
         internal ConsumptionAmount(string currency, decimal? value)
         {
             Currency = currency;
             Value = value;
         }
 
-        /// <summary>
-        /// Amount currency.
-        /// Serialized Name: Amount.currency
-        /// </summary>
+        /// <summary> Amount currency. </summary>
         public string Currency { get; }
-        /// <summary>
-        /// Amount.
-        /// Serialized Name: Amount.value
-        /// </summary>
+        /// <summary> Amount. </summary>
         public decimal? Value { get; }
     }
 }

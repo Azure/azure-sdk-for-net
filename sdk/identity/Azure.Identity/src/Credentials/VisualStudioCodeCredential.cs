@@ -85,7 +85,7 @@ namespace Azure.Identity
                 string storedCredentials = GetStoredCredentials(environmentName);
 
                 var result = await Client
-                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, async, cancellationToken)
+                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                     .ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

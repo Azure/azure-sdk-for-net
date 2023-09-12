@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="resourceLogCategories"> Resource log configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="networkAcls"> Network ACLs for the resource. </param>
         /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </param>
         /// <param name="isLocalAuthDisabled">
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </param>
         /// <param name="isAadAuthDisabled">
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubData"/> instance for mocking. </returns>
         public static WebPubSubData WebPubSubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BillingInfoSku sku = null, ManagedServiceIdentity identity = null, WebPubSubProvisioningState? provisioningState = null, string externalIP = null, string hostName = null, int? publicPort = null, int? serverPort = null, string version = null, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources = null, bool? isClientCertEnabled = null, string hostNamePrefix = null, LiveTraceConfiguration liveTraceConfiguration = null, IEnumerable<ResourceLogCategory> resourceLogCategories = null, WebPubSubNetworkAcls networkAcls = null, string publicNetworkAccess = null, bool? isLocalAuthDisabled = null, bool? isAadAuthDisabled = null)
@@ -99,19 +99,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of BillingInfoSku. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
-        /// 
+        ///
         /// Allowed values: Standard_S1, Free_F1
         /// </param>
         /// <param name="tier">
-        /// Optional tier of this particular SKU. &apos;Standard&apos; or &apos;Free&apos;. 
-        /// 
+        /// Optional tier of this particular SKU. 'Standard' or 'Free'.
+        ///
         /// `Basic` is deprecated, use `Standard` instead.
         /// </param>
         /// <param name="size"> Not used. Retained for future use. </param>
         /// <param name="family"> Not used. Retained for future use. </param>
         /// <param name="capacity">
         /// Optional, integer. The unit count of the resource. 1 by default.
-        /// 
+        ///
         /// If present, following values are allowed:
         ///     Free: 1
         ///     Standard: 1,2,5,10,20,50,100

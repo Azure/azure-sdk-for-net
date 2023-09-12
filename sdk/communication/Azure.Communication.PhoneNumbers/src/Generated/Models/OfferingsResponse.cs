@@ -13,24 +13,5 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a wrapper around a list of offerings. </summary>
     internal partial class OfferingsResponse
     {
-        /// <summary> Initializes a new instance of OfferingsResponse. </summary>
-        internal OfferingsResponse()
-        {
-            PhoneNumberOfferings = new ChangeTrackingList<PhoneNumberOffering>();
-        }
-
-        /// <summary> Initializes a new instance of OfferingsResponse. </summary>
-        /// <param name="phoneNumberOfferings"> Represents the underlying list of offerings. </param>
-        /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        internal OfferingsResponse(IReadOnlyList<PhoneNumberOffering> phoneNumberOfferings, string nextLink)
-        {
-            PhoneNumberOfferings = phoneNumberOfferings;
-            NextLink = nextLink;
-        }
-
-        /// <summary> Represents the underlying list of offerings. </summary>
-        public IReadOnlyList<PhoneNumberOffering> PhoneNumberOfferings { get; }
-        /// <summary> Represents the URL link to the next page. </summary>
-        public string NextLink { get; }
     }
 }

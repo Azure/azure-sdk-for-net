@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
-        /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>
+        /// <param name="operator"> the dimension operator. Only 'Equals' and 'NotEquals' are supported. 'Equals' being equal to any of the values. 'NotEquals' being not equal to all of the values. </param>
+        /// <param name="values"> list of dimension values. For example: ["App1","App2"]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionName"/> or <paramref name="values"/> is null. </exception>
         public AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IEnumerable<string> values)
         {
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
-        /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>
+        /// <param name="operator"> the dimension operator. Only 'Equals' and 'NotEquals' are supported. 'Equals' being equal to any of the values. 'NotEquals' being not equal to all of the values. </param>
+        /// <param name="values"> list of dimension values. For example: ["App1","App2"]. </param>
         internal AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IList<string> values)
         {
             DimensionName = dimensionName;
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Name of the dimension. </summary>
         public string DimensionName { get; set; }
-        /// <summary> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </summary>
+        /// <summary> the dimension operator. Only 'Equals' and 'NotEquals' are supported. 'Equals' being equal to any of the values. 'NotEquals' being not equal to all of the values. </summary>
         public ScaleRuleMetricDimensionOperationType Operator { get; set; }
-        /// <summary> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </summary>
+        /// <summary> list of dimension values. For example: ["App1","App2"]. </summary>
         public IList<string> Values { get; }
     }
 }

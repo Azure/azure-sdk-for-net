@@ -2,6 +2,16 @@
 
 This sample demonstrates how to analyze a conversation with Conversation Summarization. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
+You can work with request and response content more easily by using our [Dynamic JSON](https://aka.ms/azsdk/net/dynamiccontent) feature. This is illustrated in the following sample.
+
+Start by importing the namespace for the `ConversationAnalysisClient` and related classes:
+
+```C# Snippet:ConversationAnalysisClient_Namespaces
+using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.AI.Language.Conversations;
+```
+
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
@@ -18,51 +28,51 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
 var data = new
 {
-    analysisInput = new
+    AnalysisInput = new
     {
-        conversations = new[]
+        Conversations = new[]
         {
             new
             {
-                conversationItems = new[]
+                ConversationItems = new[]
                 {
                     new
                     {
-                        text = "Hello, how can I help you?",
-                        id = "1",
-                        role = "Agent",
-                        participantId = "Agent_1",
+                        Text = "Hello, how can I help you?",
+                        Id = "1",
+                        Role = "Agent",
+                        ParticipantId = "Agent_1",
                     },
                     new
                     {
-                        text = "How to upgrade Office? I am getting error messages the whole day.",
-                        id = "2",
-                        role = "Customer",
-                        participantId = "Customer_1",
+                        Text = "How to upgrade Office? I am getting error messages the whole day.",
+                        Id = "2",
+                        Role = "Customer",
+                        ParticipantId = "Customer_1",
                     },
                     new
                     {
-                        text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                        id = "3",
-                        role = "Agent",
-                        participantId = "Agent_1",
+                        Text = "Press the upgrade button please. Then sign in and follow the instructions.",
+                        Id = "3",
+                        Role = "Agent",
+                        ParticipantId = "Agent_1",
                     },
                 },
-                id = "1",
-                language = "en",
-                modality = "text",
+                Id = "1",
+                Language = "en",
+                Modality = "text",
             },
         }
     },
-    tasks = new[]
+    Tasks = new[]
     {
         new
         {
-            taskName = "Issue task",
-            kind = "ConversationalSummarizationTask",
-            parameters = new
+            TaskName = "Issue task",
+            Kind = "ConversationalSummarizationTask",
+            Parameters = new
             {
-                summaryAspects = new[]
+                SummaryAspects = new[]
                 {
                     "issue",
                 }
@@ -70,11 +80,11 @@ var data = new
         },
         new
         {
-            taskName = "Resolution task",
-            kind = "ConversationalSummarizationTask",
-            parameters = new
+            TaskName = "Resolution task",
+            Kind = "ConversationalSummarizationTask",
+            Parameters = new
             {
-                summaryAspects = new[]
+                SummaryAspects = new[]
                 {
                     "resolution",
                 }
@@ -83,22 +93,21 @@ var data = new
     },
 };
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-JsonElement jobResults = result.RootElement;
-foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+foreach (dynamic task in jobResults.Tasks.Items)
 {
-    Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
-    JsonElement results = task.GetProperty("results");
-    foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+    Console.WriteLine($"Task name: {task.TaskName}");
+    dynamic results = task.Results;
+    foreach (dynamic conversation in results.Conversations)
     {
-        Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+        Console.WriteLine($"Conversation: #{conversation.Id}");
         Console.WriteLine("Summaries:");
-        foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
+        foreach (dynamic summary in conversation.Summaries)
         {
-            Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
-            Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+            Console.WriteLine($"Text: {summary.Text}");
+            Console.WriteLine($"Aspect: {summary.Aspect}");
         }
         Console.WriteLine();
     }
@@ -110,5 +119,5 @@ foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items"
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationSummarization
-Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
+Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
 ```

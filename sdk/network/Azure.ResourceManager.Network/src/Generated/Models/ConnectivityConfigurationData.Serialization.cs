@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<ConnectivityGroupItem>> appliesToGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<DeleteExistingPeering> deleteExistingPeering = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -196,11 +198,20 @@ namespace Azure.ResourceManager.Network
                             deleteExistingPeering = new DeleteExistingPeering(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("resourceGuid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ConnectivityConfigurationData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(etag));
+            return new ConnectivityConfigurationData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag));
         }
     }
 }

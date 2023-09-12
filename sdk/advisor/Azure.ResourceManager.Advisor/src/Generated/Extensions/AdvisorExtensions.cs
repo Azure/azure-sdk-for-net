@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>

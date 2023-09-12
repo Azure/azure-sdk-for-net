@@ -210,8 +210,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// on a collection or named value, Write should be used.
         /// If it is a GET, Read should be used. If it is a DELETE, Delete should be used. If it
         /// is a POST, Action should be used.
-        /// As a note: all resource providers would need to include the &quot;{Resource Provider
-        /// Namespace}/register/action&quot; operation in their response.
+        /// As a note: all resource providers would need to include the "{Resource Provider
+        /// Namespace}/register/action" operation in their response.
         /// This API is used to register for their service, and should include details about the
         /// operation (e.g. a localized name for the resource provider + any special
         /// considerations like PII release).
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// Gets or sets Origin.
         /// The intended executor of the operation; governs the display of the operation in the
         /// RBAC UX and the audit logs UX.
-        /// Default value is &quot;user,system&quot;.
+        /// Default value is "user,system".
         /// </param>
         /// <param name="properties"> ClientDiscovery properties. </param>
         /// <returns> A new <see cref="Models.MoverOperationsDiscovery"/> instance for mocking. </returns>
@@ -242,8 +242,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// Gets or sets the provider.
         /// The localized friendly form of the resource provider name – it is expected to also
         /// include the publisher/company responsible.
-        /// It should use Title Casing and begin with &quot;Microsoft&quot; for 1st party services.
-        /// e.g. &quot;Microsoft Monitoring Insights&quot; or &quot;Microsoft Compute.&quot;.
+        /// It should use Title Casing and begin with "Microsoft" for 1st party services.
+        /// e.g. "Microsoft Monitoring Insights" or "Microsoft Compute.".
         /// </param>
         /// <param name="resource">
         /// Gets or sets the resource.
@@ -252,15 +252,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// It should use Title Casing.
         /// This value should be unique for a particular URL type (e.g. nested types should *not*
         /// reuse their parent’s display.resource field)
-        /// e.g. &quot;Virtual Machines&quot; or &quot;Scheduler Job Collections&quot;, or &quot;Virtual Machine VM Sizes&quot;
-        /// or &quot;Scheduler Jobs&quot;.
+        /// e.g. "Virtual Machines" or "Scheduler Job Collections", or "Virtual Machine VM Sizes"
+        /// or "Scheduler Jobs".
         /// </param>
         /// <param name="operation">
         /// Gets or sets the operation.
         /// The localized friendly name for the operation, as it should be shown to the user.
         /// It should be concise (to fit in drop downs) but clear (i.e. self-documenting).
         /// It should use Title Casing.
-        /// Prescriptive guidance: Read Create or Update Delete &apos;ActionName&apos;.
+        /// Prescriptive guidance: Read Create or Update Delete 'ActionName'.
         /// </param>
         /// <param name="description">
         /// Gets or sets the description.
@@ -268,13 +268,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// user.
         /// It should be thorough, yet concise – it will be used in tool tips and detailed views.
         /// Prescriptive guidance for namespace:
-        /// Read any &apos;display.provider&apos;  resource
-        /// Create or Update any  &apos;display.provider&apos;  resource
-        /// Delete any  &apos;display.provider&apos;  resource
-        /// Perform any other action on any  &apos;display.provider&apos;  resource
+        /// Read any 'display.provider'  resource
+        /// Create or Update any  'display.provider'  resource
+        /// Delete any  'display.provider'  resource
+        /// Perform any other action on any  'display.provider'  resource
         /// Prescriptive guidance for namespace:
-        /// Read any &apos;display.resource&apos; Create or Update any  &apos;display.resource&apos; Delete any
-        ///  &apos;display.resource&apos; &apos;ActionName&apos; any &apos;display.resources&apos;.
+        /// Read any 'display.resource' Create or Update any  'display.resource' Delete any
+        ///  'display.resource' 'ActionName' any 'display.resources'.
         /// </param>
         /// <returns> A new <see cref="Models.MoverDisplayInfo"/> instance for mocking. </returns>
         public static MoverDisplayInfo MoverDisplayInfo(string provider = null, string resource = null, string operation = null, string description = null)

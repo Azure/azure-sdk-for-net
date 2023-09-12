@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="stopwords"> The list of stopwords. This property and the stopwords list property cannot both be set. </param>
         /// <param name="stopwordsList"> A predefined list of stopwords to use. This property and the stopwords property cannot both be set. Default is English. </param>
         /// <param name="ignoreCase"> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </param>
-        /// <param name="removeTrailingStopWords"> A value indicating whether to ignore the last search term if it&apos;s a stop word. Default is true. </param>
+        /// <param name="removeTrailingStopWords"> A value indicating whether to ignore the last search term if it's a stop word. Default is true. </param>
         internal StopwordsTokenFilter(string oDataType, string name, IList<string> stopwords, StopwordsList? stopwordsList, bool? ignoreCase, bool? removeTrailingStopWords) : base(oDataType, name)
         {
             Stopwords = stopwords;
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public StopwordsList? StopwordsList { get; set; }
         /// <summary> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </summary>
         public bool? IgnoreCase { get; set; }
-        /// <summary> A value indicating whether to ignore the last search term if it&apos;s a stop word. Default is true. </summary>
+        /// <summary> A value indicating whether to ignore the last search term if it's a stop word. Default is true. </summary>
         public bool? RemoveTrailingStopWords { get; set; }
     }
 }

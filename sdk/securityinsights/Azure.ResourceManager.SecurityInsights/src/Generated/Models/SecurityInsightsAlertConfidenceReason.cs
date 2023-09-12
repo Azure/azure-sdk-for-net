@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsAlertConfidenceReason. </summary>
-        /// <param name="reason"> The reason&apos;s description. </param>
+        /// <param name="reason"> The reason's description. </param>
         /// <param name="reasonType"> The type (category) of the reason. </param>
         internal SecurityInsightsAlertConfidenceReason(string reason, string reasonType)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ReasonType = reasonType;
         }
 
-        /// <summary> The reason&apos;s description. </summary>
+        /// <summary> The reason's description. </summary>
         public string Reason { get; }
         /// <summary> The type (category) of the reason. </summary>
         public string ReasonType { get; }

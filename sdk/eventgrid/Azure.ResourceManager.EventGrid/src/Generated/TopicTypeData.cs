@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="supportedLocations"> List of locations supported by this topic type. </param>
         /// <param name="sourceResourceFormat"> Source resource format. </param>
         /// <param name="supportedScopesForSource"> Supported source scopes. </param>
-        internal TopicTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string displayName, string description, EventGridResourceRegionType? resourceRegionType, TopicTypeProvisioningState? provisioningState, IList<string> supportedLocations, string sourceResourceFormat, IList<TopicTypeSourceScope> supportedScopesForSource) : base(id, name, resourceType, systemData)
+        /// <param name="areRegionalAndGlobalSourcesSupported"> Flag to indicate that a topic type can support both regional or global system topics. </param>
+        internal TopicTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string displayName, string description, EventGridResourceRegionType? resourceRegionType, TopicTypeProvisioningState? provisioningState, IList<string> supportedLocations, string sourceResourceFormat, IList<TopicTypeSourceScope> supportedScopesForSource, bool? areRegionalAndGlobalSourcesSupported) : base(id, name, resourceType, systemData)
         {
             Provider = provider;
             DisplayName = displayName;
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.EventGrid
             SupportedLocations = supportedLocations;
             SourceResourceFormat = sourceResourceFormat;
             SupportedScopesForSource = supportedScopesForSource;
+            AreRegionalAndGlobalSourcesSupported = areRegionalAndGlobalSourcesSupported;
         }
 
         /// <summary> Namespace of the provider of the topic type. </summary>
@@ -66,5 +68,7 @@ namespace Azure.ResourceManager.EventGrid
         public string SourceResourceFormat { get; set; }
         /// <summary> Supported source scopes. </summary>
         public IList<TopicTypeSourceScope> SupportedScopesForSource { get; }
+        /// <summary> Flag to indicate that a topic type can support both regional or global system topics. </summary>
+        public bool? AreRegionalAndGlobalSourcesSupported { get; set; }
     }
 }

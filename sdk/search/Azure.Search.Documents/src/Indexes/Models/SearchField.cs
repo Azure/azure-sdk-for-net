@@ -15,7 +15,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// When creating an index, instead use the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
     /// </para>
     /// </summary>
-    [CodeGenModel("Field")]
     public partial class SearchField
     {
         // TODO: Replace constructor and read-only properties when https://github.com/Azure/autorest.csharp/issues/554 is fixed.

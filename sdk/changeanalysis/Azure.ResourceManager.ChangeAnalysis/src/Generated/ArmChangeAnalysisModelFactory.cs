@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <param name="changeType"> The type of the change. </param>
         /// <param name="changeCategory"> The change category. </param>
         /// <param name="jsonPath"> The json path of the changed property. </param>
-        /// <param name="displayName"> The enhanced display name of the json path. E.g., the json path value[0].properties will be translated to something meaningful like slots[&quot;Staging&quot;].properties. </param>
+        /// <param name="displayName"> The enhanced display name of the json path. E.g., the json path value[0].properties will be translated to something meaningful like slots["Staging"].properties. </param>
         /// <param name="level"></param>
         /// <param name="description"> The description of the changed property. </param>
         /// <param name="oldValue"> The value of the property before the change. </param>
         /// <param name="newValue"> The value of the property after the change. </param>
-        /// <param name="isDataMasked"> The boolean indicating whether the oldValue and newValue are masked. The values are masked if it contains sensitive information that the user doesn&apos;t have access to. </param>
+        /// <param name="isDataMasked"> The boolean indicating whether the oldValue and newValue are masked. The values are masked if it contains sensitive information that the user doesn't have access to. </param>
         /// <returns> A new <see cref="Models.PropertyChange"/> instance for mocking. </returns>
         public static PropertyChange PropertyChange(ChangeType? changeType = null, ChangeCategory? changeCategory = null, string jsonPath = null, string displayName = null, PropertyChangeLevel? level = null, string description = null, string oldValue = null, string newValue = null, bool? isDataMasked = null)
         {

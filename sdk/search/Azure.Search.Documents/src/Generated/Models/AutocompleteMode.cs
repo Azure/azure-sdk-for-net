@@ -7,14 +7,14 @@
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Specifies the mode for Autocomplete. The default is &apos;oneTerm&apos;. Use &apos;twoTerms&apos; to get shingles and &apos;oneTermWithContext&apos; to use the current context in producing autocomplete terms. </summary>
+    /// <summary> Specifies the mode for Autocomplete. The default is 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext' to use the current context in producing autocomplete terms. </summary>
     public enum AutocompleteMode
     {
-        /// <summary> Only one term is suggested. If the query has two terms, only the last term is completed. For example, if the input is &apos;washington medic&apos;, the suggested terms could include &apos;medicaid&apos;, &apos;medicare&apos;, and &apos;medicine&apos;. </summary>
+        /// <summary> Only one term is suggested. If the query has two terms, only the last term is completed. For example, if the input is 'washington medic', the suggested terms could include 'medicaid', 'medicare', and 'medicine'. </summary>
         OneTerm,
-        /// <summary> Matching two-term phrases in the index will be suggested. For example, if the input is &apos;medic&apos;, the suggested terms could include &apos;medicare coverage&apos; and &apos;medical assistant&apos;. </summary>
+        /// <summary> Matching two-term phrases in the index will be suggested. For example, if the input is 'medic', the suggested terms could include 'medicare coverage' and 'medical assistant'. </summary>
         TwoTerms,
-        /// <summary> Completes the last term in a query with two or more terms, where the last two terms are a phrase that exists in the index. For example, if the input is &apos;washington medic&apos;, the suggested terms could include &apos;washington medicaid&apos; and &apos;washington medical&apos;. </summary>
+        /// <summary> Completes the last term in a query with two or more terms, where the last two terms are a phrase that exists in the index. For example, if the input is 'washington medic', the suggested terms could include 'washington medicaid' and 'washington medical'. </summary>
         OneTermWithContext
     }
 }

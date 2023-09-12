@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="backendPools"> Backend pools available to routing rules. </param>
         /// <param name="frontendEndpoints"> Frontend endpoints available to routing rules. </param>
         /// <param name="backendPoolsSettings"> Settings for all backendPools. </param>
-        /// <param name="enabledState"> Operational status of the Front Door load balancer. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="resourceState"> Resource status of the Front Door. </param>
         /// <param name="provisioningState"> Provisioning state of the Front Door. </param>
         /// <param name="cname"> The host that each frontendEndpoint must CNAME to. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.FrontDoor
         public IList<FrontendEndpointData> FrontendEndpoints { get; }
         /// <summary> Settings for all backendPools. </summary>
         public BackendPoolsSettings BackendPoolsSettings { get; set; }
-        /// <summary> Operational status of the Front Door load balancer. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'. </summary>
         public FrontDoorEnabledState? EnabledState { get; set; }
         /// <summary> Resource status of the Front Door. </summary>
         public FrontDoorResourceState? ResourceState { get; }

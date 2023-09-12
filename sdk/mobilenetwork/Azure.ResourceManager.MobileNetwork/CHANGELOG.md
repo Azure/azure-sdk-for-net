@@ -1,5 +1,23 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2023-09-05)
+
+This package is the first stable release of the Azure Mobile Network management library.
+
+### Features Added
+
+- Updated api-version to `2023-06-01`.
+
 ## 1.0.0-beta.2 (2023-05-30)
 
 ### Features Added

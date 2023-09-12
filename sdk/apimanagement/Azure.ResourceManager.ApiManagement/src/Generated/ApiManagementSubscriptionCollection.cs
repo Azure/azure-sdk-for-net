@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,9 +71,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="content"> Create parameters. </param>
         /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
+        /// Notify change in Subscription State.
+        ///  - If false, do not send any email notification for change of state of subscription
+        ///  - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
@@ -118,9 +119,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="content"> Create parameters. </param>
         /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
+        /// Notify change in Subscription State.
+        ///  - If false, do not send any email notification for change of state of subscription
+        ///  - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementSubscriptionSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementSubscriptionSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementSubscriptionResource(Client, SubscriptionContractData.DeserializeSubscriptionContractData(e)), _apiManagementSubscriptionSubscriptionClientDiagnostics, Pipeline, "ApiManagementSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementSubscriptionResource(Client, SubscriptionContractData.DeserializeSubscriptionContractData(e)), _apiManagementSubscriptionSubscriptionClientDiagnostics, Pipeline, "ApiManagementSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -270,7 +271,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementSubscriptionSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementSubscriptionSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementSubscriptionResource(Client, SubscriptionContractData.DeserializeSubscriptionContractData(e)), _apiManagementSubscriptionSubscriptionClientDiagnostics, Pipeline, "ApiManagementSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementSubscriptionResource(Client, SubscriptionContractData.DeserializeSubscriptionContractData(e)), _apiManagementSubscriptionSubscriptionClientDiagnostics, Pipeline, "ApiManagementSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

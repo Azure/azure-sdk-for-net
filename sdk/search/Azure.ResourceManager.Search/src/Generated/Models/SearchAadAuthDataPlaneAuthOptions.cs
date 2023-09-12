@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Defines the options for how the data plane API of a Search service authenticates requests. This cannot be set if &apos;disableLocalAuth&apos; is set to true. </summary>
+    /// <summary> Defines the options for how the data plane API of a Search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </summary>
     public partial class SearchAadAuthDataPlaneAuthOptions
     {
         /// <summary> Initializes a new instance of SearchAadAuthDataPlaneAuthOptions. </summary>

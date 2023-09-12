@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -87,7 +86,7 @@ namespace Azure.Identity
             Argument.AssertNotNull(clientId, nameof(clientId));
             Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
             _clientId = clientId;
-            _authCode = authorizationCode ;
+            _authCode = authorizationCode;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
@@ -137,34 +136,55 @@ namespace Azure.Identity
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(AuthorizationCodeCredential)}.{nameof(GetToken)}", requestContext);
 
+            AccessToken token;
+            string tenantId = null;
             try
             {
-                AccessToken token;
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
+                tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
                 if (_record is null)
                 {
-                    AuthenticationResult result = await Client
-                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, async, cancellationToken)
-                        .ConfigureAwait(false);
-                    _record = new AuthenticationRecord(result, _clientId);
-
-                    token = new AccessToken(result.AccessToken, result.ExpiresOn);
+                    token = await AcquireTokenWithCode(async, requestContext, token, tenantId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
                     AuthenticationResult result = await Client
-                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, async, cancellationToken)
+                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
                         .ConfigureAwait(false);
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
 
                 return scope.Succeeded(token);
             }
+            catch (MsalUiRequiredException)
+            {
+                // This occurs when we have an auth record but the cae or ncae cache entry is missing
+                // fall through to the acquire call below
+            }
             catch (Exception e)
             {
                 throw scope.FailWrapAndThrow(e);
             }
+
+            try
+            {
+                token = await AcquireTokenWithCode(async, requestContext, token, tenantId, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(token);
+            }
+            catch (Exception e)
+            {
+                throw scope.FailWrapAndThrow(e);
+            }
+        }
+
+        private async Task<AccessToken> AcquireTokenWithCode(bool async, TokenRequestContext requestContext, AccessToken token, string tenantId, CancellationToken cancellationToken)
+        {
+            AuthenticationResult result = await Client
+                                    .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
+                                    .ConfigureAwait(false);
+            _record = new AuthenticationRecord(result, _clientId);
+            token = new AccessToken(result.AccessToken, result.ExpiresOn);
+            return token;
         }
     }
 }

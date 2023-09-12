@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
         /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SsisPropertyOverride(BinaryData value)
+        public SsisPropertyOverride(DataFactoryElement<string> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -26,43 +27,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
         /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
         /// <param name="isSensitive"> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </param>
-        internal SsisPropertyOverride(BinaryData value, bool? isSensitive)
+        internal SsisPropertyOverride(DataFactoryElement<string> value, bool? isSensitive)
         {
             Value = value;
             IsSensitive = isSensitive;
         }
 
-        /// <summary>
-        /// SSIS package property override value. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Value { get; set; }
+        /// <summary> SSIS package property override value. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Value { get; set; }
         /// <summary> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </summary>
         public bool? IsSensitive { get; set; }
     }

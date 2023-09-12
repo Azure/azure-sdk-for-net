@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of SapLandscapeMonitorSidMapping. </summary>
         /// <param name="name"> Gets or sets the name of the grouping. </param>
-        /// <param name="topSid"> Gets or sets the list of SID&apos;s. </param>
+        /// <param name="topSid"> Gets or sets the list of SID's. </param>
         internal SapLandscapeMonitorSidMapping(string name, IList<string> topSid)
         {
             Name = name;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Gets or sets the name of the grouping. </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the list of SID&apos;s. </summary>
+        /// <summary> Gets or sets the list of SID's. </summary>
         public IList<string> TopSid { get; }
     }
 }

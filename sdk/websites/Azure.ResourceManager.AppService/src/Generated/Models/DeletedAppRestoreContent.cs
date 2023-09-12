@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="recoverConfiguration"> If true, deleted site configuration, in addition to content, will be restored. </param>
         /// <param name="snapshotTime">
-        /// Point in time to restore the deleted app from, formatted as a DateTime string. 
+        /// Point in time to restore the deleted app from, formatted as a DateTime string.
         /// If unspecified, default value is the time that the app was deleted.
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> If true, deleted site configuration, in addition to content, will be restored. </summary>
         public bool? RecoverConfiguration { get; set; }
         /// <summary>
-        /// Point in time to restore the deleted app from, formatted as a DateTime string. 
+        /// Point in time to restore the deleted app from, formatted as a DateTime string.
         /// If unspecified, default value is the time that the app was deleted.
         /// </summary>
         public string SnapshotTime { get; set; }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        /// <summary> The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;. </summary>
+        /// <summary> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </summary>
         public TimeSpan? Timespan { get; set; }
         /// <summary> The interval (i.e. timegrain) of the query. </summary>
         public TimeSpan? Interval { get; set; }
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Examples: sum asc.
         /// </summary>
         public string OrderBy { get; set; }
-        /// <summary> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like &apos;City eq Seattle or City eq Tacoma&apos; but don&apos;t want to see separate values for each city, you can specify &apos;RollUpBy=City&apos; to see the results for Seattle and Tacoma rolled up into one timeseries. </summary>
+        /// <summary> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </summary>
         public string RollUpBy { get; set; }
-        /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation&apos;s description for details. </summary>
+        /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </summary>
         public MonitorMetricResultType? ResultType { get; set; }
         /// <summary> Metric namespace where the metrics you want reside. </summary>
         public string MetricNamespace { get; set; }

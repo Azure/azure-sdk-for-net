@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of PlayCanceled. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         internal PlayCanceled(string callConnectionId, string serverCallId, string correlationId, string operationContext)
         {

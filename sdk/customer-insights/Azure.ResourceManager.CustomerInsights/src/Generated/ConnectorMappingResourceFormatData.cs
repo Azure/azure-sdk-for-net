@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="description"> The description of the connector mapping. </param>
         /// <param name="dataFormatId"> The DataFormat ID. </param>
         /// <param name="mappingProperties"> The properties of the mapping. </param>
-        /// <param name="nextRunOn"> The next run time based on customer&apos;s settings. </param>
+        /// <param name="nextRunOn"> The next run time based on customer's settings. </param>
         /// <param name="runId"> The RunId. </param>
         /// <param name="state"> State of connector mapping. </param>
         /// <param name="tenantId"> The hub name. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CustomerInsights
         public string DataFormatId { get; }
         /// <summary> The properties of the mapping. </summary>
         public ConnectorMappingProperties MappingProperties { get; set; }
-        /// <summary> The next run time based on customer&apos;s settings. </summary>
+        /// <summary> The next run time based on customer's settings. </summary>
         public DateTimeOffset? NextRunOn { get; }
         /// <summary> The RunId. </summary>
         public string RunId { get; }

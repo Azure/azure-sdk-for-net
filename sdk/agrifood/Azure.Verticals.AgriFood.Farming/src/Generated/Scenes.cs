@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -66,7 +67,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='DownloadAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DownloadAsync(string filePath, RequestContext context = null)
+        public virtual async Task<Response> DownloadAsync(string filePath, RequestContext context)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
 
@@ -100,7 +101,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='Download(string,RequestContext)']/*" />
-        public virtual Response Download(string filePath, RequestContext context = null)
+        public virtual Response Download(string filePath, RequestContext context)
         {
             Argument.AssertNotNull(filePath, nameof(filePath));
 
@@ -135,7 +136,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetailsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -170,7 +171,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetails(string,RequestContext)']/*" />
-        public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestContext context = null)
+        public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -198,7 +199,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> Collection Id to be searched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
+        /// <param name="collectionId"> Collection Id to be searched. Allowed values: "Sentinel_2_L2A" | "Sentinel_2_L1C". </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="maxpagesize"> Maximum number of features needed (inclusive). Minimum = 1, Maximum = 100, Default value = 10. </param>
         /// <param name="skip"> Skip token for getting next set of results. </param>
@@ -237,7 +238,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> Collection Id to be searched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
+        /// <param name="collectionId"> Collection Id to be searched. Allowed values: "Sentinel_2_L2A" | "Sentinel_2_L1C". </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="maxpagesize"> Maximum number of features needed (inclusive). Minimum = 1, Maximum = 100, Default value = 10. </param>
         /// <param name="skip"> Skip token for getting next set of results. </param>
@@ -276,7 +277,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> Collection Id to be fetched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
+        /// <param name="collectionId"> Collection Id to be fetched. Allowed values: "Sentinel_2_L2A" | "Sentinel_2_L1C". </param>
         /// <param name="featureId"> Feature Id to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is null. </exception>
@@ -284,7 +285,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeatureAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context = null)
+        public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));
@@ -313,7 +314,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> Collection Id to be fetched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
+        /// <param name="collectionId"> Collection Id to be fetched. Allowed values: "Sentinel_2_L2A" | "Sentinel_2_L1C". </param>
         /// <param name="featureId"> Feature Id to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is null. </exception>
@@ -321,7 +322,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeature(string,string,RequestContext)']/*" />
-        public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context = null)
+        public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));
@@ -371,7 +372,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenesAsync(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetScenesAsync(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetScenesAsync(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNull(provider, nameof(provider));
             Argument.AssertNotNull(partyId, nameof(partyId));
@@ -380,7 +381,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -414,7 +415,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenes(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetScenes(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetScenes(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNull(provider, nameof(provider));
             Argument.AssertNotNull(partyId, nameof(partyId));
@@ -423,7 +424,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
         }
 
         /// <summary>

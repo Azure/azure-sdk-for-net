@@ -38,14 +38,44 @@ function NpmInstallForProject([string]$workingDirectory) {
 
         #default to root/eng/emitter-package.json but you can override by writing
         #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
-        $replacementPackageJson = "$PSScriptRoot/../../emitter-package.json"
+        $replacementPackageJson = Join-Path $PSScriptRoot "../../emitter-package.json"
         if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
             $replacementPackageJson = &$GetEmitterPackageJsonPathFn
         }
 
         Write-Host("Copying package.json from $replacementPackageJson")
         Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
-        npm install --no-lock-file
+
+        #default to root/eng/emitter-package-lock.json but you can override by writing
+        #Get-${Language}-EmitterPackageLockPath in your Language-Settings.ps1
+        $emitterPackageLock = Join-Path $PSScriptRoot "../../emitter-package-lock.json"
+        if (Test-Path "Function:$GetEmitterPackageLockPathFn") {
+            $emitterPackageLock = &$GetEmitterPackageLockPathFn
+        }
+
+        $usingLockFile = Test-Path $emitterPackageLock
+
+        if ($usingLockFile) {
+            Write-Host("Copying package-lock.json from $emitterPackageLock")
+            Copy-Item -Path $emitterPackageLock -Destination "package-lock.json" -Force
+        }
+
+        $useAlphaNpmRegistry = (Get-Content $replacementPackageJson -Raw).Contains("-alpha.")
+
+        if($useAlphaNpmRegistry) {
+            Write-Host "Package.json contains '-alpha.' in the version, Creating .npmrc using public/azure-sdk-for-js-test-autorest feed."
+            "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/ `n`nalways-auth=true" | Out-File '.npmrc'
+        }
+
+        if ($usingLockFile) {
+            Write-Host "> npm ci"
+            npm ci
+        }
+        else {
+            Write-Host "> npm install"
+            npm install
+        }
+
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
     finally {
@@ -104,3 +134,4 @@ $shouldCleanUp = !$SaveInputs
 if ($shouldCleanUp) {
     Remove-Item $tempFolder -Recurse -Force
 }
+exit 0

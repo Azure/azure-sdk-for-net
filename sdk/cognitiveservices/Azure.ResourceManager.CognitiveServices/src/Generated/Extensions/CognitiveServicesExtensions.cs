@@ -482,6 +482,52 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
+        /// Get usages for the requested subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ServiceAccountUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get usages for the requested subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ServiceAccountUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, filter, cancellationToken);
+        }
+
+        /// <summary>
         /// Check available SKUs.
         /// <list type="bullet">
         /// <item>
@@ -623,6 +669,50 @@ namespace Azure.ResourceManager.CognitiveServices
         public static Pageable<CommitmentTier> GetCommitmentTiers(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCommitmentTiers(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List Models.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/models</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Models_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CognitiveServicesModel" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CognitiveServicesModel> GetModelsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetModelsAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List Models.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/models</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Models_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesModel" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CognitiveServicesModel> GetModels(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetModels(location, cancellationToken);
         }
 
         /// <summary>

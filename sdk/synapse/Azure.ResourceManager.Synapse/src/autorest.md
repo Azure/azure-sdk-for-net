@@ -13,7 +13,15 @@ namespace: Azure.ResourceManager.Synapse
 tag: package-composite-v2
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update
+  - SqlPoolSensitivityLabels_CreateOrUpdate
+  - SqlPoolSensitivityLabels_Delete
 skip-csproj: true
+use-core-datafactory-replacements: false
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue
@@ -382,7 +390,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
