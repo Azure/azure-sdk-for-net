@@ -87,8 +87,8 @@ prepend-rp-prefix:
   - PublicNetworkAccess
   - UserSubscriptionQuota
   - UserSubscriptionQuotaListResult
-  - IPFilterRule
-  - IPFilterActionType
+  - IpFilterRule
+  - IpFilterActionType
   - RoutingSource
   - JobStatus
   - JobType
@@ -99,7 +99,7 @@ prepend-rp-prefix:
   - RegistryStatistics
   - MatchedRoute
   - NetworkRuleSetProperties
-  - NetworkRuleSetIPRule
+  - NetworkRuleSetIpRule
   - NetworkRuleIPAction
   - RoutingProperties
   - StorageEndpointProperties
