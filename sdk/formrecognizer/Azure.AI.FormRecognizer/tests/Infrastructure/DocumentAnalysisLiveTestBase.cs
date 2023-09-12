@@ -115,8 +115,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// </summary>
         /// <param name="containerType">The type of container to use for training.</param>
         /// <param name="options">A set of options to apply when configuring the request.</param>
+        /// <param name="skipCaching">If <c>true</c>, the model cache will be ignored and a new model will be returned. Otherwise, the model cache may be used.</param>
         /// <returns>A <see cref="DisposableDocumentModel"/> instance from which the built model ID can be obtained.</returns>
-        protected async ValueTask<DisposableDocumentModel> BuildDisposableDocumentModelAsync(ContainerType containerType = default, BuildDocumentModelOptions options = null)
+        protected async ValueTask<DisposableDocumentModel> BuildDisposableDocumentModelAsync(ContainerType containerType = default, BuildDocumentModelOptions options = null, bool skipCaching = false)
         {
             var client = CreateDocumentModelAdministrationClient();
             string trainingFiles = containerType switch
@@ -130,22 +131,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var buildMode = DocumentBuildMode.Template;
             var modelId = Recording.GenerateId();
 
-            if (Recording.Mode == RecordedTestMode.Live)
-            {
-                var modelKey = new DocumentModelCache.ModelKey(_serviceVersion, containerType.ToString(), buildMode, options);
+            skipCaching |= (Recording.Mode == RecordedTestMode.Record) || (Recording.Mode == RecordedTestMode.Playback);
 
-                if (!DocumentModelCache.Models.TryGetValue(modelKey, out DisposableDocumentModel model))
-                {
-                    model = await DisposableDocumentModel.BuildAsync(client, trainingFilesUri, buildMode, modelId, options, deleteOnDisposal: false);
-                    DocumentModelCache.Models.Add(modelKey, model);
-                }
-
-                return model;
-            }
-            else
+            if (skipCaching)
             {
                 return await DisposableDocumentModel.BuildAsync(client, trainingFilesUri, buildMode, modelId, options);
             }
+
+            var modelKey = new DocumentModelCache.ModelKey(_serviceVersion, containerType.ToString(), buildMode, options);
+
+            if (!DocumentModelCache.Models.TryGetValue(modelKey, out DisposableDocumentModel model))
+            {
+                model = await DisposableDocumentModel.BuildAsync(client, trainingFilesUri, buildMode, modelId, options, deleteOnDisposal: false);
+                DocumentModelCache.Models.Add(modelKey, model);
+            }
+
+            return model;
         }
 
         /// <summary>

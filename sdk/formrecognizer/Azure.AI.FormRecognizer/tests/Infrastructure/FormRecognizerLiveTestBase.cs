@@ -123,22 +123,21 @@ namespace Azure.AI.FormRecognizer.Tests
             };
             var trainingFilesUri = new Uri(trainingFiles);
 
-            if (Recording.Mode == RecordedTestMode.Live)
-            {
-                var modelKey = new TrainedModelCache.ModelKey(_serviceVersion, containerType.ToString(), useTrainingLabels, modelName);
-
-                if (!TrainedModelCache.Models.TryGetValue(modelKey, out DisposableTrainedModel model))
-                {
-                    model = await DisposableTrainedModel.TrainModelAsync(client, trainingFilesUri, useTrainingLabels, modelName, deleteOnDisposal: false);
-                    TrainedModelCache.Models.Add(modelKey, model);
-                }
-
-                return model;
-            }
-            else
+            // Skip caching on record and playback modes.
+            if (Recording.Mode == RecordedTestMode.Record || Recording.Mode == RecordedTestMode.Playback)
             {
                 return await DisposableTrainedModel.TrainModelAsync(client, trainingFilesUri, useTrainingLabels, modelName);
             }
+
+            var modelKey = new TrainedModelCache.ModelKey(_serviceVersion, containerType.ToString(), useTrainingLabels, modelName);
+
+            if (!TrainedModelCache.Models.TryGetValue(modelKey, out DisposableTrainedModel model))
+            {
+                model = await DisposableTrainedModel.TrainModelAsync(client, trainingFilesUri, useTrainingLabels, modelName, deleteOnDisposal: false);
+                TrainedModelCache.Models.Add(modelKey, model);
+            }
+
+            return model;
         }
 
         protected void ValidatePrebuiltForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
