@@ -5,12 +5,13 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Primitives;
 
 namespace Azure.Messaging.EventHubs.Consumer
 {
     /// <summary>
     ///   The position of events in an Event Hub partition, typically used in the creation of
-    ///   an <see cref="EventHubConsumerClient" />.
+    ///   an <see cref="EventHubConsumerClient" /> or an <see cref="EventProcessorCheckpoint"/>.
     /// </summary>
     ///
     public struct EventPosition : IEquatable<EventPosition>
@@ -75,8 +76,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         public long? SequenceNumber { get; set; }
 
         /// <summary>
-        ///   An optional sequence number to associate with the checkpoint, intended as informational metadata. The offset will be used to determine
-        ///   positioning.
+        ///   An optional sequence number intended as informational metadata. When this is defined it will not be used to determine
+        ///   positioning, instead the <see cref="Offset"/> value will be used.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
@@ -90,14 +91,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <value>Expected to be <c>null</c> if the event position represents an offset or sequence number.</value>
         ///
         internal DateTimeOffset? EnqueuedTime { get; set; }
-
-        /// <summary>
-        ///   Holds the offset value passed in by the constructor.
-        /// </summary>
-        ///
-        /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
-        ///
-        internal long OffsetLong { get; set; }
 
         /// <summary>
         ///   Corresponds to a specific offset in the partition event stream.  By default, if an event is located
@@ -271,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>The position of the specified event.</returns>
         ///
-        public static EventPosition FromOffset(string offset,
+        private static EventPosition FromOffset(string offset,
                                                 long? informationalSequenceNumber,
                                                 bool isInclusive)
         {

@@ -2195,7 +2195,11 @@ namespace Azure.Messaging.EventHubs.Primitives
             /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
             ///
             public async override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
-                                                             CancellationToken cancellationToken) => await Processor.UpdateCheckpointAsync(checkpoint.PartitionId, checkpoint.StartingPosition.OffsetLong, checkpoint.StartingPosition.SequenceNumber, cancellationToken).ConfigureAwait(false);
+                                                             CancellationToken cancellationToken)
+            {
+                var checkpointOffset = long.Parse(checkpoint.StartingPosition.Offset);
+                await Processor.UpdateCheckpointAsync(checkpoint.PartitionId, checkpointOffset, checkpoint.StartingPosition.SequenceNumber, cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
