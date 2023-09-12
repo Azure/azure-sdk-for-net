@@ -3,10 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
+using Castle.Components.DictionaryAdapter.Xml;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
@@ -22,6 +25,15 @@ namespace Azure.Monitor.Query.Tests
         private MetricsQueryClient CreateClient()
         {
             return InstrumentClient(new MetricsQueryClient(
+                TestEnvironment.MetricsEndpoint,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new MetricsQueryClientOptions())
+            ));
+        }
+
+        private MetricsBatchQueryClient CreateBatchClient()
+        {
+            return InstrumentClient(new MetricsBatchQueryClient(
                 TestEnvironment.MetricsEndpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MetricsQueryClientOptions())
@@ -324,6 +336,40 @@ namespace Azure.Monitor.Query.Tests
               });
 
             Assert.Throws<KeyNotFoundException>(() => { results.Value.GetMetricByName("Guinness"); });
+        }
+
+        [RecordedTest]
+        public void MetricsBatchQuery()
+        {
+            MetricsBatchQueryClient client = CreateBatchClient();
+            string resourceId = TestEnvironment.ResourceId;
+            resourceId = resourceId.Substring(resourceId.IndexOf("/subscriptions"));
+
+            try
+            {
+                client.GetComponentType(resourceId);
+                configClient.getConfigurationSetting("foo", "bar");
+            }
+            catch (Exception)
+            {
+                // ignore as this is only to generate some metrics
+            }
+
+            MetricsQueryOptions options = new MetricsQueryOptions();
+            options.Granularity = TimeSpan.FromMinutes(10);
+            options.Size = 10;
+            options.TimeRange = new QueryTimeRange(TimeSpan.FromDays(1));
+            //lic Mono<MetricsBatchResult> queryBatch(List<String> resourceUris, List<String> metricsNames, String metricsNamespace)
+            var metricsQueryResults = client.BatchAsync(
+                TestEnvironment.SubscriptionId,
+                "microsoft.appconfiguration/configurationstores",
+                new List<string> { resourceId },
+                options).getValue();
+            Assert.AreEqual(1, metricsQueryResults.getMetricsQueryResults().size());
+            Assert.AreEqual(1, metricsQueryResults.getMetricsQueryResults().get(0).getMetrics().size());
+            MetricResult metricResult = metricsQueryResults.getMetricsQueryResults().get(0).getMetrics().get(0);
+            Assert.AreEqual("HttpIncomingRequestCount", metricResult.Name);
+            Assert.NotNull(metricResult.TimeSeries);
         }
     }
 }
