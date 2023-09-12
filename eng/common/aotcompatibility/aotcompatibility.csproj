@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\sdk\core\\src\.csproj" />
+    <TrimmerRootAssembly Include="" />
+  </ItemGroup>
+
+  <!-- Update this dependency to its latest, which has all the annotations -->
+  <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-preview.7.23375.6" />
+
+</Project>

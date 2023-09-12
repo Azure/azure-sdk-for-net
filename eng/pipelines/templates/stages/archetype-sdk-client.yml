@@ -24,9 +24,12 @@ parameters:
 - name: TargetDocRepoOwner
   type: string
   default: Azure
-- name: ValidateAOT
+- name: CheckAOTCompat
   type: boolean
   default: false
+- name: ExpectedNumberOfAotWarnings
+  type: number
+  default: 0
 - name: TargetDocRepoName
   type: string
   default: azure-docs-sdk-dotnet
@@ -85,7 +88,7 @@ stages:
         LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
         BuildSnippets: ${{ parameters.BuildSnippets }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
-        ValidateAOT: ${{ paramters.ValidateAOT }}
+        CheckAOTCompat: ${{ paramters.CheckAOTCompat }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
         MatrixConfigs:
           - ${{ each config in parameters.MatrixConfigs }}:
