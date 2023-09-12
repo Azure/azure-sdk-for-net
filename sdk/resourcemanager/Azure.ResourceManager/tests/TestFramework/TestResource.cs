@@ -4,14 +4,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core.Pipeline;
 using Azure.Core.Tests;
 using Azure.ResourceManager;
 
 namespace Azure.Core.TestFramework
 {
-    internal class TestResource : ArmResource
+    public class TestResource : ArmResource
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
         private static MockResponse mockResponse = new(200);

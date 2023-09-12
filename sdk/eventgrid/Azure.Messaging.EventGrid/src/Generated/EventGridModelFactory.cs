@@ -230,6 +230,67 @@ namespace Azure.Messaging.EventGrid
             return new SubscriptionDeletedEventData(eventSubscriptionId);
         }
 
+        /// <summary> Initializes a new instance of EventGridMqttClientCreatedOrUpdatedEventData. </summary>
+        /// <param name="clientAuthenticationName"> Unique identifier for the MQTT client that the client presents to the service for authentication. This case-sensitive string can be up to 128 characters long, and supports UTF-8 characters. </param>
+        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
+        /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
+        /// <param name="state"> Configured state of the client. The value could be Enabled or Disabled. </param>
+        /// <param name="createdOn"> Time the client resource is created based on the provider's UTC time. </param>
+        /// <param name="updatedOn"> Time the client resource is last updated based on the provider's UTC time. If the client resource was never updated, this value is identical to the value of the 'createdOn' property. </param>
+        /// <param name="attributes"> The key-value attributes that are assigned to the client resource. </param>
+        /// <returns> A new <see cref="SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData"/> instance for mocking. </returns>
+        public static EventGridMqttClientCreatedOrUpdatedEventData EventGridMqttClientCreatedOrUpdatedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, EventGridMqttClientState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, IReadOnlyDictionary<string, string> attributes = null)
+        {
+            attributes ??= new Dictionary<string, string>();
+
+            return new EventGridMqttClientCreatedOrUpdatedEventData(clientAuthenticationName, clientName, namespaceName, state, createdOn, updatedOn, attributes);
+        }
+
+        /// <summary> Initializes a new instance of EventGridMqttClientEventData. </summary>
+        /// <param name="clientAuthenticationName"> Unique identifier for the MQTT client that the client presents to the service for authentication. This case-sensitive string can be up to 128 characters long, and supports UTF-8 characters. </param>
+        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
+        /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
+        /// <returns> A new <see cref="SystemEvents.EventGridMqttClientEventData"/> instance for mocking. </returns>
+        public static EventGridMqttClientEventData EventGridMqttClientEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null)
+        {
+            return new EventGridMqttClientEventData(clientAuthenticationName, clientName, namespaceName);
+        }
+
+        /// <summary> Initializes a new instance of EventGridMqttClientDeletedEventData. </summary>
+        /// <param name="clientAuthenticationName"> Unique identifier for the MQTT client that the client presents to the service for authentication. This case-sensitive string can be up to 128 characters long, and supports UTF-8 characters. </param>
+        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
+        /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
+        /// <returns> A new <see cref="SystemEvents.EventGridMqttClientDeletedEventData"/> instance for mocking. </returns>
+        public static EventGridMqttClientDeletedEventData EventGridMqttClientDeletedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null)
+        {
+            return new EventGridMqttClientDeletedEventData(clientAuthenticationName, clientName, namespaceName);
+        }
+
+        /// <summary> Initializes a new instance of EventGridMqttClientSessionConnectedEventData. </summary>
+        /// <param name="clientAuthenticationName"> Unique identifier for the MQTT client that the client presents to the service for authentication. This case-sensitive string can be up to 128 characters long, and supports UTF-8 characters. </param>
+        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
+        /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
+        /// <param name="clientSessionName"> Unique identifier for the MQTT client's session. This case-sensitive string can be up to 128 characters long, and supports UTF-8 characters. </param>
+        /// <param name="sequenceNumber"> A number that helps indicate order of MQTT client session connected or disconnected events. Latest event will have a sequence number that is higher than the previous event. </param>
+        /// <returns> A new <see cref="SystemEvents.EventGridMqttClientSessionConnectedEventData"/> instance for mocking. </returns>
+        public static EventGridMqttClientSessionConnectedEventData EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = null)
+        {
+            return new EventGridMqttClientSessionConnectedEventData(clientAuthenticationName, clientName, namespaceName, clientSessionName, sequenceNumber);
+        }
+
+        /// <summary> Initializes a new instance of EventGridMqttClientSessionDisconnectedEventData. </summary>
+        /// <param name="clientAuthenticationName"> Unique identifier for the MQTT client that the client presents to the service for authentication. This case-sensitive string can be up to 128 characters long, and supports UTF-8 characters. </param>
+        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
+        /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
+        /// <param name="clientSessionName"> Unique identifier for the MQTT client's session. This case-sensitive string can be up to 128 characters long, and supports UTF-8 characters. </param>
+        /// <param name="sequenceNumber"> A number that helps indicate order of MQTT client session connected or disconnected events. Latest event will have a sequence number that is higher than the previous event. </param>
+        /// <param name="disconnectionReason"> Reason for the disconnection of the MQTT client's session. The value could be one of the values in the disconnection reasons table. </param>
+        /// <returns> A new <see cref="SystemEvents.EventGridMqttClientSessionDisconnectedEventData"/> instance for mocking. </returns>
+        public static EventGridMqttClientSessionDisconnectedEventData EventGridMqttClientSessionDisconnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = null, EventGridMqttClientDisconnectionReason? disconnectionReason = null)
+        {
+            return new EventGridMqttClientSessionDisconnectedEventData(clientAuthenticationName, clientName, namespaceName, clientSessionName, sequenceNumber, disconnectionReason);
+        }
+
         /// <summary> Initializes a new instance of DataBoxCopyStartedEventData. </summary>
         /// <param name="serialNumber"> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </param>
         /// <param name="stageName"> Name of the current Stage. </param>
@@ -1084,6 +1145,36 @@ namespace Azure.Messaging.EventGrid
         public static AppConfigurationKeyValueDeletedEventData AppConfigurationKeyValueDeletedEventData(string key = null, string label = null, string etag = null, string syncToken = null)
         {
             return new AppConfigurationKeyValueDeletedEventData(key, label, etag, syncToken);
+        }
+
+        /// <summary> Initializes a new instance of AppConfigurationSnapshotEventData. </summary>
+        /// <param name="name"> The name of the snapshot. </param>
+        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="syncToken"> The sync token representing the server state after the event. </param>
+        /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotEventData"/> instance for mocking. </returns>
+        public static AppConfigurationSnapshotEventData AppConfigurationSnapshotEventData(string name = null, string etag = null, string syncToken = null)
+        {
+            return new AppConfigurationSnapshotEventData(name, etag, syncToken);
+        }
+
+        /// <summary> Initializes a new instance of AppConfigurationSnapshotCreatedEventData. </summary>
+        /// <param name="name"> The name of the snapshot. </param>
+        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="syncToken"> The sync token representing the server state after the event. </param>
+        /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotCreatedEventData"/> instance for mocking. </returns>
+        public static AppConfigurationSnapshotCreatedEventData AppConfigurationSnapshotCreatedEventData(string name = null, string etag = null, string syncToken = null)
+        {
+            return new AppConfigurationSnapshotCreatedEventData(name, etag, syncToken);
+        }
+
+        /// <summary> Initializes a new instance of AppConfigurationSnapshotModifiedEventData. </summary>
+        /// <param name="name"> The name of the snapshot. </param>
+        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="syncToken"> The sync token representing the server state after the event. </param>
+        /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotModifiedEventData"/> instance for mocking. </returns>
+        public static AppConfigurationSnapshotModifiedEventData AppConfigurationSnapshotModifiedEventData(string name = null, string etag = null, string syncToken = null)
+        {
+            return new AppConfigurationSnapshotModifiedEventData(name, etag, syncToken);
         }
 
         /// <summary> Initializes a new instance of SignalRServiceClientConnectionConnectedEventData. </summary>
@@ -2105,15 +2196,16 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary> Initializes a new instance of AcsEmailEngagementTrackingReportReceivedEventData. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
+        /// <param name="recipient"> The Recipient Email Address. </param>
         /// <param name="messageId"> The Id of the email that has been sent. </param>
         /// <param name="userActionTimestamp"> The time at which the user interacted with the email. </param>
         /// <param name="engagementContext"> The context of the type of engagement user had with email. </param>
         /// <param name="userAgent"> The user agent interacting with the email. </param>
         /// <param name="engagement"> The type of engagement user have with email. </param>
         /// <returns> A new <see cref="SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/> instance for mocking. </returns>
-        public static AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string messageId = null, DateTimeOffset? userActionTimestamp = null, string engagementContext = null, string userAgent = null, AcsUserEngagement? engagement = null)
+        public static AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, DateTimeOffset? userActionTimestamp = null, string engagementContext = null, string userAgent = null, AcsUserEngagement? engagement = null)
         {
-            return new AcsEmailEngagementTrackingReportReceivedEventData(sender, messageId, userActionTimestamp, engagementContext, userAgent, engagement);
+            return new AcsEmailEngagementTrackingReportReceivedEventData(sender, recipient, messageId, userActionTimestamp, engagementContext, userAgent, engagement);
         }
 
         /// <summary> Initializes a new instance of PolicyInsightsPolicyStateCreatedEventData. </summary>
