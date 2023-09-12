@@ -112,16 +112,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         /// <summary>
         /// Builds a document model and returns the associated <see cref="DisposableDocumentModel"/> instance.
-        /// Upon disposal, the document model will be deleted.
         /// </summary>
-        /// <param name="modelId">The identifier of the model.</param>
         /// <param name="containerType">The type of container to use for training.</param>
         /// <param name="options">A set of options to apply when configuring the request.</param>
         /// <returns>A <see cref="DisposableDocumentModel"/> instance from which the built model ID can be obtained.</returns>
-        protected async Task<DisposableDocumentModel> BuildDisposableDocumentModelAsync(string modelId, ContainerType containerType = default, BuildDocumentModelOptions options = null)
+        protected async ValueTask<DisposableDocumentModel> BuildDisposableDocumentModelAsync(ContainerType containerType = default, BuildDocumentModelOptions options = null)
         {
             var client = CreateDocumentModelAdministrationClient();
-
             string trainingFiles = containerType switch
             {
                 ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
@@ -130,8 +127,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 _ => TestEnvironment.BlobContainerSasUrl,
             };
             var trainingFilesUri = new Uri(trainingFiles);
+            var buildMode = DocumentBuildMode.Template;
+            var modelId = Recording.GenerateId();
 
-            return await DisposableDocumentModel.BuildAsync(client, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
+            if (Recording.Mode == RecordedTestMode.Live)
+            {
+                var modelKey = new DocumentModelCache.ModelKey(_serviceVersion, containerType.ToString(), buildMode, options);
+
+                if (!DocumentModelCache.Models.TryGetValue(modelKey, out DisposableDocumentModel model))
+                {
+                    model = await DisposableDocumentModel.BuildAsync(client, trainingFilesUri, buildMode, modelId, options, deleteOnDisposal: false);
+                    DocumentModelCache.Models.Add(modelKey, model);
+                }
+
+                return model;
+            }
+            else
+            {
+                return await DisposableDocumentModel.BuildAsync(client, trainingFilesUri, buildMode, modelId, options);
+            }
         }
 
         /// <summary>
