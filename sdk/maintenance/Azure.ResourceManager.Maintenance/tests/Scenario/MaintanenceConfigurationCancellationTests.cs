@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             _resourceGroup = await CreateResourceGroup(
                _subscription,
                "Maintenance-RG-",
-               new AzureLocation("centraluseuap"));
+               Location);
 
             _configCollection = _resourceGroup.GetMaintenanceApplyUpdates();
         }
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Maintenance.Tests
             string resourceType = "maintenanceConfigurations";
             string applyUpdateName = $"{startOn:yyyyMMddHHmm00}";
 
-            // wait 2 minutes
-            await Delay(2 * 60 * 1000);
+            // wait 3 minutes
+            await Delay(3 * 60 * 1000);
 
             // cancel the maintenance
             ArmOperation<MaintenanceApplyUpdateResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, resourceType, resourceName, applyUpdateName, data);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
 
         private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration(string resourceName, DateTime startOn)
         {
-            MaintenanceConfigurationData data = new MaintenanceConfigurationData(new AzureLocation("centraluseuap"))
+            MaintenanceConfigurationData data = new MaintenanceConfigurationData(Location)
             {
                 Namespace = "Microsoft.Maintenance",
                 MaintenanceScope = MaintenanceScope.InGuestPatch,
