@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 sb.AppendLine($"    '{item}'");
             }
-            sb.AppendLine($"  ],");
+            sb.AppendLine($"  ]");
             sb.AppendLine($"}}");
             return BinaryData.FromString(sb.ToString());
         }
