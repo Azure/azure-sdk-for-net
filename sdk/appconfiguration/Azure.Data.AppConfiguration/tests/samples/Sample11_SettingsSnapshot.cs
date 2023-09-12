@@ -32,11 +32,11 @@ namespace Azure.Data.AppConfiguration.Samples
 #endif
                 var operation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);
                 var createdSnapshot = operation.Value;
-                Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
+                Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
                 #endregion
 
                 ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
-                Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
+                Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(retrievedSnapshot);
                 Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
@@ -70,11 +70,11 @@ namespace Azure.Data.AppConfiguration.Samples
                 operation.WaitForCompletion();
 
                 var createdSnapshot = operation.Value;
-                Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
+                Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
                 #endregion
 
                 ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
-                Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
+                Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(retrievedSnapshot);
                 Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
@@ -114,11 +114,11 @@ namespace Azure.Data.AppConfiguration.Samples
                 }
 
                 var createdSnapshot = operation.Value;
-                Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
+                Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
                 #endregion
 
                 ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
-                Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
+                Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(retrievedSnapshot);
                 Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
@@ -146,7 +146,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 var configSnapshotName = GenerateSnapshotName();
                 var operation = client.CreateSnapshot(WaitUntil.Completed, configSnapshotName, settingsSnapshot);
                 var createdSnapshot = operation.Value;
-                Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
+                Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
 
                 #region Snippet:AzConfigSample11_GetSnapshot
                 var snapshotName = "some_snapshot";
@@ -154,7 +154,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 snapshotName = configSnapshotName;
 #endif
                 ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
-                Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
+                Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
                 #endregion
 
                 Assert.NotNull(retrievedSnapshot);
@@ -184,7 +184,7 @@ namespace Azure.Data.AppConfiguration.Samples
 
                 var operation = client.CreateSnapshot(WaitUntil.Completed, configSnapshotName, settingsSnapshot);
                 var createdSnapshot = operation.Value;
-                Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
+                Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(createdSnapshot);
                 Assert.AreEqual(configSnapshotName, createdSnapshot.Name);
@@ -196,7 +196,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 snapshotName = configSnapshotName;
 #endif
                 ConfigurationSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
-                Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
+                Console.WriteLine($"Archived configuration snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
                 #endregion
 
                 Assert.NotNull(archivedSnapshot);
@@ -226,14 +226,14 @@ namespace Azure.Data.AppConfiguration.Samples
 
                 var operation = client.CreateSnapshot(WaitUntil.Completed, configSnapshotName, settingsSnapshot);
                 var createdSnapshot = operation.Value;
-                Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
+                Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(createdSnapshot);
                 Assert.AreEqual(configSnapshotName, createdSnapshot.Name);
                 Assert.AreEqual(ConfigurationSnapshotStatus.Ready, createdSnapshot.Status);
 
                 ConfigurationSnapshot archivedSnapshot = client.ArchiveSnapshot(configSnapshotName);
-                Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
+                Console.WriteLine($"Archived configuration snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
 
                 Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
 
@@ -243,7 +243,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 snapshotName = configSnapshotName;
 #endif
                 ConfigurationSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
-                Console.WriteLine($"Recovered configuration setting snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
+                Console.WriteLine($"Recovered configuration snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
                 #endregion
 
                 Assert.NotNull(recoveredSnapshot);
@@ -273,7 +273,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 var firstSnapshotName = GenerateSnapshotName("first_snapshot");
                 var firstOperation = client.CreateSnapshot(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter));
                 var createdFirstSnapshot = firstOperation.Value;
-                Console.WriteLine($"Created configuration setting snapshot: {createdFirstSnapshot.Name}, status: {createdFirstSnapshot.Status}");
+                Console.WriteLine($"Created configuration snapshot: {createdFirstSnapshot.Name}, status: {createdFirstSnapshot.Status}");
 
                 Assert.NotNull(createdFirstSnapshot);
                 Assert.AreEqual(firstSnapshotName, createdFirstSnapshot.Name);
@@ -282,7 +282,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 var secondSnapshotName = GenerateSnapshotName("second_snapshot");
                 var secondOperation = client.CreateSnapshot(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter));
                 var createdSecondSnapshot = secondOperation.Value;
-                Console.WriteLine($"Created configuration setting snapshot: {createdSecondSnapshot.Name}, status: {createdFirstSnapshot.Status}");
+                Console.WriteLine($"Created configuration snapshot: {createdSecondSnapshot.Name}, status: {createdFirstSnapshot.Status}");
 
                 Assert.NotNull(createdSecondSnapshot);
                 Assert.AreEqual(secondSnapshotName, createdSecondSnapshot.Name);
@@ -292,7 +292,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 foreach (var item in client.GetSnapshots(new SnapshotSelector()))
                 {
                     count++;
-                    Console.WriteLine($"Retrieved configuration setting snapshot: {item.Name}, status {item.Status}");
+                    Console.WriteLine($"Retrieved configuration snapshot: {item.Name}, status {item.Status}");
                 }
                 Console.WriteLine($"Total number of snapshots retrieved: {count}");
                 #endregion
@@ -330,7 +330,7 @@ namespace Azure.Data.AppConfiguration.Samples
 #endif
                 var operation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);
                 var createdSnapshot = operation.Value;
-                Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
+                Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
 
                 var count = 0;
                 foreach (var item in client.GetConfigurationSettingsForSnapshot(snapshotName))
