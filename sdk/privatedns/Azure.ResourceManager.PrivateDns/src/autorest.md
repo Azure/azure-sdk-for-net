@@ -26,7 +26,7 @@ format-by-name-rules:
   'IPv6Address': 'ip-address'
   'IPv4Address': 'ip-address'
   
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

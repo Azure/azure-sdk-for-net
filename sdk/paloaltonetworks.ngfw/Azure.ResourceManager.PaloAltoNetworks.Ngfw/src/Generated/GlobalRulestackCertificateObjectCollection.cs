@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackCertificateObjectResource(Client, GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(e)), _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackCertificateObjectResource(Client, GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(e)), _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackCertificateObjectResource(Client, GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(e)), _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackCertificateObjectResource(Client, GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(e)), _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

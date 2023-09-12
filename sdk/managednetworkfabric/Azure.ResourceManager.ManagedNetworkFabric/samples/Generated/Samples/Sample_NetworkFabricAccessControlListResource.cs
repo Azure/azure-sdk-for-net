@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             {
                 ConfigurationType = NetworkFabricConfigurationType.File,
                 AclsUri = new Uri("https://microsoft.com/a"),
+                DefaultAction = CommunityActionType.Permit,
                 MatchConfigurations =
 {
 new AccessControlListMatchConfiguration()

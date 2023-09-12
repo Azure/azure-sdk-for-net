@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
-        /// <param name="etherTypes"> List of ether type values that needs to be matched. </param>
-        /// <param name="fragments"> List of IP fragment packets that needs to be matched. </param>
-        /// <param name="ipLengths"> List of IP Lengths that needs to be matched. </param>
-        /// <param name="ttlValues"> List of TTL [Time To Live] values that needs to be matched. </param>
-        /// <param name="dscpMarkings"> List of DSCP Markings that needs to be matched. </param>
+        /// <param name="etherTypes"> List of ether type values that need to be matched. </param>
+        /// <param name="fragments"> List of IP fragment packets that need to be matched. </param>
+        /// <param name="ipLengths"> List of IP Lengths that need to be matched. </param>
+        /// <param name="ttlValues"> List of TTL [Time To Live] values that need to be matched. </param>
+        /// <param name="dscpMarkings"> List of DSCP Markings that need to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
         internal AccessControlListMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IList<string> etherTypes, IList<string> fragments, IList<string> ipLengths, IList<string> ttlValues, IList<string> dscpMarkings, AccessControlListPortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition)
         {
@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             PortCondition = portCondition;
         }
 
-        /// <summary> List of ether type values that needs to be matched. </summary>
+        /// <summary> List of ether type values that need to be matched. </summary>
         public IList<string> EtherTypes { get; }
-        /// <summary> List of IP fragment packets that needs to be matched. </summary>
+        /// <summary> List of IP fragment packets that need to be matched. </summary>
         public IList<string> Fragments { get; }
-        /// <summary> List of IP Lengths that needs to be matched. </summary>
+        /// <summary> List of IP Lengths that need to be matched. </summary>
         public IList<string> IPLengths { get; }
-        /// <summary> List of TTL [Time To Live] values that needs to be matched. </summary>
+        /// <summary> List of TTL [Time To Live] values that need to be matched. </summary>
         public IList<string> TtlValues { get; }
-        /// <summary> List of DSCP Markings that needs to be matched. </summary>
+        /// <summary> List of DSCP Markings that need to be matched. </summary>
         public IList<string> DscpMarkings { get; }
         /// <summary> Defines the port condition that needs to be matched. </summary>
         public AccessControlListPortCondition PortCondition { get; set; }
