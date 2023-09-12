@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the local directory to transfer to or from
     /// </summary>
-    public class LocalDirectoryStorageResourceContainer : StorageResourceContainer
+    internal class LocalDirectoryStorageResourceContainer : StorageResourceContainer
     {
         private Uri _uri;
 

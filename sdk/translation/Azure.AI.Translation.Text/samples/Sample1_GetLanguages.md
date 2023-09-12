@@ -6,10 +6,10 @@ This sample demonstrates how to get languages that are supported by other operat
 
 This will return language metadata from all supported scopes.
 
-```C# Snippet:GetTextTranslationLanguagesMetadataAsync
+```C# Snippet:GetTextTranslationLanguagesMetadata
 try
 {
-    Response<GetLanguagesResult> response = await client.GetLanguagesAsync().ConfigureAwait(false);
+    Response<GetLanguagesResult> response = client.GetLanguages();
     GetLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operation: {languages.Translation.Count}.");
@@ -45,11 +45,11 @@ catch (RequestFailedException exception)
 
 You can limit the scope of the response of the languages API by providing the optional paramter `scope`. A comma-separated list of names defining the group of languages to return. Allowed group names are: `translation`, `transliteration` and `dictionary`. If no scope is given, then all groups are returned, which is equivalent to passing `translation,transliteration,dictionary`.
 
-```C# Snippet:GetTextTranslationLanguagesByScopeAsync
+```C# Snippet:GetTextTranslationLanguagesByScope
 try
 {
     string scope = "translation";
-    Response<GetLanguagesResult> response = await client.GetLanguagesAsync(scope: scope).ConfigureAwait(false);
+    Response<GetLanguagesResult> response = client.GetLanguages(scope: scope);
     GetLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
@@ -86,11 +86,11 @@ catch (RequestFailedException exception)
 You can select the language to use for user interface strings. Some of the fields in the response are names of languages or names of regions. Use this parameter to define the language in which these names are returned. The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr` to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
 Names are provided in the English language when a target language is not specified or when localization is not available.
 
-```C# Snippet:GetTextTranslationLanguagesByCultureAsync
+```C# Snippet:GetTextTranslationLanguagesByCulture
 try
 {
     string acceptLanguage = "es";
-    Response<GetLanguagesResult> response = await client.GetLanguagesAsync(acceptLanguage: acceptLanguage).ConfigureAwait(false);
+    Response<GetLanguagesResult> response = client.GetLanguages(acceptLanguage: acceptLanguage);
     GetLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
