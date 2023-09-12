@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<bool> restrictOutboundNetworkAccess = default;
             Optional<IList<string>> allowedFqdnList = default;
             Optional<IotHubPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<IotHubIPFilterRule>> ipFilterRules = default;
+            Optional<IList<IPFilterRule>> ipFilterRules = default;
             Optional<IotHubNetworkRuleSetProperties> networkRuleSets = default;
             Optional<string> minTlsVersion = default;
             Optional<IList<IotHubPrivateEndpointConnectionData>> privateEndpointConnections = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<IReadOnlyList<IotHubLocationDescription>> locations = default;
             Optional<bool> enableDataResidency = default;
             Optional<RootCertificateProperties> rootCertificate = default;
-            Optional<IotHubIPVersion> ipVersion = default;
+            Optional<IPVersion> ipVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationPolicies"u8))
@@ -293,10 +293,10 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    List<IotHubIPFilterRule> array = new List<IotHubIPFilterRule>();
+                    List<IPFilterRule> array = new List<IPFilterRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubIPFilterRule.DeserializeIotHubIPFilterRule(item));
+                        array.Add(IPFilterRule.DeserializeIPFilterRule(item));
                     }
                     ipFilterRules = array;
                     continue;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    ipVersion = new IotHubIPVersion(property.Value.GetString());
+                    ipVersion = new IPVersion(property.Value.GetString());
                     continue;
                 }
             }
