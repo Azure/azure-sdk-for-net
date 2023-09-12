@@ -7,7 +7,6 @@
     </Description>
     <PackageTags>Personalizer;Azure Personalizer;Cognitive Services Personalizer;Cognitive Personalizer;Cognitive;Azure</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
