@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             var sb = new StringBuilder();
             sb.AppendLine($"{{");
-            sb.AppendLine($"  tenantId: subscription().tenantId");
+            sb.AppendLine($"  tenantId: '{TenantId}'");
             sb.Append($"  sku: ");
             sb.AppendChildObject(Sku, options);
             sb.AppendLine($"  accessPolicies: [");

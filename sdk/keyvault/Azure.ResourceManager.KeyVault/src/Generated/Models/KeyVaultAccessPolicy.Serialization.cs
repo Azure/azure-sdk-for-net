@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             sb.AppendLine($"  objectId: '{ObjectId}'");
             sb.Append($"  permissions: ");
             sb.AppendChildObject(Permissions, options);
-            sb.AppendLine($"  tenantId: subscription().tenantId");
+            sb.AppendLine($"  tenantId: '{TenantId}'");
             sb.AppendLine($"}}");
             return BinaryData.FromString(sb.ToString());
         }
