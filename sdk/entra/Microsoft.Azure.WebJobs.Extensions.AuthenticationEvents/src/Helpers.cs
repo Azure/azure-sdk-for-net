@@ -52,10 +52,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         internal static HttpResponseMessage HttpErrorResponse(Exception ex)
         {
-            return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+            var response = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
             {
                 Content = new StringContent(GetFailedRequestPayload(ex))
             };
+
+            // Set the metrics on header
+            EventTriggerMetrics.SetMetricHeaders(response);
+
+            return response;
         }
 
         internal static string GetFailedRequestPayload(Exception ex)
