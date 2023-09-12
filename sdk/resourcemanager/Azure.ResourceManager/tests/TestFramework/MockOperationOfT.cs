@@ -11,7 +11,7 @@ using Azure.Core.TestFramework;
 namespace Azure.Core.Tests
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class MockOperation<T> : Operation<T>, IOperation<T>
+    public class MockOperation<T> : Operation<T>, IOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private static ClientDiagnostics _clientDiagnostics = new(new TestClientOptions());
@@ -121,7 +121,7 @@ namespace Azure.Core.Tests
             return MockOperationInternal.UpdateStatus(cancellationToken);
         }
 
-        public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        ValueTask<OperationState<T>> IOperation<T>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             MockOperationInternal.UpdateStatusCallCount++;
             MockOperationInternal.LastTokenReceivedByUpdateStatus = cancellationToken;
@@ -129,8 +129,8 @@ namespace Azure.Core.Tests
             return new ValueTask<OperationState<T>>(OnUpdateState(cancellationToken));
         }
 
-        public MockOperationInternal<T> MockOperationInternal { get; }
+        internal MockOperationInternal<T> MockOperationInternal { get; }
 
-        public Func<CancellationToken, OperationState<T>> OnUpdateState { get; set; }
+        internal Func<CancellationToken, OperationState<T>> OnUpdateState { get; set; }
     }
 }

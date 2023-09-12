@@ -6,7 +6,7 @@ using Azure.Core.Tests;
 
 namespace Azure.Core.TestFramework.Tests
 {
-    internal class ManagementTestClient
+    public class ManagementTestClient
     {
         private readonly ClientDiagnostics _diagnostics;
 
