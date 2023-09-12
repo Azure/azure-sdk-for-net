@@ -88,5 +88,14 @@
                 return PayloadHelper.GetPayload("TokenIssuanceStart.RequestMissingSource.json");
             }
         }
+
+        /// <summary> Gets the request payload without ODataType field </summary>
+        public static string RequestWithoutODataTypePayload
+        {
+            get
+            {
+                return PayloadHelper.GetPayload("TokenIssuanceStart.RequestMissingODataType.json");
+            }
+        }
     }
 }

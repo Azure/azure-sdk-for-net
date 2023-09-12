@@ -10,6 +10,7 @@
 		<None Remove="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<None Remove="Payloads\TokenIssuanceStart\NoActionResponse.json" />
 		<None Remove="Payloads\TokenIssuanceStart\QueryParameters.json" />
+		<None Remove="Payloads\TokenIssuanceStart\RequestMissingODataType.json" />
 		<None Remove="Payloads\TokenIssuanceStart\RequestMissingSource.json" />
 		<None Remove="Payloads\TokenIssuanceStart\ValidRequest.json" />
 	</ItemGroup>
@@ -21,6 +22,7 @@
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ConversionPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NoActionResponse.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\RequestMissingODataType.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\RequestMissingSource.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ValidRequest.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NullResponse.json" />
