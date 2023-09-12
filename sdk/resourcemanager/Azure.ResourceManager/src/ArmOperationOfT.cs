@@ -26,7 +26,7 @@ namespace Azure.ResourceManager
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             var obj = Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null);
-            if (obj is IResource)
+            if (typeof(T).GetInterface(nameof(IResource)) is not null)
             {
                 IOperationSource<T> source = new GenericResourceOperationSource<T>(client);
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
