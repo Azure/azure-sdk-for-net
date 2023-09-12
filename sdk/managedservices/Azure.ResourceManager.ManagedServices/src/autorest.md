@@ -12,6 +12,11 @@ namespace: Azure.ResourceManager.ManagedServices
 require: https://github.com/Azure/azure-rest-api-specs/blob/55dd4f72d2b2769c1e02f2b952e597f806d40f9a/specification/managedservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - OperationsWithScope_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
