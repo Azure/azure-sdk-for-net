@@ -12,4 +12,5 @@ steps:
     arguments: >-
       -ServiceDirectory ${{ parameters.ServiceDirectory }}
       -PackageName ${{ parameters.PackageName }}
-    workingDirectory: $(Build.SourcesDirectory)
+      -NumAOTWarningsExpected ${{ parameters.NumAOTWarningsExpected }}
+    workingDirectory: eng/common/aotcompatibility

@@ -20,7 +20,7 @@ parameters:
 - name: CheckAOTCompat
   type: boolean
   default: false
-- name: ExpectedNumberOfAotWarnings
+- name: ExpectedNumberOfAOTWarnings
   type: number
   default: 0
 - name: TestSetupSteps

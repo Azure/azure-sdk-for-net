@@ -27,7 +27,7 @@ parameters:
 - name: CheckAOTCompat
   type: boolean
   default: false
-- name: ExpectedNumberOfAotWarnings
+- name: ExpectedNumberOfAOTWarnings
   type: number
   default: 0
 - name: TargetDocRepoName
@@ -89,6 +89,7 @@ stages:
         BuildSnippets: ${{ parameters.BuildSnippets }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         CheckAOTCompat: ${{ paramters.CheckAOTCompat }}
+        ExpectedNumberOfAOTWarnings: ${{ parameters.ExpectedNumberOfAOTWarnings }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
         MatrixConfigs:
           - ${{ each config in parameters.MatrixConfigs }}:

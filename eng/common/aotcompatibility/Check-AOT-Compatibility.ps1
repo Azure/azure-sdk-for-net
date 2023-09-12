@@ -1,4 +1,4 @@
-param([string]$serviceDirectory, [string]$packageName, [int]$numExpectedWarnings=0)
+param([string]$ServiceDirectory, [string]$PackageName, [int]$NumAOTWarningsExpected=0)
 
 Write-Host "Creating a test app to publish."
 
@@ -15,8 +15,8 @@ $csprojContent = @"
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\sdk\$serviceDirectory\$packageName\src\$packageName.csproj" />
-      <TrimmerRootAssembly Include="$packageName" />
+    <ProjectReference Include="..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj" />
+      <TrimmerRootAssembly Include="$PackageName" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +32,7 @@ $csprojContent | Set-Content -Path $csprojFile
 $programFile = "Program.cs"
 
 $programFileContent = @"
-using $packageName;
+using $PackageName;
 using System;
 
 namespace AotCompatibility
@@ -49,7 +49,7 @@ namespace AotCompatibility
 
 $programFileContent | Set-Content -Path $programFile
 
-Write-Host "Validating the number of expected IL trimming warnings.\n"
+Write-Host "Validating the number of expected IL trimming warnings."
 
 $publishOutput = dotnet clean && dotnet restore && dotnet publish -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
 
@@ -72,14 +72,14 @@ foreach ($line in $($publishOutput -split "`r`n"))
     }
 }
 
-Write-Host "\nChecking against expected number of warnings"
+Write-Host "Checking against expected number of warnings"
 
 
 $testPassed = 0
-if ($actualWarningCount -ne $numExpectedWarnings)
+if ($actualWarningCount -ne $NumAOTWarningsExpected)
 {
     $testPassed = 1
-    Write-Host "Actual warning count:", $actualWarningCount, "is not as expected. Expected warning count is:", $numExpectedWarnings
+    Write-Host "Actual warning count:", $actualWarningCount, "is not as expected. Expected warning count is:", $NumAOTWarningsExpected
 }
 else 
 {
