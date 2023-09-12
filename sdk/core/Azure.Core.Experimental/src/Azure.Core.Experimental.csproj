@@ -7,7 +7,6 @@
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks);net461;net6.0</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>

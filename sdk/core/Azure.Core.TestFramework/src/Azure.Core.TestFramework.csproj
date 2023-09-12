@@ -23,11 +23,27 @@
   </ItemGroup>
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
+  	<!-- can we remove the line below? -->
     <Compile Remove="Shared\*.cs" />
+    
+    <!--
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared\Core" />
+    -->
+
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
+    
+    <!--
+    <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared\Core" />    
+    <Compile Include="$(AzureCoreSharedSources)ResponseWithHeaders.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseWithHeadersOfTHeaders.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseWithHeadersOfTOfTHeaders.cs" LinkBase="Shared\Core" />
+    -->
   </ItemGroup>
 
   <ItemGroup>
