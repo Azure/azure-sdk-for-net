@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> IP Rule to be applied as part of Network Rule Set. </summary>
-    public partial class IotHubNetworkRuleSetIPRule
+    public partial class NetworkRuleSetIPRule
     {
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of NetworkRuleSetIPRule. </summary>
         /// <param name="filterName"> Name of the IP filter rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
-        public IotHubNetworkRuleSetIPRule(string filterName, string ipMask)
+        public NetworkRuleSetIPRule(string filterName, string ipMask)
         {
             Argument.AssertNotNull(filterName, nameof(filterName));
             Argument.AssertNotNull(ipMask, nameof(ipMask));
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.IotHub.Models
             IPMask = ipMask;
         }
 
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of NetworkRuleSetIPRule. </summary>
         /// <param name="filterName"> Name of the IP filter rule. </param>
         /// <param name="action"> IP Filter Action. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
-        internal IotHubNetworkRuleSetIPRule(string filterName, IotHubNetworkRuleIPAction? action, string ipMask)
+        internal NetworkRuleSetIPRule(string filterName, IotHubNetworkRuleIPAction? action, string ipMask)
         {
             FilterName = filterName;
             Action = action;
