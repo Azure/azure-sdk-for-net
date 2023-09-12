@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             Optional<CognitiveServicesNetworkRuleAction> defaultAction = default;
-            Optional<IList<CognitiveServicesIPRule>> ipRules = default;
+            Optional<IList<IPRule>> ipRules = default;
             Optional<IList<CognitiveServicesVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<CognitiveServicesIPRule> array = new List<CognitiveServicesIPRule>();
+                    List<IPRule> array = new List<IPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesIPRule.DeserializeCognitiveServicesIPRule(item));
+                        array.Add(IPRule.DeserializeIPRule(item));
                     }
                     ipRules = array;
                     continue;

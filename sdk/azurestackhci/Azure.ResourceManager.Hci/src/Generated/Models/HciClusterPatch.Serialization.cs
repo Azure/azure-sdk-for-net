@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedServiceIdentityType))
+            if (Optional.IsDefined(HciManagedServiceIdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ManagedServiceIdentityType.Value.ToString());
+                writer.WriteStringValue(HciManagedServiceIdentityType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
