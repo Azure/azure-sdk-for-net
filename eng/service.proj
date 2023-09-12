@@ -46,14 +46,14 @@
 
   <PropertyGroup>
     <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
-    <EmitterNpmInstallScriptPath Condition="'$(EmitterNpmInstallScriptPath)' == ''">$(MSBuildProjectDirectory)/common/scripts/Invoke-EmitterNpmInstall.ps1</EmitterNpmInstallScriptPath>
+    <EmitterNpmInstallScriptPath Condition="'$(EmitterNpmInstallScriptPath)' == ''">$(MSBuildThisFileDirectory)/common/scripts/Invoke-EmitterNpmInstall.ps1</EmitterNpmInstallScriptPath>
   </PropertyGroup>
 
   <Target Name="GenerateCode">
-    <Exec Condition="'$(SkipNpmInstall)' != 'true'" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(EmitterNpmInstallScriptPath)"/>
+    <Exec Condition="'$(SkipEmitterNpmInstall)' != 'true'" Command="$(PowerShellExe) -NoProfile -NonInteractive -Executionpolicy Unrestricted -File $(EmitterNpmInstallScriptPath) -Force"/>
 
-    <CreateProperty Condition="'$(SkipNpmInstall)' != 'true'" Value="true" >
-      <Output TaskParameter="Value" PropertyName="SkipNpmInstall" />
+    <CreateProperty Value="true" >
+      <Output TaskParameter="Value" PropertyName="SkipEmitterNpmInstall" />
     </CreateProperty>
 
     <MSBuild Projects="@(ProjectReference)"
