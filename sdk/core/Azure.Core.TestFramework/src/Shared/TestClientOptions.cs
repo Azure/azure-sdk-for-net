@@ -3,7 +3,7 @@
 
 namespace Azure.Core.TestFramework
 {
-    internal class TestClientOptions : ClientOptions
+    public class TestClientOptions : ClientOptions
     {
     }
 }

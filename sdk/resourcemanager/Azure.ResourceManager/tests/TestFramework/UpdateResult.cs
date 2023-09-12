@@ -3,7 +3,7 @@
 
 namespace Azure.Core.TestFramework
 {
-    internal enum UpdateResult
+    public enum UpdateResult
     {
         Pending,
         Failure,
