@@ -12,16 +12,16 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class SynapseIPFirewallRuleInfoListResult
+    internal partial class IPFirewallRuleInfoListResult
     {
-        internal static SynapseIPFirewallRuleInfoListResult DeserializeSynapseIPFirewallRuleInfoListResult(JsonElement element)
+        internal static IPFirewallRuleInfoListResult DeserializeIPFirewallRuleInfoListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SynapseIPFirewallRuleInfoData>> value = default;
+            Optional<IReadOnlyList<IPFirewallRuleInfoData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    List<SynapseIPFirewallRuleInfoData> array = new List<SynapseIPFirewallRuleInfoData>();
+                    List<IPFirewallRuleInfoData> array = new List<IPFirewallRuleInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(item));
+                        array.Add(IPFirewallRuleInfoData.DeserializeIPFirewallRuleInfoData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new SynapseIPFirewallRuleInfoListResult(nextLink.Value, Optional.ToList(value));
+            return new IPFirewallRuleInfoListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }
