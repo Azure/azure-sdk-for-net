@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager
                 throw new InvalidOperationException($"Type {typeof(T)} should be Resource or ReousrceData");
             }
 
-            IOperationSource<T> source = new GenericResourceOperationSource<T>(client, isResource);
+            IOperationSource<T> source = new GenericOperationSource<T>(client, isResource);
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
