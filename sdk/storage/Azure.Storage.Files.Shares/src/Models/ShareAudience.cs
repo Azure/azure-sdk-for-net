@@ -48,7 +48,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// The storage account name used to populate the service endpoint.
         /// </param>
         /// <returns></returns>
-        public static ShareAudience GetShareServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.file.core.windows.net/.default");
+        public static ShareAudience GetShareServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.file.core.windows.net/");
 
         /// <summary> Determines if two <see cref="ShareAudience"/> values are the same. </summary>
         public static bool operator ==(ShareAudience left, ShareAudience right) => left.Equals(right);

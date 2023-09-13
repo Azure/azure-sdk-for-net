@@ -198,7 +198,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint));
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience($"https://{uriBuilder.AccountName}.blob.core.windows.net/.default"));
+            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience($"https://{uriBuilder.AccountName}.blob.core.windows.net/"));
 
             BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),

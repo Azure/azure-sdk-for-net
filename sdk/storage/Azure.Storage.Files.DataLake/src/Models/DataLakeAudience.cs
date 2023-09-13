@@ -34,7 +34,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Default Audience. Use to acquire a token for authorizing requests to any Azure Storage account
         ///
-        /// Resource ID: &quot;https://storage.azure.com/.default &quot;.
+        /// Resource ID: &quot;https://storage.azure.com/ &quot;.
         ///
         /// If no audience is specified, this is the default value.
         /// </summary>
@@ -48,7 +48,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// The storage account name used to populate the service endpoint.
         /// </param>
         /// <returns></returns>
-        public static DataLakeAudience DataLakeServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.blob.core.windows.net/.default");
+        public static DataLakeAudience DataLakeServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.blob.core.windows.net/");
 
         /// <summary> Determines if two <see cref="DataLakeAudience"/> values are the same. </summary>
         public static bool operator ==(DataLakeAudience left, DataLakeAudience right) => left.Equals(right);

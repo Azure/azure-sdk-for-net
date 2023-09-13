@@ -217,7 +217,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience($"https://{service.AccountName}.blob.core.windows.net/.default"));
+            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience($"https://{service.AccountName}.blob.core.windows.net/"));
 
             DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
                 service.Uri,

@@ -48,7 +48,7 @@ namespace Azure.Storage.Queues.Models
         /// The storage account name used to populate the service endpoint.
         /// </param>
         /// <returns></returns>
-        public static QueueAudience GetQueueServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.queue.core.windows.net/.default");
+        public static QueueAudience GetQueueServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.queue.core.windows.net/");
 
         /// <summary> Determines if two <see cref="QueueAudience"/> values are the same. </summary>
         public static bool operator ==(QueueAudience left, QueueAudience right) => left.Equals(right);

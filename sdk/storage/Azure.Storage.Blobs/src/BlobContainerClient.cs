@@ -362,7 +362,7 @@ namespace Azure.Storage.Blobs
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
             _uri = blobContainerUri;
 
-            string audienceScope = string.IsNullOrEmpty(options?.Audience.ToString()) ? options.Audience.Value.CreateDefaultScope() : BlobAudience.PublicAudience.CreateDefaultScope();
+            string audienceScope = string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope();
 
             _authenticationPolicy = credential.AsPolicy(audienceScope, options);
             options ??= new BlobClientOptions();
