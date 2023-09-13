@@ -6,7 +6,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Azure.Core.Diagnostics
+namespace Azure.Core.Shared.Diagnostics
 {
     // https://github.com/dotnet/aspnetcore/blob/master/src/Shared/ValueStopwatch/ValueStopwatch.cs
     internal struct ValueStopwatch

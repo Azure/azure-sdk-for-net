@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// NOTE: This type should not be used going forward. Use NoValueResponse{T} instead.

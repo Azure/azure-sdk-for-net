@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 #nullable disable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     ///  Provides a container for content encoded using multipart/form-data MIME type.

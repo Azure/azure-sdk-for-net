@@ -5,7 +5,7 @@
 
 using System.Text.Json;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal interface IUtf8JsonSerializable
     {

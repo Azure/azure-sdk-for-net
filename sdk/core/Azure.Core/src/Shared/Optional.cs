@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class Optional
     {

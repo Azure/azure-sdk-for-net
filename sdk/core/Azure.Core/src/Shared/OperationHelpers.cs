@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class OperationHelpers
     {

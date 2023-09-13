@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class Base64Url
     {

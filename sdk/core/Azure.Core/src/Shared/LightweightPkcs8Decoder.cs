@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// This is a very targeted PKCS#8 decoder for use when reading a PKCS# encoded RSA private key from an

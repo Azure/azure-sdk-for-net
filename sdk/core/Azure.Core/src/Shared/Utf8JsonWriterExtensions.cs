@@ -10,7 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class Utf8JsonWriterExtensions
     {

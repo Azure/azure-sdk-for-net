@@ -4,7 +4,7 @@
 using System;
 using System.Text.Json;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal readonly struct VoidValue { }
 }

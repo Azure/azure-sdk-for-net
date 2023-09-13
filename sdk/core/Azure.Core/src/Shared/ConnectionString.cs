@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal sealed class ConnectionString
     {

@@ -3,7 +3,7 @@
 
 #nullable enable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal enum OperationFinalStateVia
     {

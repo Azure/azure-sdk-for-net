@@ -9,7 +9,7 @@ using System.Text;
 
 #nullable disable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// A Response that can be constructed in memory without being tied to a

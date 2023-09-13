@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// Reads PEM streams to parse PEM fields or load certificates.

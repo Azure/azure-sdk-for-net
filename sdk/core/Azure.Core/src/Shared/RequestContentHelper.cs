@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class RequestContentHelper
     {

@@ -5,7 +5,7 @@ using System;
 using System.Buffers;
 using System.Diagnostics;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// Represents a heap-based, array-backed output sink into which <typeparam name="T"/> data can be written.

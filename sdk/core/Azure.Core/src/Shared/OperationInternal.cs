@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 
 #nullable enable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// A helper class used to build long-running operation instances. In order to use this helper:

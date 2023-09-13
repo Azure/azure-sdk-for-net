@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core.Shared.Pipeline
 {
     internal class ClientDiagnostics : DiagnosticScopeFactory
     {

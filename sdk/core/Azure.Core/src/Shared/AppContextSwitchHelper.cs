@@ -5,7 +5,7 @@ using System;
 
 #nullable enable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// Helper for interacting with AppConfig settings and their related Environment variable settings.

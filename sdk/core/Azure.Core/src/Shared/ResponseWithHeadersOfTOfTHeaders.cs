@@ -3,7 +3,7 @@
 
 #nullable enable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
 #pragma warning disable SA1649 // File name should match first type name
     internal class ResponseWithHeaders<T, THeaders> : Response<T>

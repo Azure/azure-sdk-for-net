@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 #nullable enable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// Copied from https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/HashCode.cs.

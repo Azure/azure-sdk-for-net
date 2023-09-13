@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 
-namespace Azure.Core.Diagnostics
+namespace Azure.Core.Shared.Diagnostics
 {
     internal abstract class AzureEventSource: EventSource
     {

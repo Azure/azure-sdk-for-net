@@ -6,7 +6,7 @@
 using System;
 using System.Xml.Linq;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class XElementExtensions
     {

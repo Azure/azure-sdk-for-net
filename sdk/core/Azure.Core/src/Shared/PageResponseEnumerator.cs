@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class PageResponseEnumerator
     {

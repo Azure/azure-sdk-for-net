@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// An empty transport protocol that never sends anything over the wire.

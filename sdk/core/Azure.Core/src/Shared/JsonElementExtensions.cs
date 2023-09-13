@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Xml;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class JsonElementExtensions
     {

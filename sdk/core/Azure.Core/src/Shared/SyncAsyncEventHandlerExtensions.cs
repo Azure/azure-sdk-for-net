@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// Extensions for raising <see cref="SyncAsyncEventHandler{T}"/>

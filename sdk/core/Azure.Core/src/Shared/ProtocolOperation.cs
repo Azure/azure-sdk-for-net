@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal class ProtocolOperation<T> : Operation<T>, IOperation<T> where T : notnull
     {

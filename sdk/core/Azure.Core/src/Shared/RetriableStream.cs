@@ -11,7 +11,7 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core.Shared.Pipeline
 {
     internal static class RetriableStream
     {

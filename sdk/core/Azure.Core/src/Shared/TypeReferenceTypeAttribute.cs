@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// An attribute class indicating to Autorest a reference type which can replace a type in target SDKs.

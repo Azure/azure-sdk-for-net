@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class HttpPipelineExtensions
     {

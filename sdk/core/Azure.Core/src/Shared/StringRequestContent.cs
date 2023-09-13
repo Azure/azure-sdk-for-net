@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal class StringRequestContent : RequestContent
     {

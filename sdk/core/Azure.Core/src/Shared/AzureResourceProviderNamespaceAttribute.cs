@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// This attribute should be set on all client assemblies with value of one of the resource providers

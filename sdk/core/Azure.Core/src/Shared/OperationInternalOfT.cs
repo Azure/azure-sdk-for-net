@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// A helper class used to build long-running operation instances. In order to use this helper:

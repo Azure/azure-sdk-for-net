@@ -6,7 +6,7 @@
 using System;
 using System.Xml;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal static class XmlWriterExtensions
     {

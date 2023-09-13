@@ -5,7 +5,7 @@ using System;
 
 #nullable enable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// A delay strategy that uses a fixed sequence of delays with no jitter applied. This is used by management LROs.

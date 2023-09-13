@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     internal class HttpMessageSanitizer
     {

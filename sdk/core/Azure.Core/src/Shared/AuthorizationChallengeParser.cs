@@ -6,7 +6,7 @@ using System.Net;
 
 #nullable enable
 
-namespace Azure.Core
+namespace Azure.Core.Shared
 {
     /// <summary>
     /// A helper class for parsing Authorization challenge headers.

@@ -12,7 +12,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core.Shared.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
