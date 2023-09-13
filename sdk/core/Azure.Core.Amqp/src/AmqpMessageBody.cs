@@ -43,7 +43,7 @@ namespace Azure.Core.Amqp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public AmqpMessageBody(IEnumerable<ReadOnlyMemory<byte>> data)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            ClientUtilities.AssertNotNull(data, nameof(data));
             _data = data;
             BodyType = AmqpMessageBodyType.Data;
         }
@@ -154,7 +154,7 @@ namespace Azure.Core.Amqp
 
         private static void ValidateAmqpPrimitive(object value, string paramName)
         {
-            Argument.AssertNotNull(value, paramName);
+            ClientUtilities.AssertNotNull(value, paramName);
             switch (value)
             {
                 case string:

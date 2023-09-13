@@ -22,7 +22,7 @@ namespace Azure.Core.Amqp
         /// <param name="messageId">The message Id.</param>
         public AmqpMessageId(string messageId)
         {
-            Argument.AssertNotNull(messageId, nameof(messageId));
+            ClientUtilities.AssertNotNull(messageId, nameof(messageId));
             _messageIdString = messageId;
         }
 
