@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using Microsoft.Azure.Management.Maintenance;
 using Microsoft.Azure.Management.Maintenance.Models;
 using Microsoft.Azure.Management.Resources;
@@ -387,6 +390,50 @@ namespace Maintenance.Tests
 
                 //Delete
                 maintenanceClient.ConfigurationAssignmentsForResourceGroup.Delete(configurationAssignmentResourceGroupName, configurationAssignmentName1);
+            }
+        }
+
+        /// <summary>
+        /// Test cancel maintenance configuration.
+        /// </summary>
+        [Fact]
+        public void MaintenanceConfigurationCancelTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = MaintenanceTestUtilities.GetResourceManagementClient(context, handler);
+                var maintenanceClient = MaintenanceTestUtilities.GetMaintenanceManagementClient(context, handler);
+
+                var resourceGroup = MaintenanceTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create maintenance configuration.
+                var maintenanceConfigurationName = TestUtilities.GenerateName("maintenancesdk");
+                var maintenanceConfiguration = MaintenanceTestUtilities.CreateTestMaintenanceConfigurationInGuestPatchScope(maintenanceConfigurationName, true);
+
+                var startDate = DateTime.UtcNow.AddMinutes(12);
+                maintenanceConfiguration.StartDateTime = $"{startDate:yyyy-MM-dd HH:mm}";
+                maintenanceConfiguration.TimeZone = "UTC";
+                maintenanceConfiguration.RecurEvery = "Day";
+
+                // Verify created maintenance configuration.
+                var createdMaintenanceConfiguration = maintenanceClient.MaintenanceConfigurations.CreateOrUpdate(resourceGroup.Name, maintenanceConfigurationName, maintenanceConfiguration);
+                MaintenanceTestUtilities.VerifyMaintenanceConfigurationProperties(maintenanceConfiguration, createdMaintenanceConfiguration);
+
+                // Cancel maintenance configuration.
+                string providerName = "Microsoft.Maintenance";
+                string resourceType = "maintenanceConfigurations";
+                string applyUpdateName = $"{startDate:yyyyMMddHHmm00}";
+
+                Thread.Sleep(3 * 60 * 1000);
+
+                var canceledMaintenanceConfiguration = maintenanceClient.ApplyUpdates.CreateOrUpdateOrCancelWithHttpMessagesAsync(resourceGroup.Name, providerName, resourceType, maintenanceConfigurationName, applyUpdateName, new ApplyUpdate()
+                {
+                    Status = UpdateStatus.Cancel
+                });
+
+                Assert.Equal(UpdateStatus.Cancelled, canceledMaintenanceConfiguration.Result.Body.Status);
             }
         }
     }
