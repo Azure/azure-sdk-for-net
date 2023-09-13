@@ -33,10 +33,12 @@ namespace Azure.AI.OpenAI.Tests
         private string _chatCompletionsDeploymentId;
         private string _embeddingsDeploymentId;
         private string _nonAzureApiKey;
+        private string _azureCognitiveSearchApiKey;
 
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")", "$1placeholder$2"));
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
             UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
             SanitizedQueryParameters.Add("sig");
@@ -61,6 +63,24 @@ namespace Azure.AI.OpenAI.Tests
 
         protected AzureKeyCredential GetAzureApiKey() => _azureApiKey ?? new AzureKeyCredential("placeholder");
         protected string GetNonAzureApiKey() => string.IsNullOrEmpty(_nonAzureApiKey) ? "placeholder" : _nonAzureApiKey;
+
+        protected AzureKeyCredential GetCognitiveSearchApiKey()
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new AzureKeyCredential("placeholder");
+            }
+            else if (!string.IsNullOrEmpty(_azureCognitiveSearchApiKey))
+            {
+                return new AzureKeyCredential(_azureCognitiveSearchApiKey);
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "No Azure Cognitive Search API key found. Please set the appropriate environment variable to "
+                    + "use this value.");
+            }
+        }
 
         [SetUp]
         public void CreateDeployment()
@@ -130,7 +150,8 @@ namespace Azure.AI.OpenAI.Tests
 
                         ServiceAccountApiKeys keys = openAIResource.GetKeys();
                         _azureApiKey = new AzureKeyCredential(keys.Key1);
-                        _nonAzureApiKey = TestEnvironment.PublicOpenAiApiKey;
+                        _nonAzureApiKey = TestEnvironment.NonAzureOpenAIApiKey;
+                        _azureCognitiveSearchApiKey = TestEnvironment.AzureCognitiveSearchApiKey;
                     }
                 }
             }

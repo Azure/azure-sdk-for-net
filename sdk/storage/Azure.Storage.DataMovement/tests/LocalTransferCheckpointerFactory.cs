@@ -132,7 +132,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 JobPartPlanFileName fileName = new JobPartPlanFileName(checkpointerPath, transferId, partNumber);
 
-                using (FileStream stream = File.Create(fileName.FullPath, DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
+                using (FileStream stream = File.Create(fileName.FullPath, DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
                 {
                     header.Serialize(stream);
                 }
@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         internal JobPartPlanHeader CreateDefaultJobPartHeader(
-            string version = DataMovementConstants.PlanFile.SchemaVersion,
+            string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
             DateTimeOffset startTime = default,
             string transferId = _testTransferId,
             long partNumber = _testPartNumber,

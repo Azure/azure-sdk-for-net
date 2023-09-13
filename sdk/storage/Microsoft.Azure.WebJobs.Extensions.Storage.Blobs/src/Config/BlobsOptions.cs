@@ -15,10 +15,10 @@ namespace Microsoft.Azure.WebJobs.Host
     /// </summary>
     public class BlobsOptions : IOptionsFormatter
     {
-        private const int DefaultMaxDequeueCount = 5;
+        private const int DefaultPoisonBlobThreshold = 5;
 
         private int _maxDegreeOfParallelism;
-        private int _maxDequeueCount = DefaultMaxDequeueCount;
+        private int _poisonBlobThreshold = DefaultPoisonBlobThreshold;
 
         /// <summary>
         /// Constructs a new instance.
@@ -47,26 +47,27 @@ namespace Microsoft.Azure.WebJobs.Host
         }
 
         /// <summary>
-        /// Gets or sets the number of times to try processing a message before moving it to the poison queue (where
-        /// possible).
+        /// Gets or sets the number of times to try processing a given blob before adding a message to a
+        /// storage queue named `webjobs-blobtrigger-poison`.
+        ///
+        /// If not specified, will default to 5.
+        ///
+        /// See <see href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger#poison-blobs">
+        /// Poison Blobs
+        /// </see>.
         /// </summary>
-        /// <remarks>
-        /// Some queues do not have corresponding poison queues, and this property does not apply to them. Specifically,
-        /// there are no corresponding poison queues for any queue whose name already ends in "-poison" or any queue
-        /// whose name is already too long to add a "-poison" suffix.
-        /// </remarks>
-        public int MaxDequeueCount
+        public int PoisonBlobThreshold
         {
-            get { return _maxDequeueCount; }
+            get { return _poisonBlobThreshold; }
 
             set
             {
                 if (value < 1)
                 {
-                    throw new ArgumentException("MaxDequeueCount must not be less than 1.", nameof(value));
+                    throw new ArgumentException("PoisonBlobThreshold must not be less than 1.", nameof(value));
                 }
 
-                _maxDequeueCount = value;
+                _poisonBlobThreshold = value;
             }
         }
 
@@ -76,7 +77,8 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             JObject options = new JObject
             {
-                { nameof(MaxDegreeOfParallelism), MaxDegreeOfParallelism }
+                { nameof(MaxDegreeOfParallelism), MaxDegreeOfParallelism },
+                { nameof(PoisonBlobThreshold), PoisonBlobThreshold }
             };
 
             return options.ToString(Formatting.Indented);

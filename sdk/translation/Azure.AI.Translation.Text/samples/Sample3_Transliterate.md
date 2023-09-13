@@ -6,19 +6,16 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 
 Converts characters or letters of a source language to the corresponding characters or letters of a target language.
 
-```C#
+```C# Snippet:GetTransliteratedText
 try
 {
     string language = "zh-Hans";
     string fromScript = "Hans";
     string toScript = "Latn";
 
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "这是个测试。"
-    };
+    string inputText = "这是个测试。";
 
-    Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(language, fromScript, toScript, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(language, fromScript, toScript, inputText);
     IReadOnlyList<TransliteratedText> transliterations = response.Value;
     TransliteratedText transliteration = transliterations.FirstOrDefault();
 

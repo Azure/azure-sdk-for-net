@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
         }
     }
 }

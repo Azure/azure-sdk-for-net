@@ -1662,7 +1662,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -1689,7 +1689,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -1717,7 +1717,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -1729,7 +1729,7 @@ namespace Azure.Data.AppConfiguration.Tests
                         ValidateCompletedOperation(operation);
                         break;
                     }
-                    await Task.Delay(500);
+                    await Delay(125);
                 }
                 var createdSnapshot = operation.Value;
 
@@ -1753,7 +1753,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -1763,9 +1763,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
                 ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
 
-                ConfigurationSettingsSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
+                ConfigurationSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
                 Assert.NotNull(archivedSnapshot);
-                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
             }
             finally
             {
@@ -1784,7 +1784,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -1794,13 +1794,13 @@ namespace Azure.Data.AppConfiguration.Tests
                 var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
                 ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
 
-                ConfigurationSettingsSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
+                ConfigurationSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
                 Assert.NotNull(archivedSnapshot);
-                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
 
-                ConfigurationSettingsSnapshot recoveredSnapshot = await service.RecoverSnapshotAsync(snapshotName);
+                ConfigurationSnapshot recoveredSnapshot = await service.RecoverSnapshotAsync(snapshotName);
                 Assert.NotNull(recoveredSnapshot);
-                Assert.AreEqual(SnapshotStatus.Ready, recoveredSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Ready, recoveredSnapshot.Status);
             }
             finally
             {
@@ -1822,17 +1822,57 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var firstSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key) });
                 var firstSnapshotName = GenerateSnapshotName("first_snapshot");
-                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSettingsSnapshot(firstSnapshotFilter));
+                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter));
                 ValidateCompletedOperation(firstOperation);
 
                 var secondSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(secondSetting.Key) });
                 var secondSnapshotName = GenerateSnapshotName("second_snapshot");
-                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSettingsSnapshot(secondSnapshotFilter));
+                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter));
                 ValidateCompletedOperation(secondOperation);
 
-                var snapshots = service.GetSnapshotsAsync(cancellationToken: CancellationToken.None);
+                var selector = new SnapshotSelector();
+                var snapshots = service.GetSnapshotsAsync(selector);
                 var resultsReturned = (await snapshots.ToEnumerableAsync()).Count;
                 Assert.GreaterOrEqual(resultsReturned, 2);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(firstSetting.Key, firstSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(secondSetting.Key, secondSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetSnapshotsUsingNameFilter()
+        {
+            var service = GetClient();
+            var firstSetting = new ConfigurationSetting("first_key", "first_value");
+            var secondSetting = new ConfigurationSetting("second_key", "second_value");
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(firstSetting);
+                await service.AddConfigurationSettingAsync(secondSetting);
+
+                var firstSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key) });
+                var firstSnapshotName = GenerateSnapshotName("first_snapshot");
+                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter));
+                ValidateCompletedOperation(firstOperation);
+
+                var secondSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(secondSetting.Key) });
+                var secondSnapshotName = GenerateSnapshotName("second_snapshot");
+                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter));
+                ValidateCompletedOperation(secondOperation);
+
+                var selector = new SnapshotSelector()
+                {
+                    Name = firstSnapshotName
+                };
+
+                ConfigurationSnapshot[] batch = (await service.GetSnapshotsAsync(selector).ToEnumerableAsync()).ToArray();
+
+                Assert.AreEqual(1, batch.Length);
+                Assert.AreEqual(firstSnapshotName, batch[0].Name);
             }
             finally
             {
@@ -1853,7 +1893,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSettingsSnapshot(snapshotFilter));
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(snapshotFilter));
                 ValidateCompletedOperation(operation);
 
                 var settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
@@ -1878,7 +1918,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(createdSetting.Key) });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSettingsSnapshot(snapshotFilter));
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(snapshotFilter));
                 ValidateCompletedOperation(operation);
 
                 setting.Value = "Updated_Value";
@@ -1897,7 +1937,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        private void ValidateCreatedSnapshot(ConfigurationSettingsSnapshot createdSnapshot, ConfigurationSettingsSnapshot retrievedSnapshot, string expectedName)
+        private void ValidateCreatedSnapshot(ConfigurationSnapshot createdSnapshot, ConfigurationSnapshot retrievedSnapshot, string expectedName)
         {
             Assert.NotNull(createdSnapshot);
             Assert.AreEqual(expectedName, createdSnapshot.Name);

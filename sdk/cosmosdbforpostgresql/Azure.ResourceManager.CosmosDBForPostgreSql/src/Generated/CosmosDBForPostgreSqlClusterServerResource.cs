@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
     }
 }

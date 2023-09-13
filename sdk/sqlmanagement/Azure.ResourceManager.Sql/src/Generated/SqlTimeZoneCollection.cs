@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

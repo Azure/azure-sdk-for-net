@@ -187,13 +187,13 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP2_1
             (s_diagnosticSource.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(s_activitySource));
 #else
-            (s_diagnosticSource.IsEnabled() || s_activitySource.HasListeners());
+            (s_diagnosticSource.IsEnabled() || IsActivitySourceEnabled);
 #endif
 
 #if NETCOREAPP2_1
         private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && ActivityExtensions.ActivitySourceHasListeners(s_activitySource);
 #else
-        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners();
+        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners() && ActivityExtensions.SupportsActivitySource;
 #endif
     }
 }
