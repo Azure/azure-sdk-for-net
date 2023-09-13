@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI
         /// This is expressed as a two-letter ISO-639-1 language code like 'en' or 'fr'.
         /// </param>
         /// <param name="duration"> The total duration of the audio processed to produce accompanying transcription information. </param>
-        /// <param name="segments"> A collection of detailed information about . </param>
+        /// <param name="segments"> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </param>
         internal AudioTranscription(string text, AudioTaskLabel? task, string language, TimeSpan? duration, IReadOnlyList<AudioTranscriptionSegment> segments)
         {
             Text = text;
@@ -52,7 +52,7 @@ namespace Azure.AI.OpenAI
         public string Language { get; }
         /// <summary> The total duration of the audio processed to produce accompanying transcription information. </summary>
         public TimeSpan? Duration { get; }
-        /// <summary> A collection of detailed information about . </summary>
+        /// <summary> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </summary>
         public IReadOnlyList<AudioTranscriptionSegment> Segments { get; }
     }
 }
