@@ -4,6 +4,7 @@
 using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
+using Azure.Core.Shared;
 
 namespace Azure
 {

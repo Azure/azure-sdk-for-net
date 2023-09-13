@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.Diagnostics;
+using Azure.Core.Shared;
+using Azure.Core.Shared.Pipeline;
 
 namespace Azure.Core.Pipeline
 {

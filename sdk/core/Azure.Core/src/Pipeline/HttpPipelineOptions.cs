@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Shared;
 
 namespace Azure.Core.Pipeline
 {

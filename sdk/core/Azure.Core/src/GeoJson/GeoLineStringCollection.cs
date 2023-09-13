@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Azure.Core.Shared;
 
 namespace Azure.Core.GeoJson
 {

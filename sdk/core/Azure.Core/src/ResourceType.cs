@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core.Shared;
 
 namespace Azure.Core
 {

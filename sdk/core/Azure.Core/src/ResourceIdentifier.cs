@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using Azure.Core.Shared;
 
 namespace Azure.Core
 {

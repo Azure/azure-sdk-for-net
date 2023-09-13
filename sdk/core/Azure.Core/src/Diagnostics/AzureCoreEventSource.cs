@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Text;
+using Azure.Core.Shared;
+using Azure.Core.Shared.Diagnostics;
 
 namespace Azure.Core.Diagnostics
 {

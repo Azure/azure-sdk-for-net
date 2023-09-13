@@ -15,6 +15,8 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Shared;
+using Azure.Core.Shared.Pipeline;
 
 namespace Azure.Core.Pipeline
 {

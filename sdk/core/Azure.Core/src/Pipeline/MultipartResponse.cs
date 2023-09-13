@@ -8,6 +8,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
+using Azure.Core.Shared.Pipeline;
 
 #nullable disable
 

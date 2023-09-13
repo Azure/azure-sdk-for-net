@@ -8,6 +8,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Shared;
 
 namespace Azure.Core.Buffers
 {

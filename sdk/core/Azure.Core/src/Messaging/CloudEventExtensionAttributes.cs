@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core;
+using Azure.Core.Shared;
 
 namespace Azure.Messaging
 {

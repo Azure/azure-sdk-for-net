@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Core.Shared;
 
 namespace Azure.Core.Pipeline
 {

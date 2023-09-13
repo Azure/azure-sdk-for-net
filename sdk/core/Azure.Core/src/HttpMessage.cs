@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 
 namespace Azure.Core
 {

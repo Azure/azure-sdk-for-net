@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Shared;
 
 namespace Azure.Messaging
 {

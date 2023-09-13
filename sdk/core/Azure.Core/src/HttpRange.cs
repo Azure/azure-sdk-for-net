@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Azure.Core;
+using Azure.Core.Shared;
 
 namespace Azure
 {

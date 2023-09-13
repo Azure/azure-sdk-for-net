@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using Azure.Core.Shared;
 
 #nullable enable
 
