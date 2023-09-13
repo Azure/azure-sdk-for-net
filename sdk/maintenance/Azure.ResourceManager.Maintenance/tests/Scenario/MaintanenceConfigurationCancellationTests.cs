@@ -61,11 +61,39 @@ namespace Azure.ResourceManager.Maintenance.Tests
             await Delay(3 * 60 * 1000);
 
             // cancel the maintenance
-            ArmOperation<MaintenanceApplyUpdateResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, resourceType, resourceName, applyUpdateName, data);
-            MaintenanceApplyUpdateResource result = lro.Value;
+            Console.WriteLine($"starton = {startOn}");
+            bool retry;
+            do
+            {
+                try
+                {
+                    Console.WriteLine($"[{DateTime.UtcNow}] Trying...");
+                    retry = false;
+                    ArmOperation<MaintenanceApplyUpdateResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, resourceType, resourceName, applyUpdateName, data);
+                    MaintenanceApplyUpdateResource result = lro.Value;
 
-            Assert.IsTrue(result.HasData);
-            Assert.AreEqual(result.Data.Status, MaintenanceUpdateStatus.Cancelled);
+                    Assert.IsTrue(result.HasData);
+                    Assert.AreEqual(result.Data.Status, MaintenanceUpdateStatus.Cancelled);
+                }
+                catch (RequestFailedException ex)
+                {
+                    if (ex.Status == 404)
+                    {
+                        Console.WriteLine($"[{DateTime.UtcNow}] Got 404. Waiting...");
+                        retry = true;
+                        await Delay(30 * 1000);
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
+            } while (retry && startOn > DateTime.UtcNow);
+
+            if (retry)
+            {
+                Assert.Fail("Maintenance configuration could not be cancelled. Got 404 responses for all tries.");
+            }
         }
 
         private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration(string resourceName, DateTime startOn)
