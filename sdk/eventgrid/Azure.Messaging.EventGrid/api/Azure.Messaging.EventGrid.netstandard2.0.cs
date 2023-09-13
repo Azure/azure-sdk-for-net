@@ -60,7 +60,9 @@ namespace Azure.Messaging.EventGrid
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus?), System.DateTimeOffset? deliveryAttemptTimestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string messageId = null, System.DateTimeOffset? userActionTimestamp = default(System.DateTimeOffset?), string engagementContext = null, string userAgent = null, Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement? engagement = default(Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender, string messageId, System.DateTimeOffset? userActionTimestamp, string engagementContext, string userAgent, Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement? engagement) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, System.DateTimeOffset? userActionTimestamp = default(System.DateTimeOffset?), string engagementContext = null, string userAgent = null, Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement? engagement = default(Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallCustomContext AcsIncomingCallCustomContext(System.Collections.Generic.IReadOnlyDictionary<string, string> sipHeaders = null, System.Collections.Generic.IReadOnlyDictionary<string, string> voipHeaders = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallEventData AcsIncomingCallEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel toCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel fromCommunicationIdentifier = null, string serverCallId = null, string callerDisplayName = null, Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallCustomContext customContext = null, string incomingCallContext = null, string correlationId = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -111,6 +113,9 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.ApiManagementUserUpdatedEventData ApiManagementUserUpdatedEventData(string resourceUri = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationKeyValueDeletedEventData AppConfigurationKeyValueDeletedEventData(string key = null, string label = null, string etag = null, string syncToken = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationKeyValueModifiedEventData AppConfigurationKeyValueModifiedEventData(string key = null, string label = null, string etag = null, string syncToken = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationSnapshotCreatedEventData AppConfigurationSnapshotCreatedEventData(string name = null, string etag = null, string syncToken = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationSnapshotEventData AppConfigurationSnapshotEventData(string name = null, string etag = null, string syncToken = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AppConfigurationSnapshotModifiedEventData AppConfigurationSnapshotModifiedEventData(string name = null, string etag = null, string syncToken = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail AppEventTypeDetail(Azure.Messaging.EventGrid.SystemEvents.AppAction? action = default(Azure.Messaging.EventGrid.SystemEvents.AppAction?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail AppServicePlanEventTypeDetail(Azure.Messaging.EventGrid.SystemEvents.StampKind? stampKind = default(Azure.Messaging.EventGrid.SystemEvents.StampKind?), Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction? action = default(Azure.Messaging.EventGrid.SystemEvents.AppServicePlanAction?), Azure.Messaging.EventGrid.SystemEvents.AsyncStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.AsyncStatus?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel CommunicationIdentifierModel(string rawId = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationUserIdentifierModel communicationUser = null, Azure.Messaging.EventGrid.SystemEvents.PhoneNumberIdentifierModel phoneNumber = null, Azure.Messaging.EventGrid.SystemEvents.MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null) { throw null; }
@@ -151,6 +156,11 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfoX509Thumbprint DeviceTwinInfoX509Thumbprint(string primaryThumbprint = null, string secondaryThumbprint = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata DeviceTwinMetadata(string lastUpdated = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties DeviceTwinProperties(Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata metadata = null, float? version = default(float?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData EventGridMqttClientCreatedOrUpdatedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState? state = default(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> attributes = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDeletedEventData EventGridMqttClientDeletedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData EventGridMqttClientEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionConnectedEventData EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientSessionDisconnectedEventData EventGridMqttClientSessionDisconnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = default(long?), Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason? disconnectionReason = default(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.EventHubCaptureFileCreatedEventData EventHubCaptureFileCreatedEventData(string fileurl = null, string fileType = null, string partitionId = null, int? sizeInBytes = default(int?), int? eventCount = default(int?), int? firstSequenceNumber = default(int?), int? lastSequenceNumber = default(int?), System.DateTimeOffset? firstEnqueueTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastEnqueueTime = default(System.DateTimeOffset?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = default(long?)) { throw null; }
@@ -383,6 +393,8 @@ namespace Azure.Messaging.EventGrid
         public const string ApiManagementUserUpdated = "Microsoft.ApiManagement.UserUpdated";
         public const string AppConfigurationKeyValueDeleted = "Microsoft.AppConfiguration.KeyValueDeleted";
         public const string AppConfigurationKeyValueModified = "Microsoft.AppConfiguration.KeyValueModified";
+        public const string AppConfigurationSnapshotCreated = "Microsoft.AppConfiguration.SnapshotCreated";
+        public const string AppConfigurationSnapshotModified = "Microsoft.AppConfiguration.SnapshotModified";
         public const string ContainerRegistryChartDeleted = "Microsoft.ContainerRegistry.ChartDeleted";
         public const string ContainerRegistryChartPushed = "Microsoft.ContainerRegistry.ChartPushed";
         public const string ContainerRegistryImageDeleted = "Microsoft.ContainerRegistry.ImageDeleted";
@@ -396,6 +408,10 @@ namespace Azure.Messaging.EventGrid
         public const string DataBoxCopyCompleted = "Microsoft.DataBox.CopyCompleted";
         public const string DataBoxCopyStarted = "Microsoft.DataBox.CopyStarted";
         public const string DataBoxOrderCompleted = "Microsoft.DataBox.OrderCompleted";
+        public const string EventGridMqttClientCreatedOrUpdated = "Microsoft.EventGrid.MQTTClientCreatedOrUpdated";
+        public const string EventGridMqttClientDeleted = "Microsoft.EventGrid.MQTTClientDeleted";
+        public const string EventGridMqttClientSessionConnected = "Microsoft.EventGrid.MQTTClientSessionConnected";
+        public const string EventGridMqttClientSessionDisconnected = "Microsoft.EventGrid.MQTTClientSessionDisconnected";
         public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
         public const string EventGridSubscriptionValidation = "Microsoft.EventGrid.SubscriptionValidationEvent";
         public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
@@ -765,6 +781,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement? Engagement { get { throw null; } }
         public string EngagementContext { get { throw null; } }
         public string MessageId { get { throw null; } }
+        public string Recipient { get { throw null; } }
         public string Sender { get { throw null; } }
         public System.DateTimeOffset? UserActionTimestamp { get { throw null; } }
         public string UserAgent { get { throw null; } }
@@ -1093,6 +1110,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Label { get { throw null; } }
         public string SyncToken { get { throw null; } }
     }
+    public partial class AppConfigurationSnapshotCreatedEventData : Azure.Messaging.EventGrid.SystemEvents.AppConfigurationSnapshotEventData
+    {
+        internal AppConfigurationSnapshotCreatedEventData() { }
+    }
+    public partial class AppConfigurationSnapshotEventData
+    {
+        internal AppConfigurationSnapshotEventData() { }
+        public string Etag { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string SyncToken { get { throw null; } }
+    }
+    public partial class AppConfigurationSnapshotModifiedEventData : Azure.Messaging.EventGrid.SystemEvents.AppConfigurationSnapshotEventData
+    {
+        internal AppConfigurationSnapshotModifiedEventData() { }
+    }
     public partial class AppEventTypeDetail
     {
         internal AppEventTypeDetail() { }
@@ -1401,6 +1433,83 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal DeviceTwinProperties() { }
         public Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata Metadata { get { throw null; } }
         public float? Version { get { throw null; } }
+    }
+    public partial class EventGridMqttClientCreatedOrUpdatedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData
+    {
+        internal EventGridMqttClientCreatedOrUpdatedEventData() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Attributes { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState? State { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+    }
+    public partial class EventGridMqttClientDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData
+    {
+        internal EventGridMqttClientDeletedEventData() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EventGridMqttClientDisconnectionReason : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EventGridMqttClientDisconnectionReason(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ClientAuthenticationError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ClientAuthorizationError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ClientError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ClientInitiatedDisconnect { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ConnectionLost { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason IpForbidden { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason QuotaExceeded { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ServerError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason ServerInitiatedDisconnect { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason SessionOverflow { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason SessionTakenOver { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason left, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason left, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class EventGridMqttClientEventData
+    {
+        internal EventGridMqttClientEventData() { }
+        public string ClientAuthenticationName { get { throw null; } }
+        public string ClientName { get { throw null; } }
+        public string NamespaceName { get { throw null; } }
+    }
+    public partial class EventGridMqttClientSessionConnectedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData
+    {
+        internal EventGridMqttClientSessionConnectedEventData() { }
+        public string ClientSessionName { get { throw null; } }
+        public long? SequenceNumber { get { throw null; } }
+    }
+    public partial class EventGridMqttClientSessionDisconnectedEventData : Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientEventData
+    {
+        internal EventGridMqttClientSessionDisconnectedEventData() { }
+        public string ClientSessionName { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientDisconnectionReason? DisconnectionReason { get { throw null; } }
+        public long? SequenceNumber { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EventGridMqttClientState : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EventGridMqttClientState(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState Disabled { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState Enabled { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState left, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState left, Azure.Messaging.EventGrid.SystemEvents.EventGridMqttClientState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EventHubCaptureFileCreatedEventData
     {

@@ -4,18 +4,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.Core.TestFramework.Tests
 {
-    internal class TestResourceCollection : ArmCollection, IEnumerable<TestResource>, IAsyncEnumerable<TestResource>
+    public class TestResourceCollection : ArmCollection, IEnumerable<TestResource>, IAsyncEnumerable<TestResource>
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
