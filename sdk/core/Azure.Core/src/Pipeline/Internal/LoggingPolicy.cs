@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
@@ -10,9 +9,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
-using Azure.Core.Shared;
-using Azure.Core.Shared.Pipeline;
 using Azure.Core.Shared.Pipeline.Content;
+using Azure.Core.Shared.Pipeline.Diagnostics;
 using Azure.Core.Shared.Pipeline.Tasks;
 
 namespace Azure.Core.Pipeline

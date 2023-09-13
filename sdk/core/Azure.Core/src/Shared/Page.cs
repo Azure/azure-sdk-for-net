@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Paging
 {
     internal static class Page
     {

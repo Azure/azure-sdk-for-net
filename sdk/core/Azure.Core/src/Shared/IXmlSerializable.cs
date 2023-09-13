@@ -5,7 +5,7 @@
 
 using System.Xml;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Xml
 {
     internal interface IXmlSerializable
     {

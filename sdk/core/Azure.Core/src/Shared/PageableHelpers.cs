@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Shared.Operations;
+using Azure.Core.Shared.Pipeline;
 using Azure.Core.Shared.Pipeline.Diagnostics;
 
 namespace Azure.Core.Shared.Paging

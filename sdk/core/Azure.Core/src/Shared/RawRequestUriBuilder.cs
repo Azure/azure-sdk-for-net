@@ -7,7 +7,7 @@ using System;
 using System.Globalization;
 using System.IO;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.RequestUri
 {
     internal class RawRequestUriBuilder: RequestUriBuilder
     {

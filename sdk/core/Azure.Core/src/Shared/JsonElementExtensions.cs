@@ -6,11 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Text.Json;
-using System.Xml;
+using Azure.Core.Shared.Formatters;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Json
 {
     internal static class JsonElementExtensions
     {

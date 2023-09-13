@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Shared.JsonWriter;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Content
 {
     internal static class RequestContentHelper
     {

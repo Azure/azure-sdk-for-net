@@ -5,8 +5,9 @@
 
 using System;
 using System.Xml;
+using Azure.Core.Shared.Formatters;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Xml
 {
     internal static class XmlWriterExtensions
     {

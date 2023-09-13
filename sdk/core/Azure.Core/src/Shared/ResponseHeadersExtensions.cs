@@ -7,8 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
+using Azure.Core.Shared.Formatters;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Headers
 {
     internal static class ResponseHeadersExtensions
     {

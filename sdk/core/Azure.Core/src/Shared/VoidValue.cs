@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Text.Json;
-
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Operations
 {
     internal readonly struct VoidValue { }
 }

@@ -12,9 +12,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Shared;
+using Azure.Core.Shared.Content;
 using Azure.Core.Shared.JsonWriter;
 using Azure.Core.Shared.Message;
 using Azure.Core.Shared.Pipeline.Diagnostics;
+using Azure.Core.Shared.RequestUri;
 using Azure.Core.TestFramework.Models;
 
 namespace Azure.Core.TestFramework

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Formatters
 {
     internal class TypeFormatters
     {

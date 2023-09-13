@@ -8,7 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Content
 {
     internal class Utf8JsonRequestContent: RequestContent
     {

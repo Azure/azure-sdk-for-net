@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Core;
-using Azure.Core.Shared;
+using Azure.Core.Shared.Diagnostics;
+using Azure.Core.Shared.Pipeline.Diagnostics;
 
 namespace Azure
 {

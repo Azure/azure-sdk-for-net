@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
+using Azure.Core.Shared.Formatters;
 using Azure.Core.Shared.Serialization;
 
 namespace Azure.Core.Shared.JsonWriter
