@@ -1,6 +1,6 @@
 {
   "Name": "Azure.Security.KeyVault.Certificates",
-  "Version": "4.3.0-beta.2",
+  "Version": "4.2.0",
   "DevVersion": null,
   "DirectoryPath": "sdk/keyvault/Azure.Security.KeyVault.Certificates",
   "ServiceDirectory": "keyvault",
@@ -12,6 +12,7 @@
   "ArtifactName": "Azure.Security.KeyVault.Certificates",
   "ReleaseStatus": "2022-09-20",
   "Namespaces": [
-    "Some.New.Namespace"
+    "Azure.Security.KeyVault.Certificates",
+    "Microsoft.Extensions.Azure"
   ]
 }
