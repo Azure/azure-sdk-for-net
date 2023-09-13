@@ -69,7 +69,7 @@ namespace Azure.Core.Serialization
             JsonToken expectedToken,
             params object[] expectedValues)
         {
-            Argument.AssertNotNull(reader, nameof(reader));
+            ClientUtilities.AssertNotNull(reader, nameof(reader));
 
             if (reader.TokenType != expectedToken)
             {
@@ -118,7 +118,7 @@ namespace Azure.Core.Serialization
         /// <param name="reader">The JSON reader to advance.</param>
         public static void Advance(this JsonReader reader)
         {
-            Argument.AssertNotNull(reader, nameof(reader));
+            ClientUtilities.AssertNotNull(reader, nameof(reader));
 
             if (!reader.Read())
             {
@@ -193,9 +193,9 @@ namespace Azure.Core.Serialization
             IEnumerable<string> optionalProperties,
             Action<JsonReader, string> readProperty)
         {
-            Argument.AssertNotNull(requiredProperties, nameof(requiredProperties));
-            Argument.AssertNotNull(optionalProperties, nameof(optionalProperties));
-            Argument.AssertNotNull(readProperty, nameof(readProperty));
+            ClientUtilities.AssertNotNull(requiredProperties, nameof(requiredProperties));
+            ClientUtilities.AssertNotNull(optionalProperties, nameof(optionalProperties));
+            ClientUtilities.AssertNotNull(readProperty, nameof(readProperty));
 
             // ExpectAndAdvance validates that reader is not null.
             reader.ExpectAndAdvance(JsonToken.StartObject);
@@ -253,9 +253,9 @@ namespace Azure.Core.Serialization
         /// </returns>
         public static bool IsValid(this JObject obj, IEnumerable<string> requiredProperties, Func<JProperty, bool> isPropertyValid)
         {
-            Argument.AssertNotNull(obj, nameof(obj));
-            Argument.AssertNotNull(requiredProperties, nameof(requiredProperties));
-            Argument.AssertNotNull(isPropertyValid, nameof(isPropertyValid));
+            ClientUtilities.AssertNotNull(obj, nameof(obj));
+            ClientUtilities.AssertNotNull(requiredProperties, nameof(requiredProperties));
+            ClientUtilities.AssertNotNull(isPropertyValid, nameof(isPropertyValid));
 
             var processedProperties = new HashSet<string>();
 

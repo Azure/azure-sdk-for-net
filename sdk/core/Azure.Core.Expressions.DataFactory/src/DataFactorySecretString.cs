@@ -15,7 +15,7 @@ namespace Azure.Core.Expressions.DataFactory
         [InitializationConstructor]
         public DataFactorySecretString(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            ClientUtilities.AssertNotNull(value, nameof(value));
 
             Value = value;
             SecretBaseType = "SecureString";

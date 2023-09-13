@@ -38,7 +38,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <param name="kind">The element kind.</param>
         public DataFactoryElementKind(string kind)
         {
-            Argument.AssertNotNull(kind, nameof(kind));
+            ClientUtilities.AssertNotNull(kind, nameof(kind));
 
             _kind = kind;
         }

@@ -20,8 +20,8 @@ namespace Azure.Core.Expressions.DataFactory
         [InitializationConstructor]
         public DataFactoryKeyVaultSecretReference(DataFactoryLinkedServiceReference store, DataFactoryElement<string> secretName)
         {
-            Argument.AssertNotNull(store, nameof(store));
-            Argument.AssertNotNull(secretName, nameof(secretName));
+            ClientUtilities.AssertNotNull(store, nameof(store));
+            ClientUtilities.AssertNotNull(secretName, nameof(secretName));
 
             Store = store;
             SecretName = secretName;

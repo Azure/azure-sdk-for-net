@@ -18,7 +18,7 @@ namespace Azure.Core.Expressions.DataFactory
         [InitializationConstructor]
         public DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType referenceType, string referenceName)
         {
-            Argument.AssertNotNull(referenceName, nameof(referenceName));
+            ClientUtilities.AssertNotNull(referenceName, nameof(referenceName));
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;

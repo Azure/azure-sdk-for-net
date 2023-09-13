@@ -17,10 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared\Core" />
@@ -28,10 +24,13 @@
     <Compile Include="$(AzureCoreSharedSources)Optional.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ChangeTrackingList.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PropertyReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)InitializationConstructorAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>

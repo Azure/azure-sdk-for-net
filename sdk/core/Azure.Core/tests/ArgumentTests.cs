@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
             ClientUtilities.AssertNotNull(value, "value");
 
             // With nullability enabled and without [NotNull] attributed on the first parameter above, this would fail compilation.
-            Assert.AreEqual("test", value.ToString());
+            Assert.AreEqual("test", value!.ToString());
         }
 
         [Test]

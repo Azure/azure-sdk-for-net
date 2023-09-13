@@ -27,7 +27,7 @@ namespace Azure.Core.TestFramework.Tests
 
         public virtual Response GetResource(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
+            ClientUtilities.AssertNotNullOrWhiteSpace(id, nameof(id));
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(MockClient)}.{nameof(GetResource)}");
             scope.Start();
@@ -46,7 +46,7 @@ namespace Azure.Core.TestFramework.Tests
 
         public virtual async Task<Response> GetResourceAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
+            ClientUtilities.AssertNotNullOrWhiteSpace(id, nameof(id));
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(MockClient)}.{nameof(GetResource)}");
             scope.Start();

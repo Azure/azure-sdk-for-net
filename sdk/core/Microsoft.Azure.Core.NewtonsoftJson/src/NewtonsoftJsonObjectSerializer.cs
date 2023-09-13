@@ -54,7 +54,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="ArgumentNullException"><paramref name="settings"/> is null.</exception>
         public NewtonsoftJsonObjectSerializer(JsonSerializerSettings settings)
         {
-            Argument.AssertNotNull(settings, nameof(settings));
+            ClientUtilities.AssertNotNull(settings, nameof(settings));
 
             _cache = new ConcurrentDictionary<MemberInfo, string?>();
             _serializer = JsonSerializer.Create(settings);
@@ -64,8 +64,8 @@ namespace Azure.Core.Serialization
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> or <paramref name="returnType"/> is null.</exception>
         public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
-            Argument.AssertNotNull(returnType, nameof(returnType));
+            ClientUtilities.AssertNotNull(stream, nameof(stream));
+            ClientUtilities.AssertNotNull(returnType, nameof(returnType));
 
             using StreamReader reader = new StreamReader(stream, UTF8NoBOM, true, DefaultBufferSize, true);
             return _serializer.Deserialize(reader, returnType);
@@ -80,8 +80,8 @@ namespace Azure.Core.Serialization
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> or <paramref name="inputType"/> is null.</exception>
         public override void Serialize(Stream stream, object? value, Type inputType, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
-            Argument.AssertNotNull(inputType, nameof(inputType));
+            ClientUtilities.AssertNotNull(stream, nameof(stream));
+            ClientUtilities.AssertNotNull(inputType, nameof(inputType));
 
             using StreamWriter writer = new StreamWriter(stream, UTF8NoBOM, DefaultBufferSize, true);
             _serializer.Serialize(writer, value, inputType);
@@ -98,7 +98,7 @@ namespace Azure.Core.Serialization
         /// <inheritdoc/>
         string? IMemberNameConverter.ConvertMemberName(MemberInfo member)
         {
-            Argument.AssertNotNull(member, nameof(member));
+            ClientUtilities.AssertNotNull(member, nameof(member));
 
             return _cache.GetOrAdd(member, m =>
             {

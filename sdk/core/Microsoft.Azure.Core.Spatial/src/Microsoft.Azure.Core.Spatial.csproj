@@ -16,9 +16,5 @@
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-
-  <!-- Pull in Shared Source from Azure.Core -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
-  </ItemGroup>
+	
 </Project>
