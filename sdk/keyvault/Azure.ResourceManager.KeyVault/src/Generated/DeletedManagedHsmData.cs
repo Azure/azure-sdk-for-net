@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the deleted managed HSM. </param>
-        internal DeletedManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeletedManagedHsmProperties properties) : base(id, name, resourceType, systemData)
+        internal DeletedManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DeletedManagedHsmProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

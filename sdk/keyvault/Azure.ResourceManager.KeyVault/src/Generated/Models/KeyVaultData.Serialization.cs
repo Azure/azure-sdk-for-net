@@ -5,48 +5,74 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.ResourceManager.KeyVault
 {
-    public partial class KeyVaultAccessPolicyParameters : IUtf8JsonSerializable
+    public partial class KeyVaultData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultAccessPolicyParameters DeserializeKeyVaultAccessPolicyParameters(JsonElement element)
+        internal static KeyVaultData DeserializeKeyVaultData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            KeyVaultAccessPolicyProperties properties = default;
+            Models.KeyVaultProperties properties = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<ResourceManager.Models.SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = Models.KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (property.NameEquals("location"u8))
                 {
-                    properties = KeyVaultAccessPolicyProperties.DeserializeKeyVaultAccessPolicyProperties(property.Value);
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -74,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultAccessPolicyParameters(id, name, type, systemData.Value, Optional.ToNullable(location), properties);
+            return new KeyVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties);
         }
     }
 }

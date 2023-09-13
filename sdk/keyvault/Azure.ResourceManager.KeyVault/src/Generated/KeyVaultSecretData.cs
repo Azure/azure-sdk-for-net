@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="properties"> Properties of the secret. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        internal KeyVaultSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecretProperties properties, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal KeyVaultSecretData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, SecretProperties properties, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        internal KeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.KeyVaultProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal KeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.KeyVaultProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }

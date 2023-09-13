@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The resource type of the access policy. </param>
         /// <param name="properties"> Properties of the access policy. </param>
-        internal KeyVaultAccessPolicyParameters(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KeyVaultAccessPolicyProperties properties) : base(id, name, resourceType, systemData)
+        internal KeyVaultAccessPolicyParameters(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, AzureLocation? location, KeyVaultAccessPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;

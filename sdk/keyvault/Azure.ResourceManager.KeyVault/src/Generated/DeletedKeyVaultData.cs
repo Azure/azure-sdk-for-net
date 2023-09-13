@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        internal DeletedKeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeletedKeyVaultProperties properties) : base(id, name, resourceType, systemData)
+        internal DeletedKeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DeletedKeyVaultProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
