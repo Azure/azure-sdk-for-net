@@ -911,8 +911,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int?> managedServiceIdentityId = default;
             Optional<int?> xManagedServiceIdentityId = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IList<AppServiceIPSecurityRestriction>> ipSecurityRestrictions = default;
-            Optional<IList<AppServiceIPSecurityRestriction>> scmIPSecurityRestrictions = default;
+            Optional<IList<IPSecurityRestriction>> ipSecurityRestrictions = default;
+            Optional<IList<IPSecurityRestriction>> scmIPSecurityRestrictions = default;
             Optional<bool?> scmIPSecurityRestrictionsUseMain = default;
             Optional<bool?> http20Enabled = default;
             Optional<AppServiceSupportedTlsVersion?> minTlsVersion = default;
@@ -1480,10 +1480,10 @@ namespace Azure.ResourceManager.AppService.Models
                         ipSecurityRestrictions = null;
                         continue;
                     }
-                    List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
+                    List<IPSecurityRestriction> array = new List<IPSecurityRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item));
+                        array.Add(IPSecurityRestriction.DeserializeIPSecurityRestriction(item));
                     }
                     ipSecurityRestrictions = array;
                     continue;
@@ -1495,10 +1495,10 @@ namespace Azure.ResourceManager.AppService.Models
                         scmIPSecurityRestrictions = null;
                         continue;
                     }
-                    List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
+                    List<IPSecurityRestriction> array = new List<IPSecurityRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item));
+                        array.Add(IPSecurityRestriction.DeserializeIPSecurityRestriction(item));
                     }
                     scmIPSecurityRestrictions = array;
                     continue;

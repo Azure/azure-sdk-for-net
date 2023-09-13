@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<AppServiceWorkerPoolData> value = default;
+            IReadOnlyList<WorkerPoolData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AppServiceWorkerPoolData> array = new List<AppServiceWorkerPoolData>();
+                    List<WorkerPoolData> array = new List<WorkerPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(item));
+                        array.Add(WorkerPoolData.DeserializeWorkerPoolData(item));
                     }
                     value = array;
                     continue;
