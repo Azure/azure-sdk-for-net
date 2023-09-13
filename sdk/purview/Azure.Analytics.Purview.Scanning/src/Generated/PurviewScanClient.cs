@@ -7,10 +7,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared.Asserts;
+using Azure.Core.Shared.Pipeline;
+using Azure.Core.Shared.Pipeline.Diagnostics;
+using Azure.Core.Shared.RequestUri;
 
 namespace Azure.Analytics.Purview.Scanning
 {
