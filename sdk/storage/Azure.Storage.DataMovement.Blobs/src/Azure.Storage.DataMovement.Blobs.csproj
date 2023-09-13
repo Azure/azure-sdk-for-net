@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Blobs client library</AssemblyTitle>
