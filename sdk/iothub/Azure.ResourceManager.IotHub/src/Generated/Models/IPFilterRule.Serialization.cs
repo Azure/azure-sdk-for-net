@@ -8,39 +8,41 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.IotCentral.Models
+namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotCentralNetworkRuleSetIPRule : IUtf8JsonSerializable
+    public partial class IPFilterRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilterName))
-            {
-                writer.WritePropertyName("filterName"u8);
-                writer.WriteStringValue(FilterName);
-            }
-            if (Optional.IsDefined(IPMask))
-            {
-                writer.WritePropertyName("ipMask"u8);
-                writer.WriteStringValue(IPMask);
-            }
+            writer.WritePropertyName("filterName"u8);
+            writer.WriteStringValue(FilterName);
+            writer.WritePropertyName("action"u8);
+            writer.WriteStringValue(Action.ToSerialString());
+            writer.WritePropertyName("ipMask"u8);
+            writer.WriteStringValue(IPMask);
             writer.WriteEndObject();
         }
 
-        internal static IotCentralNetworkRuleSetIPRule DeserializeIotCentralNetworkRuleSetIPRule(JsonElement element)
+        internal static IPFilterRule DeserializeIPFilterRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> filterName = default;
-            Optional<string> ipMask = default;
+            string filterName = default;
+            IPFilterActionType action = default;
+            string ipMask = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filterName"u8))
                 {
                     filterName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("action"u8))
+                {
+                    action = property.Value.GetString().ToIPFilterActionType();
                     continue;
                 }
                 if (property.NameEquals("ipMask"u8))
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     continue;
                 }
             }
-            return new IotCentralNetworkRuleSetIPRule(filterName.Value, ipMask.Value);
+            return new IPFilterRule(filterName, action, ipMask);
         }
     }
 }

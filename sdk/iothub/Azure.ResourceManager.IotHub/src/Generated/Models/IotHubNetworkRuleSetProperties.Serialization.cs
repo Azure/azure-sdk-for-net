@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             Optional<IotHubNetworkRuleSetDefaultAction> defaultAction = default;
             bool applyToBuiltInEventHubEndpoint = default;
-            IList<IotHubNetworkRuleSetIPRule> ipRules = default;
+            IList<NetworkRuleSetIPRule> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("ipRules"u8))
                 {
-                    List<IotHubNetworkRuleSetIPRule> array = new List<IotHubNetworkRuleSetIPRule>();
+                    List<NetworkRuleSetIPRule> array = new List<NetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubNetworkRuleSetIPRule.DeserializeIotHubNetworkRuleSetIPRule(item));
+                        array.Add(NetworkRuleSetIPRule.DeserializeNetworkRuleSetIPRule(item));
                     }
                     ipRules = array;
                     continue;
