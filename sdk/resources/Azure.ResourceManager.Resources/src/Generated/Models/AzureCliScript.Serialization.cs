@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Resources.Models
                 foreach (var variable in EnvironmentVariables)
                 {
                     sb.AppendLine($"      {{");
-                    sb.AppendChildObject(variable, options, spaces: 8);
+                    sb.AppendChildObject(variable, options, true, 6);
                     sb.AppendLine($"      }}");
                 }
                 sb.AppendLine($"    ]");

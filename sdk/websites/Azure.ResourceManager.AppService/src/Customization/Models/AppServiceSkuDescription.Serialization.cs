@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceSkuDescription : IUtf8JsonSerializable
+    public partial class AppServiceSkuDescription : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceSkuDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -69,8 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static AppServiceSkuDescription DeserializeAppServiceSkuDescription(JsonElement element)
+        internal static AppServiceSkuDescription DeserializeAppServiceSkuDescription(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -153,6 +160,34 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new AppServiceSkuDescription(name.Value, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), skuCapacity.Value, Optional.ToList(locations), Optional.ToList(capabilities));
+        }
+
+        void IModelJsonSerializable<AppServiceSkuDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        AppServiceSkuDescription IModelJsonSerializable<AppServiceSkuDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceSkuDescription(document.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceSkuDescription>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        {
+            "J" or "W" => ModelSerializer.SerializeCore(this, options),
+            "bicep" => SerializeBicep(options),
+            _ => throw new FormatException($"Unsupported format {options.Format}")
+        };
+
+        AppServiceSkuDescription IModelSerializable<AppServiceSkuDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.Parse(data);
+            return DeserializeAppServiceSkuDescription(document.RootElement, options);
+        }
+
+        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"  name: '{Name}'");
+            return BinaryData.FromString(sb.ToString());
         }
     }
 }
