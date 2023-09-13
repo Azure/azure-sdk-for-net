@@ -1,67 +1,135 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph DataVirtualized="True" Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="(@1 Namespace=Azure.Core.Shared.App)" Category="CodeSchema_Namespace" Bounds="705.893333333333,548,178.75,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.App" UseManualLocation="True" />
-    <Node Id="(@1 Namespace=Azure.Core.Shared.Attributes)" Category="CodeSchema_Namespace" Bounds="-80,349,209.136666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Attributes" UseManualLocation="True" />
-    <Node Id="(@1 Namespace=Azure.Core.Shared.Formatters)" Category="CodeSchema_Namespace" Bounds="260.938333333333,361,214.086666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Formatters" UseManualLocation="True" />
-    <Node Id="(@1 Namespace=Azure.Messaging.WebPubSub.Models)" Category="CodeSchema_Namespace" Bounds="390.076666666667,70.0004624999469,256.383333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Messaging‎.WebPubSub‎.Models" />
-    <Node Id="@10" Category="CodeSchema_Namespace" Bounds="390.076666666667,-39.9995375000531,214.633333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Messaging‎.WebPubSub" />
-    <Node Id="@11" Category="CodeSchema_Namespace" Bounds="398.09,-94.9995375000531,198.606666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Microsoft‎.Extensions‎.Azure" />
-    <Node Id="@2" Category="CodeSchema_Assembly" Bounds="370.076666666667,-135,296.383333333334,250" CodeSchemaProperty_StrongName="Azure.Messaging.WebPubSub, Version=1.4.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="16" FilePath="$(af06ab51-3b39-4905-b7ea-cd7563de5770.OutputPath)" Group="Expanded" Label="Azure.Messaging.WebPubSub.dll" UseManualLocation="True" />
-    <Node Id="@3" Category="CodeSchema_Namespace" Bounds="439.935,15.0004624999469,114.916666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core" />
-    <Node Id="@4" Category="CodeSchema_Namespace" Bounds="501.025,303,194.44,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Asserts" UseManualLocation="True" />
-    <Node Id="@5" Category="CodeSchema_Namespace" Bounds="983.241666666667,292,196.053333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Models" UseManualLocation="True" />
-    <Node Id="@6" Category="CodeSchema_Namespace" Bounds="752.898333333333,251,198.74,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Pipeline" UseManualLocation="True" />
-    <Node Id="@7" Category="CodeSchema_Namespace" Bounds="688.09,427,262.356666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Pipeline‎.Diagnostics" UseManualLocation="True" />
-    <Node Id="@8" Category="CodeSchema_Namespace" Bounds="-6.13499999960018,280,228.536666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Pipeline‎.Tasks" />
-    <Node Id="@9" Category="CodeSchema_Namespace" Bounds="252.401666666667,227,214.623333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.RequestUri" UseManualLocation="True" />
+    <Node Id="(@1 Namespace=Azure.Core.Shared.Attributes Type=AzureResourceProviderNamespaceAttribute)" Category="CodeSchema_Class" Bounds="-121.641666666667,384.030730785826,292.42,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="AzureResourceProviderNamespaceAttribute" />
+    <Node Id="(@1 Namespace=Azure.Messaging.WebPubSub.Models)" Category="CodeSchema_Namespace" Bounds="434.356580046032,74.3684797436869,256.383333333334,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Messaging‎.WebPubSub‎.Models" />
+    <Node Id="@10" Category="CodeSchema_Namespace" Bounds="609.333299839014,149.333816284366,222.166666666667,85.0002" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="1" Group="Expanded" Label="Azure‎.Core‎.Shared‎.Pipeline" UseManualLocation="True" />
+    <Node Id="@12" Category="CodeSchema_Namespace" Bounds="475.273557885517,379.331933976887,433.9,195.0004" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="5" Group="Expanded" Label="Azure‎.Core‎.Shared‎.Pipeline‎.Diagnostics" UseManualLocation="True" />
+    <Node Id="@13" Category="CodeSchema_Namespace" Bounds="69.4531004166146,149.333816888271,228.536666666667,85.0002" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="1" Group="Expanded" Label="Azure‎.Core‎.Shared‎.Pipeline‎.Tasks" UseManualLocation="True" />
+    <Node Id="@14" Category="CodeSchema_Namespace" Bounds="327.989866794481,202.1390260405,251.343333333333,140.059389341064" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="2" Group="Expanded" Label="Azure‎.Core‎.Shared‎.RequestUri" UseManualLocation="True" />
+    <Node Id="@15" Category="CodeSchema_Namespace" Bounds="434.356580046036,-35.6315232015436,214.633333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Messaging‎.WebPubSub" />
+    <Node Id="@16" Category="CodeSchema_Namespace" Bounds="442.369913379366,-90.6315249058491,198.606666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Microsoft‎.Extensions‎.Azure" />
+    <Node Id="@17" Category="CodeSchema_Class" Bounds="1288.4221783706,244.420796279438,185.676666666667,25" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="ChangeTrackingList‎&lt;T‎&gt;" />
+    <Node Id="@18" Category="CodeSchema_Struct" Bounds="881.453845037272,299.42079651247,127.613333333333,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Optional‎&lt;T‎&gt;" />
+    <Node Id="@19" Category="CodeSchema_Class" Bounds="976.425511703938,244.420796162922,281.67,25" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="ChangeTrackingDictionary‎&lt;TKey‎, TValue‎&gt;" />
+    <Node Id="@2" Category="CodeSchema_Assembly" Bounds="414.401054535861,-130.666683718305,296.383333333334,250.0004009248" CodeSchemaProperty_StrongName="Azure.Messaging.WebPubSub, Version=1.4.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="16" FilePath="$(af06ab51-3b39-4905-b7ea-cd7563de5770.OutputPath)" Group="Expanded" Label="Azure.Messaging.WebPubSub.dll" UseManualLocation="True" />
+    <Node Id="@20" Category="CodeSchema_Class" Bounds="511.255097850583,529.313419518428,155.406666666667,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="ActivityExtensions" />
+    <Node Id="@21" Category="CodeSchema_Class" Bounds="568.413107474954,653.319188066731,193.4,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="AppContextSwitchHelper" />
+    <Node Id="@22" Category="CodeSchema_Class" Bounds="649.388041833909,304.395420001217,114.24,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Argument" />
+    <Node Id="@23" Category="CodeSchema_Class" Bounds="724.76176451725,419.313418593628,152.393333333333,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="ClientDiagnostics" />
+    <Node Id="@24" Category="CodeSchema_Struct" Bounds="697.358431183917,529.313424896063,147.2,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="DiagnosticScope" />
+    <Node Id="@25" Category="CodeSchema_Class" Bounds="495.270097850583,474.313418593628,187.376666666667,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="DiagnosticScopeFactory" />
+    <Node Id="@26" Category="CodeSchema_Class" Bounds="712.74676451725,474.313421744845,176.423333333333,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="HttpMessageSanitizer" />
+    <Node Id="@27" Category="CodeSchema_Class" Bounds="629.291610139022,189.37302900544,182.166666666667,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="HttpPipelineExtensions" />
+    <Node Id="@28" Category="CodeSchema_Class" Bounds="891.73110365772,189.358346025573,106.906666666667,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Optional" />
+    <Node Id="@29" Category="CodeSchema_Class" Bounds="348.020668621348,242.091149807732,177.676666666667,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RawRequestUriBuilder" />
+    <Node Id="@3" Category="CodeSchema_Namespace" Bounds="484.214913379367,19.3684785027619,114.916666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core" />
+    <Node Id="@30" Category="CodeSchema_Class" Bounds="347.937632087737,297.150339148796,211.343333333333,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RequestUriBuilderExtensions" />
+    <Node Id="@31" Category="CodeSchema_Class" Bounds="114.327482370635,189.358069546929,138.726666666667,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="TaskExtensions" />
+    <Node Id="@32" Category="CodeSchema_Class" Bounds="266.774093613039,415.966233867378,142.946666666667,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="TypeFormatters" />
+    <Node Id="@4" Category="CodeSchema_Namespace" Bounds="548.350305857443,613.264504826674,233.4,85.0001999999999" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="1" Group="Expanded" Label="Azure‎.Core‎.Shared‎.App" UseManualLocation="True" />
+    <Node Id="@5" Category="CodeSchema_Namespace" Bounds="609.333299839014,264.334016573166,194.44,85.0001999999999" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="1" Group="Expanded" Label="Azure‎.Core‎.Shared‎.Asserts" UseManualLocation="True" />
+    <Node Id="@6" Category="CodeSchema_Namespace" Bounds="-141.641666666667,344.030730785826,332.42,85" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="1" Group="Expanded" Label="Azure‎.Core‎.Shared‎.Attributes" UseManualLocation="True" />
+    <Node Id="@7" Category="CodeSchema_Namespace" Bounds="231.18679346605,375.966133867378,214.086666666667,85.0001999999999" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="1" Group="Expanded" Label="Azure‎.Core‎.Shared‎.Formatters" UseManualLocation="True" />
+    <Node Id="@9" Category="CodeSchema_Namespace" Bounds="861.500066216881,149.333814576926,632.645,195.062650486886" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="4" Group="Expanded" Label="Azure‎.Core‎.Shared‎.Models" UseManualLocation="True" />
   </Nodes>
   <Links>
-    <Link Source="@10" Target="@3" Category="References" Bounds="497.393341064453,-14.9997777938843,0,20.9999585151672" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="48">
+    <Link Source="@10" Target="@27" Category="Contains" FetchingParent="@10" />
+    <Link Source="@12" Target="@20" Category="Contains" FetchingParent="@12" />
+    <Link Source="@12" Target="@23" Category="Contains" FetchingParent="@12" />
+    <Link Source="@12" Target="@24" Category="Contains" FetchingParent="@12" />
+    <Link Source="@12" Target="@25" Category="Contains" FetchingParent="@12" />
+    <Link Source="@12" Target="@26" Category="Contains" FetchingParent="@12" />
+    <Link Source="@13" Target="@31" Category="Contains" FetchingParent="@13" />
+    <Link Source="@14" Target="@29" Category="Contains" FetchingParent="@14" />
+    <Link Source="@14" Target="@30" Category="Contains" FetchingParent="@14" />
+    <Link Source="@15" Target="@22" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="70" />
+    <Link Source="@15" Target="@23" Category="References" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="8">
+      <Category Ref="CodeSchema_Calls" />
+      <Category Ref="CodeSchema_ReturnTypeLink" />
+    </Link>
+    <Link Source="@15" Target="@24" Category="References" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="125">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@15" Target="@25" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="50" />
+    <Link Source="@15" Target="@27" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="50" />
+    <Link Source="@15" Target="@28" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="7" />
+    <Link Source="@15" Target="@29" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="44" />
+    <Link Source="@15" Target="@3" Category="References" Bounds="541.680611131694,-10.6310847119212,1.13686837721616E-12,21.0000014196053" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="48">
       <Category Ref="CodeSchema_AttributeUse" />
       <Category Ref="CodeSchema_Calls" />
       <Category Ref="CodeSchema_FunctionPointer" />
     </Link>
-    <Link Source="@10" Target="@4" Category="CodeSchema_Calls" Bounds="501.068690037175,-14.9995875000531,90.9621645181069,309.365089730686" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="70" />
-    <Link Source="@10" Target="@5" Category="CodeSchema_Calls" Bounds="519.37660943955,-14.9995375000531,532.084791718841,302.550896615658" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="7" />
-    <Link Source="@10" Target="@6" Category="CodeSchema_Calls" Bounds="512.637129038676,-14.9995375000531,317.428018066363,260.292797314181" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="50" />
-    <Link Source="@10" Target="@7" Category="References" Bounds="506.00883880206,-14.9995875000531,299.536475395218,434.589236351959" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="183">
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-    </Link>
-    <Link Source="@10" Target="@8" Category="CodeSchema_Calls" Bounds="-244.976977597539,-270.793443698638,391.032620233158,264.952095749415" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4" />
-    <Link Source="@10" Target="@9" Category="CodeSchema_Calls" Bounds="370.283837518443,-14.9995375000531,120.663791765685,234.00041105782" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="45" />
-    <Link Source="@11" Target="@10" Category="References" Bounds="497.393341064453,-69.9996643066406,0,20.9999542236328" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="34">
+    <Link Source="@15" Target="@30" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@15" Target="@31" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4" />
+    <Link Source="@16" Target="@15" Category="References" Bounds="541.680611131694,-65.6310861315265,1.13686837721616E-12,21.0000014196053" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="34">
       <Category Ref="CodeSchema_FunctionPointer" />
       <Category Ref="CodeSchema_ReturnTypeLink" />
     </Link>
+    <Link Source="@17" Target="@18" Category="References" Bounds="1017.97393532212,268.386017446519,272.409229631604,34.3635497550877" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@19" Target="@18" Category="References" Bounds="992.931156507414,269.421205861292,85.2457864980024,27.2588272510907" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
     <Link Source="@2" Target="(@1 Namespace=Azure.Messaging.WebPubSub.Models)" Category="Contains" FetchingParent="@2" />
-    <Link Source="@2" Target="@10" Category="Contains" FetchingParent="@2" />
-    <Link Source="@2" Target="@11" Category="Contains" FetchingParent="@2" />
+    <Link Source="@2" Target="@15" Category="Contains" FetchingParent="@2" />
+    <Link Source="@2" Target="@16" Category="Contains" FetchingParent="@2" />
     <Link Source="@2" Target="@3" Category="Contains" FetchingParent="@2" IsTargetVirtualized="True" Weight="2">
       <Category Ref="CodeSchema_AttributeUse" />
     </Link>
-    <Link Source="@6" Target="@7" Category="References" Bounds="823.270680148785,276,26.6539031845482,142.154150317591" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3" />
-    <Link Source="@7" Target="(@1 Namespace=Azure.Core.Shared.App)" Category="CodeSchema_Calls" Bounds="799.498684613566,452,17.2903098767919,87.1719789621587" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
-    <Link Source="@9" Target="(@1 Namespace=Azure.Core.Shared.Formatters)" Category="CodeSchema_Calls" Bounds="360.484633084577,252,6.1714521882306,100.017084445423" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="25">
+    <Link Source="@20" Target="@21" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@23" Target="@25" Category="InheritsFrom" Bounds="646.409735946069,444.315610188054,106.440783493891,27.6143542083206" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@23" Target="@26" Category="CodeSchema_Calls" Bounds="801.032337621777,444.315610188054,0,21.0000009247998" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2">
+      <Category Ref="CodeSchema_ReturnTypeLink" />
+    </Link>
+    <Link Source="@25" Target="@20" Category="CodeSchema_Calls" Bounds="589.032337621777,499.315610188054,1.13686837721616E-13,21.0000009248" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@25" Target="@24" Category="CodeSchema_Calls" Bounds="630.395972594392,499.315610188054,90.6575223508579,27.3965049284469" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3">
+      <Category Ref="CodeSchema_ReturnTypeLink" />
+    </Link>
+    <Link Source="@27" Target="@23" Category="References" IsSourceVirtualized="True" Weight="3" />
+    <Link Source="@28" Target="@17" Category="CodeSchema_Calls" Bounds="998.645110468335,208.608200782372,282.821301167195,35.7112777547023" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3" />
+    <Link Source="@28" Target="@18" Category="References" Bounds="945.200417083565,214.358755723943,0.0525740542764197,76.0624526367791" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="17">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@28" Target="@19" Category="CodeSchema_Calls" Bounds="984.255620617187,214.358755723943,85.3765430404555,27.3195541675867" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4" />
+    <Link Source="@30" Target="@32" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="25">
       <Category Ref="CodeSchema_FunctionPointer" />
     </Link>
+    <Link Source="@4" Target="@21" Category="Contains" FetchingParent="@4" />
+    <Link Source="@5" Target="@22" Category="Contains" FetchingParent="@5" />
+    <Link Source="@6" Target="(@1 Namespace=Azure.Core.Shared.Attributes Type=AzureResourceProviderNamespaceAttribute)" Category="Contains" FetchingParent="@6" />
+    <Link Source="@7" Target="@32" Category="Contains" FetchingParent="@7" />
+    <Link Source="@9" Target="@17" Category="Contains" FetchingParent="@9" />
+    <Link Source="@9" Target="@18" Category="Contains" FetchingParent="@9" />
+    <Link Source="@9" Target="@19" Category="Contains" FetchingParent="@9" />
+    <Link Source="@9" Target="@28" Category="Contains" FetchingParent="@9" />
   </Links>
   <Categories>
     <Category Id="CodeSchema_Assembly" Label="Assembly" BasedOn="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Assembly" NavigationActionLabel="Assemblies" />
     <Category Id="CodeSchema_AttributeUse" Label="Uses Attribute" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Used by" OutgoingActionLabel="Uses Attribute" />
     <Category Id="CodeSchema_Calls" Label="Calls" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Called By" OutgoingActionLabel="Calls" />
+    <Category Id="CodeSchema_Class" Label="Class" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Classes" />
     <Category Id="CodeSchema_FunctionPointer" Label="Function Pointer" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Function Pointers" OutgoingActionLabel="Function Pointers" />
     <Category Id="CodeSchema_Namespace" Label="Namespace" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Type" Icon="CodeSchema_Namespace" NavigationActionLabel="Namespaces" />
     <Category Id="CodeSchema_ReturnTypeLink" Label="Return" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Return types" OutgoingActionLabel="Return types" />
+    <Category Id="CodeSchema_Struct" Label="Struct" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Struct" NavigationActionLabel="Structs" />
+    <Category Id="CodeSchema_Type" Label="Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Types" />
     <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
     <Category Id="File" Label="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="File" NavigationActionLabel="Files" />
+    <Category Id="InheritsFrom" Label="Inherits From" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Inherited By" OutgoingActionLabel="Inherits From" />
     <Category Id="References" Label="References" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Referenced By" OutgoingActionLabel="References" />
   </Categories>
   <Properties>
     <Property Id="Bounds" DataType="System.Windows.Rect" />
     <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
     <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsAbstract" Label="Is Abstract" Description="Flag to indicate member is 'Abstract' does not provide a full implementation" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsFinal" Label="Is Final" Description="Flag to indicate the member is 'Final' and cannot be derived from" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsGeneric" Label="Is Generic" Description="Flag to indicate the member is 'Generic'" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsInternal" Label="Is Internal" Description="Flag to indicate the method is 'Internal'" DataType="System.Boolean" />
     <Property Id="CodeSchemaProperty_StrongName" Label="StrongName" Description="StrongName" DataType="System.String" />
     <Property Id="DataVirtualized" Label="Data Virtualized" Description="If true, the graph can contain nodes and links that represent data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
     <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
@@ -93,20 +161,44 @@
   </Properties>
   <QualifiedNames>
     <Name Id="Assembly" Label="Assembly" ValueType="Uri" />
+    <Name Id="GenericParameterCount" Label="Generic Parameter Count" ValueType="System.String" />
+    <Name Id="Name" Label="Name" ValueType="System.String" />
     <Name Id="Namespace" Label="Namespace" ValueType="System.String" />
+    <Name Id="Type" Label="Type" ValueType="System.Object" />
   </QualifiedNames>
   <IdentifierAliases>
     <Alias n="1" Uri="Assembly=$(af06ab51-3b39-4905-b7ea-cd7563de5770.OutputPathUri)" />
     <Alias n="2" Id="(@1)" />
     <Alias n="3" Id="(@1 Namespace=Azure.Core)" />
-    <Alias n="4" Id="(@1 Namespace=Azure.Core.Shared.Asserts)" />
-    <Alias n="5" Id="(@1 Namespace=Azure.Core.Shared.Models)" />
-    <Alias n="6" Id="(@1 Namespace=Azure.Core.Shared.Pipeline)" />
-    <Alias n="7" Id="(@1 Namespace=Azure.Core.Shared.Pipeline.Diagnostics)" />
-    <Alias n="8" Id="(@1 Namespace=Azure.Core.Shared.Pipeline.Tasks)" />
-    <Alias n="9" Id="(@1 Namespace=Azure.Core.Shared.RequestUri)" />
-    <Alias n="10" Id="(@1 Namespace=Azure.Messaging.WebPubSub)" />
-    <Alias n="11" Id="(@1 Namespace=Microsoft.Extensions.Azure)" />
+    <Alias n="4" Id="(@1 Namespace=Azure.Core.Shared.App)" />
+    <Alias n="5" Id="(@1 Namespace=Azure.Core.Shared.Asserts)" />
+    <Alias n="6" Id="(@1 Namespace=Azure.Core.Shared.Attributes)" />
+    <Alias n="7" Id="(@1 Namespace=Azure.Core.Shared.Formatters)" />
+    <Alias n="8" Id="Namespace=Azure.Core.Shared.Models" />
+    <Alias n="9" Id="(@1 @8)" />
+    <Alias n="10" Id="(@1 Namespace=Azure.Core.Shared.Pipeline)" />
+    <Alias n="11" Id="Namespace=Azure.Core.Shared.Pipeline.Diagnostics" />
+    <Alias n="12" Id="(@1 @11)" />
+    <Alias n="13" Id="(@1 Namespace=Azure.Core.Shared.Pipeline.Tasks)" />
+    <Alias n="14" Id="(@1 Namespace=Azure.Core.Shared.RequestUri)" />
+    <Alias n="15" Id="(@1 Namespace=Azure.Messaging.WebPubSub)" />
+    <Alias n="16" Id="(@1 Namespace=Microsoft.Extensions.Azure)" />
+    <Alias n="17" Id="(@1 @8 Type=(Name=ChangeTrackingList GenericParameterCount=1))" />
+    <Alias n="18" Id="(@1 @8 Type=(Name=Optional GenericParameterCount=1))" />
+    <Alias n="19" Id="(@1 @8 Type=(Name=ChangeTrackingDictionary GenericParameterCount=2))" />
+    <Alias n="20" Id="(@1 @11 Type=ActivityExtensions)" />
+    <Alias n="21" Id="(@1 Namespace=Azure.Core.Shared.App Type=AppContextSwitchHelper)" />
+    <Alias n="22" Id="(@1 Namespace=Azure.Core.Shared.Asserts Type=Argument)" />
+    <Alias n="23" Id="(@1 @11 Type=ClientDiagnostics)" />
+    <Alias n="24" Id="(@1 @11 Type=DiagnosticScope)" />
+    <Alias n="25" Id="(@1 @11 Type=DiagnosticScopeFactory)" />
+    <Alias n="26" Id="(@1 @11 Type=HttpMessageSanitizer)" />
+    <Alias n="27" Id="(@1 Namespace=Azure.Core.Shared.Pipeline Type=HttpPipelineExtensions)" />
+    <Alias n="28" Id="(@1 @8 Type=Optional)" />
+    <Alias n="29" Id="(@1 Namespace=Azure.Core.Shared.RequestUri Type=RawRequestUriBuilder)" />
+    <Alias n="30" Id="(@1 Namespace=Azure.Core.Shared.RequestUri Type=RequestUriBuilderExtensions)" />
+    <Alias n="31" Id="(@1 Namespace=Azure.Core.Shared.Pipeline.Tasks Type=TaskExtensions)" />
+    <Alias n="32" Id="(@1 Namespace=Azure.Core.Shared.Formatters Type=TypeFormatters)" />
   </IdentifierAliases>
   <Styles>
     <Style TargetType="Node" GroupLabel="Results" ValueLabel="True">
