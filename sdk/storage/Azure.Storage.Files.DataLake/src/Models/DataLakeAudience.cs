@@ -60,7 +60,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataLakeAudience other && Equals(other);
-        /// <inheritdoc />
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">The string to compare with this object.</param>
+        /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
         public bool Equals(string other) => string.Equals(_value, other, StringComparison.InvariantCultureIgnoreCase);
         /// <inheritdoc />
         public bool Equals(DataLakeAudience other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
