@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Core
 {

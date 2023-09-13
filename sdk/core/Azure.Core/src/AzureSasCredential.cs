@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
-using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure
 {

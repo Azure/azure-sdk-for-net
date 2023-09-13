@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Core.Buffers
 {

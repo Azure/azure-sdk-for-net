@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Azure.Core.Pipeline;
 using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Core
 {

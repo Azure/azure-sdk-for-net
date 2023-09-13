@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
 
 #nullable enable
 

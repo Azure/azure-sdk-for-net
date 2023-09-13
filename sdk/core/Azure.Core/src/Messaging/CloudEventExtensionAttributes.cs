@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Messaging
 {

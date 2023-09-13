@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
-using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Core.Serialization
 {

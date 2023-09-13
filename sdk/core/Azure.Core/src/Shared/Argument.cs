@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Asserts
 {
     /// <summary>
     /// Argument validation.

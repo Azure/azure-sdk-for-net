@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Core.Pipeline
 {

@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
+using Azure.Core.Shared.Asserts;
 using Azure.Core.Shared.Pipeline;
 
 namespace Azure.Core.Shared
