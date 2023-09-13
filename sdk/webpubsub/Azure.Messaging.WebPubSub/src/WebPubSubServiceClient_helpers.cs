@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared.Asserts;
+using Azure.Core.Shared.Pipeline.Tasks;
 
 namespace Azure.Messaging.WebPubSub
 {
