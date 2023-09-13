@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<string> provisioningState = default;
             Optional<string> documentEndpoint = default;
             Optional<CosmosDBAccountOfferType> databaseAccountOfferType = default;
-            Optional<IList<CosmosDBIPAddressOrRange>> ipRules = default;
+            Optional<IList<IPAddressOrRange>> ipRules = default;
             Optional<bool> isVirtualNetworkFilterEnabled = default;
             Optional<bool> enableAutomaticFailover = default;
             Optional<ConsistencyPolicy> consistencyPolicy = default;
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            List<CosmosDBIPAddressOrRange> array = new List<CosmosDBIPAddressOrRange>();
+                            List<IPAddressOrRange> array = new List<IPAddressOrRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBIPAddressOrRange.DeserializeCosmosDBIPAddressOrRange(item));
+                                array.Add(IPAddressOrRange.DeserializeIPAddressOrRange(item));
                             }
                             ipRules = array;
                             continue;

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsDefined(EncryptionType))
+            if (Optional.IsDefined(ComputeEncryptionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(EncryptionType.Value.ToString());
+                writer.WriteStringValue(ComputeEncryptionType.Value.ToString());
             }
             writer.WriteEndObject();
         }
