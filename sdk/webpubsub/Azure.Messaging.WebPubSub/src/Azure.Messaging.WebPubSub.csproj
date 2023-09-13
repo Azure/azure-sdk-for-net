@@ -21,8 +21,6 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
 
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-
     <Compile Include="$(AzureCoreSharedSources)CodeGenSuppressTypeAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)CodeGenSuppressAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)CodeGenModelAttribute.cs" LinkBase="Shared" />
