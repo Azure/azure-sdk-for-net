@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Synapse.Samples
             {
                 IPFirewallRules =
 {
-["AnotherExampleFirewallRule"] = new SynapseIPFirewallRuleProperties()
+["AnotherExampleFirewallRule"] = new IPFirewallRuleProperties()
 {
 EndIPAddress = IPAddress.Parse("10.0.1.254"),
 StartIPAddress = IPAddress.Parse("10.0.1.0"),
 },
-["ExampleFirewallRule"] = new SynapseIPFirewallRuleProperties()
+["ExampleFirewallRule"] = new IPFirewallRuleProperties()
 {
 EndIPAddress = IPAddress.Parse("10.0.0.254"),
 StartIPAddress = IPAddress.Parse("10.0.0.0"),
