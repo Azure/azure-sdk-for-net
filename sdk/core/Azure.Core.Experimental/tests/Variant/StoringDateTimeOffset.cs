@@ -4,7 +4,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringDateTimeOffset
     {

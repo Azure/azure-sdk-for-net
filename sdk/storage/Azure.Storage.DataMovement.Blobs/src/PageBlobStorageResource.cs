@@ -5,17 +5,15 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// The PageBlobStorageResource class.
     /// </summary>
-    public class PageBlobStorageResource : StorageResourceItem
+    internal class PageBlobStorageResource : StorageResourceItem
     {
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;

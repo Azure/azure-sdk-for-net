@@ -8,6 +8,12 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 5.9.3 (2023-09-12)
+
+### Bugs Fixed
+
 - When using the `EventHubBufferedProducerClient`, events are now instrumented when `EnqueueEventAsync` or `EnqueueEventsAsync` is called, rather than when the event is published. This ensures that the instrumentation is accurate when the event is published, regardless of whether the event is published immediately or buffered for a period of time.
 
 ### Other Changes
