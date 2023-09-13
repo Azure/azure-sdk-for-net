@@ -1,180 +1,546 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph DataVirtualized="True" Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="@10" Category="CodeSchema_Namespace" Bounds="-79.705166257881,4.17060765653366,140.713333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Json" />
-    <Node Id="@11" Category="CodeSchema_Namespace" Bounds="76.8865004087856,-52.5168923434665,169.53,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.JsonPatch" />
-    <Node Id="@12" Category="CodeSchema_Namespace" Bounds="-453.025166257881,-52.5168923434663,159.353333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Pipeline" />
-    <Node Id="@13" Category="CodeSchema_Namespace" Bounds="-135.095166257881,-52.5168923434663,181.493333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Serialization" />
-    <Node Id="@14" Category="CodeSchema_Namespace" Bounds="-43.6125197262925,-474.052363236273,154.303333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared" UseManualLocation="True" />
-    <Node Id="@15" Category="CodeSchema_Namespace" Bounds="214.469776046469,-360.103608688274,217.92,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Diagnostics" UseManualLocation="True" />
-    <Node Id="@16" Category="CodeSchema_Namespace" Bounds="-518.714318578797,-481.679918696266,198.74,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Pipeline" UseManualLocation="True" />
-    <Node Id="@17" Category="CodeSchema_Namespace" Bounds="-152.940166257881,-222.579392343466,147.183333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Messaging ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Messaging" />
-    <Node Id="@18" Category="CodeSchema_Namespace" Bounds="-99.460166257881,117.545607656534,180.223333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Microsoft‎.CodeAnalysis" />
-    <Node Id="@19" Category="CodeSchema_Namespace" Bounds="-612.881832924548,4.17060765653366,231.066666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="System‎.Diagnostics‎.CodeAnalysis" />
-    <Node Id="@2" Category="CodeSchema_Assembly" Bounds="-849.348499591214,-262.579392343466,1593.12666666667,425.125" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="18" FilePath="$(25ce0676-8f2c-497b-8fb5-7da41a31f6f9.OutputPath)" Group="Expanded" Label="Azure.Core.dll" UseManualLocation="True" />
-    <Node Id="@20" Category="CodeSchema_Namespace" Bounds="-126.673499591214,60.8581076565337,234.65,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="System‎.Runtime‎.CompilerServices" />
-    <Node Id="@3" Category="CodeSchema_Namespace" Bounds="-274.051832924548,-109.204392343466,87.4066666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure" />
-    <Node Id="@4" Category="CodeSchema_Namespace" Bounds="-327.806832924548,-165.891892343466,114.916666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core" />
-    <Node Id="@5" Category="CodeSchema_Namespace" Bounds="-797.470166257881,4.17060765653378,154.243333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Buffers" />
-    <Node Id="@6" Category="CodeSchema_Namespace" Bounds="340.614833742119,4.17060765653355,190.073333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.Cryptography ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Cryptography))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.Cryptography" />
-    <Node Id="@7" Category="CodeSchema_Namespace" Bounds="-319.615166257881,4.17060765653366,178.533333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Diagnostics" />
-    <Node Id="@8" Category="CodeSchema_Namespace" Bounds="-356.918499591214,-222.579392343466,173.14,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.Extensions ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Extensions))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.Extensions" />
-    <Node Id="@9" Category="CodeSchema_Namespace" Bounds="561.524833742119,4.17060765653355,162.253333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.GeoJson ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.GeoJson" />
+    <Node Id="(@1 Namespace=Microsoft.CodeAnalysis)" Category="CodeSchema_Namespace" Bounds="-1349.80949762891,-331.202436799308,180.223333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Microsoft‎.CodeAnalysis" UseManualLocation="True" />
+    <Node Id="@10" Category="CodeSchema_Namespace" Bounds="-1902.55134792452,-1207.89900342066,178.533333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Diagnostics" />
+    <Node Id="@102" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:CreateHttpMessagePropertiesScope ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=HttpPipeline Member=(Name=CreateHttpMessagePropertiesScope OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IDictionary GenericParameterCount=2 GenericArguments=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Object)]))])))" IsUnreferenced="True" Label="CreateHttpMessagePropertiesScope" UseManualLocation="True" />
+    <Node Id="@103" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" Label="HttpPipelineOptions" UseManualLocation="True" />
+    <Node Id="@104" Category="CodeSchema_Method" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPrivate="True" CodeSchemaProperty_IsVirtual="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.Serialization‎.IMemberNameConverter‎.ConvertMemberName ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Serialization Type=JsonObjectSerializer Member=(Name=Azure.Core.Serialization.IMemberNameConverter.ConvertMemberName OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Reflection Type=MemberInfo)])))" IsUnreferenced="True" Label="Azure‎.Core‎.Serialization‎.IMemberNameConverter‎.ConvertMemberName" UseManualLocation="True" />
+    <Node Id="@105" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsVirtual="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:set_Uri ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=Request Member=(Name=set_Uri OverloadingParameters=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=RequestUriBuilder)])))" IsUnreferenced="True" Label="set_Uri" UseManualLocation="True" />
+    <Node Id="@108" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:AzureSasCredential ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=AzureSasCredential Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="AzureSasCredential" UseManualLocation="True" />
+    <Node Id="@109" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ContentType ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ContentType Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="ContentType" UseManualLocation="True" />
+    <Node Id="@11" Category="CodeSchema_Namespace" Bounds="-1703.02134792452,-1042.89870342066,173.14,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.Extensions ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Extensions))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.Extensions" />
+    <Node Id="@110" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" Label="RequestMethod" UseManualLocation="True" />
+    <Node Id="@111" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ResourceIdentifier ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ResourceIdentifier Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="ResourceIdentifier" UseManualLocation="True" />
+    <Node Id="@112" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ResourceType ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ResourceType Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="ResourceType" UseManualLocation="True" />
+    <Node Id="@113" Category="CodeSchema_Method" CodeSchemaProperty_IsPrivate="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GetProperty ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Serialization Type=DynamicData Member=(Name=GetProperty OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="GetProperty" UseManualLocation="True" />
+    <Node Id="@114" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Parse ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=RequestMethod Member=(Name=Parse OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="Parse" UseManualLocation="True" />
+    <Node Id="@115" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsVirtual="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:set_ClientRequestId ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=(Name=PipelineRequest ParentType=HttpClientTransport) Member=(Name=set_ClientRequestId OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="set_ClientRequestId" UseManualLocation="True" />
+    <Node Id="@116" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:set_Id ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=CloudEvent Member=(Name=set_Id OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="set_Id" UseManualLocation="True" />
+    <Node Id="@117" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:set_Source ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=CloudEvent Member=(Name=set_Source OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="set_Source" UseManualLocation="True" />
+    <Node Id="@118" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:set_Type ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=CloudEvent Member=(Name=set_Type OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="set_Type" UseManualLocation="True" />
+    <Node Id="@119" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Update ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=AzureKeyCredential Member=(Name=Update OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="Update" UseManualLocation="True" />
+    <Node Id="@120" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Update ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=AzureSasCredential Member=(Name=Update OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="Update" UseManualLocation="True" />
+    <Node Id="@122" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:WriteTo ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Json Type=MutableJsonDocument Member=(Name=WriteTo OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/system.text.json/4.7.2/lib/net461/System.Text.Json.dll Namespace=System.Text.Json Type=Utf8JsonWriter)])))" IsUnreferenced="True" Label="WriteTo" UseManualLocation="True" />
+    <Node Id="@125" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsInternal="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" Label="GeoObject" UseManualLocation="True" />
+    <Node Id="@127" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Parse ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=CloudEvent Member=(Name=Parse OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/system.memory.data/1.0.2/lib/net461/System.Memory.Data.dll Namespace=System Type=BinaryData),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Boolean)])))" IsUnreferenced="True" Label="Parse" UseManualLocation="True" />
+    <Node Id="@128" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ParseMany ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=CloudEvent Member=(Name=ParseMany OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/system.memory.data/1.0.2/lib/net461/System.Memory.Data.dll Namespace=System Type=BinaryData),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Boolean)])))" IsUnreferenced="True" Label="ParseMany" UseManualLocation="True" />
+    <Node Id="@129" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:AddClassifier ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=RequestContext Member=(Name=AddClassifier OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Int32),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Boolean)])))" IsUnreferenced="True" Label="AddClassifier" UseManualLocation="True" />
+    <Node Id="@13" Category="CodeSchema_Namespace" Bounds="-1718.30801459119,-1097.89880342066,162.253333333333,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.GeoJson ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.GeoJson" />
+    <Node Id="@130" Category="CodeSchema_Method" CodeSchemaProperty_IsInternal="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:AddClassifier ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=StatusCodeClassifier Member=(Name=AddClassifier OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Int32),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Boolean)])))" IsUnreferenced="True" Label="AddClassifier" UseManualLocation="True" />
+    <Node Id="@131" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Build ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=HttpPipelineBuilder Member=(Name=Build OverloadingParameters=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=HttpPipelineOptions),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=HttpPipelineTransportOptions)])))" IsUnreferenced="True" Label="Build" UseManualLocation="True" />
+    <Node Id="@132" Category="CodeSchema_Method" CodeSchemaProperty_IsInternal="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" Label="BuildInternal" UseManualLocation="True" />
+    <Node Id="@133" Category="CodeSchema_Method" CodeSchemaProperty_IsPrivate="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:SetProperty ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Serialization Type=DynamicData Member=(Name=SetProperty OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Object)])))" IsUnreferenced="True" Label="SetProperty" UseManualLocation="True" />
+    <Node Id="@134" Category="CodeSchema_Method" CodeSchemaProperty_IsPrivate="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ValidateAttribute ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=(Name=CloudEventExtensionAttributes GenericParameterCount=2) Member=(Name=ValidateAttribute OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Object)])))" IsUnreferenced="True" Label="ValidateAttribute" UseManualLocation="True" />
+    <Node Id="@135" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:HttpMessage ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=HttpMessage Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=Request),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ResponseClassifier)])))" IsUnreferenced="True" Label="HttpMessage" UseManualLocation="True" />
+    <Node Id="@136" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsVirtual="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GetObjectData ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=RequestFailedException Member=(Name=GetObjectData OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Runtime.Serialization Type=SerializationInfo),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Runtime.Serialization Type=StreamingContext)])))" IsUnreferenced="True" Label="GetObjectData" UseManualLocation="True" />
+    <Node Id="@137" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:WriteTo ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Json Type=MutableJsonDocument Member=(Name=WriteTo OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.IO Type=Stream),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="WriteTo" UseManualLocation="True" />
+    <Node Id="@139" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:HttpAuthorization ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=HttpAuthorization Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="HttpAuthorization" UseManualLocation="True" />
+    <Node Id="@140" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" Label="AssertNotNullOrEmpty" />
+    <Node Id="@141" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" Label="AssertNotNullOrWhiteSpace" />
+    <Node Id="@142" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Update ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=AzureNamedKeyCredential Member=(Name=Update OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="Update" UseManualLocation="True" />
+    <Node Id="@143" Category="CodeSchema_Method" CodeSchemaProperty_IsPrivate="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ValidatePathSegment ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ResourceIdentifier Member=(Name=ValidatePathSegment OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])))" IsUnreferenced="True" Label="ValidatePathSegment" UseManualLocation="True" />
+    <Node Id="@144" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoPolygon ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoPolygon Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IEnumerable GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoLinearRing)])),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoBoundingBox),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IReadOnlyDictionary GenericParameterCount=2 GenericArguments=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Object)]))])))" IsUnreferenced="True" Label="GeoPolygon" UseManualLocation="True" />
+    <Node Id="@145" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoLineStringCollection ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoLineStringCollection Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IEnumerable GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoLineString)])),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoBoundingBox),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IReadOnlyDictionary GenericParameterCount=2 GenericArguments=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Object)]))])))" IsUnreferenced="True" Label="GeoLineStringCollection" UseManualLocation="True" />
+    <Node Id="@146" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoCollection ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoCollection Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IEnumerable GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoObject)])),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoBoundingBox),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IReadOnlyDictionary GenericParameterCount=2 GenericArguments=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Object)]))])))" IsUnreferenced="True" Label="GeoCollection" UseManualLocation="True" />
+    <Node Id="@147" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoPointCollection ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoPointCollection Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IEnumerable GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoPoint)])),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoBoundingBox),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IReadOnlyDictionary GenericParameterCount=2 GenericArguments=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Object)]))])))" IsUnreferenced="True" Label="GeoPointCollection" UseManualLocation="True" />
+    <Node Id="@148" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoPolygonCollection ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoPolygonCollection Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IEnumerable GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoPolygon)])),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoBoundingBox),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IReadOnlyDictionary GenericParameterCount=2 GenericArguments=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Object)]))])))" IsUnreferenced="True" Label="GeoPolygonCollection" UseManualLocation="True" />
+    <Node Id="@15" Category="CodeSchema_Namespace" Bounds="-1583.60801459119,-1207.89900342066,140.713333333333,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.Json ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Json))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.Json" />
+    <Node Id="@150" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:WriteAsync ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Buffers Type=AzureBaseBuffersExtensions Member=(Name=WriteAsync OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.IO Type=Stream),(Assembly=file:///C:/Users/annelo/.nuget/packages/system.memory/4.5.4/lib/net461/System.Memory.dll Namespace=System Type=(Name=ReadOnlyMemory GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Byte)])),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Threading Type=CancellationToken)])))" IsUnreferenced="True" Label="WriteAsync" UseManualLocation="True" />
+    <Node Id="@151" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:WriteAsync ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Buffers Type=AzureBaseBuffersExtensions Member=(Name=WriteAsync OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.IO Type=Stream),(Assembly=file:///C:/Users/annelo/.nuget/packages/system.memory/4.5.4/lib/net461/System.Memory.dll Namespace=System.Buffers Type=(Name=ReadOnlySequence GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=Byte)])),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Threading Type=CancellationToken)])))" IsUnreferenced="True" Label="WriteAsync" UseManualLocation="True" />
+    <Node Id="@152" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsInternal="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:TelemetryDetails ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=TelemetryDetails Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Reflection Type=Assembly),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=RuntimeInformationWrapper)])))" IsUnreferenced="True" Label="TelemetryDetails" UseManualLocation="True" />
+    <Node Id="@153" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsInternal="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:BearerTokenAuthenticationPolicy ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=BearerTokenAuthenticationPolicy Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=TokenCredential),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IEnumerable GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=String)])),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=TimeSpan),(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System Type=TimeSpan)])))" IsUnreferenced="True" Label="BearerTokenAuthenticationPolicy" UseManualLocation="True" />
+    <Node Id="@154" Category="CodeSchema_Method" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Build ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=HttpPipelineBuilder Member=(Name=Build OverloadingParameters=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ClientOptions),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=(Name=HttpPipelinePolicy ArrayRank=1 ParentType=HttpPipelinePolicy)),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=(Name=HttpPipelinePolicy ArrayRank=1 ParentType=HttpPipelinePolicy)),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=HttpPipelineTransportOptions),(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ResponseClassifier)])))" IsUnreferenced="True" Label="Build" UseManualLocation="True" />
+    <Node Id="@156" Category="CodeSchema_Method" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" Label="AssertNotNull" />
+    <Node Id="@157" Category="CodeSchema_Method" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" DelayedCrossGroupLinksState="Fetched" Label="AssertInRange" />
+    <Node Id="@158" Category="CodeSchema_Property" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsVirtual="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ClientRequestId ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=(Name=PipelineRequest ParentType=HttpClientTransport) Member=ClientRequestId))" Group="Collapsed" IsUnreferenced="True" Label="ClientRequestId" UseManualLocation="True" />
+    <Node Id="@159" Category="CodeSchema_Property" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Id ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=CloudEvent Member=Id))" Group="Collapsed" IsUnreferenced="True" Label="Id" UseManualLocation="True" />
+    <Node Id="@16" Category="CodeSchema_Namespace" Bounds="-1902.55134792452,-1042.89870342066,169.53,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.JsonPatch ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.JsonPatch))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.JsonPatch" />
+    <Node Id="@160" Category="CodeSchema_Property" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Source ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=CloudEvent Member=Source))" Group="Collapsed" IsUnreferenced="True" Label="Source" UseManualLocation="True" />
+    <Node Id="@161" Category="CodeSchema_Property" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Type ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=CloudEvent Member=Type))" Group="Collapsed" IsUnreferenced="True" Label="Type" UseManualLocation="True" />
+    <Node Id="@162" Category="CodeSchema_Property" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsVirtual="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Uri ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=Request Member=Uri))" Group="Collapsed" IsUnreferenced="True" Label="Uri" UseManualLocation="True" />
+    <Node Id="@18" Category="CodeSchema_Namespace" Bounds="-1772.96134792452,-1262.89910342066,159.353333333333,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.Pipeline ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.Pipeline" />
+    <Node Id="@2" Category="CodeSchema_Assembly" Bounds="-1922.55134792452,-1302.89920342066,506.126666666666,360.0007" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="19" FilePath="$(25ce0676-8f2c-497b-8fb5-7da41a31f6f9.OutputPath)" Group="Expanded" Label="Azure.Core.dll" UseManualLocation="True" />
+    <Node Id="@20" Category="CodeSchema_Namespace" Bounds="-1902.55134792452,-987.898603420655,181.493333333333,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.Serialization ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Serialization))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.Serialization" />
+    <Node Id="@22" Category="CodeSchema_Namespace" Bounds="-1271.00410619912,-1174.78808142314,850.51,586.750589999841" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="26" Group="Expanded" Label="Azure‎.Core‎.Shared" UseManualLocation="True" />
+    <Node Id="@24" Category="CodeSchema_Namespace" Bounds="-1820.21391030833,-466.572209301281,194.44,85.0001999999999" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="1" Group="Expanded" Label="Azure‎.Core‎.Shared‎.Asserts" UseManualLocation="True" />
+    <Node Id="@25" Category="CodeSchema_Namespace" Bounds="-1313.75585709877,-558.037491423301,217.92,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Diagnostics" UseManualLocation="True" />
+    <Node Id="@26" Category="CodeSchema_Namespace" Bounds="-1877.58293115555,-652.657898335386,198.74,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core‎.Shared‎.Pipeline" UseManualLocation="True" />
+    <Node Id="@28" Category="CodeSchema_Namespace" Bounds="-1583.60801459119,-1152.89890342066,147.183333333333,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Messaging ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Messaging" />
+    <Node Id="@29" Category="CodeSchema_Namespace" Bounds="-1486.4301945054,-443.037291423301,231.066666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="System‎.Diagnostics‎.CodeAnalysis" UseManualLocation="True" />
+    <Node Id="@30" Category="CodeSchema_Namespace" Bounds="-1374.53209041037,-388.037291423301,234.65,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="System‎.Runtime‎.CompilerServices" UseManualLocation="True" />
+    <Node Id="@32" Category="CodeSchema_Class" Bounds="-1129.77410619911,-964.725481423286,192.493333333333,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="AsyncLockWithValue‎&lt;T‎&gt;" />
+    <Node Id="@33" Category="CodeSchema_Interface" Bounds="-721.702439532448,-1021.4130939233,140.35,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="IOperation‎&lt;T‎&gt;" />
+    <Node Id="@34" Category="CodeSchema_Class" Bounds="-860.257439532448,-1078.10058142329,177.46,25" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="OperationInternal‎&lt;T‎&gt;" />
+    <Node Id="@35" Category="CodeSchema_Struct" Bounds="-732.357439532448,-964.725593923304,161.66,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="OperationState‎&lt;T‎&gt;" />
+    <Node Id="@36" Category="CodeSchema_Class" CodeSchemaProperty_IsGeneric="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:CloudEventExtensionAttributes‎&lt;TKey‎, TValue‎&gt; ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Messaging Type=(Name=CloudEventExtensionAttributes GenericParameterCount=2)))" Group="Collapsed" IsUnreferenced="True" Label="CloudEventExtensionAttributes‎&lt;TKey‎, TValue‎&gt;" />
+    <Node Id="@37" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPrivate="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:PipelineRequest ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=(Name=PipelineRequest ParentType=HttpClientTransport)))" Group="Collapsed" IsUnreferenced="True" Label="PipelineRequest" UseManualLocation="True" />
+    <Node Id="@38" Category="CodeSchema_Class" Bounds="-633.894106199115,-798.037963154105,193.4,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="AppContextSwitchHelper" />
+    <Node Id="@4" Category="CodeSchema_Namespace" Bounds="-1583.60801459119,-1262.89910342066,87.4066666666668,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure))" Group="Collapsed" IsUnreferenced="True" Label="Azure" />
+    <Node Id="@40" Category="CodeSchema_Class" Bounds="-1780.11391030833,-426.572009301348,114.24,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Argument ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared.Asserts Type=Argument))" Group="Collapsed" IsUnreferenced="True" Label="Argument" />
+    <Node Id="@41" Category="CodeSchema_Class" Bounds="-1251.00410619911,-688.037691423301,217.506666666667,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:AuthorizationChallengeParser ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=AuthorizationChallengeParser))" Group="Collapsed" IsUnreferenced="True" Label="AuthorizationChallengeParser" />
+    <Node Id="@42" Category="CodeSchema_Class" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:AzureBaseBuffersExtensions ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Buffers Type=AzureBaseBuffersExtensions))" Group="Collapsed" IsUnreferenced="True" Label="AzureBaseBuffersExtensions" />
+    <Node Id="@43" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="AzureKeyCredential" />
+    <Node Id="@44" Category="CodeSchema_Class" Bounds="-1251.00410619911,-743.037791423301,194.763333333333,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:AzureKeyCredentialPolicy ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=AzureKeyCredentialPolicy))" Group="Collapsed" IsUnreferenced="True" Label="AzureKeyCredentialPolicy" />
+    <Node Id="@45" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:AzureNamedKeyCredential ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=AzureNamedKeyCredential))" Group="Collapsed" IsUnreferenced="True" Label="AzureNamedKeyCredential" />
+    <Node Id="@46" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="AzureSasCredential" />
+    <Node Id="@47" Category="CodeSchema_Class" Bounds="-1251.00410619911,-633.037591423301,261.31,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:AzureSasCredentialSynchronousPolicy ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=AzureSasCredentialSynchronousPolicy))" Group="Collapsed" IsUnreferenced="True" Label="AzureSasCredentialSynchronousPolicy" />
+    <Node Id="@48" Category="CodeSchema_Class" Bounds="-1251.00410619911,-853.037991423301,113.62,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Base64Url ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=Base64Url))" Group="Collapsed" IsUnreferenced="True" Label="Base64Url" />
+    <Node Id="@49" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:BearerTokenAuthenticationPolicy ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=BearerTokenAuthenticationPolicy))" Group="Collapsed" IsUnreferenced="True" Label="BearerTokenAuthenticationPolicy" />
+    <Node Id="@50" Category="CodeSchema_Class" Bounds="-1251.00410619912,-798.037891423301,161.066666666667,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:CancellationHelper ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=CancellationHelper))" Group="Collapsed" IsUnreferenced="True" Label="CancellationHelper" />
+    <Node Id="@52" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="CloudEvent" />
+    <Node Id="@53" Category="CodeSchema_Struct" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ContentType ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ContentType))" Group="Collapsed" IsUnreferenced="True" Label="ContentType" />
+    <Node Id="@54" Category="CodeSchema_Class" Bounds="-741.230772865782,-853.037993923304,158.256666666667,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:DictionaryHeaders ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=DictionaryHeaders))" Group="Collapsed" IsUnreferenced="True" Label="DictionaryHeaders" />
+    <Node Id="@55" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:DynamicData ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Serialization Type=DynamicData))" Group="Collapsed" IsUnreferenced="True" Label="DynamicData" />
+    <Node Id="@56" Category="CodeSchema_Class" Bounds="-786.377439532448,-743.037793923305,213.49,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="EventSourceEventFormatting" />
+    <Node Id="@57" Category="CodeSchema_Class" Bounds="-948.742439532447,-908.038093923305,228.43,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="FixedDelayWithNoJitterStrategy" />
+    <Node Id="@58" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoCollection ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoCollection))" Group="Collapsed" IsUnreferenced="True" Label="GeoCollection" />
+    <Node Id="@59" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="GeoLinearRing" />
+    <Node Id="@6" Category="CodeSchema_Namespace" Bounds="-1750.74301459119,-1152.89890342066,114.916666666667,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Azure‎.Core" />
+    <Node Id="@60" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoLineStringCollection ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoLineStringCollection))" Group="Collapsed" IsUnreferenced="True" Label="GeoLineStringCollection" />
+    <Node Id="@61" Category="CodeSchema_Class" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="GeoObject" />
+    <Node Id="@62" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoPointCollection ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoPointCollection))" Group="Collapsed" IsUnreferenced="True" Label="GeoPointCollection" />
+    <Node Id="@63" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="GeoPolygon" />
+    <Node Id="@64" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoPolygonCollection ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoPolygonCollection))" Group="Collapsed" IsUnreferenced="True" Label="GeoPolygonCollection" />
+    <Node Id="@65" Category="CodeSchema_Struct" Bounds="-1107.38410619912,-853.037993923304,150.313333333334,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:HashCodeBuilder ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=HashCodeBuilder))" Group="Collapsed" IsUnreferenced="True" Label="HashCodeBuilder" />
+    <Node Id="@66" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:HttpAuthorization ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=HttpAuthorization))" Group="Collapsed" IsUnreferenced="True" Label="HttpAuthorization" />
+    <Node Id="@67" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:HttpClientTransport ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=HttpClientTransport))" Group="Collapsed" IsUnreferenced="True" Label="HttpClientTransport" />
+    <Node Id="@68" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="HttpMessage" />
+    <Node Id="@69" Category="CodeSchema_Class" Bounds="-1059.93743953245,-798.037893923305,176.423333333334,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="HttpMessageSanitizer" />
+    <Node Id="@70" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:HttpPipeline ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=HttpPipeline))" Group="Collapsed" IsUnreferenced="True" Label="HttpPipeline" />
+    <Node Id="@72" Category="CodeSchema_Class" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:HttpPipelineBuilder ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Pipeline Type=HttpPipelineBuilder))" Group="Collapsed" IsUnreferenced="True" Label="HttpPipelineBuilder" />
+    <Node Id="@73" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="HttpPipelineOptions" />
+    <Node Id="@74" Category="CodeSchema_Class" Bounds="-739.194106199115,-688.037693923304,234.436666666667,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:InitializationConstructorAttribute ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=InitializationConstructorAttribute))" Group="Collapsed" IsUnreferenced="True" Label="InitializationConstructorAttribute" />
+    <Node Id="@75" Category="CodeSchema_Interface" Bounds="-1182.34910619912,-1078.10048142329,117.643333333333,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="IOperation" />
+    <Node Id="@76" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:JsonObjectSerializer ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Serialization Type=JsonObjectSerializer))" Group="Collapsed" IsUnreferenced="True" Label="JsonObjectSerializer" />
+    <Node Id="@77" Category="CodeSchema_Class" Bounds="-927.070772865782,-853.037993923304,155.84,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:MemoryResponse ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=MemoryResponse))" Group="Collapsed" IsUnreferenced="True" Label="MemoryResponse" />
+    <Node Id="@78" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:MutableJsonDocument ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Json Type=MutableJsonDocument))" Group="Collapsed" IsUnreferenced="True" Label="MutableJsonDocument" />
+    <Node Id="@79" Category="CodeSchema_Class" Bounds="-968.904106199113,-1134.78798142314,154.753333333333,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:OperationInternal ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=OperationInternal))" Group="Collapsed" IsUnreferenced="True" Label="OperationInternal" />
+    <Node Id="@8" Category="CodeSchema_Namespace" Bounds="-1902.55134792452,-1097.89880342066,154.243333333333,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.Buffers ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Buffers))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.Buffers" />
+    <Node Id="@80" Category="CodeSchema_Class" Bounds="-1027.08243953245,-1021.4130939233,179.11,25" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="OperationInternalBase" />
+    <Node Id="@81" Category="CodeSchema_Class" Bounds="-906.537439532448,-964.725593923304,144.02,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="OperationPoller" />
+    <Node Id="@82" Category="CodeSchema_Struct" Bounds="-1251.00410619912,-1021.41298142329,138.953333333333,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="OperationState" />
+    <Node Id="@83" Category="CodeSchema_Class" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Request" />
+    <Node Id="@84" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:RequestContext ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure Type=RequestContext))" Group="Collapsed" IsUnreferenced="True" Label="RequestContext" />
+    <Node Id="@85" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RequestFailedException" />
+    <Node Id="@86" Category="CodeSchema_Struct" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RequestMethod" />
+    <Node Id="@87" Category="CodeSchema_Class" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ResourceIdentifier ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ResourceIdentifier))" Group="Collapsed" IsUnreferenced="True" Label="ResourceIdentifier" />
+    <Node Id="@88" Category="CodeSchema_Struct" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:ResourceType ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=ResourceType))" Group="Collapsed" IsUnreferenced="True" Label="ResourceType" />
+    <Node Id="@89" Category="CodeSchema_Class" Bounds="-853.514106199114,-798.037893923305,189.62,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:SequentialDelayStrategy ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=SequentialDelayStrategy))" Group="Collapsed" IsUnreferenced="True" Label="SequentialDelayStrategy" />
+    <Node Id="@9" Category="CodeSchema_Namespace" Bounds="-1691.05801459119,-987.898603420656,190.073333333333,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:Azure‎.Core‎.Cryptography ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Cryptography))" Group="Collapsed" IsUnreferenced="True" Label="Azure‎.Core‎.Cryptography" />
+    <Node Id="@90" Category="CodeSchema_Class" Bounds="-1003.49743953245,-688.037693923304,234.303333333333,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:SerializationConstructorAttribute ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=SerializationConstructorAttribute))" Group="Collapsed" IsUnreferenced="True" Label="SerializationConstructorAttribute" />
+    <Node Id="@91" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:StatusCodeClassifier ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=StatusCodeClassifier))" Group="Collapsed" IsUnreferenced="True" Label="StatusCodeClassifier" />
+    <Node Id="@92" Category="CodeSchema_Class" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:TelemetryDetails ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core Type=TelemetryDetails))" Group="Collapsed" IsUnreferenced="True" Label="TelemetryDetails" />
+    <Node Id="@93" Category="CodeSchema_Class" Bounds="-1026.24077286578,-743.037793923305,209.863333333333,25" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:TypeReferenceTypeAttribute ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.Shared Type=TypeReferenceTypeAttribute))" Group="Collapsed" IsUnreferenced="True" Label="TypeReferenceTypeAttribute" />
+    <Node Id="@94" Category="CodeSchema_Struct" Bounds="-1034.20077286578,-1078.10058142329,111.346666666667,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsInternal="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="VoidValue" />
+    <Node Id="@99" Category="CodeSchema_Method" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsSpecialName="True" DelayedCrossGroupLinksState="Fetched" ErrorMessage="Unreferenced node detected:GeoLinearRing ((Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoLinearRing Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll Namespace=System.Collections.Generic Type=(Name=IEnumerable GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/src/azure-sdk-for-net/artifacts/bin/Azure.Core/Debug/netstandard2.0/Azure.Core.dll Namespace=Azure.Core.GeoJson Type=GeoPosition)]))])))" IsUnreferenced="True" Label="GeoLinearRing" UseManualLocation="True" />
   </Nodes>
   <Links>
-    <Link Source="@10" Target="@14" Category="CodeSchema_Calls" Bounds="-8.22748363364963,-440.088338666773,39.8417094495461,444.258946323306" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
-    <Link Source="@10" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-9.3484992980957,29.1706085205078,0,22.6875" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="110" />
-    <Link Source="@11" Target="@20" Category="CodeSchema_AttributeUse" Bounds="74.9438095092773,-27.5168914794922,86.7076950073242,86.9033012390137" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="11" />
-    <Link Source="@12" Target="@14" Category="References" Bounds="-361.28285877842,-442.57688952057,376.505905710289,390.059997177103" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="22">
+    <Link Source="@10" Target="@25" Category="InheritsFrom" Bounds="-1213.72347077474,-957.197397067591,625.403569765687,18.9503683306907" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2">
       <Category Ref="CodeSchema_Calls" />
     </Link>
-    <Link Source="@12" Target="@16" Category="References" Bounds="-417.045535080976,-447.731167384303,42.3573400779019,395.214275040836" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="43">
+    <Link Source="@10" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1454.0232287044,-947.402268441479,938.583487631434,715.972829858775" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="17" />
+    <Link Source="@10" Target="@56" Category="CodeSchema_Calls" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@10" Target="@69" Category="References" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="6">
       <Category Ref="CodeSchema_Calls" />
     </Link>
-    <Link Source="@12" Target="@19" Category="CodeSchema_AttributeUse" Bounds="-454.949127197266,-27.5168914794922,60.8729553222656,28.565814614296" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="8" />
-    <Link Source="@12" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-363.205169677734,-27.5168914794922,228.0771484375,90.4202690124512" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="390" />
-    <Link Source="@12" Target="@3" Category="References" Bounds="-374.362121582031,-86.4555740356445,91.5830688476563,33.9386825561523" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="54">
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-      <Category Ref="InheritsFrom" />
-    </Link>
-    <Link Source="@12" Target="@4" Category="References" Bounds="-474.348510742188,-144.173278808594,137.650421142578,91.6563873291016" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="508">
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-      <Category Ref="InheritsFrom" />
-    </Link>
-    <Link Source="@12" Target="@5" Category="CodeSchema_Calls" Bounds="-635.620849609375,-27.5168914794922,227.432220458984,32.1819400787354" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
-    <Link Source="@12" Target="@7" Category="References" Bounds="-341.815979003906,-27.5168914794922,71.568359375,28.3708482980728" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="30">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@13" Target="@10" Category="References" Bounds="-36.6307487487793,-27.5168914794922,14.8363208770752,24.0295400619507" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="145">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@13" Target="@14" Category="CodeSchema_Calls" Bounds="-42.038858650245,-440.202170025261,71.6331031635984,387.685277681795" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3" />
-    <Link Source="@13" Target="@16" Category="CodeSchema_Calls" Bounds="-402.500144813823,-449.902646195188,347.229344256515,397.385753851721" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
-    <Link Source="@13" Target="@20" Category="CodeSchema_AttributeUse" Bounds="15.6294498443604,-27.5168914794922,76.0220470428467,85.9239349365234" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="95" />
-    <Link Source="@14" Target="@12" Category="InheritsFrom" Bounds="-355.03239958271,-449.052363236273,376.505905710289,390.059997177103" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="6">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@14" Target="@16" Category="References" Bounds="-310.975594776474,-467.354750603668,267.363075050182,4.50298330181187" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="29">
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-    </Link>
-    <Link Source="@14" Target="@19" Category="CodeSchema_AttributeUse" Bounds="-476.784936857715,-449.052363236273,496.447511601535,447.199337640457" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="14" />
-    <Link Source="@14" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-7.62699710284278,-449.052363236273,40.1639285121767,500.939259922541" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="269" />
-    <Link Source="@14" Target="@3" Category="References" Bounds="-216.03299712399,-449.052363236273,240.531130149519,332.555524766107" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="321">
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-      <Category Ref="InheritsFrom" />
-    </Link>
-    <Link Source="@14" Target="@4" Category="References" Bounds="-251.702440353681,-449.052363236273,272.914907072418,276.752237996488" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="46">
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_FunctionPointer" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-      <Category Ref="InheritsFrom" />
-    </Link>
-    <Link Source="@15" Target="@20" Category="CodeSchema_AttributeUse" Bounds="6.11433354207695,-335.103608688274,307.433953798982,388.901362644224" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
-    <Link Source="@16" Target="@14" Category="CodeSchema_Calls" Bounds="-319.974318578797,-467.506308940629,267.363075050182,4.50298330181192" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3">
+    <Link Source="@10" Target="@83" Category="References" IsSourceVirtualized="True" Weight="2" />
+    <Link Source="@102" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@102" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@103" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@104" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@104" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@105" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@108" Target="@141" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@109" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@11" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1460.459974037,-1117.46476844148,787.284021885626,884.770291090047" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="9" />
+    <Link Source="@110" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@111" Target="@140" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@112" Target="@141" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@113" Target="@140" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@113" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@114" Target="@110" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@114" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@114" Target="@86" Category="CodeSchema_ReturnTypeLink" Weight="1" />
+    <Link Source="@115" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@116" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@116" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@117" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@117" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@118" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@118" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@119" Target="@140" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@120" Target="@141" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@122" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@125" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@125" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@127" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@127" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@127" Target="@52" Category="CodeSchema_ReturnTypeLink" Weight="1" />
+    <Link Source="@128" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@128" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@128" Target="@52" Category="References" Weight="2">
       <Category Ref="CodeSchema_ReturnTypeLink" />
     </Link>
-    <Link Source="@16" Target="@19" Category="CodeSchema_AttributeUse" Bounds="-493.914906581104,-456.679918696266,72.5636903871605,451.964326926161" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
-    <Link Source="@16" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-409.898072438601,-456.679918696266,385.677170093543,510.357718253271" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="58" />
-    <Link Source="@16" Target="@4" Category="References" Bounds="-413.446540379747,-456.679918696266,133.359867975972,282.648531945128" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="7">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@17" Target="@14" Category="CodeSchema_Calls" Bounds="-73.7371785150963,-440.841710709186,97.979195773438,218.262318365719" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="7" />
-    <Link Source="@17" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-5.75683307647705,-204.717269897461,315.40832233429,266.933265686035" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="44" />
-    <Link Source="@17" Target="@4" Category="References" Bounds="-219.603622436523,-197.579391479492,98.1382522583008,29.1267700195313" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="6" />
-    <Link Source="@19" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-446.631866455078,29.1706085205078,311.184280395508,34.6054039001465" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="34" />
+    <Link Source="@129" Target="@157" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@13" Target="@58" Category="Contains" />
+    <Link Source="@13" Target="@59" Category="Contains" />
+    <Link Source="@13" Target="@60" Category="Contains" />
+    <Link Source="@13" Target="@61" Category="Contains" />
+    <Link Source="@13" Target="@62" Category="Contains" />
+    <Link Source="@13" Target="@63" Category="Contains" />
+    <Link Source="@13" Target="@64" Category="Contains" />
+    <Link Source="@130" Target="@157" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@131" Target="@132" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@131" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@131" Target="@73" Category="References" Weight="1" />
+    <Link Source="@132" Target="@10" Category="CodeSchema_Calls" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@132" Target="@156" Category="CodeSchema_Calls" Weight="2" />
+    <Link Source="@132" Target="@26" Category="CodeSchema_Calls" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@132" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="4" />
+    <Link Source="@132" Target="@69" Category="CodeSchema_Calls" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@132" Target="@73" Category="References" Weight="2" />
+    <Link Source="@133" Target="@140" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@133" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@134" Target="@140" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@134" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@134" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@135" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@135" Target="@83" Category="References" Weight="3" />
+    <Link Source="@136" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@137" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@137" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@139" Target="@141" Category="CodeSchema_Calls" Weight="2" />
+    <Link Source="@140" Target="@29" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@141" Target="@29" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@142" Target="@140" Category="CodeSchema_Calls" Weight="2" />
+    <Link Source="@143" Target="@141" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@144" Target="@125" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@144" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@144" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@144" Target="@59" Category="References" Weight="4" />
+    <Link Source="@145" Target="@125" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@145" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@145" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@146" Target="@125" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@146" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@146" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@146" Target="@61" Category="References" Weight="4" />
+    <Link Source="@147" Target="@125" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@147" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@147" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@148" Target="@125" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@148" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@148" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@148" Target="@63" Category="References" Weight="4" />
+    <Link Source="@15" Target="@78" Category="Contains" />
+    <Link Source="@150" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@150" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="6" />
+    <Link Source="@151" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@151" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="8" />
+    <Link Source="@152" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@152" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="3" />
+    <Link Source="@153" Target="@156" Category="CodeSchema_Calls" Weight="2" />
+    <Link Source="@154" Target="@103" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@154" Target="@132" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@154" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@154" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@156" Target="@29" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@156" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@158" Target="@115" Category="Contains" />
+    <Link Source="@159" Target="@116" Category="Contains" />
+    <Link Source="@159" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@16" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1454.58402207728,-834.027268441479,766.625564839247,602.495144101904" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="11" />
+    <Link Source="@160" Target="@117" Category="Contains" />
+    <Link Source="@160" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@161" Target="@118" Category="Contains" />
+    <Link Source="@161" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@162" Target="@105" Category="Contains" />
+    <Link Source="@18" Target="@49" Category="Contains" />
+    <Link Source="@18" Target="@67" Category="Contains" />
+    <Link Source="@18" Target="@70" Category="Contains" />
+    <Link Source="@18" Target="@72" Category="Contains" />
+    <Link Source="@18" Target="@73" Category="Contains" />
     <Link Source="@2" Target="@10" Category="Contains" FetchingParent="@2" />
     <Link Source="@2" Target="@11" Category="Contains" FetchingParent="@2" />
-    <Link Source="@2" Target="@12" Category="Contains" FetchingParent="@2" />
     <Link Source="@2" Target="@13" Category="Contains" FetchingParent="@2" />
-    <Link Source="@2" Target="@17" Category="Contains" FetchingParent="@2" />
+    <Link Source="@2" Target="@15" Category="Contains" FetchingParent="@2" />
+    <Link Source="@2" Target="@16" Category="Contains" FetchingParent="@2" />
     <Link Source="@2" Target="@18" Category="Contains" FetchingParent="@2" />
-    <Link Source="@2" Target="@19" Category="Contains" FetchingParent="@2" />
-    <Link Source="@2" Target="@20" Category="Contains" FetchingParent="@2" IsTargetVirtualized="True" Weight="1">
-      <Category Ref="CodeSchema_AttributeUse" />
-    </Link>
-    <Link Source="@2" Target="@3" Category="Contains" FetchingParent="@2" />
+    <Link Source="@2" Target="@20" Category="Contains" FetchingParent="@2" />
+    <Link Source="@2" Target="@28" Category="Contains" FetchingParent="@2" />
     <Link Source="@2" Target="@4" Category="Contains" FetchingParent="@2" />
-    <Link Source="@2" Target="@5" Category="Contains" FetchingParent="@2" />
     <Link Source="@2" Target="@6" Category="Contains" FetchingParent="@2" />
-    <Link Source="@2" Target="@7" Category="Contains" FetchingParent="@2" />
     <Link Source="@2" Target="@8" Category="Contains" FetchingParent="@2" />
     <Link Source="@2" Target="@9" Category="Contains" FetchingParent="@2" />
-    <Link Source="@20" Target="@18" Category="CodeSchema_AttributeUse" Bounds="-9.3484992980957,85.8581085205078,0,22.6875" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="6" />
-    <Link Source="@3" Target="@10" Category="CodeSchema_Calls" Bounds="-202.123580932617,-84.2043914794922,116.690765380859,87.1392357349396" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
-    <Link Source="@3" Target="@11" Category="References" Bounds="-186.674224853516,-88.666130065918,255.301887512207,37.5708999633789" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="38">
+    <Link Source="@20" Target="@55" Category="Contains" />
+    <Link Source="@20" Target="@76" Category="Contains" />
+    <Link Source="@22" Target="@32" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@33" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@34" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@35" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@38" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@41" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@44" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@47" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@48" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@50" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@54" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@56" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@57" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@65" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@69" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@74" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@75" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@77" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@79" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@80" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@81" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@82" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@89" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@90" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@93" Category="Contains" FetchingParent="@22" />
+    <Link Source="@22" Target="@94" Category="Contains" FetchingParent="@22" />
+    <Link Source="@24" Target="@40" Category="Contains" FetchingParent="@24" />
+    <Link Source="@25" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1250.70177316446,-533.037491423301,42.0521534442726,136.399661756761" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@26" Target="@29" Category="CodeSchema_AttributeUse" Bounds="-1753.92404586991,-627.657898335386,350.735858320792,180.50224114658" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@26" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1763.05456542969,-627.657897949219,404.486450195313,238.414611816406" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="58" />
+    <Link Source="@26" Target="@38" Category="CodeSchema_Calls" Bounds="-1680.73763196626,-773.347409546241,1039.480382496,121.770695452875" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@26" Target="@69" Category="CodeSchema_Calls" Bounds="-1708.86990058347,-771.441258503156,658.943854045458,118.783360167769" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2">
+      <Category Ref="CodeSchema_ReturnTypeLink" />
+    </Link>
+    <Link Source="@28" Target="@36" Category="Contains" />
+    <Link Source="@28" Target="@52" Category="Contains" />
+    <Link Source="@29" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1345.05827690805,-418.037291423301,53.9108566448442,26.0805971865431" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="34" />
+    <Link Source="@30" Target="(@1 Namespace=Microsoft.CodeAnalysis)" Category="CodeSchema_AttributeUse" Bounds="-1258.75598942993,-363.037291423301,1.00109684598124,22.8434847070235" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="6" />
+    <Link Source="@32" Target="@26" Category="References" Bounds="-1740.08361325096,-939.725481423286,676.727479071085,283.589127461831" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="7">
       <Category Ref="CodeSchema_Calls" />
     </Link>
-    <Link Source="@3" Target="@12" Category="References" Bounds="-331.400268554688,-84.2043914794922,71.5038146972656,28.5385932922363" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="8" />
-    <Link Source="@3" Target="@13" Category="References" Bounds="-189.730102539063,-84.5856781005859,96.6562423706055,29.3930892944336" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="18">
+    <Link Source="@32" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1351.24145481129,-221.653367849177,422.060842203342,6.29758771361014" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="22" />
+    <Link Source="@33" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1351.2597669241,-275.244747180233,830.150820982811,53.6162535501581" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@33" Target="@35" Category="References" Bounds="-651.527439532448,-996.413093923305,2.27373675443232E-13,22.6875000000002" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@34" Target="@26" Category="References" Bounds="-1740.34527056906,-1053.10058142329,939.240242455336,396.939155415912" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="5">
       <Category Ref="CodeSchema_Calls" />
     </Link>
-    <Link Source="@3" Target="@14" Category="References" Bounds="-221.307485676369,-441.759917109574,240.531130149519,332.555524766107" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="50">
-      <Category Ref="CodeSchema_AttributeUse" />
+    <Link Source="@34" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1376.50505647809,-324.742411715869,719.162791551994,97.5616590259274" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="41" />
+    <Link Source="@34" Target="@32" Category="References" Bounds="-951.382141113281,-1053.1005859375,169.569458007813,86.8616333007813" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="19">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@34" Target="@33" Category="References" Bounds="-745.066573719679,-1053.10058142329,58.4884817850958,27.6297090007124" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+      <Category Ref="Implements" />
+    </Link>
+    <Link Source="@34" Target="@35" Category="References" Bounds="-765.407104492188,-1053.1005859375,75.3670654296875,84.9327392578125" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="50">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@34" Target="@80" Category="InheritsFrom" Bounds="-891.932993728415,-1053.10058142329,83.801356488304,28.6173996892301" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="7">
       <Category Ref="CodeSchema_Calls" />
       <Category Ref="CodeSchema_FieldRead" />
+    </Link>
+    <Link Source="@34" Target="@85" Category="References" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@35" Target="@156" Category="CodeSchema_Calls" IsSourceVirtualized="True" Weight="3" />
+    <Link Source="@35" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1351.24084809995,-222.332270818582,819.476902158664,7.67781954101511" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="15" />
+    <Link Source="@35" Target="@85" Category="References" IsSourceVirtualized="True" Weight="5">
       <Category Ref="CodeSchema_ReturnTypeLink" />
     </Link>
-    <Link Source="@3" Target="@16" Category="CodeSchema_Calls" Bounds="-408.929364667876,-448.653986108491,172.238306787055,339.449593765025" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
-    <Link Source="@3" Target="@19" Category="CodeSchema_AttributeUse" Bounds="-485.123596191406,-88.5559310913086,211.113983154297,85.0268294811249" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
-    <Link Source="@3" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-216.236038208008,-84.2043914794922,176.925071716309,140.635662078857" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="276" />
-    <Link Source="@3" Target="@4" Category="References" Bounds="-269.045928955078,-131.98664855957,21.0568542480469,22.7822570800781" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="41">
+    <Link Source="@36" Target="@134" Category="Contains" />
+    <Link Source="@36" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="3" />
+    <Link Source="@37" Target="@158" Category="Contains" />
+    <Link Source="@37" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@37" Target="@83" Category="InheritsFrom" Weight="1" />
+    <Link Source="@38" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1377.848264421,-199.743500715915,950.446376130578,130.841550543616" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@4" Target="@43" Category="Contains" />
+    <Link Source="@4" Target="@45" Category="Contains" />
+    <Link Source="@4" Target="@46" Category="Contains" />
+    <Link Source="@4" Target="@66" Category="Contains" />
+    <Link Source="@4" Target="@84" Category="Contains" />
+    <Link Source="@4" Target="@85" Category="Contains" />
+    <Link Source="@40" Target="@140" Category="Contains" />
+    <Link Source="@40" Target="@141" Category="Contains" />
+    <Link Source="@40" Target="@156" Category="Contains" />
+    <Link Source="@40" Target="@157" Category="Contains" />
+    <Link Source="@40" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@41" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1444.42746366346,-196.956615853219,477.687352776019,238.054937411725" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@42" Target="@150" Category="Contains" />
+    <Link Source="@42" Target="@151" Category="Contains" />
+    <Link Source="@42" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@43" Target="@119" Category="Contains" />
+    <Link Source="@43" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@44" Target="@140" Category="CodeSchema_Calls" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@44" Target="@156" Category="CodeSchema_Calls" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@44" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1438.30380625326,-197.597484971775,454.357079993662,183.695706530281" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4" />
+    <Link Source="@44" Target="@43" Category="References" IsSourceVirtualized="True" Weight="3" />
+    <Link Source="@44" Target="@68" Category="References" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@45" Target="@142" Category="Contains" />
+    <Link Source="@45" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@46" Target="@108" Category="Contains" />
+    <Link Source="@46" Target="@120" Category="Contains" />
+    <Link Source="@46" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@47" Target="@156" Category="CodeSchema_Calls" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@47" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1448.12188298928,-196.470709394637,506.716822077163,292.569130953143" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3" />
+    <Link Source="@47" Target="@46" Category="References" IsSourceVirtualized="True" Weight="3" />
+    <Link Source="@47" Target="@68" Category="References" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@48" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1409.48980011219,-199.113636347833,361.141911258037,76.1653746422151" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@49" Target="@153" Category="Contains" />
+    <Link Source="@49" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@50" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1428.56426107,-198.310862298349,418.283709806443,129.408983856855" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="5" />
+    <Link Source="@52" Target="@127" Category="Contains" />
+    <Link Source="@52" Target="@128" Category="Contains" />
+    <Link Source="@52" Target="@159" Category="Contains" />
+    <Link Source="@52" Target="@160" Category="Contains" />
+    <Link Source="@52" Target="@161" Category="Contains" />
+    <Link Source="@52" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@53" Target="@109" Category="Contains" />
+    <Link Source="@53" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="3" />
+    <Link Source="@53" Target="@53" Category="References" Weight="1" />
+    <Link Source="@55" Target="@113" Category="Contains" />
+    <Link Source="@55" Target="@133" Category="Contains" />
+    <Link Source="@55" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@56" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1409.90561624414,-199.101159080241,872.010474151238,185.199378138743" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3" />
+    <Link Source="@57" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1351.25442840368,-206.423611306896,603.105482462396,33.6491219336848" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@58" Target="@146" Category="Contains" />
+    <Link Source="@58" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@58" Target="@61" Category="References" Weight="4">
+      <Category Ref="InheritsFrom" />
+    </Link>
+    <Link Source="@59" Target="@99" Category="Contains" />
+    <Link Source="@6" Target="@53" Category="Contains" />
+    <Link Source="@6" Target="@68" Category="Contains" />
+    <Link Source="@6" Target="@83" Category="Contains" />
+    <Link Source="@6" Target="@86" Category="Contains" />
+    <Link Source="@6" Target="@87" Category="Contains" />
+    <Link Source="@6" Target="@88" Category="Contains" />
+    <Link Source="@6" Target="@91" Category="Contains" />
+    <Link Source="@6" Target="@92" Category="Contains" />
+    <Link Source="@60" Target="@145" Category="Contains" />
+    <Link Source="@60" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@60" Target="@61" Category="InheritsFrom" Weight="1" />
+    <Link Source="@61" Target="@125" Category="Contains" />
+    <Link Source="@61" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@62" Target="@147" Category="Contains" />
+    <Link Source="@62" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@62" Target="@61" Category="InheritsFrom" Weight="1" />
+    <Link Source="@63" Target="@144" Category="Contains" />
+    <Link Source="@63" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@63" Target="@61" Category="InheritsFrom" Weight="1" />
+    <Link Source="@64" Target="@148" Category="Contains" />
+    <Link Source="@64" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@64" Target="@61" Category="InheritsFrom" Weight="1" />
+    <Link Source="@64" Target="@63" Category="References" Weight="3" />
+    <Link Source="@65" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1389.57092756317,-199.566160676186,484.847440994033,76.6147044195598" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="42" />
+    <Link Source="@66" Target="@139" Category="Contains" />
+    <Link Source="@66" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@67" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@67" Target="@37" Category="Contains" />
+    <Link Source="@68" Target="@135" Category="Contains" />
+    <Link Source="@68" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@69" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1412.56002399965,-199.017526415838,585.207778238218,130.11564547434" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@70" Target="@102" Category="Contains" />
+    <Link Source="@70" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@72" Target="@131" Category="Contains" />
+    <Link Source="@72" Target="@132" Category="Contains" />
+    <Link Source="@72" Target="@154" Category="Contains" />
+    <Link Source="@72" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@73" Target="@103" Category="Contains" />
+    <Link Source="@73" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@75" Target="@82" Category="References" Bounds="-1162.30165424067,-1053.10048142329,25.9847990522126,25.3967809702121" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@76" Target="@104" Category="Contains" />
+    <Link Source="@76" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@78" Target="@122" Category="Contains" />
+    <Link Source="@78" Target="@137" Category="Contains" />
+    <Link Source="@78" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@79" Target="@26" Category="References" Bounds="-1747.31744145344,-1109.78798142314,832.801250473859,452.830840111702" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@79" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1414.06728605503,-380.651968441479,668.409191272574,152.676927240245" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="15" />
+    <Link Source="@79" Target="@33" Category="Implements" Bounds="-888.310119628906,-1109.78796386719,158.253479003906,88.8931274414063" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@79" Target="@34" Category="References" Bounds="-865.066532875874,-1109.78798142314,58.9404918368355,27.8431936411916" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@79" Target="@35" Category="References" Bounds="-888.310119628906,-1109.78796386719,198.037658691406,141.641723632813" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="11">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@79" Target="@75" Category="References" Bounds="-1063.62698065378,-1109.78798142314,120.941878497167,29.5512617986667" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@79" Target="@80" Category="InheritsFrom" Bounds="-928.884090070009,-1109.78798142314,32.2849806759202,79.5718706971015" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="7">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@79" Target="@82" Category="References" Bounds="-1125.21008300781,-1109.78796386719,176.418518066406,86.089599609375" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="22">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@79" Target="@85" Category="References" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@79" Target="@94" Category="References" Bounds="-951.802735963272,-1109.78798142314,41.0911391048098,26.7741360791265" IsSourceVirtualized="True" Weight="16" />
+    <Link Source="@8" Target="@42" Category="Contains" />
+    <Link Source="@80" Target="@26" Category="References" Bounds="-1741.47354629442,-996.413093923304,775.448695007446,340.139966783278" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="12">
       <Category Ref="CodeSchema_Calls" />
       <Category Ref="CodeSchema_ReturnTypeLink" />
     </Link>
-    <Link Source="@4" Target="@12" Category="References" Bounds="-412.815460205078,-143.615829467773,85.5567016601563,83.826789855957" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="25">
+    <Link Source="@80" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1352.2171569625,-271.761912766661,525.754821658657,47.0690173734758" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="44" />
+    <Link Source="@80" Target="@32" Category="References" Bounds="-1004.60905292482,-996.413093923304,45.912967420564,27.1114219360719" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="15">
       <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@80" Target="@81" Category="References" Bounds="-913.167663574219,-996.4130859375,74.4699096679688,27.7879028320313" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@81" Target="@26" Category="CodeSchema_Calls" Bounds="-1731.86831967798,-939.725593923304,859.541169338987,284.241979303091" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4" />
+    <Link Source="@81" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1351.24103802933,-222.268557056389,645.29709208804,7.35737155389066" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="42" />
+    <Link Source="@81" Target="@34" Category="References" Bounds="-827.581463022416,-1045.23357531203,44.7365238076923,80.5079813887262" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="5">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@81" Target="@57" Category="CodeSchema_Calls" Bounds="-834.527439532448,-939.725593923304,4.54747350886464E-13,22.6874999999998" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3" />
+    <Link Source="@81" Target="@80" Category="References" Bounds="-923.312744140625,-993.520263671875,78.8963012695313,28.794677734375" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="8">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@82" Target="@156" Category="CodeSchema_Calls" IsSourceVirtualized="True" Weight="3" />
+    <Link Source="@82" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1375.01979663162,-270.542479919009,324.919669169717,43.3805494203563" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="9" />
+    <Link Source="@82" Target="@85" Category="References" IsSourceVirtualized="True" Weight="5">
       <Category Ref="CodeSchema_ReturnTypeLink" />
     </Link>
-    <Link Source="@4" Target="@13" Category="References" Bounds="-212.890167236328,-146.185760498047,168.541667938232,84.6688690185547" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="18">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@4" Target="@14" Category="References" Bounds="-258.021819369577,-442.644130339955,272.914907072418,276.752237996488" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="21">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@4" Target="@16" Category="CodeSchema_Calls" Bounds="-409.606145766237,-448.540424288594,133.359867975972,282.648531945128" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
-    <Link Source="@4" Target="@19" Category="CodeSchema_AttributeUse" Bounds="-516.348510742188,-146.771636962891,188.541687011719,142.966520786285" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="7" />
-    <Link Source="@4" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-212.890167236328,-150.420028686523,490.541656494141,211.491760253906" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="321" />
-    <Link Source="@4" Target="@3" Category="References" Bounds="-235.94938659668,-140.891891479492,30.8250274658203,25.6772384643555" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="85">
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-    </Link>
-    <Link Source="@4" Target="@5" Category="CodeSchema_Calls" Bounds="-698.231628417969,-147.533676147461,370.4248046875,145.98119354248" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
-    <Link Source="@5" Target="@14" Category="CodeSchema_Calls" Bounds="-700.6430564084,-444.23142185995,706.876857255655,448.402029516484" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
-    <Link Source="@5" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-645.066162109375,28.044900894165,509.415756225586,37.0291957855225" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="16" />
-    <Link Source="@6" Target="@20" Category="CodeSchema_AttributeUse" Bounds="116.554565429688,29.1706085205078,277.6416015625,34.0206489562988" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="6" />
-    <Link Source="@7" Target="@14" Category="References" Bounds="-223.450889517222,-441.172446293529,245.744218824683,445.343053950062" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="7">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@7" Target="@15" Category="InheritsFrom" Bounds="-211.345704073788,-330.157568080157,508.253596739076,334.328175736691" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@7" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-191.539245605469,29.1706085205078,114.733558654785,29.8113861083984" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="17" />
-    <Link Source="@7" Target="@3" Category="References" Bounds="-230.348495483398,-75.2043914794922,0,79.3749990463257" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="12">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@7" Target="@4" Category="References" Bounds="-293.416687011719,-133.233932495117,54.7991638183594,137.404540061951" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="14">
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@8" Target="@20" Category="CodeSchema_AttributeUse" Bounds="-828.348510742188,-205.682052612305,692.680389404297,274.668525695801" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="9" />
-    <Link Source="@8" Target="@4" Category="References" Bounds="-270.348510742188,-197.579391479492,0,22.6875" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
-    <Link Source="@9" Target="@14" Category="CodeSchema_Calls" Bounds="56.5393175883862,-443.49459462314,570.190939212756,447.665202279673" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="9" />
-    <Link Source="@9" Target="@20" Category="CodeSchema_AttributeUse" Bounds="116.812591552734,27.4158020019531,445.908477783203,36.6058120727539" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="76" />
+    <Link Source="@83" Target="@162" Category="Contains" />
+    <Link Source="@83" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@84" Target="@129" Category="Contains" />
+    <Link Source="@84" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@85" Target="@136" Category="Contains" />
+    <Link Source="@85" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@86" Target="@110" Category="Contains" />
+    <Link Source="@86" Target="@114" Category="Contains" />
+    <Link Source="@86" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="3" />
+    <Link Source="@86" Target="@86" Category="References" Weight="1" />
+    <Link Source="@87" Target="@111" Category="Contains" />
+    <Link Source="@87" Target="@143" Category="Contains" />
+    <Link Source="@87" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@87" Target="@87" Category="References" Weight="2" />
+    <Link Source="@88" Target="@112" Category="Contains" />
+    <Link Source="@88" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="3" />
+    <Link Source="@88" Target="@88" Category="References" Weight="1" />
+    <Link Source="@89" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1395.52112946163,-199.455392599509,764.237678666418,130.553511658011" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@9" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1449.59708399673,-665.652268441479,706.529554578779,434.963114915573" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="6" />
+    <Link Source="@91" Target="@130" Category="Contains" />
+    <Link Source="@91" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@92" Target="@152" Category="Contains" />
+    <Link Source="@92" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@93" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1424.28818976505,-198.54262012673,658.961540444404,184.640839185232" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="@94" Target="@30" Category="CodeSchema_AttributeUse" Bounds="-1397.59696246619,-326.766787211305,564.498607856612,99.2376087388" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@99" Target="@156" Category="CodeSchema_Calls" Weight="1" />
+    <Link Source="@99" Target="@30" Category="CodeSchema_AttributeUse" IsTargetVirtualized="True" Weight="1" />
   </Links>
   <Categories>
     <Category Id="CodeSchema_Assembly" Label="Assembly" BasedOn="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Assembly" NavigationActionLabel="Assemblies" />
     <Category Id="CodeSchema_AttributeUse" Label="Uses Attribute" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Used by" OutgoingActionLabel="Uses Attribute" />
     <Category Id="CodeSchema_Calls" Label="Calls" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Called By" OutgoingActionLabel="Calls" />
+    <Category Id="CodeSchema_Class" Label="Class" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Classes" />
     <Category Id="CodeSchema_FieldRead" Label="Field Read" BasedOn="CodeSchema_FieldReference" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Read By" OutgoingActionLabel="Reads Fields" />
     <Category Id="CodeSchema_FieldReference" Label="Field Reference" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Referenced By" OutgoingActionLabel="References Fields" />
-    <Category Id="CodeSchema_FunctionPointer" Label="Function Pointer" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Function Pointers" OutgoingActionLabel="Function Pointers" />
+    <Category Id="CodeSchema_Interface" Label="Interface" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Interface" NavigationActionLabel="Interfaces" />
+    <Category Id="CodeSchema_Member" Label="Member" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Field" NavigationActionLabel="Members" />
+    <Category Id="CodeSchema_Method" Label="Method" BasedOn="CodeSchema_Member" CanBeDataDriven="True" DefaultAction="Link:Forward:CodeSchema_Calls" Icon="CodeSchema_Method" NavigationActionLabel="Methods" />
     <Category Id="CodeSchema_Namespace" Label="Namespace" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Type" Icon="CodeSchema_Namespace" NavigationActionLabel="Namespaces" />
+    <Category Id="CodeSchema_Property" Label="Property" BasedOn="CodeSchema_Member" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Property" NavigationActionLabel="Properties" />
     <Category Id="CodeSchema_ReturnTypeLink" Label="Return" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Return types" OutgoingActionLabel="Return types" />
+    <Category Id="CodeSchema_Struct" Label="Struct" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Struct" NavigationActionLabel="Structs" />
+    <Category Id="CodeSchema_Type" Label="Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Types" />
     <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
     <Category Id="File" Label="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="File" NavigationActionLabel="Files" />
+    <Category Id="Implements" Label="Implements" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Implemented by" OutgoingActionLabel="Implements" />
     <Category Id="InheritsFrom" Label="Inherits From" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Inherited By" OutgoingActionLabel="Inherits From" />
     <Category Id="References" Label="References" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Referenced By" OutgoingActionLabel="References" />
   </Categories>
@@ -182,6 +548,16 @@
     <Property Id="Bounds" DataType="System.Windows.Rect" />
     <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
     <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsAbstract" Label="Is Abstract" Description="Flag to indicate member is 'Abstract' does not provide a full implementation" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsConstructor" Label="Is Constructor" Description="Flag to indicate the method is a constructor" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsFinal" Label="Is Final" Description="Flag to indicate the member is 'Final' and cannot be derived from" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsGeneric" Label="Is Generic" Description="Flag to indicate the member is 'Generic'" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsInternal" Label="Is Internal" Description="Flag to indicate the method is 'Internal'" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPrivate" Label="Is Private" Description="Flag to indicate the scope is Private" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPublic" Label="Is Public" Description="Flag to indicate the scope is Public" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsSpecialName" Label="Is Special Name" Description="Flag to indicate the method is treated in a special way by some compilers" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsStatic" Label="Is Static" Description="Flag to indicate the member is a static member" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsVirtual" Label="Is Virtual" Description="Flag to indicate the method can be overridden" DataType="System.Boolean" />
     <Property Id="DataVirtualized" Label="Data Virtualized" Description="If true, the graph can contain nodes and links that represent data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
     <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
     <Property Id="DelayedChildNodesState" Label="Delayed Child Nodes State" Description="Unspecified if the delayed child nodes state is not specified. NotFetched if the group contains child nodes that are not fetched into the graph yet. Fetched if the group has all its delayed child nodes already fetched." DataType="Microsoft.VisualStudio.GraphModel.DelayedDataState" />
@@ -214,30 +590,181 @@
     <Property Id="ZoomLevel" DataType="System.String" />
   </Properties>
   <QualifiedNames>
+    <Name Id="ArrayRank" Label="Array Rank" ValueType="System.String" />
     <Name Id="Assembly" Label="Assembly" ValueType="Uri" />
+    <Name Id="GenericArguments" Label="Generic Arguments" ValueType="Microsoft.VisualStudio.GraphModel.GraphNodeIdCollection" />
+    <Name Id="GenericParameterCount" Label="Generic Parameter Count" ValueType="System.String" />
+    <Name Id="Member" Label="Member" ValueType="System.Object" />
+    <Name Id="Name" Label="Name" ValueType="System.String" />
     <Name Id="Namespace" Label="Namespace" ValueType="System.String" />
+    <Name Id="OverloadingParameters" Label="Parameter" ValueType="Microsoft.VisualStudio.GraphModel.GraphNodeIdCollection" Formatter="NameValueNoEscape" />
+    <Name Id="ParameterIdentifier" Label="Parameter Identifier" ValueType="System.String" />
+    <Name Id="ParentType" Label="Parent Type" ValueType="System.Object" />
+    <Name Id="Type" Label="Type" ValueType="System.Object" />
   </QualifiedNames>
   <IdentifierAliases>
     <Alias n="1" Uri="Assembly=$(25ce0676-8f2c-497b-8fb5-7da41a31f6f9.OutputPathUri)" />
     <Alias n="2" Id="(@1)" />
-    <Alias n="3" Id="(@1 Namespace=Azure)" />
-    <Alias n="4" Id="(@1 Namespace=Azure.Core)" />
-    <Alias n="5" Id="(@1 Namespace=Azure.Core.Buffers)" />
-    <Alias n="6" Id="(@1 Namespace=Azure.Core.Cryptography)" />
-    <Alias n="7" Id="(@1 Namespace=Azure.Core.Diagnostics)" />
-    <Alias n="8" Id="(@1 Namespace=Azure.Core.Extensions)" />
-    <Alias n="9" Id="(@1 Namespace=Azure.Core.GeoJson)" />
-    <Alias n="10" Id="(@1 Namespace=Azure.Core.Json)" />
-    <Alias n="11" Id="(@1 Namespace=Azure.Core.JsonPatch)" />
-    <Alias n="12" Id="(@1 Namespace=Azure.Core.Pipeline)" />
-    <Alias n="13" Id="(@1 Namespace=Azure.Core.Serialization)" />
-    <Alias n="14" Id="(@1 Namespace=Azure.Core.Shared)" />
-    <Alias n="15" Id="(@1 Namespace=Azure.Core.Shared.Diagnostics)" />
-    <Alias n="16" Id="(@1 Namespace=Azure.Core.Shared.Pipeline)" />
-    <Alias n="17" Id="(@1 Namespace=Azure.Messaging)" />
-    <Alias n="18" Id="(@1 Namespace=Microsoft.CodeAnalysis)" />
-    <Alias n="19" Id="(@1 Namespace=System.Diagnostics.CodeAnalysis)" />
-    <Alias n="20" Id="(@1 Namespace=System.Runtime.CompilerServices)" />
+    <Alias n="3" Id="Namespace=Azure" />
+    <Alias n="4" Id="(@1 @3)" />
+    <Alias n="5" Id="Namespace=Azure.Core" />
+    <Alias n="6" Id="(@1 @5)" />
+    <Alias n="7" Id="Namespace=Azure.Core.Buffers" />
+    <Alias n="8" Id="(@1 @7)" />
+    <Alias n="9" Id="(@1 Namespace=Azure.Core.Cryptography)" />
+    <Alias n="10" Id="(@1 Namespace=Azure.Core.Diagnostics)" />
+    <Alias n="11" Id="(@1 Namespace=Azure.Core.Extensions)" />
+    <Alias n="12" Id="Namespace=Azure.Core.GeoJson" />
+    <Alias n="13" Id="(@1 @12)" />
+    <Alias n="14" Id="Namespace=Azure.Core.Json" />
+    <Alias n="15" Id="(@1 @14)" />
+    <Alias n="16" Id="(@1 Namespace=Azure.Core.JsonPatch)" />
+    <Alias n="17" Id="Namespace=Azure.Core.Pipeline" />
+    <Alias n="18" Id="(@1 @17)" />
+    <Alias n="19" Id="Namespace=Azure.Core.Serialization" />
+    <Alias n="20" Id="(@1 @19)" />
+    <Alias n="21" Id="Namespace=Azure.Core.Shared" />
+    <Alias n="22" Id="(@1 @21)" />
+    <Alias n="23" Id="Namespace=Azure.Core.Shared.Asserts" />
+    <Alias n="24" Id="(@1 @23)" />
+    <Alias n="25" Id="(@1 Namespace=Azure.Core.Shared.Diagnostics)" />
+    <Alias n="26" Id="(@1 Namespace=Azure.Core.Shared.Pipeline)" />
+    <Alias n="27" Id="Namespace=Azure.Messaging" />
+    <Alias n="28" Id="(@1 @27)" />
+    <Alias n="29" Id="(@1 Namespace=System.Diagnostics.CodeAnalysis)" />
+    <Alias n="30" Id="(@1 Namespace=System.Runtime.CompilerServices)" />
+    <Alias n="31" Id="GenericParameterCount=1" />
+    <Alias n="32" Id="(@1 @21 Type=(Name=AsyncLockWithValue @31))" />
+    <Alias n="33" Id="(@1 @21 Type=(Name=IOperation @31))" />
+    <Alias n="34" Id="(@1 @21 Type=(Name=OperationInternal @31))" />
+    <Alias n="35" Id="(@1 @21 Type=(Name=OperationState @31))" />
+    <Alias n="36" Id="(@1 @27 Type=(Name=CloudEventExtensionAttributes GenericParameterCount=2))" />
+    <Alias n="37" Id="(@1 @17 Type=(Name=PipelineRequest ParentType=HttpClientTransport))" />
+    <Alias n="38" Id="(@1 @21 Type=AppContextSwitchHelper)" />
+    <Alias n="39" Id="Type=Argument" />
+    <Alias n="40" Id="(@1 @23 @39)" />
+    <Alias n="41" Id="(@1 @21 Type=AuthorizationChallengeParser)" />
+    <Alias n="42" Id="(@1 @7 Type=AzureBaseBuffersExtensions)" />
+    <Alias n="43" Id="(@1 @3 Type=AzureKeyCredential)" />
+    <Alias n="44" Id="(@1 @21 Type=AzureKeyCredentialPolicy)" />
+    <Alias n="45" Id="(@1 @3 Type=AzureNamedKeyCredential)" />
+    <Alias n="46" Id="(@1 @3 Type=AzureSasCredential)" />
+    <Alias n="47" Id="(@1 @21 Type=AzureSasCredentialSynchronousPolicy)" />
+    <Alias n="48" Id="(@1 @21 Type=Base64Url)" />
+    <Alias n="49" Id="(@1 @17 Type=BearerTokenAuthenticationPolicy)" />
+    <Alias n="50" Id="(@1 @21 Type=CancellationHelper)" />
+    <Alias n="51" Id="Type=CloudEvent" />
+    <Alias n="52" Id="(@1 @27 @51)" />
+    <Alias n="53" Id="(@1 @5 Type=ContentType)" />
+    <Alias n="54" Id="(@1 @21 Type=DictionaryHeaders)" />
+    <Alias n="55" Id="(@1 @19 Type=DynamicData)" />
+    <Alias n="56" Id="(@1 @21 Type=EventSourceEventFormatting)" />
+    <Alias n="57" Id="(@1 @21 Type=FixedDelayWithNoJitterStrategy)" />
+    <Alias n="58" Id="(@1 @12 Type=GeoCollection)" />
+    <Alias n="59" Id="(@1 @12 Type=GeoLinearRing)" />
+    <Alias n="60" Id="(@1 @12 Type=GeoLineStringCollection)" />
+    <Alias n="61" Id="(@1 @12 Type=GeoObject)" />
+    <Alias n="62" Id="(@1 @12 Type=GeoPointCollection)" />
+    <Alias n="63" Id="(@1 @12 Type=GeoPolygon)" />
+    <Alias n="64" Id="(@1 @12 Type=GeoPolygonCollection)" />
+    <Alias n="65" Id="(@1 @21 Type=HashCodeBuilder)" />
+    <Alias n="66" Id="(@1 @3 Type=HttpAuthorization)" />
+    <Alias n="67" Id="(@1 @17 Type=HttpClientTransport)" />
+    <Alias n="68" Id="(@1 @5 Type=HttpMessage)" />
+    <Alias n="69" Id="(@1 @21 Type=HttpMessageSanitizer)" />
+    <Alias n="70" Id="(@1 @17 Type=HttpPipeline)" />
+    <Alias n="71" Id="Type=HttpPipelineBuilder" />
+    <Alias n="72" Id="(@1 @17 @71)" />
+    <Alias n="73" Id="(@1 @17 Type=HttpPipelineOptions)" />
+    <Alias n="74" Id="(@1 @21 Type=InitializationConstructorAttribute)" />
+    <Alias n="75" Id="(@1 @21 Type=IOperation)" />
+    <Alias n="76" Id="(@1 @19 Type=JsonObjectSerializer)" />
+    <Alias n="77" Id="(@1 @21 Type=MemoryResponse)" />
+    <Alias n="78" Id="(@1 @14 Type=MutableJsonDocument)" />
+    <Alias n="79" Id="(@1 @21 Type=OperationInternal)" />
+    <Alias n="80" Id="(@1 @21 Type=OperationInternalBase)" />
+    <Alias n="81" Id="(@1 @21 Type=OperationPoller)" />
+    <Alias n="82" Id="(@1 @21 Type=OperationState)" />
+    <Alias n="83" Id="(@1 @5 Type=Request)" />
+    <Alias n="84" Id="(@1 @3 Type=RequestContext)" />
+    <Alias n="85" Id="(@1 @3 Type=RequestFailedException)" />
+    <Alias n="86" Id="(@1 @5 Type=RequestMethod)" />
+    <Alias n="87" Id="(@1 @5 Type=ResourceIdentifier)" />
+    <Alias n="88" Id="(@1 @5 Type=ResourceType)" />
+    <Alias n="89" Id="(@1 @21 Type=SequentialDelayStrategy)" />
+    <Alias n="90" Id="(@1 @21 Type=SerializationConstructorAttribute)" />
+    <Alias n="91" Id="(@1 @5 Type=StatusCodeClassifier)" />
+    <Alias n="92" Id="(@1 @5 Type=TelemetryDetails)" />
+    <Alias n="93" Id="(@1 @21 Type=TypeReferenceTypeAttribute)" />
+    <Alias n="94" Id="(@1 @21 Type=VoidValue)" />
+    <Alias n="95" Id="Name=.ctor" />
+    <Alias n="96" Uri="Assembly=file:///C:/Users/annelo/.nuget/packages/microsoft.netcore.app/2.1.0/ref/netcoreapp2.1/netstandard.dll" />
+    <Alias n="97" Id="Namespace=System.Collections.Generic" />
+    <Alias n="98" Id="Name=IEnumerable" />
+    <Alias n="99" Id="(@1 @12 Type=GeoLinearRing Member=(@95 OverloadingParameters=[(@96 @97 Type=(@98 @31 GenericArguments=[(@1 @12 Type=GeoPosition)]))]))" />
+    <Alias n="100" Id="Namespace=System" />
+    <Alias n="101" Id="(@96 @100 Type=String)" />
+    <Alias n="102" Id="(@1 @17 Type=HttpPipeline Member=(Name=CreateHttpMessagePropertiesScope OverloadingParameters=[(@96 @97 Type=(Name=IDictionary GenericParameterCount=2 GenericArguments=[@101,(@96 @100 Type=Object)]))]))" />
+    <Alias n="103" Id="(@1 @17 Type=HttpPipelineOptions Member=(@95 OverloadingParameters=[(@1 @5 Type=ClientOptions)]))" />
+    <Alias n="104" Id="(@1 @19 Type=JsonObjectSerializer Member=(Name=Azure.Core.Serialization.IMemberNameConverter.ConvertMemberName OverloadingParameters=[(@96 Namespace=System.Reflection Type=MemberInfo)]))" />
+    <Alias n="105" Id="(@1 @5 Type=Request Member=(Name=set_Uri OverloadingParameters=[(@1 @5 Type=RequestUriBuilder)]))" />
+    <Alias n="106" Id="OverloadingParameters=[@101]" />
+    <Alias n="107" Id="Member=(@95 @106)" />
+    <Alias n="108" Id="(@1 @3 Type=AzureSasCredential @107)" />
+    <Alias n="109" Id="(@1 @5 Type=ContentType @107)" />
+    <Alias n="110" Id="(@1 @5 Type=RequestMethod @107)" />
+    <Alias n="111" Id="(@1 @5 Type=ResourceIdentifier @107)" />
+    <Alias n="112" Id="(@1 @5 Type=ResourceType @107)" />
+    <Alias n="113" Id="(@1 @19 Type=DynamicData Member=(Name=GetProperty @106))" />
+    <Alias n="114" Id="(@1 @5 Type=RequestMethod Member=(Name=Parse @106))" />
+    <Alias n="115" Id="(@1 @17 Type=(Name=PipelineRequest ParentType=HttpClientTransport) Member=(Name=set_ClientRequestId @106))" />
+    <Alias n="116" Id="(@1 @27 @51 Member=(Name=set_Id @106))" />
+    <Alias n="117" Id="(@1 @27 @51 Member=(Name=set_Source @106))" />
+    <Alias n="118" Id="(@1 @27 @51 Member=(Name=set_Type @106))" />
+    <Alias n="119" Id="(@1 @3 Type=AzureKeyCredential Member=(Name=Update @106))" />
+    <Alias n="120" Id="(@1 @3 Type=AzureSasCredential Member=(Name=Update @106))" />
+    <Alias n="121" Uri="Assembly=file:///C:/Users/annelo/.nuget/packages/system.text.json/4.7.2/lib/net461/System.Text.Json.dll" />
+    <Alias n="122" Id="(@1 @14 Type=MutableJsonDocument Member=(Name=WriteTo OverloadingParameters=[(@121 Namespace=System.Text.Json Type=Utf8JsonWriter)]))" />
+    <Alias n="123" Id="(@1 @12 Type=GeoBoundingBox)" />
+    <Alias n="124" Id="(@96 @97 Type=(Name=IReadOnlyDictionary GenericParameterCount=2 GenericArguments=[@101,(@96 @100 Type=Object)]))" />
+    <Alias n="125" Id="(@1 @12 Type=GeoObject Member=(@95 OverloadingParameters=[@123,@124]))" />
+    <Alias n="126" Uri="Assembly=file:///C:/Users/annelo/.nuget/packages/system.memory.data/1.0.2/lib/net461/System.Memory.Data.dll" />
+    <Alias n="127" Id="(@1 @27 @51 Member=(Name=Parse OverloadingParameters=[(@126 @100 Type=BinaryData),(@96 @100 Type=Boolean)]))" />
+    <Alias n="128" Id="(@1 @27 @51 Member=(Name=ParseMany OverloadingParameters=[(@126 @100 Type=BinaryData),(@96 @100 Type=Boolean)]))" />
+    <Alias n="129" Id="(@1 @3 Type=RequestContext Member=(Name=AddClassifier OverloadingParameters=[(@96 @100 Type=Int32),(@96 @100 Type=Boolean)]))" />
+    <Alias n="130" Id="(@1 @5 Type=StatusCodeClassifier Member=(Name=AddClassifier OverloadingParameters=[(@96 @100 Type=Int32),(@96 @100 Type=Boolean)]))" />
+    <Alias n="131" Id="(@1 @17 @71 Member=(Name=Build OverloadingParameters=[@73,(@1 @17 Type=HttpPipelineTransportOptions)]))" />
+    <Alias n="132" Id="(@1 @17 @71 Member=(Name=BuildInternal OverloadingParameters=[@73,(@1 @17 Type=HttpPipelineTransportOptions)]))" />
+    <Alias n="133" Id="(@1 @19 Type=DynamicData Member=(Name=SetProperty OverloadingParameters=[@101,(@96 @100 Type=Object)]))" />
+    <Alias n="134" Id="(@1 @27 Type=(Name=CloudEventExtensionAttributes GenericParameterCount=2) Member=(Name=ValidateAttribute OverloadingParameters=[@101,(@96 @100 Type=Object)]))" />
+    <Alias n="135" Id="(@1 @5 Type=HttpMessage Member=(@95 OverloadingParameters=[@83,(@1 @5 Type=ResponseClassifier)]))" />
+    <Alias n="136" Id="(@1 @3 Type=RequestFailedException Member=(Name=GetObjectData OverloadingParameters=[(@96 Namespace=System.Runtime.Serialization Type=SerializationInfo),(@96 Namespace=System.Runtime.Serialization Type=StreamingContext)]))" />
+    <Alias n="137" Id="(@1 @14 Type=MutableJsonDocument Member=(Name=WriteTo OverloadingParameters=[(@96 Namespace=System.IO Type=Stream),@101]))" />
+    <Alias n="138" Id="OverloadingParameters=[@101,@101]" />
+    <Alias n="139" Id="(@1 @3 Type=HttpAuthorization Member=(@95 @138))" />
+    <Alias n="140" Id="(@1 @23 @39 Member=(Name=AssertNotNullOrEmpty @138))" />
+    <Alias n="141" Id="(@1 @23 @39 Member=(Name=AssertNotNullOrWhiteSpace @138))" />
+    <Alias n="142" Id="(@1 @3 Type=AzureNamedKeyCredential Member=(Name=Update @138))" />
+    <Alias n="143" Id="(@1 @5 Type=ResourceIdentifier Member=(Name=ValidatePathSegment @138))" />
+    <Alias n="144" Id="(@1 @12 Type=GeoPolygon Member=(@95 OverloadingParameters=[(@96 @97 Type=(@98 @31 GenericArguments=[@59])),@123,@124]))" />
+    <Alias n="145" Id="(@1 @12 Type=GeoLineStringCollection Member=(@95 OverloadingParameters=[(@96 @97 Type=(@98 @31 GenericArguments=[(@1 @12 Type=GeoLineString)])),@123,@124]))" />
+    <Alias n="146" Id="(@1 @12 Type=GeoCollection Member=(@95 OverloadingParameters=[(@96 @97 Type=(@98 @31 GenericArguments=[@61])),@123,@124]))" />
+    <Alias n="147" Id="(@1 @12 Type=GeoPointCollection Member=(@95 OverloadingParameters=[(@96 @97 Type=(@98 @31 GenericArguments=[(@1 @12 Type=GeoPoint)])),@123,@124]))" />
+    <Alias n="148" Id="(@1 @12 Type=GeoPolygonCollection Member=(@95 OverloadingParameters=[(@96 @97 Type=(@98 @31 GenericArguments=[@63])),@123,@124]))" />
+    <Alias n="149" Uri="Assembly=file:///C:/Users/annelo/.nuget/packages/system.memory/4.5.4/lib/net461/System.Memory.dll" />
+    <Alias n="150" Id="(@1 @7 Type=AzureBaseBuffersExtensions Member=(Name=WriteAsync OverloadingParameters=[(@96 Namespace=System.IO Type=Stream),(@149 @100 Type=(Name=ReadOnlyMemory @31 GenericArguments=[(@96 @100 Type=Byte)])),(@96 Namespace=System.Threading Type=CancellationToken)]))" />
+    <Alias n="151" Id="(@1 @7 Type=AzureBaseBuffersExtensions Member=(Name=WriteAsync OverloadingParameters=[(@96 Namespace=System.IO Type=Stream),(@149 Namespace=System.Buffers Type=(Name=ReadOnlySequence @31 GenericArguments=[(@96 @100 Type=Byte)])),(@96 Namespace=System.Threading Type=CancellationToken)]))" />
+    <Alias n="152" Id="(@1 @5 Type=TelemetryDetails Member=(@95 OverloadingParameters=[(@96 Namespace=System.Reflection Type=Assembly),@101,(@1 @5 Type=RuntimeInformationWrapper)]))" />
+    <Alias n="153" Id="(@1 @17 Type=BearerTokenAuthenticationPolicy Member=(@95 OverloadingParameters=[(@1 @5 Type=TokenCredential),(@96 @97 Type=(@98 @31 GenericArguments=[@101])),(@96 @100 Type=TimeSpan),(@96 @100 Type=TimeSpan)]))" />
+    <Alias n="154" Id="(@1 @17 @71 Member=(Name=Build OverloadingParameters=[(@1 @5 Type=ClientOptions),(@1 @17 Type=(Name=HttpPipelinePolicy ArrayRank=1 ParentType=HttpPipelinePolicy)),(@1 @17 Type=(Name=HttpPipelinePolicy ArrayRank=1 ParentType=HttpPipelinePolicy)),(@1 @17 Type=HttpPipelineTransportOptions),(@1 @5 Type=ResponseClassifier)]))" />
+    <Alias n="155" Id="(ParameterIdentifier=0)" />
+    <Alias n="156" Id="(@1 @23 @39 Member=(Name=AssertNotNull @31 OverloadingParameters=[@155,@101]))" />
+    <Alias n="157" Id="(@1 @23 @39 Member=(Name=AssertInRange @31 OverloadingParameters=[@155,@155,@155,@101]))" />
+    <Alias n="158" Id="(@1 @17 Type=(Name=PipelineRequest ParentType=HttpClientTransport) Member=ClientRequestId)" />
+    <Alias n="159" Id="(@1 @27 @51 Member=Id)" />
+    <Alias n="160" Id="(@1 @27 @51 Member=Source)" />
+    <Alias n="161" Id="(@1 @27 @51 Member=Type)" />
+    <Alias n="162" Id="(@1 @5 Type=Request Member=Uri)" />
   </IdentifierAliases>
   <Styles>
     <Style TargetType="Node" GroupLabel="Unreferenced" ToolTip="Node has no links pointing to it from other nodes in the graph" ValueLabel="True">
