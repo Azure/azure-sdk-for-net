@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ScriptEnvironmentVariable : IUtf8JsonSerializable
+    public partial class ScriptEnvironmentVariable : IUtf8JsonSerializable, IModelJsonSerializable<ScriptEnvironmentVariable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -30,8 +35,10 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ScriptEnvironmentVariable DeserializeScriptEnvironmentVariable(JsonElement element)
+        internal static ScriptEnvironmentVariable DeserializeScriptEnvironmentVariable(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +65,44 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             return new ScriptEnvironmentVariable(name, value.Value, secureValue.Value);
+        }
+
+        void IModelJsonSerializable<ScriptEnvironmentVariable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        ScriptEnvironmentVariable IModelJsonSerializable<ScriptEnvironmentVariable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScriptEnvironmentVariable(document.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScriptEnvironmentVariable>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        {
+            "J" or "W" => ModelSerializer.SerializeCore(this, options),
+            "bicep" => SerializeBicep(options),
+            _ => throw new FormatException($"Unsupported format {options.Format}")
+        };
+
+        ScriptEnvironmentVariable IModelSerializable<ScriptEnvironmentVariable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.Parse(data);
+            return DeserializeScriptEnvironmentVariable(document.RootElement, options);
+        }
+
+        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"  name: '{Name}'");
+            if (Optional.IsDefined(Value))
+            {
+                string value = Value.StartsWith("_p_.", StringComparison.Ordinal) ? Value.Substring(4) : $"'{Value}'";
+                sb.AppendLine($"  value: {value}");
+            }
+            if (Optional.IsDefined(SecureValue))
+            {
+                string value = SecureValue.StartsWith("_p_.", StringComparison.Ordinal) ? SecureValue.Substring(4) : $"'{SecureValue}'";
+                sb.AppendLine($"  secureValue: {value}");
+            }
+            return BinaryData.FromString(sb.ToString());
         }
     }
 }
