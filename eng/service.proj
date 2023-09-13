@@ -50,7 +50,7 @@
   </PropertyGroup>
 
   <Target Name="GenerateCode">
-    <Exec Condition="'$(SkipEmitterNpmInstall)' != 'true'" Command="$(PowerShellExe) -NoProfile -NonInteractive -Executionpolicy Unrestricted -File $(EmitterNpmInstallScriptPath) -Force"/>
+    <Exec Condition="'$(SkipEmitterNpmInstall)' != 'true'" Command="$(PowerShellExe) -NoProfile -NonInteractive -Executionpolicy Unrestricted -File $(EmitterNpmInstallScriptPath)"/>
 
     <CreateProperty Value="true" >
       <Output TaskParameter="Value" PropertyName="SkipEmitterNpmInstall" />
