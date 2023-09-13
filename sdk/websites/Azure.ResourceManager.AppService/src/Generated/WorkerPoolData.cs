@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing the AppServiceWorkerPool data model.
+    /// A class representing the WorkerPool data model.
     /// Worker pool of an App Service Environment ARM resource.
     /// </summary>
-    public partial class AppServiceWorkerPoolData : ResourceData
+    public partial class WorkerPoolData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceWorkerPoolData. </summary>
-        public AppServiceWorkerPoolData()
+        /// <summary> Initializes a new instance of WorkerPoolData. </summary>
+        public WorkerPoolData()
         {
             InstanceNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceWorkerPoolData. </summary>
+        /// <summary> Initializes a new instance of WorkerPoolData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerCount"> Number of instances in the worker pool. </param>
         /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceWorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceSkuDescription sku, int? workerSizeId, ComputeModeOption? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, string kind) : base(id, name, resourceType, systemData)
+        internal WorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceSkuDescription sku, int? workerSizeId, ComputeModeOption? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, string kind) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             WorkerSizeId = workerSizeId;

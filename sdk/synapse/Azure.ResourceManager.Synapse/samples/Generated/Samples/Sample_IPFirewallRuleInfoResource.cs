@@ -16,7 +16,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
-    public partial class Sample_SynapseIPFirewallRuleInfoResource
+    public partial class Sample_IPFirewallRuleInfoResource
     {
         // Create an IP firewall rule
         [NUnit.Framework.Test]
@@ -31,27 +31,27 @@ namespace Azure.ResourceManager.Synapse.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SynapseIPFirewallRuleInfoResource created on azure
-            // for more information of creating SynapseIPFirewallRuleInfoResource, please refer to the document of SynapseIPFirewallRuleInfoResource
+            // this example assumes you already have this IPFirewallRuleInfoResource created on azure
+            // for more information of creating IPFirewallRuleInfoResource, please refer to the document of IPFirewallRuleInfoResource
             string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
             string resourceGroupName = "ExampleResourceGroup";
             string workspaceName = "ExampleWorkspace";
             string ruleName = "ExampleIpFirewallRule";
-            ResourceIdentifier synapseIPFirewallRuleInfoResourceId = SynapseIPFirewallRuleInfoResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, ruleName);
-            SynapseIPFirewallRuleInfoResource synapseIPFirewallRuleInfo = client.GetSynapseIPFirewallRuleInfoResource(synapseIPFirewallRuleInfoResourceId);
+            ResourceIdentifier ipFirewallRuleInfoResourceId = IPFirewallRuleInfoResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, ruleName);
+            IPFirewallRuleInfoResource ipFirewallRuleInfo = client.GetIPFirewallRuleInfoResource(ipFirewallRuleInfoResourceId);
 
             // invoke the operation
-            SynapseIPFirewallRuleInfoData info = new SynapseIPFirewallRuleInfoData()
+            IPFirewallRuleInfoData info = new IPFirewallRuleInfoData()
             {
                 EndIPAddress = IPAddress.Parse("10.0.0.254"),
                 StartIPAddress = IPAddress.Parse("10.0.0.0"),
             };
-            ArmOperation<SynapseIPFirewallRuleInfoResource> lro = await synapseIPFirewallRuleInfo.UpdateAsync(WaitUntil.Completed, info);
-            SynapseIPFirewallRuleInfoResource result = lro.Value;
+            ArmOperation<IPFirewallRuleInfoResource> lro = await ipFirewallRuleInfo.UpdateAsync(WaitUntil.Completed, info);
+            IPFirewallRuleInfoResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SynapseIPFirewallRuleInfoData resourceData = result.Data;
+            IPFirewallRuleInfoData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.Synapse.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SynapseIPFirewallRuleInfoResource created on azure
-            // for more information of creating SynapseIPFirewallRuleInfoResource, please refer to the document of SynapseIPFirewallRuleInfoResource
+            // this example assumes you already have this IPFirewallRuleInfoResource created on azure
+            // for more information of creating IPFirewallRuleInfoResource, please refer to the document of IPFirewallRuleInfoResource
             string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
             string resourceGroupName = "ExampleResourceGroup";
             string workspaceName = "ExampleWorkspace";
             string ruleName = "ExampleIpFirewallRule";
-            ResourceIdentifier synapseIPFirewallRuleInfoResourceId = SynapseIPFirewallRuleInfoResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, ruleName);
-            SynapseIPFirewallRuleInfoResource synapseIPFirewallRuleInfo = client.GetSynapseIPFirewallRuleInfoResource(synapseIPFirewallRuleInfoResourceId);
+            ResourceIdentifier ipFirewallRuleInfoResourceId = IPFirewallRuleInfoResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, ruleName);
+            IPFirewallRuleInfoResource ipFirewallRuleInfo = client.GetIPFirewallRuleInfoResource(ipFirewallRuleInfoResourceId);
 
             // invoke the operation
-            ArmOperation<BinaryData> lro = await synapseIPFirewallRuleInfo.DeleteAsync(WaitUntil.Completed);
+            ArmOperation<BinaryData> lro = await ipFirewallRuleInfo.DeleteAsync(WaitUntil.Completed);
             BinaryData result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -98,21 +98,21 @@ namespace Azure.ResourceManager.Synapse.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SynapseIPFirewallRuleInfoResource created on azure
-            // for more information of creating SynapseIPFirewallRuleInfoResource, please refer to the document of SynapseIPFirewallRuleInfoResource
+            // this example assumes you already have this IPFirewallRuleInfoResource created on azure
+            // for more information of creating IPFirewallRuleInfoResource, please refer to the document of IPFirewallRuleInfoResource
             string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
             string resourceGroupName = "ExampleResourceGroup";
             string workspaceName = "ExampleWorkspace";
             string ruleName = "ExampleIpFirewallRule";
-            ResourceIdentifier synapseIPFirewallRuleInfoResourceId = SynapseIPFirewallRuleInfoResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, ruleName);
-            SynapseIPFirewallRuleInfoResource synapseIPFirewallRuleInfo = client.GetSynapseIPFirewallRuleInfoResource(synapseIPFirewallRuleInfoResourceId);
+            ResourceIdentifier ipFirewallRuleInfoResourceId = IPFirewallRuleInfoResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, ruleName);
+            IPFirewallRuleInfoResource ipFirewallRuleInfo = client.GetIPFirewallRuleInfoResource(ipFirewallRuleInfoResourceId);
 
             // invoke the operation
-            SynapseIPFirewallRuleInfoResource result = await synapseIPFirewallRuleInfo.GetAsync();
+            IPFirewallRuleInfoResource result = await ipFirewallRuleInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SynapseIPFirewallRuleInfoData resourceData = result.Data;
+            IPFirewallRuleInfoData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
