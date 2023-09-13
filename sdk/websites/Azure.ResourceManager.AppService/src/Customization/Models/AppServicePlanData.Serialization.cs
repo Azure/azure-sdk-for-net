@@ -7,17 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServicePlanData : IUtf8JsonSerializable
+    public partial class AppServicePlanData : IUtf8JsonSerializable, IModelJsonSerializable<AppServicePlanData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -157,8 +161,10 @@ namespace Azure.ResourceManager.AppService
             writer.WriteEndObject();
         }
 
-        internal static AppServicePlanData DeserializeAppServicePlanData(JsonElement element)
+        internal static AppServicePlanData DeserializeAppServicePlanData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -462,6 +468,52 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             return new AppServicePlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value);
+        }
+
+        void IModelJsonSerializable<AppServicePlanData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        AppServicePlanData IModelJsonSerializable<AppServicePlanData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServicePlanData(document.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServicePlanData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        {
+            "J" or "W" => ModelSerializer.SerializeCore(this, options),
+            "bicep" => SerializeBicep(options),
+            _ => throw new FormatException($"Unsupported format {options.Format}")
+        };
+
+        AppServicePlanData IModelSerializable<AppServicePlanData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.Parse(data);
+            return DeserializeAppServicePlanData(document.RootElement, options);
+        }
+
+        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"  name: '{Name}'");
+            sb.AppendLine($"  location: '{Location}'");
+            if (Optional.IsCollectionDefined(Tags) && Tags.Count > 0)
+            {
+                sb.AppendLine($"  tags: {{");
+                foreach (var kv in Tags)
+                {
+                    sb.AppendLine($"    '{kv.Key}': '{kv.Value}'");
+                }
+                sb.AppendLine($"  }}");
+            }
+            sb.AppendLine($"  sku: {{");
+            sb.AppendChildObject(Sku, options, true);
+            sb.AppendLine($"  }}");
+            if (Optional.IsDefined(Kind))
+            {
+                sb.AppendLine($" kind: '{Kind}'");
+            }
+            sb.AppendLine($" reserved: {IsReserved}");
+            return BinaryData.FromString(sb.ToString());
         }
     }
 }
