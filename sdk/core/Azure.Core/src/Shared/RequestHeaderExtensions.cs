@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Linq;
 using Azure.Core.Shared.Formatters;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Headers
 {
     internal static class RequestHeaderExtensions
     {

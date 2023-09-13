@@ -6,7 +6,7 @@ using Azure.Core.Shared.Asserts;
 
 #nullable enable
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.AuthPolicies
 {
     internal class AzureKeyCredentialPolicy : HttpPipelineSynchronousPolicy
     {

@@ -5,7 +5,7 @@ using System;
 
 #nullable enable
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Delay
 {
     /// <summary>
     /// A delay strategy that uses a fixed delay with no jitter applied. This is used by data plane LROs.

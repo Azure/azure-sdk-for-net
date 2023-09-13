@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Shared.Attributes;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 

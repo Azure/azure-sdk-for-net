@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
+using Azure.Core.Shared.AuthPolicies;
+using Azure.Core.Shared.Pipeline.Diagnostics;
 
 namespace Azure.Maps.Rendering
 {

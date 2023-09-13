@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Shared.Models;
 
 namespace Azure.Maps.Rendering
 {

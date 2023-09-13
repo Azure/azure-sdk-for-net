@@ -11,9 +11,12 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared.Message;
+using Azure.Core.Shared.Models;
+using Azure.Core.Shared.Pipeline.Diagnostics;
+using Azure.Core.Shared.RequestUri;
 
 namespace Azure.Maps.Rendering
 {

@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Shared.Asserts;
 using Azure.Core.Shared.Pipeline.Diagnostics;
+using Azure.Core.Shared.Delay;
 
 #nullable enable
 

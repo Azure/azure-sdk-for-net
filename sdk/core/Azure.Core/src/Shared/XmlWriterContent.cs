@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Xml
 {
     internal class XmlWriterContent : RequestContent
     {
