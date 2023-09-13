@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> The current state of the IP address firewall for this Data Lake Store account. </summary>
         public DataLakeStoreFirewallState? FirewallState { get; set; }
         /// <summary> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </summary>
-        public DataLakeStoreFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
+        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
         /// <summary> The list of trusted identity providers associated with this Data Lake Store account. </summary>
         public IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> TrustedIdProviders { get; }
         /// <summary> The current state of the trusted identity provider feature for this Data Lake Store account. </summary>
