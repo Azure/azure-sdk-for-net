@@ -314,13 +314,13 @@ namespace Azure.Storage.Blobs.Test
 
             BlobClient aadBlob = InstrumentClient(new BlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                new MockCredential(),
                 options));
 
             // Assert
-            await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadBlob.ExistsAsync(),
-                e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
+                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
         }
 
         #region Upload

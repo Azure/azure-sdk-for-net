@@ -320,13 +320,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileSystemClient aadFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(
                 uriBuilder.ToUri(),
-                GetOAuthHnsCredential(),
+                new MockCredential(),
                 options));
 
             // Assert
-            await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadFileSystemClient.ExistsAsync(),
-                e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]

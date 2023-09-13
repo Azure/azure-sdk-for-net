@@ -29,12 +29,12 @@ namespace Azure.Storage.Queues.Models
             _value = value;
         }
 
-        private const string _publicAudience = "https://storage.azure.com/.default";
+        private const string _publicAudience = "https://storage.azure.com/";
 
         /// <summary>
         /// Default Audience. Use to acquire a token for authorizing requests to any Azure Storage account
         ///
-        /// Resource ID: &quot;https://storage.azure.com/.default &quot;.
+        /// Resource ID: &quot;https://storage.azure.com/ &quot;.
         ///
         /// If no audience is specified, this is the default value.
         /// </summary>
@@ -70,5 +70,18 @@ namespace Azure.Storage.Queues.Models
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
+
+        /// <summary>
+        /// Creates a scope with the respective audience and the default scope.
+        /// </summary>
+        /// <returns></returns>
+        internal string CreateDefaultScope()
+        {
+            if (_value.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return $"{(_value)}{Constants.DefaultScope}";
+            }
+            return $"{(_value)}/{Constants.DefaultScope}";
+        }
     }
 }

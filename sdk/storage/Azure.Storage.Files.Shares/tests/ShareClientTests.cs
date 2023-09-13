@@ -244,14 +244,14 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareClient aadShare = InstrumentClient(new ShareClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                new MockCredential(),
                 options));
 
             // Assert
             var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
-            await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadShare.CreatePermissionAsync(permission),
-                e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]

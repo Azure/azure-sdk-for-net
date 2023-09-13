@@ -218,13 +218,13 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                new MockCredential(),
                 options));
 
             // Assert
-            await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadFileClient.ExistsAsync(),
-                e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]

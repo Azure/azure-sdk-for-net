@@ -352,7 +352,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience("https://badaudience.blob.core.windows.net"));
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.PublicAudience);
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
             {
@@ -360,15 +360,16 @@ namespace Azure.Storage.Blobs.Test
                 BlobName = blob.Name
             };
 
+            // Hand it a Mock Credential that's supposed to fail
             BlobBaseClient aadBlob = InstrumentClient(new BlobBaseClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                new MockCredential(),
                 options));
 
             // Assert
-            await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadBlob.ExistsAsync(),
-                e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
+                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
         }
 
         #region Sequential Download

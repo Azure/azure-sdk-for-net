@@ -112,13 +112,8 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task Ctor_DefaultAudience()
         {
             // Arrange
-            string shareName = GetNewShareName();
-            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
-            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
-
-            string directoryName = GetNewDirectoryName();
-            ShareDirectoryClient directoryClient = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
             await directoryClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
@@ -126,8 +121,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
             {
-                ShareName = shareName,
-                DirectoryOrFilePath = directoryName
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = directoryClient.Path
             };
 
             ShareDirectoryClient aadDirClient = InstrumentClient(new ShareDirectoryClient(
@@ -144,13 +139,8 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task Ctor_CustomAudience()
         {
             // Arrange
-            string shareName = GetNewShareName();
-            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
-            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
-
-            string directoryName = GetNewDirectoryName();
-            ShareDirectoryClient directoryClient = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
             await directoryClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
@@ -158,8 +148,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
             {
-                ShareName = shareName,
-                DirectoryOrFilePath = directoryName
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = directoryClient.Path
             };
 
             ShareDirectoryClient aadDirClient = InstrumentClient(new ShareDirectoryClient(
@@ -176,13 +166,8 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
-            string shareName = GetNewShareName();
-            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
-            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
-
-            string directoryName = GetNewDirectoryName();
-            ShareDirectoryClient directoryClient = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
             await directoryClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
@@ -190,8 +175,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
             {
-                ShareName = shareName,
-                DirectoryOrFilePath = directoryName
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = directoryClient.Path
             };
 
             ShareDirectoryClient aadDirClient = InstrumentClient(new ShareDirectoryClient(
@@ -208,13 +193,8 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task Ctor_AudienceError()
         {
             // Arrange
-            string shareName = GetNewShareName();
-            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
-            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
-
-            string directoryName = GetNewDirectoryName();
-            ShareDirectoryClient directoryClient = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
             await directoryClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
@@ -222,19 +202,19 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
             {
-                ShareName = shareName,
-                DirectoryOrFilePath = directoryName
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = directoryClient.Path
             };
 
             ShareDirectoryClient aadDirClient = InstrumentClient(new ShareDirectoryClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                new MockCredential(),
                 options));
 
             // Assert
-            await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadDirClient.ExistsAsync(),
-                e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]

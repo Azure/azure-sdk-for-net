@@ -91,5 +91,8 @@ namespace Azure.Storage.Shared
             };
             return HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object> { { key, true } });
         }
+
+        public static string AppendDefaultScope(string audienceStr)
+            => $"{audienceStr}{Constants.DefaultScope}";
     }
 }

@@ -169,13 +169,13 @@ namespace Azure.Storage.Queues.Test
 
             QueueServiceClient aadContainer = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                new MockCredential(),
                 options));
 
             // Assert
-            await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadContainer.GetPropertiesAsync(),
-                e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]

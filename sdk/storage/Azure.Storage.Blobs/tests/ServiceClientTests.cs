@@ -237,13 +237,13 @@ namespace Azure.Storage.Blobs.Test
 
             BlobServiceClient aadContainer = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                new MockCredential(),
                 options));
 
             // Assert
-            await TestHelper.AssertExpectedExceptionAsync<AuthenticationFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadContainer.GetPropertiesAsync(),
-                e => Assert.IsTrue(e.Message.Contains("ClientSecretCredential authentication")));
+                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]
