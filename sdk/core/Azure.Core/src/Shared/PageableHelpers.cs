@@ -11,8 +11,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Shared.Operations;
-using Azure.Core.Shared.Pipeline;
 using Azure.Core.Shared.Pipeline.Diagnostics;
 
 namespace Azure.Core.Shared.Paging
@@ -62,31 +60,31 @@ namespace Azure.Core.Shared.Paging
             return new PageableWrapper<T>(new PageableImplementation<T>(initialResponse, null, createNextPageRequest, valueFactory, pipeline, clientDiagnostics, scopeName, itemPropertyName, nextLinkPropertyName, null, cancellationToken, null));
         }
 
-        public static async ValueTask<Operation<AsyncPageable<T>>> CreateAsyncPageable<T>(WaitUntil waitUntil, HttpMessage message, Func<int?, string, HttpMessage>? createNextPageMethod, Func<JsonElement, T> valueFactory, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, OperationFinalStateVia finalStateVia, string scopeName, string? itemPropertyName, string? nextLinkPropertyName, RequestContext? requestContext = null) where T : notnull
-        {
-            AsyncPageable<T> ResultSelector(Response r) => new AsyncPageableWrapper<T>(new PageableImplementation<T>(r, null, createNextPageMethod, valueFactory, pipeline, clientDiagnostics, scopeName, itemPropertyName, nextLinkPropertyName, null, requestContext?.CancellationToken, requestContext?.ErrorOptions));
+        //public static async ValueTask<Operation<AsyncPageable<T>>> CreateAsyncPageable<T>(WaitUntil waitUntil, HttpMessage message, Func<int?, string, HttpMessage>? createNextPageMethod, Func<JsonElement, T> valueFactory, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, OperationFinalStateVia finalStateVia, string scopeName, string? itemPropertyName, string? nextLinkPropertyName, RequestContext? requestContext = null) where T : notnull
+        //{
+        //    AsyncPageable<T> ResultSelector(Response r) => new AsyncPageableWrapper<T>(new PageableImplementation<T>(r, null, createNextPageMethod, valueFactory, pipeline, clientDiagnostics, scopeName, itemPropertyName, nextLinkPropertyName, null, requestContext?.CancellationToken, requestContext?.ErrorOptions));
 
-            var response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
-            var operation = new ProtocolOperation<AsyncPageable<T>>(clientDiagnostics, pipeline, message.Request, response, finalStateVia, scopeName, ResultSelector);
-            if (waitUntil == WaitUntil.Completed)
-            {
-                await operation.WaitForCompletionAsync(requestContext?.CancellationToken ?? default).ConfigureAwait(false);
-            }
-            return operation;
-        }
+        //    var response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
+        //    var operation = new ProtocolOperation<AsyncPageable<T>>(clientDiagnostics, pipeline, message.Request, response, finalStateVia, scopeName, ResultSelector);
+        //    if (waitUntil == WaitUntil.Completed)
+        //    {
+        //        await operation.WaitForCompletionAsync(requestContext?.CancellationToken ?? default).ConfigureAwait(false);
+        //    }
+        //    return operation;
+        //}
 
-        public static Operation<Pageable<T>> CreatePageable<T>(WaitUntil waitUntil, HttpMessage message, Func<int?, string, HttpMessage>? createNextPageMethod, Func<JsonElement, T> valueFactory, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, OperationFinalStateVia finalStateVia, string scopeName, string? itemPropertyName, string? nextLinkPropertyName, RequestContext? requestContext = null) where T : notnull
-        {
-            Pageable<T> ResultSelector(Response r) => new PageableWrapper<T>(new PageableImplementation<T>(r, null, createNextPageMethod, valueFactory, pipeline, clientDiagnostics, scopeName, itemPropertyName, nextLinkPropertyName, null, requestContext?.CancellationToken, requestContext?.ErrorOptions));
+        //public static Operation<Pageable<T>> CreatePageable<T>(WaitUntil waitUntil, HttpMessage message, Func<int?, string, HttpMessage>? createNextPageMethod, Func<JsonElement, T> valueFactory, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, OperationFinalStateVia finalStateVia, string scopeName, string? itemPropertyName, string? nextLinkPropertyName, RequestContext? requestContext = null) where T : notnull
+        //{
+        //    Pageable<T> ResultSelector(Response r) => new PageableWrapper<T>(new PageableImplementation<T>(r, null, createNextPageMethod, valueFactory, pipeline, clientDiagnostics, scopeName, itemPropertyName, nextLinkPropertyName, null, requestContext?.CancellationToken, requestContext?.ErrorOptions));
 
-            var response = pipeline.ProcessMessage(message, requestContext);
-            var operation = new ProtocolOperation<Pageable<T>>(clientDiagnostics, pipeline, message.Request, response, finalStateVia, scopeName, ResultSelector);
-            if (waitUntil == WaitUntil.Completed)
-            {
-                operation.WaitForCompletion(requestContext?.CancellationToken ?? default);
-            }
-            return operation;
-        }
+        //    var response = pipeline.ProcessMessage(message, requestContext);
+        //    var operation = new ProtocolOperation<Pageable<T>>(clientDiagnostics, pipeline, message.Request, response, finalStateVia, scopeName, ResultSelector);
+        //    if (waitUntil == WaitUntil.Completed)
+        //    {
+        //        operation.WaitForCompletion(requestContext?.CancellationToken ?? default);
+        //    }
+        //    return operation;
+        //}
 
         public static Pageable<T> CreateEnumerable<T>(Func<int?, Page<T>> firstPageFunc, Func<string?, int?, Page<T>>? nextPageFunc, int? pageSize = default) where T : notnull
         {

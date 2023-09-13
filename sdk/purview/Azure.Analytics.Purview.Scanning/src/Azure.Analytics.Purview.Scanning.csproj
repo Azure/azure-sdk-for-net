@@ -26,6 +26,9 @@
     <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)RequestUriBuilderExtensions.cs" LinkBase="Shared\Core" />
+
+    <Compile Include="$(AzureCoreSharedSources)GeneratorPageableHelpers.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)PageableHelpers.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
