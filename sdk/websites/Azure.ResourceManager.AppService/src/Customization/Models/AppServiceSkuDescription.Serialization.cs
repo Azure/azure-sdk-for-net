@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -14,160 +13,14 @@ using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceSkuDescription : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceSkuDescription>
+    public partial class AppServiceSkuDescription : IModelJsonSerializable<AppServiceSkuDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Tier))
-            {
-                writer.WritePropertyName("tier"u8);
-                writer.WriteStringValue(Tier);
-            }
-            if (Optional.IsDefined(Size))
-            {
-                writer.WritePropertyName("size"u8);
-                writer.WriteStringValue(Size);
-            }
-            if (Optional.IsDefined(Family))
-            {
-                writer.WritePropertyName("family"u8);
-                writer.WriteStringValue(Family);
-            }
-            if (Optional.IsDefined(Capacity))
-            {
-                writer.WritePropertyName("capacity"u8);
-                writer.WriteNumberValue(Capacity.Value);
-            }
-            if (Optional.IsDefined(SkuCapacity))
-            {
-                writer.WritePropertyName("skuCapacity"u8);
-                writer.WriteObjectValue(SkuCapacity);
-            }
-            if (Optional.IsCollectionDefined(Locations))
-            {
-                writer.WritePropertyName("locations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Locations)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Capabilities))
-            {
-                writer.WritePropertyName("capabilities"u8);
-                writer.WriteStartArray();
-                foreach (var item in Capabilities)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
-        internal static AppServiceSkuDescription DeserializeAppServiceSkuDescription(JsonElement element, ModelSerializerOptions options = default)
-        {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
-            Optional<AppServiceSkuCapacity> skuCapacity = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<AppServiceSkuCapability>> capabilities = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tier"u8))
-                {
-                    tier = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("size"u8))
-                {
-                    size = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("family"u8))
-                {
-                    family = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("capacity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capacity = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("skuCapacity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    skuCapacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("locations"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AzureLocation> array = new List<AzureLocation>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new AzureLocation(item.GetString()));
-                    }
-                    locations = array;
-                    continue;
-                }
-                if (property.NameEquals("capabilities"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
-                    }
-                    capabilities = array;
-                    continue;
-                }
-            }
-            return new AppServiceSkuDescription(name.Value, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), skuCapacity.Value, Optional.ToList(locations), Optional.ToList(capabilities));
-        }
-
-        void IModelJsonSerializable<AppServiceSkuDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<AppServiceSkuDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
         AppServiceSkuDescription IModelJsonSerializable<AppServiceSkuDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppServiceSkuDescription(document.RootElement, options);
+            return DeserializeAppServiceSkuDescription(document.RootElement);
         }
 
         BinaryData IModelSerializable<AppServiceSkuDescription>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
@@ -180,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         AppServiceSkuDescription IModelSerializable<AppServiceSkuDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             using var document = JsonDocument.Parse(data);
-            return DeserializeAppServiceSkuDescription(document.RootElement, options);
+            return DeserializeAppServiceSkuDescription(document.RootElement);
         }
 
         private BinaryData SerializeBicep(ModelSerializerOptions options)
