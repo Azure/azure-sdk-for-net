@@ -7,6 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Shared.Json;
+using Azure.Core.Shared.JsonWriter;
 
 namespace Azure.Core.Expressions.DataFactory
 {

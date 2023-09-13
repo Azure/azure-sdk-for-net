@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
+using Azure.Core.Shared.Models;
 
 namespace Azure.Core.Expressions.DataFactory
 {

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Shared;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Core.Expressions.DataFactory
 {

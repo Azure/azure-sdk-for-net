@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Shared.Serialization;
 
 namespace Azure.Core.Expressions.DataFactory
 {
