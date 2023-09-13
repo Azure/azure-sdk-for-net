@@ -81,7 +81,7 @@
 
   <!-- Add Client SDK Tools -->
   <ItemGroup>
-    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
+    <PackageReference Condition="'$(IsClientLibrary)' == 'true' and !$(MSBuildProjectName.StartsWith('Azure.Core.TestFramework'))" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
 
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
