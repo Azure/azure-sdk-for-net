@@ -30,7 +30,7 @@ namespace Azure.Core.GeoJson
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         public GeoPointCollection(IEnumerable<GeoPoint> points, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
-            Argument.AssertNotNull(points, nameof(points));
+            ClientUtilities.AssertNotNull(points, nameof(points));
 
             Points = points.ToArray();
         }

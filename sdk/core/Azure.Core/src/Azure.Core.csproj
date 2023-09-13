@@ -52,7 +52,6 @@
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\AppContextSwitchHelper.cs" />
     <Compile Include="Shared\AsyncLockWithValue.cs" />
-    <Compile Include="Shared\Argument.cs" />
     <Compile Include="Shared\AuthorizationChallengeParser.cs" />
     <Compile Include="Shared\AzureEventSource.cs" />
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />

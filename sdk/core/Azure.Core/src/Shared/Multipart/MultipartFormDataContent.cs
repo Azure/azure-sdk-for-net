@@ -42,7 +42,7 @@ namespace Azure.Core
         /// <param name="content">The Request content to add to the collection.</param>
         public override void Add(RequestContent content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNull(content, nameof(content));
             AddInternal(content, null, null, null);
         }
 
@@ -54,8 +54,8 @@ namespace Azure.Core
         /// <param name="headers">The headers to add to the collection.</param>
         public override void Add(RequestContent content, Dictionary<string, string> headers)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(headers, nameof(headers));
+            ClientUtilities.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNull(headers, nameof(headers));
 
             AddInternal(content, headers, null, null);
         }
@@ -69,8 +69,8 @@ namespace Azure.Core
         /// <param name="headers">The headers to add to the collection.</param>
         public void Add(RequestContent content, string name, Dictionary<string, string> headers)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrWhiteSpace(name, nameof(name));
+            ClientUtilities.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrWhiteSpace(name, nameof(name));
 
             AddInternal(content, headers, name, null);
         }
@@ -85,9 +85,9 @@ namespace Azure.Core
         /// <param name="headers">The headers to add to the collection.</param>
         public void Add(RequestContent content, string name, string fileName, Dictionary<string, string> headers)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrWhiteSpace(name, nameof(name));
-            Argument.AssertNotNullOrWhiteSpace(fileName, nameof(fileName));
+            ClientUtilities.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrWhiteSpace(name, nameof(name));
+            ClientUtilities.AssertNotNullOrWhiteSpace(fileName, nameof(fileName));
 
             AddInternal(content, headers, name, fileName);
         }

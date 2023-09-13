@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline
         /// <param name="options">The customer provided client options object.</param>
         public HttpPipelineOptions(ClientOptions options)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            ClientUtilities.AssertNotNull(options, nameof(options));
 
             ClientOptions = options;
             PerCallPolicies = new List<HttpPipelinePolicy>();

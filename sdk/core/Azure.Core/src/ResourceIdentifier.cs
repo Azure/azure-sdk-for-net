@@ -79,7 +79,7 @@ namespace Azure.Core
         /// </remarks>
         public ResourceIdentifier(string resourceId)
         {
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            ClientUtilities.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             _stringValue = resourceId;
 
@@ -586,7 +586,7 @@ namespace Azure.Core
 
         private static void ValidatePathSegment(string segment, string parameterName)
         {
-            Argument.AssertNotNullOrWhiteSpace(segment, nameof(segment));
+            ClientUtilities.AssertNotNullOrWhiteSpace(segment, nameof(segment));
             if (segment.Contains(Separator))
                 throw new ArgumentOutOfRangeException(parameterName, $"{parameterName} must be a single path segment");
         }

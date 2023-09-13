@@ -89,15 +89,16 @@ namespace Azure.Messaging
 
         private static void ValidateAttribute(string? name, object? value)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
-            if (s_reservedAttributes.Contains(name))
+            ClientUtilities.AssertNotNullOrEmpty(name, nameof(name));
+            ClientUtilities.AssertNotNull(value, nameof(value));
+
+            if (s_reservedAttributes.Contains(name!))
             {
                 throw new ArgumentException($"Attribute name cannot use the reserved attribute: '{name}'", nameof(name));
             }
 
             // https://github.com/cloudevents/spec/blob/v1.0/spec.md#attribute-naming-convention
-            for (int i = 0; i < name.Length; i++)
+            for (int i = 0; i < name!.Length; i++)
             {
                 char c = name[i];
                 bool valid = (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z');
@@ -124,7 +125,7 @@ namespace Azure.Messaging
                 case DateTimeOffset:
                     return;
                 default:
-                    throw new ArgumentException($"Values of type {value.GetType()} are not supported. " +
+                    throw new ArgumentException($"Values of type {value!.GetType()} are not supported. " +
                         "Attribute values must be of type string, bool, byte, int, Uri, DateTime, or DateTimeOffset.");
             }
         }

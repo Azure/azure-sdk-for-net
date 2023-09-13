@@ -30,7 +30,7 @@ namespace Azure.Core.GeoJson
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         public GeoPolygonCollection(IEnumerable<GeoPolygon> polygons, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
-            Argument.AssertNotNull(polygons, nameof(polygons));
+            ClientUtilities.AssertNotNull(polygons, nameof(polygons));
 
             Polygons = polygons.ToArray();
         }

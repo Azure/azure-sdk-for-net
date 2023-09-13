@@ -138,7 +138,7 @@ namespace Azure
         /// <inheritdoc />
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            ClientUtilities.AssertNotNull(info, nameof(info));
 
             info.AddValue(nameof(Status), Status);
             info.AddValue(nameof(ErrorCode), ErrorCode);

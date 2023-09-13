@@ -30,7 +30,7 @@ namespace Azure.Core.GeoJson
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         public GeoLineStringCollection(IEnumerable<GeoLineString> lines, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
-            Argument.AssertNotNull(lines, nameof(lines));
+            ClientUtilities.AssertNotNull(lines, nameof(lines));
 
             Lines = lines.ToArray();
         }

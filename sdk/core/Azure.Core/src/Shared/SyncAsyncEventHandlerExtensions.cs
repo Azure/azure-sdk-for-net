@@ -62,10 +62,10 @@ namespace Azure.Core
             ClientDiagnostics clientDiagnostics)
             where T : SyncAsyncEventArgs
         {
-            Argument.AssertNotNull(e, nameof(e));
-            Argument.AssertNotNullOrEmpty(declaringTypeName, nameof(declaringTypeName));
-            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            ClientUtilities.AssertNotNull(e, nameof(e));
+            ClientUtilities.AssertNotNullOrEmpty(declaringTypeName, nameof(declaringTypeName));
+            ClientUtilities.AssertNotNullOrEmpty(eventName, nameof(eventName));
+            ClientUtilities.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
             // Get the invocation list, but return early if there's no work
             if (eventHandler == null) { return; }

@@ -33,7 +33,7 @@ namespace Azure.Core
         /// <param name="contentType">The content type string.</param>
         public ContentType(string contentType)
         {
-            Argument.AssertNotNull(contentType, nameof(contentType));
+            ClientUtilities.AssertNotNull(contentType, nameof(contentType));
 
             _contentType = contentType;
         }

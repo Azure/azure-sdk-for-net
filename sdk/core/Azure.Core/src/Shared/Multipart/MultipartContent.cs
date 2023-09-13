@@ -67,7 +67,7 @@ namespace Azure.Core
         {
             // NameValueHeaderValue is too restrictive for boundary.
             // Instead validate it ourselves and then quote it.
-            Argument.AssertNotNullOrWhiteSpace(boundary, nameof(boundary));
+            ClientUtilities.AssertNotNullOrWhiteSpace(boundary, nameof(boundary));
 
             // cspell:disable
             // RFC 2046 Section 5.1.1
@@ -125,7 +125,7 @@ namespace Azure.Core
         /// <param name="content">The Request content to add to the collection.</param>
         public virtual void Add(RequestContent content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNull(content, nameof(content));
             AddInternal(content, null);
         }
 
@@ -137,8 +137,8 @@ namespace Azure.Core
         /// <param name="headers">The headers to add to the collection.</param>
         public virtual void Add(RequestContent content, Dictionary<string, string> headers)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(headers, nameof(headers));
+            ClientUtilities.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNull(headers, nameof(headers));
 
             AddInternal(content, headers);
         }
@@ -188,7 +188,7 @@ namespace Azure.Core
         ///
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            ClientUtilities.AssertNotNull(stream, nameof(stream));
 
             try
             {
@@ -234,7 +234,7 @@ namespace Azure.Core
 
         private async Task SerializeToStreamAsync(Stream stream, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            ClientUtilities.AssertNotNull(stream, nameof(stream));
             try
             {
                 // Write start boundary.

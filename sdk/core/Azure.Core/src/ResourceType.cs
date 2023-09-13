@@ -26,7 +26,7 @@ namespace Azure.Core
         /// <param name="resourceType"> The resource type string to convert. </param>
         public ResourceType(string resourceType)
         {
-            Argument.AssertNotNullOrWhiteSpace(resourceType, nameof(resourceType));
+            ClientUtilities.AssertNotNullOrWhiteSpace(resourceType, nameof(resourceType));
 
             int index = resourceType.IndexOf(ResourceIdentifier.Separator);
             if (index == -1 || resourceType.Length < 3)

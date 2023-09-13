@@ -35,7 +35,7 @@ namespace Azure.Core
         /// <param name="request">The <see cref="Request"/> instance to encapsulate.</param>
         public RequestRequestContent(Request request)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            ClientUtilities.AssertNotNull(request, nameof(request));
             this._request = request;
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Core
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            ClientUtilities.AssertNotNull(stream, nameof(stream));
 
             byte[] header = SerializeHeader();
             await stream.WriteAsync(header, 0, header.Length, cancellationToken).ConfigureAwait(false);
@@ -70,7 +70,7 @@ namespace Azure.Core
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            ClientUtilities.AssertNotNull(stream, nameof(stream));
 
             byte[] header = SerializeHeader();
             stream.Write(header, 0, header.Length);
@@ -135,7 +135,7 @@ namespace Azure.Core
         /// <param name="request">The HTTP request.</param>
         private static void SerializeRequestLine(StringBuilder message, Request request)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            ClientUtilities.AssertNotNull(message, nameof(message));
             message.Append(request.Method + SP);
             message.Append(request.Uri.ToString() + SP);
             message.Append("HTTP/1.1" + CRLF);
@@ -154,7 +154,7 @@ namespace Azure.Core
         /// <param name="headers">The headers to write.</param>
         private static void SerializeHeaderFields(StringBuilder message, RequestHeaders headers)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            ClientUtilities.AssertNotNull(message, nameof(message));
             foreach (HttpHeader header in headers)
             {
                 message.Append(header.Name + ColonSP + header.Value + CRLF);

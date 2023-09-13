@@ -370,7 +370,7 @@ namespace Azure.Core
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> or <paramref name="value"/> is <c>null</c>.</exception>
         public static OperationState<T> Success(Response rawResponse, T value)
         {
-            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+            ClientUtilities.AssertNotNull(rawResponse, nameof(rawResponse));
 
             if (value is null)
             {
@@ -393,7 +393,7 @@ namespace Azure.Core
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
         public static OperationState<T> Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
         {
-            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+            ClientUtilities.AssertNotNull(rawResponse, nameof(rawResponse));
             return new OperationState<T>(rawResponse, true, false, default, operationFailedException);
         }
 
@@ -405,7 +405,7 @@ namespace Azure.Core
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
         public static OperationState<T> Pending(Response rawResponse)
         {
-            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+            ClientUtilities.AssertNotNull(rawResponse, nameof(rawResponse));
             return new OperationState<T>(rawResponse, false, default, default, default);
         }
     }

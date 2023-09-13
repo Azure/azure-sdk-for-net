@@ -18,7 +18,7 @@ namespace Azure.Core
         /// <param name="credential">The <see cref="AzureSasCredentialSynchronousPolicy"/> used to authenticate requests.</param>
         public AzureSasCredentialSynchronousPolicy(AzureSasCredential credential)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
+            ClientUtilities.AssertNotNull(credential, nameof(credential));
             _credential = credential;
         }
 

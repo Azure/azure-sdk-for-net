@@ -1,44 +1,29 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if AZURE_NULLABLE
-#nullable enable
-#endif
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Core
 {
     /// <summary>
-    /// Argument validation.
+    /// Utility class for standardizing behavior across Azure SDK clients.  This type is intended for use
+    /// by developers building Azure SDK service clients.
+    ///
+    /// Its primary functionality is standardizing exception messages thrown from client methods.
+    /// When calling ClientUtilities.Assert to throw an exception, please make sure to include documentation
+    /// on the public methods indicating which exceptions are thrown.
     /// </summary>
-    /// <remarks>
-    ///   <para>This class should be shared via source using Azure.Core.props and contain only common argument validation.
-    ///     It is declared partial so that you can use the same familiar class name but extend it with project-specific validation.
-    ///     To extend the functionality of this class, just declare your own partial <see cref="Argument"/> class with project-specific methods.
-    ///   </para>
-    ///   <para>
-    ///     Be sure to document exceptions thrown by these methods on your public methods.
-    ///   </para>
-    /// </remarks>
-    internal static partial class Argument
+    public static class ClientUtilities
     {
-        // TODO: Add nullability attributes as needed when possible.
-
         /// <summary>
         /// Throws if <paramref name="value"/> is null.
         /// </summary>
         /// <param name="value">The value to validate.</param>
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-#if AZURE_NULLABLE
-        public static void AssertNotNull<T>([AllowNull, NotNull] T value, string name)
-#else
-        public static void AssertNotNull<T>(T value, string name)
-#endif
+        public static void AssertNotNull<T>(T? value, string name)
         {
             if (value is null)
             {
@@ -67,11 +52,7 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-#if AZURE_NULLABLE
-        public static void AssertNotNullOrEmpty<T>([AllowNull, NotNull] IEnumerable<T> value, string name)
-#else
-        public static void AssertNotNullOrEmpty<T>(IEnumerable<T> value, string name)
-#endif
+        public static void AssertNotNullOrEmpty<T>(IEnumerable<T>? value, string name)
         {
             if (value is null)
             {
@@ -103,11 +84,7 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-#if AZURE_NULLABLE
-        public static void AssertNotNullOrEmpty([AllowNull, NotNull] string value, string name)
-#else
-        public static void AssertNotNullOrEmpty(string value, string name)
-#endif
+        public static void AssertNotNullOrEmpty(string? value, string name)
         {
             if (value is null)
             {
@@ -127,11 +104,7 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty string or consists only of white-space characters.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-#if AZURE_NULLABLE
-        public static void AssertNotNullOrWhiteSpace([AllowNull, NotNull] string value, string name)
-#else
-        public static void AssertNotNullOrWhiteSpace(string value, string name)
-#endif
+        public static void AssertNotNullOrWhiteSpace(string? value, string name)
         {
             if (value is null)
             {
@@ -201,14 +174,10 @@ namespace Azure.Core
         /// <param name="value">The value to validate.</param>
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> has not been initialized.</exception>
-#if AZURE_NULLABLE
-        public static T CheckNotNull<T>([AllowNull, NotNull] T value, string name) where T : class
-#else
-        public static T CheckNotNull<T>(T value, string name) where T : class
-#endif
+        public static T CheckNotNull<T>(T? value, string name) where T : class
         {
             AssertNotNull(value, name);
-            return value;
+            return value!;
         }
 
         /// <summary>
@@ -218,14 +187,10 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-#if AZURE_NULLABLE
-        public static string CheckNotNullOrEmpty([AllowNull, NotNull] string value, string name)
-#else
-        public static string CheckNotNullOrEmpty(string value, string name)
-#endif
+        public static string CheckNotNullOrEmpty(string? value, string name)
         {
             AssertNotNullOrEmpty(value, name);
-            return value;
+            return value!;
         }
 
         /// <summary>
@@ -235,13 +200,7 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <param name="message">The error message.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is not null.</exception>
-#if AZURE_NULLABLE
-        public static void AssertNull<T>([AllowNull] T value, string name, [AllowNull] string message = null)
-#else
-#nullable enable
-        public static void AssertNull<T>(T value, string name, string? message = null)
-#nullable disable
-#endif
+        public static void AssertNull<T>(T? value, string name, string? message = null)
         {
             if (value is not null)
             {

@@ -26,7 +26,7 @@ namespace Azure.Core.GeoJson
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         internal GeoObject(GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties)
         {
-            Argument.AssertNotNull(customProperties, nameof(customProperties));
+            ClientUtilities.AssertNotNull(customProperties, nameof(customProperties));
 
             BoundingBox = boundingBox;
             CustomProperties = customProperties;

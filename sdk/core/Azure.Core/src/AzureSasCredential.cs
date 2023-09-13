@@ -41,7 +41,7 @@ namespace Azure
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public AzureSasCredential(string signature)
         {
-            Argument.AssertNotNullOrWhiteSpace(signature, nameof(signature));
+            ClientUtilities.AssertNotNullOrWhiteSpace(signature, nameof(signature));
             Signature = signature;
         }
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
@@ -60,7 +60,7 @@ namespace Azure
         /// </exception>
         public void Update(string signature)
         {
-            Argument.AssertNotNullOrWhiteSpace(signature, nameof(signature));
+            ClientUtilities.AssertNotNullOrWhiteSpace(signature, nameof(signature));
             Signature = signature;
         }
     }

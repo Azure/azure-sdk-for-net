@@ -47,8 +47,8 @@ namespace Azure.Core.Samples
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public WidgetsClient(Uri endpoint, TokenCredential credential, WidgetsClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            ClientUtilities.AssertNotNull(endpoint, nameof(endpoint));
+            ClientUtilities.AssertNotNull(credential, nameof(credential));
             options ??= new WidgetsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -105,7 +105,7 @@ namespace Azure.Core.Samples
         /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='SetAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SetWidgetAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WidgetsClient.Set");
             scope.Start();
@@ -129,7 +129,7 @@ namespace Azure.Core.Samples
         /// <include file="Docs/WidgetsClient.xml" path="doc/members/member[@name='Set(RequestContent,RequestContext)']/*" />
         public virtual Response SetWidget(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WidgetsClient.Set");
             scope.Start();

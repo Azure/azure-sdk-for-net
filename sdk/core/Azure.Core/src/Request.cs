@@ -29,7 +29,7 @@ namespace Azure.Core
             }
             set
             {
-                Argument.AssertNotNull(value, nameof(value));
+                ClientUtilities.AssertNotNull(value, nameof(value));
                 _uri = value;
             }
         }

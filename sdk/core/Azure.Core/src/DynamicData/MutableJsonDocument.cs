@@ -58,7 +58,7 @@ namespace Azure.Core.Json
         /// <remarks>The value of <paramref name="format"/> can be default or "J" to write the document as JSON, or "P" to write the changes as JSON Merge Patch.</remarks>
         public void WriteTo(Stream stream, string? format = default)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            ClientUtilities.AssertNotNull(stream, nameof(stream));
 
             switch (format)
             {
@@ -124,7 +124,7 @@ namespace Azure.Core.Json
         public void WriteTo(Utf8JsonWriter writer)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            Argument.AssertNotNull(writer, nameof(writer));
+            ClientUtilities.AssertNotNull(writer, nameof(writer));
 
             if (!Changes.HasChanges)
             {

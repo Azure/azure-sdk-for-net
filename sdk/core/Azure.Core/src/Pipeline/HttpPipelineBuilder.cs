@@ -57,7 +57,7 @@ namespace Azure.Core.Pipeline
         /// <returns>A new instance of <see cref="DisposableHttpPipeline"/></returns>
         public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions transportOptions, ResponseClassifier? responseClassifier)
         {
-            Argument.AssertNotNull(transportOptions, nameof(transportOptions));
+            ClientUtilities.AssertNotNull(transportOptions, nameof(transportOptions));
 
             var pipelineOptions = new HttpPipelineOptions(options) { ResponseClassifier = responseClassifier };
             ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
@@ -85,7 +85,7 @@ namespace Azure.Core.Pipeline
         /// <returns>A new instance of <see cref="DisposableHttpPipeline"/></returns>
         public static DisposableHttpPipeline Build(HttpPipelineOptions options, HttpPipelineTransportOptions transportOptions)
         {
-            Argument.AssertNotNull(transportOptions, nameof(transportOptions));
+            ClientUtilities.AssertNotNull(transportOptions, nameof(transportOptions));
             var result = BuildInternal(options, transportOptions);
             return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
         }
@@ -94,8 +94,8 @@ namespace Azure.Core.Pipeline
             HttpPipelineOptions buildOptions,
             HttpPipelineTransportOptions? defaultTransportOptions)
         {
-            Argument.AssertNotNull(buildOptions.PerCallPolicies, nameof(buildOptions.PerCallPolicies));
-            Argument.AssertNotNull(buildOptions.PerRetryPolicies, nameof(buildOptions.PerRetryPolicies));
+            ClientUtilities.AssertNotNull(buildOptions.PerCallPolicies, nameof(buildOptions.PerCallPolicies));
+            ClientUtilities.AssertNotNull(buildOptions.PerRetryPolicies, nameof(buildOptions.PerRetryPolicies));
 
             var policies = new List<HttpPipelinePolicy>(8 +
                                                         (buildOptions.ClientOptions.Policies?.Count ?? 0) +

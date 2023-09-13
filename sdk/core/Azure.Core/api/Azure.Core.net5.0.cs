@@ -392,6 +392,20 @@ namespace Azure.Core
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
     }
+    public static partial class ClientUtilities
+    {
+        public static void AssertEnumDefined(System.Type enumType, object value, string name) { }
+        public static void AssertInRange<T>(T value, T minimum, T maximum, string name) where T : notnull, System.IComparable<T> { }
+        public static void AssertNotDefault<T>(ref T value, string name) where T : struct { }
+        public static void AssertNotNullOrEmpty(string? value, string name) { }
+        public static void AssertNotNullOrEmpty<T>(System.Collections.Generic.IEnumerable<T>? value, string name) { }
+        public static void AssertNotNullOrWhiteSpace(string? value, string name) { }
+        public static void AssertNotNull<T>(T? value, string name) where T : struct { }
+        public static void AssertNotNull<T>(T? value, string name) { }
+        public static void AssertNull<T>(T? value, string name, string? message = null) { }
+        public static string CheckNotNullOrEmpty(string? value, string name) { throw null; }
+        public static T CheckNotNull<T>(T? value, string name) where T : class { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
     {

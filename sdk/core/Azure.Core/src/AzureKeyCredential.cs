@@ -53,7 +53,7 @@ namespace Azure
         /// </exception>
         public void Update(string key)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            ClientUtilities.AssertNotNullOrEmpty(key, nameof(key));
             Key = key;
         }
     }
