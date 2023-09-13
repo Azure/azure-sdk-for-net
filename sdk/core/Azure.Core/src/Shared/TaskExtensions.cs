@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Shared.Pipeline
+namespace Azure.Core.Shared.Pipeline.Tasks
 {
     internal static class TaskExtensions
     {

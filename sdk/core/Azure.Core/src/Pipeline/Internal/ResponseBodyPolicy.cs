@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.Buffers;
 using Azure.Core.Shared;
 using Azure.Core.Shared.Pipeline;
+using Azure.Core.Shared.Pipeline.Tasks;
 
 namespace Azure.Core.Pipeline
 {

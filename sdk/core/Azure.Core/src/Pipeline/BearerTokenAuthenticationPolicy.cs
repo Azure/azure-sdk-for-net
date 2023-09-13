@@ -11,6 +11,7 @@ using Azure.Core.Diagnostics;
 using Azure.Core.Shared;
 using Azure.Core.Shared.Asserts;
 using Azure.Core.Shared.Pipeline;
+using Azure.Core.Shared.Pipeline.Tasks;
 
 namespace Azure.Core.Pipeline
 {
