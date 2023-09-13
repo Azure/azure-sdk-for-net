@@ -14,7 +14,7 @@
   </Target>
   
   <Target Name="ValidateApiCompat" BeforeTargets="Build">
-    <Error Condition="'$(RunApiCompat)' == 'false'" Text="Api Compat cannot be disabled."/>
+    <Error Condition="'$(RunApiCompat)' == 'false' and '$(IncludeBuildOutput)' != 'false'" Text="Api Compat cannot be disabled."/>
   </Target>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
