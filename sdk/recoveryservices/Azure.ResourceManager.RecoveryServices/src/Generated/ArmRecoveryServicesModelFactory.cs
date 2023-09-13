@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
         /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RecoveryServicesPrivateEndpointConnection RecoveryServicesPrivateEndpointConnection(RecoveryServicesPrivateEndpointConnectionProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, IEnumerable<VaultSubResourceType> groupIds = null)
+        public static RecoveryServicesPrivateEndpointConnection RecoveryServicesPrivateEndpointConnection(PrivateEndpointConnectionProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, IEnumerable<VaultSubResourceType> groupIds = null)
         {
             groupIds ??= new List<VaultSubResourceType>();
 
