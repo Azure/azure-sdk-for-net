@@ -8,10 +8,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Shared.Asserts;
-using Azure.Core.Shared.Pipeline;
 using Azure.Core.Shared.Pipeline.Diagnostics;
 using Azure.Core.Shared.Pipeline.Tasks;
-using Azure.Core.Shared.Delay;
 
 namespace Azure.Core.Shared.Operations
 {
