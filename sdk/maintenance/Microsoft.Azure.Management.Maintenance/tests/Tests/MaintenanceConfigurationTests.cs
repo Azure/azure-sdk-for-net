@@ -428,12 +428,37 @@ namespace Maintenance.Tests
 
                 Thread.Sleep(3 * 60 * 1000);
 
-                var canceledMaintenanceConfiguration = maintenanceClient.ApplyUpdates.CreateOrUpdateOrCancelWithHttpMessagesAsync(resourceGroup.Name, providerName, resourceType, maintenanceConfigurationName, applyUpdateName, new ApplyUpdate()
+                bool retry;
+                do
                 {
-                    Status = UpdateStatus.Cancel
-                });
+                    try
+                    {
+                        retry = false;
+                        var canceledMaintenanceConfiguration = maintenanceClient.ApplyUpdates.CreateOrUpdateOrCancelWithHttpMessagesAsync(resourceGroup.Name, providerName, resourceType, maintenanceConfigurationName, applyUpdateName, new ApplyUpdate()
+                        {
+                            Status = UpdateStatus.Cancel
+                        });
 
-                Assert.Equal(UpdateStatus.Cancelled, canceledMaintenanceConfiguration.Result.Body.Status);
+                        Assert.Equal(UpdateStatus.Cancelled, canceledMaintenanceConfiguration.Result.Body.Status);
+                    }
+                    catch (AggregateException ex)
+                    {
+                        if (ex.InnerException is MaintenanceErrorException && ((MaintenanceErrorException)ex.InnerException).Response.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            retry = true;
+                            Thread.Sleep(30 * 1000);
+                        }
+                        else
+                        {
+                            throw ex;
+                        }
+                    }
+                } while (retry && startDate > DateTime.UtcNow);
+
+                if (retry)
+                {
+                    Assert.True(false, "Maintenance configuration could not be cancelled. Got 404 responses for all tries.");
+                }
             }
         }
     }
