@@ -30,6 +30,7 @@
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
