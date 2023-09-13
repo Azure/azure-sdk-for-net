@@ -15,10 +15,31 @@ namespace Azure.ResourceManager.ResourceMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceRegion"u8);
-            writer.WriteStringValue(SourceRegion);
-            writer.WritePropertyName("targetRegion"u8);
-            writer.WriteStringValue(TargetRegion);
+            if (Optional.IsDefined(SourceRegion))
+            {
+                writer.WritePropertyName("sourceRegion"u8);
+                writer.WriteStringValue(SourceRegion.Value);
+            }
+            if (Optional.IsDefined(TargetRegion))
+            {
+                writer.WritePropertyName("targetRegion"u8);
+                writer.WriteStringValue(TargetRegion.Value);
+            }
+            if (Optional.IsDefined(MoveRegion))
+            {
+                writer.WritePropertyName("moveRegion"u8);
+                writer.WriteStringValue(MoveRegion);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(MoveType))
+            {
+                writer.WritePropertyName("moveType"u8);
+                writer.WriteStringValue(MoveType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -28,20 +49,36 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            AzureLocation sourceRegion = default;
-            AzureLocation targetRegion = default;
+            Optional<AzureLocation> sourceRegion = default;
+            Optional<AzureLocation> targetRegion = default;
+            Optional<string> moveRegion = default;
             Optional<MoverProvisioningState> provisioningState = default;
+            Optional<string> version = default;
+            Optional<MoveType> moveType = default;
             Optional<MoveCollectionPropertiesErrors> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceRegion"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     sourceRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetRegion"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     targetRegion = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("moveRegion"u8))
+                {
+                    moveRegion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -51,6 +88,20 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         continue;
                     }
                     provisioningState = new MoverProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("moveType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    moveType = new MoveType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -64,7 +115,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverResourceSetProperties(sourceRegion, targetRegion, Optional.ToNullable(provisioningState), errors.Value);
+            return new MoverResourceSetProperties(Optional.ToNullable(sourceRegion), Optional.ToNullable(targetRegion), moveRegion.Value, Optional.ToNullable(provisioningState), version.Value, Optional.ToNullable(moveType), errors.Value);
         }
     }
 }

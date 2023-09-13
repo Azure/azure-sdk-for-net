@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
                 Properties = new MoverResourceProperties(unresolvedDependencyId)
                 {
                     ExistingTargetId = targetRg.Id,
-                    ResourceSettings = new ResourceGroupResourceSettings(unresolvedDependencyId.Name)
+                    ResourceSettings = new ResourceGroupResourceSettings() { TargetResourceName = unresolvedDependencyId.Name }
                 }
             };
             _ = await moverResourceSet.GetMoverResources().CreateOrUpdateAsync(WaitUntil.Completed, moverDependentResourceName, input);
