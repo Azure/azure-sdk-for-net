@@ -245,9 +245,9 @@ namespace Azure.Data.AppConfiguration
     }
     public partial class SnapshotSelector
     {
-        public SnapshotSelector(string name = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> fields = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSnapshotStatus> status = null) { }
+        public SnapshotSelector() { }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SnapshotFields> Fields { get { throw null; } }
-        public string Name { get { throw null; } }
+        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.ConfigurationSnapshotStatus> Status { get { throw null; } }
     }
     public partial class SnapshotSettingFilter

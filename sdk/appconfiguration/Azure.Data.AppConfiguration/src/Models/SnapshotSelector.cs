@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -14,20 +15,16 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Initializes a new instance of <see cref="SnapshotSelector"/>.
         /// </summary>
-        /// <param name="name">A filter for the name of the returned snapshots.</param>
-        /// <param name="fields">A list of fields used to specify which fields are included in the returned resource(s).</param>
-        /// <param name="status">A list of snapshot status used to filter the returned snapshots based on their status property.</param>
-        public SnapshotSelector(string name = null, IEnumerable<SnapshotFields> fields = null, IEnumerable<ConfigurationSnapshotStatus> status = null)
+        public SnapshotSelector()
         {
-            Name = name;
-            Fields = fields?.ToList();
-            Status = status?.ToList();
+            Fields = new ChangeTrackingList<SnapshotFields>();
+            Status = new ChangeTrackingList<ConfigurationSnapshotStatus>();
         }
 
         /// <summary>
         /// A filter for the name of the returned snapshots.
         /// </summary>
-        public string Name { get;  }
+        public string Name { get; set; }
 
         /// <summary>
         /// A list of fields used to specify which fields are included in the returned resource(s).

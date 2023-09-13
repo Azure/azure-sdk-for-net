@@ -1864,7 +1864,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter));
                 ValidateCompletedOperation(secondOperation);
 
-                var selector = new SnapshotSelector(firstSnapshotName);
+                var selector = new SnapshotSelector()
+                {
+                    Name = firstSnapshotName
+                };
 
                 ConfigurationSnapshot[] batch = (await service.GetSnapshotsAsync(selector).ToEnumerableAsync()).ToArray();
 

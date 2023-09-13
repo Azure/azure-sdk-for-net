@@ -1152,24 +1152,16 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            List<string> snapshotFields = null;
-            if (fields != null)
+            var snapshotFields = new ChangeTrackingList<string>();
+            foreach (SnapshotFields field in fields)
             {
-                snapshotFields = new();
-                foreach (SnapshotFields field in fields)
-                {
-                    snapshotFields.Add(field.ToString());
-                }
+                snapshotFields.Add(field.ToString());
             }
 
-            List<string> snapshotStatus = null;
-            if (status != null)
+            var snapshotStatus = new ChangeTrackingList<string>();
+            foreach (ConfigurationSnapshotStatus st in status)
             {
-                snapshotStatus = new();
-                foreach (ConfigurationSnapshotStatus st in status)
-                {
-                    snapshotStatus.Add(st.ToString());
-                }
+                snapshotStatus.Add(st.ToString());
             }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, snapshotFields, snapshotStatus, context);
@@ -1188,24 +1180,17 @@ namespace Azure.Data.AppConfiguration
             var status = selector.Status;
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            List<string> snapshotFields = null;
-            if (fields != null)
+
+            var snapshotFields = new ChangeTrackingList<string>();
+            foreach (SnapshotFields field in fields)
             {
-                snapshotFields = new();
-                foreach (SnapshotFields field in fields)
-                {
-                    snapshotFields.Add(field.ToString());
-                }
+                snapshotFields.Add(field.ToString());
             }
 
-            List<string> snapshotStatus = null;
-            if (status != null)
+            var snapshotStatus = new ChangeTrackingList<string>();
+            foreach (ConfigurationSnapshotStatus st in status)
             {
-                snapshotStatus = new();
-                foreach (ConfigurationSnapshotStatus st in status)
-                {
-                    snapshotStatus.Add(st.ToString());
-                }
+                snapshotStatus.Add(st.ToString());
             }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, snapshotFields, snapshotStatus, context);
