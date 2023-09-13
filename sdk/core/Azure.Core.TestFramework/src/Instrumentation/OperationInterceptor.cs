@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Azure.Core.Shared.Operations;
 using Castle.DynamicProxy;
 
 namespace Azure.Core.TestFramework

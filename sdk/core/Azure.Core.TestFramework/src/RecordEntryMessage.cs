@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared.Pipeline;
+using Azure.Core.Shared.Pipeline.Content;
 
 namespace Azure.Core.TestFramework
 {

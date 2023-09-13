@@ -7,7 +7,7 @@ using System.Linq;
 
 #nullable disable
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Headers
 {
     /// <summary>
     /// An implementation for manipulating headers on <see cref="Request"/>.

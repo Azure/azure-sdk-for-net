@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Attributes
 {
     /// <summary>
     /// Marks methods that call methods on other client and don't need their diagnostics verified.

@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Core.TestFramework
 {

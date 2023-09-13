@@ -8,6 +8,7 @@ using Azure.Core.Diagnostics;
 using Azure.Core.Shared;
 using Azure.Core.Shared.Asserts;
 using Azure.Core.Shared.Pipeline;
+using Azure.Core.Shared.Pipeline.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {

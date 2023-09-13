@@ -9,7 +9,7 @@ using System.Threading;
 
 #nullable enable
 
-namespace Azure.Core.Shared.Pipeline
+namespace Azure.Core.Shared.Pipeline.Diagnostics
 {
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
     internal class DiagnosticScopeFactory

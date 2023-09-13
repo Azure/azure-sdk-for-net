@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Shared.Asserts;
-using Azure.Core.Shared.Pipeline;
+using Azure.Core.Shared.Pipeline.Diagnostics;
 
 #nullable enable
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Operations
 {
     /// <summary>
     /// A helper class used to build long-running operation instances. In order to use this helper:

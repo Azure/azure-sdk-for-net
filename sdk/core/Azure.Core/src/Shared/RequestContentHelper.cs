@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Shared.JsonWriter;
 
 namespace Azure.Core.Shared
 {

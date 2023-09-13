@@ -4,10 +4,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Models
 {
     internal static class Optional
     {

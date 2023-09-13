@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Core.TestFramework.Models
 {

@@ -7,8 +7,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared.Pipeline.Diagnostics;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Operations
 {
     internal static class ProtocolOperationHelpers
     {

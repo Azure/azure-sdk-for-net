@@ -3,7 +3,7 @@
 
 #nullable enable
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Message
 {
     internal static class ResponseWithHeaders
     {

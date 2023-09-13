@@ -6,7 +6,8 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
+using Azure.Core.Shared.Models;
+using Azure.Core.Shared.Serialization;
 
 namespace Azure.Core.TestFramework.Models
 {

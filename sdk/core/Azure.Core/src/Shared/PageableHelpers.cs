@@ -11,8 +11,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared.Operations;
+using Azure.Core.Shared.Pipeline.Diagnostics;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Paging
 {
     internal static class PageableHelpers
     {

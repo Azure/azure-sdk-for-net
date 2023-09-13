@@ -10,9 +10,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
+using Azure.Core.Shared.JsonWriter;
+using Azure.Core.Shared.Message;
+using Azure.Core.Shared.Pipeline.Diagnostics;
 using Azure.Core.TestFramework.Models;
 
 namespace Azure.Core.TestFramework

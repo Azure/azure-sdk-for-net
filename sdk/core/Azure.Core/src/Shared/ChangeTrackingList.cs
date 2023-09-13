@@ -8,7 +8,7 @@ using System.Linq;
 
 #nullable enable
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Models
 {
     internal class ChangeTrackingList<T>: IList<T>, IReadOnlyList<T>
     {

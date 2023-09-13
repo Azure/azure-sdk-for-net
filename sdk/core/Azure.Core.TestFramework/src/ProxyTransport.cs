@@ -9,6 +9,7 @@ using System.Net.Security;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 
 namespace Azure.Core.TestFramework
 {

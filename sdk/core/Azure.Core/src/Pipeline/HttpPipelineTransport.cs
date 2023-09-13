@@ -3,7 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Shared;
+using Azure.Core.Shared.App;
 
 namespace Azure.Core.Pipeline
 {

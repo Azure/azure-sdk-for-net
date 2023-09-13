@@ -11,8 +11,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+using Azure.Core.Shared.App;
 
-namespace Azure.Core.Shared.Pipeline
+namespace Azure.Core.Shared.Pipeline.Diagnostics
 {
     internal readonly struct DiagnosticScope : IDisposable
     {

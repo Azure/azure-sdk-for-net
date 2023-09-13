@@ -3,18 +3,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Identity;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared.Pipeline.Diagnostics;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework

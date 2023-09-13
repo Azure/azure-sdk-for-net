@@ -5,13 +5,12 @@
 
 using System;
 using System.Linq;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Operations
 {
     internal class NextLinkOperationImplementation : IOperation
     {

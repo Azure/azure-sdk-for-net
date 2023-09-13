@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 #nullable enable
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.Models
 {
     internal class ChangeTrackingDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey: notnull
     {

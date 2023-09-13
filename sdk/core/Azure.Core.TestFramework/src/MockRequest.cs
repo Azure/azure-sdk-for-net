@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Shared;
+using Azure.Core.Shared.Headers;
 
 namespace Azure.Core.TestFramework
 {

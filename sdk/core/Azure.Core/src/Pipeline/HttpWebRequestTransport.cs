@@ -6,16 +6,14 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Shared;
 using Azure.Core.Shared.Asserts;
+using Azure.Core.Shared.Headers;
 using Azure.Core.Shared.Pipeline;
 
 namespace Azure.Core.Pipeline

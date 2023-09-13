@@ -7,10 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.Json;
+using Azure.Core.Shared.Serialization;
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Shared.JsonWriter
 {
     internal static class Utf8JsonWriterExtensions
     {

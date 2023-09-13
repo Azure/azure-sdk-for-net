@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Shared.Models;
 
 namespace Azure.Core.TestFramework.Models
 {

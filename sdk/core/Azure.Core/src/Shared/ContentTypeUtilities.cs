@@ -6,7 +6,7 @@
 using System;
 using System.Text;
 
-namespace Azure.Core.Shared.Pipeline
+namespace Azure.Core.Shared.Pipeline.Content
 {
     internal static class ContentTypeUtilities
     {
