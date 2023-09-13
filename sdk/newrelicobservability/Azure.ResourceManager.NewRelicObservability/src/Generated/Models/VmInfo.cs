@@ -10,18 +10,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Details of VM Resource having NewRelic OneAgent installed. </summary>
-    public partial class NewRelicObservabilityVmInfo
+    public partial class VmInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmInfo. </summary>
-        internal NewRelicObservabilityVmInfo()
+        /// <summary> Initializes a new instance of VmInfo. </summary>
+        internal VmInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmInfo. </summary>
+        /// <summary> Initializes a new instance of VmInfo. </summary>
         /// <param name="vmId"> Azure VM resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the VM. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the VM. </param>
-        internal NewRelicObservabilityVmInfo(ResourceIdentifier vmId, string agentVersion, string agentStatus)
+        internal VmInfo(ResourceIdentifier vmId, string agentVersion, string agentStatus)
         {
             VmId = vmId;
             AgentVersion = agentVersion;
