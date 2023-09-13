@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement
         InProgress = 2,
 
         /// <summary>
-        /// The transfer has started and is in the process of being paused.
+        /// The transfer is in progress and is in the process of being paused.
         ///
         /// Transfer can be stopped if  <see cref="TransferManager.PauseTransferIfRunningAsync(string, System.Threading.CancellationToken)"/>
         /// or <see cref="DataTransfer.PauseAsync(CancellationToken)"/> is called.
@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement
         Pausing = 3,
 
         /// <summary>
-        /// The transfer has started and is in the process of being stopped.
+        /// The transfer is in progress and is in the process of being stopped.
         ///
         /// Transfer can be stopped if <see cref="DataTransferErrorMode.StopOnAnyFailure"/> is
         /// enabled in the <see cref="TransferManagerOptions.ErrorHandling"/>.

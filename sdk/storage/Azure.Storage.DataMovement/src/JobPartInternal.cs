@@ -299,8 +299,7 @@ namespace Azure.Storage.DataMovement
                 {
                     _progressTracker.IncrementInProgressFiles();
                 }
-
-                if (JobPartStatus.HasCompletedSuccessfully)
+                else if (JobPartStatus.HasCompletedSuccessfully)
                 {
                     _progressTracker.IncrementCompletedFiles();
                     await InvokeSingleCompletedArg().ConfigureAwait(false);

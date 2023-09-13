@@ -12,12 +12,14 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class DataTransferStatus : IEquatable<DataTransferStatus>
     {
-        private object _stateLock = new object();
+        private int _hasFailedItemValue;
+        private int _hasSkippedItemValue;
+        private int _stateValue;
 
         /// <summary>
         /// Defines the state of the transfer.
         /// </summary>
-        public DataTransferState State { get; internal set; }
+        public DataTransferState State => (DataTransferState)_stateValue;
 
         /// <summary>
         /// Represents if the transfer has completed successfully without any failure or skipped items.
@@ -33,7 +35,7 @@ namespace Azure.Storage.DataMovement
         /// If set to `true`, the transfer has at least one failure item.
         /// If set to `false`, the transfer currently has no failures.
         /// </summary>
-        public bool HasFailedItems { get; internal set; }
+        public bool HasFailedItems => _hasFailedItemValue != 0;
 
         /// <summary>
         /// Represents if transfer has any skipped items.
@@ -44,16 +46,16 @@ namespace Azure.Storage.DataMovement
         /// It's possible to never have any items skipped if
         /// <see cref="StorageResourceCreationPreference.SkipIfExists"/> is not enabled in the <see cref="DataTransferOptions.CreationPreference"/>.
         /// </summary>
-        public bool HasSkippedItems { get; internal set; }
+        public bool HasSkippedItems => _hasSkippedItemValue != 0;
 
         /// <summary>
         /// Constructor to set the initial state to <see cref="DataTransferState.Queued"/> with no failures or skipped items.
         /// </summary>
         protected internal DataTransferStatus()
         {
-            State = DataTransferState.Queued;
-            HasFailedItems = false;
-            HasSkippedItems = false;
+            _stateValue = (int)DataTransferState.Queued;
+            _hasFailedItemValue = 0; // Initialized to false
+            _hasSkippedItemValue = 0; // Initialized to false
         }
 
         /// <summary>
@@ -61,9 +63,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         protected internal DataTransferStatus(DataTransferState state, bool hasFailureItems, bool hasSkippedItems)
         {
-            State = state;
-            HasFailedItems = hasFailureItems;
-            HasSkippedItems = hasSkippedItems;
+            _stateValue = (int)state;
+            _hasFailedItemValue = hasFailureItems ? 1 : 0;
+            _hasSkippedItemValue = hasSkippedItems ? 1 : 0;
         }
 
         internal bool IsCompletedWithFailedItems => State.Equals(DataTransferState.Completed) && HasFailedItems;
@@ -77,12 +79,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>True if <see cref="HasFailedItems"/> was updated. False otherwise.</returns>
         internal bool TrySetFailedItem()
         {
-            if (!HasFailedItems)
-            {
-                HasFailedItems = true;
-                return true;
-            }
-            return false;
+            return Interlocked.Exchange(ref _hasFailedItemValue, 1) != 1;
         }
 
         /// <summary>
@@ -93,12 +90,7 @@ namespace Azure.Storage.DataMovement
         /// /// <returns>True if <see cref="HasSkippedItems"/> was updated. False otherwise.</returns>
         internal bool TrySetSkippedItem()
         {
-            if (!HasSkippedItems)
-            {
-                HasSkippedItems = true;
-                return true;
-            }
-            return false;
+            return Interlocked.Exchange(ref _hasSkippedItemValue, 1) != 1;
         }
 
         /// <summary>
@@ -110,16 +102,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>True if <see cref="State"/> was updated. False otherwise.</returns>
         internal bool TrySetTransferStateChange(DataTransferState state)
         {
-            lock (_stateLock)
-            {
-                if (state != DataTransferState.None &&
-                    State != state)
-                {
-                    State = state;
-                    return true;
-                }
-            }
-            return false;
+            return Interlocked.Exchange(ref _stateValue, (int)state) != (int)state;
         }
 
         /// <summary>
@@ -137,11 +120,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns>A deep copy of the respective <see cref="DataTransferStatus"/>.</returns>
         internal DataTransferStatus DeepCopy()
-            => new DataTransferStatus
+            => new()
             {
-                State = State,
-                HasFailedItems = HasFailedItems,
-                HasSkippedItems =HasSkippedItems,
+                _stateValue = _stateValue,
+                _hasFailedItemValue = _hasFailedItemValue,
+                _hasSkippedItemValue = _hasSkippedItemValue,
             };
     }
 }
