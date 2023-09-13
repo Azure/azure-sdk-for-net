@@ -106,11 +106,11 @@ namespace Azure
 
         private CloudMachine(string id, string displayName, string subscriptionId, string region, int version)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNullOrEmpty(displayName, nameof(displayName));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
-            Argument.AssertInRange(version, 0, int.MaxValue, nameof(version));
+            ClientUtilities.AssertNotNullOrEmpty(id, nameof(id));
+            ClientUtilities.AssertNotNullOrEmpty(displayName, nameof(displayName));
+            ClientUtilities.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            ClientUtilities.AssertNotNullOrEmpty(region, nameof(region));
+            ClientUtilities.AssertInRange(version, 0, int.MaxValue, nameof(version));
 
             Id = id;
             DisplayName = displayName;

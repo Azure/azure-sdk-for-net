@@ -19,8 +19,8 @@ namespace Azure.Core.TestFramework.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public HeaderRegexSanitizer(string key, string value)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            ClientUtilities.AssertNotNull(key, nameof(key));
+            ClientUtilities.AssertNotNull(value, nameof(value));
 
             Key = key;
             Value = value;

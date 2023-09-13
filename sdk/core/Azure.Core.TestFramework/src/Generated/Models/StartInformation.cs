@@ -18,7 +18,7 @@ namespace Azure.Core.TestFramework.Models
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
         public StartInformation(string xRecordingFile)
         {
-            Argument.AssertNotNull(xRecordingFile, nameof(xRecordingFile));
+            ClientUtilities.AssertNotNull(xRecordingFile, nameof(xRecordingFile));
 
             XRecordingFile = xRecordingFile;
         }

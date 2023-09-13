@@ -50,8 +50,8 @@ namespace Azure
         /// </exception>
         public void Update(string name, string key)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            ClientUtilities.AssertNotNullOrEmpty(name, nameof(name));
+            ClientUtilities.AssertNotNullOrEmpty(key, nameof(key));
 
             Volatile.Write(ref _namedKey, Tuple.Create(name, key));
         }

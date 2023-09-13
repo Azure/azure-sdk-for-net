@@ -15,7 +15,7 @@ namespace Azure.Core.Buffers
     {
         public static async Task WriteAsync(this Stream stream, ReadOnlyMemory<byte> buffer, CancellationToken cancellation = default)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            ClientUtilities.AssertNotNull(stream, nameof(stream));
 #if NETCOREAPP
             await stream.WriteAsync(buffer, cancellation).ConfigureAwait(false);
 #else
@@ -49,7 +49,7 @@ namespace Azure.Core.Buffers
 
         public static async Task WriteAsync(this Stream stream, ReadOnlySequence<byte> buffer, CancellationToken cancellation = default)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            ClientUtilities.AssertNotNull(stream, nameof(stream));
 
             if (buffer.Length == 0)
                 return;

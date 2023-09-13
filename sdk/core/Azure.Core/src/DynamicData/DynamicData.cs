@@ -48,7 +48,7 @@ namespace Azure.Core.Serialization
 
         private object? GetProperty(string name)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            ClientUtilities.AssertNotNullOrEmpty(name, nameof(name));
 
             if (_element.ValueKind == JsonValueKind.Array && name == "Length")
             {
@@ -136,7 +136,7 @@ namespace Azure.Core.Serialization
 
         private object? SetProperty(string name, object value)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            ClientUtilities.AssertNotNullOrEmpty(name, nameof(name));
             AllowList.AssertAllowedValue(value);
 
             if (HasTypeConverter(value))

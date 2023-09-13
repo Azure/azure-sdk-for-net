@@ -72,7 +72,7 @@ namespace Azure.Core
 
         internal void AddClassifier(int statusCode, bool isError)
         {
-            Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
+            ClientUtilities.AssertInRange(statusCode, 0, 639, nameof(statusCode));
 
             var index = statusCode >> 6;        // divides by 64
             int bit = statusCode & 0b111111;    // keeps the bits up to 63

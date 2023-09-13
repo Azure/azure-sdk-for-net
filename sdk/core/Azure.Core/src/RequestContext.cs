@@ -77,7 +77,7 @@ namespace Azure
         /// used in a method call.</exception>
         public void AddClassifier(int statusCode, bool isError)
         {
-            Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
+            ClientUtilities.AssertInRange(statusCode, 100, 599, nameof(statusCode));
 
             if (_frozen)
             {

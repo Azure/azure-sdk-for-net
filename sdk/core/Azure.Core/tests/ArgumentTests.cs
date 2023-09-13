@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
         [TestCase("test")]
         public void NotNull(object? value)
         {
-            Argument.AssertNotNull(value, "value");
+            ClientUtilities.AssertNotNull(value, "value");
 
             // With nullability enabled and without [NotNull] attributed on the first parameter above, this would fail compilation.
             Assert.AreEqual("test", value.ToString());
@@ -24,100 +24,100 @@ namespace Azure.Core.Tests
         public void NotNullThrowsOnNull()
         {
             object? value = null;
-            Assert.Throws<ArgumentNullException>(() => Argument.AssertNotNull(value, "value"));
+            Assert.Throws<ArgumentNullException>(() => ClientUtilities.AssertNotNull(value, "value"));
         }
 
         [Test]
         public void NotNullNullableInt32()
         {
             int? value = 1;
-            Argument.AssertNotNull(value, "value");
+            ClientUtilities.AssertNotNull(value, "value");
         }
 
         [Test]
         public void NotNullNullableInt32ThrowsOnNull()
         {
             int? value = null;
-            Assert.Throws<ArgumentNullException>(() => Argument.AssertNotNull(value, "value"));
+            Assert.Throws<ArgumentNullException>(() => ClientUtilities.AssertNotNull(value, "value"));
         }
 
         [Test]
         public void NotNullOrEmptyCollection()
         {
             string[] value = { "test" };
-            Argument.AssertNotNullOrEmpty(value, "value");
+            ClientUtilities.AssertNotNullOrEmpty(value, "value");
         }
 
         [Test]
         public void NotNullOrEmptyCollectionThrowsOnNull()
         {
             string[]? value = null;
-            Assert.Throws<ArgumentNullException>(() => Argument.AssertNotNullOrEmpty(value, "value"));
+            Assert.Throws<ArgumentNullException>(() => ClientUtilities.AssertNotNullOrEmpty(value, "value"));
         }
 
         [TestCaseSource(nameof(GetNotNullOrEmptyCollectionThrowsOnEmptyCollectionData))]
         public void NotNullOrEmptyCollectionThrowsOnEmptyCollection(IEnumerable<string>? value)
         {
-            Assert.Throws<ArgumentException>(() => Argument.AssertNotNullOrEmpty(value, "value"));
+            Assert.Throws<ArgumentException>(() => ClientUtilities.AssertNotNullOrEmpty(value, "value"));
         }
 
         [Test]
         public void NotNullOrEmptyString()
         {
             string value = "test";
-            Argument.AssertNotNullOrEmpty(value, "value");
+            ClientUtilities.AssertNotNullOrEmpty(value, "value");
         }
 
         [Test]
         public void NotNullOrEmptyStringThrowsOnNull()
         {
             string? value = null;
-            Assert.Throws<ArgumentNullException>(() => Argument.AssertNotNullOrEmpty(value, "value"));
+            Assert.Throws<ArgumentNullException>(() => ClientUtilities.AssertNotNullOrEmpty(value, "value"));
         }
 
         [Test]
         public void NotNullOrEmptyStringThrowsOnEmpty()
         {
-            Assert.Throws<ArgumentException>(() => Argument.AssertNotNullOrEmpty(string.Empty, "value"));
+            Assert.Throws<ArgumentException>(() => ClientUtilities.AssertNotNullOrEmpty(string.Empty, "value"));
         }
 
         [Test]
         public void NotNullOrWhiteSpace()
         {
             string value = "test";
-            Argument.AssertNotNullOrWhiteSpace(value, "value");
+            ClientUtilities.AssertNotNullOrWhiteSpace(value, "value");
         }
 
         [Test]
         public void NotNullOrWhiteSpaceThrowsOnNull()
         {
-            Assert.Throws<ArgumentNullException>(() => Argument.AssertNotNullOrWhiteSpace(null, "value"));
+            Assert.Throws<ArgumentNullException>(() => ClientUtilities.AssertNotNullOrWhiteSpace(null, "value"));
         }
 
         [Test]
         public void NotNullOrWhiteSpaceThrowsOnEmpty()
         {
-            Assert.Throws<ArgumentException>(() => Argument.AssertNotNullOrWhiteSpace(string.Empty, "value"));
+            Assert.Throws<ArgumentException>(() => ClientUtilities.AssertNotNullOrWhiteSpace(string.Empty, "value"));
         }
 
         [Test]
         public void NotNullOrWhiteSpaceThrowsOnWhiteSpace()
         {
-            Assert.Throws<ArgumentException>(() => Argument.AssertNotNullOrWhiteSpace(string.Empty, " "));
+            Assert.Throws<ArgumentException>(() => ClientUtilities.AssertNotNullOrWhiteSpace(string.Empty, " "));
         }
 
         [Test]
         public void NotDefault()
         {
             TestStructure value = new TestStructure("test", 1);
-            Argument.AssertNotDefault(ref value, "value");
+            ClientUtilities.AssertNotDefault(ref value, "value");
         }
 
         [Test]
         public void NotDefaultThrows()
         {
             TestStructure value = default;
-            Assert.Throws<ArgumentException>(() => Argument.AssertNotDefault(ref value, "value"));
+            Assert.Throws<ArgumentException>(() => ClientUtilities.AssertNotDefault(ref value, "value"));
         }
 
         [TestCase(0, 0, 2)]
@@ -125,21 +125,21 @@ namespace Azure.Core.Tests
         [TestCase(2, 0, 2)]
         public void InRangeInt32(int value, int minimum, int maximum)
         {
-            Argument.AssertInRange(value, minimum, maximum, "value");
+            ClientUtilities.AssertInRange(value, minimum, maximum, "value");
         }
 
         [TestCase(-1, 0, 2)]
         [TestCase(3, 0, 2)]
         public void InRangeInt32Throws(int value, int minimum, int maximum)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Argument.AssertInRange(value, minimum, maximum, "value"));
+            Assert.Throws<ArgumentOutOfRangeException>(() => ClientUtilities.AssertInRange(value, minimum, maximum, "value"));
         }
 
         [Test]
         public void CheckNotNull()
         {
             var value = "test";
-            var checkedValue = Argument.CheckNotNull(value, "value");
+            var checkedValue = ClientUtilities.CheckNotNull(value, "value");
 
             Assert.AreEqual(value, checkedValue);
         }
@@ -148,14 +148,14 @@ namespace Azure.Core.Tests
         public void CheckNotNullThrowsOnNull()
         {
             object? value = null;
-            Assert.Throws<ArgumentNullException>(() => Argument.CheckNotNull<object>(value, "value"));
+            Assert.Throws<ArgumentNullException>(() => ClientUtilities.CheckNotNull<object>(value, "value"));
         }
 
         [Test]
         public void CheckNotNullOrEmptyString()
         {
             string value = "test";
-            var checkedValue = Argument.CheckNotNullOrEmpty(value, "value");
+            var checkedValue = ClientUtilities.CheckNotNullOrEmpty(value, "value");
 
             Assert.AreEqual(value, checkedValue);
         }
@@ -164,13 +164,13 @@ namespace Azure.Core.Tests
         public void CheckNotNullOrEmptyStringThrowsOnNull()
         {
             string? value = null;
-            Assert.Throws<ArgumentNullException>(() => Argument.CheckNotNullOrEmpty(value, "value"));
+            Assert.Throws<ArgumentNullException>(() => ClientUtilities.CheckNotNullOrEmpty(value, "value"));
         }
 
         [Test]
         public void CheckNotNullOrEmptyStringThrowsOnEmpty()
         {
-            Assert.Throws<ArgumentException>(() => Argument.CheckNotNullOrEmpty(string.Empty, "value"));
+            Assert.Throws<ArgumentException>(() => ClientUtilities.CheckNotNullOrEmpty(string.Empty, "value"));
         }
 
         private readonly struct TestStructure : IEquatable<TestStructure>

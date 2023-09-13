@@ -30,8 +30,8 @@ namespace Azure.Core.TestFramework
         /// <exception cref="ArgumentNullException"><paramref name="errorCode"/> is null.</exception>
         public IgnoreServiceErrorAttribute(int status, string errorCode)
         {
-            Argument.AssertInRange(status, 100, 599, nameof(status));
-            Argument.AssertNotNullOrEmpty(errorCode, nameof(errorCode));
+            ClientUtilities.AssertInRange(status, 100, 599, nameof(status));
+            ClientUtilities.AssertNotNullOrEmpty(errorCode, nameof(errorCode));
 
             _statusMessage = $"Status: {status.ToString(CultureInfo.InvariantCulture)}";
             _errorCodeMessage = $"ErrorCode: {errorCode}";

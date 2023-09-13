@@ -18,7 +18,7 @@ namespace Azure.Core
 
         public ApiVersionString(string version)
         {
-            Argument.AssertNotNull(version, nameof(version));
+            ClientUtilities.AssertNotNull(version, nameof(version));
 
             RawVersion = version;
             ReadOnlySpan<char> chars = version.AsSpan();

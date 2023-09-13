@@ -94,7 +94,7 @@ namespace Azure.Core.Serialization
         /// <inheritdoc/>
         string? IMemberNameConverter.ConvertMemberName(MemberInfo member)
         {
-            Argument.AssertNotNull(member, nameof(member));
+            ClientUtilities.AssertNotNull(member, nameof(member));
 
             return _cache.GetOrAdd(member, m =>
             {

@@ -76,7 +76,7 @@ namespace Azure.Core.GeoJson
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         public GeoPolygon(IEnumerable<GeoLinearRing> rings, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
-            Argument.AssertNotNull(rings, nameof(rings));
+            ClientUtilities.AssertNotNull(rings, nameof(rings));
 
             Rings = rings.ToArray();
         }

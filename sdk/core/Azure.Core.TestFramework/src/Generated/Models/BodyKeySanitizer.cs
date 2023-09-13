@@ -18,7 +18,7 @@ namespace Azure.Core.TestFramework.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BodyKeySanitizer(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            ClientUtilities.AssertNotNull(value, nameof(value));
 
             Value = value;
         }

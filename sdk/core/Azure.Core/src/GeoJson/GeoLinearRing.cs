@@ -18,7 +18,7 @@ namespace Azure.Core.GeoJson
         /// <param name="coordinates"></param>
         public GeoLinearRing(IEnumerable<GeoPosition> coordinates)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
+            ClientUtilities.AssertNotNull(coordinates, nameof(coordinates));
 
             Coordinates = new GeoArray<GeoPosition>(coordinates.ToArray());
 

@@ -55,7 +55,7 @@ namespace Azure.Core
         /// <param name="method">The method to use.</param>
         public RequestMethod(string method)
         {
-            Argument.AssertNotNull(method, nameof(method));
+            ClientUtilities.AssertNotNull(method, nameof(method));
 
             Method = method.ToUpperInvariant();
         }
@@ -66,7 +66,7 @@ namespace Azure.Core
         /// <param name="method">The method string to parse.</param>
         public static RequestMethod Parse(string method)
         {
-            Argument.AssertNotNull(method, nameof(method));
+            ClientUtilities.AssertNotNull(method, nameof(method));
 
             // Fast-path common values
             if (method.Length == 3)

@@ -22,8 +22,8 @@ namespace Azure.Core
         /// a value of "SharedAccessKey {credential.Key}" being stamped on the request header with header key of <paramref name="name"/>.</param>
         public AzureKeyCredentialPolicy(AzureKeyCredential credential, string name, string? prefix = null)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            ClientUtilities.AssertNotNull(credential, nameof(credential));
+            ClientUtilities.AssertNotNullOrEmpty(name, nameof(name));
             _credential = credential;
             _name = name;
             _prefix = prefix;

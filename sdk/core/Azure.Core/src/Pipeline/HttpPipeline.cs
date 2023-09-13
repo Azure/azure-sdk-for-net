@@ -245,7 +245,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when properties shouldn't be used anymore.</returns>
         public static IDisposable CreateHttpMessagePropertiesScope(IDictionary<string, object?> messageProperties)
         {
-            Argument.AssertNotNull(messageProperties, nameof(messageProperties));
+            ClientUtilities.AssertNotNull(messageProperties, nameof(messageProperties));
             CurrentHttpMessagePropertiesScope.Value = new HttpMessagePropertiesScope(messageProperties, CurrentHttpMessagePropertiesScope.Value);
             return CurrentHttpMessagePropertiesScope.Value;
         }

@@ -19,8 +19,8 @@ namespace Azure.Core.TestFramework.Models
         /// <exception cref="ArgumentNullException"> <paramref name="regex"/> or <paramref name="value"/> is null. </exception>
         public UriRegexSanitizer(string regex, string value)
         {
-            Argument.AssertNotNull(regex, nameof(regex));
-            Argument.AssertNotNull(value, nameof(value));
+            ClientUtilities.AssertNotNull(regex, nameof(regex));
+            ClientUtilities.AssertNotNull(value, nameof(value));
 
             Regex = regex;
             Value = value;

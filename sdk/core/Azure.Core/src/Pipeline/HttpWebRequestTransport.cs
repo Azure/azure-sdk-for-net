@@ -361,7 +361,7 @@ namespace Azure.Core.Pipeline
                 get => _clientRequestId ??= Guid.NewGuid().ToString();
                 set
                 {
-                    Argument.AssertNotNull(value, nameof(value));
+                    ClientUtilities.AssertNotNull(value, nameof(value));
                     _clientRequestId = value;
                 }
             }

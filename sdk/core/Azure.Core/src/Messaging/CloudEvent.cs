@@ -77,7 +77,7 @@ namespace Azure.Messaging
             }
             set
             {
-                Argument.AssertNotNull(value, nameof(value));
+                ClientUtilities.AssertNotNull(value, nameof(value));
                 _id = value;
             }
         }
@@ -95,7 +95,7 @@ namespace Azure.Messaging
             }
             set
             {
-                Argument.AssertNotNull(value, nameof(value));
+                ClientUtilities.AssertNotNull(value, nameof(value));
                 _source = value;
             }
         }
@@ -110,7 +110,7 @@ namespace Azure.Messaging
             }
             set
             {
-                Argument.AssertNotNull(value, nameof(value));
+                ClientUtilities.AssertNotNull(value, nameof(value));
                 _type = value;
             }
         }
@@ -157,7 +157,7 @@ namespace Azure.Messaging
         /// <returns> An array of <see cref="CloudEvent"/> instances.</returns>
         public static CloudEvent[] ParseMany(BinaryData json, bool skipValidation = false)
         {
-            Argument.AssertNotNull(json, nameof(json));
+            ClientUtilities.AssertNotNull(json, nameof(json));
 
             CloudEvent[]? cloudEvents = null;
             JsonDocument requestDocument = JsonDocument.Parse(json);
@@ -197,7 +197,7 @@ namespace Azure.Messaging
         /// </exception>
         public static CloudEvent? Parse(BinaryData json, bool skipValidation = false)
         {
-            Argument.AssertNotNull(json, nameof(json));
+            ClientUtilities.AssertNotNull(json, nameof(json));
 
             using JsonDocument requestDocument = JsonDocument.Parse(json);
             CloudEvent? cloudEvent = null;
