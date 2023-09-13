@@ -295,7 +295,8 @@
         "Ipvs",
         "Keda",
         "Kata",
-        "Mshv"
+        "Mshv",
+        "Fips"
       ]
     },
     {
@@ -486,6 +487,14 @@
       "filename": "**/sdk/guestconfiguration/**/*.cs",
       "words": [
         "Hcrp"
+      ]
+    },
+    {
+      "filename": "**/sdk/hardwaresecuritymodules/**/*.cs",
+      "words": [
+        "fips",
+        "klmk",
+        "hsma"
       ]
     },
     {

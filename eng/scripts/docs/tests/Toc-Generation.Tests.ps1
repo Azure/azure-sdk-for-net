@@ -9,27 +9,12 @@ Import-Module Pester
 BeforeAll {
     . $PSScriptRoot/../Docs-ToC.ps1
     . $PSScriptRoot/logging.ps1
-    function Backup-File($targetPath, $backupFolder) {
-        if (!(Test-Path $targetPath)) {
-            return $null
-        }
-        $fileName = (Split-Path $targetPath -leaf)
-        $backupFile = "$backupFolder/temp-$fileName"
-        $null = New-Item $backupFile -ItemType "file" -Force
-        $null = Copy-Item $targetPath -Destination $backupFile
-        return $backupFile
-    }
-    function Reset-File($targetPath, $backupFile) {
-        if ($backupFile) {
-            $null = Copy-Item $backupFile -Destination $targetPath
-        }
-    }
 }
 
 AfterAll {
     $tempLocation = (Join-Path ([System.IO.Path]::GetTempPath()) "extractNupkg")
-    Remove-Item "$tempLocation/*" -Recurse -Force
-    Remove-Item "$PSScriptRoot/outputs" -Recurse -Force
+    Remove-Item "$tempLocation/*" -Recurse -Force -ErrorAction Ignore
+    Remove-Item "$PSScriptRoot/outputs" -Recurse -Force -ErrorAction Ignore
 }
 # Test plan:
 # 1. Tests on Fetch-NamespacesFromNupkg from nuget source. 
@@ -86,33 +71,28 @@ Describe "Fetch-NamespacesFromNupkg-PublicFeeds" -Tag "UnitTest" {
     }
 }
 
-# Test scenarios:
-# 1. No package json found. Expect generate and update the json.
-# 2. Json exists, but no namespaces. Expect to add new property and update the json
-# 3. Json and namespaces exists, but version mismatch. Expect to update to the most recent namespaces.
-# 4. Otherwise, return namespaces in json file.
 Describe "Get-Toc-Children" -Tag "UnitTest" {
-    # passed cases
     It "Get toc children from package json" -TestCases @(
-        @{ package = "Azure.Security.KeyVault.Secrets"; version="4.4.0"; folder="latest"; expectNamespaces = @('Azure.Security.KeyVault.Secrets', 'Microsoft.Extensions.Azure') }
-        @{ package = "Azure.Security.KeyVault.Certificates"; version="4.3.0-beta.4"; folder="preview"; expectNamespaces = @('Azure.Security.KeyVault.Certificates', 'Microsoft.Extensions.Azure') }
-        @{ package = "Azure.Security.KeyVault.Keys"; version="4.4.0"; folder="latest"; expectNamespaces = @('Azure.Security.KeyVault.Keys', 'Azure.Security.KeyVault.Keys.Cryptography', 'Microsoft.Extensions.Azure') }
+        @{ 
+            package = "Azure.Security.KeyVault.Secrets";
+            expectNamespaces = @('Azure.Security.KeyVault.Secrets', 'Microsoft.Extensions.Azure') 
+        }
     ) {
-        $targetFile = "$PSScriptRoot/inputs/metadata/$folder/$package.json"
-        $backupFolder = "$PSScriptRoot/outputs"
-        $backupFile = Backup-File $targetFile $backupFolder
-        $namespaces = Get-Toc-Children -package $package -version $version -docRepoLocation "$PSScriptRoot/inputs" -folder $folder
+        $namespaces = Get-Toc-Children `
+            -package $package `
+            -docRepoLocation "$PSScriptRoot/inputs"
         $namespaces | Should -Be $expectNamespaces
-        Reset-File $targetFile $backupFile
     }
-    # No json case
-    It "Get toc children when no package json" -TestCases @(
-        @{ package = "Azure.Data.AppConfiguration"; version="1.3.0-beta.1"; folder="latest"; expectNamespaces = @('Azure.Data.AppConfiguration', 'Microsoft.Extensions.Azure') }
-    ) {
-        $namespaces = Get-Toc-Children -package $package -version $version -docRepoLocation "$PSScriptRoot/inputs" -folder $folder
-        $namespaces | Should -Be $expectNamespaces
-        $expectFile = "$PSScriptRoot/inputs/metadata/$folder/$package.json"
-        (Test-Path $expectFile) | Should -BeTrue
-        Remove-Item $expectFile
+
+    It "Combines ToC children from each moniker" { 
+        $namespaces = Get-Toc-Children `
+            -package 'Azure.Security.KeyVault.Certificates' `
+            -docRepoLocation "$PSScriptRoot/inputs"
+
+        $namespaces | Should -be @(
+            'Azure.Security.KeyVault.Certificates',
+            'Microsoft.Extensions.Azure'
+            'Some.New.Namespace'
+        )
     }
 }

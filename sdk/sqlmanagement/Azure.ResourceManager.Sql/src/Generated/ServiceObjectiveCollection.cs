@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<ServiceObjectiveResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceObjectiveRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceObjectiveResource(Client, ServiceObjectiveData.DeserializeServiceObjectiveData(e)), _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceObjectiveResource(Client, ServiceObjectiveData.DeserializeServiceObjectiveData(e)), _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<ServiceObjectiveResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceObjectiveRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceObjectiveResource(Client, ServiceObjectiveData.DeserializeServiceObjectiveData(e)), _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceObjectiveResource(Client, ServiceObjectiveData.DeserializeServiceObjectiveData(e)), _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
