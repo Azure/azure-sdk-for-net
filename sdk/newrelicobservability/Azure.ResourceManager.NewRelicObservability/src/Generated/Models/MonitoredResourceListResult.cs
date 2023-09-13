@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> List of all the resources being monitored by NewRelic monitor resource. </summary>
-    internal partial class NewRelicObservabilityMonitoredResourceListResult
+    internal partial class MonitoredResourceListResult
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityMonitoredResourceListResult. </summary>
+        /// <summary> Initializes a new instance of MonitoredResourceListResult. </summary>
         /// <param name="value"> The MonitoredResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal NewRelicObservabilityMonitoredResourceListResult(IEnumerable<NewRelicResourceMonitorResult> value)
+        internal MonitoredResourceListResult(IEnumerable<NewRelicResourceMonitorResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityMonitoredResourceListResult. </summary>
+        /// <summary> Initializes a new instance of MonitoredResourceListResult. </summary>
         /// <param name="value"> The MonitoredResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal NewRelicObservabilityMonitoredResourceListResult(IReadOnlyList<NewRelicResourceMonitorResult> value, Uri nextLink)
+        internal MonitoredResourceListResult(IReadOnlyList<NewRelicResourceMonitorResult> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;

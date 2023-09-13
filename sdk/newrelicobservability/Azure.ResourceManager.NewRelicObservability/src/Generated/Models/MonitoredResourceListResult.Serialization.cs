@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class NewRelicObservabilityMonitoredResourceListResult
+    internal partial class MonitoredResourceListResult
     {
-        internal static NewRelicObservabilityMonitoredResourceListResult DeserializeNewRelicObservabilityMonitoredResourceListResult(JsonElement element)
+        internal static MonitoredResourceListResult DeserializeMonitoredResourceListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicObservabilityMonitoredResourceListResult(value, nextLink.Value);
+            return new MonitoredResourceListResult(value, nextLink.Value);
         }
     }
 }
