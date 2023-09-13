@@ -3,4 +3,4 @@
 
 using System.Runtime.CompilerServices;
 
-[assembly: Azure.Core.AzureResourceProviderNamespace("Azure.Maps.Render")]
+[assembly: Azure.Core.Shared.Attributes.AzureResourceProviderNamespace("Azure.Maps.Render")]

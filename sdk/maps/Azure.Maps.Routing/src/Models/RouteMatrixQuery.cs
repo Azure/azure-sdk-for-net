@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Maps.Routing.Models;
+using Azure.Core.Shared.Attributes;
 
 namespace Azure.Maps.Routing
 {

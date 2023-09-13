@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Shared.Asserts;
 
 namespace Azure.Maps.Routing.Models
 {

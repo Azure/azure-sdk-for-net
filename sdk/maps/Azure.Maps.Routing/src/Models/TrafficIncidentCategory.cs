@@ -5,6 +5,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Shared.Attributes;
 
 namespace Azure.Maps.Routing.Models
 {

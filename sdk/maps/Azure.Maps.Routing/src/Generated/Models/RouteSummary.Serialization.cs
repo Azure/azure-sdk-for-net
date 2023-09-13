@@ -8,6 +8,8 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Shared.Json;
+using Azure.Core.Shared.Models;
 
 namespace Azure.Maps.Routing.Models
 {
