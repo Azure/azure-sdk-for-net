@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="VirtualMachineResource" /> using the GetVirtualMachineExtension method.
     /// </summary>
     [DeserializationProxy(typeof(VirtualMachineExtensionData))]
-    public partial class VirtualMachineExtensionResource : ArmResource, ResourceManager.IResource
+    public partial class VirtualMachineExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineExtensionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName)

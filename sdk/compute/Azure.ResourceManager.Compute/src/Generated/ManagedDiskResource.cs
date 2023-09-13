@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedDisk method.
     /// </summary>
     [DeserializationProxy(typeof(ManagedDiskData))]
-    public partial class ManagedDiskResource : ArmResource, ResourceManager.IResource
+    public partial class ManagedDiskResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedDiskResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskName)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagementGroups
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetManagementGroup method.
     /// </summary>
     [DeserializationProxy(typeof(ManagementGroupData))]
-    public partial class ManagementGroupResource : ArmResource, ResourceManager.IResource
+    public partial class ManagementGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string groupId)

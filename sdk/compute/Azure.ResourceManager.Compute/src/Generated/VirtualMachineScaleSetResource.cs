@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVirtualMachineScaleSet method.
     /// </summary>
     [DeserializationProxy(typeof(VirtualMachineScaleSetData))]
-    public partial class VirtualMachineScaleSetResource : ArmResource, ResourceManager.IResource
+    public partial class VirtualMachineScaleSetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)

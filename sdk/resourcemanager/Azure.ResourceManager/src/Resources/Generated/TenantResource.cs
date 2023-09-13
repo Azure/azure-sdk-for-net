@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetTenantResource method.
     /// </summary>
     [DeserializationProxy(typeof(TenantData))]
-    public partial class TenantResource : ArmResource, ResourceManager.IResource
+    public partial class TenantResource : ArmResource
     {
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetResourceGroup method.
     /// </summary>
     [DeserializationProxy(typeof(ResourceGroupData))]
-    public partial class ResourceGroupResource : ArmResource, ResourceManager.IResource
+    public partial class ResourceGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName)

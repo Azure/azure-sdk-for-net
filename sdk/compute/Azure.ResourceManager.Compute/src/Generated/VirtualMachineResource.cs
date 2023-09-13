@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVirtualMachine method.
     /// </summary>
     [DeserializationProxy(typeof(VirtualMachineData))]
-    public partial class VirtualMachineResource : ArmResource, ResourceManager.IResource
+    public partial class VirtualMachineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSshPublicKey method.
     /// </summary>
     [DeserializationProxy(typeof(SshPublicKeyData))]
-    public partial class SshPublicKeyResource : ArmResource, ResourceManager.IResource
+    public partial class SshPublicKeyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SshPublicKeyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sshPublicKeyName)

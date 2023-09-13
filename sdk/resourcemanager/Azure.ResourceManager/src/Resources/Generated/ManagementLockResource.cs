@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
     /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetManagementLock method.
     /// </summary>
     [DeserializationProxy(typeof(ManagementLockData))]
-    public partial class ManagementLockResource : ArmResource, ResourceManager.IResource
+    public partial class ManagementLockResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementLockResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string lockName)

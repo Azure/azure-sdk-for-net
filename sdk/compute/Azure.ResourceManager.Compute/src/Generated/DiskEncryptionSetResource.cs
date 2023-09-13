@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDiskEncryptionSet method.
     /// </summary>
     [DeserializationProxy(typeof(DiskEncryptionSetData))]
-    public partial class DiskEncryptionSetResource : ArmResource, ResourceManager.IResource
+    public partial class DiskEncryptionSetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskEncryptionSetResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskEncryptionSetName)

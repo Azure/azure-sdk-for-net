@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="SharedGalleryImageResource" /> using the GetSharedGalleryImageVersion method.
     /// </summary>
     [DeserializationProxy(typeof(SharedGalleryImageVersionData))]
-    public partial class SharedGalleryImageVersionResource : ArmResource, ResourceManager.IResource
+    public partial class SharedGalleryImageVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SharedGalleryImageVersionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName)

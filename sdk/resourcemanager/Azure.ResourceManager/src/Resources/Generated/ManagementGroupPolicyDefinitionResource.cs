@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
     /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource" /> using the GetManagementGroupPolicyDefinition method.
     /// </summary>
     [DeserializationProxy(typeof(PolicyDefinitionData))]
-    public partial class ManagementGroupPolicyDefinitionResource : ArmResource, ResourceManager.IResource
+    public partial class ManagementGroupPolicyDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicyDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string policyDefinitionName)

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetResource" /> using the GetVirtualMachineScaleSetRollingUpgrade method.
     /// </summary>
     [DeserializationProxy(typeof(VirtualMachineScaleSetRollingUpgradeData))]
-    public partial class VirtualMachineScaleSetRollingUpgradeResource : ArmResource, ResourceManager.IResource
+    public partial class VirtualMachineScaleSetRollingUpgradeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDiskImage method.
     /// </summary>
     [DeserializationProxy(typeof(DiskImageData))]
-    public partial class DiskImageResource : ArmResource, ResourceManager.IResource
+    public partial class DiskImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskImageResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string imageName)

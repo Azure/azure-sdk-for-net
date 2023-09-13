@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Models
             return new ManagementLockData(id, name, resourceType, systemData, level, notes, owners?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of/>. </summary>
+        /// <summary> Initializes a new instance of. </summary>
         /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="name"> The location name. </param>

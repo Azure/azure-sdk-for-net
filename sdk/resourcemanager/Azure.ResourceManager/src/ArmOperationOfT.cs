@@ -25,27 +25,24 @@ namespace Azure.ResourceManager
         public ArmOperation(ArmClient client, string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            var isResource = typeof(T).GetConstructor(
+                BindingFlags.NonPublic | BindingFlags.Instance,
+                null,
+                CallingConventions.Any,
+                new Type[] { typeof(ArmClient), typeof(ResourceIdentifier) },
+                null) is not null;
             var obj = Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null);
-            if (typeof(T).GetInterface(nameof(IResource)) is not null)
-            {
-                IOperationSource<T> source = new GenericResourceOperationSource<T>(client);
-                var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
-                // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-                var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-                _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, null, operationTypeName: null);
-            }
-            else if (obj is IModelJsonSerializable<object>)
-            {
-                IOperationSource<T> source = new GenericOperationSource<T>();
-                var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
-                // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-                var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-                _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, null, operationTypeName: null);
-            }
-            else
+            if (!isResource && obj is not IModelJsonSerializable<object>)
             {
                 throw new InvalidOperationException($"Type {typeof(T)} should be Resource or ReousrceData");
             }
+
+            IOperationSource<T> source = new GenericResourceOperationSource<T>(client, isResource);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
+            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
+            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, null, operationTypeName: null);
         }
 
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>

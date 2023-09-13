@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="DiskAccessResource" /> using the GetComputePrivateEndpointConnection method.
     /// </summary>
     [DeserializationProxy(typeof(ComputePrivateEndpointConnectionData))]
-    public partial class ComputePrivateEndpointConnectionResource : ArmResource, ResourceManager.IResource
+    public partial class ComputePrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ComputePrivateEndpointConnectionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskAccessName, string privateEndpointConnectionName)

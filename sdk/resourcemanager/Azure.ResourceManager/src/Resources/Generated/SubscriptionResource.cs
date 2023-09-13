@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetSubscription method.
     /// </summary>
     [DeserializationProxy(typeof(SubscriptionData))]
-    public partial class SubscriptionResource : ArmResource, ResourceManager.IResource
+    public partial class SubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId)

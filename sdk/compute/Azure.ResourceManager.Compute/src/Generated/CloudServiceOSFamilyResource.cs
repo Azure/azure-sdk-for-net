@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCloudServiceOSFamily method.
     /// </summary>
     [DeserializationProxy(typeof(CloudServiceOSFamilyData))]
-    public partial class CloudServiceOSFamilyResource : ArmResource, ResourceManager.IResource
+    public partial class CloudServiceOSFamilyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceOSFamilyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string osFamilyName)

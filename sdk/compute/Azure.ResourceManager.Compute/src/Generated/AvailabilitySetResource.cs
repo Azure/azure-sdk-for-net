@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAvailabilitySet method.
     /// </summary>
     [DeserializationProxy(typeof(AvailabilitySetData))]
-    public partial class AvailabilitySetResource : ArmResource, ResourceManager.IResource
+    public partial class AvailabilitySetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvailabilitySetResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string availabilitySetName)

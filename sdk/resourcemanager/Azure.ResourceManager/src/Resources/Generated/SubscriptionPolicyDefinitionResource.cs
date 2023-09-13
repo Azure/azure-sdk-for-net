@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionPolicyDefinition method.
     /// </summary>
     [DeserializationProxy(typeof(PolicyDefinitionData))]
-    public partial class SubscriptionPolicyDefinitionResource : ArmResource, ResourceManager.IResource
+    public partial class SubscriptionPolicyDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionPolicyDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string policyDefinitionName)

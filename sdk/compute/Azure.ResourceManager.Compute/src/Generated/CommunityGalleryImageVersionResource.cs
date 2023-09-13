@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="CommunityGalleryImageResource" /> using the GetCommunityGalleryImageVersion method.
     /// </summary>
     [DeserializationProxy(typeof(CommunityGalleryImageVersionData))]
-    public partial class CommunityGalleryImageVersionResource : ArmResource, ResourceManager.IResource
+    public partial class CommunityGalleryImageVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunityGalleryImageVersionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName)

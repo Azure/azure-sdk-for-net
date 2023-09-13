@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="RestorePointResource" /> using the GetDiskRestorePoint method.
     /// </summary>
     [DeserializationProxy(typeof(DiskRestorePointData))]
-    public partial class DiskRestorePointResource : ArmResource, ResourceManager.IResource
+    public partial class DiskRestorePointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskRestorePointResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName)

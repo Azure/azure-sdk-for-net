@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSharedGallery method.
     /// </summary>
     [DeserializationProxy(typeof(SharedGalleryData))]
-    public partial class SharedGalleryResource : ArmResource, ResourceManager.IResource
+    public partial class SharedGalleryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SharedGalleryResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string galleryUniqueName)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="CloudServiceResource" /> using the GetCloudServiceRoleInstance method.
     /// </summary>
     [DeserializationProxy(typeof(CloudServiceRoleInstanceData))]
-    public partial class CloudServiceRoleInstanceResource : ArmResource, ResourceManager.IResource
+    public partial class CloudServiceRoleInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceRoleInstanceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)

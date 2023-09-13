@@ -6,6 +6,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,10 +17,12 @@ namespace Azure.ResourceManager
     internal class GenericResourceOperationSource<T> : IOperationSource<T>
     {
         private readonly ArmClient _client;
+        private readonly bool _isResource;
 
-        public GenericResourceOperationSource(ArmClient client)
+        public GenericResourceOperationSource(ArmClient client, bool isResource)
         {
             _client = client;
+            _isResource = isResource;
         }
 
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager
         {
             object data;
             MemoryStream memoryStream = response.ContentStream as MemoryStream;
-            if (memoryStream == null)
+            if (memoryStream is not null)
             {
                 data = ModelSerializer.Deserialize(BinaryData.FromStream(memoryStream), typeof(T), new ModelSerializerOptions());
             }
@@ -40,7 +43,10 @@ namespace Azure.ResourceManager
             {
                 data = ModelSerializer.Deserialize(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)), typeof(T), new ModelSerializerOptions());
             }
-            return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
+
+            return _isResource
+                ? (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null)
+                : (T)data;
         }
     }
 }

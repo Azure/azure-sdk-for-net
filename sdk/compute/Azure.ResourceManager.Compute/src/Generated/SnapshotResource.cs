@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSnapshot method.
     /// </summary>
     [DeserializationProxy(typeof(SnapshotData))]
-    public partial class SnapshotResource : ArmResource, ResourceManager.IResource
+    public partial class SnapshotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SnapshotResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string snapshotName)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetVmResource" /> using the GetVirtualMachineScaleSetVmRunCommand method.
     /// </summary>
     [DeserializationProxy(typeof(VirtualMachineRunCommandData))]
-    public partial class VirtualMachineScaleSetVmRunCommandResource : ArmResource, ResourceManager.IResource
+    public partial class VirtualMachineScaleSetVmRunCommandResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetVmRunCommandResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName)

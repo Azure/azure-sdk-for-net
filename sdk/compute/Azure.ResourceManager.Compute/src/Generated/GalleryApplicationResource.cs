@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="GalleryResource" /> using the GetGalleryApplication method.
     /// </summary>
     [DeserializationProxy(typeof(GalleryApplicationData))]
-    public partial class GalleryApplicationResource : ArmResource, ResourceManager.IResource
+    public partial class GalleryApplicationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GalleryApplicationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName)

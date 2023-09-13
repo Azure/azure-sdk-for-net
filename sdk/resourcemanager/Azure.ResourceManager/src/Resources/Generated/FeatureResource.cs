@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
     /// Otherwise you can get one from its parent resource <see cref="ResourceProviderResource" /> using the GetFeature method.
     /// </summary>
     [DeserializationProxy(typeof(FeatureData))]
-    public partial class FeatureResource : ArmResource, ResourceManager.IResource
+    public partial class FeatureResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FeatureResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceProviderNamespace, string featureName)

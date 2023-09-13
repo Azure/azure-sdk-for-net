@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCloudService method.
     /// </summary>
     [DeserializationProxy(typeof(CloudServiceData))]
-    public partial class CloudServiceResource : ArmResource, ResourceManager.IResource
+    public partial class CloudServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName)

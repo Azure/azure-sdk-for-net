@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantPolicySetDefinition method.
     /// </summary>
     [DeserializationProxy(typeof(PolicySetDefinitionData))]
-    public partial class TenantPolicySetDefinitionResource : ArmResource, ResourceManager.IResource
+    public partial class TenantPolicySetDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantPolicySetDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string policySetDefinitionName)

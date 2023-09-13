@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="CapacityReservationGroupResource" /> using the GetCapacityReservation method.
     /// </summary>
     [DeserializationProxy(typeof(CapacityReservationData))]
-    public partial class CapacityReservationResource : ArmResource, ResourceManager.IResource
+    public partial class CapacityReservationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CapacityReservationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName)

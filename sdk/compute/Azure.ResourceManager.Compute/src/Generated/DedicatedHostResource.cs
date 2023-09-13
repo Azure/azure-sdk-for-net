@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="DedicatedHostGroupResource" /> using the GetDedicatedHost method.
     /// </summary>
     [DeserializationProxy(typeof(DedicatedHostData))]
-    public partial class DedicatedHostResource : ArmResource, ResourceManager.IResource
+    public partial class DedicatedHostResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DedicatedHostResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostGroupName, string hostName)

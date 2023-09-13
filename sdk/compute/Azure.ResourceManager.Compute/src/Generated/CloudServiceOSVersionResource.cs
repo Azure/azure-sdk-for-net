@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCloudServiceOSVersion method.
     /// </summary>
     [DeserializationProxy(typeof(CloudServiceOSVersionData))]
-    public partial class CloudServiceOSVersionResource : ArmResource, ResourceManager.IResource
+    public partial class CloudServiceOSVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceOSVersionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string osVersionName)

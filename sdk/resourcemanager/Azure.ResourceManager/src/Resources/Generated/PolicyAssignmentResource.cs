@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
     /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetPolicyAssignment method.
     /// </summary>
     [DeserializationProxy(typeof(PolicyAssignmentData))]
-    public partial class PolicyAssignmentResource : ArmResource, ResourceManager.IResource
+    public partial class PolicyAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyAssignmentResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string policyAssignmentName)

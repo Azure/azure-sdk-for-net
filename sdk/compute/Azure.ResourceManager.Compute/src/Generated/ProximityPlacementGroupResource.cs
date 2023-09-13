@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetProximityPlacementGroup method.
     /// </summary>
     [DeserializationProxy(typeof(ProximityPlacementGroupData))]
-    public partial class ProximityPlacementGroupResource : ArmResource, ResourceManager.IResource
+    public partial class ProximityPlacementGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProximityPlacementGroupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string proximityPlacementGroupName)

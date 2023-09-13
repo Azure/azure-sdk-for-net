@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
     /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetTagResource method.
     /// </summary>
     [DeserializationProxy(typeof(TagResourceData))]
-    public partial class TagResource : ArmResource, ResourceManager.IResource
+    public partial class TagResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TagResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope)
