@@ -1149,32 +1149,32 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary> Initializes a new instance of AppConfigurationSnapshotEventData. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotEventData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotEventData AppConfigurationSnapshotEventData(string name = null, string etag = null, string syncToken = null)
+        public static AppConfigurationSnapshotEventData AppConfigurationSnapshotEventData(string name = null, string eTag = null, string syncToken = null)
         {
-            return new AppConfigurationSnapshotEventData(name, etag, syncToken);
+            return new AppConfigurationSnapshotEventData(name, eTag, syncToken);
         }
 
         /// <summary> Initializes a new instance of AppConfigurationSnapshotCreatedEventData. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotCreatedEventData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotCreatedEventData AppConfigurationSnapshotCreatedEventData(string name = null, string etag = null, string syncToken = null)
+        public static AppConfigurationSnapshotCreatedEventData AppConfigurationSnapshotCreatedEventData(string name = null, string eTag = null, string syncToken = null)
         {
-            return new AppConfigurationSnapshotCreatedEventData(name, etag, syncToken);
+            return new AppConfigurationSnapshotCreatedEventData(name, eTag, syncToken);
         }
 
         /// <summary> Initializes a new instance of AppConfigurationSnapshotModifiedEventData. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotModifiedEventData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotModifiedEventData AppConfigurationSnapshotModifiedEventData(string name = null, string etag = null, string syncToken = null)
+        public static AppConfigurationSnapshotModifiedEventData AppConfigurationSnapshotModifiedEventData(string name = null, string eTag = null, string syncToken = null)
         {
-            return new AppConfigurationSnapshotModifiedEventData(name, etag, syncToken);
+            return new AppConfigurationSnapshotModifiedEventData(name, eTag, syncToken);
         }
 
         /// <summary> Initializes a new instance of SignalRServiceClientConnectionConnectedEventData. </summary>
