@@ -31,7 +31,7 @@ steps:
       dotnet build /t:ProjectDependsOn ./eng/service.proj `
         /p:TestDependsOnDependency="${{parameters.TestDependsOnDependency}}" `
         /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
-        /p:IncludePerf=false /p:RunApiCompat=false `
+        /p:IncludePerf=false `
         /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
         /p:OutputProjectFilePath="${{parameters.OutputProjectFilePath}}"
     displayName: Find all test dependencies
