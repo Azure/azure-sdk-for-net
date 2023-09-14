@@ -41,7 +41,7 @@ In principle, `Variant` is similar to `object`, but without boxing as described 
 
 - [Assigning a value to `Variant`](#assign-a-value-to-variant)
 - [Retrieving the value a `Variant` holds](#get-the-value-from-variant)
-- [Working with `null` and `Variant`](#handling-nulls).
+- [Working with `null` and `Variant`](#handling-nulls)
 
 ## Assign a value to Variant
 
