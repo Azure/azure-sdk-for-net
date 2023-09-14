@@ -45,7 +45,6 @@ if (Test-Path "Function:$GetFoldersForGenerationFn") {
 }
 
 [array]$packageFolders = $foldersForGeneration
-| Get-ChildItem -Directory
 | Sort-Object -Property FullName
 | ForEach-Object {
   [ordered]@{
