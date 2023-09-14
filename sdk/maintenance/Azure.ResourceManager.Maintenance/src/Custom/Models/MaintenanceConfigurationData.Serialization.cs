@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.Maintenance
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "yyyy-MM-dd hh:mm");
+                writer.WriteStringValue(StartOn.Value, "yyyy-MM-dd HH:mm");
             }
             // Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
             // Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "yyyy-MM-dd hh:mm");
+                writer.WriteStringValue(ExpireOn.Value, "yyyy-MM-dd HH:mm");
             }
             if (Optional.IsDefined(Duration))
             {
