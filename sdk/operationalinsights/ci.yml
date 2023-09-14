@@ -9,5 +9,3 @@ extends:
     ServiceDirectory: operationalinsights
     ArtifactName: packages
     Artifacts:
-    - name: Microsoft.Azure.OperationalInsights
-      safeName: MicrosoftAzureOperationalInsights

@@ -11,9 +11,18 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/2491b616cde43277fae3
 tag: package-track2-stable
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - MetricDefinitions_List
+  - Metrics_List
+  - Baselines_List
+  - MetricNamespaces_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 format-by-name-rules:
   "tenantId": "uuid"
@@ -23,7 +32,7 @@ format-by-name-rules:
   "*Uri": "Uri"
   "*Uris": "Uri"
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

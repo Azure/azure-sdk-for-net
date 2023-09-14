@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of ClusterMetricsConfigurationList. </summary>
         internal ClusterMetricsConfigurationList()
         {
-            Value = new ChangeTrackingList<ClusterMetricsConfigurationData>();
+            Value = new ChangeTrackingList<NetworkCloudClusterMetricsConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of ClusterMetricsConfigurationList. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of metrics configurations. </param>
-        internal ClusterMetricsConfigurationList(string nextLink, IReadOnlyList<ClusterMetricsConfigurationData> value)
+        internal ClusterMetricsConfigurationList(string nextLink, IReadOnlyList<NetworkCloudClusterMetricsConfigurationData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of metrics configurations. </summary>
-        public IReadOnlyList<ClusterMetricsConfigurationData> Value { get; }
+        public IReadOnlyList<NetworkCloudClusterMetricsConfigurationData> Value { get; }
     }
 }

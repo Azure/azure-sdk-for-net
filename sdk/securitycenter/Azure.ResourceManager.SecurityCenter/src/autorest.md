@@ -11,10 +11,19 @@ namespace: Azure.ResourceManager.SecurityCenter
 require: https://github.com/Azure/azure-rest-api-specs/blob/44e83346defd3d4ca99efade8b1ee90c67d9f249/specification/security/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - InformationProtectionPolicies_CreateOrUpdate
+  - InformationProtectionPolicies_List
+  - SubAssessments_ListAll
+  - Assessments_List
 tag: package-dotnet-sdk
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 keep-orphaned-models:
   - ExternalSecuritySolutionKind
@@ -249,7 +258,7 @@ format-by-name-rules:
   '*ResourceId': 'arm-id'
   'policyDefinitionId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

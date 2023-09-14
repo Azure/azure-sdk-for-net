@@ -30,6 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly ConnectionVars _connectionVars;
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
+        private readonly bool _isAadEnabled;
         private bool _disposed;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
@@ -45,13 +46,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _transmissionStateManager = new TransmissionStateManager();
 
-            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
+            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory);
 
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled);
             }
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
@@ -61,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (options.ConnectionString == null)
             {
-                var connectionString = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+                var connectionString = platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING);
 
                 if (!string.IsNullOrWhiteSpace(connectionString))
                 {
@@ -76,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
         }
 
-        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
+        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, out bool isAadEnabled)
         {
             HttpPipeline pipeline;
 
@@ -89,11 +90,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     new IngestionRedirectPolicy()
                 };
 
+                isAadEnabled = true;
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
                 AzureMonitorExporterEventSource.Log.SetAADCredentialsToPipeline(options.Credential.GetType().Name, scope);
             }
             else
             {
+                isAadEnabled = false;
                 var httpPipelinePolicy = new HttpPipelinePolicy[] { new IngestionRedirectPolicy() };
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
             }
@@ -118,10 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    // TODO:
-                    // Remove this when we add an option to disable offline storage.
-                    // So if someone opts in for storage and we cannot initialize, we can throw.
-                    // Change needed on persistent storage side to throw if not able to create storage directory.
+                    // TODO: Should we throw if customer has opted for storage?
                     AzureMonitorExporterEventSource.Log.FailedToInitializePersistentStorage(connectionVars.InstrumentationKey, ex);
 
                     return null;
@@ -137,7 +137,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    var disableStatsbeat = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
+                    var disableStatsbeat = platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATSBEAT_DISABLED);
                     if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
                     {
                         AzureMonitorExporterEventSource.Log.StatsbeatDisabled();
@@ -179,13 +179,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     if (result == ExportResult.Failure && _fileBlobProvider != null)
                     {
                         _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars, origin);
+                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars, origin, _isAadEnabled);
                     }
                     else
                     {
                         _transmissionStateManager.ResetConsecutiveErrors();
                         _transmissionStateManager.CloseTransmission();
-                        AzureMonitorExporterEventSource.Log.TransmissionSuccess(origin, _connectionVars.InstrumentationKey);
+                        AzureMonitorExporterEventSource.Log.TransmissionSuccess(origin, _isAadEnabled, _connectionVars.InstrumentationKey);
                     }
                 }
                 else
@@ -199,7 +199,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _connectionVars.InstrumentationKey, ex);
+                AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
             }
 
             return result;

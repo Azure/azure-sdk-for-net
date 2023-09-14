@@ -6,10 +6,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/0b4a0a3f4bfc198df608f373784505e42e248c2c/specification/network/resource-manager/readme.md
-# tag: package-2023-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/f5cb37608399dd19760b9ef985a707294e32fbda/specification/network/resource-manager/readme.md
+# tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -175,6 +178,8 @@ rename-mapping:
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
   ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
   AdminState: ExpressRouteGatewayAdminState
+  SyncMode: BackendAddressSyncMode
+  MigratedPools: MigrateLoadBalancerToIPBasedResult
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -207,7 +212,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -266,6 +271,7 @@ override-operation-name:
   VirtualHubs_GetEffectiveVirtualHubRoutes: GetVirtualHubEffectiveRoutes
   VirtualHubs_GetOutboundRoutes: GetVirtualHubOutboundRoutes
   VirtualHubs_GetInboundRoutes: GetVirtualHubInboundRoutes
+  generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
 
 directive:
   - remove-operation: 'PutBastionShareableLink'

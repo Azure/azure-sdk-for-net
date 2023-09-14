@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The Dimensions or Tags to filter a budget by.
-    /// Serialized Name: BudgetFilterProperties
-    /// </summary>
+    /// <summary> The Dimensions or Tags to filter a budget by. </summary>
     public partial class BudgetFilterProperties
     {
         /// <summary> Initializes a new instance of BudgetFilterProperties. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of BudgetFilterProperties. </summary>
-        /// <param name="dimensions">
-        /// Has comparison expression for a dimension
-        /// Serialized Name: BudgetFilterProperties.dimensions
-        /// </param>
-        /// <param name="tags">
-        /// Has comparison expression for a tag
-        /// Serialized Name: BudgetFilterProperties.tags
-        /// </param>
+        /// <param name="dimensions"> Has comparison expression for a dimension. </param>
+        /// <param name="tags"> Has comparison expression for a tag. </param>
         internal BudgetFilterProperties(BudgetComparisonExpression dimensions, BudgetComparisonExpression tags)
         {
             Dimensions = dimensions;
             Tags = tags;
         }
 
-        /// <summary>
-        /// Has comparison expression for a dimension
-        /// Serialized Name: BudgetFilterProperties.dimensions
-        /// </summary>
+        /// <summary> Has comparison expression for a dimension. </summary>
         public BudgetComparisonExpression Dimensions { get; set; }
-        /// <summary>
-        /// Has comparison expression for a tag
-        /// Serialized Name: BudgetFilterProperties.tags
-        /// </summary>
+        /// <summary> Has comparison expression for a tag. </summary>
         public BudgetComparisonExpression Tags { get; set; }
     }
 }

@@ -12,6 +12,7 @@ public-clients: false
 head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
+deserialize-null-collection-as-null-value: true
 
 # mgmt-debug:
 #   show-serialized-names: true
@@ -40,7 +41,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -247,7 +248,7 @@ format-by-name-rules:
 keep-plural-enums:
   - ResourceTypeAliasPathAttributes
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -710,7 +711,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

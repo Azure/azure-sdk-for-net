@@ -1,6 +1,6 @@
-# Guide for migrating Azure.AI.FormRecognizer to version 4.0.x from versions 3.1.x and below
+# Guide for migrating Azure.AI.FormRecognizer to version 4.x.x from version 3.1.x or lower
 
-This guide is intended to assist in the migration to `Azure.AI.FormRecognizer (4.0.x)` from versions `3.1.x` and below. It will focus on side-by-side comparisons for similar operations between versions. Please note that version `4.0.0` will be used for comparison with `3.1.1`.
+This guide is intended to assist in the migration to `Azure.AI.FormRecognizer (4.x.x)` from version `3.1.x` or lower. It will focus on side-by-side comparisons for similar operations between versions. Please note that version `4.0.0` will be used for comparison with `3.1.1`.
 
 Familiarity with `Azure.AI.FormRecognizer (3.1.x and below)` package is assumed. For those new to the Azure Form Recognizer client library for .NET please refer to the [README][readme] rather than this guide.
 
@@ -19,7 +19,7 @@ Familiarity with `Azure.AI.FormRecognizer (3.1.x and below)` package is assumed.
 
 A natural question to ask when considering whether to adopt a new version of the library is what the benefits of doing so would be. As Azure Form Recognizer has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and add value to our customers.
 
-There are many benefits to using the new design of the `Azure.AI.FormRecognizer (4.0.x)` library. This new version of the library introduces two new clients `DocumentAnalysisClient` and the `DocumentModelAdministrationClient` with unified methods for analyzing documents and provides support for the new features added by the service in API version `2022-08-31` and later.
+There are many benefits to using the new design of the `Azure.AI.FormRecognizer (4.x.x)` library. This new version of the library introduces two new clients `DocumentAnalysisClient` and the `DocumentModelAdministrationClient` with unified methods for analyzing documents and provides support for the new features added by the service in API version `2022-08-31` and higher.
 
 New features provided by the `DocumentAnalysisClient` include:
 - One consolidated method for analyzing document layout, a prebuilt general document model type, along with the same prebuilt models that were included previously (receipts, invoices, business cards, ID documents), and custom models.
@@ -37,6 +37,7 @@ The table below describes the relationship of each client and its supported API 
 
 |API version|Supported clients
 |-|-
+|2023-07-31 | DocumentAnalysisClient and DocumentModelAdministrationClient
 |2022-08-31 | DocumentAnalysisClient and DocumentModelAdministrationClient
 |2.1 | FormRecognizerClient and FormTrainingClient
 |2.0 | FormRecognizerClient and FormTrainingClient
@@ -46,18 +47,18 @@ Please refer to the [README][readme] for more information on these new clients.
 ## Important changes
 
 ### Terminology
-Some terminology has changed to reflect the enhanced capabilities of the newest Form Recognizer service APIs. While the service is still called "Form Recognizer," it is capable of much more than simple recognition, and is not limited to documents that are "forms". As a result, we've made the following broad changes to the terminology used throughout the SDK:
+Some terminology has changed to reflect the enhanced capabilities of the newest service APIs. The "Azure Cognitive Services Form Recognizer" service has been renamed to "Azure AI Document Intelligence", reflecting the fact that it is capable of much more than simple recognition, and is not limited to documents that are "forms". Similarly, we've made the following broad changes to the terminology used throughout the SDK:
 
 - The word `Document` has broadly replaced the word `Form`. The service supports a wide variety of documents and data-extraction scenarios, not merely limited to `forms`.
 - The word `Analyze` has broadly replaced the word `Recognize`. The document analysis operation executes a data extraction pipeline that supports more than just recognition.
-- Distinctions between `custom` and `prebuilt` models have broadly been eliminated. Prebuilt models are simply models that were created by the Form Recognizer service team and that exist within every Form Recognizer resource.
+- Distinctions between `custom` and `prebuilt` models have broadly been eliminated. Prebuilt models are simply models that were created by the Document Intelligence service team and that exist within every Form Recognizer resource.
 - The concept of `model training` has broadly been replaced with `model creation` or `model administration` (whatever is most appropriate in context), as not all model creation operations involve `training` a model from a data set. When referring to a model schema trained from a data set, we will use the term `document type` instead.
 
 ### Client usage
 
 We continue to support API key and AAD authentication methods when creating the clients. Below are the differences between the two versions:
 
-- In `4.0.x`, we have added `DocumentAnalysisClient` and `DocumentModelAdministrationClient` which support API version `2022-08-31` and later.
+- In `4.x.x`, we have added `DocumentAnalysisClient` and `DocumentModelAdministrationClient` which support API version `2022-08-31` and higher.
 - `FormRecognizerClient` and `FormTrainingClient` will continue to work targeting API version `2.1` and `2.0`. 
 - In `DocumentAnalysisClient` all prebuilt model methods along with custom model, layout, and a prebuilt general document analysis model are unified into two methods called `AnalyzeDocument` and `AnalyzeDocumentFromUri`.
 - In `FormRecognizerClient` there are two methods (a stream and Uri method) for each of the prebuilt models supported by the service. This results in two methods for business card, receipt, identity document, and invoice models, along with a pair of methods for recognizing custom documents and for recognizing content/layout. 
@@ -72,7 +73,7 @@ var formRecognizerClient = new FormRecognizerClient(new Uri(endpoint), credentia
 var formTrainingClient = new FormTrainingClient(new Uri(endpoint), credential);
 ```
 
-Creating new clients in `4.0.x`:
+Creating new clients in `4.x.x`:
 ```C# Snippet:CreateDocumentAnalysisClients
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
@@ -85,9 +86,9 @@ var documentModelAdministrationClient = new DocumentModelAdministrationClient(ne
 ### Long-running operations
 
 The way long-running operations are designed has changed slightly to conform to new patterns in the Azure SDK for .NET libraries. The differences are listed below:
-- In version `3.1.x`, service methods begin with the `Start` prefix to indicate it starts a long-running operation. In version `4.0.x`, that prefix is not used anymore. For example, `StartCopyModel` is equivalent to the new `CopyDocumentModelTo`.
+- In version `3.1.x`, service methods begin with the `Start` prefix to indicate it starts a long-running operation. In version `4.x.x`, that prefix is not used anymore. For example, `StartCopyModel` is equivalent to the new `CopyDocumentModelTo`.
 - In version `3.1.x`, the method `WaitForCompletionAsync` had to be called to wait for the long-running operation to finish running.
-- In version `4.0.x`, methods that start a long-running operation take a required `waitUntil` parameter. You can pass the value `WaitUntil.Completed` to wait for the operation to complete and obtain its result; or set it to `WaitUntil.Started` if you just want to start the operation and consume the result later.
+- In version `4.x.x`, methods that start a long-running operation take a required `waitUntil` parameter. You can pass the value `WaitUntil.Completed` to wait for the operation to complete and obtain its result; or set it to `WaitUntil.Started` if you just want to start the operation and consume the result later.
 
 Waiting for long-running operations to finish in `3.1.x`:
 ```C# Snippet:WaitForLongRunningOperationV2
@@ -95,7 +96,7 @@ CopyModelOperation operation = await client.StartCopyModelAsync(modelId, authori
 await operation.WaitForCompletionAsync();
 ```
 
-Waiting for long-running operations to finish in `4.0.x`:
+Waiting for long-running operations to finish in `4.x.x`:
 ```C# Snippet:WaitForLongRunningOperationV3
 CopyDocumentModelToOperation operation = await client.CopyDocumentModelToAsync(WaitUntil.Completed, modelId, authorization);
 ```
@@ -105,9 +106,9 @@ CopyDocumentModelToOperation operation = await client.CopyDocumentModelToAsync(W
 Differences between the versions:
 - `AnalyzeDocument` and `AnalyzeDocumentFromUri` accept a string with the desired model ID for analysis. The model ID can be any of the prebuilt model IDs or a custom model ID.
 - Along with more consolidated analysis methods in the `DocumentAnalysisClient`, the return types have also been improved and remove the hierarchical dependencies between elements. An instance of the `AnalyzeResult` model is now returned which showcases important document elements, such as key-value pairs, tables, and document fields and values, among others, at the top level of the returned model. This can be contrasted with `RecognizedForm` which included more hierarchical relationships, for instance tables were an element of a `FormPage` and not a top-level element.
-- In the new version of the library, the functionality of `StartRecognizeContent` has been added as a prebuilt model and can be called in library version `Azure.AI.FormRecognizer (4.0.x)` with `AnalyzeDocument` by passing in the `prebuilt-layout` model ID. Similarly, to get general document information, such as key-value pairs and text layout, the `prebuilt-document` model ID can be used with `AnalyzeDocument`.
+- In the new version of the library, the functionality of `StartRecognizeContent` has been added as a prebuilt model and can be called in library version `Azure.AI.FormRecognizer (4.x.x)` with `AnalyzeDocument` by passing in the `prebuilt-layout` model ID. Similarly, to get general document information, such as key-value pairs and text layout, the `prebuilt-document` model ID can be used with `AnalyzeDocument`.
 - When calling `AnalyzeDocument` and `AnalyzeDocumentFromUri` the returned type is an `AnalyzeResult` object, while the various methods used with `FormRecognizerClient` return a list of `RecognizedForm`.
-- The optional `IncludeFieldElements` parameter is not supported with the `DocumentAnalysisClient`. Text details are automatically included with API version `2022-08-31` and later.
+- The optional `IncludeFieldElements` parameter is not supported with the `DocumentAnalysisClient`. Text details are automatically included with API version `2022-08-31` and higher.
 - The optional `ReadingOrder` parameter does not exist on `AnalyzeDocument` and `AnalyzeDocumentFromUri`. The service uses `natural` reading order to return data.
 
 Analyzing prebuilt models like business cards, identity documents, invoices, and receipts with `3.1.x`:
@@ -236,7 +237,7 @@ Analyzing prebuilt models like business cards, identity documents, invoices, and
 }
 ```
 
-Analyzing prebuilt models like business cards, identity documents, invoices, and receipts with `4.0.x`:
+Analyzing prebuilt models like business cards, identity documents, invoices, and receipts with `4.x.x`:
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
@@ -338,7 +339,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 
 Analyzing document content with `3.1.x`:
 
-> NOTE: With version `3.1.x` of the library this method had an optional `Language` parameter to hint at the language for the document, whereas in version `4.0.x` of the library `Locale` is used for this purpose.
+> NOTE: With version `3.1.x` of the library this method had an optional `Language` parameter to hint at the language for the document, whereas in version `4.x.x` of the library `Locale` is used for this purpose.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
 Uri formUri = new Uri("<formUri>");
@@ -395,7 +396,7 @@ foreach (FormPage page in formPages)
 }
 ```
 
-Analyzing document layout with `4.0.x`:
+Analyzing document layout with `4.x.x`:
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
@@ -478,7 +479,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 }
 ```
 
-Analyzing general document types with `4.0.x`:
+Analyzing general document types with `4.x.x`:
 
 > NOTE: Analyzing a document with the `prebuilt-document` model replaces training without labels in version `3.1.x` of the library.
 
@@ -571,14 +572,14 @@ for (int i = 0; i < result.Tables.Count; i++)
 ### Training a custom model
 
 Differences between the versions:
-- Files for building a new model for version `4.0.x` can be created using the labeling tool found [here][fr_labeling_tool].
+- Files for building a new model for version `3.1.x` can be created using the labeling tool found [here][fr_labeling_tool].
 - In version `3.1.x` the `useTrainingLabels` parameter was used to indicate whether to use labeled data when creating the custom model.
-- In version `4.0.x` the `useTrainingLabels` parameter is not supported since training must be carried out with labeled training documents. Additionally train without labels is now replaced with the prebuilt model `prebuilt-document` which extracts key-value pairs and layout from a document.
-- In version `4.0.x`, the new `buildMode` required parameter is used to choose the technique to be applied when building the model. Currently there are only two options:
+- In version `4.x.x` the `useTrainingLabels` parameter is not supported since training must be carried out with labeled training documents. Additionally train without labels is now replaced with the prebuilt model `prebuilt-document` which extracts key-value pairs and layout from a document.
+- In version `4.x.x`, the new `buildMode` required parameter is used to choose the technique to be applied when building the model. Currently there are only two options:
   - Template build mode: equivalent to the technique used in version `3.1.x`. Recommended when the custom documents all have the same layout. Fields are expected to be in the same place across documents. Build time tends to be considerably shorter than the neural build mode.
   - Neural build mode: recommended when custom documents have different layouts. Fields are expected to be the same but they can be placed in different positions across documents.
 
-For more information about the available build modes and their capabilities, see [Form Recognizer custom models](https://aka.ms/azsdk/formrecognizer/buildmode).
+For more information about the available build modes and their capabilities, see [Document Intelligence custom models](https://aka.ms/azsdk/formrecognizer/buildmode).
 
 Train a custom model with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
@@ -624,7 +625,7 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
 }
 ```
 
-Train a custom model with `4.0.x`:
+Train a custom model with `4.x.x`:
 ```C# Snippet:FormRecognizerSampleBuildModel
 // For this sample, you can use the training documents found in the `trainingFiles` folder.
 // Upload the documents to your storage container and then generate a container SAS URL. Note
@@ -645,13 +646,12 @@ BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(Wai
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
-if (string.IsNullOrEmpty(model.Description))
-    Console.WriteLine($"  Model description: {model.Description}");
 Console.WriteLine($"  Created on: {model.CreatedOn}");
-Console.WriteLine("  Doc types the model can recognize:");
+
+Console.WriteLine("  Document types the model can recognize:");
 foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.DocumentTypes)
 {
-    Console.WriteLine($"    Doc type: {documentType.Key} which has the following fields:");
+    Console.WriteLine($"    Document type: {documentType.Key} which has the following fields:");
     foreach (KeyValuePair<string, DocumentFieldSchema> schema in documentType.Value.FieldSchema)
     {
         Console.WriteLine($"    Field: {schema.Key} with confidence {documentType.Value.FieldConfidence[schema.Key]}");
@@ -664,7 +664,7 @@ foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.Documen
 Differences between the versions:
 - Analyzing a custom model with `DocumentAnalysisClient` uses the general `AnalyzeDocument` and `AnalyzeDocumentFromUri` methods.
 - In order to analyze a custom model with `FormRecognizerClient` the `StartRecognizeCustomModels` and its corresponding Uri methods are used.
-- The `IncludeFieldElements` keyword argument is not supported with the `DocumentAnalysisClient`. Text details are automatically included with API version `2022-08-31` and later.
+- The `IncludeFieldElements` keyword argument is not supported with the `DocumentAnalysisClient`. Text details are automatically included with API version `2022-08-31` and higher.
 
 Analyze a document using a custom model with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
@@ -724,7 +724,7 @@ foreach (RecognizedForm form in forms)
 }
 ```
 
-Analyze a document using a custom model with `4.0.x`:
+Analyze a document using a custom model with `4.x.x`:
 ```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
 string modelId = "<modelId>";
 Uri fileUri = new Uri("<fileUri>");
@@ -754,9 +754,9 @@ foreach (AnalyzedDocument document in result.Documents)
 ### Managing models
 
 Differences between the versions:
-- When using API version `2022-08-31` and later, models no longer include submodels. Instead, a model can analyze different document types.
+- When using API version `2022-08-31` and higher, models no longer include submodels. Instead, a model can analyze different document types.
 - When building, composing, or copying models, users can now assign their own model IDs and specify a description.
-- In version `4.0.x` of the library, only models that build successfully can be retrieved from the get and list model calls. Unsuccessful model operations can be viewed with the `GetOperation()` and `GetOperations()` methods (note that document model operation data persists for only 24 hours). In version `3.1.x` of the library, models that had not succeeded were still created, had to be deleted by the user, and were returned in the `GetCustomModels()` response.
+- In version `4.x.x` of the library, only models that build successfully can be retrieved from the get and list model calls. Unsuccessful model operations can be viewed with the `GetOperation()` and `GetOperations()` methods (note that document model operation data persists for only 24 hours). In version `3.1.x` of the library, models that had not succeeded were still created, had to be deleted by the user, and were returned in the `GetCustomModels()` response.
 
 ## Additional samples
 

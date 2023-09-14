@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
@@ -55,5 +56,15 @@ namespace Azure.Communication.CallAutomation
         /// The Custom Context which contains SIP and voip headers
         /// </summary>
         public CustomContext CustomContext { get; }
+
+        /// <summary>
+        /// The callee that being transferred
+        /// </summary>
+        public CommunicationIdentifier Transferee { get; set; }
+
+        /// <summary>
+        /// The callback URI override for this transfer call request.
+        /// </summary>
+        public Uri CallbackUri { get; set; }
     }
 }

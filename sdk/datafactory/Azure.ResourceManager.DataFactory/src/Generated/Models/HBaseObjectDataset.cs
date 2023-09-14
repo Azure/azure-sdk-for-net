@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> HBase server dataset. </summary>
-    public partial class HBaseObjectDataset : DataFactoryDatasetDefinition
+    public partial class HBaseObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of HBaseObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

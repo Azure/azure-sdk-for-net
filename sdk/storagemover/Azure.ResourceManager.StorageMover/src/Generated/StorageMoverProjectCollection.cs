@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverProjectProjectsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageMoverProjectProjectsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageMoverProjectResource(Client, StorageMoverProjectData.DeserializeStorageMoverProjectData(e)), _storageMoverProjectProjectsClientDiagnostics, Pipeline, "StorageMoverProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageMoverProjectResource(Client, StorageMoverProjectData.DeserializeStorageMoverProjectData(e)), _storageMoverProjectProjectsClientDiagnostics, Pipeline, "StorageMoverProjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverProjectProjectsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageMoverProjectProjectsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageMoverProjectResource(Client, StorageMoverProjectData.DeserializeStorageMoverProjectData(e)), _storageMoverProjectProjectsClientDiagnostics, Pipeline, "StorageMoverProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageMoverProjectResource(Client, StorageMoverProjectData.DeserializeStorageMoverProjectData(e)), _storageMoverProjectProjectsClientDiagnostics, Pipeline, "StorageMoverProjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

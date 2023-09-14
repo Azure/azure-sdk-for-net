@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringSByte
     {
@@ -13,7 +13,7 @@ namespace Azure
         [TestCase(sbyte.MaxValue)]
         public void SByteImplicit(sbyte testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<sbyte>());
             Assert.AreEqual(typeof(sbyte), value.Type);
 
@@ -29,10 +29,10 @@ namespace Azure
         [TestCase(sbyte.MaxValue)]
         public void SByteCreate(sbyte testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
-                value = Value.Create(testValue);
+                value = Variant.Create(testValue);
             }
 
             Assert.AreEqual(testValue, value.As<sbyte>());
@@ -42,7 +42,7 @@ namespace Azure
 
             using (MemoryWatch.Create())
             {
-                value = Value.Create(source);
+                value = Variant.Create(source);
             }
 
             Assert.AreEqual(source, value.As<sbyte?>());
@@ -55,7 +55,7 @@ namespace Azure
         [TestCase(sbyte.MaxValue)]
         public void SByteInOut(sbyte testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out sbyte result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -71,7 +71,7 @@ namespace Azure
         public void NullableSByteInSByteOut(sbyte? testValue)
         {
             sbyte? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out sbyte result);
             Assert.True(success);
@@ -89,7 +89,7 @@ namespace Azure
         public void SByteInNullableSByteOut(sbyte testValue)
         {
             sbyte source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out sbyte? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -101,7 +101,7 @@ namespace Azure
         public void NullSByte()
         {
             sbyte? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<sbyte?>());
             Assert.False(value.As<sbyte?>().HasValue);
@@ -113,7 +113,7 @@ namespace Azure
         [TestCase(sbyte.MaxValue)]
         public void OutAsObject(sbyte testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(sbyte), o.GetType());
             Assert.AreEqual(testValue, (sbyte)o);

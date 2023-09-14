@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-09-08)
+
+### Features Added
+
+- Upgraded API version to 2023-04-01
+- Added SecureScore as part of VaultProperties
+- Added MultiUserAuthorization as part of vaultProperties
+- Added SoftDeleteSettings as part of vaultproperties
+- Added CrossSubscriptionRestoresettings
+
+### Bugs Fixed
+
+- Removed incorrect protectable item type and discriminator for HSR container protectable item
+- Added correct protectable item type and discriminator for HSR container protectable item
 
 ## 1.1.0-beta.1 (2023-05-31)
 

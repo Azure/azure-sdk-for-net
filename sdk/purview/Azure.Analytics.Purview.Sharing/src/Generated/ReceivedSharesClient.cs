@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -141,13 +142,12 @@ namespace Azure.Analytics.Purview.Sharing
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistrationAsync(RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Response> ActivateTenantEmailRegistrationAsync(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistrationAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> ActivateTenantEmailRegistrationAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Purview.Sharing
             scope.Start();
             try
             {
-                using HttpMessage message = CreateActivateTenantEmailRegistrationRequest(content, repeatabilityRequestId, context);
+                using HttpMessage message = CreateActivateTenantEmailRegistrationRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -176,13 +176,12 @@ namespace Azure.Analytics.Purview.Sharing
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistration(RequestContent,string,RequestContext)']/*" />
-        public virtual Response ActivateTenantEmailRegistration(RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistration(RequestContent,RequestContext)']/*" />
+        public virtual Response ActivateTenantEmailRegistration(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -190,7 +189,7 @@ namespace Azure.Analytics.Purview.Sharing
             scope.Start();
             try
             {
-                using HttpMessage message = CreateActivateTenantEmailRegistrationRequest(content, repeatabilityRequestId, context);
+                using HttpMessage message = CreateActivateTenantEmailRegistrationRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -210,18 +209,17 @@ namespace Azure.Analytics.Purview.Sharing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistrationAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> RegisterTenantEmailRegistrationAsync(string repeatabilityRequestId, RequestContext context)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistrationAsync(RequestContext)']/*" />
+        public virtual async Task<Response> RegisterTenantEmailRegistrationAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.RegisterTenantEmailRegistration");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRegisterTenantEmailRegistrationRequest(repeatabilityRequestId, context);
+                using HttpMessage message = CreateRegisterTenantEmailRegistrationRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -241,18 +239,17 @@ namespace Azure.Analytics.Purview.Sharing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistration(string,RequestContext)']/*" />
-        public virtual Response RegisterTenantEmailRegistration(string repeatabilityRequestId, RequestContext context)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='RegisterTenantEmailRegistration(RequestContext)']/*" />
+        public virtual Response RegisterTenantEmailRegistration(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.RegisterTenantEmailRegistration");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRegisterTenantEmailRegistrationRequest(repeatabilityRequestId, context);
+                using HttpMessage message = CreateRegisterTenantEmailRegistrationRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -286,7 +283,7 @@ namespace Azure.Analytics.Purview.Sharing
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -313,7 +310,7 @@ namespace Azure.Analytics.Purview.Sharing
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -336,7 +333,7 @@ namespace Azure.Analytics.Purview.Sharing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -359,7 +356,7 @@ namespace Azure.Analytics.Purview.Sharing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -602,7 +599,7 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
-        internal HttpMessage CreateActivateTenantEmailRegistrationRequest(RequestContent content, string repeatabilityRequestId, RequestContext context)
+        internal HttpMessage CreateActivateTenantEmailRegistrationRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -613,16 +610,13 @@ namespace Azure.Analytics.Purview.Sharing
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (repeatabilityRequestId != null)
-            {
-                request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
-            }
+            request.Headers.Add("repeatability-request-id", Guid.NewGuid());
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateRegisterTenantEmailRegistrationRequest(string repeatabilityRequestId, RequestContext context)
+        internal HttpMessage CreateRegisterTenantEmailRegistrationRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -633,10 +627,7 @@ namespace Azure.Analytics.Purview.Sharing
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (repeatabilityRequestId != null)
-            {
-                request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
-            }
+            request.Headers.Add("repeatability-request-id", Guid.NewGuid());
             return message;
         }
 

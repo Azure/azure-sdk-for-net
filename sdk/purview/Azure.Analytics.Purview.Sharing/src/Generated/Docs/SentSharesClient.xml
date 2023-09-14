@@ -163,7 +163,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="NotifyUserSentShareInvitationAsync(string,string,string,RequestContext)">
+    <member name="NotifyUserSentShareInvitationAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call NotifyUserSentShareInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -171,7 +171,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new SentSharesClient(endpoint, credential);
 
-Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>", new RequestContext());
+Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -180,7 +180,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="NotifyUserSentShareInvitation(string,string,string,RequestContext)">
+    <member name="NotifyUserSentShareInvitation(string,string,RequestContext)">
 <example>
 This sample shows how to call NotifyUserSentShareInvitation with required parameters and parse the result.
 <code><![CDATA[
@@ -188,7 +188,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new SentSharesClient(endpoint, credential);
 
-Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>", new RequestContext());
+Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());

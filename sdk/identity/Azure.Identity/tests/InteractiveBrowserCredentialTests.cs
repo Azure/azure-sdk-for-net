@@ -9,6 +9,7 @@ using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
+
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -26,14 +27,8 @@ namespace Azure.Identity.Tests
             string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
             var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken");
             var tokenCacheOptions = new MockTokenCache(
-                () =>
-                {
-                    return Task.FromResult<ReadOnlyMemory<byte>>(mockBytes);
-                },
-                args =>
-                {
-                    return Task.FromResult<ReadOnlyMemory<byte>>(mockBytes);
-                });
+                () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
+                args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
 
             var options = new InteractiveBrowserCredentialOptions
             {
@@ -42,7 +37,7 @@ namespace Azure.Identity.Tests
                 TokenCachePersistenceOptions = tokenCacheOptions,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null));
@@ -178,7 +173,7 @@ namespace Azure.Identity.Tests
         {
             var mockMsalClient = new MockMsalPublicClient
             {
-                InteractiveAuthFactory = (_, _, prompt, hintArg, _, _, _) =>
+                InteractiveAuthFactory = (_, _, prompt, hintArg, _, _, _, _) =>
                 {
                     Assert.AreEqual(loginHint == null ? Prompt.SelectAccount : Prompt.NoPrompt, prompt);
                     Assert.AreEqual(loginHint, hintArg);
@@ -296,6 +291,60 @@ namespace Azure.Identity.Tests
             catch (OperationCanceledException) { }
 
             Assert.True(beforeBuildClientInvoked);
+        }
+
+        [Test]
+        public async Task BrowserCustomizationsHtmlMessage([Values(null, "<p> Login Successfully.</p>")] string htmlMessageSuccess, [Values(null, "<p> An error occured: {0}. Details {1}</p>")] string htmlMessageError)
+        {
+            var mockMsalClient = new MockMsalPublicClient
+            {
+                InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
+                {
+                    Assert.AreEqual(false, browserOptions.UseEmbeddedWebView);
+                    Assert.AreEqual(htmlMessageSuccess, browserOptions.SuccessMessage);
+                    Assert.AreEqual(htmlMessageError, browserOptions.ErrorMessage);
+                    return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
+                }
+            };
+            var options = new InteractiveBrowserCredentialOptions()
+            {
+                BrowserCustomization = new BrowserCustomizationOptions()
+                {
+                    UseEmbeddedWebView = false,
+                    SuccessMessage = htmlMessageSuccess,
+                    ErrorMessage = htmlMessageError
+                }
+            };
+
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", options, default, mockMsalClient));
+
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+        }
+
+        [Test]
+        public async Task BrowserCustomizedUseEmbeddedWebView([Values(null, true, false)] bool useEmbeddedWebView, [Values(null, "<p> An error occured: {0}. Details {1}</p>")] string htmlMessageError)
+        {
+            var mockMsalClient = new MockMsalPublicClient
+            {
+                InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
+                {
+                    Assert.AreEqual(useEmbeddedWebView, browserOptions.UseEmbeddedWebView);
+                    Assert.AreEqual(htmlMessageError, browserOptions.ErrorMessage);
+                    return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
+                }
+            };
+            var options = new InteractiveBrowserCredentialOptions()
+            {
+                BrowserCustomization = new BrowserCustomizationOptions()
+                {
+                    UseEmbeddedWebView = useEmbeddedWebView,
+                    ErrorMessage = htmlMessageError
+                }
+            };
+
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", options, default, mockMsalClient));
+
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
         }
     }
 }

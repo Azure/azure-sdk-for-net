@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -22,112 +21,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task RoutePolicies()
         {
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            string routePolicyName = TestEnvironment.RoutePolicyName;
-
             TestContext.Out.WriteLine($"Entered into the RoutePolicy tests....");
-            TestContext.Out.WriteLine($"Provided routePolicyName name : {routePolicyName}");
+            TestContext.Out.WriteLine($"Provided TestEnvironment.RoutePolicyName name : {TestEnvironment.RoutePolicyName}");
 
-            ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
+            ResourceIdentifier routePolicyResourceId = NetworkFabricRoutePolicyResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.RoutePolicyName);
             TestContext.Out.WriteLine($"routePolicyResourceId: {routePolicyResourceId}");
 
             TestContext.Out.WriteLine($"RoutePolicy Test started.....");
 
-            RoutePolicyCollection collection = ResourceGroupResource.GetRoutePolicies();
+            NetworkFabricRoutePolicyCollection collection = ResourceGroupResource.GetNetworkFabricRoutePolicies();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            RoutePolicyData data =
-                new RoutePolicyData(new AzureLocation(TestEnvironment.Location), new RoutePolicyStatementProperties[]
+
+            NetworkFabricRoutePolicyData data = new NetworkFabricRoutePolicyData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
+            {
+                Annotation = "annotation",
+                DefaultAction = CommunityActionType.Permit,
+                Statements =
                 {
-                    new RoutePolicyStatementProperties(7,new StatementConditionProperties()
-                    {
-                        IPCommunityIds =
+                    new RoutePolicyStatementProperties(
+                        7,
+                        new StatementConditionProperties()
                         {
-                            "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                            RoutePolicyConditionType = RoutePolicyConditionType.Or,
+                            IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipprefix"),
                         },
-                        IPExtendedCommunityIds =
+                        new StatementActionProperties(RoutePolicyActionType.Deny)
                         {
-                            "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
-                        },
-                        IPPrefixId = "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipPrefix061623"
-                    },
-                    new StatementActionProperties(CommunityActionType.Permit)
+                            LocalPreference = 20,
+                        })
                     {
-                        LocalPreference = 20,
-                        IPCommunityProperties = new ActionIPCommunityProperties()
-                        {
-                            AddIPCommunityIds =
-                            {
-                                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
-                            },
-                            DeleteIPCommunityIds =
-                            {
-                                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
-                            },
-                            SetIPCommunityIds =
-                            {
-                                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
-                            }
-                        },
-                        IPExtendedCommunityProperties = new ActionIPExtendedCommunityProperties()
-                        {
-                            AddIPExtendedCommunityIds =
-                            {
-                                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
-                            },
-                            DeleteIPExtendedCommunityIds =
-                            {
-                                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
-                            },
-                            SetIPExtendedCommunityIds =
-                            {
-                                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
-                            }
-                        }
-                    })
-                    {
-                        Annotation = "annotationValue",
+                        Annotation = "annotation",
                     }
-                })
+                },
+                AddressFamilyType = AddressFamilyType.IPv4,
+                Tags =
                 {
-                    Annotation = "annotationValue",
-                    Tags =
-                    {
-                        ["key8254"] = "",
-                    },
-                };
+                    ["keyID"] = "keyValue",
+                },
+            };
+            ArmOperation<NetworkFabricRoutePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.RoutePolicyName, data);
+            NetworkFabricRoutePolicyResource createResult = lro.Value;
+            Assert.AreEqual(createResult.Data.Name, TestEnvironment.RoutePolicyName);
 
-            ArmOperation<RoutePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routePolicyName, data);
-            RoutePolicyResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, routePolicyName);
-
-            RoutePolicyResource routePolicy = Client.GetRoutePolicyResource(routePolicyResourceId);
+            NetworkFabricRoutePolicyResource routePolicy = Client.GetNetworkFabricRoutePolicyResource(routePolicyResourceId);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            RoutePolicyResource getResult = await routePolicy.GetAsync();
+            NetworkFabricRoutePolicyResource getResult = await routePolicy.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, routePolicyName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.RoutePolicyName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<RoutePolicyResource>();
-            await foreach (RoutePolicyResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricRoutePolicyResource>();
+            await foreach (NetworkFabricRoutePolicyResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
             TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<RoutePolicyResource>();
-            await foreach (RoutePolicyResource item in DefaultSubscription.GetRoutePoliciesAsync())
+
+            await foreach (NetworkFabricRoutePolicyResource item in subscriptionResource.GetNetworkFabricRoutePoliciesAsync())
             {
-                listBySubscription.Add(item);
-                Console.WriteLine($"Succeeded on id: {item}");
+                NetworkFabricRoutePolicyData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-            Assert.IsNotEmpty(listBySubscription);
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
