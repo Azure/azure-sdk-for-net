@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -15,8 +16,26 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="targetRegion"> Gets or sets the target region. </param>
         public MoverResourceSetProperties(AzureLocation sourceRegion, AzureLocation targetRegion)
         {
-            SourceRegion = sourceRegion;
-            TargetRegion = targetRegion;
+            SourceLocation = sourceRegion;
+            TargetLocation = targetRegion;
+        }
+
+        /// <summary> Gets or sets the source region. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AzureLocation SourceRegion
+        {
+            get { return SourceLocation ?? default; }
+
+            set { SourceLocation = value; }
+        }
+
+        /// <summary> Gets or sets the target region. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AzureLocation TargetRegion
+        {
+            get { return TargetLocation ?? default; }
+
+            set { TargetLocation = value; }
         }
     }
 }

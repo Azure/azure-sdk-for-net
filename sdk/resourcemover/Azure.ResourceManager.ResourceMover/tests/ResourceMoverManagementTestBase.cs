@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         {
             MoverResourceSetData input = new MoverResourceSetData("eastus2euap")
             {
-                Properties = new MoverResourceSetProperties() { SourceRegion = AzureLocation.EastUS, TargetRegion = AzureLocation.EastUS2 },
+                Properties = new MoverResourceSetProperties() { SourceLocation = AzureLocation.EastUS, TargetLocation = AzureLocation.EastUS2 },
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             var lro = await rg.GetMoverResourceSets().CreateOrUpdateAsync(WaitUntil.Completed, moverResourceSetName, input);

@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ResourceMover.Samples
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Properties = new MoverResourceSetProperties()
                 {
-                    SourceRegion = new AzureLocation("eastus"),
-                    TargetRegion = new AzureLocation("westus"),
+                    SourceLocation = new AzureLocation("eastus"),
+                    TargetLocation = new AzureLocation("westus"),
                     MoveType = MoveType.RegionToRegion,
                 },
             };

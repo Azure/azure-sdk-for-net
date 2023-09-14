@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class VirtualMachineResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of VirtualMachineResourceSettings. </summary>
+        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public VirtualMachineResourceSettings(string targetResourceName) : base(targetResourceName)
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));

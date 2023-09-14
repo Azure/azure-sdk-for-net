@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.ResourceMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceRegion))
+            if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceRegion"u8);
-                writer.WriteStringValue(SourceRegion.Value);
+                writer.WriteStringValue(SourceLocation.Value);
             }
-            if (Optional.IsDefined(TargetRegion))
+            if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetRegion"u8);
-                writer.WriteStringValue(TargetRegion.Value);
+                writer.WriteStringValue(TargetLocation.Value);
             }
-            if (Optional.IsDefined(MoveRegion))
+            if (Optional.IsDefined(MoveLocation))
             {
                 writer.WritePropertyName("moveRegion"u8);
-                writer.WriteStringValue(MoveRegion);
+                writer.WriteStringValue(MoveLocation.Value);
             }
             if (Optional.IsDefined(Version))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             Optional<AzureLocation> sourceRegion = default;
             Optional<AzureLocation> targetRegion = default;
-            Optional<string> moveRegion = default;
+            Optional<AzureLocation> moveRegion = default;
             Optional<MoverProvisioningState> provisioningState = default;
             Optional<string> version = default;
             Optional<MoveType> moveType = default;
@@ -78,7 +78,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (property.NameEquals("moveRegion"u8))
                 {
-                    moveRegion = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    moveRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverResourceSetProperties(Optional.ToNullable(sourceRegion), Optional.ToNullable(targetRegion), moveRegion.Value, Optional.ToNullable(provisioningState), version.Value, Optional.ToNullable(moveType), errors.Value);
+            return new MoverResourceSetProperties(Optional.ToNullable(sourceRegion), Optional.ToNullable(targetRegion), Optional.ToNullable(moveRegion), Optional.ToNullable(provisioningState), version.Value, Optional.ToNullable(moveType), errors.Value);
         }
     }
 }

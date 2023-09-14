@@ -12,6 +12,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class SqlDatabaseResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of SqlDatabaseResourceSettings. </summary>
+        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public SqlDatabaseResourceSettings(string targetResourceName) : base(targetResourceName)
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
