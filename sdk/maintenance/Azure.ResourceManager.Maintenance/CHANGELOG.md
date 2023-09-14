@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.4 (2023-09-15)
 
 - Fix the string format of `StartOn` and `ExpireOn` in `MaintenanceConfigurationData` serialization.
 
