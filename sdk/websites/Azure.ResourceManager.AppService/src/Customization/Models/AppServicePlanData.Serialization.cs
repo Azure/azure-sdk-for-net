@@ -61,7 +61,9 @@ namespace Azure.ResourceManager.AppService
             {
                 sb.AppendLine($" kind: '{Kind}'");
             }
-            sb.AppendLine($" reserved: {IsReserved}");
+            sb.AppendLine($"  properties: {{");
+            sb.AppendLine($"   reserved: {IsReserved.ToString().ToLower()}");
+            sb.AppendLine($"  }}");
             return BinaryData.FromString(sb.ToString());
         }
     }

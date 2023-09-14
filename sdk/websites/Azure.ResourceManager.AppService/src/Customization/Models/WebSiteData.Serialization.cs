@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService
             }
             if(IsHttpsOnly.HasValue)
             {
-                sb.AppendLine($"    httpsOnly: {IsHttpsOnly.Value}");
+                sb.AppendLine($"    httpsOnly: {IsHttpsOnly.Value.ToString().ToLower()}");
             }
             sb.AppendLine($"  }}");
             if (Optional.IsDefined(Identity))
