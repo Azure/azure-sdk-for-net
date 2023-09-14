@@ -5,19 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlFirewallRuleData : IUtf8JsonSerializable, IModelJsonSerializable<SqlFirewallRuleData>
+    public partial class SqlFirewallRuleData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -41,10 +36,8 @@ namespace Azure.ResourceManager.Sql
             writer.WriteEndObject();
         }
 
-        internal static SqlFirewallRuleData DeserializeSqlFirewallRuleData(JsonElement element, ModelSerializerOptions options = default)
+        internal static SqlFirewallRuleData DeserializeSqlFirewallRuleData(JsonElement element)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,38 +96,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return new SqlFirewallRuleData(id.Value, name.Value, Optional.ToNullable(type), startIPAddress.Value, endIPAddress.Value);
-        }
-
-        void IModelJsonSerializable<SqlFirewallRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
-
-        SqlFirewallRuleData IModelJsonSerializable<SqlFirewallRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSqlFirewallRuleData(document.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<SqlFirewallRuleData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
-        {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        SqlFirewallRuleData IModelSerializable<SqlFirewallRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeSqlFirewallRuleData(document.RootElement, options);
-        }
-
-        private BinaryData SerializeBicep()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"  name: '{Name}'");
-            sb.AppendLine($"  properties: {{");
-            sb.AppendLine($"    startIpAddress: '{StartIPAddress}'");
-            sb.AppendLine($"    endIpAddress: '{EndIPAddress}'");
-            sb.AppendLine($"  }}");
-            return BinaryData.FromString(sb.ToString());
         }
     }
 }
