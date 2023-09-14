@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ResourceManager.Models.ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = JsonSerializer.Deserialize<ResourceManager.Models.ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

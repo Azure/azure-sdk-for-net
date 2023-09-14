@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Wrapper for a collection of private link resources. </summary>
-    internal partial class PrivateLinkResourcesWrapper
+    public partial class PrivateLinkResourcesWrapper
     {
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>

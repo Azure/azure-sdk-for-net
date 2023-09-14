@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class AppServiceBlobStorageTokenStore : IUtf8JsonSerializable
+    public partial class AppServiceBlobStorageTokenStore : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

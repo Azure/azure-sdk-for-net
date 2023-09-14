@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<ResourceManager.Models.ManagedServiceIdentity> identity = default;
+            Optional<Resources.Models.ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = JsonSerializer.Deserialize<ResourceManager.Models.ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = JsonSerializer.Deserialize<Resources.Models.ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

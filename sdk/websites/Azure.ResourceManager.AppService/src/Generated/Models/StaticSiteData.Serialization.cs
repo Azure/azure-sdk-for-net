@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
                 return null;
             }
             Optional<AppServiceSkuDescription> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ResourceManager.Models.ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = JsonSerializer.Deserialize<ResourceManager.Models.ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
-    internal partial class AppServiceBlobStorageTokenStore
+    public partial class AppServiceBlobStorageTokenStore
     {
         /// <summary> Initializes a new instance of AppServiceBlobStorageTokenStore. </summary>
         public AppServiceBlobStorageTokenStore()

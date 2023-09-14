@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class AppServiceApiDefinitionInfo : IUtf8JsonSerializable
+    public partial class AppServiceApiDefinitionInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

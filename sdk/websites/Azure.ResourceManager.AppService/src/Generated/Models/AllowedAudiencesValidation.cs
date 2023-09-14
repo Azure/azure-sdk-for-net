@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Allowed Audiences validation flow. </summary>
-    internal partial class AllowedAudiencesValidation
+    public partial class AllowedAudiencesValidation
     {
         /// <summary> Initializes a new instance of AllowedAudiencesValidation. </summary>
         public AllowedAudiencesValidation()

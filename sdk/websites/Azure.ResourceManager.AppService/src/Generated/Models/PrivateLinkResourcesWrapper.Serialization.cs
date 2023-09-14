@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class PrivateLinkResourcesWrapper
+    public partial class PrivateLinkResourcesWrapper
     {
         internal static PrivateLinkResourcesWrapper DeserializePrivateLinkResourcesWrapper(JsonElement element)
         {

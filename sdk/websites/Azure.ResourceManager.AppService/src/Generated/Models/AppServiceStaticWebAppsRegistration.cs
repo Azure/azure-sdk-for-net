@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the registration for the Azure Static Web Apps provider. </summary>
-    internal partial class AppServiceStaticWebAppsRegistration
+    public partial class AppServiceStaticWebAppsRegistration
     {
         /// <summary> Initializes a new instance of AppServiceStaticWebAppsRegistration. </summary>
         public AppServiceStaticWebAppsRegistration()

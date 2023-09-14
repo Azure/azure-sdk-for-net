@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Enabled configuration. </summary>
-    internal partial class WebAppEnabledConfig
+    public partial class WebAppEnabledConfig
     {
         /// <summary> Initializes a new instance of WebAppEnabledConfig. </summary>
         public WebAppEnabledConfig()
