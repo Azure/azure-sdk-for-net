@@ -13,7 +13,7 @@
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
   
-  <Target Name="ValidateApiCompat">
+  <Target Name="ValidateRunApiCompat" BeforeTargets="Build" Condition="'$(ValidateRunApiCompatSetting)' == 'true'">
     <Error Condition="'$(RunApiCompat)' == 'false' and '$(IncludeBuildOutput)' != 'false'" 
            Text="Api Compat cannot be disabled."/>
   </Target>
