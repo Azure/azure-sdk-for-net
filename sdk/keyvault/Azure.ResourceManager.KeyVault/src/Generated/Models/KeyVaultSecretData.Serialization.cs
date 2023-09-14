@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class KeyVaultSecretData : IUtf8JsonSerializable
+    public partial class KeyVaultSecretData : IUtf8JsonSerializable, IModelJsonSerializable<KeyVaultSecretData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -23,8 +28,10 @@ namespace Azure.ResourceManager.KeyVault
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultSecretData DeserializeKeyVaultSecretData(JsonElement element)
+        internal static KeyVaultSecretData DeserializeKeyVaultSecretData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +99,37 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
             return new KeyVaultSecretData(id, name, type, systemData.Value, properties, Optional.ToNullable(location), Optional.ToDictionary(tags));
+        }
+
+        void IModelJsonSerializable<KeyVaultSecretData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        KeyVaultSecretData IModelJsonSerializable<KeyVaultSecretData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultSecretData(document.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KeyVaultSecretData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        {
+            "J" or "W" => ModelSerializer.SerializeCore(this, options),
+            "bicep" => SerializeBicep(options),
+            _ => throw new FormatException($"Unsupported format {options.Format}")
+        };
+
+        KeyVaultSecretData IModelSerializable<KeyVaultSecretData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.Parse(data);
+            return DeserializeKeyVaultSecretData(document.RootElement, options);
+        }
+
+        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"  name: '{Name}'");
+            sb.AppendLine($"  properties: {{");
+            sb.AppendChildObject(Properties, options, spaces: 4);
+            sb.AppendLine($"  }}");
+            return BinaryData.FromString(sb.ToString());
         }
     }
 }

@@ -6,14 +6,18 @@
 #nullable disable
 
 using System;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class SecretProperties : IUtf8JsonSerializable
+    public partial class SecretProperties : IUtf8JsonSerializable, IModelJsonSerializable<SecretProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
@@ -34,8 +38,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static SecretProperties DeserializeSecretProperties(JsonElement element)
+        internal static SecretProperties DeserializeSecretProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +88,34 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             return new SecretProperties(value.Value, contentType.Value, attributes.Value, secretUri.Value, secretUriWithVersion.Value);
+        }
+
+        void IModelJsonSerializable<SecretProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        SecretProperties IModelJsonSerializable<SecretProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretProperties(document.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecretProperties>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        {
+            "J" or "W" => ModelSerializer.SerializeCore(this, options),
+            "bicep" => SerializeBicep(options),
+            _ => throw new FormatException($"Unsupported format {options.Format}")
+        };
+
+        SecretProperties IModelSerializable<SecretProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var document = JsonDocument.Parse(data);
+            return DeserializeSecretProperties(document.RootElement, options);
+        }
+
+        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"  value: '{Value}'");
+            return BinaryData.FromString(sb.ToString());
         }
     }
 }
