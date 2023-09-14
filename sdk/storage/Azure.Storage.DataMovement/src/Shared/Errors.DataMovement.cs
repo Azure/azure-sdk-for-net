@@ -61,8 +61,8 @@ namespace Azure.Storage
         public static ArgumentException InvalidTransferIdFileName(string fileName)
             => new ArgumentException($"Invalid Checkpoint File: The following checkpoint file contains a Transfer ID that is invalid {fileName}");
 
-        public static ArgumentException InvalidJobPartFileName(string fileName)
-            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number: {fileName}");
+        public static ArgumentException InvalidJobPartFileNameExtension(string fileName)
+            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid extension: {fileName}");
 
         public static ArgumentException InvalidJobPartNumberFileName(string fileName)
             => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
