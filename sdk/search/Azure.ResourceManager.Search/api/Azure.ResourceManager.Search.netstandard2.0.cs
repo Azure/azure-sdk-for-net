@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Search
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Search.SearchServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SearchServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SearchServiceData : Azure.ResourceManager.Models.TrackedResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.SearchServiceData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.SearchServiceData>
     {
         public SearchServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions AuthOptions { get { throw null; } set { } }
@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.Search
         public Azure.ResourceManager.Search.Models.SearchSkuName? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceStatus? Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
+        Azure.ResourceManager.Search.SearchServiceData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.SearchServiceData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.SearchServiceData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.Search.SearchServiceData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.SearchServiceData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.SearchServiceData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class SearchServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -171,11 +175,15 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType ShareableSearchServicePrivateLinkResourceType(string name = null, Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData SharedSearchServicePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties properties = null) { throw null; }
     }
-    public partial class SearchAadAuthDataPlaneAuthOptions
+    public partial class SearchAadAuthDataPlaneAuthOptions : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>
     {
         public SearchAadAuthDataPlaneAuthOptions() { }
         public Azure.ResourceManager.Search.Models.SearchAadAuthFailureMode? AadAuthFailureMode { get { throw null; } set { } }
         public System.BinaryData ApiKeyOnly { get { throw null; } set { } }
+        Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public enum SearchAadAuthFailureMode
     {
@@ -187,11 +195,15 @@ namespace Azure.ResourceManager.Search.Models
         Compliant = 0,
         NonCompliant = 1,
     }
-    public partial class SearchEncryptionWithCmk
+    public partial class SearchEncryptionWithCmk : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>
     {
         public SearchEncryptionWithCmk() { }
         public Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchEncryptionWithCmkEnforcement? Enforcement { get { throw null; } set { } }
+        Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public enum SearchEncryptionWithCmkEnforcement
     {
@@ -255,10 +267,14 @@ namespace Azure.ResourceManager.Search.Models
         Default = 0,
         HighDensity = 1,
     }
-    public partial class SearchServiceIPRule
+    public partial class SearchServiceIPRule : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.Models.SearchServiceIPRule>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.Models.SearchServiceIPRule>
     {
         public SearchServiceIPRule() { }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Search.Models.SearchServiceIPRule Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchServiceIPRule Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class SearchServiceNameAvailabilityContent
     {
