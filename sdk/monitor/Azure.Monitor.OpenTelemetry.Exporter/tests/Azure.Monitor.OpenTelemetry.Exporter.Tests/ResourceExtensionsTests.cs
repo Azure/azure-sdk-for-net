@@ -27,19 +27,30 @@ public class ResourceExtensionsTests
     }
 
     [Theory]
-    [InlineData(null)]
-    [InlineData(InstrumentationKey)]
-    public void DefaultResource(string? instrumentationKey)
+    [InlineData(null, "true")]
+    [InlineData(null, "false")]
+    [InlineData(null, null)]
+    [InlineData(InstrumentationKey, "false")]
+    [InlineData(InstrumentationKey, "true")]
+    [InlineData(InstrumentationKey, null)]
+    public void DefaultResource(string? instrumentationKey, string envVarValue)
     {
         try
         {
-            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", "true");
+            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", envVarValue);
             var resource = CreateTestResource();
             var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey);
 
             Assert.StartsWith("unknown_service", azMonResource?.RoleName);
             Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
-            Assert.Equal(instrumentationKey != null, azMonResource?.MetricTelemetry != null);
+            if (envVarValue == "true")
+            {
+                Assert.Equal(instrumentationKey != null, azMonResource?.MetricTelemetry != null);
+            }
+            else
+            {
+                Assert.Null(azMonResource?.MetricTelemetry);
+            }
         }
         finally
         {
