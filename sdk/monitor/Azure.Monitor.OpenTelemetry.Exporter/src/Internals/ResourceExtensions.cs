@@ -119,7 +119,20 @@ internal static class ResourceExtensions
             }
         }
 
-        if (metricsData != null)
+        bool shouldReportMetricTelemetry = false;
+        try
+        {
+            var exportResource = Environment.GetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES");
+            if (exportResource.Equals("true", StringComparison.OrdinalIgnoreCase))
+            {
+                shouldReportMetricTelemetry = true;
+            }
+        }
+        catch
+        {
+        }
+
+        if (shouldReportMetricTelemetry && metricsData != null)
         {
             azureMonitorResource.MetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!)
             {
