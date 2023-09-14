@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Files.Shares;
 
-namespace Azure.Storage.DataMovement.Blobs
+namespace Azure.Storage.DataMovement.Files.Shares
 {
     /// <summary>
     /// Provider for a <see cref="StorageResource"/> configured for an Azure Blob Storage resource.
@@ -71,6 +71,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private readonly GetTokenCredential _getTokenCredential;
         private readonly GetAzureSasCredential _getAzureSasCredential;
 
+        #region ctors
         /// <summary>
         /// Default constrctor.
         /// </summary>
@@ -217,6 +218,7 @@ namespace Azure.Storage.DataMovement.Blobs
             _credentialType = CredentialType.SharedKey;
             _getAzureSasCredential = getAzureSasCredentialAsync;
         }
+        #endregion
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
@@ -267,7 +269,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromShare(string shareUri, ShareStorageResourceContainerOptions options = default)
+        public StorageResource FromShare(string shareUri, ShareFileStorageResourceOptions options = default)
         {
             ShareClient client = _credentialType switch
             {
@@ -292,9 +294,42 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromPath(string directoryUri, ShareStorageResourceOptions options = default)
+        public StorageResource FromDirectory(string directoryUri, ShareFileStorageResourceOptions options = default)
         {
-            throw new NotImplementedException();
+            ShareDirectoryClient client = _credentialType switch
+            {
+                CredentialType.None => new ShareDirectoryClient(new Uri(directoryUri)),
+                CredentialType.SharedKey => new ShareDirectoryClient(new Uri(directoryUri), _getStorageSharedKeyCredential(directoryUri, false)),
+                CredentialType.Token => new ShareDirectoryClient(new Uri(directoryUri), _getTokenCredential(directoryUri, false)),
+                CredentialType.Sas => new ShareDirectoryClient(new Uri(directoryUri), _getAzureSasCredential(directoryUri, false)),
+                _ => throw BadCredentialTypeException(_credentialType),
+            };
+            return new ShareDirectoryStorageResourceContainer(client, options);
+        }
+
+        /// <summary>
+        /// Creates a storage resource pointing towards the given container URI.
+        /// </summary>
+        /// <param name="fileUri">
+        /// Target location.
+        /// </param>
+        /// <param name="options">
+        /// Options for creating the storage resource.
+        /// </param>
+        /// <returns>
+        /// The configured storage resource.
+        /// </returns>
+        public StorageResource FromFile(string fileUri, ShareFileStorageResourceOptions options = default)
+        {
+            ShareFileClient client = _credentialType switch
+            {
+                CredentialType.None => new ShareFileClient(new Uri(fileUri)),
+                CredentialType.SharedKey => new ShareFileClient(new Uri(fileUri), _getStorageSharedKeyCredential(fileUri, false)),
+                CredentialType.Token => new ShareFileClient(new Uri(fileUri), _getTokenCredential(fileUri, false)),
+                CredentialType.Sas => new ShareFileClient(new Uri(fileUri), _getAzureSasCredential(fileUri, false)),
+                _ => throw BadCredentialTypeException(_credentialType),
+            };
+            return new ShareFileStorageResourceItem(client, options);
         }
         #endregion
 
@@ -313,9 +348,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public StorageResource FromClient(
             ShareClient client,
-            ShareStorageResourceContainerOptions options = default)
+            ShareFileStorageResourceOptions options = default)
         {
-            throw new NotImplementedException();
+            return new ShareStorageResourceContainer(client, options);
         }
 
         /// <summary>
@@ -332,9 +367,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public StorageResource FromClient(
             ShareDirectoryClient client,
-            ShareStorageResourceContainerOptions options = default)
+            ShareFileStorageResourceOptions options = default)
         {
-            throw new NotImplementedException();
+            return new ShareDirectoryStorageResourceContainer(client, options);
         }
 
         /// <summary>
@@ -351,9 +386,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public StorageResource FromClient(
             ShareFileClient client,
-            ShareStorageResourceOptions options = default)
+            ShareFileStorageResourceOptions options = default)
         {
-            throw new NotImplementedException();
+            return new ShareFileStorageResourceItem(client, options);
         }
         #endregion
 

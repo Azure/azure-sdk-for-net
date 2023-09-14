@@ -11,6 +11,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 {
     internal class ShareFileStorageResourceItem : StorageResourceItem
     {
+        internal readonly ShareFileStorageResourceOptions _options;
+
         internal ShareFileClient ShareFileClient { get; }
 
         public override Uri Uri => ShareFileClient.Uri;
@@ -22,6 +24,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override long MaxChunkSize => throw new NotImplementedException();
 
         protected override long? Length => throw new NotImplementedException();
+
+        public ShareFileStorageResourceItem(
+            ShareFileClient fileClient,
+            ShareFileStorageResourceOptions options = default)
+        {
+            ShareFileClient = fileClient;
+            _options = options;
+        }
 
         protected override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {

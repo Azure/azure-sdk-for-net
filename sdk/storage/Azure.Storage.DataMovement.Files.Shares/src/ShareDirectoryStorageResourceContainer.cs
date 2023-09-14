@@ -10,9 +10,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
 {
     internal class ShareDirectoryStorageResourceContainer : StorageResourceContainer
     {
+        internal readonly ShareFileStorageResourceOptions _options;
+
         internal ShareDirectoryClient ShareDirectoryClient { get; }
 
         public override Uri Uri => ShareDirectoryClient.Uri;
+
+        internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
+        {
+            ShareDirectoryClient = shareDirectoryClient;
+            _options = options;
+        }
 
         protected override StorageResourceItem GetStorageResourceReference(string path)
         {
