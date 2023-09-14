@@ -32,7 +32,10 @@ public class AzureChatExtensionsTests : OpenAITestBase
         OpenAIClientServiceTarget serviceTarget,
         ExtensionObjectStrategy extensionStrategy)
     {
-        OpenAIClient client = GetTestClient(serviceTarget);
+        OpenAIClient client = GetTestClient(
+            serviceTarget,
+            OpenAIClientAuthenticationType.ApiKey,
+            OpenAIClientOptions.ServiceVersion.V2023_08_01_Preview);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
             serviceTarget,
             OpenAIClientScenario.ChatCompletions);
@@ -93,7 +96,10 @@ public class AzureChatExtensionsTests : OpenAITestBase
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task StreamingSearchExtensionWorks(OpenAIClientServiceTarget serviceTarget)
     {
-        OpenAIClient client = GetTestClient(serviceTarget);
+        OpenAIClient client = GetTestClient(
+            serviceTarget,
+            OpenAIClientAuthenticationType.ApiKey,
+            OpenAIClientOptions.ServiceVersion.V2023_08_01_Preview);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
             serviceTarget,
             OpenAIClientScenario.ChatCompletions);

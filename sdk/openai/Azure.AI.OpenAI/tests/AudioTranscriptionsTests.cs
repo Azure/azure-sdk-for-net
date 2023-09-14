@@ -48,7 +48,15 @@ public class AudioTranscriptionsTest : OpenAITestBase
 
         if (transcriptionFormat != null && !string.IsNullOrEmpty(transcriptionFormat.ToString()))
         {
-            requestOptions.ResponseFormat = transcriptionFormat;
+            requestOptions.ResponseFormat = transcriptionFormat switch
+            {
+                "json" => AudioTranscriptionFormat.SimpleJson,
+                "verbose_json" => AudioTranscriptionFormat.VerboseJson,
+                "srt" => AudioTranscriptionFormat.SubRipText,
+                "vtt" => AudioTranscriptionFormat.WebVideoTextTracksText,
+                "text" => AudioTranscriptionFormat.PlainText,
+                _ => throw new ArgumentException($"Unknown response format provided to test: {transcriptionFormat}"),
+            };
         }
 
         Response<AudioTranscription> response = await client.GetAudioTranscriptionAsync(
@@ -64,7 +72,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
         {
             Assert.That(response.Value.Duration, Is.Null);
             Assert.That(response.Value.Language, Is.Null);
-            Assert.That(response.Value.Segments, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Segments, Is.Null.Or.Empty);
         }
 
         if (transcriptionFormat != null && transcriptionFormat == AudioTranscriptionFormat.VerboseJson)
@@ -75,7 +83,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
             AudioTranscriptionSegment firstSegment = response.Value.Segments[0];
             Assert.That(firstSegment, Is.Not.Null);
             Assert.That(firstSegment.Id, Is.EqualTo(0));
-            Assert.That(firstSegment.Start, Is.GreaterThanOrEqualTo(0));
+            Assert.That(firstSegment.Start, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
             Assert.That(firstSegment.End, Is.GreaterThan(firstSegment.Start));
             Assert.That(firstSegment.Tokens, Is.Not.Null.Or.Empty);
         }
@@ -113,7 +121,15 @@ public class AudioTranscriptionsTest : OpenAITestBase
 
         if (transcriptionFormat != null && !string.IsNullOrEmpty(transcriptionFormat.ToString()))
         {
-            requestOptions.ResponseFormat = transcriptionFormat;
+            requestOptions.ResponseFormat = transcriptionFormat switch
+            {
+                "json" => AudioTranscriptionFormat.SimpleJson,
+                "verbose_json" => AudioTranscriptionFormat.VerboseJson,
+                "srt" => AudioTranscriptionFormat.SubRipText,
+                "vtt" => AudioTranscriptionFormat.WebVideoTextTracksText,
+                "text" => AudioTranscriptionFormat.PlainText,
+                _ => throw new ArgumentException($"Unknown response format provided to test: {transcriptionFormat}"),
+            };
         }
 
         Response<AudioTranscription> response = await client.GetAudioTranslationAsync(
@@ -127,7 +143,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
             || transcriptionFormat == AudioTranscriptionFormat.SimpleJson
             || transcriptionFormat == AudioTranscriptionFormat.PlainText)
         {
-            Assert.That(response.Value.Duration, Is.EqualTo(default(TimeSpan)));
+            Assert.That(response.Value.Duration, Is.Null);
             Assert.That(response.Value.Language, Is.Null);
             Assert.That(response.Value.Segments, Is.Null.Or.Empty);
         }
@@ -140,7 +156,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
             AudioTranscriptionSegment firstSegment = response.Value.Segments[0];
             Assert.That(firstSegment, Is.Not.Null);
             Assert.That(firstSegment.Id, Is.EqualTo(0));
-            Assert.That(firstSegment.Start, Is.GreaterThanOrEqualTo(0));
+            Assert.That(firstSegment.Start, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
             Assert.That(firstSegment.End, Is.GreaterThan(firstSegment.Start));
             Assert.That(firstSegment.Tokens, Is.Not.Null.Or.Empty);
         }
