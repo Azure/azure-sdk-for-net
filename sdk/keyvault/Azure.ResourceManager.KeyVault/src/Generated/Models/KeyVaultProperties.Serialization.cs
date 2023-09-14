@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
