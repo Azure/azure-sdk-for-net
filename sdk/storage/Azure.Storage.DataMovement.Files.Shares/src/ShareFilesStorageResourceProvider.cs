@@ -10,7 +10,7 @@ using Azure.Storage.Files.Shares;
 namespace Azure.Storage.DataMovement.Files.Shares
 {
     /// <summary>
-    /// Provider for a <see cref="StorageResource"/> configured for an Azure Blob Storage resource.
+    /// Provider for a <see cref="StorageResource"/> configured for an Azure File Share Storage resource.
     /// </summary>
     public class ShareFilesStorageResourceProvider : StorageResourceProvider
     {
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <inheritdoc/>
-        protected override string TypeId => "blob";
+        protected override string TypeId => "share";
 
         private readonly CredentialType _credentialType;
         private readonly GetStorageSharedKeyCredential _getStorageSharedKeyCredential;
@@ -82,12 +82,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// <para>
-        /// Constructs this provider to use the given credential when making a new Blob Storage
+        /// Constructs this provider to use the given credential when making a new File Share
         /// <see cref="StorageResource"/>.
         /// </para>
         /// <para>
         /// This instance will use the given <see cref="StorageSharedKeyCredential"/> when constructing the underlying
-        /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, StorageSharedKeyCredential, ShareClientOptions)"/>.
+        /// Azure.Storage.Files.Shares client, e.g. <see cref="ShareFileClient(Uri, StorageSharedKeyCredential, ShareClientOptions)"/>.
         /// The credential will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
         /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
@@ -104,12 +104,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// <para>
-        /// Constructs this provider to use the given credential when making a new Blob Storage
+        /// Constructs this provider to use the given credential when making a new File Share
         /// <see cref="StorageResource"/>.
         /// </para>
         /// <para>
         /// This instance will use the given <see cref="TokenCredential"/> when constructing the underlying
-        /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, TokenCredential, ShareClientOptions)"/>.
+        /// Azure.Storage.Files.Shares client, e.g. <see cref="ShareFileClient(Uri, TokenCredential, ShareClientOptions)"/>.
         /// The credential will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
         /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
@@ -126,16 +126,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// <para>
-        /// Constructs this provider to use the given credential when making a new Blob Storage
+        /// Constructs this provider to use the given credential when making a new File Share
         /// <see cref="StorageResource"/>.
         /// </para>
         /// <para>
         /// This instance will use the given <see cref="AzureSasCredential"/> when constructing the underlying
-        /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, AzureSasCredential, ShareClientOptions)"/>.
+        /// Azure.Storage.Files.Shares client, e.g. <see cref="ShareFileClient(Uri, AzureSasCredential, ShareClientOptions)"/>.
         /// The credential will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
         /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
-        /// Additionally, if the given target blob resource already has a SAS token in the URI, that token will be
+        /// Additionally, if the given target share resource already has a SAS token in the URI, that token will be
         /// preferred over this credential.
         /// </para>
         /// </summary>
@@ -150,12 +150,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// <para>
-        /// Constructs this provider to use the given delegate for acquiring a credential when making a new Blob
-        /// Storage <see cref="StorageResource"/>.
+        /// Constructs this provider to use the given delegate for acquiring a credential when making a new File Share
+        /// see cref="StorageResource"/>.
         /// </para>
         /// <para>
         /// This instance will use the given <see cref="GetStorageSharedKeyCredential"/> to fetch a credential
-        /// when constructing the underlying Azure.Storage.Blobs client, e.g.
+        /// when constructing the underlying Azure.Storage.Files.Shares client, e.g.
         /// <see cref="ShareFileClient(Uri, StorageSharedKeyCredential, ShareClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
@@ -173,12 +173,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// <para>
-        /// Constructs this provider to use the given delegate for acquiring a credential when making a new Blob
-        /// Storage <see cref="StorageResource"/>.
+        /// Constructs this provider to use the given delegate for acquiring a credential when making a new File Share
+        /// <see cref="StorageResource"/>.
         /// </para>
         /// <para>
         /// This instance will use the given <see cref="GetTokenCredential"/> to fetch a credential
-        /// when constructing the underlying Azure.Storage.Blobs client, e.g.
+        /// when constructing the underlying Azure.Storage.Files.Shares client, e.g.
         /// <see cref="ShareFileClient(Uri, TokenCredential, ShareClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
@@ -196,17 +196,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// <para>
-        /// Constructs this provider to use the given delegate for acquiring a credential when making a new Blob
-        /// Storage <see cref="StorageResource"/>.
+        /// Constructs this provider to use the given delegate for acquiring a credential when making a new File Share
+        /// <see cref="StorageResource"/>.
         /// </para>
         /// <para>
         /// This instance will use the given <see cref="GetAzureSasCredential"/> to fetch a credential
-        /// when constructing the underlying Azure.Storage.Blobs client, e.g.
+        /// when constructing the underlying Azure.Storage.Files.Shares client, e.g.
         /// <see cref="ShareFileClient(Uri, AzureSasCredential, ShareClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
         /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
-        /// Additionally, if the given target blob resource already has a SAS token in the URI, that token will be
+        /// Additionally, if the given target share resource already has a SAS token in the URI, that token will be
         /// preferred over this delegate.
         /// </para>
         /// </summary>
