@@ -6,6 +6,7 @@
     <PackageId>Azure.ResourceManager.MySql</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DBforMySQL.</Description>
     <PackageTags>azure;management;arm;resource manager;mysql</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
 </Project>

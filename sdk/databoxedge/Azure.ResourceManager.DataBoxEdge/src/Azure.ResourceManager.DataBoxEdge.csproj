@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.DataBoxEdge</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DataBoxEdge.</Description>
     <PackageTags>azure;management;arm;resource manager;databoxedge</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

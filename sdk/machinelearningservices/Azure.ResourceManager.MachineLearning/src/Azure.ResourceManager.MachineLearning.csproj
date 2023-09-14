@@ -6,6 +6,7 @@
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.MachineLearningServices.</Description>
     <PackageId>Azure.ResourceManager.MachineLearning</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 
   <PropertyGroup>

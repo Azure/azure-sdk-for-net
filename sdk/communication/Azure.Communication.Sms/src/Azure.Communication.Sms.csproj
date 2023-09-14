@@ -10,6 +10,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Sms Service;Microsoft;Azure;Azure Communication Service;Azure Communication Sms Service;Sms;Communication;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
