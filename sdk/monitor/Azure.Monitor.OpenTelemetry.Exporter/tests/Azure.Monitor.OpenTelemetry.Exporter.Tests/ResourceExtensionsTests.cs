@@ -340,6 +340,7 @@ public class ResourceExtensionsTests
     }
 
     [Theory]
+    [InlineData(null)]
     [InlineData("true")]
     [InlineData("false")]
     public void MetricTelemetryIsAddedToResourceBasedOnEnvVar(string envVarValue)
