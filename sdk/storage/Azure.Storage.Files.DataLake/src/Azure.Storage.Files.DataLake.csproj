@@ -19,6 +19,7 @@
     </Description>
     <GenerateAPIListing>true</GenerateAPIListing>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />

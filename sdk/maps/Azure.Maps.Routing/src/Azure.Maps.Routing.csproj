@@ -4,6 +4,7 @@
     <AssemblyTitle>Azure Maps Azure.Maps.Routing</AssemblyTitle>
     <Version>1.0.0-beta.3</Version>
     <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Routing</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

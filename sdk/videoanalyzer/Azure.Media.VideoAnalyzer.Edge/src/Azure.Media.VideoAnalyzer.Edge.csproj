@@ -12,6 +12,7 @@
     <AssemblyTitle>Azure Video Analyzer Edge SDK</AssemblyTitle>
     <Version>1.0.0-beta.7</Version>
     <PackageTags>Azure Video Analyzer Edge</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>

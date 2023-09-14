@@ -4,6 +4,7 @@
     <AssemblyTitle>Azure SDK Code Generation ContentSafety for Azure Data Plane</AssemblyTitle>
     <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure ContentSafety</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

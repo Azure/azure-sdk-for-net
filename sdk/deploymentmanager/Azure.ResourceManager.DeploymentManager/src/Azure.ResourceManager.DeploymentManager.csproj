@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.DeploymentManager</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DeploymentManager.</Description>
     <PackageTags>azure;management;arm;resource manager;deploymentmanager</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

@@ -6,6 +6,7 @@
       This is the Azure Personalizer client library for developing .NET applications.
     </Description>
     <PackageTags>Personalizer;Azure Personalizer;Cognitive Services Personalizer;Cognitive Personalizer;Cognitive;Azure</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

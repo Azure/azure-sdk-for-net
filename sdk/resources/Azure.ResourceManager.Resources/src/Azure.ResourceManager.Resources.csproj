@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Resources</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Resources.</Description>
     <PackageTags>azure;management;resources</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>
