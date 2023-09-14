@@ -177,6 +177,9 @@ All covered projects should have 70% or better test coverage.
 By default, all _Azure.*_ libraries are covered, and any project that sets the `IsClientLibrary=true` MSBuild property.
 To exclude a project, set `ExcludeFromCodeCoverage=true` in the project's MSBuild properties before other targets are imported.
 
+> The Azure SDK team does not mandate a threshold for code coverage nor do we report on it. This metric can be misleading e.g., a client library with a lot of models and few operations could have complete serialization coverage of models but no coverage for operations and still have a high metric.
+> We encourage teams to drill into the reports to analyze their code coverage as necessary e.g., any code teams have written or client library methods that call an endpoint.
+
 ## Public API additions
 
 If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in `sdk\template\Azure.Template\api\Azure.Template.netstandard2.0.cs`.
