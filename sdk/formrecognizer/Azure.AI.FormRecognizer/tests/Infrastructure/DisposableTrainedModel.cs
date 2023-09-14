@@ -26,6 +26,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         /// <param name="trainingClient">The client to use for deleting the model.</param>
         /// <param name="modelId">The identifier of the model to associate with this instance.</param>
+        /// <param name="deleteOnDisposal">Whether the model should be deleted on disposal.</param>
         private DisposableTrainedModel(FormTrainingClient trainingClient, string modelId, bool deleteOnDisposal)
         {
             _trainingClient = trainingClient;

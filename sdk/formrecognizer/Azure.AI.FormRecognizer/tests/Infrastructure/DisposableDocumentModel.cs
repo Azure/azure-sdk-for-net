@@ -24,6 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// </summary>
         /// <param name="client">The client to use for deleting the model.</param>
         /// <param name="value">The model to associate with this instance.</param>
+        /// <param name="deleteOnDisposal">Whether the model should be deleted on disposal.</param>
         private DisposableDocumentModel(DocumentModelAdministrationClient client, DocumentModelDetails value, bool deleteOnDisposal)
         {
             _client = client;
@@ -50,6 +51,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <param name="buildMode">The technique to use to build the model.</param>
         /// <param name="modelId">The identifier of the model.</param>
         /// <param name="options">A set of options to apply when configuring the request.</param>
+        /// <param name="deleteOnDisposal">Whether the model should be deleted on disposal.</param>
         /// <returns>A <see cref="DisposableDocumentModel"/> instance from which the built model can be obtained.</returns>
         public static async Task<DisposableDocumentModel> BuildAsync(DocumentModelAdministrationClient client, Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId, BuildDocumentModelOptions options = null, bool deleteOnDisposal = true)
         {

@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>
         /// Trains a model and returns the associated <see cref="DisposableTrainedModel"/> instance, from which
-        /// the model ID can be obtained.
+        /// the model ID can be obtained. A cached model may be returned instead when running in live mode.
         /// </summary>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="containerType">Type of container to use to execute training.</param>

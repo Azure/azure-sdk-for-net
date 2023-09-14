@@ -111,12 +111,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         /// <summary>
-        /// Builds a document model and returns the associated <see cref="DisposableDocumentModel"/> instance.
+        /// Builds a document model and returns the associated <see cref="DisposableDocumentModel"/> instance. A cached
+        /// model may be returned instead when running in live mode.
         /// </summary>
         /// <param name="containerType">The type of container to use for training.</param>
         /// <param name="options">A set of options to apply when configuring the request.</param>
         /// <param name="skipCaching">If <c>true</c>, the model cache will be ignored and a new model will be returned. Otherwise, the model cache may be used.</param>
-        /// <returns>A <see cref="DisposableDocumentModel"/> instance from which the built model ID can be obtained.</returns>
+        /// <returns>A <see cref="DisposableDocumentModel"/> instance from which the built model can be obtained.</returns>
         protected async ValueTask<DisposableDocumentModel> BuildDisposableDocumentModelAsync(ContainerType containerType = default, BuildDocumentModelOptions options = null, bool skipCaching = false)
         {
             var client = CreateDocumentModelAdministrationClient();

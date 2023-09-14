@@ -8,10 +8,20 @@ using ServiceVersion = Azure.AI.FormRecognizer.FormRecognizerClientOptions.Servi
 
 namespace Azure.AI.FormRecognizer.Tests
 {
+    /// <summary>
+    /// Stores instances of <see cref="DisposableTrainedModel"/> for later use, reducing the amount
+    /// of calls to the model training API.
+    /// </summary>
     internal static class TrainedModelCache
     {
+        /// <summary>
+        /// The actual collection storing <see cref="DisposableTrainedModel"/> instances.
+        /// </summary>
         public static Dictionary<ModelKey, DisposableTrainedModel> Models { get; } = new();
 
+        /// <summary>
+        /// Deletes all cached models.
+        /// </summary>
         public static async Task DeleteModelsAsync()
         {
             foreach (var model in Models.Values)
@@ -29,6 +39,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Models.Clear();
         }
 
+        /// <summary>
+        /// A key used the <see cref="Models"/> dictionary to indicate whether two models are the same.
+        /// </summary>
         public readonly struct ModelKey
         {
             public ModelKey(ServiceVersion serviceVersion, string containerType, bool useTrainingLabels, string modelName)
