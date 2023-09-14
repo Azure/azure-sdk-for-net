@@ -203,6 +203,7 @@ jobs:
       - script: >-
           dotnet build eng/service.proj -warnaserror
           /t:rebuild
+          /t:ValidateApiCompat
           /p:DebugType=none
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
