@@ -7,21 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Text.Json;
-using System.Xml;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class AzureCliScript : IUtf8JsonSerializable, IModelJsonSerializable<AzureCliScript>
+    public partial class AzureCliScript : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -119,10 +113,8 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureCliScript DeserializeAzureCliScript(JsonElement element, ModelSerializerOptions options = default)
+        internal static AzureCliScript DeserializeAzureCliScript(JsonElement element)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -355,68 +347,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             return new AzureCliScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
-        }
-
-        void IModelJsonSerializable<AzureCliScript>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
-
-        AzureCliScript IModelJsonSerializable<AzureCliScript>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureCliScript(document.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<AzureCliScript>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
-        {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        AzureCliScript IModelSerializable<AzureCliScript>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeAzureCliScript(document.RootElement, options);
-        }
-
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"  name: '{Name}'");
-            sb.AppendLine($"  location: '{Location}'");
-            sb.AppendLine($"  kind: '{Kind}'");
-            if (Optional.IsCollectionDefined(Tags) && Tags.Count > 0)
-            {
-                sb.AppendLine($"  tags: {{");
-                foreach (var kv in Tags)
-                {
-                    sb.AppendLine($"    '{kv.Key}': '{kv.Value}'");
-                }
-                sb.AppendLine($"  }}");
-            }
-            sb.AppendLine($"  properties: {{");
-            sb.AppendLine($"    azCliVersion: '{AzCliVersion}'");
-            sb.AppendLine($"    retentionInterval: '{XmlConvert.ToString(RetentionInterval)}'");
-            if (Timeout.HasValue)
-            {
-                sb.AppendLine($"    timeout: '{XmlConvert.ToString(Timeout.Value)}'");
-            }
-            sb.AppendLine($"    cleanupPreference: '{CleanupPreference}'");
-            if (Optional.IsCollectionDefined(EnvironmentVariables) && EnvironmentVariables.Count > 0)
-            {
-                sb.AppendLine($"    environmentVariables: [");
-                foreach (var variable in EnvironmentVariables)
-                {
-                    sb.AppendLine($"      {{");
-                    sb.AppendChildObject(variable, options, true, 6);
-                    sb.AppendLine($"      }}");
-                }
-                sb.AppendLine($"    ]");
-            }
-            sb.AppendLine($"    scriptContent: '''");
-            sb.AppendLine($"{ScriptContent}");
-            sb.AppendLine($"    '''");
-            sb.AppendLine($"  }}");
-            return BinaryData.FromString(sb.ToString());
         }
     }
 }
