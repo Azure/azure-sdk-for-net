@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, StorageSharedKeyCredential, ShareClientOptions)"/>.
         /// The credential will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
-        /// <see cref="FromClient(ShareFileClient, ShareClientOptions)"/>.
+        /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
         /// </para>
         /// </summary>
         /// <param name="credential">
@@ -109,10 +109,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </para>
         /// <para>
         /// This instance will use the given <see cref="TokenCredential"/> when constructing the underlying
-        /// Azure.Storage.Blobs client, e.g. <see cref="BlockBlobClient(Uri, TokenCredential, BlobClientOptions)"/>.
+        /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, TokenCredential, ShareClientOptions)"/>.
         /// The credential will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
-        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
         /// </para>
         /// </summary>
         /// <param name="credential">
@@ -131,10 +131,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </para>
         /// <para>
         /// This instance will use the given <see cref="AzureSasCredential"/> when constructing the underlying
-        /// Azure.Storage.Blobs client, e.g. <see cref="BlockBlobClient(Uri, AzureSasCredential, BlobClientOptions)"/>.
+        /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, AzureSasCredential, ShareClientOptions)"/>.
         /// The credential will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
-        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
         /// Additionally, if the given target blob resource already has a SAS token in the URI, that token will be
         /// preferred over this credential.
         /// </para>
@@ -156,10 +156,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <para>
         /// This instance will use the given <see cref="GetStorageSharedKeyCredential"/> to fetch a credential
         /// when constructing the underlying Azure.Storage.Blobs client, e.g.
-        /// <see cref="BlockBlobClient(Uri, StorageSharedKeyCredential, BlobClientOptions)"/>.
+        /// <see cref="ShareFileClient(Uri, StorageSharedKeyCredential, ShareClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
-        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
         /// </para>
         /// </summary>
         /// <param name="getStorageSharedKeyCredentialAsync">
@@ -179,10 +179,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <para>
         /// This instance will use the given <see cref="GetTokenCredential"/> to fetch a credential
         /// when constructing the underlying Azure.Storage.Blobs client, e.g.
-        /// <see cref="BlockBlobClient(Uri, TokenCredential, BlobClientOptions)"/>.
+        /// <see cref="ShareFileClient(Uri, TokenCredential, ShareClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
-        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
         /// </para>
         /// </summary>
         /// <param name="getTokenCredentialAsync">
@@ -202,10 +202,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <para>
         /// This instance will use the given <see cref="GetAzureSasCredential"/> to fetch a credential
         /// when constructing the underlying Azure.Storage.Blobs client, e.g.
-        /// <see cref="BlockBlobClient(Uri, AzureSasCredential, BlobClientOptions)"/>.
+        /// <see cref="ShareFileClient(Uri, AzureSasCredential, ShareClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
-        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// <see cref="FromClient(ShareFileClient, ShareFileStorageResourceOptions)"/>.
         /// Additionally, if the given target blob resource already has a SAS token in the URI, that token will be
         /// preferred over this delegate.
         /// </para>
@@ -229,7 +229,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
             => await FromTransferPropertiesAsync(properties, getSource: false, cancellationToken).ConfigureAwait(false);
 
-        private async Task<StorageResource> FromTransferPropertiesAsync(
+        private Task<StorageResource> FromTransferPropertiesAsync(
             DataTransferProperties properties,
             bool getSource,
             CancellationToken cancellationToken)
