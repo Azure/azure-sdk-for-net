@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -19,6 +20,8 @@ namespace Azure.ResourceManager.Communication.Models
             LinkedDomains = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> List of email Domain resource Ids. </summary>
         public IList<string> LinkedDomains { get; }
     }

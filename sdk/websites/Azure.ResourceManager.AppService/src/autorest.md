@@ -20,6 +20,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+unreferenced-types-handling: KeepAll
 
 # mgmt-debug:
 #  show-serialized-names: true
