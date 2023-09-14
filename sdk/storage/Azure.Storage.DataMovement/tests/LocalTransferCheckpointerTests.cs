@@ -74,8 +74,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal async Task AddJobToCheckpointer(
             TransferCheckpointer transferCheckpointer,
             string transferId,
-            string sourcePath = CheckpointerTesting.DefaultSourcePath,
-            string destinationPath = CheckpointerTesting.DefaultDestinationPath)
+            string sourcePath = CheckpointerTesting.DefaultWebSourcePath,
+            string destinationPath = CheckpointerTesting.DefaultWebDestinationPath)
         {
             StorageResource source = MockStorageResource.MakeSourceResource(10, uri: new(sourcePath));
             StorageResource destination = MockStorageResource.MakeDestinationResource(uri: new(destinationPath));
@@ -156,8 +156,8 @@ namespace Azure.Storage.DataMovement.Tests
                 string transferId = GetNewTransferId();
                 expectedTransferIds.Add(transferId);
 
-                string sourcePath = CheckpointerTesting.DefaultSourcePath + i;
-                string destinationPath = CheckpointerTesting.DefaultDestinationPath + i;
+                string sourcePath = CheckpointerTesting.DefaultWebSourcePath + i;
+                string destinationPath = CheckpointerTesting.DefaultWebDestinationPath + i;
                 await AddJobToCheckpointer(transferCheckpointer, transferId, sourcePath, destinationPath);
             }
 
@@ -524,8 +524,8 @@ namespace Azure.Storage.DataMovement.Tests
                 string transferId = GetNewTransferId();
                 expectedTransferIds.Add(transferId);
 
-                string sourcePath = CheckpointerTesting.DefaultSourcePath + i;
-                string destinationPath = CheckpointerTesting.DefaultDestinationPath + i;
+                string sourcePath = CheckpointerTesting.DefaultWebSourcePath + i;
+                string destinationPath = CheckpointerTesting.DefaultWebDestinationPath + i;
                 await AddJobToCheckpointer(transferCheckpointer, transferId, sourcePath, destinationPath);
             }
 

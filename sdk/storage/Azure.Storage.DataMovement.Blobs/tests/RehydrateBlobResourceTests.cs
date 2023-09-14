@@ -111,9 +111,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Use mock resources that don't correspond to correct paths
             var sourceMock = new Mock<StorageResource>();
-            sourceMock.Setup(s => s.Uri).Returns(new Uri("https://example.com/source"));
+            sourceMock.Setup(s => s.Uri).Returns(new Uri(CheckpointerTesting.DefaultWebSourcePath));
             var destMock = new Mock<StorageResource>();
-            destMock.Setup(s => s.Uri).Returns(new Uri("https://example.com/destination"));
+            destMock.Setup(s => s.Uri).Returns(new Uri(CheckpointerTesting.DefaultWebDestinationPath));
             await checkpointer.AddNewJobAsync(transferId, sourceMock.Object, destMock.Object);
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
