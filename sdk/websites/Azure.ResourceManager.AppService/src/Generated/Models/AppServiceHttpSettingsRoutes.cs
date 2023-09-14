@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the paths HTTP requests. </summary>
-    public partial class AppServiceHttpSettingsRoutes
+    internal partial class AppServiceHttpSettingsRoutes
     {
         /// <summary> Initializes a new instance of AppServiceHttpSettingsRoutes. </summary>
         public AppServiceHttpSettingsRoutes()

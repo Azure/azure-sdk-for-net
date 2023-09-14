@@ -19,8 +19,9 @@ using Azure.Core;
 [assembly: CodeGenSuppressType("ProxyOnlyResource")]
 [assembly: CodeGenSuppressType("StaticSiteUserProvidedFunctionAppProperties")]
 [assembly: CodeGenSuppressType("UserAssignedIdentity")]
+[assembly: CodeGenSuppressType("ManagedServiceIdentityType")]
 
-namespace Azure.ResourceManager.AppService.CdkHack
+namespace Azure.ResourceManager.AppService.Models
 {
 #pragma warning disable SA1402 // File may only contain a single type
     internal partial class AllowedAudiencesValidation { }
@@ -38,5 +39,6 @@ namespace Azure.ResourceManager.AppService.CdkHack
     internal partial class PrivateLinkResourcesWrapper { }
     internal partial class RoutingRuleExperiments { }
     internal partial class WebAppEnabledConfig { }
+    internal partial class PrivateLinkResourcesWrapper { }
 #pragma warning restore SA1402 // File may only contain a single type
 }

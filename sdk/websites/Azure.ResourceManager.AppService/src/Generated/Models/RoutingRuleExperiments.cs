@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Routing rules in production experiments. </summary>
-    public partial class RoutingRuleExperiments
+    internal partial class RoutingRuleExperiments
     {
         /// <summary> Initializes a new instance of RoutingRuleExperiments. </summary>
         public RoutingRuleExperiments()

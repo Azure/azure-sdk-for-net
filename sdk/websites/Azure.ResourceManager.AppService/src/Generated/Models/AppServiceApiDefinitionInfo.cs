@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Information about the formal API definition for the app. </summary>
-    public partial class AppServiceApiDefinitionInfo
+    internal partial class AppServiceApiDefinitionInfo
     {
         /// <summary> Initializes a new instance of AppServiceApiDefinitionInfo. </summary>
         public AppServiceApiDefinitionInfo()

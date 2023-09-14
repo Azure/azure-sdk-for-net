@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The DetectorMetadata. </summary>
-    public partial class DetectorMetadata
+    internal partial class DetectorMetadata
     {
         /// <summary> Initializes a new instance of DetectorMetadata. </summary>
         public DetectorMetadata()
