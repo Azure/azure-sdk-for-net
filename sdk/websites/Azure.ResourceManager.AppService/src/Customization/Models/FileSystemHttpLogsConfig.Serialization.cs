@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
             var sb = new StringBuilder();
             if (IsEnabled.HasValue)
             {
-                sb.AppendLine($"  enabled: {IsEnabled.Value}");
+                sb.AppendLine($"  enabled: {IsEnabled.Value.ToString().ToLower()}");
             }
             if (RetentionInDays.HasValue)
             {

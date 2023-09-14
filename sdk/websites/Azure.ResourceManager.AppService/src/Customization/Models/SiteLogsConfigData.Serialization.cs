@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.AppService
         private BinaryData SerializeBicep(ModelSerializerOptions options)
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"  name: '{Name}'");
+            sb.AppendLine($"  name: 'logs'");
             sb.AppendLine($"  properties: {{");
             sb.AppendLine($"    applicationLogs: {{");
             sb.AppendChildObject(ApplicationLogs, options, true, 4);
             sb.AppendLine($"    }}");
             sb.AppendLine($"    detailedErrorMessages: {{");
-            sb.AppendLine($"      enabled: {IsDetailedErrorMessagesEnabled}");
+            sb.AppendLine($"      enabled: {IsDetailedErrorMessagesEnabled.ToString().ToLower()}");
             sb.AppendLine($"    }}");
             sb.AppendLine($"    failedRequestsTracing: {{");
-            sb.AppendLine($"      enabled: {IsFailedRequestsTracingEnabled}");
+            sb.AppendLine($"      enabled: {IsFailedRequestsTracingEnabled.ToString().ToLower()}");
             sb.AppendLine($"    }}");
             sb.AppendLine($"    httpLogs: {{");
             sb.AppendChildObject(HttpLogs, options, true, 4);

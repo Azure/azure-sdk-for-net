@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
             var sb = new StringBuilder();
             if (Level.HasValue)
             {
-                sb.AppendLine($"  level: {Level.Value.ToSerialString()} {{");
+                sb.AppendLine($"  level: '{Level.Value.ToSerialString()}'");
             }
             return BinaryData.FromString(sb.ToString());
         }

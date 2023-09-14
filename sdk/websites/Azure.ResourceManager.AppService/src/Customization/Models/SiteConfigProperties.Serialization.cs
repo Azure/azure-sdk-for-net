@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
             sb.AppendLine($"  linuxFxVersion: '{LinuxFxVersion}'");
             if(IsAlwaysOn.HasValue)
             {
-                sb.AppendLine($"  alwaysOn: {IsAlwaysOn.Value}");
+                sb.AppendLine($"  alwaysOn: {IsAlwaysOn.Value.ToString().ToLower()}");
             }
             sb.AppendLine($"  ftpsState: '{FtpsState}'");
             sb.AppendLine($"  minTlsVersion: '{MinTlsVersion}'");
