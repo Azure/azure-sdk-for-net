@@ -3,7 +3,9 @@
 
 //This file is needed because we had to turn off the post processor which makes a bunch of types public.
 
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 [assembly: CodeGenSuppressType("ArmIdWrapper")]
 [assembly: CodeGenSuppressType("AppServiceGithubToken")]
@@ -20,6 +22,7 @@ using Azure.Core;
 [assembly: CodeGenSuppressType("StaticSiteUserProvidedFunctionAppProperties")]
 [assembly: CodeGenSuppressType("UserAssignedIdentity")]
 [assembly: CodeGenSuppressType("ManagedServiceIdentityType")]
+[assembly: CodeGenSuppressType("ArmAppServiceModelFactory")]
 
 namespace Azure.ResourceManager.AppService.Models
 {
