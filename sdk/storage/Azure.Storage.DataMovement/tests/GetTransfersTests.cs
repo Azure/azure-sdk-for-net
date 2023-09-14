@@ -270,6 +270,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalTransferCheckpointerFactory factory = new LocalTransferCheckpointerFactory(test.DirectoryPath);
 
             string transferId1 = Guid.NewGuid().ToString();
+            factory.CreateStubJobPlanFile(test.DirectoryPath, transferId1);
             factory.CreateStubJobPartPlanFilesAsync(
                 test.DirectoryPath,
                 transferId1,
@@ -277,6 +278,7 @@ namespace Azure.Storage.DataMovement.Tests
                 DataTransferStatus.Completed);
 
             string transferId2 = Guid.NewGuid().ToString();
+            factory.CreateStubJobPlanFile(test.DirectoryPath, transferId2);
             factory.CreateStubJobPartPlanFilesAsync(
                 test.DirectoryPath,
                 transferId2,
@@ -303,6 +305,9 @@ namespace Azure.Storage.DataMovement.Tests
             string checkpointerPath,
             DataTransferProperties properties)
         {
+            // First add the job plan file for the transfer
+            factory.CreateStubJobPlanFile(checkpointerPath, properties.TransferId);
+
             if (properties.IsContainer)
             {
                 int numParts = 3;

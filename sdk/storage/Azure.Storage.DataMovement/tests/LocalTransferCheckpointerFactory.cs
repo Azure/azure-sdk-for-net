@@ -58,9 +58,11 @@ namespace Azure.Storage.DataMovement.Tests
             // Create stub files
             for (int i = 0; i < transferCount; i++)
             {
+                string transferId = GetNewTransferId();
+                CreateStubJobPlanFile(_checkpointerPath, transferId);
                 CreateStubJobPartPlanFilesAsync(
                     checkpointerPath: _checkpointerPath,
-                    transferId: GetNewTransferId(),
+                    transferId: transferId,
                     jobPartCount: _partCountDefault);
             }
 
@@ -72,6 +74,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             foreach (DataTransfer dataTransfer in dataTransfers)
             {
+                CreateStubJobPlanFile(_checkpointerPath, dataTransfer.Id);
                 CreateStubJobPartPlanFilesAsync(
                     checkpointerPath: _checkpointerPath,
                     transferId: dataTransfer.Id,
@@ -136,6 +139,25 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     header.Serialize(stream);
                 }
+            }
+        }
+
+        internal void CreateStubJobPlanFile(string checkpointPath, string transferId)
+        {
+            JobPlanHeader header = new JobPlanHeader(
+                DataMovementConstants.JobPlanFile.SchemaVersion,
+                transferId,
+                DateTimeOffset.UtcNow,
+                JobPlanOperation.ServiceToService,
+                false, /* enumerationComplete */
+                JobPlanStatus.Queued,
+                _testSourcePath,
+                _testDestinationPath);
+
+            string filePath = Path.Combine(checkpointPath, $"{transferId}.{DataMovementConstants.JobPlanFile.FileExtension}");
+            using (FileStream stream = File.Create(filePath))
+            {
+                header.Serialize(stream);
             }
         }
 

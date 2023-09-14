@@ -28,9 +28,11 @@ namespace Azure.Storage.DataMovement.Tests
             = new DateTimeOffset(2023, 03, 13, 15, 24, 6, default);
         internal const string DefaultSourceResourceId = "LocalFile";
         internal const string DefaultSourcePath = "C:/sample-source";
+        internal const string DefaultWebSourcePath = "https://example.com/source";
         internal const string DefaultSourceQuery = "sourcequery";
         internal const string DefaultDestinationResourceId = "LocalFile";
         internal const string DefaultDestinationPath = "C:/sample-destination";
+        internal const string DefaultWebDestinationPath = "https://example.com/destination";
         internal const string DefaultDestinationQuery = "destquery";
         internal const byte DefaultPriority = 0;
         internal static readonly DateTimeOffset DefaultTtlAfterCompletion = DateTimeOffset.MaxValue;

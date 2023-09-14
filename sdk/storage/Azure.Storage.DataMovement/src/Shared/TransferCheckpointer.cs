@@ -25,12 +25,16 @@ namespace Azure.Storage.DataMovement
         /// Adds a new transfer to the checkpointer.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
+        /// <param name="source">The source resource.</param>
+        /// <param name="destination">The destination resource.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
         public abstract Task AddNewJobAsync(
             string transferId,
+            StorageResource source,
+            StorageResource destination,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -51,20 +55,6 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             int chunksTotal,
             Stream headerStream,
-            CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Add existing job to the checkpointer with verification. This function will throw
-        /// if no existing job plan files exist in the checkpointer, and the job plan files have
-        /// mismatch information from the information to resume from.
-        /// </summary>
-        /// <param name="transferId">The transfer ID.</param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        public abstract Task AddExistingJobAsync(
-            string transferId,
             CancellationToken cancellationToken = default);
 
         /// <summary>
