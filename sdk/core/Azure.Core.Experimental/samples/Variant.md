@@ -37,7 +37,11 @@
 
 </details>
 
-In principle, `Variant` is similar to `object`, but without boxing as described above.  However, since it's not `object`, there are different APIs needed to achieve some of the same functionality, such as [assigning a value to `Variant`](#assign-a-value-to-variant), [retrieving the value a `Variant` holds](#get-the-value-from-variant), and [working with `null` and `Variant`](#handling-nulls).
+In principle, `Variant` is similar to `object`, but without boxing as described above.  However, since it's not `object`, there are different APIs needed to achieve some of the same functionality, including:
+
+- [Assigning a value to `Variant`](#assign-a-value-to-variant)
+- [Retrieving the value a `Variant` holds](#get-the-value-from-variant)
+- [Working with `null` and `Variant`](#handling-nulls).
 
 ## Assign a value to Variant
 
