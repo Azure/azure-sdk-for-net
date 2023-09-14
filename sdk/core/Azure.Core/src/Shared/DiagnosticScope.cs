@@ -513,7 +513,7 @@ namespace Azure.Core.Pipeline
                     _currentActivity?.SetErrorStatus(exception?.ToString());
                 }
 #endif
-#if NET6_0_OR_GREATER // Set status is only defined in NET 6 or greater
+#if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
                 _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
 #endif
             }
