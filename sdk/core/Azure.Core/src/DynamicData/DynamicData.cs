@@ -23,7 +23,7 @@ namespace Azure.Core.Serialization
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
 #if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
-    [RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
+    [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
 #endif
     [JsonConverter(typeof(DynamicDataJsonConverter))]
     public sealed partial class DynamicData : IDisposable
@@ -37,6 +37,8 @@ namespace Azure.Core.Serialization
         private MutableJsonElement _element;
         private readonly DynamicDataOptions _options;
         private readonly JsonSerializerOptions _serializerOptions;
+
+        internal const string SerializationRequiresUnreferencedCodeClass = "This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.";
 
         internal DynamicData(MutableJsonElement element, DynamicDataOptions options)
         {
