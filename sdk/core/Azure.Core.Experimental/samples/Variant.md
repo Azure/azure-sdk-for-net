@@ -3,7 +3,7 @@
 `Azure.Variant` is an implementation of a [tagged union](https://en.wikipedia.org/wiki/Tagged_union).  It can hold both reference and value types and can be used to avoid boxing .NET primitives.  The list of value types that Variant can hold without boxing is below.
 
 <details>
-<summary>Value types that Variant won't box</summary>
+<summary>Value types that `Variant` won't box</summary>
 
 - `byte`
 - `byte?`
@@ -37,7 +37,7 @@
 
 </details>
 
-In principle, `Variant` is similar to `object`, but without boxing as described above.  However, since it's not `object`, there are different APIs needed to achieve some of the same functionality.  For example:
+In principle, `Variant` is similar to `object`, but without boxing as described above.  However, since it's not `object`, there are different APIs needed to achieve some of the same functionality, such as assigning a value to `Variant`, retrieving the value a `Variant` holds, and working with `null` and `Variant`.
 
 ## Assign a value to Variant
 
@@ -66,7 +66,7 @@ Value v = Value.Create(System.Color.Blue);
 // v.Type is System.Color
 ```
 
-### Get the value from Variant
+## Get the value from Variant
 
 `Variant` has explicit cast operators for each of the primitives listed above, as well as to `string`.  That means you can assign a `Variant` holding one of these types to a variable of that type with a cast:
 
@@ -112,7 +112,7 @@ if (v.TryGetValue(out int i))
 }
 ```
 
-### Handling nulls
+## Handling nulls
 
 `Variant` handles nullable primitives without boxing them for value types on the supported list above.  It also supports holding a reference type with a `null` value.  In either of these cases, the variant's `Type` property will return `null`.
 
