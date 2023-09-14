@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
@@ -393,8 +395,11 @@ namespace Azure.ResourceManager.Resources.Models
             }
             sb.AppendLine($"  properties: {{");
             sb.AppendLine($"    azCliVersion: '{AzCliVersion}'");
-            sb.AppendLine($"    retentionInterval: '{RetentionInterval}'");
-            sb.AppendLine($"    timeout: '{Timeout}'");
+            sb.AppendLine($"    retentionInterval: '{XmlConvert.ToString(RetentionInterval)}'");
+            if (Timeout.HasValue)
+            {
+                sb.AppendLine($"    timeout: '{XmlConvert.ToString(Timeout.Value)}'");
+            }
             sb.AppendLine($"    cleanupPreference: '{CleanupPreference}'");
             if (Optional.IsCollectionDefined(EnvironmentVariables) && EnvironmentVariables.Count > 0)
             {
