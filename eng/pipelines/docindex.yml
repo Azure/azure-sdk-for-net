@@ -38,12 +38,22 @@ jobs:
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
+      
       # Install the tool for toc step to use
       - task: NuGetToolInstaller@1
         inputs:
           versionSpec: 6.3.1
-      # Call update docs ci script to onboard packages
+
       - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
+          arguments: -DocRepoLocation $(DocRepoLocation)
+        displayName: Move deprecated packages to legacy moniker
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+
       - task: Powershell@2
         inputs:
           pwsh: true
@@ -108,6 +118,14 @@ jobs:
           Write-Host "##vso[task.setvariable variable=PackageSourceOverride]$publicFeedUrl"
         displayName: Set package source variable
         workingDirectory: $(DocRepoLocation)
+
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
+          arguments: -DocRepoLocation $(DocRepoLocation)
+        displayName: Move deprecated packages to legacy moniker
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
 
       - task: Powershell@2
         inputs:

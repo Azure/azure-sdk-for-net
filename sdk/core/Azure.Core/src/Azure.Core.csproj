@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.35.0-beta.1</Version>
+    <Version>1.36.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.34.0</ApiCompatVersion>
+    <ApiCompatVersion>1.35.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
@@ -69,15 +69,6 @@
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
-    <Compile Include="Shared\MutableJsonChange.cs" />
-    <Compile Include="Shared\MutableJsonChangeKind.cs" />
-    <Compile Include="Shared\MutableJsonDocument.ChangeTracker.cs" />
-    <Compile Include="Shared\MutableJsonDocument.cs" />
-    <Compile Include="Shared\MutableJsonElement.ArrayEnumerator.cs" />
-    <Compile Include="Shared\MutableJsonElement.cs" />
-    <Compile Include="Shared\MutableJsonElement.ObjectEnumerator.cs" />
-    <Compile Include="Shared\MutableJsonElement.WriteTo.cs" />
-    <Compile Include="Shared\MutableJsonElement.WriteTo.MergePatch.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />
     <Compile Include="Shared\TrimmingAttribute.cs" />
@@ -90,7 +81,6 @@
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
-    <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
   </ItemGroup>
 
 </Project>

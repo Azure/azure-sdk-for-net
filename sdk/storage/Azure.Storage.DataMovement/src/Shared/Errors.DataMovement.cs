@@ -26,8 +26,11 @@ namespace Azure.Storage
         public static ArgumentException UnableToGetLength()
             => new ArgumentException("Unable to get the length of the source storage resource");
 
-        public static ArgumentException UnsupportedSchemaVersionHeader(string schemaVersion)
+        public static ArgumentException UnsupportedJobSchemaVersionHeader(string schemaVersion)
             => new ArgumentException($"The checkpoint file schema version {schemaVersion} is not supported by this version of the SDK.");
+
+        public static ArgumentException UnsupportedJobPartSchemaVersionHeader(string schemaVersion)
+            => new ArgumentException($"The checkpoint part file schema version {schemaVersion} is not supported by this version of the SDK.");
 
         public static ArgumentException MismatchTransferId(string passedTransferId, string storedTransferId)
             => throw new ArgumentException($"Mismatch Transfer Id: Transfer ID stored in the Job Plan file does not match the Transfer ID " +
