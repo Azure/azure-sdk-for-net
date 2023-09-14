@@ -122,7 +122,7 @@ internal static class ResourceExtensions
         bool shouldReportMetricTelemetry = false;
         try
         {
-            var exportResource = Environment.GetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES");
+            var exportResource = Environment.GetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS");
             if (exportResource.Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 shouldReportMetricTelemetry = true;

@@ -33,7 +33,7 @@ public class ResourceExtensionsTests
     {
         try
         {
-            Environment.SetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES", "true");
+            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", "true");
             var resource = CreateTestResource();
             var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey);
 
@@ -43,7 +43,7 @@ public class ResourceExtensionsTests
         }
         finally
         {
-            Environment.SetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES", null);
+            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", null);
         }
     }
 
@@ -196,7 +196,7 @@ public class ResourceExtensionsTests
     {
         try
         {
-            Environment.SetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES", "true");
+            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", "true");
 
             // SDK version is static, preserve to clean up later.
             var sdkVersion = SdkVersionUtils.s_sdkVersion;
@@ -223,7 +223,7 @@ public class ResourceExtensionsTests
         }
         finally
         {
-            Environment.SetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES", null);
+            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", null);
         }
     }
 
@@ -234,7 +234,7 @@ public class ResourceExtensionsTests
     {
         try
         {
-            Environment.SetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES", "true");
+            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", "true");
 
             var testAttributes = new Dictionary<string, object>
             {
@@ -278,7 +278,7 @@ public class ResourceExtensionsTests
         }
         finally
         {
-            Environment.SetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES", null);
+            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", null);
         }
     }
 
@@ -346,7 +346,7 @@ public class ResourceExtensionsTests
     {
         try
         {
-            Environment.SetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES", envVarValue);
+            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", envVarValue);
 
             var resource = ResourceBuilder.CreateDefault().Build();
             var azMonResource = resource.CreateAzureMonitorResource(InstrumentationKey);
@@ -362,7 +362,7 @@ public class ResourceExtensionsTests
         }
         finally
         {
-            Environment.SetEnvironmentVariable("EXPORT_METRIC_FOR_RESOURCE_ATTRIBUTES", null);
+            Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS", null);
         }
     }
 
