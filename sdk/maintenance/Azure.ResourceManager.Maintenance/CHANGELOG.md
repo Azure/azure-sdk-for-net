@@ -2,13 +2,7 @@
 
 ## 1.2.0-beta.4 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Fix the string format of `StartOn` and `ExpireOn` in `MaintenanceConfigurationData` serialization.
 
 ## 1.2.0-beta.3 (2023-09-05)
 

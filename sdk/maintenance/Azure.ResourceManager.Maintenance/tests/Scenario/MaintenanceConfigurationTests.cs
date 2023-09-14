@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationResource maintenanceConfigurationResource = await CreateMaintenanceConfiguration();
             Assert.IsNotEmpty(maintenanceConfigurationResource.Data.Id);
             Assert.AreEqual(maintenanceConfigurationResource.Data.StartOn, new DateTimeOffset(2024, 12, 31, 14, 0, 0, TimeSpan.Zero));
+            Assert.AreEqual(maintenanceConfigurationResource.Data.ExpireOn, new DateTimeOffset(9999, 12, 31, 0, 0, 0, TimeSpan.Zero));
         }
 
         [RecordedTest]
