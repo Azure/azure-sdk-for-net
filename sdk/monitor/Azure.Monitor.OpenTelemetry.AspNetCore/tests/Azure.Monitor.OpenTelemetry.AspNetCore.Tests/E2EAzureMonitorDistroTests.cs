@@ -54,14 +54,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             // Telemetry is serialized as json, and then byte encoded.
             // Need to parse the request content into something assertable.
             var data = ParseJsonRequestContent<ParsedData>(transport.Requests);
-            Assert.Equal(16, data.Count); // Total telemetry items
+            Assert.Equal(15, data.Count); // Total telemetry items
 
             // Group all parsed telemetry by name and get the count per name.
             var summary = data.GroupBy(x => x.name).ToDictionary(x => x.Key!, x => x.Count());
 
             Assert.Equal(4, summary.Count); // Total unique telemetry items
             Assert.Equal(8, summary["Message"]); // Count of telemetry items
-            Assert.Equal(6, summary["Metric"]);
+            Assert.Equal(5, summary["Metric"]);
             Assert.Equal(1, summary["RemoteDependency"]);
             Assert.Equal(1, summary["Request"]);
 
