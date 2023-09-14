@@ -5,22 +5,17 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ResourceGroupData : IUtf8JsonSerializable, IModelJsonSerializable<ResourceGroupData>
+    public partial class ResourceGroupData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -49,10 +44,8 @@ namespace Azure.ResourceManager.Resources
             writer.WriteEndObject();
         }
 
-        internal static ResourceGroupData DeserializeResourceGroupData(JsonElement element, ModelSerializerOptions options = default)
+        internal static ResourceGroupData DeserializeResourceGroupData(JsonElement element)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -126,48 +119,6 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return new ResourceGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, managedBy.Value);
-        }
-
-        void IModelJsonSerializable<ResourceGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
-
-        ResourceGroupData IModelJsonSerializable<ResourceGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceGroupData(document.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ResourceGroupData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
-        {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        ResourceGroupData IModelSerializable<ResourceGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeResourceGroupData(document.RootElement, options);
-        }
-
-        private BinaryData SerializeBicep()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"  name: '{Name}'");
-            sb.AppendLine($"  location: '{Location}'");
-            if(Optional.IsDefined(ManagedBy))
-            {
-                sb.AppendLine($"  managedBy: {ManagedBy}");
-            }
-            if(Optional.IsCollectionDefined(Tags) && Tags.Count > 0)
-            {
-                sb.AppendLine($"  tags: {{");
-                foreach(var kv in Tags)
-                {
-                    sb.AppendLine($"    '{kv.Key}': '{kv.Value}'");
-                }
-                sb.AppendLine($"  }}");
-            }
-            return BinaryData.FromString(sb.ToString());
         }
     }
 }
