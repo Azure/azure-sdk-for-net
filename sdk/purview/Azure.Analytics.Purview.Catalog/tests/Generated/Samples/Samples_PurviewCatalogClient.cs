@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Analytics.Purview.Catalog;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,13 +23,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Search()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new { };
-
-            Response response = client.Search(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.Search(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -39,38 +38,34 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Search_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 keywords = "<keywords>",
                 offset = 1234,
                 limit = 1234,
-                filter = new { },
-                facets = new[] {
-        new {
-            count = 1234,
-            facet = "<facet>",
-            sort = new {},
-        }
-    },
+                filter = new object(),
+                facets = new List<object>()
+{
+new
+{
+count = 1234,
+facet = "<facet>",
+sort = new object(),
+}
+},
                 taxonomySetting = new
                 {
-                    assetTypes = new[] {
-            "<String>"
-        },
-                    facet = new
-                    {
-                        count = 1234,
-                        facet = "<facet>",
-                        sort = new { },
-                    },
+                    assetTypes = new List<object>()
+{
+"<assetTypes>"
+},
                 },
-            };
-
-            Response response = client.Search(RequestContent.Create(data));
+            });
+            Response response = client.Search(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -116,13 +111,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Search_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new { };
-
-            Response response = await client.SearchAsync(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.SearchAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -132,38 +126,34 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Search_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 keywords = "<keywords>",
                 offset = 1234,
                 limit = 1234,
-                filter = new { },
-                facets = new[] {
-        new {
-            count = 1234,
-            facet = "<facet>",
-            sort = new {},
-        }
-    },
+                filter = new object(),
+                facets = new List<object>()
+{
+new
+{
+count = 1234,
+facet = "<facet>",
+sort = new object(),
+}
+},
                 taxonomySetting = new
                 {
-                    assetTypes = new[] {
-            "<String>"
-        },
-                    facet = new
-                    {
-                        count = 1234,
-                        facet = "<facet>",
-                        sort = new { },
-                    },
+                    assetTypes = new List<object>()
+{
+"<assetTypes>"
+},
                 },
-            };
-
-            Response response = await client.SearchAsync(RequestContent.Create(data));
+            });
+            Response response = await client.SearchAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -209,13 +199,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Suggest()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new { };
-
-            Response response = client.Suggest(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.Suggest(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -225,18 +214,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Suggest_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 keywords = "<keywords>",
                 limit = 1234,
-                filter = new { },
-            };
-
-            Response response = client.Suggest(RequestContent.Create(data));
+                filter = new object(),
+            });
+            Response response = client.Suggest(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
@@ -262,13 +250,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Suggest_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new { };
-
-            Response response = await client.SuggestAsync(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.SuggestAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -278,18 +265,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Suggest_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 keywords = "<keywords>",
                 limit = 1234,
-                filter = new { },
-            };
-
-            Response response = await client.SuggestAsync(RequestContent.Create(data));
+                filter = new object(),
+            });
+            Response response = await client.SuggestAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
@@ -315,13 +301,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Browse()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new { };
-
-            Response response = client.Browse(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.Browse(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -331,19 +316,18 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Browse_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 entityType = "<entityType>",
                 path = "<path>",
                 limit = 1234,
                 offset = 1234,
-            };
-
-            Response response = client.Browse(RequestContent.Create(data));
+            });
+            Response response = client.Browse(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -363,13 +347,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Browse_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new { };
-
-            Response response = await client.BrowseAsync(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.BrowseAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -379,19 +362,18 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Browse_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 entityType = "<entityType>",
                 path = "<path>",
                 limit = 1234,
                 offset = 1234,
-            };
-
-            Response response = await client.BrowseAsync(RequestContent.Create(data));
+            });
+            Response response = await client.BrowseAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -411,13 +393,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AutoComplete()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new { };
-
-            Response response = client.AutoComplete(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.AutoComplete(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -427,18 +408,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AutoComplete_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 keywords = "<keywords>",
                 limit = 1234,
-                filter = new { },
-            };
-
-            Response response = client.AutoComplete(RequestContent.Create(data));
+                filter = new object(),
+            });
+            Response response = client.AutoComplete(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
@@ -449,13 +429,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AutoComplete_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new { };
-
-            Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.AutoCompleteAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -465,18 +444,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AutoComplete_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 keywords = "<keywords>",
                 limit = 1234,
-                filter = new { },
-            };
-
-            Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
+                filter = new object(),
+            });
+            Response response = await client.AutoCompleteAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());

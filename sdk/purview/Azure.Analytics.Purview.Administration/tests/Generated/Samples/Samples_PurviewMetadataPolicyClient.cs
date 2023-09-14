@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Analytics.Purview.Administration;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,13 +23,12 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateMetadataPolicy()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            var data = new { };
-
-            Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+            RequestContent content = null;
+            Response response = client.UpdateMetadataPolicy("<policyId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -39,11 +38,11 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateMetadataPolicy_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 id = "<id>",
@@ -51,56 +50,56 @@ namespace Azure.Analytics.Purview.Administration.Samples
                 properties = new
                 {
                     description = "<description>",
-                    decisionRules = new[] {
-            new {
-                effect = "Deny",
-                dnfCondition = new[] {
-                    new[] {
-                        new {
-                            attributeName = "<attributeName>",
-                            attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new[] {
-                                "<String>"
-                            },
-                            attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new[] {
-                                "<String>"
-                            },
-                        }
-                    }
-                },
-            }
-        },
-                    attributeRules = new[] {
-            new {
-                id = "<id>",
-                name = "<name>",
-                dnfCondition = new[] {
-                    new[] {
-                        new {
-                            attributeName = "<attributeName>",
-                            attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new[] {
-                                "<String>"
-                            },
-                            attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new[] {
-                                "<String>"
-                            },
-                        }
-                    }
-                },
-            }
-        },
+                    decisionRules = new List<object>()
+{
+new
+{
+effect = "Deny",
+dnfCondition = new List<object>()
+{
+new List<object>()
+{
+new
+{
+attributeName = "<attributeName>",
+attributeValueIncludes = "<attributeValueIncludes>",
+attributeValueIncludedIn = new List<object>()
+{
+"<attributeValueIncludedIn>"
+},
+attributeValueExcludes = "<attributeValueExcludes>",
+attributeValueExcludedIn = new List<object>()
+{
+"<attributeValueExcludedIn>"
+},
+}
+}
+},
+}
+},
+                    attributeRules = new List<object>()
+{
+new
+{
+id = "<id>",
+name = "<name>",
+dnfCondition = new List<object>()
+{
+new List<object>()
+{
+null
+}
+},
+}
+},
                     collection = new
                     {
                         referenceName = "<referenceName>",
                     },
                     parentCollectionName = "<parentCollectionName>",
                 },
-            };
-
-            Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+            });
+            Response response = client.UpdateMetadataPolicy("<policyId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -131,13 +130,12 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateMetadataPolicy_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            var data = new { };
-
-            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+            RequestContent content = null;
+            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -147,11 +145,11 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateMetadataPolicy_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 id = "<id>",
@@ -159,56 +157,56 @@ namespace Azure.Analytics.Purview.Administration.Samples
                 properties = new
                 {
                     description = "<description>",
-                    decisionRules = new[] {
-            new {
-                effect = "Deny",
-                dnfCondition = new[] {
-                    new[] {
-                        new {
-                            attributeName = "<attributeName>",
-                            attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new[] {
-                                "<String>"
-                            },
-                            attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new[] {
-                                "<String>"
-                            },
-                        }
-                    }
-                },
-            }
-        },
-                    attributeRules = new[] {
-            new {
-                id = "<id>",
-                name = "<name>",
-                dnfCondition = new[] {
-                    new[] {
-                        new {
-                            attributeName = "<attributeName>",
-                            attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new[] {
-                                "<String>"
-                            },
-                            attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new[] {
-                                "<String>"
-                            },
-                        }
-                    }
-                },
-            }
-        },
+                    decisionRules = new List<object>()
+{
+new
+{
+effect = "Deny",
+dnfCondition = new List<object>()
+{
+new List<object>()
+{
+new
+{
+attributeName = "<attributeName>",
+attributeValueIncludes = "<attributeValueIncludes>",
+attributeValueIncludedIn = new List<object>()
+{
+"<attributeValueIncludedIn>"
+},
+attributeValueExcludes = "<attributeValueExcludes>",
+attributeValueExcludedIn = new List<object>()
+{
+"<attributeValueExcludedIn>"
+},
+}
+}
+},
+}
+},
+                    attributeRules = new List<object>()
+{
+new
+{
+id = "<id>",
+name = "<name>",
+dnfCondition = new List<object>()
+{
+new List<object>()
+{
+null
+}
+},
+}
+},
                     collection = new
                     {
                         referenceName = "<referenceName>",
                     },
                     parentCollectionName = "<parentCollectionName>",
                 },
-            };
-
-            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+            });
+            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -239,11 +237,11 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataPolicy()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            Response response = client.GetMetadataPolicy("<policyId>", new RequestContext());
+            Response response = client.GetMetadataPolicy("<policyId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -253,11 +251,11 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataPolicy_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            Response response = client.GetMetadataPolicy("<policyId>", new RequestContext());
+            Response response = client.GetMetadataPolicy("<policyId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -288,11 +286,11 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetadataPolicy_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            Response response = await client.GetMetadataPolicyAsync("<policyId>", new RequestContext());
+            Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -302,11 +300,11 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetadataPolicy_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            Response response = await client.GetMetadataPolicyAsync("<policyId>", new RequestContext());
+            Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -337,12 +335,14 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataPolicies()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
-            foreach (var item in client.GetMetadataPolicies(new RequestContext()))
+            foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -350,12 +350,14 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataPolicies_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
-            foreach (var item in client.GetMetadataPolicies(new RequestContext()))
+            foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -363,12 +365,14 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetadataPolicies_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
-            await foreach (var item in client.GetMetadataPoliciesAsync(new RequestContext()))
+            await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -376,12 +380,14 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetadataPolicies_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
-            await foreach (var item in client.GetMetadataPoliciesAsync(new RequestContext()))
+            await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
     }
