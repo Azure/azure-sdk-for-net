@@ -381,7 +381,7 @@ namespace Azure.Storage.DataMovement
                 SearchOption.TopDirectoryOnly))
             {
                 // TODO: Should we check for valid schema version inside file now?
-                JobPlanFile jobPlanFile = JobPlanFile.CreateExistingJobPlanFile(path);
+                JobPlanFile jobPlanFile = JobPlanFile.LoadExistingJobPlanFile(path);
                 if (!_transferStates.ContainsKey(jobPlanFile.Id))
                 {
                     _transferStates.Add(jobPlanFile.Id, jobPlanFile);

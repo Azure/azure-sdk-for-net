@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task CreateExistingJobPlanFileAsync()
+        public async Task LoadExistingJobPlanFile()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string transferId = GetNewTransferId();
@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await fileStream.WriteAsync(data, 0, data.Length);
             }
 
-            JobPlanFile jobPlanFile = JobPlanFile.CreateExistingJobPlanFile(filePath);
+            JobPlanFile jobPlanFile = JobPlanFile.LoadExistingJobPlanFile(filePath);
 
             Assert.NotNull(jobPlanFile);
             Assert.AreEqual(transferId, jobPlanFile.Id);

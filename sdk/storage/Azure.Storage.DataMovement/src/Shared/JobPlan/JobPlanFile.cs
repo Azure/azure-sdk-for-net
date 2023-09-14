@@ -62,7 +62,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             return jobPlanFile;
         }
 
-        public static JobPlanFile CreateExistingJobPlanFile(string fullPath)
+        public static JobPlanFile LoadExistingJobPlanFile(string fullPath)
         {
             Argument.AssertNotNullOrEmpty(fullPath, nameof(fullPath));
 

@@ -109,10 +109,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             JobPlanOperation operationType = GetPlanOperation(sourceType, destinationType);
 
-            // Use dummy resources that don't correspond to correct paths
-            StorageResource source = new MockStorageResource();
-            StorageResource destination = new MockStorageResource();
-            await checkpointer.AddNewJobAsync(transferId, source, destination);
+            // Use mock resources that don't correspond to correct paths
+            var sourceMock = new Mock<StorageResource>();
+            sourceMock.Setup(s => s.Uri).Returns(new Uri("https://example.com/source"));
+            var destMock = new Mock<StorageResource>();
+            destMock.Setup(s => s.Uri).Returns(new Uri("https://example.com/destination"));
+            await checkpointer.AddNewJobAsync(transferId, sourceMock.Object, destMock.Object);
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
