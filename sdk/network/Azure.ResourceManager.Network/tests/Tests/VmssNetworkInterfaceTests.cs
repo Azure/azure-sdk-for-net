@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Tests
             VerifyVmssNicProperties(getNic);
         }
 
-        private void VerifyVmssNicProperties(VmssNetworkInterfaceResource nic)
+        private void VerifyVmssNicProperties(NetworkInterfaceResource nic)
         {
             Assert.NotNull(nic.Data.NetworkSecurityGroup);
             Assert.False(string.IsNullOrEmpty(nic.Data.NetworkSecurityGroup.Id));

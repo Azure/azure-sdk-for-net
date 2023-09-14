@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// A Class representing a CloudServiceSwap along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CloudServiceSwapResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCloudServiceSwapResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CloudServiceNetworkResource" /> using the GetCloudServiceSwap method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCloudServiceSwap method.
     /// </summary>
     public partial class CloudServiceSwapResource : ArmResource
     {
@@ -167,11 +168,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> SwapResource object where slot type should be the target slot after vip swap for the specified cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, CloudServiceSwapData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, CloudServiceSwapData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.CreateOrUpdate");
+            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Update");
             scope.Start();
             try
             {
@@ -205,11 +206,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> SwapResource object where slot type should be the target slot after vip swap for the specified cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, CloudServiceSwapData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, CloudServiceSwapData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.CreateOrUpdate");
+            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Update");
             scope.Start();
             try
             {
