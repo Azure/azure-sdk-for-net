@@ -206,10 +206,14 @@ namespace Azure.Core
             if (response != null)
             {
                 _response = null;
-                response.Dispose();
+                // ================================================================
+                // JS: This is a hack job to get around the `Response` is not
+                //     nullable constraint without hacking up a dummy `Response` type
+                //
+                //response.Dispose();
+                // ================================================================
             }
         }
-
         private class ResponseShouldNotBeUsedStream : Stream
         {
             public Stream Original { get; }
