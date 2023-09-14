@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared.Pipeline.Diagnostics;
+using Azure.Core.Shared.RequestUri;
 using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query

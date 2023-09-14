@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
