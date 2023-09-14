@@ -14,14 +14,7 @@ function Invoke-LoggedCommand($Command, $ExecutePath, [switch]$GroupOutput)
     }
 
     try {
-      if ($IsLinux -or $IsMacOs)
-      {
-          sh -c "$Command 2>&1"
-      }
-      else
-      {
-          cmd /c "$Command 2>&1"
-      }
+      Invoke-Expression $Command
 
       $duration = (Get-Date) - $startTime
 
@@ -47,5 +40,3 @@ function Invoke-LoggedCommand($Command, $ExecutePath, [switch]$GroupOutput)
       }
     }
 }
-
-Set-Alias -Name invoke -Value Invoke-LoggedCommand
