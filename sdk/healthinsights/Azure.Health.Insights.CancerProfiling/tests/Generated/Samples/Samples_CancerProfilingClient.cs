@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Health.Insights.CancerProfiling;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -23,22 +23,23 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_InferCancerProfile()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new CancerProfilingClient(endpoint, credential);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                patients = new[] {
-        new {
-            id = "<id>",
-        }
-    },
-            };
-
-            var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data));
-
+                patients = new List<object>()
+{
+new
+{
+id = "<id>",
+}
+},
+            });
+            Operation<BinaryData> operation = client.InferCancerProfile(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -51,56 +52,64 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_InferCancerProfile_AllParameters()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new CancerProfilingClient(endpoint, credential);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                patients = new[] {
-        new {
-            id = "<id>",
-            info = new {
-                sex = "female",
-                birthDate = "2022-05-10",
-                clinicalInfo = new[] {
-                    new {
-                        system = "<system>",
-                        code = "<code>",
-                        name = "<name>",
-                        value = "<value>",
-                    }
-                },
-            },
-            data = new[] {
-                new {
-                    type = "note",
-                    clinicalType = "consultation",
-                    id = "<id>",
-                    language = "<language>",
-                    createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-                    content = new {
-                        sourceType = "inline",
-                        value = "<value>",
-                    },
-                }
-            },
-        }
-    },
+                patients = new List<object>()
+{
+new
+{
+id = "<id>",
+info = new
+{
+sex = "female",
+birthDate = "2022-05-10",
+clinicalInfo = new List<object>()
+{
+new
+{
+system = "<system>",
+code = "<code>",
+name = "<name>",
+value = "<value>",
+}
+},
+},
+data = new List<object>()
+{
+new
+{
+type = "note",
+clinicalType = "consultation",
+id = "<id>",
+language = "<language>",
+createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+content = new
+{
+sourceType = "inline",
+value = "<value>",
+},
+}
+},
+}
+},
                 configuration = new
                 {
                     verbose = true,
                     includeEvidence = true,
-                    inferenceTypes = new[] {
-            "tumorSite"
-        },
+                    inferenceTypes = new List<object>()
+{
+"tumorSite"
+},
                     checkForCancerCase = true,
                 },
-            };
-
-            var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.InferCancerProfile(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -131,24 +140,93 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_InferCancerProfile_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
+
+            OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new List<PatientRecord>()
+{
+new PatientRecord("<id>")
+});
+            Operation<OncoPhenotypeResult> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+            OncoPhenotypeResult responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_InferCancerProfile_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
+
+            OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new List<PatientRecord>()
+{
+new PatientRecord("<id>")
+{
+Info = new PatientInfo()
+{
+Sex = PatientInfoSex.Female,
+BirthDate = DateTimeOffset.Parse("2022-05-10"),
+ClinicalInfo =
+{
+new ClinicalCodedElement("<system>","<code>")
+{
+Name = "<name>",
+Value = "<value>",
+}
+},
+},
+Data =
+{
+new PatientDocument(DocumentType.Note,"<id>",new DocumentContent(DocumentContentSourceType.Inline,"<value>"))
+{
+ClinicalType = ClinicalDocumentType.Consultation,
+Language = "<language>",
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+}
+},
+}
+})
+            {
+                Configuration = new OncoPhenotypeModelConfiguration()
+                {
+                    Verbose = true,
+                    IncludeEvidence = true,
+                    InferenceTypes =
+{
+OncoPhenotypeInferenceType.TumorSite
+},
+                    CheckForCancerCase = true,
+                },
+            };
+            Operation<OncoPhenotypeResult> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+            OncoPhenotypeResult responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_InferCancerProfile_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new CancerProfilingClient(endpoint, credential);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                patients = new[] {
-        new {
-            id = "<id>",
-        }
-    },
-            };
-
-            var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data));
-
+                patients = new List<object>()
+{
+new
+{
+id = "<id>",
+}
+},
+            });
+            Operation<BinaryData> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -161,56 +239,64 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_InferCancerProfile_AllParameters_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new CancerProfilingClient(endpoint, credential);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                patients = new[] {
-        new {
-            id = "<id>",
-            info = new {
-                sex = "female",
-                birthDate = "2022-05-10",
-                clinicalInfo = new[] {
-                    new {
-                        system = "<system>",
-                        code = "<code>",
-                        name = "<name>",
-                        value = "<value>",
-                    }
-                },
-            },
-            data = new[] {
-                new {
-                    type = "note",
-                    clinicalType = "consultation",
-                    id = "<id>",
-                    language = "<language>",
-                    createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-                    content = new {
-                        sourceType = "inline",
-                        value = "<value>",
-                    },
-                }
-            },
-        }
-    },
+                patients = new List<object>()
+{
+new
+{
+id = "<id>",
+info = new
+{
+sex = "female",
+birthDate = "2022-05-10",
+clinicalInfo = new List<object>()
+{
+new
+{
+system = "<system>",
+code = "<code>",
+name = "<name>",
+value = "<value>",
+}
+},
+},
+data = new List<object>()
+{
+new
+{
+type = "note",
+clinicalType = "consultation",
+id = "<id>",
+language = "<language>",
+createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+content = new
+{
+sourceType = "inline",
+value = "<value>",
+},
+}
+},
+}
+},
                 configuration = new
                 {
                     verbose = true,
                     includeEvidence = true,
-                    inferenceTypes = new[] {
-            "tumorSite"
-        },
+                    inferenceTypes = new List<object>()
+{
+"tumorSite"
+},
                     checkForCancerCase = true,
                 },
-            };
-
-            var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -243,38 +329,54 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_InferCancerProfile_Convenience_Async()
         {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new CancerProfilingClient(endpoint, credential);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            var oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
-            {
-    new PatientRecord("<id>")
+            OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new List<PatientRecord>()
 {
-        Info = new PatientInfo()
+new PatientRecord("<id>")
+});
+            Operation<OncoPhenotypeResult> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+            OncoPhenotypeResult responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_InferCancerProfile_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
+
+            OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new List<PatientRecord>()
 {
-            Sex = PatientInfoSex.Female,
-            BirthDate = DateTimeOffset.UtcNow,
-            ClinicalInfo =
+new PatientRecord("<id>")
 {
-                new ClinicalCodedElement("<system>", "<code>")
+Info = new PatientInfo()
 {
-                    Name = "<Name>",
-                    Value = "<Value>",
-                }
-            },
-        },
-        Data =
+Sex = PatientInfoSex.Female,
+BirthDate = DateTimeOffset.Parse("2022-05-10"),
+ClinicalInfo =
 {
-            new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+new ClinicalCodedElement("<system>","<code>")
 {
-                ClinicalType = ClinicalDocumentType.Consultation,
-                Language = "<Language>",
-                CreatedDateTime = DateTimeOffset.UtcNow,
-            }
-        },
-    }
-            })
+Name = "<name>",
+Value = "<value>",
+}
+},
+},
+Data =
+{
+new PatientDocument(DocumentType.Note,"<id>",new DocumentContent(DocumentContentSourceType.Inline,"<value>"))
+{
+ClinicalType = ClinicalDocumentType.Consultation,
+Language = "<language>",
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+}
+},
+}
+})
             {
                 Configuration = new OncoPhenotypeModelConfiguration()
                 {
@@ -282,12 +384,13 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
                     IncludeEvidence = true,
                     InferenceTypes =
 {
-            OncoPhenotypeInferenceType.TumorSite
-        },
+OncoPhenotypeInferenceType.TumorSite
+},
                     CheckForCancerCase = true,
                 },
             };
-            var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+            Operation<OncoPhenotypeResult> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+            OncoPhenotypeResult responseData = operation.Value;
         }
     }
 }

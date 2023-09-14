@@ -2,13 +2,33 @@
 <doc>
   <members>
     <member name="GetBiomassModelJobAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetBiomassModelJobAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetBiomassModelJobAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GetBiomassModelJobAsync("<jobId>", new RequestContext());
+Response response = await client.GetBiomassModelJobAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("cropName").ToString());
+Console.WriteLine(result.GetProperty("plantingStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("weatherExtensionId").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("imageResolution").ToString());
+Console.WriteLine(result.GetProperty("imageFormat").ToString());
+]]></code>
+This sample shows how to call GetBiomassModelJobAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetBiomassModelJobAsync("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -35,18 +55,37 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="GetBiomassModelJob(string,RequestContext)">
-<example>
-This sample shows how to call GetBiomassModelJob with required parameters and parse the result.
+      <example>
+This sample shows how to call GetBiomassModelJob and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GetBiomassModelJob("<jobId>", new RequestContext());
+Response response = client.GetBiomassModelJob("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("cropName").ToString());
+Console.WriteLine(result.GetProperty("plantingStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("weatherExtensionId").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("imageResolution").ToString());
+Console.WriteLine(result.GetProperty("imageFormat").ToString());
+]]></code>
+This sample shows how to call GetBiomassModelJob with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetBiomassModelJob("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -73,18 +112,35 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="GetSensorPlacementModelJobAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetSensorPlacementModelJobAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSensorPlacementModelJobAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GetSensorPlacementModelJobAsync("<jobId>", new RequestContext());
+Response response = await client.GetSensorPlacementModelJobAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("sensorType").ToString());
+Console.WriteLine(result.GetProperty("isRanked").ToString());
+]]></code>
+This sample shows how to call GetSensorPlacementModelJobAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetSensorPlacementModelJobAsync("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -109,18 +165,35 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="GetSensorPlacementModelJob(string,RequestContext)">
-<example>
-This sample shows how to call GetSensorPlacementModelJob with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSensorPlacementModelJob and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GetSensorPlacementModelJob("<jobId>", new RequestContext());
+Response response = client.GetSensorPlacementModelJob("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("sensorType").ToString());
+Console.WriteLine(result.GetProperty("isRanked").ToString());
+]]></code>
+This sample shows how to call GetSensorPlacementModelJob with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetSensorPlacementModelJob("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -145,18 +218,40 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="GetSoilMoistureModelJobAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetSoilMoistureModelJobAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSoilMoistureModelJobAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GetSoilMoistureModelJobAsync("<jobId>", new RequestContext());
+Response response = await client.GetSoilMoistureModelJobAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
+Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("imageResolution").ToString());
+Console.WriteLine(result.GetProperty("imageFormat").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("sensorMeasurement").ToString());
+Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("minProperty").ToString());
+Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxProperty").ToString());
+]]></code>
+This sample shows how to call GetSoilMoistureModelJobAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetSoilMoistureModelJobAsync("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -186,18 +281,40 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="GetSoilMoistureModelJob(string,RequestContext)">
-<example>
-This sample shows how to call GetSoilMoistureModelJob with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSoilMoistureModelJob and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GetSoilMoistureModelJob("<jobId>", new RequestContext());
+Response response = client.GetSoilMoistureModelJob("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
+Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("imageResolution").ToString());
+Console.WriteLine(result.GetProperty("imageFormat").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("sensorMeasurement").ToString());
+Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("minProperty").ToString());
+Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxProperty").ToString());
+]]></code>
+This sample shows how to call GetSoilMoistureModelJob with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetSoilMoistureModelJob("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -227,18 +344,18 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateBiomassModelJobAsync(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateBiomassModelJobAsync with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateBiomassModelJobAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
@@ -248,13 +365,12 @@ var data = new {
     weatherExtensionId = "<weatherExtensionId>",
     satelliteProvider = "Microsoft",
     satelliteSource = "Sentinel_2_L2A",
-    imageResolution = 123.45d,
+    imageResolution = 123.45,
     imageFormat = "TIF",
-};
-
-var operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -268,12 +384,13 @@ Console.WriteLine(result.GetProperty("satelliteSource").ToString());
 Console.WriteLine(result.GetProperty("imageResolution").ToString());
 Console.WriteLine(result.GetProperty("imageFormat").ToString());
 ]]></code>
-This sample shows how to call CreateBiomassModelJobAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateBiomassModelJobAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
@@ -283,18 +400,18 @@ var data = new {
     weatherExtensionId = "<weatherExtensionId>",
     satelliteProvider = "Microsoft",
     satelliteSource = "Sentinel_2_L2A",
-    imageResolution = 123.45d,
+    imageResolution = 123.45,
     imageFormat = "TIF",
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-var operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -320,18 +437,18 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateBiomassModelJob(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateBiomassModelJob with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateBiomassModelJob and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
@@ -341,13 +458,12 @@ var data = new {
     weatherExtensionId = "<weatherExtensionId>",
     satelliteProvider = "Microsoft",
     satelliteSource = "Sentinel_2_L2A",
-    imageResolution = 123.45d,
+    imageResolution = 123.45,
     imageFormat = "TIF",
-};
-
-var operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -361,12 +477,13 @@ Console.WriteLine(result.GetProperty("satelliteSource").ToString());
 Console.WriteLine(result.GetProperty("imageResolution").ToString());
 Console.WriteLine(result.GetProperty("imageFormat").ToString());
 ]]></code>
-This sample shows how to call CreateBiomassModelJob with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateBiomassModelJob with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
@@ -376,18 +493,18 @@ var data = new {
     weatherExtensionId = "<weatherExtensionId>",
     satelliteProvider = "Microsoft",
     satelliteSource = "Sentinel_2_L2A",
-    imageResolution = 123.45d,
+    imageResolution = 123.45,
     imageFormat = "TIF",
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-var operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -413,18 +530,18 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateSensorPlacementModelJobAsync(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateSensorPlacementModelJobAsync with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateSensorPlacementModelJobAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
@@ -434,11 +551,10 @@ var data = new {
     satelliteSource = "Sentinel_2_L2A",
     sensorType = "<sensorType>",
     isRanked = true,
-};
-
-var operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -450,12 +566,13 @@ Console.WriteLine(result.GetProperty("satelliteSource").ToString());
 Console.WriteLine(result.GetProperty("sensorType").ToString());
 Console.WriteLine(result.GetProperty("isRanked").ToString());
 ]]></code>
-This sample shows how to call CreateSensorPlacementModelJobAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateSensorPlacementModelJobAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
@@ -467,14 +584,14 @@ var data = new {
     isRanked = true,
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-var operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -498,18 +615,18 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateSensorPlacementModelJob(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateSensorPlacementModelJob with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateSensorPlacementModelJob and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
@@ -519,11 +636,10 @@ var data = new {
     satelliteSource = "Sentinel_2_L2A",
     sensorType = "<sensorType>",
     isRanked = true,
-};
-
-var operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -535,12 +651,13 @@ Console.WriteLine(result.GetProperty("satelliteSource").ToString());
 Console.WriteLine(result.GetProperty("sensorType").ToString());
 Console.WriteLine(result.GetProperty("isRanked").ToString());
 ]]></code>
-This sample shows how to call CreateSensorPlacementModelJob with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateSensorPlacementModelJob with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
@@ -552,14 +669,14 @@ var data = new {
     isRanked = true,
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-var operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -583,18 +700,18 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateSoilMoistureModelJobAsync(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateSoilMoistureModelJobAsync with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateSoilMoistureModelJobAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     sensorDataModelId = "<sensorDataModelId>",
@@ -603,19 +720,19 @@ var data = new {
     inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
     satelliteProvider = "Microsoft",
     satelliteSource = "Sentinel_2_L2A",
-    imageResolution = 123.45d,
+    imageResolution = 123.45,
     imageFormat = "TIF",
     modelVersion = "<modelVersion>",
-    sensorDefinition = new {
+    sensorDefinition = new
+    {
         sensorMeasurement = "<sensorMeasurement>",
         minProperty = "<minProperty>",
         maxProperty = "<maxProperty>",
     },
-};
-
-var operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -632,12 +749,13 @@ Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("sensorMeas
 Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("minProperty").ToString());
 Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxProperty").ToString());
 ]]></code>
-This sample shows how to call CreateSoilMoistureModelJobAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateSoilMoistureModelJobAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     sensorDataModelId = "<sensorDataModelId>",
@@ -646,24 +764,25 @@ var data = new {
     inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
     satelliteProvider = "Microsoft",
     satelliteSource = "Sentinel_2_L2A",
-    imageResolution = 123.45d,
+    imageResolution = 123.45,
     imageFormat = "TIF",
     modelVersion = "<modelVersion>",
-    sensorDefinition = new {
+    sensorDefinition = new
+    {
         sensorMeasurement = "<sensorMeasurement>",
         minProperty = "<minProperty>",
         maxProperty = "<maxProperty>",
     },
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-var operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -692,18 +811,18 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateSoilMoistureModelJob(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateSoilMoistureModelJob with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateSoilMoistureModelJob and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     sensorDataModelId = "<sensorDataModelId>",
@@ -712,19 +831,19 @@ var data = new {
     inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
     satelliteProvider = "Microsoft",
     satelliteSource = "Sentinel_2_L2A",
-    imageResolution = 123.45d,
+    imageResolution = 123.45,
     imageFormat = "TIF",
     modelVersion = "<modelVersion>",
-    sensorDefinition = new {
+    sensorDefinition = new
+    {
         sensorMeasurement = "<sensorMeasurement>",
         minProperty = "<minProperty>",
         maxProperty = "<maxProperty>",
     },
-};
-
-var operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -741,12 +860,13 @@ Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("sensorMeas
 Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("minProperty").ToString());
 Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxProperty").ToString());
 ]]></code>
-This sample shows how to call CreateSoilMoistureModelJob with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateSoilMoistureModelJob with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+TokenCredential credential = new DefaultAzureCredential();
+ModelInference client = new FarmBeatsClient(credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+RequestContent content = RequestContent.Create(new
+{
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     sensorDataModelId = "<sensorDataModelId>",
@@ -755,24 +875,25 @@ var data = new {
     inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
     satelliteProvider = "Microsoft",
     satelliteSource = "Sentinel_2_L2A",
-    imageResolution = 123.45d,
+    imageResolution = 123.45,
     imageFormat = "TIF",
     modelVersion = "<modelVersion>",
-    sensorDefinition = new {
+    sensorDefinition = new
+    {
         sensorMeasurement = "<sensorMeasurement>",
         minProperty = "<minProperty>",
         maxProperty = "<maxProperty>",
     },
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-var operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+});
+Operation<BinaryData> operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -801,9 +922,8 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
   </members>
 </doc>

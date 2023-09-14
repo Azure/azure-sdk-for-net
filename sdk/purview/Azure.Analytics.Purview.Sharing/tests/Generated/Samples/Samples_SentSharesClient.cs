@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Analytics.Purview.Sharing;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,11 +23,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSentShare()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = client.GetSentShare("<sentShareId>", new RequestContext());
+            Response response = client.GetSentShare("<sentShareId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -38,11 +38,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSentShare_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = client.GetSentShare("<sentShareId>", new RequestContext());
+            Response response = client.GetSentShare("<sentShareId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -54,11 +54,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSentShare_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = await client.GetSentShareAsync("<sentShareId>", new RequestContext());
+            Response response = await client.GetSentShareAsync("<sentShareId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -69,11 +69,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSentShare_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = await client.GetSentShareAsync("<sentShareId>", new RequestContext());
+            Response response = await client.GetSentShareAsync("<sentShareId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -85,11 +85,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSentShareInvitation()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -100,11 +100,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSentShareInvitation_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -116,11 +116,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSentShareInvitation_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -131,11 +131,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSentShareInvitation_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -147,11 +147,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateSentShareInvitation()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -159,9 +159,8 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 },
                 invitationKind = "Service",
-            };
-
-            Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+            });
+            Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -172,11 +171,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateSentShareInvitation_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -186,9 +185,8 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 },
                 invitationKind = "Service",
-            };
-
-            Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+            });
+            Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -200,11 +198,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateSentShareInvitation_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -212,9 +210,8 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 },
                 invitationKind = "Service",
-            };
-
-            Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+            });
+            Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -225,11 +222,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateSentShareInvitation_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -239,9 +236,8 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 },
                 invitationKind = "Service",
-            };
-
-            Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+            });
+            Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -253,11 +249,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NotifyUserSentShareInvitation()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -268,11 +264,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NotifyUserSentShareInvitation_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -284,11 +280,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NotifyUserSentShareInvitation_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -299,11 +295,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NotifyUserSentShareInvitation_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", new RequestContext());
+            Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -315,15 +311,15 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllSentShares()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllSentShares("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
+            foreach (BinaryData item in client.GetAllSentShares("<referenceName>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("shareKind").ToString());
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -331,16 +327,16 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllSentShares_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllSentShares("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
+            foreach (BinaryData item in client.GetAllSentShares("<referenceName>", "<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("shareKind").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("type").ToString());
             }
         }
 
@@ -348,15 +344,15 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllSentShares_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllSentSharesAsync("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
+            await foreach (BinaryData item in client.GetAllSentSharesAsync("<referenceName>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("shareKind").ToString());
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -364,16 +360,16 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllSentShares_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllSentSharesAsync("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
+            await foreach (BinaryData item in client.GetAllSentSharesAsync("<referenceName>", "<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("shareKind").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("type").ToString());
             }
         }
 
@@ -381,15 +377,15 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllSentShareInvitations()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllSentShareInvitations("<sentShareId>", "<filter>", "<orderby>", new RequestContext()))
+            foreach (BinaryData item in client.GetAllSentShareInvitations("<sentShareId>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("invitationKind").ToString());
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].GetProperty("invitationKind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -397,16 +393,16 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllSentShareInvitations_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllSentShareInvitations("<sentShareId>", "<filter>", "<orderby>", new RequestContext()))
+            foreach (BinaryData item in client.GetAllSentShareInvitations("<sentShareId>", "<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("invitationKind").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("invitationKind").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("type").ToString());
             }
         }
 
@@ -414,15 +410,15 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllSentShareInvitations_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllSentShareInvitationsAsync("<sentShareId>", "<filter>", "<orderby>", new RequestContext()))
+            await foreach (BinaryData item in client.GetAllSentShareInvitationsAsync("<sentShareId>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("invitationKind").ToString());
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].GetProperty("invitationKind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -430,16 +426,16 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllSentShareInvitations_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllSentShareInvitationsAsync("<sentShareId>", "<filter>", "<orderby>", new RequestContext()))
+            await foreach (BinaryData item in client.GetAllSentShareInvitationsAsync("<sentShareId>", "<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("invitationKind").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("invitationKind").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("type").ToString());
             }
         }
 
@@ -447,11 +443,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrReplaceSentShare()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -459,23 +455,24 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     {
                         properties = new
                         {
-                            paths = new[] {
-                    new {
-                        containerName = "<containerName>",
-                    }
-                },
+                            paths = new List<object>()
+{
+new
+{
+containerName = "<containerName>",
+}
+},
                         },
                         storeKind = "AdlsGen2Account",
-                        storeReference = new { },
+                        storeReference = new object(),
                     },
                     displayName = "<displayName>",
                 },
                 shareKind = "InPlace",
-            };
-
-            var operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
             Console.WriteLine(result.ToString());
@@ -485,11 +482,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrReplaceSentShare_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -497,13 +494,15 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     {
                         properties = new
                         {
-                            paths = new[] {
-                    new {
-                        containerName = "<containerName>",
-                        receiverPath = "<receiverPath>",
-                        senderPath = "<senderPath>",
-                    }
-                },
+                            paths = new List<object>()
+{
+new
+{
+containerName = "<containerName>",
+receiverPath = "<receiverPath>",
+senderPath = "<senderPath>",
+}
+},
                         },
                         storeKind = "AdlsGen2Account",
                         storeReference = new
@@ -516,11 +515,10 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     displayName = "<displayName>",
                 },
                 shareKind = "InPlace",
-            };
-
-            var operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -531,11 +529,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrReplaceSentShare_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -543,23 +541,24 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     {
                         properties = new
                         {
-                            paths = new[] {
-                    new {
-                        containerName = "<containerName>",
-                    }
-                },
+                            paths = new List<object>()
+{
+new
+{
+containerName = "<containerName>",
+}
+},
                         },
                         storeKind = "AdlsGen2Account",
-                        storeReference = new { },
+                        storeReference = new object(),
                     },
                     displayName = "<displayName>",
                 },
                 shareKind = "InPlace",
-            };
-
-            var operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
             Console.WriteLine(result.ToString());
@@ -569,11 +568,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrReplaceSentShare_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -581,13 +580,15 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     {
                         properties = new
                         {
-                            paths = new[] {
-                    new {
-                        containerName = "<containerName>",
-                        receiverPath = "<receiverPath>",
-                        senderPath = "<senderPath>",
-                    }
-                },
+                            paths = new List<object>()
+{
+new
+{
+containerName = "<containerName>",
+receiverPath = "<receiverPath>",
+senderPath = "<senderPath>",
+}
+},
                         },
                         storeKind = "AdlsGen2Account",
                         storeReference = new
@@ -600,11 +601,10 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                     displayName = "<displayName>",
                 },
                 shareKind = "InPlace",
-            };
-
-            var operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -615,13 +615,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteSentShare()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>", new RequestContext());
-
+            Operation<BinaryData> operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("status").ToString());
         }
@@ -630,13 +630,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteSentShare_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>", new RequestContext());
-
+            Operation<BinaryData> operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
@@ -651,13 +651,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteSentShare_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>", new RequestContext());
-
+            Operation<BinaryData> operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("status").ToString());
         }
@@ -666,13 +666,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteSentShare_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>", new RequestContext());
-
+            Operation<BinaryData> operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
@@ -687,13 +687,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteSentShareInvitation()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
-
+            Operation<BinaryData> operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("status").ToString());
         }
@@ -702,13 +702,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteSentShareInvitation_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
-
+            Operation<BinaryData> operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
@@ -723,13 +723,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteSentShareInvitation_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
-
+            Operation<BinaryData> operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("status").ToString());
         }
@@ -738,13 +738,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteSentShareInvitation_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new SentSharesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            var operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", new RequestContext());
-
+            Operation<BinaryData> operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>", null);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());

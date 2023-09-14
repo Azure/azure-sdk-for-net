@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Analytics.Purview.Scanning;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,11 +23,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetFilter()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetFilter(new RequestContext());
+            Response response = client.GetFilter(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -37,11 +37,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetFilter_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetFilter(new RequestContext());
+            Response response = client.GetFilter(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -54,11 +54,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetFilter_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetFilterAsync(new RequestContext());
+            Response response = await client.GetFilterAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -68,11 +68,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetFilter_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetFilterAsync(new RequestContext());
+            Response response = await client.GetFilterAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -85,13 +85,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateFilter()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new { };
-
-            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+            RequestContent content = null;
+            Response response = client.CreateOrUpdateFilter(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -101,24 +100,25 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateFilter_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
-                    excludeUriPrefixes = new[] {
-            "<String>"
-        },
-                    includeUriPrefixes = new[] {
-            "<String>"
-        },
+                    excludeUriPrefixes = new List<object>()
+{
+"<excludeUriPrefixes>"
+},
+                    includeUriPrefixes = new List<object>()
+{
+"<includeUriPrefixes>"
+},
                 },
-            };
-
-            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdateFilter(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -131,13 +131,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateFilter_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new { };
-
-            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+            RequestContent content = null;
+            Response response = await client.CreateOrUpdateFilterAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -147,24 +146,25 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateFilter_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
-                    excludeUriPrefixes = new[] {
-            "<String>"
-        },
-                    includeUriPrefixes = new[] {
-            "<String>"
-        },
+                    excludeUriPrefixes = new List<object>()
+{
+"<excludeUriPrefixes>"
+},
+                    includeUriPrefixes = new List<object>()
+{
+"<includeUriPrefixes>"
+},
                 },
-            };
-
-            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateFilterAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -177,16 +177,15 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 kind = "AzureSubscriptionCredential",
-            };
-
-            Response response = client.CreateOrUpdate(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -197,11 +196,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -213,565 +212,18 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             scanRulesetType = "Custom",
                             resourceNameFilter = new
                             {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSubscription = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureResourceGroup = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSynapseWorkspace = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSynapse = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AdlsGen1 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AdlsGen2 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AmazonAccount = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AmazonS3 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AmazonSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureCosmosDb = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureDataExplorer = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureFileService = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSqlDatabase = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AmazonPostgreSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzurePostgreSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        SqlServerDatabase = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSqlDatabaseManagedInstance = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSqlDataWarehouse = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureMySql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureStorage = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        Teradata = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        Oracle = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        SapS4Hana = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        SapEcc = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        PowerBI = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
+                                excludePrefixes = new List<object>()
+{
+"<excludePrefixes>"
+},
+                                includePrefixes = new List<object>()
+{
+"<includePrefixes>"
+},
+                                resources = new List<object>()
+{
+"<resources>"
+},
                             },
                             credential = new
                             {
@@ -798,9 +250,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     },
                 },
                 kind = "AzureSubscriptionCredential",
-            };
-
-            Response response = client.CreateOrUpdate(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -812,7 +263,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -837,16 +288,15 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 kind = "AzureSubscriptionCredential",
-            };
-
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -857,11 +307,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -873,565 +323,18 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             scanRulesetType = "Custom",
                             resourceNameFilter = new
                             {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSubscription = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureResourceGroup = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSynapseWorkspace = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSynapse = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AdlsGen1 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AdlsGen2 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AmazonAccount = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AmazonS3 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AmazonSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureCosmosDb = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureDataExplorer = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureFileService = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSqlDatabase = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AmazonPostgreSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzurePostgreSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        SqlServerDatabase = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSqlDatabaseManagedInstance = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureSqlDataWarehouse = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureMySql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        AzureStorage = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        Teradata = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        Oracle = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        SapS4Hana = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        SapEcc = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
-                            },
-                            credential = new
-                            {
-                                referenceName = "<referenceName>",
-                                credentialType = "AccountKey",
-                            },
-                        },
-                        PowerBI = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                            resourceNameFilter = new
-                            {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
+                                excludePrefixes = new List<object>()
+{
+"<excludePrefixes>"
+},
+                                includePrefixes = new List<object>()
+{
+"<includePrefixes>"
+},
+                                resources = new List<object>()
+{
+"<resources>"
+},
                             },
                             credential = new
                             {
@@ -1458,9 +361,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     },
                 },
                 kind = "AzureSubscriptionCredential",
-            };
-
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1472,7 +374,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -1497,11 +399,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetProperties(new RequestContext());
+            Response response = client.GetProperties(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1512,11 +414,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetProperties(new RequestContext());
+            Response response = client.GetProperties(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1528,7 +430,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -1553,11 +455,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProperties_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetPropertiesAsync(new RequestContext());
+            Response response = await client.GetPropertiesAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1568,11 +470,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProperties_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetPropertiesAsync(new RequestContext());
+            Response response = await client.GetPropertiesAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1584,7 +486,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -1609,11 +511,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.Delete(new RequestContext());
+            Response response = client.Delete(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1624,11 +526,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.Delete(new RequestContext());
+            Response response = client.Delete(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1640,7 +542,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -1665,11 +567,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.DeleteAsync(new RequestContext());
+            Response response = await client.DeleteAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1680,11 +582,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.DeleteAsync(new RequestContext());
+            Response response = await client.DeleteAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1696,7 +598,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -1721,11 +623,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_RunScan()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.RunScan("<runId>", "<scanLevel>", new RequestContext());
+            Response response = client.RunScan("<runId>", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1735,11 +637,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_RunScan_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.RunScan("<runId>", "<scanLevel>", new RequestContext());
+            Response response = client.RunScan("<runId>", "Full", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -1758,11 +660,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_RunScan_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.RunScanAsync("<runId>", "<scanLevel>", new RequestContext());
+            Response response = await client.RunScanAsync("<runId>", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1772,11 +674,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_RunScan_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.RunScanAsync("<runId>", "<scanLevel>", new RequestContext());
+            Response response = await client.RunScanAsync("<runId>", "Full", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -1795,11 +697,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelScan()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.CancelScan("<runId>", new RequestContext());
+            Response response = client.CancelScan("<runId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1809,11 +711,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelScan_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.CancelScan("<runId>", new RequestContext());
+            Response response = client.CancelScan("<runId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -1832,11 +734,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelScan_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.CancelScanAsync("<runId>", new RequestContext());
+            Response response = await client.CancelScanAsync("<runId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1846,11 +748,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelScan_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.CancelScanAsync("<runId>", new RequestContext());
+            Response response = await client.CancelScanAsync("<runId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -1869,11 +771,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrigger()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetTrigger(new RequestContext());
+            Response response = client.GetTrigger(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1883,23 +785,23 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrigger_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetTrigger(new RequestContext());
+            Response response = client.GetTrigger(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -1917,11 +819,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrigger_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetTriggerAsync(new RequestContext());
+            Response response = await client.GetTriggerAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1931,23 +833,23 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrigger_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetTriggerAsync(new RequestContext());
+            Response response = await client.GetTriggerAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -1965,13 +867,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateTrigger()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new { };
-
-            Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.CreateOrUpdateTrigger(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1981,11 +882,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateTrigger_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -1999,29 +900,36 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                         {
                             additionalProperties = new
                             {
-                                key = new { },
+                                key = new object(),
                             },
-                            minutes = new[] {
-                    1234
-                },
-                            hours = new[] {
-                    1234
-                },
-                            weekDays = new[] {
-                    "Sunday"
-                },
-                            monthDays = new[] {
-                    1234
-                },
-                            monthlyOccurrences = new[] {
-                    new {
-                        additionalProperties = new {
-                            key = new {},
-                        },
-                        day = "Sunday",
-                        occurrence = 1234,
-                    }
-                },
+                            minutes = new List<object>()
+{
+1234
+},
+                            hours = new List<object>()
+{
+1234
+},
+                            weekDays = new List<object>()
+{
+"Sunday"
+},
+                            monthDays = new List<object>()
+{
+1234
+},
+                            monthlyOccurrences = new List<object>()
+{
+new
+{
+additionalProperties = new
+{
+key = new object(),
+},
+day = "Sunday",
+occurrence = 1234,
+}
+},
                         },
                         timeZone = "<timeZone>",
                     },
@@ -2029,21 +937,20 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     scanLevel = "Full",
                     incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
                 },
-            };
-
-            Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdateTrigger(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -2061,13 +968,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateTrigger_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new { };
-
-            Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateTriggerAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2077,11 +983,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateTrigger_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -2095,29 +1001,36 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                         {
                             additionalProperties = new
                             {
-                                key = new { },
+                                key = new object(),
                             },
-                            minutes = new[] {
-                    1234
-                },
-                            hours = new[] {
-                    1234
-                },
-                            weekDays = new[] {
-                    "Sunday"
-                },
-                            monthDays = new[] {
-                    1234
-                },
-                            monthlyOccurrences = new[] {
-                    new {
-                        additionalProperties = new {
-                            key = new {},
-                        },
-                        day = "Sunday",
-                        occurrence = 1234,
-                    }
-                },
+                            minutes = new List<object>()
+{
+1234
+},
+                            hours = new List<object>()
+{
+1234
+},
+                            weekDays = new List<object>()
+{
+"Sunday"
+},
+                            monthDays = new List<object>()
+{
+1234
+},
+                            monthlyOccurrences = new List<object>()
+{
+new
+{
+additionalProperties = new
+{
+key = new object(),
+},
+day = "Sunday",
+occurrence = 1234,
+}
+},
                         },
                         timeZone = "<timeZone>",
                     },
@@ -2125,21 +1038,20 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     scanLevel = "Full",
                     incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
                 },
-            };
-
-            Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateTriggerAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -2157,11 +1069,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTrigger()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.DeleteTrigger(new RequestContext());
+            Response response = client.DeleteTrigger(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2171,23 +1083,23 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTrigger_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.DeleteTrigger(new RequestContext());
+            Response response = client.DeleteTrigger(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -2205,11 +1117,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTrigger_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.DeleteTriggerAsync(new RequestContext());
+            Response response = await client.DeleteTriggerAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2219,23 +1131,23 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTrigger_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.DeleteTriggerAsync(new RequestContext());
+            Response response = await client.DeleteTriggerAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -2253,14 +1165,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRuns()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            foreach (var item in client.GetRuns(new RequestContext()))
+            foreach (BinaryData item in client.GetRuns(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -2268,38 +1180,38 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRuns_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            foreach (var item in client.GetRuns(new RequestContext()))
+            foreach (BinaryData item in client.GetRuns(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("parentId").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
-                Console.WriteLine(result.GetProperty("assetsClassified").ToString());
-                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
-                Console.WriteLine(result.GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("queuedTime").ToString());
-                Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
-                Console.WriteLine(result.GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("scanLevelType").ToString());
-                Console.WriteLine(result.GetProperty("errorMessage").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("runType").ToString());
-                Console.WriteLine(result.GetProperty("dataSourceType").ToString());
+                Console.WriteLine(result[0].GetProperty("parentId").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("assetsDiscovered").ToString());
+                Console.WriteLine(result[0].GetProperty("assetsClassified").ToString());
+                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("queuedTime").ToString());
+                Console.WriteLine(result[0].GetProperty("pipelineStartTime").ToString());
+                Console.WriteLine(result[0].GetProperty("endTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("scanLevelType").ToString());
+                Console.WriteLine(result[0].GetProperty("errorMessage").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result[0].GetProperty("runType").ToString());
+                Console.WriteLine(result[0].GetProperty("dataSourceType").ToString());
             }
         }
 
@@ -2307,14 +1219,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRuns_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            await foreach (var item in client.GetRunsAsync(new RequestContext()))
+            await foreach (BinaryData item in client.GetRunsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -2322,38 +1234,38 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRuns_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            await foreach (var item in client.GetRunsAsync(new RequestContext()))
+            await foreach (BinaryData item in client.GetRunsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("parentId").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
-                Console.WriteLine(result.GetProperty("assetsClassified").ToString());
-                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
-                Console.WriteLine(result.GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("queuedTime").ToString());
-                Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
-                Console.WriteLine(result.GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("scanLevelType").ToString());
-                Console.WriteLine(result.GetProperty("errorMessage").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("runType").ToString());
-                Console.WriteLine(result.GetProperty("dataSourceType").ToString());
+                Console.WriteLine(result[0].GetProperty("parentId").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("assetsDiscovered").ToString());
+                Console.WriteLine(result[0].GetProperty("assetsClassified").ToString());
+                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("queuedTime").ToString());
+                Console.WriteLine(result[0].GetProperty("pipelineStartTime").ToString());
+                Console.WriteLine(result[0].GetProperty("endTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("scanLevelType").ToString());
+                Console.WriteLine(result[0].GetProperty("errorMessage").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result[0].GetProperty("runType").ToString());
+                Console.WriteLine(result[0].GetProperty("dataSourceType").ToString());
             }
         }
     }
