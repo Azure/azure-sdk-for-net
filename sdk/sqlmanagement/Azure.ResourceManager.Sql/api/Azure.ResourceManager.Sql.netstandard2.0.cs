@@ -2698,7 +2698,7 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource>> GetSqlDatabaseSensitivityLabelAsync(Azure.ResourceManager.Sql.Models.SensitivityLabelSource sensitivityLabelSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelCollection GetSqlDatabaseSensitivityLabels() { throw null; }
     }
-    public partial class SqlDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SqlDatabaseData : Azure.ResourceManager.Models.TrackedResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Sql.SqlDatabaseData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Sql.SqlDatabaseData>
     {
         public SqlDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public int? AutoPauseDelay { get { throw null; } set { } }
@@ -2750,6 +2750,10 @@ namespace Azure.ResourceManager.Sql
         public Azure.Core.ResourceIdentifier SourceDatabaseId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlDatabaseStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Sql.SqlDatabaseData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Sql.SqlDatabaseData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Sql.SqlDatabaseData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.Sql.SqlDatabaseData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Sql.SqlDatabaseData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Sql.SqlDatabaseData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class SqlDatabaseResource : Azure.ResourceManager.ArmResource
     {
@@ -3466,11 +3470,15 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlFirewallRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlFirewallRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlFirewallRuleData : Azure.ResourceManager.Sql.Models.ProxyResourceWithWritableName
+    public partial class SqlFirewallRuleData : Azure.ResourceManager.Sql.Models.ProxyResourceWithWritableName, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Sql.SqlFirewallRuleData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Sql.SqlFirewallRuleData>
     {
         public SqlFirewallRuleData() { }
         public string EndIPAddress { get { throw null; } set { } }
         public string StartIPAddress { get { throw null; } set { } }
+        Azure.ResourceManager.Sql.SqlFirewallRuleData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Sql.SqlFirewallRuleData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Sql.SqlFirewallRuleData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.Sql.SqlFirewallRuleData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Sql.SqlFirewallRuleData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Sql.SqlFirewallRuleData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class SqlFirewallRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -3794,7 +3802,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerConnectionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SqlServerData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SqlServerData : Azure.ResourceManager.Models.TrackedResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Sql.SqlServerData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Sql.SqlServerData>
     {
         public SqlServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string AdministratorLogin { get { throw null; } set { } }
@@ -3814,6 +3822,10 @@ namespace Azure.ResourceManager.Sql
         public string State { get { throw null; } }
         public string Version { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerWorkspaceFeature? WorkspaceFeature { get { throw null; } }
+        Azure.ResourceManager.Sql.SqlServerData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Sql.SqlServerData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Sql.SqlServerData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.Sql.SqlServerData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Sql.SqlServerData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Sql.SqlServerData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class SqlServerDatabaseReplicationLinkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerDatabaseReplicationLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerDatabaseReplicationLinkResource>, System.Collections.IEnumerable
     {

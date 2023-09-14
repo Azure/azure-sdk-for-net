@@ -7,20 +7,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerData : IUtf8JsonSerializable, IModelJsonSerializable<SqlServerData>
+    public partial class SqlServerData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -98,10 +94,8 @@ namespace Azure.ResourceManager.Sql
             writer.WriteEndObject();
         }
 
-        internal static SqlServerData DeserializeSqlServerData(JsonElement element, ModelSerializerOptions options = default)
+        internal static SqlServerData DeserializeSqlServerData(JsonElement element)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -319,50 +313,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(externalGovernanceStatus));
-        }
-
-        void IModelJsonSerializable<SqlServerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
-
-        SqlServerData IModelJsonSerializable<SqlServerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSqlServerData(document.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<SqlServerData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
-        {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        SqlServerData IModelSerializable<SqlServerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeSqlServerData(document.RootElement, options);
-        }
-
-        private BinaryData SerializeBicep()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"  name: '{Name}'");
-            sb.AppendLine($"  location: '{Location}'");
-            if (Optional.IsCollectionDefined(Tags) && Tags.Count > 0)
-            {
-                sb.AppendLine($"  tags: {{");
-                foreach (var kv in Tags)
-                {
-                    sb.AppendLine($"    '{kv.Key}': '{kv.Value}'");
-                }
-                sb.AppendLine($"  }}");
-            }
-            sb.AppendLine($"  properties: {{");
-            sb.AppendLine($"    administratorLogin: '{AdministratorLogin}'");
-            sb.AppendLine($"    administratorLoginPassword: '{AdministratorLoginPassword}'");
-            sb.AppendLine($"    version: '{Version}'");
-            sb.AppendLine($"    minimalTlsVersion: '{MinimalTlsVersion}'");
-            sb.AppendLine($"  }}");
-            return BinaryData.FromString(sb.ToString());
         }
     }
 }

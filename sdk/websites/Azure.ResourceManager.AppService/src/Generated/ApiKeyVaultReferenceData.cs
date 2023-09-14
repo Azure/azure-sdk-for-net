@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="source"></param>
         /// <param name="activeVersion"></param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ResourceManager.Models.ManagedServiceIdentity identity, string details, ConfigReferenceSource? source, string activeVersion, string kind) : base(id, name, resourceType, systemData)
+        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identity, string details, ConfigReferenceSource? source, string activeVersion, string kind) : base(id, name, resourceType, systemData)
         {
             Reference = reference;
             Status = status;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets or sets the secret version. </summary>
         public string SecretVersion { get; set; }
         /// <summary> Managed service identity. </summary>
-        public ResourceManager.Models.ManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Gets or sets the details. </summary>
         public string Details { get; set; }
         /// <summary> Gets or sets the source. </summary>

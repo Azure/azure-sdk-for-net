@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="error"> Azure-AsyncOperation Error info. </param>
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
-        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ResourceManager.Models.ManagedServiceIdentity identity, IReadOnlyList<string> zones) : base(id, name, resourceType, systemData)
+        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Azure-AsyncOperation Error info. </summary>
         public ResponseError Error { get; }
         /// <summary> MSI resource. </summary>
-        public ResourceManager.Models.ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; }
         /// <summary> Logical Availability Zones the service is hosted in. </summary>
         public IReadOnlyList<string> Zones { get; }
     }

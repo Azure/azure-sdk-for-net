@@ -860,11 +860,15 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ResourceGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Resources.ResourceGroupData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Resources.ResourceGroupData>
     {
         public ResourceGroupData(Azure.Core.AzureLocation location) { }
         public string ManagedBy { get { throw null; } set { } }
         public string ResourceGroupProvisioningState { get { throw null; } }
+        Azure.ResourceManager.Resources.ResourceGroupData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Resources.ResourceGroupData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.Resources.ResourceGroupData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.Resources.ResourceGroupData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Resources.ResourceGroupData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.Resources.ResourceGroupData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class ResourceGroupResource : Azure.ResourceManager.ArmResource
     {
