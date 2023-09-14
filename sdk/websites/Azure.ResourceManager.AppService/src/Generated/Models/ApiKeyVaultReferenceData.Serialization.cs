@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> vaultName = default;
             Optional<string> secretName = default;
             Optional<string> secretVersion = default;
-            Optional<ManagedServiceIdentity> identityType = default;
+            Optional<ResourceManager.Models.ManagedServiceIdentity> identityType = default;
             Optional<string> details = default;
             Optional<ConfigReferenceSource> source = default;
             Optional<string> activeVersion = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            identityType = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.GetRawText());
+                            identityType = JsonSerializer.Deserialize<ResourceManager.Models.ManagedServiceIdentity>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("details"u8))

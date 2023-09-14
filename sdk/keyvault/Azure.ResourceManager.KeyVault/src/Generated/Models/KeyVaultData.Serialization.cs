@@ -17,11 +17,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class KeyVaultData : IUtf8JsonSerializable, IModelJsonSerializable<KeyVaultData>
+    public partial class KeyVaultData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -42,10 +40,8 @@ namespace Azure.ResourceManager.KeyVault
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultData DeserializeKeyVaultData(JsonElement element, ModelSerializerOptions options = default)
+        internal static KeyVaultData DeserializeKeyVaultData(JsonElement element)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,46 +105,6 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
             return new KeyVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties);
-        }
-
-        void IModelJsonSerializable<KeyVaultData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
-
-        KeyVaultData IModelJsonSerializable<KeyVaultData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyVaultData(document.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<KeyVaultData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
-        {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        KeyVaultData IModelSerializable<KeyVaultData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeKeyVaultData(document.RootElement, options);
-        }
-
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"  name: '{Name}'");
-            sb.AppendLine($"  location: '{Location}'");
-            if (Optional.IsCollectionDefined(Tags) && Tags.Count > 0)
-            {
-                sb.AppendLine($"  tags: {{");
-                foreach (var kv in Tags)
-                {
-                    sb.AppendLine($"    '{kv.Key}': '{kv.Value}'");
-                }
-                sb.AppendLine($"  }}");
-            }
-            sb.Append($"  properties: ");
-            sb.AppendChildObject(Properties, options);
-            return BinaryData.FromString(sb.ToString());
         }
     }
 }

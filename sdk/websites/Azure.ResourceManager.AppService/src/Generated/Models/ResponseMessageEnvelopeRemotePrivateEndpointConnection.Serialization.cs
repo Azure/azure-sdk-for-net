@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceSkuDescription> sku = default;
             Optional<string> status = default;
             Optional<ResponseError> error = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ResourceManager.Models.ManagedServiceIdentity> identity = default;
             Optional<IReadOnlyList<string>> zones = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = JsonSerializer.Deserialize<ResourceManager.Models.ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
