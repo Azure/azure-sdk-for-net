@@ -47,5 +47,3 @@ function Invoke-LoggedCommand($Command, $ExecutePath, [switch]$GroupOutput)
       }
     }
 }
-
-Set-Alias -Name invoke -Value Invoke-LoggedCommand
