@@ -17,7 +17,7 @@ namespace Azure.Core.Json
     /// A mutable representation of a JSON value.
     /// </summary>
 #if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
-    //[RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+    [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
 #endif
     [JsonConverter(typeof(MutableJsonDocumentConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
@@ -47,9 +47,6 @@ namespace Azure.Core.Json
         /// </summary>
         public MutableJsonElement RootElement
         {
-#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
-           [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
-#endif
             get => new(this, _originalDocument.RootElement, string.Empty);
         }
 

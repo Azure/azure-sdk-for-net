@@ -142,7 +142,6 @@ namespace Azure.Core.Json
             return Path.AsSpan().SequenceCompareTo(otherPath) > 0;
         }
 
-        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         internal string AsString()
         {
             if (Value is null)

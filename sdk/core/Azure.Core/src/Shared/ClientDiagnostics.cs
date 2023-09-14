@@ -65,10 +65,10 @@ namespace Azure.Core.Pipeline
             foreach (var customAttribute in assembly.GetCustomAttributesData())
             {
                 // Weak bind internal shared type
-                var attributeType = customAttribute.AttributeType!;
+                Type attributeType = customAttribute.AttributeType!;
                 if (attributeType.FullName == ("Azure.Core.AzureResourceProviderNamespaceAttribute"))
                 {
-                    var namedArguments = customAttribute.ConstructorArguments;
+                    IList<CustomAttributeTypedArgument> namedArguments = customAttribute.ConstructorArguments;
                     return namedArguments.Single().Value as string;                }
             }
 
