@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Local File Storage Resource
     /// </summary>
-    public class LocalFileStorageResource : StorageResourceItem
+    internal class LocalFileStorageResource : StorageResourceItem
     {
         private Uri _uri;
 

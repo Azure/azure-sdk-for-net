@@ -12,6 +12,17 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/d03c1964cb76ffd6884d
 #tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+    # The discriminator value is incorrect
+    - ReplicationFabrics_Create 
+    - ReplicationProtectionContainers_Create
+    - ReplicationProtectedItems_Delete
+    - ReplicationProtectionContainerMappings_Create
+    # Missing requried parameter
+    - ReplicationJobs_Export
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -336,7 +347,7 @@ format-by-name-rules:
   'VMwareMachineId': 'arm-id'
   '*ProcessServerId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
