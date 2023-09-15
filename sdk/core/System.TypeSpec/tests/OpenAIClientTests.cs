@@ -14,11 +14,14 @@ public class OpenAIClientTests
     public void ClientDoesNotExposeAzureTypes()
     {
         string key = Environment.GetEnvironmentVariable("OPENAI_KEY");
+
         KeyCredential credential = new KeyCredential(key);
         OpenAIClient client = new OpenAIClient(credential);
 
         Result<Completions> result = client.GetCompletions("tell me something about life.");
         Choice choice = result.Value.Choices[0];
         Debug.WriteLine(choice.Text);
+
+        Result httpResult = result.GetRawResult();
     }
 }
