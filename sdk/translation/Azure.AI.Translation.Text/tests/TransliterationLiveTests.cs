@@ -33,6 +33,21 @@ namespace Azure.AI.Translation.Text.Tests
         }
 
         [RecordedTest]
+        public async Task VerifyTransliterationTestOptions()
+        {
+            TextTranslationClient client = GetClient();
+            TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions();
+            options.Content = new[] { "这里怎么一回事?" };
+            options.Language = "zh-Hans";
+            options.FromScript = "Hans";
+            options.ToScript = "Latn";
+
+            Response<IReadOnlyList<TransliteratedText>> response =
+                await client.TransliterateAsync(options).ConfigureAwait(false);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+        }
+
+        [RecordedTest]
         public async Task VerifyTransliterationWithMultipleTextArray()
         {
             TextTranslationClient client = GetClient();
@@ -42,6 +57,26 @@ namespace Azure.AI.Translation.Text.Tests
                 "यहएककसौटीहै"
             };
             Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("hi", "Deva", "Latn", inputText).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[1].Text));
+        }
+
+        [RecordedTest]
+        public async Task VerifyTransliterationWithMultipleTextArrayOptions()
+        {
+            TextTranslationClient client = GetClient();
+            TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions();
+            options.Language = "hi";
+            options.FromScript = "Deva";
+            options.ToScript = "Latn";
+            options.Content = new[]
+            {
+                "यहएककसौटीहैयहएककसौटीहै",
+                "यहएककसौटीहै"
+            };
+            Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));
@@ -59,6 +94,39 @@ namespace Azure.AI.Translation.Text.Tests
                 "hukkabar"
             };
             Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("gu", "latn", "gujr", inputText).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[1].Text));
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[2].Text));
+
+            List<string> expectedText = new()
+            { "ગુજરાત", "હદમાં", "હુક્કાબાર" };
+
+            int editDistance = 0;
+            for (int i = 0; i < expectedText.Count; i++)
+            {
+                editDistance = editDistance + TestHelper.EditDistance(expectedText[i], response.Value[i].Text);
+            }
+            Assert.IsTrue(editDistance < 6, $"Total string distance: {editDistance}");
+        }
+
+        [RecordedTest]
+        public async Task VerifyTransliterationWithEditDistanceOptions()
+        {
+            TextTranslationClient client = GetClient();
+
+            TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions();
+            options.Language = "gu";
+            options.FromScript = "latn";
+            options.ToScript = "gujr";
+            options.Content = new[]
+            {
+                "gujarat",
+                "hadman",
+                "hukkabar"
+            };
+            Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));

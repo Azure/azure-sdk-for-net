@@ -146,6 +146,38 @@ catch (RequestFailedException exception)
 }
 ```
 
+A convenience overload of Translate is provided using a single TextTranslationTranslateOptions parameter.  This sample demonstrates Translation and Transliteration in a single call using the options parameter.
+
+```C# Snippet:GetTranslationTextTransliteratedOptions
+try
+{
+    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions()
+    {
+        FromScript = "Latn",
+        SourceLanguage = "ar",
+        ToScript = "Latn",
+        TargetLanguages = new[] { "zh-Hans" },
+        Content = new[]
+        {
+            "hudha akhtabar."
+        }
+    };
+
+    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
+    TranslatedTextItem translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Source Text: {translation.SourceText.Text}");
+    Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
 For samples on using the `translate` endpoint refer to more samples [here][translate_sample].
 
 Please refer to the service documentation for a conceptual discussion of [translate][translate_doc].
@@ -176,6 +208,32 @@ catch (RequestFailedException exception)
 }
 ```
 
+A convenience overload of Transliterate is provided using a single TextTranslationTransliterateOptions parameter.  A modified version of the preceding sample is provided here demonstrating its use.
+
+```C# Snippet:GetTransliteratedTextOptions
+try
+{
+    TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions()
+    {
+        Language = "zh-Hans",
+        FromScript = "Hans",
+        ToScript = "Latn",
+        Content = new[] { "这是个测试。" }
+    };
+
+    Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(options);
+    IReadOnlyList<TransliteratedText> transliterations = response.Value;
+    TransliteratedText transliteration = transliterations.FirstOrDefault();
+
+    Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
 For samples on using the `transliterate` endpoint refer to more samples [here][transliterate_sample].
 
 Please refer to the service documentation for a conceptual discussion of [transliterate][transliterate_doc].
@@ -194,7 +252,7 @@ try
     BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-    Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
 }
 catch (RequestFailedException exception)
 {
