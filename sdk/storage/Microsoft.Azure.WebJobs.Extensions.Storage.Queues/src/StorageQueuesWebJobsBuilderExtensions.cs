@@ -74,20 +74,9 @@ namespace Microsoft.Extensions.Hosting
         /// <returns></returns>
         public static IWebJobsBuilder AddAzureStorageQueuesScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
-            IServiceProvider serviceProvider = null;
-            Lazy<QueueScalerProvider> scalerProvider = new Lazy<QueueScalerProvider>(() => new QueueScalerProvider(serviceProvider, triggerMetadata));
-
-            builder.Services.AddSingleton<IScaleMonitorProvider>(resolvedServiceProvider =>
-            {
-                serviceProvider = serviceProvider ?? resolvedServiceProvider;
-                return scalerProvider.Value;
-            });
-
-            builder.Services.AddSingleton<ITargetScalerProvider>(resolvedServiceProvider =>
-            {
-                serviceProvider = serviceProvider ?? resolvedServiceProvider;
-                return scalerProvider.Value;
-            });
+            builder.Services.AddSingleton(serviceProvider => new QueueScalerProvider(serviceProvider, triggerMetadata));
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetRequiredService<QueueScalerProvider>());
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetRequiredService<QueueScalerProvider>());
 
             return builder;
         }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.Subscription
         public virtual AsyncPageable<SubscriptionAliasResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Subscription
         public virtual Pageable<SubscriptionAliasResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -10,6 +10,9 @@ namespace: Azure.ResourceManager.CosmosDBForPostgreSql
 require: https://github.com/Azure/azure-rest-api-specs/blob/84dfc2bed5cd1db42469895b0adaf5738e4802bc/specification/postgresqlhsc/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -26,7 +29,7 @@ format-by-name-rules:
   'sourceResourceId': 'arm-id'
   'sourceLocation': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

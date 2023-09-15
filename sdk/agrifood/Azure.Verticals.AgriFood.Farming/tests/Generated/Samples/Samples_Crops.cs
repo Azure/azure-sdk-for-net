@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -23,10 +23,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCrop()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetCrop("<cropId>", new RequestContext());
+            Response response = client.GetCrop("<cropId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -36,16 +36,16 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCrop_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetCrop("<cropId>", new RequestContext());
+            Response response = client.GetCrop("<cropId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
             Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-            Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-            Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("eTag").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -56,17 +56,17 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCrop_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            Response response = await client.GetCropAsync("<cropId>", new RequestContext());
+            Response response = await client.GetCropAsync("<cropId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -76,16 +76,16 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCrop_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            Response response = await client.GetCropAsync("<cropId>", new RequestContext());
+            Response response = await client.GetCropAsync("<cropId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
             Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-            Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-            Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("eTag").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -96,19 +96,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            var data = new { };
-
-            Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.CreateOrUpdate("<cropId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -118,10 +117,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 phenotype = "<phenotype>",
                 breedingMethod = "VARIETY",
@@ -130,7 +129,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                     key = new
                     {
                         unit = "<unit>",
-                        value = 123.45d,
+                        value = 123.45,
                     },
                 },
                 status = "<status>",
@@ -139,17 +138,16 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdate("<cropId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
             Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-            Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-            Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("eTag").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -160,19 +158,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            var data = new { };
-
-            Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateAsync("<cropId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -182,10 +179,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 phenotype = "<phenotype>",
                 breedingMethod = "VARIETY",
@@ -194,7 +191,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                     key = new
                     {
                         unit = "<unit>",
-                        value = 123.45d,
+                        value = 123.45,
                     },
                 },
                 status = "<status>",
@@ -203,17 +200,16 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateAsync("<cropId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
             Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-            Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-            Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("eTag").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -224,15 +220,15 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<cropId>");
             Console.WriteLine(response.Status);
@@ -242,8 +238,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<cropId>");
             Console.WriteLine(response.Status);
@@ -253,8 +249,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<cropId>");
             Console.WriteLine(response.Status);
@@ -264,8 +260,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<cropId>");
             Console.WriteLine(response.Status);
@@ -275,13 +271,13 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCrops()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (var item in client.GetCrops(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (BinaryData item in client.GetCrops(null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -289,27 +285,45 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCrops_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (var item in client.GetCrops(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            foreach (BinaryData item in client.GetCrops(new List<string>()
+{
+"<phenotypes>"
+}, new List<string>()
+{
+"<breedingMethods>"
+}, new List<string>()
+{
+"<cropIds>"
+}, new List<string>()
+{
+"<names>"
+}, new List<string>()
+{
+"<propertyFilters>"
+}, new List<string>()
+{
+"<statuses>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("phenotype").ToString());
-                Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-                Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("eTag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("createdBy").ToString());
-                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+                Console.WriteLine(result[0].GetProperty("phenotype").ToString());
+                Console.WriteLine(result[0].GetProperty("breedingMethod").ToString());
+                Console.WriteLine(result[0].GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -317,13 +331,13 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCrops_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (var item in client.GetCropsAsync(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (BinaryData item in client.GetCropsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -331,27 +345,45 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCrops_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+            TokenCredential credential = new DefaultAzureCredential();
+            Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (var item in client.GetCropsAsync(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            await foreach (BinaryData item in client.GetCropsAsync(new List<string>()
+{
+"<phenotypes>"
+}, new List<string>()
+{
+"<breedingMethods>"
+}, new List<string>()
+{
+"<cropIds>"
+}, new List<string>()
+{
+"<names>"
+}, new List<string>()
+{
+"<propertyFilters>"
+}, new List<string>()
+{
+"<statuses>"
+}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("phenotype").ToString());
-                Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-                Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-                Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("eTag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("createdBy").ToString());
-                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+                Console.WriteLine(result[0].GetProperty("phenotype").ToString());
+                Console.WriteLine(result[0].GetProperty("breedingMethod").ToString());
+                Console.WriteLine(result[0].GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+                Console.WriteLine(result[0].GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
     }

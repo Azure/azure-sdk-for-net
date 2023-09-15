@@ -401,7 +401,7 @@ function CheckDependencies()
         $job | Remove-Job -Force
 
         if (($result -eq $null -and $job.State -ne "Completed") -or ($result | Select -Last 1) -ne 0) {
-            throw "Docker does not appear to be running. Start/restart docker."
+            throw "Docker does not appear to be running. Start/restart docker or re-run this script with -SkipPushImages"
         }
     }
 

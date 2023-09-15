@@ -6,14 +6,14 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 
 Returns equivalent words for the source term in the target language.
 
-```C# Snippet:LookupDictionaryEntriesAsync
+```C# Snippet:LookupDictionaryEntries
 try
 {
     string sourceLanguage = "en";
     string targetLanguage = "es";
     string inputText = "fly";
 
-    Response<IReadOnlyList<DictionaryLookupItem>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputText).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryLookupItem>> response = client.LookupDictionaryEntries(sourceLanguage, targetLanguage, inputText);
     IReadOnlyList<DictionaryLookupItem> dictionaryEntries = response.Value;
     DictionaryLookupItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
 

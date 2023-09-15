@@ -306,8 +306,5 @@ namespace Azure.Storage.DataMovement
                 throw Errors.MismatchResumeCreateMode(header.ForceWrite, jobPart._createMode);
             }
         }
-
-        internal static bool IsLocalResource(this StorageResource resource)
-            => resource is LocalFileStorageResource || resource is LocalDirectoryStorageResourceContainer;
     }
 }
