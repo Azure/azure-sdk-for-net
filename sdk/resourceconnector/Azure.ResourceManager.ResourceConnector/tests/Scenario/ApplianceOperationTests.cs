@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
         }
 
         [Test]
+        [Ignore("New version hasn't been deployed.")]
         public async Task TestOperationsAppliances()
         {
             await SetCollectionsAsync();
