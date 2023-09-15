@@ -1,6 +1,6 @@
 # Microsoft Azure API Center management client library for .NET
 
-API Center is a structured and organized repository that provides comprehensive information about APIs available within your organization. API Center acts as a centralized hub for discovery, reuse, and governance. [Learn more](https://learn.microsoft.com/azure/api-center/overview).
+Microsoft Azure API Center is a structured and organized repository that provides comprehensive information about APIs available within your organization. API Center acts as a centralized hub for discovery, reuse, and governance. [Learn more](https://learn.microsoft.com/azure/api-center/overview).
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

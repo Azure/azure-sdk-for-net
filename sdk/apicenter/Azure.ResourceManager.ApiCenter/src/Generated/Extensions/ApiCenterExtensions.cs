@@ -49,31 +49,31 @@ namespace Azure.ResourceManager.ApiCenter
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region ServiceResource
+        #region ApiCenterServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiCenterServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceResource" /> object. </returns>
-        public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterServiceResource" /> object. </returns>
+        public static ApiCenterServiceResource GetApiCenterServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceResource.ValidateResourceId(id);
-                return new ServiceResource(client, id);
+                ApiCenterServiceResource.ValidateResourceId(id);
+                return new ApiCenterServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of ServiceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ApiCenterServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
-        public static ServiceCollection GetServices(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ApiCenterServiceResources and their operations over a ApiCenterServiceResource. </returns>
+        public static ApiCenterServiceCollection GetApiCenterServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServices();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApiCenterServices();
         }
 
         /// <summary>
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.ApiCenter
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServiceResource>> GetServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiCenterServiceResource>> GetApiCenterServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetApiCenterServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.ApiCenter
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ServiceResource> GetService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<ApiCenterServiceResource> GetApiCenterService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetServices().Get(serviceName, cancellationToken);
+            return resourceGroupResource.GetApiCenterServices().Get(serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.ApiCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServiceResource> GetServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiCenterServiceResource> GetApiCenterServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServicesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiCenterServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.ApiCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServiceResource> GetServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiCenterServiceResource> GetApiCenterServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServices(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiCenterServices(cancellationToken);
         }
     }
 }

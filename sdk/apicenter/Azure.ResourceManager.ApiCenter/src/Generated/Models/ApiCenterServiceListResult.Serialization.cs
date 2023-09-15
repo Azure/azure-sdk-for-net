@@ -13,24 +13,24 @@ using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    internal partial class ServiceCollection
+    internal partial class ApiCenterServiceListResult
     {
-        internal static ServiceCollection DeserializeServiceCollection(JsonElement element)
+        internal static ApiCenterServiceListResult DeserializeApiCenterServiceListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<ServiceData> value = default;
+            IReadOnlyList<ApiCenterServiceData> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ServiceData> array = new List<ServiceData>();
+                    List<ApiCenterServiceData> array = new List<ApiCenterServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceData.DeserializeServiceData(item));
+                        array.Add(ApiCenterServiceData.DeserializeApiCenterServiceData(item));
                     }
                     value = array;
                     continue;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     continue;
                 }
             }
-            return new ServiceCollection(value, nextLink.Value);
+            return new ApiCenterServiceListResult(value, nextLink.Value);
         }
     }
 }

@@ -17,12 +17,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiCenter.Samples
 {
-    public partial class Sample_ServiceResource
+    public partial class Sample_ApiCenterServiceResource
     {
         // Services_ListBySubscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetServices_ServicesListBySubscription()
+        public async Task GetApiCenterServices_ServicesListBySubscription()
         {
             // Generated from example definition: specification/apicenter/resource-manager/Microsoft.ApiCenter/preview/2023-07-01-preview/examples/Services_ListBySubscription.json
             // this example is just showing the usage of "Services_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.ApiCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceResource item in subscriptionResource.GetServicesAsync())
+            await foreach (ApiCenterServiceResource item in subscriptionResource.GetApiCenterServicesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ServiceData resourceData = item.Data;
+                ApiCenterServiceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.ApiCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceResource created on azure
-            // for more information of creating ServiceResource, please refer to the document of ServiceResource
+            // this example assumes you already have this ApiCenterServiceResource created on azure
+            // for more information of creating ApiCenterServiceResource, please refer to the document of ApiCenterServiceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-resources";
             string serviceName = "contoso";
-            ResourceIdentifier serviceResourceId = ServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ServiceResource service = client.GetServiceResource(serviceResourceId);
+            ResourceIdentifier apiCenterServiceResourceId = ApiCenterServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiCenterServiceResource apiCenterService = client.GetApiCenterServiceResource(apiCenterServiceResourceId);
 
             // invoke the operation
-            ServiceResource result = await service.GetAsync();
+            ApiCenterServiceResource result = await apiCenterService.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceData resourceData = result.Data;
+            ApiCenterServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -95,21 +95,21 @@ namespace Azure.ResourceManager.ApiCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceResource created on azure
-            // for more information of creating ServiceResource, please refer to the document of ServiceResource
+            // this example assumes you already have this ApiCenterServiceResource created on azure
+            // for more information of creating ApiCenterServiceResource, please refer to the document of ApiCenterServiceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-resources";
             string serviceName = "contoso";
-            ResourceIdentifier serviceResourceId = ServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ServiceResource service = client.GetServiceResource(serviceResourceId);
+            ResourceIdentifier apiCenterServiceResourceId = ApiCenterServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiCenterServiceResource apiCenterService = client.GetApiCenterServiceResource(apiCenterServiceResourceId);
 
             // invoke the operation
-            ServicePatch patch = new ServicePatch();
-            ServiceResource result = await service.UpdateAsync(patch);
+            ApiCenterServicePatch patch = new ApiCenterServicePatch();
+            ApiCenterServiceResource result = await apiCenterService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceData resourceData = result.Data;
+            ApiCenterServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.ApiCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceResource created on azure
-            // for more information of creating ServiceResource, please refer to the document of ServiceResource
+            // this example assumes you already have this ApiCenterServiceResource created on azure
+            // for more information of creating ApiCenterServiceResource, please refer to the document of ApiCenterServiceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-resources";
             string serviceName = "contoso";
-            ResourceIdentifier serviceResourceId = ServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ServiceResource service = client.GetServiceResource(serviceResourceId);
+            ResourceIdentifier apiCenterServiceResourceId = ApiCenterServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiCenterServiceResource apiCenterService = client.GetApiCenterServiceResource(apiCenterServiceResourceId);
 
             // invoke the operation
-            await service.DeleteAsync(WaitUntil.Completed);
+            await apiCenterService.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

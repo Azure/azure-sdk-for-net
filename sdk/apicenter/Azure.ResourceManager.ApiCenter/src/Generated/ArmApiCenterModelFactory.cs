@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmApiCenterModelFactory
     {
-        /// <summary> Initializes a new instance of ServiceData. </summary>
+        /// <summary> Initializes a new instance of ApiCenterServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the service. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="ApiCenter.ServiceData"/> instance for mocking. </returns>
-        public static ServiceData ServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ApiCenter.ApiCenterServiceData"/> instance for mocking. </returns>
+        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ApiCenterProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ServiceData(id, name, resourceType, systemData, tags, location, identity, provisioningState);
+            return new ApiCenterServiceData(id, name, resourceType, systemData, tags, location, identity, provisioningState);
         }
     }
 }

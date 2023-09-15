@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ApiCenter
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _serviceClientDiagnostics;
-        private ServicesRestOperations _serviceRestClient;
+        private ClientDiagnostics _apiCenterServiceServicesClientDiagnostics;
+        private ServicesRestOperations _apiCenterServiceServicesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.ApiCenter
         {
         }
 
-        private ClientDiagnostics ServiceClientDiagnostics => _serviceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ServiceResource.ResourceType.Namespace, Diagnostics);
-        private ServicesRestOperations ServiceRestClient => _serviceRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceResource.ResourceType));
+        private ClientDiagnostics ApiCenterServiceServicesClientDiagnostics => _apiCenterServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterServiceResource.ResourceType.Namespace, Diagnostics);
+        private ServicesRestOperations ApiCenterServiceServicesRestClient => _apiCenterServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiCenterServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceResource> GetServicesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiCenterServiceResource> GetApiCenterServicesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), ServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServices", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiCenterServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceResource> GetServices(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiCenterServiceResource> GetApiCenterServices(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), ServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServices", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiCenterServices", "value", "nextLink", cancellationToken);
         }
     }
 }

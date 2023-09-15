@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiCenter.Samples
 {
-    public partial class Sample_ServiceCollection
+    public partial class Sample_ApiCenterServiceCollection
     {
         // Services_ListByResourceGroup
         [NUnit.Framework.Test]
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.ApiCenter.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ServiceResource
-            ServiceCollection collection = resourceGroupResource.GetServices();
+            // get the collection of this ApiCenterServiceResource
+            ApiCenterServiceCollection collection = resourceGroupResource.GetApiCenterServices();
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceResource item in collection.GetAllAsync())
+            await foreach (ApiCenterServiceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ServiceData resourceData = item.Data;
+                ApiCenterServiceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.ApiCenter.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ServiceResource
-            ServiceCollection collection = resourceGroupResource.GetServices();
+            // get the collection of this ApiCenterServiceResource
+            ApiCenterServiceCollection collection = resourceGroupResource.GetApiCenterServices();
 
             // invoke the operation
             string serviceName = "contoso";
-            ServiceResource result = await collection.GetAsync(serviceName);
+            ApiCenterServiceResource result = await collection.GetAsync(serviceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceData resourceData = result.Data;
+            ApiCenterServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.ApiCenter.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ServiceResource
-            ServiceCollection collection = resourceGroupResource.GetServices();
+            // get the collection of this ApiCenterServiceResource
+            ApiCenterServiceCollection collection = resourceGroupResource.GetApiCenterServices();
 
             // invoke the operation
             string serviceName = "contoso";
@@ -138,18 +138,18 @@ namespace Azure.ResourceManager.ApiCenter.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ServiceResource
-            ServiceCollection collection = resourceGroupResource.GetServices();
+            // get the collection of this ApiCenterServiceResource
+            ApiCenterServiceCollection collection = resourceGroupResource.GetApiCenterServices();
 
             // invoke the operation
             string serviceName = "contoso";
-            ServiceData data = new ServiceData(new AzureLocation("placeholder"));
-            ArmOperation<ServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
-            ServiceResource result = lro.Value;
+            ApiCenterServiceData data = new ApiCenterServiceData(new AzureLocation("placeholder"));
+            ArmOperation<ApiCenterServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
+            ApiCenterServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceData resourceData = result.Data;
+            ApiCenterServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

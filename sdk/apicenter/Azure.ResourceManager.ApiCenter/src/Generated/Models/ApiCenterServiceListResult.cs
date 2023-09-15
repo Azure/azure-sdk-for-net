@@ -14,29 +14,29 @@ using Azure.ResourceManager.ApiCenter;
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> The response of a Service list operation. </summary>
-    internal partial class ServiceCollection
+    internal partial class ApiCenterServiceListResult
     {
-        /// <summary> Initializes a new instance of ServiceCollection. </summary>
+        /// <summary> Initializes a new instance of ApiCenterServiceListResult. </summary>
         /// <param name="value"> The Service items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ServiceCollection(IEnumerable<ServiceData> value)
+        internal ApiCenterServiceListResult(IEnumerable<ApiCenterServiceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ServiceCollection. </summary>
+        /// <summary> Initializes a new instance of ApiCenterServiceListResult. </summary>
         /// <param name="value"> The Service items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal ServiceCollection(IReadOnlyList<ServiceData> value, Uri nextLink)
+        internal ApiCenterServiceListResult(IReadOnlyList<ApiCenterServiceData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The Service items on this page. </summary>
-        public IReadOnlyList<ServiceData> Value { get; }
+        public IReadOnlyList<ApiCenterServiceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

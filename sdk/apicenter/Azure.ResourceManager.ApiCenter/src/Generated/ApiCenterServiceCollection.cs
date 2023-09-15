@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceResource" /> and their operations.
-    /// Each <see cref="ServiceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ServiceCollection" /> instance call the GetServices method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ApiCenterServiceResource" /> and their operations.
+    /// Each <see cref="ApiCenterServiceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ApiCenterServiceCollection" /> instance call the GetApiCenterServices method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class ServiceCollection : ArmCollection, IEnumerable<ServiceResource>, IAsyncEnumerable<ServiceResource>
+    public partial class ApiCenterServiceCollection : ArmCollection, IEnumerable<ApiCenterServiceResource>, IAsyncEnumerable<ApiCenterServiceResource>
     {
-        private readonly ClientDiagnostics _serviceClientDiagnostics;
-        private readonly ServicesRestOperations _serviceRestClient;
+        private readonly ClientDiagnostics _apiCenterServiceServicesClientDiagnostics;
+        private readonly ServicesRestOperations _apiCenterServiceServicesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceCollection"/> class for mocking. </summary>
-        protected ServiceCollection()
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterServiceCollection"/> class for mocking. </summary>
+        protected ApiCenterServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiCenterServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ServiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceResource.ResourceType, out string serviceApiVersion);
-            _serviceRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceApiVersion);
+            _apiCenterServiceServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterServiceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiCenterServiceResource.ResourceType, out string apiCenterServiceServicesApiVersion);
+            _apiCenterServiceServicesRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterServiceServicesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, ServiceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiCenterServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, ApiCenterServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceCollection.CreateOrUpdate");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiCenterArmOperation<ServiceResource>(Response.FromValue(new ServiceResource(Client, response), response.GetRawResponse()));
+                var response = await _apiCenterServiceServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiCenterArmOperation<ApiCenterServiceResource>(Response.FromValue(new ApiCenterServiceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, ServiceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiCenterServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, ApiCenterServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceCollection.CreateOrUpdate");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken);
-                var operation = new ApiCenterArmOperation<ServiceResource>(Response.FromValue(new ServiceResource(Client, response), response.GetRawResponse()));
+                var response = _apiCenterServiceServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken);
+                var operation = new ApiCenterArmOperation<ApiCenterServiceResource>(Response.FromValue(new ApiCenterServiceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
-        public virtual async Task<Response<ServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiCenterServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceCollection.Get");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, cancellationToken).ConfigureAwait(false);
+                var response = await _apiCenterServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiCenterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,18 +190,18 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
-        public virtual Response<ServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiCenterServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceCollection.Get");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, cancellationToken);
+                var response = _apiCenterServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiCenterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiCenterServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), _serviceClientDiagnostics, Pipeline, "ServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiCenterServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), _apiCenterServiceServicesClientDiagnostics, Pipeline, "ApiCenterServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,12 +246,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiCenterServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), _serviceClientDiagnostics, Pipeline, "ServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiCenterServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), _apiCenterServiceServicesClientDiagnostics, Pipeline, "ApiCenterServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceCollection.Exists");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiCenterServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceCollection.Exists");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, cancellationToken: cancellationToken);
+                var response = _apiCenterServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ApiCenter
             }
         }
 
-        IEnumerator<ServiceResource> IEnumerable<ServiceResource>.GetEnumerator()
+        IEnumerator<ApiCenterServiceResource> IEnumerable<ApiCenterServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ApiCenter
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServiceResource> IAsyncEnumerable<ServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ApiCenterServiceResource> IAsyncEnumerable<ApiCenterServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiCenter
 {
-    public partial class ServiceData : IUtf8JsonSerializable
+    public partial class ApiCenterServiceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiCenter
             writer.WriteEndObject();
         }
 
-        internal static ServiceData DeserializeServiceData(JsonElement element)
+        internal static ApiCenterServiceData DeserializeApiCenterServiceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ApiCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.ApiCenter
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ApiCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState));
+            return new ApiCenterServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState));
         }
     }
 }

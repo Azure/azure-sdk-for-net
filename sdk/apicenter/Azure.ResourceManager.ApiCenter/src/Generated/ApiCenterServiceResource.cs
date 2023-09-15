@@ -19,46 +19,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
-    /// A Class representing a Service along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetService method.
+    /// A Class representing an ApiCenterService along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiCenterServiceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetApiCenterServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetApiCenterService method.
     /// </summary>
-    public partial class ServiceResource : ArmResource
+    public partial class ApiCenterServiceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServiceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ApiCenterServiceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _serviceClientDiagnostics;
-        private readonly ServicesRestOperations _serviceRestClient;
-        private readonly ServiceData _data;
+        private readonly ClientDiagnostics _apiCenterServiceServicesClientDiagnostics;
+        private readonly ServicesRestOperations _apiCenterServiceServicesRestClient;
+        private readonly ApiCenterServiceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceResource"/> class for mocking. </summary>
-        protected ServiceResource()
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterServiceResource"/> class for mocking. </summary>
+        protected ApiCenterServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ApiCenterServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceResource(ArmClient client, ServiceData data) : this(client, data.Id)
+        internal ApiCenterServiceResource(ArmClient client, ApiCenterServiceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiCenterServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serviceApiVersion);
-            _serviceRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceApiVersion);
+            _apiCenterServiceServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiCenterServiceServicesApiVersion);
+            _apiCenterServiceServicesRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterServiceServicesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ServiceData Data
+        public virtual ApiCenterServiceData Data
         {
             get
             {
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiCenterServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceResource.Get");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _serviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiCenterServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiCenterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.ApiCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ApiCenterServiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceResource.Get");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceResource.Get");
             scope.Start();
             try
             {
-                var response = _serviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _apiCenterServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiCenterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceResource.Delete");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _serviceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiCenterServiceServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ApiCenterArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceResource.Delete");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = _serviceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _apiCenterServiceServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new ApiCenterArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -236,16 +236,16 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="patch"> The service properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ServiceResource>> UpdateAsync(ServicePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiCenterServiceResource>> UpdateAsync(ApiCenterServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceResource.Update");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                var response = await _apiCenterServiceServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ApiCenterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,16 +270,16 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="patch"> The service properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ServiceResource> Update(ServicePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ApiCenterServiceResource> Update(ApiCenterServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _serviceClientDiagnostics.CreateScope("ServiceResource.Update");
+            using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                var response = _apiCenterServiceServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new ApiCenterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

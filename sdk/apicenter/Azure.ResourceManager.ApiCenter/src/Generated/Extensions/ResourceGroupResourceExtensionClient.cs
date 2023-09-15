@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ApiCenter
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
-        public virtual ServiceCollection GetServices()
+        /// <summary> Gets a collection of ApiCenterServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ApiCenterServiceResources and their operations over a ApiCenterServiceResource. </returns>
+        public virtual ApiCenterServiceCollection GetApiCenterServices()
         {
-            return GetCachedClient(Client => new ServiceCollection(Client, Id));
+            return GetCachedClient(Client => new ApiCenterServiceCollection(Client, Id));
         }
     }
 }

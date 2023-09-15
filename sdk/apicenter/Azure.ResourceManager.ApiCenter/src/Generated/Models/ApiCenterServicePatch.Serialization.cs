@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    public partial class ServicePatch : IUtf8JsonSerializable
+    public partial class ApiCenterServicePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

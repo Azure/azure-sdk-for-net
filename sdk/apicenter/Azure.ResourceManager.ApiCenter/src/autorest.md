@@ -8,13 +8,25 @@ csharp: true
 library-name: ApiCenter
 namespace: Azure.ResourceManager.ApiCenter
 require: https://github.com/Azure/azure-rest-api-specs/blob/a29126ca8200a6c981a4e908e41fe55730df4cad/specification/apicenter/resource-manager/readme.md
+#tag: package-2023-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+#mgmt-debug: 
+#  show-serialized-names: true
+
+rename-mapping:
+  ServiceCollection: ApiCenterServiceListResult
+
+prepend-rp-prefix:
+  - ProvisioningState
+  - Service
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -23,7 +35,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

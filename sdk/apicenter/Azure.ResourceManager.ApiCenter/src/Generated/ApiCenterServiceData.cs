@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
-    /// A class representing the Service data model.
+    /// A class representing the ApiCenterService data model.
     /// The service entity.
     /// </summary>
-    public partial class ServiceData : TrackedResourceData
+    public partial class ApiCenterServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceData. </summary>
+        /// <summary> Initializes a new instance of ApiCenterServiceData. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceData(AzureLocation location) : base(location)
+        public ApiCenterServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceData. </summary>
+        /// <summary> Initializes a new instance of ApiCenterServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the service. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        internal ServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal ApiCenterServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ApiCenterProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.ApiCenter
         /// <summary> The identity of the service. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ApiCenterProvisioningState? ProvisioningState { get; }
     }
 }

@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> The service properties to be updated. </summary>
-    public partial class ServicePatch
+    public partial class ApiCenterServicePatch
     {
-        /// <summary> Initializes a new instance of ServicePatch. </summary>
-        public ServicePatch()
+        /// <summary> Initializes a new instance of ApiCenterServicePatch. </summary>
+        public ApiCenterServicePatch()
         {
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ApiCenterProvisioningState? ProvisioningState { get; }
     }
 }
