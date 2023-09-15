@@ -45,6 +45,30 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetWeatherData_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+
+            RequestContent content = RequestContent.Create(new
+            {
+                providerApiKey = "<providerApiKey>",
+                extensionId = "<extensionId>",
+                extensionApiName = "<extensionApiName>",
+                units = "<units>",
+            });
+            Response response = await client.GetWeatherDataAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetWeatherData_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -138,30 +162,6 @@ value = "<value>",
             Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("retryable").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWeatherData_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = RequestContent.Create(new
-            {
-                providerApiKey = "<providerApiKey>",
-                extensionId = "<extensionId>",
-                extensionApiName = "<extensionApiName>",
-                units = "<units>",
-            });
-            Response response = await client.GetWeatherDataAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
         }
 
         [Test]
