@@ -8,12 +8,18 @@ csharp: true
 library-name: DefenderEasm
 namespace: Azure.ResourceManager.DefenderEasm
 require: https://github.com/Azure/azure-rest-api-specs/blob/23d88533ddfde4d1565a897fe95d42fb0d9333e5/specification/riskiq/resource-manager/readme.md
-tag: package-preview-2023-04
+#tag: package-preview-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
     flatten-payloads: false
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
     "tenantId": "uuid"
@@ -22,7 +28,7 @@ format-by-name-rules:
     "*Uri": "Uri"
     "*Uris": "Uri"
 
-rename-rules:
+acronym-mapping:
     CPU: Cpu
     CPUs: Cpus
     Os: OS
