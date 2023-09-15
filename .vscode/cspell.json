@@ -898,6 +898,14 @@
       ]
     },
     {
+      "filename": "**/sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/api/*.cs",
+      "words": [
+        "capi",
+        "kvaio",
+        "scvmm"
+      ]
+    },
+    {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": [
         "Puid"

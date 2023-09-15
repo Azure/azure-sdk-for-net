@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DefenderEasm.Tests.Tests
         {
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Service not ready.")]
         public async Task LabelCRUDTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();

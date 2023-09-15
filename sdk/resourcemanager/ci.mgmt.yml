@@ -483,6 +483,7 @@ trigger:
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
     - sdk/reservations/Azure.ResourceManager.Reservations
+    - sdk/resourceconnector/Azure.ResourceManager.ResourceConnector
     - sdk/resourcegraph/Azure.ResourceManager.ResourceGraph
     - sdk/resourcehealth/Azure.ResourceManager.ResourceHealth
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
@@ -1002,6 +1003,7 @@ pr:
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
     - sdk/reservations/Azure.ResourceManager.Reservations
+    - sdk/resourceconnector/Azure.ResourceManager.ResourceConnector
     - sdk/resourcegraph/Azure.ResourceManager.ResourceGraph
     - sdk/resourcehealth/Azure.ResourceManager.ResourceHealth
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
