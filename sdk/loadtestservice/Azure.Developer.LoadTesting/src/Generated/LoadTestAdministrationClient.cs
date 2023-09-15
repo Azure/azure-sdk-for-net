@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -813,7 +814,7 @@ namespace Azure.Developer.LoadTesting
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestFilesRequest(testId, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestFilesNextPageRequest(nextLink, testId, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -839,7 +840,7 @@ namespace Azure.Developer.LoadTesting
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestFilesRequest(testId, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestFilesNextPageRequest(nextLink, testId, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateCreateOrUpdateTestRequest(string testId, RequestContent content, RequestContext context)

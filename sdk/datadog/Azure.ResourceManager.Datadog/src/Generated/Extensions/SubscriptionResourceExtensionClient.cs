@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
         }
     }
 }

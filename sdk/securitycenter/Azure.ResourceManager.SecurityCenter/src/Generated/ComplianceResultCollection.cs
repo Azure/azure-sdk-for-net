@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _complianceResultRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _complianceResultRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _complianceResultRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _complianceResultRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

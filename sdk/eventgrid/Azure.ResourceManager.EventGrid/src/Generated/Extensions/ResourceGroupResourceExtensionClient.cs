@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<EventTypeUnderTopic> GetEventTypes(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }

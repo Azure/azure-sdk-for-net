@@ -85,7 +85,11 @@ namespace Azure.AI.OpenAI
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName)
+        /// <param name="internalAzureExtensionsDataSources">
+        ///   The configuration entries for Azure OpenAI chat extensions that use them.
+        ///   This additional specification is only compatible with Azure OpenAI.
+        /// </param>
+        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources)
         {
             Messages = messages;
             Functions = functions;
@@ -101,6 +105,7 @@ namespace Azure.AI.OpenAI
             FrequencyPenalty = frequencyPenalty;
             InternalShouldStreamResponse = internalShouldStreamResponse;
             InternalNonAzureModelName = internalNonAzureModelName;
+            InternalAzureExtensionsDataSources = internalAzureExtensionsDataSources;
         }
 
         /// <summary>

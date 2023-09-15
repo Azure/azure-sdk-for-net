@@ -3,7 +3,7 @@
 
 namespace Azure.Storage.DataMovement
 {
-    internal static class CheckpointerExtensions
+    internal static partial class CheckpointerExtensions
     {
         public static TransferCheckpointer GetCheckpointer(this TransferCheckpointStoreOptions options)
         {
@@ -17,5 +17,7 @@ namespace Azure.Storage.DataMovement
                 return new LocalTransferCheckpointer(default);
             }
         }
+
+        internal static bool IsLocalResource(this StorageResource resource) => resource.Uri.IsFile;
     }
 }

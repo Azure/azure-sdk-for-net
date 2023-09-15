@@ -517,7 +517,7 @@ namespace Azure.Storage.DataMovement
 
         internal List<string> GetJobPartSourceResourcePaths()
         {
-            return _jobParts.Select( x => x._sourceResource.Path ).ToList();
+            return _jobParts.Select( x => x._sourceResource.Uri.GetPath() ).ToList();
         }
 
         internal void QueueJobPart()

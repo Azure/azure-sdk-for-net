@@ -4,14 +4,14 @@ trigger: none
 pr:
   branches:
     include:
-      - main
-      - feature/*
-      - hotfix/*
-      - release/*
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
   paths:
     include:
-      - sdk/defendereasm/ci.mgmt.yml
-      - sdk/defendereasm/Azure.ResourceManager.DefenderEasm/
+    - sdk/defendereasm/ci.mgmt.yml
+    - sdk/defendereasm/Azure.ResourceManager.DefenderEasm/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

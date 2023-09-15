@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobScheduleJobScheduleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobScheduleJobScheduleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationJobScheduleResource(Client, AutomationJobScheduleData.DeserializeAutomationJobScheduleData(e)), _automationJobScheduleJobScheduleClientDiagnostics, Pipeline, "AutomationJobScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationJobScheduleResource(Client, AutomationJobScheduleData.DeserializeAutomationJobScheduleData(e)), _automationJobScheduleJobScheduleClientDiagnostics, Pipeline, "AutomationJobScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobScheduleJobScheduleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobScheduleJobScheduleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationJobScheduleResource(Client, AutomationJobScheduleData.DeserializeAutomationJobScheduleData(e)), _automationJobScheduleJobScheduleClientDiagnostics, Pipeline, "AutomationJobScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationJobScheduleResource(Client, AutomationJobScheduleData.DeserializeAutomationJobScheduleData(e)), _automationJobScheduleJobScheduleClientDiagnostics, Pipeline, "AutomationJobScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

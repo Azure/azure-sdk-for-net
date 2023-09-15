@@ -1515,6 +1515,12 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
+                    using DisposableBucket disposableBucket = new();
+                    if (ClientSideEncryption != default)
+                    {
+                        disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
+                    }
+
                     // Start downloading the blob
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
                         range,
