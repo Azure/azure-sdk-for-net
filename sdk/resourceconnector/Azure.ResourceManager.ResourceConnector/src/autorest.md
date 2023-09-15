@@ -8,13 +8,18 @@ csharp: true
 library-name: ResourceConnector
 namespace: Azure.ResourceManager.ResourceConnector
 require: https://github.com/Azure/azure-rest-api-specs/blob/616302e10e5ce0f80d2f0eaf8002f3e39d033696/specification/resourceconnector/resource-manager/readme.md
+#tag: package-2022-10-27
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
