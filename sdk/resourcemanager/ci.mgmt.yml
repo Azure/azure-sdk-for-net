@@ -15,6 +15,7 @@ trigger:
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/analysisservices/Azure.ResourceManager.Analysis
+    - sdk/apicenter/Azure.ResourceManager.ApiCenter
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
@@ -89,7 +90,6 @@ trigger:
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
-    - sdk/hybriddatamanager/Azure.ResourceManager.HybridData
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
@@ -194,6 +194,7 @@ pr:
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/analysisservices/Azure.ResourceManager.Analysis
+    - sdk/apicenter/Azure.ResourceManager.ApiCenter
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
@@ -268,7 +269,6 @@ pr:
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
-    - sdk/hybriddatamanager/Azure.ResourceManager.HybridData
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
