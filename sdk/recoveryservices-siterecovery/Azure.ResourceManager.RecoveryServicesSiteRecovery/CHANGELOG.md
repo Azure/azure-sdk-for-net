@@ -3,7 +3,7 @@
 ## 2.0.0 (2023-09-25)
 
 ### Features Added
-- Changes Related to Integration of In place OS upgrade (https://learn.microsoft.com/en-us/azure/migrate/how-to-upgrade-windows)
+- Changes Related to Integration of In place OS upgrade [Upgrade Windows Guideline](https://learn.microsoft.com/en-us/azure/migrate/how-to-upgrade-windows)
 - Changes Releated to Implementing Monitoring Flow.
 
 ### Breaking Changes
