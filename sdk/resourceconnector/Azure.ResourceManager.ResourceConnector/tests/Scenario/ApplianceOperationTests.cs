@@ -2,21 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using System.IO;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.ResourceManager.ResourceConnector.Tests
 {
