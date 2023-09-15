@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelSerializerOptions options)
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"  kind: '{Kind}'");
+            sb.AppendLine($"  name: 'appsettings'");
             if (Optional.IsCollectionDefined(Properties))
             {
                 sb.AppendLine($"  properties: {{");
                 foreach (var kv in Properties)
                 {
                     string value = kv.Value.StartsWith("_p_.", StringComparison.Ordinal) ? kv.Value.Substring(4) : $"'{kv.Value}'";
-                    sb.AppendLine($"    '{kv.Key}': {value}");
+                    sb.AppendLine($"    {kv.Key}: {value}");
                 }
                 sb.AppendLine($"  }}");
             }
