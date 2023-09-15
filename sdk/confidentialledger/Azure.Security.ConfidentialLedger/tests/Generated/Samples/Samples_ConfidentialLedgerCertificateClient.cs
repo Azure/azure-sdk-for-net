@@ -31,6 +31,18 @@ namespace Azure.Security.ConfidentialLedger.Certificate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLedgerIdentity_Async()
+        {
+            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+
+            Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetLedgerIdentity_AllParameters()
         {
             ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
@@ -39,18 +51,6 @@ namespace Azure.Security.ConfidentialLedger.Certificate.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("ledgerId").ToString());
-            Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLedgerIdentity_Async()
-        {
-            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
-
-            Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
         }
 
