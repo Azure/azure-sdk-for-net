@@ -4639,11 +4639,15 @@ namespace Azure.ResourceManager.AppService.Models
         public string KeyVaultSecretName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? ProvisioningState { get { throw null; } }
     }
-    public partial class AppServiceConfigurationDictionary : Azure.ResourceManager.Models.ResourceData
+    public partial class AppServiceConfigurationDictionary : Azure.ResourceManager.Models.ResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>
     {
         public AppServiceConfigurationDictionary() { }
         public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class AppServiceCorsSettings : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>
     {
