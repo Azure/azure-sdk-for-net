@@ -357,6 +357,8 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
                 SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
                 IndexName = "contoso-products-index",
                 SearchKey = new AzureKeyCredential("<your Cognitive Search resource API key>"),
+                QueryType = AzureCognitiveSearchQueryType.Simple,
+                ShouldRestrictResultScope = false
             }
         }
     }
