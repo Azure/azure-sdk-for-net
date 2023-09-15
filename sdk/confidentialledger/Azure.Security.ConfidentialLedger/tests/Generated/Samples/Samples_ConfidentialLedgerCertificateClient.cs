@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Identity;
+using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Certificate.Samples
@@ -23,8 +21,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetLedgerIdentity()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new ConfidentialLedgerCertificateClient(endpoint);
+            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
             Response response = client.GetLedgerIdentity("<ledgerId>");
 
@@ -36,8 +33,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetLedgerIdentity_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new ConfidentialLedgerCertificateClient(endpoint);
+            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
             Response response = client.GetLedgerIdentity("<ledgerId>");
 
@@ -50,8 +46,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetLedgerIdentity_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new ConfidentialLedgerCertificateClient(endpoint);
+            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
             Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
 
@@ -63,8 +58,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetLedgerIdentity_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new ConfidentialLedgerCertificateClient(endpoint);
+            ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
             Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSliceSlicesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSliceSlicesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSliceResource(Client, MobileNetworkSliceData.DeserializeMobileNetworkSliceData(e)), _mobileNetworkSliceSlicesClientDiagnostics, Pipeline, "MobileNetworkSliceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSliceResource(Client, MobileNetworkSliceData.DeserializeMobileNetworkSliceData(e)), _mobileNetworkSliceSlicesClientDiagnostics, Pipeline, "MobileNetworkSliceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSliceSlicesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSliceSlicesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSliceResource(Client, MobileNetworkSliceData.DeserializeMobileNetworkSliceData(e)), _mobileNetworkSliceSlicesClientDiagnostics, Pipeline, "MobileNetworkSliceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSliceResource(Client, MobileNetworkSliceData.DeserializeMobileNetworkSliceData(e)), _mobileNetworkSliceSlicesClientDiagnostics, Pipeline, "MobileNetworkSliceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

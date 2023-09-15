@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Storage
         public virtual AsyncPageable<StorageAccountLocalUserResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountLocalUserLocalUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Pageable<StorageAccountLocalUserResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountLocalUserLocalUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

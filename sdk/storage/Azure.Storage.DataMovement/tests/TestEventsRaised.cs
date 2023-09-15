@@ -106,8 +106,8 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     Assert.Fail(
                         $"Failure occurred at Transfer id: {failure.TransferId}.\n" +
-                        $"Source Resource Path: {failure.SourceResource.Path}\n" +
-                        $"Destination Resource Path: {failure.DestinationResource.Path}\n" +
+                        $"Source Resource Path: {failure.SourceResource.Uri.AbsoluteUri}\n" +
+                        $"Destination Resource Path: {failure.DestinationResource.Uri.AbsoluteUri}\n" +
                         $"Exception Message: {failure.Exception.Message}\n" +
                         $"Exception Stack: {failure.Exception.StackTrace}\n");
                 }
@@ -143,8 +143,8 @@ namespace Azure.Storage.DataMovement.Tests
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SingleCompletedEvents);
             Assert.AreEqual(1, SkippedEvents.Count);
-            Assert.NotNull(SkippedEvents.First().SourceResource.Path);
-            Assert.NotNull(SkippedEvents.First().DestinationResource.Path);
+            Assert.NotNull(SkippedEvents.First().SourceResource.Uri);
+            Assert.NotNull(SkippedEvents.First().DestinationResource.Uri);
 
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(
@@ -164,8 +164,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsEmpty(SingleCompletedEvents);
             Assert.AreEqual(1, FailedEvents.Count);
             Assert.NotNull(FailedEvents.First().Exception);
-            Assert.NotNull(FailedEvents.First().SourceResource.Path);
-            Assert.NotNull(FailedEvents.First().DestinationResource.Path);
+            Assert.NotNull(FailedEvents.First().SourceResource.Uri);
+            Assert.NotNull(FailedEvents.First().DestinationResource.Uri);
 
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(

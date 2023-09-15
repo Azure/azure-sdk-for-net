@@ -29,8 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Perf", "perf\Azu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{96E9F605-9C38-4D77-96F4-679EF8B9390F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{8E60A748-3973-471A-B103-EC9406BB3313}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework.Tests", "..\Azure.Core.TestFramework\tests\Azure.Core.TestFramework.Tests.csproj", "{33C299B5-ABDA-47BC-838F-973E62C067F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{13A04222-4F21-40FC-BE42-A37EE34FF272}"
@@ -53,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Expressions.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests.Public", "tests\public\Azure.Core.Tests.Public.csproj", "{BFBF8EF7-61D8-40E7-9E98-468A0427761E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Tests.Common", "tests\common\Azure.Core.Tests.Common.csproj", "{0EEDF53F-120A-45B1-8468-A97A0D46DBAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests.Common", "tests\common\Azure.Core.Tests.Common.csproj", "{0EEDF53F-120A-45B1-8468-A97A0D46DBAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,10 +111,6 @@ Global
 		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E60A748-3973-471A-B103-EC9406BB3313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E60A748-3973-471A-B103-EC9406BB3313}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E60A748-3973-471A-B103-EC9406BB3313}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E60A748-3973-471A-B103-EC9406BB3313}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33C299B5-ABDA-47BC-838F-973E62C067F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{33C299B5-ABDA-47BC-838F-973E62C067F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33C299B5-ABDA-47BC-838F-973E62C067F9}.Release|Any CPU.ActiveCfg = Release|Any CPU

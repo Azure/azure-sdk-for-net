@@ -295,7 +295,8 @@
         "Ipvs",
         "Keda",
         "Kata",
-        "Mshv"
+        "Mshv",
+        "Fips"
       ]
     },
     {
@@ -489,11 +490,22 @@
       ]
     },
     {
+      "filename": "**/sdk/hardwaresecuritymodules/**/*.cs",
+      "words": [
+        "fips",
+        "klmk",
+        "hsma"
+      ]
+    },
+    {
       "filename": "**/sdk/hdinsight/**/*.cs",
       "words": [
         "aadds",
+        "flink",
         "ldaps",
-        "oaep"
+        "llap",
+        "oaep",
+        "trino"
       ]
     },
     {

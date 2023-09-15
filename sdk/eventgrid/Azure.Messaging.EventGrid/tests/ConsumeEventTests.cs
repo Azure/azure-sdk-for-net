@@ -2299,6 +2299,36 @@ namespace Azure.Messaging.EventGrid.Tests
             var sysEvent = events[0].Data.ToObjectFromJson<AppConfigurationKeyValueModifiedEventData>();
             Assert.AreEqual("key1", sysEvent.Key);
         }
+
+        [Test]
+        public void ConsumeCloudEventAppConfigurationSnapshotCreatedEvent()
+        {
+            string requestContent = "[{\"specversion\": \"1.0\",   \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"source\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"type\": \"Microsoft.AppConfiguration.SnapshotCreated\",\"time\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"name\":\"Foo\",\"etag\":\"FnUExLaj2moIi4tJX9AXn9sakm0\",\"syncToken\":\"zAJw6V16=Njo1IzUxNjQ2NzM=;sn=5164673\"}}]";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("Foo", (eventData as AppConfigurationSnapshotCreatedEventData).Name);
+            Assert.AreEqual("zAJw6V16=Njo1IzUxNjQ2NzM=;sn=5164673", (eventData as AppConfigurationSnapshotCreatedEventData).SyncToken);
+
+            var sysEvent = events[0].Data.ToObjectFromJson<AppConfigurationSnapshotCreatedEventData>();
+            Assert.AreEqual("Foo", sysEvent.Name);
+        }
+
+        [Test]
+        public void ConsumeCloudEventAppConfigurationSnapshotModifiedEvent()
+        {
+            string requestContent = "[{\"specversion\": \"1.0\",   \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"source\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.Maps/test1\",  \"subject\": \"test1\",  \"type\": \"Microsoft.AppConfiguration.SnapshotModified\",\"time\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {\"name\":\"Foo\",\"etag\":\"FnUExLaj2moIi4tJX9AXn9sakm0\",\"syncToken\":\"zAJw6V16=Njo1IzUxNjQ2NzM=;sn=5164673\"}}]";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("Foo", (eventData as AppConfigurationSnapshotModifiedEventData).Name);
+            Assert.AreEqual("zAJw6V16=Njo1IzUxNjQ2NzM=;sn=5164673", (eventData as AppConfigurationSnapshotModifiedEventData).SyncToken);
+
+            var sysEvent = events[0].Data.ToObjectFromJson<AppConfigurationSnapshotModifiedEventData>();
+            Assert.AreEqual("Foo", sysEvent.Name);
+        }
         #endregion
 
         #region ContainerRegistry events
@@ -2564,6 +2594,65 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("/subscriptions/id/resourceGroups/rg/providers/Microsoft.EventGrid/topics/topic1/providers/Microsoft.EventGrid/eventSubscriptions/eventsubscription1", (eventData as SubscriptionDeletedEventData).EventSubscriptionId);
+        }
+
+        [Test]
+        public void ConsumeCloudEventEventGridMqttClientCreatedOrUpdatedEvent()
+        {
+            string requestContent = "[{ \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"source\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": {  \"createdOn\": \"2023-07-29T01:14:34.2048108Z\", \"updatedOn\": \"2023-07-29T01:14:34.2048108Z\",\"namespaceName\": \"myns\",\"clientName\": \"client1\",\"clientAuthenticationName\": \"client1\",\"state\": \"Enabled\",\"attributes\": {\"attribute1\": \"value1\"}  },  \"type\": \"Microsoft.EventGrid.MQTTClientCreatedOrUpdated\",  \"time\": \"2018-01-25T22:12:19.4556811Z\",  \"specversion\": \"1.0\"}]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("client1", (eventData as EventGridMqttClientCreatedOrUpdatedEventData).ClientName);
+            Assert.AreEqual("myns", (eventData as EventGridMqttClientCreatedOrUpdatedEventData).NamespaceName);
+            Assert.AreEqual("client1", (eventData as EventGridMqttClientCreatedOrUpdatedEventData).ClientAuthenticationName);
+        }
+
+        [Test]
+        public void ConsumeCloudEventEventGridMqttClientDeletedEvent()
+        {
+            string requestContent = "[{ \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"source\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": {  \"namespaceName\": \"myns\",\"clientName\": \"client1\",\"clientAuthenticationName\": \"client1\" },  \"type\": \"Microsoft.EventGrid.MQTTClientDeleted\",  \"time\": \"2018-01-25T22:12:19.4556811Z\",  \"specversion\": \"1.0\"}]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("client1", (eventData as EventGridMqttClientDeletedEventData).ClientName);
+            Assert.AreEqual("myns", (eventData as EventGridMqttClientDeletedEventData).NamespaceName);
+            Assert.AreEqual("client1", (eventData as EventGridMqttClientDeletedEventData).ClientAuthenticationName);
+        }
+
+        [Test]
+        public void ConsumeCloudEventEventGridMqttClientSessionConnectedEvent()
+        {
+            string requestContent = "[{ \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"source\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": {  \"namespaceName\": \"myns\",\"clientSessionName\": \"session\",\"clientAuthenticationName\": \"client1\", \"sequenceNumber\": 1 },  \"type\": \"Microsoft.EventGrid.MQTTClientSessionConnected\",  \"time\": \"2018-01-25T22:12:19.4556811Z\",  \"specversion\": \"1.0\"}]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("session", (eventData as EventGridMqttClientSessionConnectedEventData).ClientSessionName);
+            Assert.AreEqual("myns", (eventData as EventGridMqttClientSessionConnectedEventData).NamespaceName);
+            Assert.AreEqual("client1", (eventData as EventGridMqttClientSessionConnectedEventData).ClientAuthenticationName);
+            Assert.AreEqual(1, (eventData as EventGridMqttClientSessionConnectedEventData).SequenceNumber);
+        }
+
+        [Test]
+        public void ConsumeCloudEventEventGridMqttClientSessionDisconnectedEvent()
+        {
+            string requestContent = "[{ \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"source\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": {  \"namespaceName\": \"myns\",\"clientSessionName\": \"session\",\"clientAuthenticationName\": \"client1\", \"sequenceNumber\": 1, \"disconnectionReason\": \"ClientInitiatedDisconnect\" },  \"type\": \"Microsoft.EventGrid.MQTTClientSessionDisconnected\",  \"time\": \"2018-01-25T22:12:19.4556811Z\",  \"specversion\": \"1.0\"}]";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("session", (eventData as EventGridMqttClientSessionDisconnectedEventData).ClientSessionName);
+            Assert.AreEqual("myns", (eventData as EventGridMqttClientSessionDisconnectedEventData).NamespaceName);
+            Assert.AreEqual("client1", (eventData as EventGridMqttClientSessionDisconnectedEventData).ClientAuthenticationName);
+            Assert.AreEqual(1, (eventData as EventGridMqttClientSessionDisconnectedEventData).SequenceNumber);
+            Assert.AreEqual(EventGridMqttClientDisconnectionReason.ClientInitiatedDisconnect, (eventData as EventGridMqttClientSessionDisconnectedEventData).DisconnectionReason);
         }
         #endregion
 
