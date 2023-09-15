@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
 {
-    public partial class TaskResource : IUtf8JsonSerializable
+    public partial class EasmTask : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             writer.WriteEndObject();
         }
 
-        internal static TaskResource DeserializeTaskResource(JsonElement element)
+        internal static EasmTask DeserializeEasmTask(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceState> provisioningState = default;
+            Optional<EasmResourceProvisioningState> provisioningState = default;
             Optional<string> startedAt = default;
             Optional<string> completedAt = default;
             Optional<string> lastPolledAt = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                             {
                                 continue;
                             }
-                            provisioningState = new ResourceState(property0.Value.GetString());
+                            provisioningState = new EasmResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startedAt"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     continue;
                 }
             }
-            return new TaskResource(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startedAt.Value, completedAt.Value, lastPolledAt.Value, state.Value, phase.Value, reason.Value, metadata.Value);
+            return new EasmTask(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startedAt.Value, completedAt.Value, lastPolledAt.Value, state.Value, phase.Value, reason.Value, metadata.Value);
         }
     }
 }

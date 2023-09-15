@@ -27,26 +27,26 @@ namespace Azure.ResourceManager.DefenderEasm.Tests.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroupName);
-            WorkspaceResourceCollection workspaces = resourceGroup.GetWorkspaceResources();
+            EasmWorkspaceCollection workspaces = resourceGroup.GetEasmWorkspaces();
             String workspaceName = Recording.GenerateAssetName("workspace");
-            WorkspaceResourceData workspaceResourceData = new WorkspaceResourceData("eastus");
+            EasmWorkspaceData workspaceResourceData = new EasmWorkspaceData("eastus");
 
             // create
             var createWorkspaceOperation = await workspaces.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, workspaceResourceData);
             Assert.AreEqual(workspaceResourceData.Location, createWorkspaceOperation.Value.Data.Location);
 
             // get
-            WorkspaceResource getWorkspaceOperation = await workspaces.GetAsync(workspaceName);
+            EasmWorkspaceResource getWorkspaceOperation = await workspaces.GetAsync(workspaceName);
             Assert.AreEqual(workspaceResourceData.Location, getWorkspaceOperation.Data.Location);
 
             // update
-            WorkspaceResourcePatch workspaceResourcePatch = new WorkspaceResourcePatch();
+            EasmWorkspacePatch workspaceResourcePatch = new EasmWorkspacePatch();
             workspaceResourcePatch.Tags.Add(new KeyValuePair<string, string>("testkey", "testvalue"));
-            WorkspaceResource updateWorkspaceOperation = await getWorkspaceOperation.UpdateAsync(workspaceResourcePatch);
+            EasmWorkspaceResource updateWorkspaceOperation = await getWorkspaceOperation.UpdateAsync(workspaceResourcePatch);
             Assert.AreEqual(updateWorkspaceOperation.Data.Tags.Count, 1);
 
             // delete
-            WorkspaceResource w = await workspaces.GetAsync(workspaceName);
+            EasmWorkspaceResource w = await workspaces.GetAsync(workspaceName);
             ArmOperation operation = await w.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(operation.HasCompleted);
         }

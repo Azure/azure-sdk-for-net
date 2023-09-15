@@ -12,15 +12,15 @@ using Azure.ResourceManager.DefenderEasm;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
 {
-    internal partial class LabelResourceList
+    internal partial class EasmLabelListResult
     {
-        internal static LabelResourceList DeserializeLabelResourceList(JsonElement element)
+        internal static EasmLabelListResult DeserializeEasmLabelListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<LabelResourceData>> value = default;
+            Optional<IReadOnlyList<EasmLabelData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     {
                         continue;
                     }
-                    List<LabelResourceData> array = new List<LabelResourceData>();
+                    List<EasmLabelData> array = new List<EasmLabelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabelResourceData.DeserializeLabelResourceData(item));
+                        array.Add(EasmLabelData.DeserializeEasmLabelData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     continue;
                 }
             }
-            return new LabelResourceList(Optional.ToList(value), nextLink.Value);
+            return new EasmLabelListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

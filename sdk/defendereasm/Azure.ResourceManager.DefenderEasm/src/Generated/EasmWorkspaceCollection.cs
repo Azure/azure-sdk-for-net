@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DefenderEasm
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkspaceResource" /> and their operations.
-    /// Each <see cref="WorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="WorkspaceResourceCollection" /> instance call the GetWorkspaceResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="EasmWorkspaceResource" /> and their operations.
+    /// Each <see cref="EasmWorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="EasmWorkspaceCollection" /> instance call the GetEasmWorkspaces method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class WorkspaceResourceCollection : ArmCollection, IEnumerable<WorkspaceResource>, IAsyncEnumerable<WorkspaceResource>
+    public partial class EasmWorkspaceCollection : ArmCollection, IEnumerable<EasmWorkspaceResource>, IAsyncEnumerable<EasmWorkspaceResource>
     {
-        private readonly ClientDiagnostics _workspaceResourceWorkspacesClientDiagnostics;
-        private readonly WorkspacesRestOperations _workspaceResourceWorkspacesRestClient;
+        private readonly ClientDiagnostics _easmWorkspaceWorkspacesClientDiagnostics;
+        private readonly WorkspacesRestOperations _easmWorkspaceWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceResourceCollection"/> class for mocking. </summary>
-        protected WorkspaceResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="EasmWorkspaceCollection"/> class for mocking. </summary>
+        protected EasmWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EasmWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WorkspaceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EasmWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceResourceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DefenderEasm", WorkspaceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WorkspaceResource.ResourceType, out string workspaceResourceWorkspacesApiVersion);
-            _workspaceResourceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceResourceWorkspacesApiVersion);
+            _easmWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DefenderEasm", EasmWorkspaceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EasmWorkspaceResource.ResourceType, out string easmWorkspaceWorkspacesApiVersion);
+            _easmWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, easmWorkspaceWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, WorkspaceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EasmWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, EasmWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceResourceWorkspacesClientDiagnostics.CreateScope("WorkspaceResourceCollection.CreateOrUpdate");
+            using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _workspaceResourceWorkspacesRestClient.CreateAndUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DefenderEasmArmOperation<WorkspaceResource>(new WorkspaceResourceOperationSource(Client), _workspaceResourceWorkspacesClientDiagnostics, Pipeline, _workspaceResourceWorkspacesRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _easmWorkspaceWorkspacesRestClient.CreateAndUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DefenderEasmArmOperation<EasmWorkspaceResource>(new EasmWorkspaceOperationSource(Client), _easmWorkspaceWorkspacesClientDiagnostics, Pipeline, _easmWorkspaceWorkspacesRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, WorkspaceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EasmWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, EasmWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceResourceWorkspacesClientDiagnostics.CreateScope("WorkspaceResourceCollection.CreateOrUpdate");
+            using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _workspaceResourceWorkspacesRestClient.CreateAndUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new DefenderEasmArmOperation<WorkspaceResource>(new WorkspaceResourceOperationSource(Client), _workspaceResourceWorkspacesClientDiagnostics, Pipeline, _workspaceResourceWorkspacesRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _easmWorkspaceWorkspacesRestClient.CreateAndUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
+                var operation = new DefenderEasmArmOperation<EasmWorkspaceResource>(new EasmWorkspaceOperationSource(Client), _easmWorkspaceWorkspacesClientDiagnostics, Pipeline, _easmWorkspaceWorkspacesRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual async Task<Response<WorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EasmWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceResourceWorkspacesClientDiagnostics.CreateScope("WorkspaceResourceCollection.Get");
+            using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workspaceResourceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                var response = await _easmWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EasmWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,18 +190,18 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual Response<WorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<EasmWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceResourceWorkspacesClientDiagnostics.CreateScope("WorkspaceResourceCollection.Get");
+            using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _workspaceResourceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                var response = _easmWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EasmWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EasmWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceResourceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceResourceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkspaceResource(Client, WorkspaceResourceData.DeserializeWorkspaceResourceData(e)), _workspaceResourceWorkspacesClientDiagnostics, Pipeline, "WorkspaceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EasmWorkspaceResource(Client, EasmWorkspaceData.DeserializeEasmWorkspaceData(e)), _easmWorkspaceWorkspacesClientDiagnostics, Pipeline, "EasmWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,12 +246,12 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EasmWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceResourceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceResourceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkspaceResource(Client, WorkspaceResourceData.DeserializeWorkspaceResourceData(e)), _workspaceResourceWorkspacesClientDiagnostics, Pipeline, "WorkspaceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _easmWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EasmWorkspaceResource(Client, EasmWorkspaceData.DeserializeEasmWorkspaceData(e)), _easmWorkspaceWorkspacesClientDiagnostics, Pipeline, "EasmWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.DefenderEasm
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceResourceWorkspacesClientDiagnostics.CreateScope("WorkspaceResourceCollection.Exists");
+            using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workspaceResourceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _easmWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.DefenderEasm
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _workspaceResourceWorkspacesClientDiagnostics.CreateScope("WorkspaceResourceCollection.Exists");
+            using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workspaceResourceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                var response = _easmWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DefenderEasm
             }
         }
 
-        IEnumerator<WorkspaceResource> IEnumerable<WorkspaceResource>.GetEnumerator()
+        IEnumerator<EasmWorkspaceResource> IEnumerable<EasmWorkspaceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DefenderEasm
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<WorkspaceResource> IAsyncEnumerable<WorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<EasmWorkspaceResource> IAsyncEnumerable<EasmWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

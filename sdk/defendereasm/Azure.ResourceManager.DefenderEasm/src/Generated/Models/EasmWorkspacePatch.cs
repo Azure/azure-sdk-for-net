@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DefenderEasm.Models
 {
     /// <summary> Workspace patch properties. </summary>
-    public partial class WorkspaceResourcePatch
+    public partial class EasmWorkspacePatch
     {
-        /// <summary> Initializes a new instance of WorkspaceResourcePatch. </summary>
-        public WorkspaceResourcePatch()
+        /// <summary> Initializes a new instance of EasmWorkspacePatch. </summary>
+        public EasmWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

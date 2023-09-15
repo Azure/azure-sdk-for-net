@@ -12,18 +12,18 @@ using Azure.ResourceManager.DefenderEasm;
 namespace Azure.ResourceManager.DefenderEasm.Models
 {
     /// <summary> The list of workspaces. </summary>
-    internal partial class WorkspaceResourceList
+    internal partial class EasmWorkspaceListResult
     {
-        /// <summary> Initializes a new instance of WorkspaceResourceList. </summary>
-        internal WorkspaceResourceList()
+        /// <summary> Initializes a new instance of EasmWorkspaceListResult. </summary>
+        internal EasmWorkspaceListResult()
         {
-            Value = new ChangeTrackingList<WorkspaceResourceData>();
+            Value = new ChangeTrackingList<EasmWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceResourceList. </summary>
+        /// <summary> Initializes a new instance of EasmWorkspaceListResult. </summary>
         /// <param name="nextLink"> The link used to get the next page of Workspace list. </param>
         /// <param name="value"> The list of workspaces. </param>
-        internal WorkspaceResourceList(string nextLink, IReadOnlyList<WorkspaceResourceData> value)
+        internal EasmWorkspaceListResult(string nextLink, IReadOnlyList<EasmWorkspaceData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         /// <summary> The link used to get the next page of Workspace list. </summary>
         public string NextLink { get; }
         /// <summary> The list of workspaces. </summary>
-        public IReadOnlyList<WorkspaceResourceData> Value { get; }
+        public IReadOnlyList<EasmWorkspaceData> Value { get; }
     }
 }

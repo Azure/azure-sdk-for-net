@@ -12,25 +12,25 @@ using Azure.ResourceManager.DefenderEasm;
 namespace Azure.ResourceManager.DefenderEasm.Models
 {
     /// <summary> The list of labels. </summary>
-    internal partial class LabelResourceList
+    internal partial class EasmLabelListResult
     {
-        /// <summary> Initializes a new instance of LabelResourceList. </summary>
-        internal LabelResourceList()
+        /// <summary> Initializes a new instance of EasmLabelListResult. </summary>
+        internal EasmLabelListResult()
         {
-            Value = new ChangeTrackingList<LabelResourceData>();
+            Value = new ChangeTrackingList<EasmLabelData>();
         }
 
-        /// <summary> Initializes a new instance of LabelResourceList. </summary>
+        /// <summary> Initializes a new instance of EasmLabelListResult. </summary>
         /// <param name="value"> The list of labels. </param>
         /// <param name="nextLink"> The link used to get the next page of Label list. </param>
-        internal LabelResourceList(IReadOnlyList<LabelResourceData> value, string nextLink)
+        internal EasmLabelListResult(IReadOnlyList<EasmLabelData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of labels. </summary>
-        public IReadOnlyList<LabelResourceData> Value { get; }
+        public IReadOnlyList<EasmLabelData> Value { get; }
         /// <summary> The link used to get the next page of Label list. </summary>
         public string NextLink { get; }
     }

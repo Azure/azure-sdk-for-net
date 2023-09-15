@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabelResourceList>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<EasmLabelListResult>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 case 200:
                     {
-                        LabelResourceList value = default;
+                        EasmLabelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabelResourceList.DeserializeLabelResourceList(document.RootElement);
+                        value = EasmLabelListResult.DeserializeEasmLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabelResourceList> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<EasmLabelListResult> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 case 200:
                     {
-                        LabelResourceList value = default;
+                        EasmLabelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabelResourceList.DeserializeLabelResourceList(document.RootElement);
+                        value = EasmLabelListResult.DeserializeEasmLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="labelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabelResourceData>> GetByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, CancellationToken cancellationToken = default)
+        public async Task<Response<EasmLabelData>> GetByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 case 200:
                     {
-                        LabelResourceData value = default;
+                        EasmLabelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabelResourceData.DeserializeLabelResourceData(document.RootElement);
+                        value = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LabelResourceData)null, message.Response);
+                    return Response.FromValue((EasmLabelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="labelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabelResourceData> GetByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, CancellationToken cancellationToken = default)
+        public Response<EasmLabelData> GetByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 case 200:
                     {
-                        LabelResourceData value = default;
+                        EasmLabelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabelResourceData.DeserializeLabelResourceData(document.RootElement);
+                        value = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LabelResourceData)null, message.Response);
+                    return Response.FromValue((EasmLabelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateAndUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, LabelResourceData data)
+        internal HttpMessage CreateCreateAndUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, EasmLabelData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="labelName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAndUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, LabelResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAndUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, EasmLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="labelName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateAndUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, LabelResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateAndUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, EasmLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DefenderEasm
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, LabelResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, EasmLabelPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="labelName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabelResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, LabelResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<EasmLabelData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, EasmLabelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 case 200:
                     {
-                        LabelResourceData value = default;
+                        EasmLabelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabelResourceData.DeserializeLabelResourceData(document.RootElement);
+                        value = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="labelName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabelResourceData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, LabelResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<EasmLabelData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string labelName, EasmLabelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -370,9 +370,9 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 case 200:
                     {
-                        LabelResourceData value = default;
+                        EasmLabelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabelResourceData.DeserializeLabelResourceData(document.RootElement);
+                        value = EasmLabelData.DeserializeEasmLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabelResourceList>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<EasmLabelListResult>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -491,9 +491,9 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 case 200:
                     {
-                        LabelResourceList value = default;
+                        EasmLabelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabelResourceList.DeserializeLabelResourceList(document.RootElement);
+                        value = EasmLabelListResult.DeserializeEasmLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabelResourceList> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<EasmLabelListResult> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -522,9 +522,9 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 case 200:
                     {
-                        LabelResourceList value = default;
+                        EasmLabelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabelResourceList.DeserializeLabelResourceList(document.RootElement);
+                        value = EasmLabelListResult.DeserializeEasmLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DefenderEasm
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _workspaceResourceWorkspacesClientDiagnostics;
-        private WorkspacesRestOperations _workspaceResourceWorkspacesRestClient;
+        private ClientDiagnostics _easmWorkspaceWorkspacesClientDiagnostics;
+        private WorkspacesRestOperations _easmWorkspaceWorkspacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DefenderEasm
         {
         }
 
-        private ClientDiagnostics WorkspaceResourceWorkspacesClientDiagnostics => _workspaceResourceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DefenderEasm", WorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations WorkspaceResourceWorkspacesRestClient => _workspaceResourceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkspaceResource.ResourceType));
+        private ClientDiagnostics EasmWorkspaceWorkspacesClientDiagnostics => _easmWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DefenderEasm", EasmWorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private WorkspacesRestOperations EasmWorkspaceWorkspacesRestClient => _easmWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EasmWorkspaceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetWorkspaceResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EasmWorkspaceResource> GetEasmWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkspaceResourceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkspaceResourceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkspaceResource(Client, WorkspaceResourceData.DeserializeWorkspaceResourceData(e)), WorkspaceResourceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetWorkspaceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EasmWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EasmWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EasmWorkspaceResource(Client, EasmWorkspaceData.DeserializeEasmWorkspaceData(e)), EasmWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEasmWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetWorkspaceResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EasmWorkspaceResource> GetEasmWorkspaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkspaceResourceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkspaceResourceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkspaceResource(Client, WorkspaceResourceData.DeserializeWorkspaceResourceData(e)), WorkspaceResourceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetWorkspaceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EasmWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EasmWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EasmWorkspaceResource(Client, EasmWorkspaceData.DeserializeEasmWorkspaceData(e)), EasmWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEasmWorkspaces", "value", "nextLink", cancellationToken);
         }
     }
 }

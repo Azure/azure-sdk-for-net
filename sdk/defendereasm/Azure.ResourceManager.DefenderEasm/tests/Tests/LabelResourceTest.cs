@@ -25,35 +25,35 @@ namespace Azure.ResourceManager.DefenderEasm.Tests.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroupName);
-            WorkspaceResource workspace = await resourceGroup.GetWorkspaceResourceAsync(TestEnvironment.WorkspaceName);
-            LabelResourceCollection labels = workspace.GetLabelResources();
+            EasmWorkspaceResource workspace = await resourceGroup.GetEasmWorkspaceAsync(TestEnvironment.WorkspaceName);
+            EasmLabelCollection labels = workspace.GetEasmLabels();
             String labelName = Recording.GenerateAssetName("label");
             String newLabelName = Recording.GenerateAssetName("label");
             String color = "red";
             String newColor = "blue";
 
             // create
-            LabelResourceData labelResourceData = new LabelResourceData();
+            EasmLabelData labelResourceData = new EasmLabelData();
             labelResourceData.Color = color;
             var createLabelOperation = await labels.CreateOrUpdateAsync(WaitUntil.Completed, labelName, labelResourceData);
             Assert.AreEqual(labelName, createLabelOperation.Value.Data.Name);
             Assert.AreEqual(color, createLabelOperation.Value.Data.Color);
 
             // get
-            LabelResource getLabelOperation = await labels.GetAsync(labelName);
+            EasmLabelResource getLabelOperation = await labels.GetAsync(labelName);
             Assert.AreEqual(labelName, getLabelOperation.Data.Name);
             Assert.AreEqual(color, getLabelOperation.Data.Color);
 
             // update
-            LabelResourcePatch labelResourcePatch = new LabelResourcePatch();
+            EasmLabelPatch labelResourcePatch = new EasmLabelPatch();
             labelResourcePatch.Color = newColor;
             labelResourcePatch.DisplayName = newLabelName;
-            LabelResource updateLabelOperation = await getLabelOperation.UpdateAsync(labelResourcePatch);
+            EasmLabelResource updateLabelOperation = await getLabelOperation.UpdateAsync(labelResourcePatch);
             Assert.AreEqual(newLabelName, updateLabelOperation.Data.DisplayName);
             Assert.AreEqual(newColor, updateLabelOperation.Data.Color);
 
             // delete
-            LabelResource labelResource = await workspace.GetLabelResourceAsync(labelName);
+            EasmLabelResource labelResource = await workspace.GetEasmLabelAsync(labelName);
             ArmOperation op = await labelResource.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(op.HasCompleted);
         }

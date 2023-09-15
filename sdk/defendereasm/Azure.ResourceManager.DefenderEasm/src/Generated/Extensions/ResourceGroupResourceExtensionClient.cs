@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DefenderEasm
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public virtual WorkspaceResourceCollection GetWorkspaceResources()
+        /// <summary> Gets a collection of EasmWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EasmWorkspaceResources and their operations over a EasmWorkspaceResource. </returns>
+        public virtual EasmWorkspaceCollection GetEasmWorkspaces()
         {
-            return GetCachedClient(Client => new WorkspaceResourceCollection(Client, Id));
+            return GetCachedClient(Client => new EasmWorkspaceCollection(Client, Id));
         }
     }
 }

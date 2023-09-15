@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DefenderEasm.Samples
 {
-    public partial class Sample_WorkspaceResourceCollection
+    public partial class Sample_EasmWorkspaceCollection
     {
         // Workspaces
         [NUnit.Framework.Test]
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceResourceCollection collection = resourceGroupResource.GetWorkspaceResources();
+            // get the collection of this EasmWorkspaceResource
+            EasmWorkspaceCollection collection = resourceGroupResource.GetEasmWorkspaces();
 
             // invoke the operation and iterate over the result
-            await foreach (WorkspaceResource item in collection.GetAllAsync())
+            await foreach (EasmWorkspaceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                WorkspaceResourceData resourceData = item.Data;
+                EasmWorkspaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceResourceCollection collection = resourceGroupResource.GetWorkspaceResources();
+            // get the collection of this EasmWorkspaceResource
+            EasmWorkspaceCollection collection = resourceGroupResource.GetEasmWorkspaces();
 
             // invoke the operation
             string workspaceName = "ThisisaWorkspace";
-            WorkspaceResource result = await collection.GetAsync(workspaceName);
+            EasmWorkspaceResource result = await collection.GetAsync(workspaceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceResourceData resourceData = result.Data;
+            EasmWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceResourceCollection collection = resourceGroupResource.GetWorkspaceResources();
+            // get the collection of this EasmWorkspaceResource
+            EasmWorkspaceCollection collection = resourceGroupResource.GetEasmWorkspaces();
 
             // invoke the operation
             string workspaceName = "ThisisaWorkspace";
@@ -138,18 +138,18 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this WorkspaceResource
-            WorkspaceResourceCollection collection = resourceGroupResource.GetWorkspaceResources();
+            // get the collection of this EasmWorkspaceResource
+            EasmWorkspaceCollection collection = resourceGroupResource.GetEasmWorkspaces();
 
             // invoke the operation
             string workspaceName = "ThisisaWorkspace";
-            WorkspaceResourceData data = new WorkspaceResourceData(new AzureLocation("West US"));
-            ArmOperation<WorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
-            WorkspaceResource result = lro.Value;
+            EasmWorkspaceData data = new EasmWorkspaceData(new AzureLocation("West US"));
+            ArmOperation<EasmWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
+            EasmWorkspaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceResourceData resourceData = result.Data;
+            EasmWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

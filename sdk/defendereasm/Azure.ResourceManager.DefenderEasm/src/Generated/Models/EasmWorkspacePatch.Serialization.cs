@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
 {
-    public partial class WorkspaceResourcePatch : IUtf8JsonSerializable
+    public partial class EasmWorkspacePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

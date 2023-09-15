@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DefenderEasm
 {
     /// <summary>
-    /// A class representing the WorkspaceResource data model.
+    /// A class representing the EasmWorkspace data model.
     /// Workspace details.
     /// </summary>
-    public partial class WorkspaceResourceData : TrackedResourceData
+    public partial class EasmWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WorkspaceResourceData. </summary>
+        /// <summary> Initializes a new instance of EasmWorkspaceData. </summary>
         /// <param name="location"> The location. </param>
-        public WorkspaceResourceData(AzureLocation location) : base(location)
+        public EasmWorkspaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceResourceData. </summary>
+        /// <summary> Initializes a new instance of EasmWorkspaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="dataPlaneEndpoint"> Data plane endpoint. </param>
-        internal WorkspaceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceState? provisioningState, string dataPlaneEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        internal EasmWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EasmResourceProvisioningState? provisioningState, string dataPlaneEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DataPlaneEndpoint = dataPlaneEndpoint;
         }
 
         /// <summary> Resource provisioning state. </summary>
-        public ResourceState? ProvisioningState { get; }
+        public EasmResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Data plane endpoint. </summary>
         public string DataPlaneEndpoint { get; }
     }

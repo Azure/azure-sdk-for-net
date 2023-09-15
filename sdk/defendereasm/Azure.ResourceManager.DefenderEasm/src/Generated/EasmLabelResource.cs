@@ -18,46 +18,46 @@ using Azure.ResourceManager.DefenderEasm.Models;
 namespace Azure.ResourceManager.DefenderEasm
 {
     /// <summary>
-    /// A Class representing a LabelResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LabelResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLabelResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetLabelResource method.
+    /// A Class representing an EasmLabel along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EasmLabelResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetEasmLabelResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EasmWorkspaceResource" /> using the GetEasmLabel method.
     /// </summary>
-    public partial class LabelResource : ArmResource
+    public partial class EasmLabelResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LabelResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="EasmLabelResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string labelName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Easm/workspaces/{workspaceName}/labels/{labelName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _labelResourceLabelsClientDiagnostics;
-        private readonly LabelsRestOperations _labelResourceLabelsRestClient;
-        private readonly LabelResourceData _data;
+        private readonly ClientDiagnostics _easmLabelLabelsClientDiagnostics;
+        private readonly LabelsRestOperations _easmLabelLabelsRestClient;
+        private readonly EasmLabelData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="LabelResource"/> class for mocking. </summary>
-        protected LabelResource()
+        /// <summary> Initializes a new instance of the <see cref="EasmLabelResource"/> class for mocking. </summary>
+        protected EasmLabelResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LabelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "EasmLabelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LabelResource(ArmClient client, LabelResourceData data) : this(client, data.Id)
+        internal EasmLabelResource(ArmClient client, EasmLabelData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LabelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EasmLabelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LabelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EasmLabelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _labelResourceLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DefenderEasm", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string labelResourceLabelsApiVersion);
-            _labelResourceLabelsRestClient = new LabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, labelResourceLabelsApiVersion);
+            _easmLabelLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DefenderEasm", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string easmLabelLabelsApiVersion);
+            _easmLabelLabelsRestClient = new LabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, easmLabelLabelsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DefenderEasm
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual LabelResourceData Data
+        public virtual EasmLabelData Data
         {
             get
             {
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LabelResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EasmLabelResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _labelResourceLabelsClientDiagnostics.CreateScope("LabelResource.Get");
+            using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelResource.Get");
             scope.Start();
             try
             {
-                var response = await _labelResourceLabelsRestClient.GetByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _easmLabelLabelsRestClient.GetByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EasmLabelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LabelResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EasmLabelResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _labelResourceLabelsClientDiagnostics.CreateScope("LabelResource.Get");
+            using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelResource.Get");
             scope.Start();
             try
             {
-                var response = _labelResourceLabelsRestClient.GetByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _easmLabelLabelsRestClient.GetByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EasmLabelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labelResourceLabelsClientDiagnostics.CreateScope("LabelResource.Delete");
+            using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelResource.Delete");
             scope.Start();
             try
             {
-                var response = await _labelResourceLabelsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DefenderEasmArmOperation(_labelResourceLabelsClientDiagnostics, Pipeline, _labelResourceLabelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _easmLabelLabelsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DefenderEasmArmOperation(_easmLabelLabelsClientDiagnostics, Pipeline, _easmLabelLabelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labelResourceLabelsClientDiagnostics.CreateScope("LabelResource.Delete");
+            using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelResource.Delete");
             scope.Start();
             try
             {
-                var response = _labelResourceLabelsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DefenderEasmArmOperation(_labelResourceLabelsClientDiagnostics, Pipeline, _labelResourceLabelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _easmLabelLabelsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new DefenderEasmArmOperation(_easmLabelLabelsClientDiagnostics, Pipeline, _easmLabelLabelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -235,16 +235,16 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="patch"> Label patch details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<LabelResource>> UpdateAsync(LabelResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EasmLabelResource>> UpdateAsync(EasmLabelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _labelResourceLabelsClientDiagnostics.CreateScope("LabelResource.Update");
+            using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelResource.Update");
             scope.Start();
             try
             {
-                var response = await _labelResourceLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LabelResource(Client, response.Value), response.GetRawResponse());
+                var response = await _easmLabelLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new EasmLabelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,16 +269,16 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="patch"> Label patch details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<LabelResource> Update(LabelResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<EasmLabelResource> Update(EasmLabelPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _labelResourceLabelsClientDiagnostics.CreateScope("LabelResource.Update");
+            using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelResource.Update");
             scope.Start();
             try
             {
-                var response = _labelResourceLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new LabelResource(Client, response.Value), response.GetRawResponse());
+                var response = _easmLabelLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new EasmLabelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

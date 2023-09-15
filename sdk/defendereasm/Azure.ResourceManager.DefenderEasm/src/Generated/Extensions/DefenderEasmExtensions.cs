@@ -49,50 +49,50 @@ namespace Azure.ResourceManager.DefenderEasm
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region WorkspaceResource
+        #region EasmWorkspaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EasmWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EasmWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="EasmWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceResource" /> object. </returns>
-        public static WorkspaceResource GetWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EasmWorkspaceResource" /> object. </returns>
+        public static EasmWorkspaceResource GetEasmWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceResource.ValidateResourceId(id);
-                return new WorkspaceResource(client, id);
+                EasmWorkspaceResource.ValidateResourceId(id);
+                return new EasmWorkspaceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LabelResource
+        #region EasmLabelResource
         /// <summary>
-        /// Gets an object representing a <see cref="LabelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabelResource.CreateResourceIdentifier" /> to create a <see cref="LabelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EasmLabelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EasmLabelResource.CreateResourceIdentifier" /> to create an <see cref="EasmLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabelResource" /> object. </returns>
-        public static LabelResource GetLabelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EasmLabelResource" /> object. </returns>
+        public static EasmLabelResource GetEasmLabelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LabelResource.ValidateResourceId(id);
-                return new LabelResource(client, id);
+                EasmLabelResource.ValidateResourceId(id);
+                return new EasmLabelResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of EasmWorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public static WorkspaceResourceCollection GetWorkspaceResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EasmWorkspaceResources and their operations over a EasmWorkspaceResource. </returns>
+        public static EasmWorkspaceCollection GetEasmWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWorkspaceResources();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEasmWorkspaces();
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkspaceResource>> GetWorkspaceResourceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EasmWorkspaceResource>> GetEasmWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWorkspaceResources().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEasmWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkspaceResource> GetWorkspaceResource(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<EasmWorkspaceResource> GetEasmWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWorkspaceResources().Get(workspaceName, cancellationToken);
+            return resourceGroupResource.GetEasmWorkspaces().Get(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspaceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EasmWorkspaceResource> GetEasmWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkspaceResourcesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEasmWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspaceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EasmWorkspaceResource> GetEasmWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkspaceResources(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEasmWorkspaces(cancellationToken);
         }
     }
 }

@@ -12,16 +12,16 @@ using Azure.ResourceManager.DefenderEasm;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
 {
-    internal partial class WorkspaceResourceList
+    internal partial class EasmWorkspaceListResult
     {
-        internal static WorkspaceResourceList DeserializeWorkspaceResourceList(JsonElement element)
+        internal static EasmWorkspaceListResult DeserializeEasmWorkspaceListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<WorkspaceResourceData>> value = default;
+            Optional<IReadOnlyList<EasmWorkspaceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     {
                         continue;
                     }
-                    List<WorkspaceResourceData> array = new List<WorkspaceResourceData>();
+                    List<EasmWorkspaceData> array = new List<EasmWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceResourceData.DeserializeWorkspaceResourceData(item));
+                        array.Add(EasmWorkspaceData.DeserializeEasmWorkspaceData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new WorkspaceResourceList(nextLink.Value, Optional.ToList(value));
+            return new EasmWorkspaceListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

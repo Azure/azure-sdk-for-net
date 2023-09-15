@@ -15,7 +15,7 @@ using Azure.ResourceManager.DefenderEasm;
 
 namespace Azure.ResourceManager.DefenderEasm.Samples
 {
-    public partial class Sample_LabelResourceCollection
+    public partial class Sample_EasmLabelCollection
     {
         // Labels
         [NUnit.Framework.Test]
@@ -30,23 +30,23 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this EasmWorkspaceResource created on azure
+            // for more information of creating EasmWorkspaceResource, please refer to the document of EasmWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string workspaceName = "ThisisaWorkspace";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspaceResource = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier easmWorkspaceResourceId = EasmWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            EasmWorkspaceResource easmWorkspace = client.GetEasmWorkspaceResource(easmWorkspaceResourceId);
 
-            // get the collection of this LabelResource
-            LabelResourceCollection collection = workspaceResource.GetLabelResources();
+            // get the collection of this EasmLabelResource
+            EasmLabelCollection collection = easmWorkspace.GetEasmLabels();
 
             // invoke the operation and iterate over the result
-            await foreach (LabelResource item in collection.GetAllAsync())
+            await foreach (EasmLabelResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                LabelResourceData resourceData = item.Data;
+                EasmLabelData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -67,24 +67,24 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this EasmWorkspaceResource created on azure
+            // for more information of creating EasmWorkspaceResource, please refer to the document of EasmWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string workspaceName = "ThisisaWorkspace";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspaceResource = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier easmWorkspaceResourceId = EasmWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            EasmWorkspaceResource easmWorkspace = client.GetEasmWorkspaceResource(easmWorkspaceResourceId);
 
-            // get the collection of this LabelResource
-            LabelResourceCollection collection = workspaceResource.GetLabelResources();
+            // get the collection of this EasmLabelResource
+            EasmLabelCollection collection = easmWorkspace.GetEasmLabels();
 
             // invoke the operation
             string labelName = "ThisisaLabel";
-            LabelResource result = await collection.GetAsync(labelName);
+            EasmLabelResource result = await collection.GetAsync(labelName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LabelResourceData resourceData = result.Data;
+            EasmLabelData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this EasmWorkspaceResource created on azure
+            // for more information of creating EasmWorkspaceResource, please refer to the document of EasmWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string workspaceName = "ThisisaWorkspace";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspaceResource = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier easmWorkspaceResourceId = EasmWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            EasmWorkspaceResource easmWorkspace = client.GetEasmWorkspaceResource(easmWorkspaceResourceId);
 
-            // get the collection of this LabelResource
-            LabelResourceCollection collection = workspaceResource.GetLabelResources();
+            // get the collection of this EasmLabelResource
+            EasmLabelCollection collection = easmWorkspace.GetEasmLabels();
 
             // invoke the operation
             string labelName = "ThisisaLabel";
@@ -133,26 +133,26 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this EasmWorkspaceResource created on azure
+            // for more information of creating EasmWorkspaceResource, please refer to the document of EasmWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string workspaceName = "ThisisaWorkspace";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspaceResource = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier easmWorkspaceResourceId = EasmWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            EasmWorkspaceResource easmWorkspace = client.GetEasmWorkspaceResource(easmWorkspaceResourceId);
 
-            // get the collection of this LabelResource
-            LabelResourceCollection collection = workspaceResource.GetLabelResources();
+            // get the collection of this EasmLabelResource
+            EasmLabelCollection collection = easmWorkspace.GetEasmLabels();
 
             // invoke the operation
             string labelName = "ThisisaLabel";
-            LabelResourceData data = new LabelResourceData();
-            ArmOperation<LabelResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, labelName, data);
-            LabelResource result = lro.Value;
+            EasmLabelData data = new EasmLabelData();
+            ArmOperation<EasmLabelResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, labelName, data);
+            EasmLabelResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LabelResourceData resourceData = result.Data;
+            EasmLabelData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

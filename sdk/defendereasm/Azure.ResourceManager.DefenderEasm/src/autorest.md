@@ -21,6 +21,17 @@ modelerfour:
 #mgmt-debug:
 #  show-serialized-names: true
 
+rename-mapping:
+    LabelResource: EasmLabel
+    LabelResourceList: EasmLabelListResult
+    ResourceState: EasmResourceProvisioningState
+    TaskResource: EasmTask
+    WorkspaceResource: EasmWorkspace
+    WorkspaceResourceList: EasmWorkspaceListResult
+
+override-operation-name:
+    Tasks_GetByWorkspace: GetTaskByWorkspace
+
 format-by-name-rules:
     "tenantId": "uuid"
     "ETag": "etag"

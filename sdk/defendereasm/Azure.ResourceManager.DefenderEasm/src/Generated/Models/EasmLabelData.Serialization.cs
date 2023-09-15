@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DefenderEasm.Models;
@@ -13,65 +12,42 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DefenderEasm
 {
-    public partial class WorkspaceResourceData : IUtf8JsonSerializable
+    public partial class EasmLabelData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(Color))
+            {
+                writer.WritePropertyName("color"u8);
+                writer.WriteStringValue(Color);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static WorkspaceResourceData DeserializeWorkspaceResourceData(JsonElement element)
+        internal static EasmLabelData DeserializeEasmLabelData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceState> provisioningState = default;
-            Optional<string> dataPlaneEndpoint = default;
+            Optional<EasmResourceProvisioningState> provisioningState = default;
+            Optional<string> displayName = default;
+            Optional<string> color = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -111,19 +87,24 @@ namespace Azure.ResourceManager.DefenderEasm
                             {
                                 continue;
                             }
-                            provisioningState = new ResourceState(property0.Value.GetString());
+                            provisioningState = new EasmResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dataPlaneEndpoint"u8))
+                        if (property0.NameEquals("displayName"u8))
                         {
-                            dataPlaneEndpoint = property0.Value.GetString();
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("color"u8))
+                        {
+                            color = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new WorkspaceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataPlaneEndpoint.Value);
+            return new EasmLabelData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, color.Value);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
 {
-    public partial class LabelResourcePatch : IUtf8JsonSerializable
+    public partial class EasmLabelPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             writer.WriteEndObject();
         }
 
-        internal static LabelResourcePatch DeserializeLabelResourcePatch(JsonElement element)
+        internal static EasmLabelPatch DeserializeEasmLabelPatch(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceState> provisioningState = default;
+            Optional<EasmResourceProvisioningState> provisioningState = default;
             Optional<string> displayName = default;
             Optional<string> color = default;
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                             {
                                 continue;
                             }
-                            provisioningState = new ResourceState(property0.Value.GetString());
+                            provisioningState = new EasmResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     continue;
                 }
             }
-            return new LabelResourcePatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, color.Value);
+            return new EasmLabelPatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, color.Value);
         }
     }
 }

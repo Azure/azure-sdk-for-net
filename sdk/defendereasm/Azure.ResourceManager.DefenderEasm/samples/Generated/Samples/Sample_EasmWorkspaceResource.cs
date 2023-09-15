@@ -17,12 +17,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DefenderEasm.Samples
 {
-    public partial class Sample_WorkspaceResource
+    public partial class Sample_EasmWorkspaceResource
     {
         // Workspaces
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetWorkspaceResources_Workspaces()
+        public async Task GetEasmWorkspaces_Workspaces()
         {
             // Generated from example definition: specification/riskiq/resource-manager/Microsoft.Easm/preview/2023-04-01-preview/examples/Workspaces_ListBySubscription.json
             // this example is just showing the usage of "Workspaces_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (WorkspaceResource item in subscriptionResource.GetWorkspaceResourcesAsync())
+            await foreach (EasmWorkspaceResource item in subscriptionResource.GetEasmWorkspacesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                WorkspaceResourceData resourceData = item.Data;
+                EasmWorkspaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this EasmWorkspaceResource created on azure
+            // for more information of creating EasmWorkspaceResource, please refer to the document of EasmWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string workspaceName = "ThisisaWorkspace";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspaceResource = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier easmWorkspaceResourceId = EasmWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            EasmWorkspaceResource easmWorkspace = client.GetEasmWorkspaceResource(easmWorkspaceResourceId);
 
             // invoke the operation
-            WorkspaceResource result = await workspaceResource.GetAsync();
+            EasmWorkspaceResource result = await easmWorkspace.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceResourceData resourceData = result.Data;
+            EasmWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -95,21 +95,21 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this EasmWorkspaceResource created on azure
+            // for more information of creating EasmWorkspaceResource, please refer to the document of EasmWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string workspaceName = "ThisisaWorkspace";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspaceResource = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier easmWorkspaceResourceId = EasmWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            EasmWorkspaceResource easmWorkspace = client.GetEasmWorkspaceResource(easmWorkspaceResourceId);
 
             // invoke the operation
-            WorkspaceResourcePatch patch = new WorkspaceResourcePatch();
-            WorkspaceResource result = await workspaceResource.UpdateAsync(patch);
+            EasmWorkspacePatch patch = new EasmWorkspacePatch();
+            EasmWorkspaceResource result = await easmWorkspace.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            WorkspaceResourceData resourceData = result.Data;
+            EasmWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this EasmWorkspaceResource created on azure
+            // for more information of creating EasmWorkspaceResource, please refer to the document of EasmWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string workspaceName = "ThisisaWorkspace";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspaceResource = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier easmWorkspaceResourceId = EasmWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            EasmWorkspaceResource easmWorkspace = client.GetEasmWorkspaceResource(easmWorkspaceResourceId);
 
             // invoke the operation
-            await workspaceResource.DeleteAsync(WaitUntil.Completed);
+            await easmWorkspace.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
         // Tasks
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetByWorkspaceTask_Tasks()
+        public async Task GetTaskByWorkspace_Tasks()
         {
             // Generated from example definition: specification/riskiq/resource-manager/Microsoft.Easm/preview/2023-04-01-preview/examples/Tasks_GetByWorkspace.json
             // this example is just showing the usage of "Tasks_GetByWorkspace" operation, for the dependent resources, they will have to be created separately.
@@ -154,17 +154,17 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this WorkspaceResource created on azure
-            // for more information of creating WorkspaceResource, please refer to the document of WorkspaceResource
+            // this example assumes you already have this EasmWorkspaceResource created on azure
+            // for more information of creating EasmWorkspaceResource, please refer to the document of EasmWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string workspaceName = "ThisisaWorkspace";
-            ResourceIdentifier workspaceResourceId = WorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            WorkspaceResource workspaceResource = client.GetWorkspaceResource(workspaceResourceId);
+            ResourceIdentifier easmWorkspaceResourceId = EasmWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            EasmWorkspaceResource easmWorkspace = client.GetEasmWorkspaceResource(easmWorkspaceResourceId);
 
             // invoke the operation
             string taskId = "ThisisaTaskId";
-            TaskResource result = await workspaceResource.GetByWorkspaceTaskAsync(taskId);
+            EasmTask result = await easmWorkspace.GetTaskByWorkspaceAsync(taskId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

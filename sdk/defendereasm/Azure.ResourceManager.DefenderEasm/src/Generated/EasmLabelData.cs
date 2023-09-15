@@ -6,19 +6,23 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.DefenderEasm.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.DefenderEasm.Models
+namespace Azure.ResourceManager.DefenderEasm
 {
-    /// <summary> Label patch properties. </summary>
-    public partial class LabelResourcePatch : ResourceData
+    /// <summary>
+    /// A class representing the EasmLabel data model.
+    /// Label details
+    /// </summary>
+    public partial class EasmLabelData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabelResourcePatch. </summary>
-        public LabelResourcePatch()
+        /// <summary> Initializes a new instance of EasmLabelData. </summary>
+        public EasmLabelData()
         {
         }
 
-        /// <summary> Initializes a new instance of LabelResourcePatch. </summary>
+        /// <summary> Initializes a new instance of EasmLabelData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="displayName"> Label display name. </param>
         /// <param name="color"> Label color. </param>
-        internal LabelResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceState? provisioningState, string displayName, string color) : base(id, name, resourceType, systemData)
+        internal EasmLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EasmResourceProvisioningState? provisioningState, string displayName, string color) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         }
 
         /// <summary> Resource provisioning state. </summary>
-        public ResourceState? ProvisioningState { get; }
+        public EasmResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Label display name. </summary>
         public string DisplayName { get; set; }
         /// <summary> Label color. </summary>
