@@ -28,21 +28,21 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetServiceStatus_AllParameters()
-        {
-            HealthApiClient client = new HealthApiClient("<Endpoint>");
-
-            Response response = client.GetServiceStatus();
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetServiceStatus_Async()
         {
             HealthApiClient client = new HealthApiClient("<Endpoint>");
 
             Response response = await client.GetServiceStatusAsync();
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetServiceStatus_AllParameters()
+        {
+            HealthApiClient client = new HealthApiClient("<Endpoint>");
+
+            Response response = client.GetServiceStatus();
             Console.WriteLine(response.Status);
         }
 
