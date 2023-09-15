@@ -290,7 +290,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             CancellationTokenSource cancellationTokenSource)
         {
-            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
+            cancellationTokenSource.CancelAfter(ProcessorOptions.MaxAutoLockRenewalDuration);
             CancellationToken cancellationToken = cancellationTokenSource.Token;
             bool isTriggerMessage = args.Message == message;
 
