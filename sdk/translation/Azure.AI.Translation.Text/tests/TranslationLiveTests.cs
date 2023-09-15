@@ -40,12 +40,46 @@ namespace Azure.AI.Translation.Text.Tests
         }
 
         [RecordedTest]
+        public async Task TranslateBasicOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.SourceLanguage = "es";
+            options.TargetLanguages = new[] { "cs" };
+            options.Content = new[] {"Hola mundo" };
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
+            Assert.AreEqual("cs", response.Value.FirstOrDefault().Translations.FirstOrDefault().To);
+            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
+        }
+
+        [RecordedTest]
         public async Task TranslateWithAutoDetect()
         {
             IEnumerable<string> targetLanguages = new[] { "cs" };
             IEnumerable<string> inputText = new[] { "This is a test." };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual("en", response.Value.FirstOrDefault().DetectedLanguage.Language);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.AreEqual("cs", response.Value.FirstOrDefault().Translations.FirstOrDefault().To);
+            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
+        }
+
+        [RecordedTest]
+        public async Task TranslateWithAutoDetectOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.TargetLanguages = new[] { "cs" };
+            options.Content = new[] { "This is a test." };
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -71,6 +105,23 @@ namespace Azure.AI.Translation.Text.Tests
         }
 
         [RecordedTest]
+        public async Task TranslateWithNoTranslateTagOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.SourceLanguage = "zh-chs";
+            options.TargetLanguages =  new[] { "en" };
+            options.Content = new[] { "<span class=notranslate>今天是怎么回事是</span>非常可怕的" };
+            options.TextType = TextType.Html;
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
+            Assert.IsTrue(response.Value.FirstOrDefault().Translations.First().Text.Contains("今天是怎么回事是"));
+        }
+
+        [RecordedTest]
         public async Task TranslateWithDictionaryTag()
         {
             string fromLanguage = "en";
@@ -78,6 +129,23 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: fromLanguage).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
+            Assert.AreEqual("es", response.Value.FirstOrDefault().Translations.FirstOrDefault().To);
+            Assert.IsTrue(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text.Contains("wordomatic"));
+        }
+
+        [RecordedTest]
+        public async Task TranslateWithDictionaryTagOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.SourceLanguage = "en";
+            options.TargetLanguages = new[] { "es" };
+            options.Content = new[] { "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." };
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -103,12 +171,49 @@ namespace Azure.AI.Translation.Text.Tests
         }
 
         [RecordedTest]
+        public async Task TranslateWithTransliterationOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.TargetLanguages = new[] { "zh-Hans" };
+            options.Content = new[] { "hudha akhtabar." };
+            options.SourceLanguage = "ar";
+            options.FromScript = "Latn";
+            options.ToScript = "Latn";
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+
+            Assert.NotNull(response.Value.FirstOrDefault().SourceText.Text);
+            Assert.AreEqual("zh-Hans", response.Value.FirstOrDefault().Translations.FirstOrDefault().To);
+            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
+        }
+
+        [RecordedTest]
         public async Task TranslateFromLatinToLatinScript()
         {
             IEnumerable<string> targetLanguages = new[] { "ta" };
             IEnumerable<string> inputText = new[] { "ap kaise ho" };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: "hi", fromScript: "Latn", toScript: "Latn").ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Transliteration);
+            Assert.AreEqual("eppadi irukkiraai?", response.Value.FirstOrDefault().Translations.FirstOrDefault().Transliteration.Text);
+        }
+
+        [RecordedTest]
+        public async Task TranslateFromLatinToLatinScriptOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.TargetLanguages = new[] { "ta" };
+            options.Content = new[] { "ap kaise ho" };
+            options.SourceLanguage = "hi";
+            options.FromScript = "Latn";
+            options.ToScript = "Latn";
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Transliteration);
@@ -127,6 +232,36 @@ namespace Azure.AI.Translation.Text.Tests
             };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(3, response.Value.Count);
+
+            Assert.AreEqual("en", response.Value.FirstOrDefault().DetectedLanguage.Language);
+            Assert.AreEqual("es", response.Value[1].DetectedLanguage.Language);
+            Assert.AreEqual("de", response.Value[2].DetectedLanguage.Language);
+
+            Assert.AreEqual(1, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+
+            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
+            Assert.NotNull(response.Value[1].Translations.FirstOrDefault().Text);
+            Assert.NotNull(response.Value[2].Translations.FirstOrDefault().Text);
+        }
+
+        [RecordedTest]
+        public async Task TranslateWithMultipleInputTextsOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.TargetLanguages = new[] { "cs" };
+            options.Content = new[]
+            {
+                "This is a test.",
+                "Esto es una prueba.",
+                "Dies ist ein Test."
+            };
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(3, response.Value.Count);
@@ -165,12 +300,51 @@ namespace Azure.AI.Translation.Text.Tests
         }
 
         [RecordedTest]
+        public async Task TranslateMultipleTargetLanguagesOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.TargetLanguages = new[] { "cs", "es", "de" };
+            options.Content = new[] { "This is a test." };
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.Count);
+
+            Assert.AreEqual("en", response.Value.FirstOrDefault().DetectedLanguage.Language);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+
+            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
+            Assert.NotNull(response.Value.FirstOrDefault().Translations[1].Text);
+            Assert.NotNull(response.Value.FirstOrDefault().Translations[2].Text);
+        }
+
+        [RecordedTest]
         public async Task TranslateDifferentTextTypes()
         {
             IEnumerable<string> targetLanguages = new[] { "cs" };
             IEnumerable<string> inputText = new[] { "<html><body>This <b>is</b> a test.</body></html>" };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(targetLanguages, inputText, textType: TextType.Html).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
+
+            Assert.AreEqual("en", response.Value.FirstOrDefault().DetectedLanguage.Language);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+        }
+
+        [RecordedTest]
+        public async Task TranslateDifferentTextTypesOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.TargetLanguages = new[] { "cs" };
+            options.Content = new[] { "<html><body>This <b>is</b> a test.</body></html>" };
+            options.TextType = TextType.Html;
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -197,6 +371,26 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
             Assert.IsTrue(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text.Contains("***"));
         }
+
+        [RecordedTest]
+        public async Task TranslateWithProfanityOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.ProfanityAction = ProfanityAction.Marked;
+            options.ProfanityMarker = ProfanityMarker.Asterisk;
+            options.TargetLanguages = new[] { "zh-cn" };
+            options.Content = new[] { "shit this is fucking crazy" };
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual("en", response.Value.FirstOrDefault().DetectedLanguage.Language);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
+            Assert.IsTrue(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text.Contains("***"));
+        }
+
         [RecordedTest]
         public async Task TranslateWithAlignment()
         {
@@ -205,6 +399,23 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "It is a beautiful morning" };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(targetLanguages, inputText, includeAlignment: includeAlignment).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual("en", response.Value.FirstOrDefault().DetectedLanguage.Language);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
+            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Alignment.Proj);
+        }
+
+        public async Task TranslateWithAlignmentOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.IncludeAlignment = true;
+            options.TargetLanguages = new[] { "cs" };
+            options.Content = new[] { "It is a beautiful morning" };
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -233,12 +444,48 @@ namespace Azure.AI.Translation.Text.Tests
         }
 
         [RecordedTest]
+        public async Task TranslateWithIncludeSentenceLengthOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.IncludeSentenceLength = true;
+            options.TargetLanguages = new[] { "fr" };
+            options.Content = new[] { "La réponse se trouve dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adaptées à un site ou des utilisateurs comme un être humain. Il suffit de copier et coller un extrait de code n'importe où." };
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual("fr", response.Value.FirstOrDefault().DetectedLanguage.Language);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
+            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentLen.SrcSentLen.Count);
+            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentLen.TransSentLen.Count);
+        }
+
+        [RecordedTest]
         public async Task TranslateWithCustomEndpoint()
         {
             IEnumerable<string> targetLanguages = new[] { "cs" };
             IEnumerable<string> inputText = new[] { "It is a beautiful morning" };
             TextTranslationClient client = GetClient(endpoint: new Uri(TestEnvironment.CustomEndpoint));
             var response = await client.TranslateAsync(targetLanguages, inputText).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(1, response.Value.Count);
+            Assert.AreEqual("en", response.Value.FirstOrDefault().DetectedLanguage.Language);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
+            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
+        }
+
+        [RecordedTest]
+        public async Task TranslateWithCustomEndpointOptions()
+        {
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.TargetLanguages = new[] { "cs" };
+            options.Content = new[] { "It is a beautiful morning" };
+            TextTranslationClient client = GetClient(endpoint: new Uri(TestEnvironment.CustomEndpoint));
+            var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -266,6 +513,31 @@ namespace Azure.AI.Translation.Text.Tests
             TextTranslationClient client = GetClient(token: token);
             IEnumerable<string> inputText = new[] { "This is a test." };
             var translate = await client.TranslateAsync(new[] { "cs" }, inputText).ConfigureAwait(false);
+
+            Assert.AreEqual(200, translate.GetRawResponse().Status);
+            Assert.AreEqual(1, translate.Value.Count);
+        }
+
+        [RecordedTest]
+        public async Task TranslateWithTokenOptions()
+        {
+            string accessToken;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                accessToken = string.Empty;
+            }
+            else
+            {
+                accessToken = await GetAzureAuthorizationTokenAsync();
+            }
+
+            TokenCredential token = new StaticAccessTokenCredential(new AccessToken(accessToken, DateTimeOffset.Now.AddDays(1)));
+
+            TextTranslationClient client = GetClient(token: token);
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
+            options.Content = new[] { "This is a test." };
+            options.TargetLanguages = new[] { "cs" };
+            var translate = await client.TranslateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, translate.GetRawResponse().Status);
             Assert.AreEqual(1, translate.Value.Count);

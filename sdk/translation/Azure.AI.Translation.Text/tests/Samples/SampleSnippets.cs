@@ -1007,8 +1007,8 @@ namespace Azure.AI.Translation.Text.Samples
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Source Sentece length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.SrcSentLen)}");
-                Console.WriteLine($"Translated Sentece length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.TransSentLen)}");
+                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.SrcSentLen)}");
+                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.TransSentLen)}");
             }
             catch (RequestFailedException exception)
             {
@@ -1039,8 +1039,8 @@ namespace Azure.AI.Translation.Text.Samples
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Source Sentece length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.SrcSentLen)}");
-                Console.WriteLine($"Translated Sentece length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.TransSentLen)}");
+                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.SrcSentLen)}");
+                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.TransSentLen)}");
             }
             catch (RequestFailedException exception)
             {
@@ -1127,7 +1127,7 @@ namespace Azure.AI.Translation.Text.Samples
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1156,7 +1156,7 @@ namespace Azure.AI.Translation.Text.Samples
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1182,7 +1182,7 @@ namespace Azure.AI.Translation.Text.Samples
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1208,7 +1208,7 @@ namespace Azure.AI.Translation.Text.Samples
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1232,6 +1232,36 @@ namespace Azure.AI.Translation.Text.Samples
                 string inputText = "这是个测试。";
 
                 Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(language, fromScript, toScript, inputText);
+                IReadOnlyList<TransliteratedText> transliterations = response.Value;
+                TransliteratedText transliteration = transliterations.FirstOrDefault();
+
+                Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
+            }
+            #endregion
+        }
+
+        [Test]
+        public void GetTransliteratedTextOptions()
+        {
+            TextTranslationClient client = CreateTextTranslationClient();
+
+            #region Snippet:GetTransliteratedTextOptions
+            try
+            {
+                TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions()
+                {
+                    Language = "zh-Hans",
+                    FromScript = "Hans",
+                    ToScript = "Latn",
+                    Content = new[] { "这是个测试。" }
+                };
+
+                Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(options);
                 IReadOnlyList<TransliteratedText> transliterations = response.Value;
                 TransliteratedText transliteration = transliterations.FirstOrDefault();
 
@@ -1305,6 +1335,42 @@ namespace Azure.AI.Translation.Text.Samples
         }
 
         [Test]
+        public void GetTranslationTextTransliteratedOptions()
+        {
+            TextTranslationClient client = CreateTextTranslationClient();
+
+            #region Snippet:GetTranslationTextTransliteratedOptions
+            try
+            {
+                TextTranslationTranslateOptions options = new TextTranslationTranslateOptions()
+                {
+                    FromScript = "Latn",
+                    SourceLanguage = "ar",
+                    ToScript = "Latn",
+                    TargetLanguages = new[] { "zh-Hans" },
+                    Content = new[]
+                    {
+                        "hudha akhtabar."
+                    }
+                };
+
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                TranslatedTextItem translation = translations.FirstOrDefault();
+
+                Console.WriteLine($"Source Text: {translation.SourceText.Text}");
+                Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+                Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
+            }
+            #endregion
+        }
+
+        [Test]
         public async void GetTranslationTextTransliteratedAsync()
         {
             TextTranslationClient client = CreateTextTranslationClient();
@@ -1350,7 +1416,7 @@ namespace Azure.AI.Translation.Text.Samples
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1374,7 +1440,7 @@ namespace Azure.AI.Translation.Text.Samples
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
             }
             catch (RequestFailedException exception)
             {
