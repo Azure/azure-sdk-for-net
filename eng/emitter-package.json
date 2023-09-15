@@ -1,6 +1,15 @@
 {
-    "main": "dist/src/index.js",
-    "dependencies": {
-      "@azure-tools/typespec-csharp": "0.2.0-beta.20230907.2"
-    }
+  "main": "dist/src/index.js",
+  "dependencies": {
+    "@azure-tools/typespec-csharp": "0.2.0-alpha.20230915.1.x"
+  },
+  "devDependencies": {
+    "@typespec/rest": "0.47.0",
+    "@typespec/eslint-config-typespec": "0.47.0",
+    "@typespec/versioning": "0.47.0",
+    "@azure-tools/typespec-azure-core": "0.33.1",
+    "@typespec/compiler": "0.47.1",
+    "@azure-tools/typespec-client-generator-core": "0.33.0",
+    "@typespec/http": "0.47.0"
+  }
 }
