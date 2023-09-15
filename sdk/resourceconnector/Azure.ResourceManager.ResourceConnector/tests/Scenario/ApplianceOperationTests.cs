@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             LocationCollection = ResourceGroup.GetResourceConnectorAppliances();
         }
 
-        [Test]
+        [RecordedTest]
+        [Ignore("Service not ready.")]
         public async Task TestOperationsAppliances()
         {
             await SetCollectionsAsync();
