@@ -17,7 +17,11 @@ namespace Azure.Core.Json
     /// A mutable representation of a JSON value.
     /// </summary>
 #if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
-    [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+    // This class is marked as RequiresUnreferencedCode and RequiresDynamic code for two reasons. First, for the usage of MutableJsonElement in RootElement and WriteTo. Second, the method WriteTo
+    // is  used in the MutableJsonDocumentConverter, which causes MutableJsonDocumentConverter to be incompatible with trimming. Since the class is used in the attribute on this class, the entire
+    // class must be annotated.
+    [RequiresUnreferencedCode(SerializationRequiresUnreferencedCodeClass)]
+    [RequiresDynamicCode(SerializationRequiresUnreferencedCodeClass)]
 #endif
     [JsonConverter(typeof(MutableJsonDocumentConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
@@ -218,10 +222,12 @@ namespace Azure.Core.Json
 
 #if !NET5_0
         // Since this type is used in an attribute it cannot be annotated correctly through the call chain.
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "This JsonConverter is used with the class MutableJsonDocument, which is already annotated as RequiresUnreferencedCode.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = MutableJsonDocumentConverterSuppression)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL3050", Justification = MutableJsonDocumentConverterSuppression)]
 #endif
         private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
         {
+            internal const string MutableJsonDocumentConverterSuppression = "This JsonConverter is used with the class MutableJsonDocument, which is already annotated as RequiresUnreferencedCode.";
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 return Parse(ref reader);

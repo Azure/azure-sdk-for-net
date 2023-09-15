@@ -24,6 +24,7 @@ namespace Azure.Core.Serialization
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
 #if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
     [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+    [RequiresDynamicCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
 #endif
     [JsonConverter(typeof(DynamicDataJsonConverter))]
     public sealed partial class DynamicData : IDisposable
@@ -480,10 +481,13 @@ namespace Azure.Core.Serialization
 
 #if !NET5_0
         // Since this type is used in an attribute it cannot be annotated correctly through the call chain.
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "This JsonConverter is only used with its parent class DynamicData class which is already marked as RequiresUnreferencedCode.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = DynamicDataJsonConverterSuppression)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL3050", Justification = DynamicDataJsonConverterSuppression)]
 #endif
         private class DynamicDataJsonConverter : JsonConverter<DynamicData>
         {
+            internal const string DynamicDataJsonConverterSuppression = "This JsonConverter is only used with its parent class DynamicData class which is already marked as RequiresUnreferencedCode.";
+
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
