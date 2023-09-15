@@ -37,8 +37,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
             serviceTarget,
             OpenAIClientScenario.AudioTranscription);
 
-        string audioFilePath = GetTestAudioInputPath();
-        using Stream audioFileStream = File.OpenRead(audioFilePath);
+        using Stream audioFileStream = GetTestAudioInputStream();
 
         var requestOptions = new AudioTranscriptionOptions()
         {
@@ -110,8 +109,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
             serviceTarget,
             OpenAIClientScenario.AudioTranscription);
 
-        string audioFilePath = GetTestAudioInputPath();
-        using Stream audioFileStream = File.OpenRead(audioFilePath);
+        using Stream audioFileStream = GetTestAudioInputStream();
 
         var requestOptions = new AudioTranslationOptions()
         {

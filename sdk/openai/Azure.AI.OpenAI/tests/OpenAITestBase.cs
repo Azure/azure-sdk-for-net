@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -98,11 +99,19 @@ namespace Azure.AI.OpenAI.Tests
             }
         }
 
-        protected string GetTestAudioInputPath(string language = "english") => language switch
+        protected Stream GetTestAudioInputStream(string language = "en")
         {
-            "english" => TestEnvironment.TestAudioInputPathEnglish,
-            _ => throw new NotImplementedException(),
-        };
+            Recording.DisableRequestBodyRecording();
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new MemoryStream();
+            }
+            return File.OpenRead(language switch
+            {
+                "en" => TestEnvironment.TestAudioInputPathEnglish,
+                _ => throw new NotImplementedException(),
+            });
+        }
 
         [SetUp]
         public void CreateDeployment()

@@ -14,9 +14,9 @@ namespace Azure.AI.OpenAI.Tests
 
         public string TestAudioInputPathEnglish => GetOptionalVariable("OAI_TEST_AUDIO_INPUT_ENGLISH_PATH");
 
-        public Uri GetUrlVariable(string variableName) => new(GetOptionalVariable(variableName));
+        public Uri GetUrlVariable(string variableName) => new(GetRecordedVariable(variableName));
 
-        public AzureKeyCredential GetKeyVariable(string variableName) => new(GetOptionalVariable(variableName));
+        public AzureKeyCredential GetKeyVariable(string variableName) => new(GetOptionalVariable(variableName) ?? "placeholder");
 
         public void ThrowIfCannotDeploy()
         {
