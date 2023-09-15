@@ -408,7 +408,7 @@ BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
 var transcriptionOptions = new AudioTranscriptionOptions()
 {
     AudioData = BinaryData.FromStream(audioStreamFromFile),
-    ResponseFormat = AudioTranscriptionFormat.VerboseJson,
+    ResponseFormat = AudioTranscriptionFormat.Verbose,
 };
 
 Response<AudioTranscription> transcriptionResponse = await client.GetAudioTranscriptionAsync(
@@ -416,7 +416,7 @@ Response<AudioTranscription> transcriptionResponse = await client.GetAudioTransc
     transcriptionOptions);
 AudioTranscription transcription = transcriptionResponse.Value;
 
-// When using Text, Vtt, Json formats, only .Text will be populated
+// When using Simple, SRT, or VTT formats, only transcription.Text will be populated
 Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
 Console.WriteLine(transcription.Text);
 ```
@@ -430,7 +430,7 @@ BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
 var translationOptions = new AudioTranslationOptions()
 {
     AudioData = BinaryData.FromStream(audioStreamFromFile),
-    ResponseFormat = AudioTranscriptionFormat.VerboseJson,
+    ResponseFormat = AudioTranscriptionFormat.Verbose,
 };
 
 Response<AudioTranscription> translationResponse = await client.GetAudioTranslationAsync(
@@ -438,7 +438,7 @@ Response<AudioTranscription> translationResponse = await client.GetAudioTranslat
     translationOptions);
 AudioTranscription transcription = translationResponse.Value;
 
-// When using Text, Vtt, Json formats, only .Text will be populated
+// When using Simple, SRT, or VTT formats, only transcription.Text will be populated
 Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
 // .Text will be translated to English (ISO-639-1 "en")
 Console.WriteLine(transcription.Text);

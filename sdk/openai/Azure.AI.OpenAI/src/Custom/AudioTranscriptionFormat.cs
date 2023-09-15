@@ -10,29 +10,38 @@ namespace Azure.AI.OpenAI
 {
     public readonly partial struct AudioTranscriptionFormat : IEquatable<AudioTranscriptionFormat>
     {
-        /// <summary> Use a response body that is a JSON object containing a single 'text' field for the transcription. </summary>
+        /// <summary>
+        /// Specifies that a transcription response should provide plain, unannotated text with no additional metadata.
+        /// </summary>
         [CodeGenMember("Json")]
-        public static AudioTranscriptionFormat SimpleJson { get; } = new AudioTranscriptionFormat(SimpleJsonValue);
+        public static AudioTranscriptionFormat Simple { get; } = new AudioTranscriptionFormat(SimpleValue);
 
         /// <summary>
-        /// Use a response body that is a JSON object containing transcription text along with timing, segments, and other
-        /// metadata.
+        /// Specifies that a transcription response should provide plain, unannotated text with additional metadata
+        /// including timings, probability scores, and other processing details.
         /// </summary>
         [CodeGenMember("VerboseJson")]
-        public static AudioTranscriptionFormat VerboseJson { get; } = new AudioTranscriptionFormat(VerboseJsonValue);
+        public static AudioTranscriptionFormat Verbose { get; } = new AudioTranscriptionFormat(VerboseValue);
         /// <summary> Use a response body that is plain text containing the raw, unannotated transcription. </summary>
 
         /// <summary>
-        /// Use a response body that is plain text containing the raw, unannotated transcription.
+        /// Specifies that a transcription response should provide text with embedded caption timing data in the
+        /// SubRipText (SRT) format.
         /// </summary>
-        [CodeGenMember("Text")]
-        public static AudioTranscriptionFormat PlainText{ get; } = new AudioTranscriptionFormat(PlainTextValue);
-
         [CodeGenMember("Srt")]
-        public static AudioTranscriptionFormat SubRipText { get; } = new AudioTranscriptionFormat(SubRipTextValue);
+        public static AudioTranscriptionFormat SubRip { get; } = new AudioTranscriptionFormat(SubRipValue);
         /// <summary> Use a response body is plain text in Web Video Text Tracks (VTT) format that also includes timing information. </summary>
 
+        /// <summary>
+        /// Specifies that a transcription response should provide text with embedded caption timing data in the Web
+        /// Video Text Tracks (VTT) format.
+        /// </summary>
         [CodeGenMember("Vtt")]
-        public static AudioTranscriptionFormat WebVideoTextTracksText { get; } = new AudioTranscriptionFormat(WebVideoTextTracksTextValue);
+        public static AudioTranscriptionFormat WebVideoTextTracks { get; } = new AudioTranscriptionFormat(WebVideoTextTracksValue);
+
+        // (Note: text is hidden as its behavior is redundant with 'json' when using a shared, strongly-typed response
+        // value container)
+        [CodeGenMember("Text")]
+        internal static AudioTranscriptionFormat InternalPlainText { get; } = new AudioTranscriptionFormat(InternalPlainTextValue);
     }
 }

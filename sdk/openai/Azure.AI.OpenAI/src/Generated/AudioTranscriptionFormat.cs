@@ -22,11 +22,11 @@ namespace Azure.AI.OpenAI
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SimpleJsonValue = "json";
-        private const string VerboseJsonValue = "verbose_json";
-        private const string PlainTextValue = "text";
-        private const string SubRipTextValue = "srt";
-        private const string WebVideoTextTracksTextValue = "vtt";
+        private const string SimpleValue = "json";
+        private const string VerboseValue = "verbose_json";
+        private const string InternalPlainTextValue = "text";
+        private const string SubRipValue = "srt";
+        private const string WebVideoTextTracksValue = "vtt";
         /// <summary> Determines if two <see cref="AudioTranscriptionFormat"/> values are the same. </summary>
         public static bool operator ==(AudioTranscriptionFormat left, AudioTranscriptionFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AudioTranscriptionFormat"/> values are not the same. </summary>

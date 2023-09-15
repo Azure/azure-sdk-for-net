@@ -20,11 +20,9 @@ public class AudioTranscriptionsTest : OpenAITestBase
     [TestCase(OpenAIClientServiceTarget.Azure, "json")]
     [TestCase(OpenAIClientServiceTarget.Azure, null)]
     [TestCase(OpenAIClientServiceTarget.Azure, "verbose_json")]
-    [TestCase(OpenAIClientServiceTarget.Azure, "text")]
     [TestCase(OpenAIClientServiceTarget.NonAzure, "json")]
     [TestCase(OpenAIClientServiceTarget.NonAzure, null)]
     [TestCase(OpenAIClientServiceTarget.NonAzure, "verbose_json")]
-    [TestCase(OpenAIClientServiceTarget.NonAzure, "text")]
     public async Task TranscriptionWorksWithFormat(
         OpenAIClientServiceTarget serviceTarget,
         string transcriptionFormat)
@@ -49,11 +47,10 @@ public class AudioTranscriptionsTest : OpenAITestBase
         {
             requestOptions.ResponseFormat = transcriptionFormat switch
             {
-                "json" => AudioTranscriptionFormat.SimpleJson,
-                "verbose_json" => AudioTranscriptionFormat.VerboseJson,
-                "srt" => AudioTranscriptionFormat.SubRipText,
-                "vtt" => AudioTranscriptionFormat.WebVideoTextTracksText,
-                "text" => AudioTranscriptionFormat.PlainText,
+                "json" => AudioTranscriptionFormat.Simple,
+                "verbose_json" => AudioTranscriptionFormat.Verbose,
+                "srt" => AudioTranscriptionFormat.SubRip,
+                "vtt" => AudioTranscriptionFormat.WebVideoTextTracks,
                 _ => throw new ArgumentException($"Unknown response format provided to test: {transcriptionFormat}"),
             };
         }
@@ -65,16 +62,14 @@ public class AudioTranscriptionsTest : OpenAITestBase
         string text = response.Value.Text;
         Assert.That(text, Is.Not.Null.Or.Empty);
 
-        if (transcriptionFormat == null
-            || transcriptionFormat == AudioTranscriptionFormat.SimpleJson
-            || transcriptionFormat == AudioTranscriptionFormat.PlainText)
+        if (transcriptionFormat == null || transcriptionFormat == AudioTranscriptionFormat.Simple)
         {
             Assert.That(response.Value.Duration, Is.Null);
             Assert.That(response.Value.Language, Is.Null);
             Assert.That(response.Value.Segments, Is.Null.Or.Empty);
         }
 
-        if (transcriptionFormat != null && transcriptionFormat == AudioTranscriptionFormat.VerboseJson)
+        if (transcriptionFormat != null && transcriptionFormat == AudioTranscriptionFormat.Verbose)
         {
             Assert.That(response.Value.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(response.Value.Language, Is.Not.Null.Or.Empty);
@@ -92,11 +87,9 @@ public class AudioTranscriptionsTest : OpenAITestBase
     [TestCase(OpenAIClientServiceTarget.Azure, "json")]
     [TestCase(OpenAIClientServiceTarget.Azure, null)]
     [TestCase(OpenAIClientServiceTarget.Azure, "verbose_json")]
-    [TestCase(OpenAIClientServiceTarget.Azure, "text")]
     [TestCase(OpenAIClientServiceTarget.NonAzure, "json")]
     [TestCase(OpenAIClientServiceTarget.NonAzure, null)]
     [TestCase(OpenAIClientServiceTarget.NonAzure, "verbose_json")]
-    [TestCase(OpenAIClientServiceTarget.NonAzure, "text")]
     public async Task TranslationWorksWithFormat(
     OpenAIClientServiceTarget serviceTarget,
     string transcriptionFormat)
@@ -121,11 +114,10 @@ public class AudioTranscriptionsTest : OpenAITestBase
         {
             requestOptions.ResponseFormat = transcriptionFormat switch
             {
-                "json" => AudioTranscriptionFormat.SimpleJson,
-                "verbose_json" => AudioTranscriptionFormat.VerboseJson,
-                "srt" => AudioTranscriptionFormat.SubRipText,
-                "vtt" => AudioTranscriptionFormat.WebVideoTextTracksText,
-                "text" => AudioTranscriptionFormat.PlainText,
+                "json" => AudioTranscriptionFormat.Simple,
+                "verbose_json" => AudioTranscriptionFormat.Verbose,
+                "srt" => AudioTranscriptionFormat.SubRip,
+                "vtt" => AudioTranscriptionFormat.WebVideoTextTracks,
                 _ => throw new ArgumentException($"Unknown response format provided to test: {transcriptionFormat}"),
             };
         }
@@ -137,16 +129,14 @@ public class AudioTranscriptionsTest : OpenAITestBase
         string text = response.Value.Text;
         Assert.That(text, Is.Not.Null.Or.Empty);
 
-        if (transcriptionFormat == null
-            || transcriptionFormat == AudioTranscriptionFormat.SimpleJson
-            || transcriptionFormat == AudioTranscriptionFormat.PlainText)
+        if (transcriptionFormat == null || transcriptionFormat == AudioTranscriptionFormat.Simple)
         {
             Assert.That(response.Value.Duration, Is.Null);
             Assert.That(response.Value.Language, Is.Null);
             Assert.That(response.Value.Segments, Is.Null.Or.Empty);
         }
 
-        if (transcriptionFormat != null && transcriptionFormat == AudioTranscriptionFormat.VerboseJson)
+        if (transcriptionFormat != null && transcriptionFormat == AudioTranscriptionFormat.Verbose)
         {
             Assert.That(response.Value.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(response.Value.Language, Is.Not.Null.Or.Empty);

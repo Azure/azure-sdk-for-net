@@ -14,11 +14,10 @@ namespace Azure.AI.OpenAI
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AudioTranscriptionFormat(string value) { throw null; }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat PlainText { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat SimpleJson { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat SubRipText { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat VerboseJson { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat WebVideoTextTracksText { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranscriptionFormat Simple { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranscriptionFormat SubRip { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranscriptionFormat Verbose { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranscriptionFormat WebVideoTextTracks { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.AudioTranscriptionFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
