@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.0-beta.3 (2023-09-14)
 
 ### Bugs Fixed
 
-### Other Changes
+- Due to `HealthCheckUri` not being a valid URI, add a new property `HealthCheckUriString` to replace it in order to fix the URI format issue.
 
 ## 1.1.0-beta.2 (2023-09-06)
 
