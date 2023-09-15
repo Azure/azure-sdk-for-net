@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelSerializerOptions options)
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"  name: 'appsettings'");
+            sb.AppendLine($"  name: '{Name}'");
             if (Optional.IsCollectionDefined(Properties))
             {
                 sb.AppendLine($"  properties: {{");
