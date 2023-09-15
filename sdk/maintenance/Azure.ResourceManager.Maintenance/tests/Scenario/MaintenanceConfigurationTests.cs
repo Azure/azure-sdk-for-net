@@ -60,6 +60,8 @@ namespace Azure.ResourceManager.Maintenance.Tests
         {
             MaintenanceConfigurationResource maintenanceConfigurationResource = await CreateMaintenanceConfiguration();
             Assert.IsNotEmpty(maintenanceConfigurationResource.Data.Id);
+            Assert.AreEqual(maintenanceConfigurationResource.Data.StartOn, new DateTimeOffset(2024, 12, 31, 14, 0, 0, TimeSpan.Zero));
+            Assert.AreEqual(maintenanceConfigurationResource.Data.ExpireOn, new DateTimeOffset(9999, 12, 31, 0, 0, 0, TimeSpan.Zero));
         }
 
         [RecordedTest]
@@ -92,7 +94,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 Namespace = "Microsoft.Maintenance",
                 MaintenanceScope = MaintenanceScope.InGuestPatch,
                 Visibility = MaintenanceConfigurationVisibility.Custom,
-                StartOn = DateTimeOffset.Parse("2024-12-31 00:00"),
+                StartOn = DateTimeOffset.Parse("2024-12-31 14:00"),
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
                 Duration = TimeSpan.Parse("03:00"),
                 TimeZone = "Pacific Standard Time",
