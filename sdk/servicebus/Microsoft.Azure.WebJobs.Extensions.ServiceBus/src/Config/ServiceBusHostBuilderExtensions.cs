@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Net;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
@@ -109,8 +110,8 @@ namespace Microsoft.Extensions.Hosting
         internal static IWebJobsBuilder AddServiceBusScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
             builder.Services.AddSingleton(serviceProvider => new ServiceBusScalerProvider(serviceProvider, triggerMetadata));
-            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetRequiredService<ServiceBusScalerProvider>());
-            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetRequiredService<ServiceBusScalerProvider>());
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<ServiceBusScalerProvider>().Where(x => x.GetMonitor().Descriptor.FunctionId == triggerMetadata.FunctionName).First());
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<ServiceBusScalerProvider>().Where(x => x.GetTargetScaler().TargetScalerDescriptor.FunctionId == triggerMetadata.FunctionName).First());
 
             return builder;
         }

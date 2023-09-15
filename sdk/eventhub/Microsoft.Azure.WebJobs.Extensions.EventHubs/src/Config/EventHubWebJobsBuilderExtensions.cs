@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Net;
 using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.WebJobs;
@@ -95,8 +96,8 @@ namespace Microsoft.Extensions.Hosting
         internal static IWebJobsBuilder AddEventHubsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
             builder.Services.AddSingleton(serviceProvider => new EventHubsScalerProvider(serviceProvider, triggerMetadata));
-            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetRequiredService<EventHubsScalerProvider>());
-            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetRequiredService<EventHubsScalerProvider>());
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Where(x => x.GetMonitor().Descriptor.FunctionId == triggerMetadata.FunctionName).First());
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Where(x => x.GetTargetScaler().TargetScalerDescriptor.FunctionId == triggerMetadata.FunctionName).First());
 
             return builder;
         }
