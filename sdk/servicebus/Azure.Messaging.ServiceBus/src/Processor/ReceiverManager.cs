@@ -29,7 +29,8 @@ namespace Azure.Messaging.ServiceBus
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
         private readonly MessagingClientDiagnostics _clientDiagnostics;
 
-        protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
+        protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero ||
+                                        ProcessorOptions.MaxAutoLockRenewalDuration == Timeout.InfiniteTimeSpan;
 
         public ReceiverManager(
             ServiceBusProcessor processor,
@@ -289,7 +290,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             CancellationTokenSource cancellationTokenSource)
         {
-            cancellationTokenSource.CancelAfter(ProcessorOptions.MaxAutoLockRenewalDuration);
+            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
             CancellationToken cancellationToken = cancellationTokenSource.Token;
             bool isTriggerMessage = args.Message == message;
 
