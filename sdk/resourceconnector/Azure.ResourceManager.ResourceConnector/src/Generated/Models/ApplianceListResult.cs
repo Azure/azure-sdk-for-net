@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <summary> Initializes a new instance of ApplianceListResult. </summary>
         internal ApplianceListResult()
         {
-            Value = new ChangeTrackingList<ApplianceData>();
+            Value = new ChangeTrackingList<ResourceConnectorApplianceData>();
         }
 
         /// <summary> Initializes a new instance of ApplianceListResult. </summary>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="value"> The list of Appliances. </param>
-        internal ApplianceListResult(string nextLink, IReadOnlyList<ApplianceData> value)
+        internal ApplianceListResult(string nextLink, IReadOnlyList<ResourceConnectorApplianceData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
         /// <summary> The list of Appliances. </summary>
-        public IReadOnlyList<ApplianceData> Value { get; }
+        public IReadOnlyList<ResourceConnectorApplianceData> Value { get; }
     }
 }

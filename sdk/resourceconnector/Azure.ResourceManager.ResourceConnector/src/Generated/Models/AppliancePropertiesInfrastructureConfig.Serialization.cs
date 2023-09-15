@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<Provider> provider = default;
+            Optional<ApplianceProvider> provider = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    provider = new Provider(property.Value.GetString());
+                    provider = new ApplianceProvider(property.Value.GetString());
                     continue;
                 }
             }

@@ -21,6 +21,28 @@ modelerfour:
 #mgmt-debug: 
 #  show-serialized-names: true
 
+prepend-rp-prefix:
+  - Appliance
+  - Distro
+  - Status
+
+rename-mapping:
+  ApplianceGetTelemetryConfigResult: ApplianceTelemetryConfigResult
+  ApplianceListCredentialResults: ApplianceClusterUserCredentialResult
+  ApplianceListKeysResults: ApplianceClusterUserKeysResult
+  ArtifactProfile: ApplianceArtifactProfile
+  Distro.AKSEdge: AksEdge
+  Provider: ApplianceProvider
+  Provider.VMWare: VMware
+  Provider.HCI: Hci
+  SSHKey: ApplianceSshKey
+  SupportedVersion: ApplianceSupportedVersion
+  SupportedVersionCatalogVersion: ApplianceSupportedVersionCatalogVersion
+  SupportedVersionCatalogVersionData: ApplianceSupportedVersionCatalogVersionProperties
+  SupportedVersionMetadata: ApplianceSupportedVersionMetadata
+  UpgradeGraph: ApplianceUpgradeGraph
+  UpgradeGraphProperties: ApplianceUpgradeGraphProperties
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -28,7 +50,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -51,4 +73,6 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - remove-operation: Appliances_ListOperations
 ```

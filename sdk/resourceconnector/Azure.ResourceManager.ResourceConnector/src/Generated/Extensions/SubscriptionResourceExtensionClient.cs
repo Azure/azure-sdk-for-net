@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.ResourceConnector
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _applianceClientDiagnostics;
-        private AppliancesRestOperations _applianceRestClient;
+        private ClientDiagnostics _resourceConnectorApplianceAppliancesClientDiagnostics;
+        private AppliancesRestOperations _resourceConnectorApplianceAppliancesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +35,8 @@ namespace Azure.ResourceManager.ResourceConnector
         {
         }
 
-        private ClientDiagnostics ApplianceClientDiagnostics => _applianceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceConnector", ApplianceResource.ResourceType.Namespace, Diagnostics);
-        private AppliancesRestOperations ApplianceRestClient => _applianceRestClient ??= new AppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplianceResource.ResourceType));
+        private ClientDiagnostics ResourceConnectorApplianceAppliancesClientDiagnostics => _resourceConnectorApplianceAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceConnector", ResourceConnectorApplianceResource.ResourceType.Namespace, Diagnostics);
+        private AppliancesRestOperations ResourceConnectorApplianceAppliancesRestClient => _resourceConnectorApplianceAppliancesRestClient ??= new AppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ResourceConnectorApplianceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -57,12 +58,12 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplianceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplianceResource> GetAppliancesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplianceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplianceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplianceResource(Client, ApplianceData.DeserializeApplianceData(e)), ApplianceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppliances", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), ResourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceConnectorAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -79,12 +80,12 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplianceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplianceResource> GetAppliances(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliances(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplianceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplianceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplianceResource(Client, ApplianceData.DeserializeApplianceData(e)), ApplianceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppliances", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), ResourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceConnectorAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -101,13 +102,13 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplianceGetTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = ApplianceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTelemetryConfigAppliance");
+            using var scope = ResourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTelemetryConfigAppliance");
             scope.Start();
             try
             {
-                var response = await ApplianceRestClient.GetTelemetryConfigAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                var response = await ResourceConnectorApplianceAppliancesRestClient.GetTelemetryConfigAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -131,13 +132,13 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplianceGetTelemetryConfigResult> GetTelemetryConfigAppliance(CancellationToken cancellationToken = default)
+        public virtual Response<ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(CancellationToken cancellationToken = default)
         {
-            using var scope = ApplianceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTelemetryConfigAppliance");
+            using var scope = ResourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTelemetryConfigAppliance");
             scope.Start();
             try
             {
-                var response = ApplianceRestClient.GetTelemetryConfig(Id.SubscriptionId, cancellationToken);
+                var response = ResourceConnectorApplianceAppliancesRestClient.GetTelemetryConfig(Id.SubscriptionId, cancellationToken);
                 return response;
             }
             catch (Exception e)

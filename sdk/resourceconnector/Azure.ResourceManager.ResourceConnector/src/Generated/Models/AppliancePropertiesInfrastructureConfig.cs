@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         /// <summary> Initializes a new instance of AppliancePropertiesInfrastructureConfig. </summary>
         /// <param name="provider"> Information about the connected appliance. </param>
-        internal AppliancePropertiesInfrastructureConfig(Provider? provider)
+        internal AppliancePropertiesInfrastructureConfig(ApplianceProvider? provider)
         {
             Provider = provider;
         }
 
         /// <summary> Information about the connected appliance. </summary>
-        public Provider? Provider { get; set; }
+        public ApplianceProvider? Provider { get; set; }
     }
 }

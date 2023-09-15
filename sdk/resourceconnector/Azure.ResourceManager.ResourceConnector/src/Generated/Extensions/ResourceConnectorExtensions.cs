@@ -50,47 +50,31 @@ namespace Azure.ResourceManager.ResourceConnector
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region ApplianceResource
+        #region ResourceConnectorApplianceResource
         /// <summary>
-        /// Gets an object representing an <see cref="ApplianceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplianceResource.CreateResourceIdentifier" /> to create an <see cref="ApplianceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceConnectorApplianceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceConnectorApplianceResource.CreateResourceIdentifier" /> to create a <see cref="ResourceConnectorApplianceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplianceResource" /> object. </returns>
-        public static ApplianceResource GetApplianceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceConnectorApplianceResource" /> object. </returns>
+        public static ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ApplianceResource.ValidateResourceId(id);
-                return new ApplianceResource(client, id);
+                ResourceConnectorApplianceResource.ValidateResourceId(id);
+                return new ResourceConnectorApplianceResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of ApplianceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ResourceConnectorApplianceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ApplianceResources and their operations over a ApplianceResource. </returns>
-        public static ApplianceCollection GetAppliances(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ResourceConnectorApplianceResources and their operations over a ResourceConnectorApplianceResource. </returns>
+        public static ResourceConnectorApplianceCollection GetResourceConnectorAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAppliances();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceConnectorAppliances();
         }
 
         /// <summary>
@@ -112,9 +96,9 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ApplianceResource>> GetApplianceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAppliances().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetResourceConnectorAppliances().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -136,9 +120,9 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ApplianceResource> GetAppliance(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<ResourceConnectorApplianceResource> GetResourceConnectorAppliance(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAppliances().Get(resourceName, cancellationToken);
+            return resourceGroupResource.GetResourceConnectorAppliances().Get(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -156,10 +140,10 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplianceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplianceResource> GetAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppliancesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceConnectorAppliancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -177,10 +161,10 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplianceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplianceResource> GetAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppliances(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceConnectorAppliances(cancellationToken);
         }
 
         /// <summary>
@@ -198,7 +182,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ApplianceGetTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetTelemetryConfigApplianceAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -218,51 +202,9 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ApplianceGetTelemetryConfigResult> GetTelemetryConfigAppliance(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTelemetryConfigAppliance(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available Appliances operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceConnector/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Appliances_ListOperations</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplianceOperation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplianceOperation> GetOperationsAppliancesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsAppliancesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available Appliances operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceConnector/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Appliances_ListOperations</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplianceOperation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplianceOperation> GetOperationsAppliances(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsAppliances(cancellationToken);
         }
     }
 }

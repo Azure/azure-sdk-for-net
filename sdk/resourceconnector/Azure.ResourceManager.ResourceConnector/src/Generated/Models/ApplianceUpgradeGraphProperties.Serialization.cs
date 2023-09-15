@@ -8,43 +8,42 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    internal partial class ApplianceListResult
+    public partial class ApplianceUpgradeGraphProperties
     {
-        internal static ApplianceListResult DeserializeApplianceListResult(JsonElement element)
+        internal static ApplianceUpgradeGraphProperties DeserializeApplianceUpgradeGraphProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ResourceConnectorApplianceData>> value = default;
+            Optional<string> applianceVersion = default;
+            Optional<IReadOnlyList<ApplianceSupportedVersion>> supportedVersions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"u8))
+                if (property.NameEquals("applianceVersion"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    applianceVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("supportedVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ResourceConnectorApplianceData> array = new List<ResourceConnectorApplianceData>();
+                    List<ApplianceSupportedVersion> array = new List<ApplianceSupportedVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(item));
+                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item));
                     }
-                    value = array;
+                    supportedVersions = array;
                     continue;
                 }
             }
-            return new ApplianceListResult(nextLink.Value, Optional.ToList(value));
+            return new ApplianceUpgradeGraphProperties(applianceVersion.Value, Optional.ToList(supportedVersions));
         }
     }
 }

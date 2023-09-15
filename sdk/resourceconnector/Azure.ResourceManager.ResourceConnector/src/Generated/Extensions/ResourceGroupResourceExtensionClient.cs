@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ResourceConnector
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ApplianceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplianceResources and their operations over a ApplianceResource. </returns>
-        public virtual ApplianceCollection GetAppliances()
+        /// <summary> Gets a collection of ResourceConnectorApplianceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ResourceConnectorApplianceResources and their operations over a ResourceConnectorApplianceResource. </returns>
+        public virtual ResourceConnectorApplianceCollection GetResourceConnectorAppliances()
         {
-            return GetCachedClient(Client => new ApplianceCollection(Client, Id));
+            return GetCachedClient(Client => new ResourceConnectorApplianceCollection(Client, Id));
         }
     }
 }

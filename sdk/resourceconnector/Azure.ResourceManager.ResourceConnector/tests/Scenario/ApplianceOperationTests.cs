@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private ApplianceCollection LocationCollection { get; set; }
+        private ResourceConnectorApplianceCollection LocationCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            LocationCollection = ResourceGroup.GetAppliances();
+            LocationCollection = ResourceGroup.GetResourceConnectorAppliances();
         }
 
         [Test]
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
 
             // CREATE APPLIANCE RESOURCE
             var resourceName = Recording.GenerateAssetName("appliancetest-");
-            var parameters = new ApplianceData(DefaultLocation)
+            var parameters = new ResourceConnectorApplianceData(DefaultLocation)
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
-                Distro = Distro.AKSEdge,
+                Distro = ResourceConnectorDistro.AksEdge,
                 InfrastructureConfig = new AppliancePropertiesInfrastructureConfig("VMWare")
             };
             var appliance = (await LocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, parameters)).Value;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             appliance = await LocationCollection.GetAsync(resourceName);
 
             // PATCH APPLIANCE
-            var patchData = new AppliancePatch()
+            var patchData = new ResourceConnectorAppliancePatch()
             {
                 Tags = { { "newkey", "newvalue" } }
             };
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             // // LIST BY RESOURCE GROUP
             var listResult = await LocationCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(listResult.Count, 1);
-            foreach (ApplianceResource item in listResult)
+            foreach (ResourceConnectorApplianceResource item in listResult)
             {
                 Assert.AreEqual(item.Data.Name, resourceName);
             }
