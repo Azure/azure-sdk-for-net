@@ -1665,7 +1665,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ServiceBusMessageActions messageActions)
             {
                 // wait long enough to trigger lock renewal
-                await Task.Delay(TimeSpan.FromSeconds(30));
+                await Task.Delay(TimeSpan.FromSeconds(20));
                 _waitHandle1.Set();
             }
         }
