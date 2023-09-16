@@ -18,7 +18,7 @@ We will create an instace of `SearchIndex` and define `Hotel` fields.
 string vectorSearchConfigName = "my-vector-config";
 int modelDimensions = 1536;
 
-string indexName = "Hotel";
+string indexName = "hotel";
 SearchIndex searchIndex = new(indexName)
 {
     Fields =
