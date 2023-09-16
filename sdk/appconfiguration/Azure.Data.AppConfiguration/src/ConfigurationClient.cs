@@ -726,11 +726,11 @@ namespace Azure.Data.AppConfiguration
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
-        /// <summary> Gets a single configuration setting snapshot. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <summary> Gets a single configuration snapshot. </summary>
+        /// <param name="name"> The name of the configuration snapshot to retrieve. </param>
+        /// <param name="fields"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> select = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -740,17 +740,17 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
                 List<string> snapshotFields = null;
-                if (select != null)
+                if (fields != null)
                 {
                     snapshotFields = new();
-                    foreach (var field in select)
+                    foreach (var field in fields)
                     {
                         snapshotFields.Add(field.ToString());
                     }
                 }
 
                 Response response = await GetSnapshotAsync(name, snapshotFields, new MatchConditions(), context).ConfigureAwait(false);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -760,11 +760,11 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Gets a single configuration setting snapshot. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <summary> Gets a single configuration snapshot. </summary>
+        /// <param name="name"> The name of the configuration snapshot to retrieve. </param>
+        /// <param name="fields"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> select = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -774,17 +774,17 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
                 List<string> snapshotFields = null;
-                if (select != null)
+                if (fields != null)
                 {
                     snapshotFields = new();
-                    foreach (var field in select)
+                    foreach (var field in fields)
                     {
                         snapshotFields.Add(field.ToString());
                     }
                 }
 
                 Response response = GetSnapshot(name, snapshotFields, new MatchConditions(), context);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -794,15 +794,15 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Creates a configuration setting snapshot. </summary>
+        /// <summary> Creates a configuration snapshot. </summary>
         /// <param name="wait">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation
         /// </param>
-        /// <param name="name"> The name of the configuration setting snapshot to create. </param>
-        /// <param name="snapshot"> The configuration setting snapshot to create. </param>
+        /// <param name="name"> The name of the configuration snapshot to create. </param>
+        /// <param name="snapshot"> The configuration snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(WaitUntil wait, string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        public virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(WaitUntil wait, string name, ConfigurationSnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
@@ -812,7 +812,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
+                using RequestContent content = ConfigurationSnapshot.ToRequestContent(snapshot);
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 // Start the operation
@@ -834,15 +834,15 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Creates a configuration setting snapshot. </summary>
+        /// <summary> Creates a configuration snapshot. </summary>
         /// <param name="wait">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
-        /// <param name="name"> The name of the configuration setting snapshot to create. </param>
-        /// <param name="snapshot"> The configuration setting snapshot to create. </param>
+        /// <param name="name"> The name of the configuration snapshot to create. </param>
+        /// <param name="snapshot"> The configuration snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CreateSnapshotOperation CreateSnapshot(WaitUntil wait, string name, ConfigurationSettingsSnapshot snapshot, CancellationToken cancellationToken = default)
+        public virtual CreateSnapshotOperation CreateSnapshot(WaitUntil wait, string name, ConfigurationSnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
@@ -852,7 +852,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
+                using RequestContent content = ConfigurationSnapshot.ToRequestContent(snapshot);
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 // Start the operation
@@ -874,10 +874,10 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <summary> Updates the state of a configuration snapshot to archive. </summary>
+        /// <param name="name"> The name of the configuration snapshot to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -889,12 +889,12 @@ namespace Azure.Data.AppConfiguration
 
                 SnapshotUpdateParameters snapshotUpdateParameters = new()
                 {
-                    Status = SnapshotStatus.Archived
+                    Status = ConfigurationSnapshotStatus.Archived
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = await UpdateSnapshotStatusAsync(name, content, new MatchConditions(), context).ConfigureAwait(false);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -904,10 +904,10 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <summary> Updates the state of a configuration snapshot to archive. </summary>
+        /// <param name="name"> The name of the configuration snapshot to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -919,12 +919,12 @@ namespace Azure.Data.AppConfiguration
 
                 SnapshotUpdateParameters snapshotUpdateParameters = new()
                 {
-                    Status = SnapshotStatus.Archived
+                    Status = ConfigurationSnapshotStatus.Archived
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = UpdateSnapshotStatus(name, content, new MatchConditions(), context);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -934,14 +934,14 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
-        /// <param name="snapshot"> The snapshot object of the configuration setting snapshot to archive. </param>
+        /// <summary> Updates the state of a configuration snapshot to archive. </summary>
+        /// <param name="snapshot"> The snapshot object of the configuration snapshot to archive. </param>
         /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
-        /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
+        /// status if the passed-in <see cref="ConfigurationSnapshot"/> has the same status as the one in the configuration store. The status
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
         /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(ConfigurationSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -953,16 +953,16 @@ namespace Azure.Data.AppConfiguration
 
                 SnapshotUpdateParameters snapshotUpdateParameters = new()
                 {
-                    Status = SnapshotStatus.Archived
+                    Status = ConfigurationSnapshotStatus.Archived
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 var matchConditions = new MatchConditions();
 
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.ETag } : default;
 
                 Response response = await UpdateSnapshotStatusAsync(snapshot.Name, content, requestOptions, context).ConfigureAwait(false);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -972,14 +972,14 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
-        /// <param name="snapshot"> The snapshot object of the configuration setting snapshot to archive. </param>
+        /// <summary> Updates the state of a configuration snapshot to archive. </summary>
+        /// <param name="snapshot"> The snapshot object of the configuration snapshot to archive. </param>
         /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
-        /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
+        /// status if the passed-in <see cref="ConfigurationSnapshot"/> has the same status as the one in the configuration store. The status
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
         /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(ConfigurationSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -991,14 +991,14 @@ namespace Azure.Data.AppConfiguration
 
                 SnapshotUpdateParameters snapshotUpdateParameters = new()
                 {
-                    Status = SnapshotStatus.Archived
+                    Status = ConfigurationSnapshotStatus.Archived
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.ETag } : default;
 
                 Response response = UpdateSnapshotStatus(snapshot.Name, content, requestOptions, context);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1008,10 +1008,10 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to recover. </param>
+        /// <summary> Updates the state of a configuration snapshot to ready. </summary>
+        /// <param name="name"> The name of the configuration snapshot to recover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> RecoverSnapshotAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1023,12 +1023,12 @@ namespace Azure.Data.AppConfiguration
 
                 SnapshotUpdateParameters snapshotUpdateParameters = new()
                 {
-                    Status = SnapshotStatus.Ready
+                    Status = ConfigurationSnapshotStatus.Ready
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = await UpdateSnapshotStatusAsync(name, content, new MatchConditions(), context).ConfigureAwait(false);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1038,10 +1038,10 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to recover. </param>
+        /// <summary> Updates the state of a configuration snapshot to ready. </summary>
+        /// <param name="name"> The name of the configuration snapshot to recover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> RecoverSnapshot(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1053,12 +1053,12 @@ namespace Azure.Data.AppConfiguration
 
                 SnapshotUpdateParameters snapshotUpdateParameters = new()
                 {
-                    Status = SnapshotStatus.Ready
+                    Status = ConfigurationSnapshotStatus.Ready
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = UpdateSnapshotStatus(name, content, new MatchConditions(), context);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1068,14 +1068,14 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
-        /// <param name="snapshot"> The name of the configuration setting snapshot to recover. </param>
-        /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
-        /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
+        /// <summary> Updates the state of a configuration snapshot to ready. </summary>
+        /// <param name="snapshot"> The name of the configuration snapshot to recover. </param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration snapshot exists in the configuration store, update the snapshot
+        /// status if the passed-in <see cref="ConfigurationSnapshot"/> has the same status as the one in the configuration store. The status
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
         /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> RecoverSnapshotAsync(ConfigurationSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -1087,14 +1087,14 @@ namespace Azure.Data.AppConfiguration
 
                 SnapshotUpdateParameters snapshotUpdateParameters = new()
                 {
-                    Status = SnapshotStatus.Ready
+                    Status = ConfigurationSnapshotStatus.Ready
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.ETag } : default;
 
                 Response response = await UpdateSnapshotStatusAsync(snapshot.Name, content, requestOptions, context).ConfigureAwait(false);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1104,14 +1104,14 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
-        /// <param name="snapshot"> The name of the configuration setting snapshot to recover. </param>
-        /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
-        /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
+        /// <summary> Updates the state of a configuration snapshot to ready. </summary>
+        /// <param name="snapshot"> The name of the configuration snapshot to recover. </param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration snapshot exists in the configuration store, update the snapshot
+        /// status if the passed-in <see cref="ConfigurationSnapshot"/> has the same status as the one in the configuration store. The status
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
         /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> RecoverSnapshot(ConfigurationSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -1123,14 +1123,14 @@ namespace Azure.Data.AppConfiguration
 
                 SnapshotUpdateParameters snapshotUpdateParameters = new()
                 {
-                    Status = SnapshotStatus.Ready
+                    Status = ConfigurationSnapshotStatus.Ready
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.ETag } : default;
 
                 Response response = UpdateSnapshotStatus(snapshot.Name, content, requestOptions, context);
-                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1140,72 +1140,62 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Gets a list of configuration setting snapshots. </summary>
-        /// <param name="name"> A filter for the name of the returned snapshots. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <summary> Gets a list of configuration snapshots. </summary>
+        /// <param name="selector">Set of options for selecting <see cref="ConfigurationSnapshot"/>.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ConfigurationSettingsSnapshot> GetSnapshotsAsync(string name = null, string after = null, IEnumerable<SnapshotFields> select = null, IEnumerable<SnapshotStatus> status = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConfigurationSnapshot> GetSnapshotsAsync(SnapshotSelector selector, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(selector, nameof(selector));
+            var name = selector.Name;
+            var fields = selector.Fields;
+            var status = selector.Status;
+
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            List<string> snapshotFields = null;
-            if (select != null)
+
+            var snapshotFields = new ChangeTrackingList<string>();
+            foreach (SnapshotFields field in fields)
             {
-                snapshotFields = new();
-                foreach (SnapshotFields field in select)
-                {
-                    snapshotFields.Add(field.ToString());
-                }
+                snapshotFields.Add(field.ToString());
             }
 
-            List<string> snapshotStatus = null;
-            if (status != null)
+            var snapshotStatus = new ChangeTrackingList<string>();
+            foreach (ConfigurationSnapshotStatus st in status)
             {
-                snapshotStatus = new();
-                foreach (SnapshotStatus st in status)
-                {
-                    snapshotStatus.Add(st.ToString());
-                }
+                snapshotStatus.Add(st.ToString());
             }
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, snapshotFields, snapshotStatus, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, snapshotFields, snapshotStatus, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationSettingsSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, snapshotFields, snapshotStatus, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, null, snapshotFields, snapshotStatus, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
         }
 
-        /// <summary> Gets a list of configuration setting snapshots. </summary>
-        /// <param name="name"> A filter for the name of the returned snapshots. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <summary> Gets a list of configuration snapshots. </summary>
+        /// <param name="selector">Set of options for selecting <see cref="ConfigurationSnapshot"/>.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ConfigurationSettingsSnapshot> GetSnapshots(string name = null, string after = null, IEnumerable<SnapshotFields> select = null, IEnumerable<SnapshotStatus> status = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConfigurationSnapshot> GetSnapshots(SnapshotSelector selector, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(selector, nameof(selector));
+            var name = selector.Name;
+            var fields = selector.Fields;
+            var status = selector.Status;
+
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            List<string> snapshotFields = null;
-            if (select != null)
+
+            var snapshotFields = new ChangeTrackingList<string>();
+            foreach (SnapshotFields field in fields)
             {
-                snapshotFields = new();
-                foreach (SnapshotFields field in select)
-                {
-                    snapshotFields.Add(field.ToString());
-                }
+                snapshotFields.Add(field.ToString());
             }
 
-            List<string> snapshotStatus = null;
-            if (status != null)
+            var snapshotStatus = new ChangeTrackingList<string>();
+            foreach (ConfigurationSnapshotStatus st in status)
             {
-                snapshotStatus = new();
-                foreach (SnapshotStatus st in status)
-                {
-                    snapshotStatus.Add(st.ToString());
-                }
+                snapshotStatus.Add(st.ToString());
             }
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, snapshotFields, snapshotStatus, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, snapshotFields, snapshotStatus, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationSettingsSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, snapshotFields, snapshotStatus, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, null, snapshotFields, snapshotStatus, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1409,210 +1399,6 @@ namespace Azure.Data.AppConfiguration
                 ErrorOptions = errorOptions,
                 CancellationToken = cancellationToken
             };
-        }
-
-        /// <summary> Gets a single key-value. </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
-        /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingAsync(String,String,String,IEnumerable,MatchConditions,RequestContext)']/*" />
-        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, acceptDatetime, select, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a single key-value. </summary>
-        /// <param name="key"> The key of the key-value to retrieve. </param>
-        /// <param name="label"> The label of the key-value to retrieve. </param>
-        /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSetting(String,String,String,IEnumerable,MatchConditions,RequestContext)']/*" />
-        internal virtual Response GetConfigurationSetting(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, acceptDatetime, select, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a key-value. </summary>
-        /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource's etag matches the value provided. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteConfigurationSettingAsync(String,String,ETag,RequestContext)']/*" />
-        internal virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, ETag? ifMatch, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, ifMatch, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a key-value. </summary>
-        /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="label"> The label of the key-value to delete. </param>
-        /// <param name="ifMatch"> Used to perform an operation only if the targeted resource's etag matches the value provided. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteConfigurationSetting(String,String,ETag,RequestContext)']/*" />
-        internal virtual Response DeleteConfigurationSetting(string key, string label, ETag? ifMatch, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, ifMatch, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a single key-value snapshot. </summary>
-        /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotAsync(String,IEnumerable,MatchConditions,RequestContext)']/*" />
-        internal virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a single key-value snapshot. </summary>
-        /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshot(String,IEnumerable,MatchConditions,RequestContext)']/*" />
-        internal virtual Response GetSnapshot(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a list of key-value snapshots. </summary>
-        /// <param name="name"> A filter for the name of the returned snapshots. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotsAsync(String,String,IEnumerable,IEnumerable,RequestContext)']/*" />
-        internal virtual AsyncPageable<BinaryData> GetSnapshotsAsync(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
-        }
-
-        /// <summary> Gets a list of key-value snapshots. </summary>
-        /// <param name="name"> A filter for the name of the returned snapshots. </param>
-        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshots(String,String,IEnumerable,IEnumerable,RequestContext)']/*" />
-        internal virtual Pageable<BinaryData> GetSnapshots(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
         }
 
         private class ConfigurationRequestFailedDetailsParser : RequestFailedDetailsParser

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, category, tags, sourceId, canFetchContent);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workbookRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, category, tags, sourceId, canFetchContent);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookClientDiagnostics, Pipeline, "WorkbookCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookClientDiagnostics, Pipeline, "WorkbookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, category, tags, sourceId, canFetchContent);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workbookRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, category, tags, sourceId, canFetchContent);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookClientDiagnostics, Pipeline, "WorkbookCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookClientDiagnostics, Pipeline, "WorkbookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

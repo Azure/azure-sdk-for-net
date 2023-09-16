@@ -178,6 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             options.PrefetchCount = 0;
             options.MaxReceiveWaitTime = TimeSpan.FromSeconds(1);
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+            options.MaxAutoLockRenewalDuration = Timeout.InfiniteTimeSpan;
         }
 
         [Test]

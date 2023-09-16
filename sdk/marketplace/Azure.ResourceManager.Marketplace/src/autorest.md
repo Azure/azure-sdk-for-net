@@ -11,6 +11,9 @@ namespace: Azure.ResourceManager.Marketplace
 require: https://github.com/Azure/azure-rest-api-specs/blob/a54263176acce91199a19333d6c4717367a3317e/specification/marketplace/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -90,7 +93,7 @@ override-operation-name:
   PrivateStore_BulkCollectionsAction: PerformActionOnBulkCollections
   PrivateStore_CollectionsToSubscriptionsMapping: FetchCollectionsToSubscriptionsMapping
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

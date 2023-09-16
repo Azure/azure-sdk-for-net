@@ -900,7 +900,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         {
             if (version != DataMovementConstants.JobPartPlanFile.SchemaVersion)
             {
-                throw Errors.UnsupportedSchemaVersionHeader(version);
+                throw Errors.UnsupportedJobPartSchemaVersionHeader(version);
             }
         }
     }
