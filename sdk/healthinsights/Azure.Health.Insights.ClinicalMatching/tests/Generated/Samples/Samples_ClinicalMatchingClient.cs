@@ -50,6 +50,67 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_MatchTrials_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                patients = new List<object>()
+{
+new
+{
+id = "<id>",
+}
+},
+            });
+            Operation<BinaryData> operation = await client.MatchTrialsAsync(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_MatchTrials_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
+
+            TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
+{
+new PatientRecord("<id>")
+});
+            Operation<TrialMatcherResult> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
+            TrialMatcherResult responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_MatchTrials_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
+
+            TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
+{
+new PatientRecord("<id>")
+});
+            Operation<TrialMatcherResult> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+            TrialMatcherResult responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_MatchTrials_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -282,205 +343,6 @@ radius = 123.45,
             Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
             Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToString());
             Console.WriteLine(result.GetProperty("results").GetProperty("knowledgeGraphLastUpdateDate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_MatchTrials_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
-
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
-{
-new PatientRecord("<id>")
-});
-            Operation<TrialMatcherResult> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
-            TrialMatcherResult responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_MatchTrials_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
-
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
-{
-new PatientRecord("<id>")
-{
-Info = new PatientInfo()
-{
-Sex = PatientInfoSex.Female,
-BirthDate = DateTimeOffset.Parse("2022-05-10"),
-ClinicalInfo =
-{
-new ClinicalCodedElement("<system>","<code>")
-{
-Name = "<name>",
-Value = "<value>",
-}
-},
-},
-Data =
-{
-new PatientDocument(DocumentType.Note,"<id>",new DocumentContent(DocumentContentSourceType.Inline,"<value>"))
-{
-ClinicalType = ClinicalDocumentType.Consultation,
-Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-}
-},
-}
-})
-            {
-                Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
-                {
-                    CustomTrials =
-{
-new ClinicalTrialDetails("<id>",new ClinicalTrialMetadata(new List<string>()
-{
-"<conditions>"
-})
-{
-Phases =
-{
-ClinicalTrialPhase.NotApplicable
-},
-StudyType = ClinicalTrialStudyType.Interventional,
-RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
-Sponsors =
-{
-"<sponsors>"
-},
-Contacts =
-{
-new ContactDetails()
-{
-Name = "<name>",
-Email = "<email>",
-Phone = "<phone>",
-}
-},
-Facilities =
-{
-new ClinicalTrialResearchFacility("<name>","<countryOrRegion>")
-{
-City = "<city>",
-State = "<state>",
-}
-},
-})
-{
-EligibilityCriteriaText = "<eligibilityCriteriaText>",
-Demographics = new ClinicalTrialDemographics()
-{
-AcceptedSex = ClinicalTrialAcceptedSex.All,
-AcceptedAgeRange = new AcceptedAgeRange()
-{
-MinimumAge = new AcceptedAge(AgeUnit.Years,123.45F),
-MaximumAge = null,
-},
-},
-}
-},
-                    RegistryFilters =
-{
-new ClinicalTrialRegistryFilter()
-{
-Conditions =
-{
-"<conditions>"
-},
-StudyTypes =
-{
-ClinicalTrialStudyType.Interventional
-},
-RecruitmentStatuses =
-{
-ClinicalTrialRecruitmentStatus.UnknownStatus
-},
-Sponsors =
-{
-"<sponsors>"
-},
-Phases =
-{
-ClinicalTrialPhase.NotApplicable
-},
-Purposes =
-{
-ClinicalTrialPurpose.NotApplicable
-},
-Ids =
-{
-"<ids>"
-},
-Sources =
-{
-ClinicalTrialSource.Custom
-},
-FacilityNames =
-{
-"<facilityNames>"
-},
-FacilityLocations =
-{
-new GeographicLocation("<countryOrRegion>")
-{
-City = "<city>",
-State = "<state>",
-}
-},
-FacilityAreas =
-{
-new GeographicArea(GeoJsonType.Feature,new AreaGeometry(GeoJsonGeometryType.Point,new List<float>()
-{
-123.45F
-}),new AreaProperties(GeoJsonPropertiesSubType.Circle,123.45))
-},
-}
-},
-                })
-                {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                },
-            };
-            Operation<TrialMatcherResult> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
-            TrialMatcherResult responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_MatchTrials_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                patients = new List<object>()
-{
-new
-{
-id = "<id>",
-}
-},
-            });
-            Operation<BinaryData> operation = await client.MatchTrialsAsync(WaitUntil.Completed, content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
@@ -721,7 +583,7 @@ radius = 123.45,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MatchTrials_Convenience_Async()
+        public void Example_MatchTrials_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -730,8 +592,146 @@ radius = 123.45,
             TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
 {
 new PatientRecord("<id>")
-});
-            Operation<TrialMatcherResult> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+{
+Info = new PatientInfo()
+{
+Sex = PatientInfoSex.Female,
+BirthDate = DateTimeOffset.Parse("2022-05-10"),
+ClinicalInfo =
+{
+new ClinicalCodedElement("<system>","<code>")
+{
+Name = "<name>",
+Value = "<value>",
+}
+},
+},
+Data =
+{
+new PatientDocument(DocumentType.Note,"<id>",new DocumentContent(DocumentContentSourceType.Inline,"<value>"))
+{
+ClinicalType = ClinicalDocumentType.Consultation,
+Language = "<language>",
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+}
+},
+}
+})
+            {
+                Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
+                {
+                    CustomTrials =
+{
+new ClinicalTrialDetails("<id>",new ClinicalTrialMetadata(new List<string>()
+{
+"<conditions>"
+})
+{
+Phases =
+{
+ClinicalTrialPhase.NotApplicable
+},
+StudyType = ClinicalTrialStudyType.Interventional,
+RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
+Sponsors =
+{
+"<sponsors>"
+},
+Contacts =
+{
+new ContactDetails()
+{
+Name = "<name>",
+Email = "<email>",
+Phone = "<phone>",
+}
+},
+Facilities =
+{
+new ClinicalTrialResearchFacility("<name>","<countryOrRegion>")
+{
+City = "<city>",
+State = "<state>",
+}
+},
+})
+{
+EligibilityCriteriaText = "<eligibilityCriteriaText>",
+Demographics = new ClinicalTrialDemographics()
+{
+AcceptedSex = ClinicalTrialAcceptedSex.All,
+AcceptedAgeRange = new AcceptedAgeRange()
+{
+MinimumAge = new AcceptedAge(AgeUnit.Years,123.45F),
+MaximumAge = null,
+},
+},
+}
+},
+                    RegistryFilters =
+{
+new ClinicalTrialRegistryFilter()
+{
+Conditions =
+{
+"<conditions>"
+},
+StudyTypes =
+{
+ClinicalTrialStudyType.Interventional
+},
+RecruitmentStatuses =
+{
+ClinicalTrialRecruitmentStatus.UnknownStatus
+},
+Sponsors =
+{
+"<sponsors>"
+},
+Phases =
+{
+ClinicalTrialPhase.NotApplicable
+},
+Purposes =
+{
+ClinicalTrialPurpose.NotApplicable
+},
+Ids =
+{
+"<ids>"
+},
+Sources =
+{
+ClinicalTrialSource.Custom
+},
+FacilityNames =
+{
+"<facilityNames>"
+},
+FacilityLocations =
+{
+new GeographicLocation("<countryOrRegion>")
+{
+City = "<city>",
+State = "<state>",
+}
+},
+FacilityAreas =
+{
+new GeographicArea(GeoJsonType.Feature,new AreaGeometry(GeoJsonGeometryType.Point,new List<float>()
+{
+123.45F
+}),new AreaProperties(GeoJsonPropertiesSubType.Circle,123.45))
+},
+}
+},
+                })
+                {
+                    Verbose = true,
+                    IncludeEvidence = true,
+                },
+            };
+            Operation<TrialMatcherResult> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
             TrialMatcherResult responseData = operation.Value;
         }
 
