@@ -426,6 +426,12 @@
       ]
     },
     {
+      "filename": "**/sdk/defendereasm/**/*.cs",
+      "words": [
+        "easm"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",
@@ -487,6 +493,14 @@
       "filename": "**/sdk/guestconfiguration/**/*.cs",
       "words": [
         "Hcrp"
+      ]
+    },
+    {
+      "filename": "**/sdk/hardwaresecuritymodules/**/*.cs",
+      "words": [
+        "fips",
+        "klmk",
+        "hsma"
       ]
     },
     {
@@ -881,6 +895,14 @@
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "Unprovisioning"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/api/*.cs",
+      "words": [
+        "capi",
+        "kvaio",
+        "scvmm"
       ]
     },
     {

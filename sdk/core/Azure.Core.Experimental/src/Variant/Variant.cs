@@ -22,8 +22,16 @@ namespace Azure
         /// <param name="value"></param>
         public Variant(object? value)
         {
-            _object = value;
-            _union = default;
+            if (value is Variant variant)
+            {
+                _object = variant._object;
+                _union = variant._union;
+            }
+            else
+            {
+                _object = value;
+                _union = default;
+            }
         }
 
         /// <summary>
@@ -69,7 +77,17 @@ namespace Azure
         }
 
         [DoesNotReturn]
-        private static void ThrowInvalidCast() => throw new InvalidCastException();
+        private static void ThrowInvalidCast(Type? source, Type target)
+        {
+            if (source is null)
+            {
+                throw new InvalidCastException($"Unable to cast null Variant to type '{target}'.");
+            }
+            else
+            {
+                throw new InvalidCastException($"Unable to cast Variant of type '{source}' to type '{target}'.");
+            }
+        }
 
         [DoesNotReturn]
         private static void ThrowArgumentNull(string paramName) => throw new ArgumentNullException(paramName);
@@ -1288,11 +1306,12 @@ namespace Azure
         {
             // Single return has a significant performance benefit.
 
-            bool result = false;
+            bool result;
 
             if (_object is null)
             {
                 value = default!;
+                result = true;
             }
             else if (typeof(T) == typeof(char[]))
             {
@@ -1372,9 +1391,9 @@ namespace Azure
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly T As<T>()
         {
-            if (!TryGetValue<T>(out T value))
+            if (!TryGetValue(out T value))
             {
-                ThrowInvalidCast();
+                ThrowInvalidCast(Type, typeof(T));
             }
 
             return value;
@@ -1388,5 +1407,94 @@ namespace Azure
             return value;
         }
         #endregion
+
+        /// <inheritdoc/>
+        public override string? ToString()
+        {
+            string? result;
+
+            if (_object == null)
+            {
+                result = "null";
+            }
+            else if (Type == typeof(byte))
+            {
+                result = As<byte>().ToString();
+            }
+            else if (Type == typeof(sbyte))
+            {
+                result = As<sbyte>().ToString();
+            }
+            else if (Type == typeof(bool))
+            {
+                result = ((bool)this) ? "true" : "false";
+            }
+            else if (Type == typeof(char))
+            {
+                result = As<char>().ToString();
+            }
+            else if (Type == typeof(short))
+            {
+                result = As<short>().ToString();
+            }
+            else if (Type == typeof(int))
+            {
+                result = As<int>().ToString();
+            }
+            else if (Type == typeof(long))
+            {
+                result = As<long>().ToString();
+            }
+            else if (Type == typeof(ushort))
+            {
+                result = As<ushort>().ToString();
+            }
+            else if (Type == typeof(uint))
+            {
+                result = As<uint>().ToString();
+            }
+            else if (Type == typeof(ulong))
+            {
+                result = As<ulong>().ToString();
+            }
+            else if (Type == typeof(float))
+            {
+                result = As<float>().ToString();
+            }
+            else if (Type == typeof(double))
+            {
+                result = As<double>().ToString();
+            }
+            else if (Type == typeof(decimal))
+            {
+                result = As<decimal>().ToString();
+            }
+            else if (Type == typeof(DateTime))
+            {
+                result = As<DateTime>().ToString();
+            }
+            else if (Type == typeof(DateTimeOffset))
+            {
+                result = As<DateTimeOffset>().ToString();
+            }
+            else if (Type == typeof(string))
+            {
+                result = (string)this;
+            }
+            else if (Type == typeof(ArraySegment<byte>))
+            {
+                result = ((ArraySegment<byte>)this).ToString();
+            }
+            else if (Type == typeof(ArraySegment<char>))
+            {
+                result = ((ArraySegment<char>)this).ToString();
+            }
+            else
+            {
+                result = _object.ToString();
+            }
+
+            return result;
+        }
     }
 }
