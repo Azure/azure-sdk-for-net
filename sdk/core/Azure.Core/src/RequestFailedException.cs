@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
+using System.ServiceModel.Rest;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -18,19 +19,9 @@ namespace Azure
     /// An exception thrown when service request fails.
     /// </summary>
     [Serializable]
-    public class RequestFailedException : Exception, ISerializable
+    public class RequestFailedException : ServiceErrorException, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
-
-        /// <summary>
-        /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
-        /// </summary>
-        public int Status { get; }
-
-        /// <summary>
-        /// Gets the service specific error code if available. Please refer to the client documentation for the list of supported error codes.
-        /// </summary>
-        public string? ErrorCode { get; }
 
         /// <summary>
         /// Gets the response, if any, that led to the exception.
@@ -76,10 +67,33 @@ namespace Azure
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
-            : base(message, innerException)
+            : base(new ErrorResult(status, errorCode), message, innerException)
         {
-            Status = status;
-            ErrorCode = errorCode;
+        }
+
+        private class ErrorResult : Result
+        {
+            private int _status;
+            private Stream? _contentStream;
+
+            public ErrorResult(int status, string? errorCode)
+            {
+                _status = status;
+                if (errorCode != null)
+                {
+                    _contentStream = new MemoryStream();
+                }
+            }
+
+            public override int Status => _status;
+
+            public override Stream? ContentStream
+            {
+                get => _contentStream;
+                set => throw new NotImplementedException();
+            }
+
+            public override bool TryGetHeader(string name, out string? value) => throw new NotImplementedException();
         }
 
         internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :
@@ -131,8 +145,6 @@ namespace Azure
         protected RequestFailedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            Status = info.GetInt32(nameof(Status));
-            ErrorCode = info.GetString(nameof(ErrorCode));
         }
 
         /// <inheritdoc />
