@@ -508,14 +508,14 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
             PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
 
             // invoke the operation and iterate over the result
-            QueryUserRulesProperties payload = new QueryUserRulesProperties()
+            QueryUserRulesContent content = new QueryUserRulesContent()
             {
                 SubscriptionIds =
 {
 "b340914e-353d-453a-85fb-8f9b65b51f91"
 },
             };
-            await foreach (Rule item in privateStore.QueryUserRulesAsync(payload: payload))
+            await foreach (MarketplaceRule item in privateStore.QueryUserRulesAsync(content: content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

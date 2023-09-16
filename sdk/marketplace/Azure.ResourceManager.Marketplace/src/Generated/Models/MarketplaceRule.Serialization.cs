@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class Rule : IUtf8JsonSerializable
+    public partial class MarketplaceRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteEndObject();
         }
 
-        internal static Rule DeserializeRule(JsonElement element)
+        internal static MarketplaceRule DeserializeMarketplaceRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RuleType> type = default;
+            Optional<MarketplaceRuleType> type = default;
             Optional<IList<string>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    type = new RuleType(property.Value.GetString());
+                    type = new MarketplaceRuleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new Rule(Optional.ToNullable(type), Optional.ToList(value));
+            return new MarketplaceRule(Optional.ToNullable(type), Optional.ToList(value));
         }
     }
 }

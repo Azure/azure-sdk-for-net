@@ -9,6 +9,7 @@ csharp: true
 library-name: Marketplace
 namespace: Azure.ResourceManager.Marketplace
 require: https://github.com/Azure/azure-rest-api-specs/blob/a54263176acce91199a19333d6c4717367a3317e/specification/marketplace/resource-manager/readme.md
+#tag: package-2023-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,6 +18,9 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 rename-mapping:
   AcknowledgeOfferNotificationProperties: AcknowledgeOfferNotificationContent
@@ -55,11 +59,15 @@ rename-mapping:
   PlanDetails: PrivateStorePlanDetails
   PrivateStore.properties.collectionIds: -|uuid
   PrivateStore.properties.privateStoreId: -|uuid
+  Rule: MarketplaceRule
+  RuleListResponse: MarketplaceRuleListResult
+  RuleType: MarketplaceRuleType
   QueryApprovedPlansPayload: QueryApprovedPlansContent
   QueryApprovedPlansResponse: QueryApprovedPlansResult
   QueryRequestApproval: QueryApprovalRequestResult
   QueryRequestApprovalProperties: QueryApprovalRequestContent
   QueryUserOffersProperties:  QueryUserOffersContent
+  QueryUserRulesProperties: QueryUserRulesContent
   Recipient: NotificationRecipient
   Recipient.principalId: -|uuid
   RequestApprovalsDetails.icon: iconUri|uri

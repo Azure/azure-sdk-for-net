@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<IList<string>> subscriptionsList = default;
             Optional<bool> enabled = default;
             Optional<long> numberOfOffers = default;
-            Optional<IReadOnlyList<Rule>> appliedRules = default;
+            Optional<IReadOnlyList<MarketplaceRule>> appliedRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.Marketplace
                             {
                                 continue;
                             }
-                            List<Rule> array = new List<Rule>();
+                            List<MarketplaceRule> array = new List<MarketplaceRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Rule.DeserializeRule(item));
+                                array.Add(MarketplaceRule.DeserializeMarketplaceRule(item));
                             }
                             appliedRules = array;
                             continue;

@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> The Rule. </summary>
-    public partial class Rule
+    /// <summary> The MarketplaceRule. </summary>
+    public partial class MarketplaceRule
     {
-        /// <summary> Initializes a new instance of Rule. </summary>
-        public Rule()
+        /// <summary> Initializes a new instance of MarketplaceRule. </summary>
+        public MarketplaceRule()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Rule. </summary>
+        /// <summary> Initializes a new instance of MarketplaceRule. </summary>
         /// <param name="ruleType"> Rule type. </param>
         /// <param name="value"></param>
-        internal Rule(RuleType? ruleType, IList<string> value)
+        internal MarketplaceRule(MarketplaceRuleType? ruleType, IList<string> value)
         {
             RuleType = ruleType;
             Value = value;
         }
 
         /// <summary> Rule type. </summary>
-        public RuleType? RuleType { get; set; }
+        public MarketplaceRuleType? RuleType { get; set; }
         /// <summary> Gets the value. </summary>
         public IList<string> Value { get; }
     }

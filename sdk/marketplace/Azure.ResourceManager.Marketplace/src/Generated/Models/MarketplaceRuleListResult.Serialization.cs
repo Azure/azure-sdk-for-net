@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    internal partial class RuleListResponse
+    internal partial class MarketplaceRuleListResult
     {
-        internal static RuleListResponse DeserializeRuleListResponse(JsonElement element)
+        internal static MarketplaceRuleListResult DeserializeMarketplaceRuleListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<Rule>> value = default;
+            Optional<IReadOnlyList<MarketplaceRule>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    List<Rule> array = new List<Rule>();
+                    List<MarketplaceRule> array = new List<MarketplaceRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Rule.DeserializeRule(item));
+                        array.Add(MarketplaceRule.DeserializeMarketplaceRule(item));
                     }
                     value = array;
                     continue;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new RuleListResponse(Optional.ToList(value), nextLink.Value);
+            return new MarketplaceRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

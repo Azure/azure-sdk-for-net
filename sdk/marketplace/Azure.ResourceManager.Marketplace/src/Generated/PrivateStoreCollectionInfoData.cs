@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Marketplace
         public PrivateStoreCollectionInfoData()
         {
             SubscriptionsList = new ChangeTrackingList<string>();
-            AppliedRules = new ChangeTrackingList<Rule>();
+            AppliedRules = new ChangeTrackingList<MarketplaceRule>();
         }
 
         /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
         /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
         /// <param name="appliedRules"> Gets list of collection rules. </param>
-        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers, IReadOnlyList<Rule> appliedRules) : base(id, name, resourceType, systemData)
+        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers, IReadOnlyList<MarketplaceRule> appliedRules) : base(id, name, resourceType, systemData)
         {
             CollectionId = collectionId;
             CollectionName = collectionName;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Gets the number of offers associated with the collection. </summary>
         public long? NumberOfOffers { get; }
         /// <summary> Gets list of collection rules. </summary>
-        public IReadOnlyList<Rule> AppliedRules { get; }
+        public IReadOnlyList<MarketplaceRule> AppliedRules { get; }
     }
 }

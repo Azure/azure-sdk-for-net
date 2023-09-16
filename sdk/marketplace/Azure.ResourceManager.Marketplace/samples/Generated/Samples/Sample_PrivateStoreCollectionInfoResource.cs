@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Marketplace.Samples
             {
                 Value =
 {
-new Rule()
+new MarketplaceRule()
 {
-RuleType = RuleType.PrivateProducts,
+RuleType = MarketplaceRuleType.PrivateProducts,
 }
 },
             };
@@ -75,7 +75,7 @@ RuleType = RuleType.PrivateProducts,
             PrivateStoreCollectionInfoResource privateStoreCollectionInfo = client.GetPrivateStoreCollectionInfoResource(privateStoreCollectionInfoResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Rule item in privateStoreCollectionInfo.QueryRulesAsync())
+            await foreach (MarketplaceRule item in privateStoreCollectionInfo.QueryRulesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateQueryUserRulesRequest(Guid privateStoreId, QueryUserRulesProperties payload)
+        internal HttpMessage CreateQueryUserRulesRequest(Guid privateStoreId, QueryUserRulesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Marketplace
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (payload != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> All rules approved in the private store that are relevant for user subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The QueryUserRulesProperties to use. </param>
+        /// <param name="content"> The QueryUserRulesContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RuleListResponse>> QueryUserRulesAsync(Guid privateStoreId, QueryUserRulesProperties payload = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MarketplaceRuleListResult>> QueryUserRulesAsync(Guid privateStoreId, QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryUserRulesRequest(privateStoreId, payload);
+            using var message = CreateQueryUserRulesRequest(privateStoreId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RuleListResponse value = default;
+                        MarketplaceRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RuleListResponse.DeserializeRuleListResponse(document.RootElement);
+                        value = MarketplaceRuleListResult.DeserializeMarketplaceRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -85,19 +85,19 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> All rules approved in the private store that are relevant for user subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The QueryUserRulesProperties to use. </param>
+        /// <param name="content"> The QueryUserRulesContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RuleListResponse> QueryUserRules(Guid privateStoreId, QueryUserRulesProperties payload = null, CancellationToken cancellationToken = default)
+        public Response<MarketplaceRuleListResult> QueryUserRules(Guid privateStoreId, QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryUserRulesRequest(privateStoreId, payload);
+            using var message = CreateQueryUserRulesRequest(privateStoreId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RuleListResponse value = default;
+                        MarketplaceRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RuleListResponse.DeserializeRuleListResponse(document.RootElement);
+                        value = MarketplaceRuleListResult.DeserializeMarketplaceRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RuleListResponse>> QueryRulesAsync(Guid privateStoreId, Guid collectionId, CancellationToken cancellationToken = default)
+        public async Task<Response<MarketplaceRuleListResult>> QueryRulesAsync(Guid privateStoreId, Guid collectionId, CancellationToken cancellationToken = default)
         {
             using var message = CreateQueryRulesRequest(privateStoreId, collectionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        RuleListResponse value = default;
+                        MarketplaceRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RuleListResponse.DeserializeRuleListResponse(document.RootElement);
+                        value = MarketplaceRuleListResult.DeserializeMarketplaceRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RuleListResponse> QueryRules(Guid privateStoreId, Guid collectionId, CancellationToken cancellationToken = default)
+        public Response<MarketplaceRuleListResult> QueryRules(Guid privateStoreId, Guid collectionId, CancellationToken cancellationToken = default)
         {
             using var message = CreateQueryRulesRequest(privateStoreId, collectionId);
             _pipeline.Send(message, cancellationToken);
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        RuleListResponse value = default;
+                        MarketplaceRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RuleListResponse.DeserializeRuleListResponse(document.RootElement);
+                        value = MarketplaceRuleListResult.DeserializeMarketplaceRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

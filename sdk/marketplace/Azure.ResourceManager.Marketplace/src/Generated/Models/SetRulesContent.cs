@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of SetRulesContent. </summary>
         public SetRulesContent()
         {
-            Value = new ChangeTrackingList<Rule>();
+            Value = new ChangeTrackingList<MarketplaceRule>();
         }
 
         /// <summary> Gets the value. </summary>
-        public IList<Rule> Value { get; }
+        public IList<MarketplaceRule> Value { get; }
         /// <summary> URL to get the next set of rules list results if there are any. </summary>
         public string NextLink { get; set; }
     }

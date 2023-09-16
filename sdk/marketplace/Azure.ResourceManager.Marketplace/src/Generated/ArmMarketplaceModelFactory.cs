@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
         /// <param name="appliedRules"> Gets list of collection rules. </param>
         /// <returns> A new <see cref="Marketplace.PrivateStoreCollectionInfoData"/> instance for mocking. </returns>
-        public static PrivateStoreCollectionInfoData PrivateStoreCollectionInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? collectionId = null, string collectionName = null, string claim = null, bool? areAllSubscriptionsSelected = null, bool? areAllItemsApproved = null, DateTimeOffset? approveAllItemsModifiedOn = null, IEnumerable<string> subscriptionsList = null, bool? isEnabled = null, long? numberOfOffers = null, IEnumerable<Rule> appliedRules = null)
+        public static PrivateStoreCollectionInfoData PrivateStoreCollectionInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? collectionId = null, string collectionName = null, string claim = null, bool? areAllSubscriptionsSelected = null, bool? areAllItemsApproved = null, DateTimeOffset? approveAllItemsModifiedOn = null, IEnumerable<string> subscriptionsList = null, bool? isEnabled = null, long? numberOfOffers = null, IEnumerable<MarketplaceRule> appliedRules = null)
         {
             subscriptionsList ??= new List<string>();
-            appliedRules ??= new List<Rule>();
+            appliedRules ??= new List<MarketplaceRule>();
 
             return new PrivateStoreCollectionInfoData(id, name, resourceType, systemData, collectionId, collectionName, claim, areAllSubscriptionsSelected, areAllItemsApproved, approveAllItemsModifiedOn, subscriptionsList?.ToList(), isEnabled, numberOfOffers, appliedRules?.ToList());
         }

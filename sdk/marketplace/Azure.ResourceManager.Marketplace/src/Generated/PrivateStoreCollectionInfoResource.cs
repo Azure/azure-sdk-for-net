@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -433,11 +434,11 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Rule> QueryRulesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MarketplaceRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MarketplaceRule> QueryRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryRulesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Rule.DeserializeRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -454,11 +455,11 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Rule> QueryRules(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarketplaceRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MarketplaceRule> QueryRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryRulesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, Rule.DeserializeRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -663,7 +664,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -686,7 +687,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

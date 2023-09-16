@@ -1221,13 +1221,13 @@ namespace Azure.ResourceManager.Marketplace
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="payload"> The QueryUserRulesProperties to use. </param>
+        /// <param name="content"> The QueryUserRulesContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Rule> QueryUserRulesAsync(QueryUserRulesProperties payload = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MarketplaceRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MarketplaceRule> QueryUserRulesAsync(QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), payload);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Rule.DeserializeRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1243,13 +1243,13 @@ namespace Azure.ResourceManager.Marketplace
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="payload"> The QueryUserRulesProperties to use. </param>
+        /// <param name="content"> The QueryUserRulesContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Rule> QueryUserRules(QueryUserRulesProperties payload = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarketplaceRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MarketplaceRule> QueryUserRules(QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), payload);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, Rule.DeserializeRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
         }
     }
 }

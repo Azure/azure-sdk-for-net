@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Query user's rules properties. </summary>
-    public partial class QueryUserRulesProperties
+    public partial class QueryUserRulesContent
     {
-        /// <summary> Initializes a new instance of QueryUserRulesProperties. </summary>
-        public QueryUserRulesProperties()
+        /// <summary> Initializes a new instance of QueryUserRulesContent. </summary>
+        public QueryUserRulesContent()
         {
             SubscriptionIds = new ChangeTrackingList<string>();
         }
