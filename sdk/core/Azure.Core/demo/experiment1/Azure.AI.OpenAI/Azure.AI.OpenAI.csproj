@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure.AI.OpenAI</Description>
+    <AssemblyTitle>Azure.AI.OpenAI</AssemblyTitle>
+    <Version>0.0.1-beta.1</Version>
+    <PackageTags>Azure;Azure OpenAI</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);AZC0001;AZC0012;AZC0005</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\System.TypeSpec\src\System.ServiceModel.Rest.csproj" />
+  </ItemGroup>
+
+</Project>
