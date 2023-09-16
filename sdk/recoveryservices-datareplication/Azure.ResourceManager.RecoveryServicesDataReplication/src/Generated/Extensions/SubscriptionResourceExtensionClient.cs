@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _fabricModelFabricClientDiagnostics;
-        private FabricRestOperations _fabricModelFabricRestClient;
+        private ClientDiagnostics _dataReplicationFabricFabricClientDiagnostics;
+        private FabricRestOperations _dataReplicationFabricFabricRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private AzureSiteRecoveryManagementServiceAPIRestOperations _defaultRestClient;
-        private ClientDiagnostics _vaultModelVaultClientDiagnostics;
-        private VaultRestOperations _vaultModelVaultRestClient;
+        private ClientDiagnostics _dataReplicationVaultVaultClientDiagnostics;
+        private VaultRestOperations _dataReplicationVaultVaultRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
         }
 
-        private ClientDiagnostics FabricModelFabricClientDiagnostics => _fabricModelFabricClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", FabricModelResource.ResourceType.Namespace, Diagnostics);
-        private FabricRestOperations FabricModelFabricRestClient => _fabricModelFabricRestClient ??= new FabricRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FabricModelResource.ResourceType));
+        private ClientDiagnostics DataReplicationFabricFabricClientDiagnostics => _dataReplicationFabricFabricClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationFabricResource.ResourceType.Namespace, Diagnostics);
+        private FabricRestOperations DataReplicationFabricFabricRestClient => _dataReplicationFabricFabricRestClient ??= new FabricRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataReplicationFabricResource.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AzureSiteRecoveryManagementServiceAPIRestOperations DefaultRestClient => _defaultRestClient ??= new AzureSiteRecoveryManagementServiceAPIRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VaultModelVaultClientDiagnostics => _vaultModelVaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", VaultModelResource.ResourceType.Namespace, Diagnostics);
-        private VaultRestOperations VaultModelVaultRestClient => _vaultModelVaultRestClient ??= new VaultRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VaultModelResource.ResourceType));
+        private ClientDiagnostics DataReplicationVaultVaultClientDiagnostics => _dataReplicationVaultVaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationVaultResource.ResourceType.Namespace, Diagnostics);
+        private VaultRestOperations DataReplicationVaultVaultRestClient => _dataReplicationVaultVaultRestClient ??= new VaultRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataReplicationVaultResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FabricModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FabricModelResource> GetFabricModelsAsync(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataReplicationFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataReplicationFabricResource> GetDataReplicationFabricsAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FabricModelFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricModelFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FabricModelResource(Client, FabricModelData.DeserializeFabricModelData(e)), FabricModelFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFabricModels", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), DataReplicationFabricFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataReplicationFabrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FabricModelResource> GetFabricModels(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataReplicationFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataReplicationFabricResource> GetDataReplicationFabrics(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FabricModelFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricModelFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FabricModelResource(Client, FabricModelData.DeserializeFabricModelData(e)), FabricModelFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFabricModels", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), DataReplicationFabricFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataReplicationFabrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="body"> Resource details. </param>
+        /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponseModel>> CheckNameAvailabilityAsync(AzureLocation location, CheckNameAvailabilityModel body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataReplicationNameAvailabilityResult>> CheckDataReplicationNameAvailabilityAsync(AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataReplicationNameAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, body, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="body"> Resource details. </param>
+        /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponseModel> CheckNameAvailability(AzureLocation location, CheckNameAvailabilityModel body = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataReplicationNameAvailabilityResult> CheckDataReplicationNameAvailability(AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataReplicationNameAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckNameAvailability(Id.SubscriptionId, location, body, cancellationToken);
+                var response = DefaultRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VaultModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VaultModelResource> GetVaultModelsAsync(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataReplicationVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataReplicationVaultResource> GetDataReplicationVaultsAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultModelVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultModelVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultModelResource(Client, VaultModelData.DeserializeVaultModelData(e)), VaultModelVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaultModels", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), DataReplicationVaultVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataReplicationVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VaultModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VaultModelResource> GetVaultModels(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataReplicationVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataReplicationVaultResource> GetDataReplicationVaults(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultModelVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultModelVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultModelResource(Client, VaultModelData.DeserializeVaultModelData(e)), VaultModelVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaultModels", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), DataReplicationVaultVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataReplicationVaults", "value", "nextLink", cancellationToken);
         }
     }
 }

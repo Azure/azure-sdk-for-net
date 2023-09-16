@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(DeploymentPreflightResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(DeploymentPreflightResourceType);
+                writer.WriteStringValue(DeploymentPreflightResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -57,7 +57,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     continue;
                 }
             }
-            return new DeploymentPreflightResource(name.Value, type.Value, Optional.ToNullable(location), apiVersion.Value);
+            return new DeploymentPreflightResource(name.Value, Optional.ToNullable(type), Optional.ToNullable(location), apiVersion.Value);
         }
     }
 }

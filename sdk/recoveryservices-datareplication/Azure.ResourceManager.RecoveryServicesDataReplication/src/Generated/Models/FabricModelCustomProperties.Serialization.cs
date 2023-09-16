@@ -30,7 +30,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzStackHCI": return AzStackHCIFabricModelCustomProperties.DeserializeAzStackHCIFabricModelCustomProperties(element);
+                    case "AzStackHCI": return AzStackHciFabricModelCustomProperties.DeserializeAzStackHciFabricModelCustomProperties(element);
+                    case "FabricModelCustomProperties": return GeneralFabricModelCustomProperties.DeserializeGeneralFabricModelCustomProperties(element);
                     case "HyperVMigrate": return HyperVMigrateFabricModelCustomProperties.DeserializeHyperVMigrateFabricModelCustomProperties(element);
                     case "VMwareMigrate": return VMwareMigrateFabricModelCustomProperties.DeserializeVMwareMigrateFabricModelCustomProperties(element);
                 }

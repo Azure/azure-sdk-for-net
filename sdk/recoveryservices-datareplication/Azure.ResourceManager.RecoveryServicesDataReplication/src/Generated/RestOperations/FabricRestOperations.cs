@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FabricModelData>> GetAsync(string subscriptionId, string resourceGroupName, string fabricName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationFabricData>> GetAsync(string subscriptionId, string resourceGroupName, string fabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        FabricModelData value = default;
+                        DataReplicationFabricData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FabricModelData.DeserializeFabricModelData(document.RootElement);
+                        value = DataReplicationFabricData.DeserializeDataReplicationFabricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FabricModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationFabricData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FabricModelData> Get(string subscriptionId, string resourceGroupName, string fabricName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationFabricData> Get(string subscriptionId, string resourceGroupName, string fabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        FabricModelData value = default;
+                        DataReplicationFabricData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FabricModelData.DeserializeFabricModelData(document.RootElement);
+                        value = DataReplicationFabricData.DeserializeDataReplicationFabricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FabricModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationFabricData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string fabricName, FabricModelData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string fabricName, DataReplicationFabricData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fabricName, FabricModelData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fabricName, DataReplicationFabricData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string fabricName, FabricModelData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string fabricName, DataReplicationFabricData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string fabricName, FabricModelPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string fabricName, DataReplicationFabricPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string fabricName, FabricModelPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string fabricName, DataReplicationFabricPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string fabricName, FabricModelPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string fabricName, DataReplicationFabricPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.FabricModelCollection>> ListBySubscriptionAsync(string subscriptionId, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationFabricListResult>> ListBySubscriptionAsync(string subscriptionId, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -382,9 +382,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.FabricModelCollection value = default;
+                        DataReplicationFabricListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.FabricModelCollection.DeserializeFabricModelCollection(document.RootElement);
+                        value = DataReplicationFabricListResult.DeserializeDataReplicationFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.FabricModelCollection> ListBySubscription(string subscriptionId, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<DataReplicationFabricListResult> ListBySubscription(string subscriptionId, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.FabricModelCollection value = default;
+                        DataReplicationFabricListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.FabricModelCollection.DeserializeFabricModelCollection(document.RootElement);
+                        value = DataReplicationFabricListResult.DeserializeDataReplicationFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.FabricModelCollection>> ListAsync(string subscriptionId, string resourceGroupName, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationFabricListResult>> ListAsync(string subscriptionId, string resourceGroupName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -459,9 +459,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.FabricModelCollection value = default;
+                        DataReplicationFabricListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.FabricModelCollection.DeserializeFabricModelCollection(document.RootElement);
+                        value = DataReplicationFabricListResult.DeserializeDataReplicationFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.FabricModelCollection> List(string subscriptionId, string resourceGroupName, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<DataReplicationFabricListResult> List(string subscriptionId, string resourceGroupName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -487,9 +487,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.FabricModelCollection value = default;
+                        DataReplicationFabricListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.FabricModelCollection.DeserializeFabricModelCollection(document.RootElement);
+                        value = DataReplicationFabricListResult.DeserializeDataReplicationFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.FabricModelCollection>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationFabricListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.FabricModelCollection value = default;
+                        DataReplicationFabricListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.FabricModelCollection.DeserializeFabricModelCollection(document.RootElement);
+                        value = DataReplicationFabricListResult.DeserializeDataReplicationFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.FabricModelCollection> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<DataReplicationFabricListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -557,9 +557,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.FabricModelCollection value = default;
+                        DataReplicationFabricListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.FabricModelCollection.DeserializeFabricModelCollection(document.RootElement);
+                        value = DataReplicationFabricListResult.DeserializeDataReplicationFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.FabricModelCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationFabricListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -601,9 +601,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.FabricModelCollection value = default;
+                        DataReplicationFabricListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.FabricModelCollection.DeserializeFabricModelCollection(document.RootElement);
+                        value = DataReplicationFabricListResult.DeserializeDataReplicationFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.FabricModelCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<DataReplicationFabricListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -631,9 +631,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.FabricModelCollection value = default;
+                        DataReplicationFabricListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.FabricModelCollection.DeserializeFabricModelCollection(document.RootElement);
+                        value = DataReplicationFabricListResult.DeserializeDataReplicationFabricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

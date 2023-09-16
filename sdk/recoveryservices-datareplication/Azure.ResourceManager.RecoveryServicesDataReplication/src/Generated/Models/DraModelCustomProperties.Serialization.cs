@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "DraModelCustomProperties": return GeneralDraModelCustomProperties.DeserializeGeneralDraModelCustomProperties(element);
                     case "VMware": return VMwareDraModelCustomProperties.DeserializeVMwareDraModelCustomProperties(element);
                 }
             }

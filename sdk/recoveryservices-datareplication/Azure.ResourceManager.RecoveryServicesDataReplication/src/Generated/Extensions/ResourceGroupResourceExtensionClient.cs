@@ -43,18 +43,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of FabricModelResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of FabricModelResources and their operations over a FabricModelResource. </returns>
-        public virtual FabricModelCollection GetFabricModels()
+        /// <summary> Gets a collection of DataReplicationFabricResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DataReplicationFabricResources and their operations over a DataReplicationFabricResource. </returns>
+        public virtual DataReplicationFabricCollection GetDataReplicationFabrics()
         {
-            return GetCachedClient(Client => new FabricModelCollection(Client, Id));
+            return GetCachedClient(Client => new DataReplicationFabricCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VaultModelResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VaultModelResources and their operations over a VaultModelResource. </returns>
-        public virtual VaultModelCollection GetVaultModels()
+        /// <summary> Gets a collection of DataReplicationVaultResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DataReplicationVaultResources and their operations over a DataReplicationVaultResource. </returns>
+        public virtual DataReplicationVaultCollection GetDataReplicationVaults()
         {
-            return GetCachedClient(Client => new VaultModelCollection(Client, Id));
+            return GetCachedClient(Client => new DataReplicationVaultCollection(Client, Id));
         }
 
         /// <summary>

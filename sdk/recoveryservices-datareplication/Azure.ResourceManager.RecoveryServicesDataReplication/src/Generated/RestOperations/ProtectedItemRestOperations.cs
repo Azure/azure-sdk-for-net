@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProtectedItemModelData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationProtectedItemData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        ProtectedItemModelData value = default;
+                        DataReplicationProtectedItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProtectedItemModelData.DeserializeProtectedItemModelData(document.RootElement);
+                        value = DataReplicationProtectedItemData.DeserializeDataReplicationProtectedItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProtectedItemModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationProtectedItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProtectedItemModelData> Get(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationProtectedItemData> Get(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        ProtectedItemModelData value = default;
+                        DataReplicationProtectedItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProtectedItemModelData.DeserializeProtectedItemModelData(document.RootElement);
+                        value = DataReplicationProtectedItemData.DeserializeDataReplicationProtectedItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProtectedItemModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationProtectedItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, ProtectedItemModelData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, DataReplicationProtectedItemData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, ProtectedItemModelData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, DataReplicationProtectedItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, ProtectedItemModelData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, DataReplicationProtectedItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.ProtectedItemModelCollection>> ListAsync(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationProtectedItemListResult>> ListAsync(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -331,9 +331,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.ProtectedItemModelCollection value = default;
+                        DataReplicationProtectedItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.ProtectedItemModelCollection.DeserializeProtectedItemModelCollection(document.RootElement);
+                        value = DataReplicationProtectedItemListResult.DeserializeDataReplicationProtectedItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.ProtectedItemModelCollection> List(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationProtectedItemListResult> List(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.ProtectedItemModelCollection value = default;
+                        DataReplicationProtectedItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.ProtectedItemModelCollection.DeserializeProtectedItemModelCollection(document.RootElement);
+                        value = DataReplicationProtectedItemListResult.DeserializeDataReplicationProtectedItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.ProtectedItemModelCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationProtectedItemListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -491,9 +491,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.ProtectedItemModelCollection value = default;
+                        DataReplicationProtectedItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.ProtectedItemModelCollection.DeserializeProtectedItemModelCollection(document.RootElement);
+                        value = DataReplicationProtectedItemListResult.DeserializeDataReplicationProtectedItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.ProtectedItemModelCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationProtectedItemListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -522,9 +522,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.ProtectedItemModelCollection value = default;
+                        DataReplicationProtectedItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.ProtectedItemModelCollection.DeserializeProtectedItemModelCollection(document.RootElement);
+                        value = DataReplicationProtectedItemListResult.DeserializeDataReplicationProtectedItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

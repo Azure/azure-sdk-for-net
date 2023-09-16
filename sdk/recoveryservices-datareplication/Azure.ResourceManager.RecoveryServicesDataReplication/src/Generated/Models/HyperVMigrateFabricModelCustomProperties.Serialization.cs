@@ -31,22 +31,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            string hyperVSiteId = default;
-            Optional<string> fabricResourceId = default;
+            ResourceIdentifier hyperVSiteId = default;
+            Optional<ResourceIdentifier> fabricResourceId = default;
             Optional<string> fabricContainerId = default;
-            string migrationSolutionId = default;
+            ResourceIdentifier migrationSolutionId = default;
             Optional<Uri> migrationHubUri = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hyperVSiteId"u8))
                 {
-                    hyperVSiteId = property.Value.GetString();
+                    hyperVSiteId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fabricResourceId"u8))
                 {
-                    fabricResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fabricContainerId"u8))
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("migrationSolutionId"u8))
                 {
-                    migrationSolutionId = property.Value.GetString();
+                    migrationSolutionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationHubUri"u8))

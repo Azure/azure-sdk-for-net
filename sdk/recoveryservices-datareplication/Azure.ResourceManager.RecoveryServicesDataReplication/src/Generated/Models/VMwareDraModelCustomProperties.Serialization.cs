@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             string biosId = default;
-            IdentityModel marsAuthenticationIdentity = default;
+            DataReplicationIdentity marsAuthenticationIdentity = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("marsAuthenticationIdentity"u8))
                 {
-                    marsAuthenticationIdentity = IdentityModel.DeserializeIdentityModel(property.Value);
+                    marsAuthenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

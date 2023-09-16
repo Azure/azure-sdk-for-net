@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="biosId"> Gets or sets the BIOS Id of the DRA machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="biosId"/> or <paramref name="marsAuthenticationIdentity"/> is null. </exception>
-        public VMwareDraModelCustomProperties(string biosId, IdentityModel marsAuthenticationIdentity)
+        public VMwareDraModelCustomProperties(string biosId, DataReplicationIdentity marsAuthenticationIdentity)
         {
             Argument.AssertNotNull(biosId, nameof(biosId));
             Argument.AssertNotNull(marsAuthenticationIdentity, nameof(marsAuthenticationIdentity));
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="biosId"> Gets or sets the BIOS Id of the DRA machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>
-        internal VMwareDraModelCustomProperties(string instanceType, string biosId, IdentityModel marsAuthenticationIdentity) : base(instanceType)
+        internal VMwareDraModelCustomProperties(string instanceType, string biosId, DataReplicationIdentity marsAuthenticationIdentity) : base(instanceType)
         {
             BiosId = biosId;
             MarsAuthenticationIdentity = marsAuthenticationIdentity;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the BIOS Id of the DRA machine. </summary>
         public string BiosId { get; set; }
         /// <summary> Identity model. </summary>
-        public IdentityModel MarsAuthenticationIdentity { get; set; }
+        public DataReplicationIdentity MarsAuthenticationIdentity { get; set; }
     }
 }

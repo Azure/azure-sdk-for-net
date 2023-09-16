@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="deploymentPreflightResourceType"> Gets or sets the resource type. </param>
         /// <param name="location"> Gets or sets the location of the resource. </param>
         /// <param name="apiVersion"> Gets or sets the Api version. </param>
-        internal DeploymentPreflightResource(string name, string deploymentPreflightResourceType, AzureLocation? location, string apiVersion)
+        internal DeploymentPreflightResource(string name, ResourceType? deploymentPreflightResourceType, AzureLocation? location, string apiVersion)
         {
             Name = name;
             DeploymentPreflightResourceType = deploymentPreflightResourceType;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Gets or sets the resource name. </summary>
         public string Name { get; set; }
         /// <summary> Gets or sets the resource type. </summary>
-        public string DeploymentPreflightResourceType { get; set; }
+        public ResourceType? DeploymentPreflightResourceType { get; set; }
         /// <summary> Gets or sets the location of the resource. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> Gets or sets the Api version. </summary>

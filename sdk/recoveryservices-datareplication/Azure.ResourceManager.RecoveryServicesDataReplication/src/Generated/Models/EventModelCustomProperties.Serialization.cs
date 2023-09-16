@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVToAzStackHCI": return HyperVToAzStackHCIEventModelCustomProperties.DeserializeHyperVToAzStackHCIEventModelCustomProperties(element);
+                    case "HyperVToAzStackHCI": return HyperVToAzStackHciEventModelCustomProperties.DeserializeHyperVToAzStackHciEventModelCustomProperties(element);
                 }
             }
             return UnknownEventModelCustomProperties.DeserializeUnknownEventModelCustomProperties(element);

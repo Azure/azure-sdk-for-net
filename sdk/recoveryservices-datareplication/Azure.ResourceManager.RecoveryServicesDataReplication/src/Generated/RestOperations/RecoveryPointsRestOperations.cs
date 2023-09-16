@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecoveryPointModelData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationRecoveryPointData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        RecoveryPointModelData value = default;
+                        DataReplicationRecoveryPointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecoveryPointModelData.DeserializeRecoveryPointModelData(document.RootElement);
+                        value = DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecoveryPointModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationRecoveryPointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecoveryPointModelData> Get(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationRecoveryPointData> Get(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        RecoveryPointModelData value = default;
+                        DataReplicationRecoveryPointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecoveryPointModelData.DeserializeRecoveryPointModelData(document.RootElement);
+                        value = DataReplicationRecoveryPointData.DeserializeDataReplicationRecoveryPointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecoveryPointModelData)null, message.Response);
+                    return Response.FromValue((DataReplicationRecoveryPointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.RecoveryPointModelCollection>> ListAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationRecoveryPointListResult>> ListAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.RecoveryPointModelCollection value = default;
+                        DataReplicationRecoveryPointListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.RecoveryPointModelCollection.DeserializeRecoveryPointModelCollection(document.RootElement);
+                        value = DataReplicationRecoveryPointListResult.DeserializeDataReplicationRecoveryPointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.RecoveryPointModelCollection> List(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationRecoveryPointListResult> List(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.RecoveryPointModelCollection value = default;
+                        DataReplicationRecoveryPointListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.RecoveryPointModelCollection.DeserializeRecoveryPointModelCollection(document.RootElement);
+                        value = DataReplicationRecoveryPointListResult.DeserializeDataReplicationRecoveryPointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.RecoveryPointModelCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataReplicationRecoveryPointListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.RecoveryPointModelCollection value = default;
+                        DataReplicationRecoveryPointListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.RecoveryPointModelCollection.DeserializeRecoveryPointModelCollection(document.RootElement);
+                        value = DataReplicationRecoveryPointListResult.DeserializeDataReplicationRecoveryPointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.RecoveryPointModelCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
+        public Response<DataReplicationRecoveryPointListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case 200:
                     {
-                        Models.RecoveryPointModelCollection value = default;
+                        DataReplicationRecoveryPointListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.RecoveryPointModelCollection.DeserializeRecoveryPointModelCollection(document.RootElement);
+                        value = DataReplicationRecoveryPointListResult.DeserializeDataReplicationRecoveryPointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

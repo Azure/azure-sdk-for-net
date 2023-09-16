@@ -50,202 +50,202 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region DraModelResource
+        #region DataReplicationDraResource
         /// <summary>
-        /// Gets an object representing a <see cref="DraModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DraModelResource.CreateResourceIdentifier" /> to create a <see cref="DraModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationDraResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationDraResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationDraResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DraModelResource" /> object. </returns>
-        public static DraModelResource GetDraModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationDraResource" /> object. </returns>
+        public static DataReplicationDraResource GetDataReplicationDraResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DraModelResource.ValidateResourceId(id);
-                return new DraModelResource(client, id);
+                DataReplicationDraResource.ValidateResourceId(id);
+                return new DataReplicationDraResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EmailConfigurationModelResource
+        #region DataReplicationEmailConfigurationResource
         /// <summary>
-        /// Gets an object representing an <see cref="EmailConfigurationModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EmailConfigurationModelResource.CreateResourceIdentifier" /> to create an <see cref="EmailConfigurationModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationEmailConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationEmailConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationEmailConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EmailConfigurationModelResource" /> object. </returns>
-        public static EmailConfigurationModelResource GetEmailConfigurationModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationEmailConfigurationResource" /> object. </returns>
+        public static DataReplicationEmailConfigurationResource GetDataReplicationEmailConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EmailConfigurationModelResource.ValidateResourceId(id);
-                return new EmailConfigurationModelResource(client, id);
+                DataReplicationEmailConfigurationResource.ValidateResourceId(id);
+                return new DataReplicationEmailConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EventModelResource
+        #region DataReplicationEventResource
         /// <summary>
-        /// Gets an object representing an <see cref="EventModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventModelResource.CreateResourceIdentifier" /> to create an <see cref="EventModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationEventResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationEventResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationEventResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventModelResource" /> object. </returns>
-        public static EventModelResource GetEventModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationEventResource" /> object. </returns>
+        public static DataReplicationEventResource GetDataReplicationEventResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EventModelResource.ValidateResourceId(id);
-                return new EventModelResource(client, id);
+                DataReplicationEventResource.ValidateResourceId(id);
+                return new DataReplicationEventResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FabricModelResource
+        #region DataReplicationFabricResource
         /// <summary>
-        /// Gets an object representing a <see cref="FabricModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FabricModelResource.CreateResourceIdentifier" /> to create a <see cref="FabricModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationFabricResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationFabricResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationFabricResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FabricModelResource" /> object. </returns>
-        public static FabricModelResource GetFabricModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationFabricResource" /> object. </returns>
+        public static DataReplicationFabricResource GetDataReplicationFabricResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FabricModelResource.ValidateResourceId(id);
-                return new FabricModelResource(client, id);
+                DataReplicationFabricResource.ValidateResourceId(id);
+                return new DataReplicationFabricResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PolicyModelResource
+        #region DataReplicationPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="PolicyModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PolicyModelResource.CreateResourceIdentifier" /> to create a <see cref="PolicyModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyModelResource" /> object. </returns>
-        public static PolicyModelResource GetPolicyModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationPolicyResource" /> object. </returns>
+        public static DataReplicationPolicyResource GetDataReplicationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PolicyModelResource.ValidateResourceId(id);
-                return new PolicyModelResource(client, id);
+                DataReplicationPolicyResource.ValidateResourceId(id);
+                return new DataReplicationPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProtectedItemModelResource
+        #region DataReplicationProtectedItemResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProtectedItemModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProtectedItemModelResource.CreateResourceIdentifier" /> to create a <see cref="ProtectedItemModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationProtectedItemResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationProtectedItemResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationProtectedItemResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProtectedItemModelResource" /> object. </returns>
-        public static ProtectedItemModelResource GetProtectedItemModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationProtectedItemResource" /> object. </returns>
+        public static DataReplicationProtectedItemResource GetDataReplicationProtectedItemResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProtectedItemModelResource.ValidateResourceId(id);
-                return new ProtectedItemModelResource(client, id);
+                DataReplicationProtectedItemResource.ValidateResourceId(id);
+                return new DataReplicationProtectedItemResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RecoveryPointModelResource
+        #region DataReplicationRecoveryPointResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecoveryPointModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoveryPointModelResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryPointModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationRecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryPointModelResource" /> object. </returns>
-        public static RecoveryPointModelResource GetRecoveryPointModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationRecoveryPointResource" /> object. </returns>
+        public static DataReplicationRecoveryPointResource GetDataReplicationRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecoveryPointModelResource.ValidateResourceId(id);
-                return new RecoveryPointModelResource(client, id);
+                DataReplicationRecoveryPointResource.ValidateResourceId(id);
+                return new DataReplicationRecoveryPointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ReplicationExtensionModelResource
+        #region DataReplicationReplicationExtensionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationExtensionModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationExtensionModelResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationExtensionModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationReplicationExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationReplicationExtensionResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationReplicationExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationExtensionModelResource" /> object. </returns>
-        public static ReplicationExtensionModelResource GetReplicationExtensionModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationReplicationExtensionResource" /> object. </returns>
+        public static DataReplicationReplicationExtensionResource GetDataReplicationReplicationExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReplicationExtensionModelResource.ValidateResourceId(id);
-                return new ReplicationExtensionModelResource(client, id);
+                DataReplicationReplicationExtensionResource.ValidateResourceId(id);
+                return new DataReplicationReplicationExtensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VaultModelResource
+        #region DataReplicationVaultResource
         /// <summary>
-        /// Gets an object representing a <see cref="VaultModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultModelResource.CreateResourceIdentifier" /> to create a <see cref="VaultModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationVaultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationVaultResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VaultModelResource" /> object. </returns>
-        public static VaultModelResource GetVaultModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationVaultResource" /> object. </returns>
+        public static DataReplicationVaultResource GetDataReplicationVaultResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VaultModelResource.ValidateResourceId(id);
-                return new VaultModelResource(client, id);
+                DataReplicationVaultResource.ValidateResourceId(id);
+                return new DataReplicationVaultResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowModelResource
+        #region DataReplicationWorkflowResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowModelResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataReplicationWorkflowResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataReplicationWorkflowResource.CreateResourceIdentifier" /> to create a <see cref="DataReplicationWorkflowResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowModelResource" /> object. </returns>
-        public static WorkflowModelResource GetWorkflowModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationWorkflowResource" /> object. </returns>
+        public static DataReplicationWorkflowResource GetDataReplicationWorkflowResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowModelResource.ValidateResourceId(id);
-                return new WorkflowModelResource(client, id);
+                DataReplicationWorkflowResource.ValidateResourceId(id);
+                return new DataReplicationWorkflowResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of FabricModelResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DataReplicationFabricResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of FabricModelResources and their operations over a FabricModelResource. </returns>
-        public static FabricModelCollection GetFabricModels(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DataReplicationFabricResources and their operations over a DataReplicationFabricResource. </returns>
+        public static DataReplicationFabricCollection GetDataReplicationFabrics(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFabricModels();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataReplicationFabrics();
         }
 
         /// <summary>
@@ -267,9 +267,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<FabricModelResource>> GetFabricModelAsync(this ResourceGroupResource resourceGroupResource, string fabricName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataReplicationFabricResource>> GetDataReplicationFabricAsync(this ResourceGroupResource resourceGroupResource, string fabricName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFabricModels().GetAsync(fabricName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDataReplicationFabrics().GetAsync(fabricName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -291,41 +291,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<FabricModelResource> GetFabricModel(this ResourceGroupResource resourceGroupResource, string fabricName, CancellationToken cancellationToken = default)
+        public static Response<DataReplicationFabricResource> GetDataReplicationFabric(this ResourceGroupResource resourceGroupResource, string fabricName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFabricModels().Get(fabricName, cancellationToken);
+            return resourceGroupResource.GetDataReplicationFabrics().Get(fabricName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VaultModelResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DataReplicationVaultResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VaultModelResources and their operations over a VaultModelResource. </returns>
-        public static VaultModelCollection GetVaultModels(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DataReplicationVaultResources and their operations over a DataReplicationVaultResource. </returns>
+        public static DataReplicationVaultCollection GetDataReplicationVaults(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVaultModels();
-        }
-
-        /// <summary>
-        /// Gets the details of the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vaultName"> The vault name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<VaultModelResource>> GetVaultModelAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetVaultModels().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataReplicationVaults();
         }
 
         /// <summary>
@@ -347,9 +323,33 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VaultModelResource> GetVaultModel(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataReplicationVaultResource>> GetDataReplicationVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVaultModels().Get(vaultName, cancellationToken);
+            return await resourceGroupResource.GetDataReplicationVaults().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Vault_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DataReplicationVaultResource> GetDataReplicationVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetDataReplicationVaults().Get(vaultName, cancellationToken);
         }
 
         /// <summary>
@@ -420,10 +420,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FabricModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FabricModelResource> GetFabricModelsAsync(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataReplicationFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataReplicationFabricResource> GetDataReplicationFabricsAsync(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFabricModelsAsync(continuationToken, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataReplicationFabricsAsync(continuationToken, cancellationToken);
         }
 
         /// <summary>
@@ -442,10 +442,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FabricModelResource> GetFabricModels(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataReplicationFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataReplicationFabricResource> GetDataReplicationFabrics(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFabricModels(continuationToken, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataReplicationFabrics(continuationToken, cancellationToken);
         }
 
         /// <summary>
@@ -463,11 +463,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="body"> Resource details. </param>
+        /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<CheckNameAvailabilityResponseModel>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityModel body = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataReplicationNameAvailabilityResult>> CheckDataReplicationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityAsync(location, body, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataReplicationNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -485,11 +485,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="body"> Resource details. </param>
+        /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<CheckNameAvailabilityResponseModel> CheckNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityModel body = null, CancellationToken cancellationToken = default)
+        public static Response<DataReplicationNameAvailabilityResult> CheckDataReplicationNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailability(location, body, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataReplicationNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -508,10 +508,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VaultModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VaultModelResource> GetVaultModelsAsync(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataReplicationVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataReplicationVaultResource> GetDataReplicationVaultsAsync(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVaultModelsAsync(continuationToken, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataReplicationVaultsAsync(continuationToken, cancellationToken);
         }
 
         /// <summary>
@@ -530,10 +530,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VaultModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VaultModelResource> GetVaultModels(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataReplicationVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataReplicationVaultResource> GetDataReplicationVaults(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVaultModels(continuationToken, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataReplicationVaults(continuationToken, cancellationToken);
         }
     }
 }

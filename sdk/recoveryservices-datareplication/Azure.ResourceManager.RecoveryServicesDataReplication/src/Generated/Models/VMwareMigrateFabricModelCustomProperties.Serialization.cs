@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vmwareSiteId"u8);
-            writer.WriteStringValue(VmwareSiteId);
+            writer.WriteStringValue(VMwareSiteId);
             writer.WritePropertyName("migrationSolutionId"u8);
             writer.WriteStringValue(MigrationSolutionId);
             writer.WritePropertyName("instanceType"u8);
@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            string vmwareSiteId = default;
-            string migrationSolutionId = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier migrationSolutionId = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmwareSiteId"u8))
                 {
-                    vmwareSiteId = property.Value.GetString();
+                    vmwareSiteId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationSolutionId"u8))
                 {
-                    migrationSolutionId = property.Value.GetString();
+                    migrationSolutionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
