@@ -109,9 +109,13 @@ namespace Microsoft.Extensions.Hosting
 
         internal static IWebJobsBuilder AddServiceBusScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
-            builder.Services.AddSingleton(serviceProvider => new ServiceBusScalerProvider(serviceProvider, triggerMetadata));
-            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<ServiceBusScalerProvider>().Where(x => x.GetMonitor().Descriptor.FunctionId == triggerMetadata.FunctionName).First());
-            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<ServiceBusScalerProvider>().Where(x => x.GetTargetScaler().TargetScalerDescriptor.FunctionId == triggerMetadata.FunctionName).First());
+            ServiceBusScalerProvider serviceBusScalerProvider = null;
+            builder.Services.AddSingleton(serviceProvider => {
+                serviceBusScalerProvider = new ServiceBusScalerProvider(serviceProvider, triggerMetadata);
+                return serviceBusScalerProvider;
+            });
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<ServiceBusScalerProvider>().Single(x => x == serviceBusScalerProvider));
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<ServiceBusScalerProvider>().Single(x => x == serviceBusScalerProvider));
 
             return builder;
         }

@@ -77,9 +77,14 @@ namespace Microsoft.Extensions.Hosting
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IWebJobsBuilder AddAzureStorageQueuesScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
-            builder.Services.AddSingleton(serviceProvider => new QueueScalerProvider(serviceProvider, triggerMetadata));
-            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Where(x => x.GetMonitor().Descriptor.FunctionId == triggerMetadata.FunctionName).First());
-            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Where(x => x.GetTargetScaler().TargetScalerDescriptor.FunctionId == triggerMetadata.FunctionName).First());
+            QueueScalerProvider serviceBusScalerProvider = null;
+            builder.Services.AddSingleton(serviceProvider =>
+            {
+                serviceBusScalerProvider = new QueueScalerProvider(serviceProvider, triggerMetadata);
+                return serviceBusScalerProvider;
+            });
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Single(x => x == serviceBusScalerProvider));
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Single(x => x == serviceBusScalerProvider));
 
             return builder;
         }
