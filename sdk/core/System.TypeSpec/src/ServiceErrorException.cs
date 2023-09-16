@@ -16,18 +16,12 @@ namespace System.ServiceModel.Rest
         public int Status { get; }
 
         /// <summary>
-        /// Gets the service specific error code if available. Please refer to the client documentation for the list of supported error codes.
-        /// </summary>
-        public string? ErrorCode { get; }
-
-        /// <summary>
         /// TBD
         /// </summary>
         /// <param name="result"></param>
         public ServiceErrorException(Result result) : base(GetMessageFromResult(result))
         {
             Status = result.Status;
-            ErrorCode = GetErrorCode(result);
         }
 
         /// <summary>
@@ -42,19 +36,6 @@ namespace System.ServiceModel.Rest
             : base(message, innerException)
         {
             Status = result.Status;
-            ErrorCode = GetErrorCode(result);
-        }
-
-        private static string? GetErrorCode(Result result)
-        {
-            if (result.Content is null)
-            {
-                return null;
-            }
-
-            // TODO: Parse content with Utf8JsonReader to get error code.
-            // ErrorCode = errorCode;
-            return string.Empty;
         }
 
         private static string GetMessageFromResult(Result result)
@@ -71,7 +52,6 @@ namespace System.ServiceModel.Rest
         protected ServiceErrorException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             Status = info.GetInt32(nameof(Status));
-            ErrorCode = info.GetString(nameof(ErrorCode));
         }
     }
 }

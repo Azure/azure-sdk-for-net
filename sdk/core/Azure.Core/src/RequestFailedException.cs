@@ -28,6 +28,11 @@ namespace Azure
         /// </summary>
         private readonly Response? _response;
 
+        /// <summary>
+        /// Gets the service specific error code if available. Please refer to the client documentation for the list of supported error codes.
+        /// </summary>
+        public string? ErrorCode { get; }
+
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message.</summary>
         /// <param name="message">The message that describes the error.</param>
         public RequestFailedException(string message) : this(0, message)
@@ -67,29 +72,25 @@ namespace Azure
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
-            : base(new ErrorResult(status, errorCode), message, innerException)
+            : base(new ErrorResult(status), message, innerException)
         {
+            ErrorCode = errorCode;
         }
 
         private class ErrorResult : Result
         {
             private int _status;
-            private Stream? _contentStream;
 
-            public ErrorResult(int status, string? errorCode)
+            public ErrorResult(int status)
             {
                 _status = status;
-                if (errorCode != null)
-                {
-                    _contentStream = new MemoryStream();
-                }
             }
 
             public override int Status => _status;
 
             public override Stream? ContentStream
             {
-                get => _contentStream;
+                get => throw new NotImplementedException();
                 set => throw new NotImplementedException();
             }
 
@@ -145,6 +146,7 @@ namespace Azure
         protected RequestFailedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            ErrorCode = info.GetString(nameof(ErrorCode));
         }
 
         /// <inheritdoc />
