@@ -6,9 +6,6 @@
     <Nullable>enable</Nullable>
     <TargetFrameworks>net461;netstandard2.0;</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
-    <AssemblyOriginatorKeyFile>Open.snk</AssemblyOriginatorKeyFile>
-    <PackageIcon>DotNetPackageIcon.png</PackageIcon>
-    <PackageIconPath>..\$(PackageIcon)</PackageIconPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,19 +14,4 @@
     <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="D:\git\azure-sdk-for-net\sdk\core\System.TypeSpec\README.md" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="..\DotNetPackageIcon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="..\DotNetPackageIcon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="..\DotNetPackageIcon.png" />
-  </ItemGroup>
 </Project>
