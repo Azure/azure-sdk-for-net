@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Analytics.Purview.Catalog;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,11 +23,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByGuid()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetBusinessMetadataDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetBusinessMetadataDefByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetBusinessMetadataDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -37,15 +51,15 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByGuid_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetBusinessMetadataDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetBusinessMetadataDefByGuid("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -54,7 +68,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -81,7 +95,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -92,31 +106,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBusinessMetadataDefByGuid_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetBusinessMetadataDefByGuid_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>", new RequestContext());
+            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -152,7 +152,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -165,11 +165,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByName()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetBusinessMetadataDefByName("<name>", new RequestContext());
+            Response response = client.GetBusinessMetadataDefByName("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetBusinessMetadataDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -179,15 +193,15 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByName_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetBusinessMetadataDefByName("<name>", new RequestContext());
+            Response response = client.GetBusinessMetadataDefByName("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -196,7 +210,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -223,7 +237,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -234,31 +248,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBusinessMetadataDefByName_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetBusinessMetadataDefByName_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>", new RequestContext());
+            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -267,7 +267,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -294,7 +294,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -307,11 +307,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByGuid()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetClassificationDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetClassificationDefByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassificationDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetClassificationDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -321,18 +335,18 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByGuid_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetClassificationDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetClassificationDefByGuid("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -341,7 +355,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -368,7 +382,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -379,34 +393,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationDefByGuid_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetClassificationDefByGuidAsync("<guid>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationDefByGuid_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetClassificationDefByGuidAsync("<guid>", new RequestContext());
+            Response response = await client.GetClassificationDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -415,7 +415,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -442,7 +442,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -455,11 +455,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByName()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetClassificationDefByName("<name>", new RequestContext());
+            Response response = client.GetClassificationDefByName("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassificationDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetClassificationDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -469,18 +483,18 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByName_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetClassificationDefByName("<name>", new RequestContext());
+            Response response = client.GetClassificationDefByName("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -489,7 +503,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -516,7 +530,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -527,34 +541,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationDefByName_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetClassificationDefByNameAsync("<name>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationDefByName_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetClassificationDefByNameAsync("<name>", new RequestContext());
+            Response response = await client.GetClassificationDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -563,7 +563,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -590,7 +590,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -603,11 +603,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByGuid()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEntityDefinitionByGuid("<guid>", new RequestContext());
+            Response response = client.GetEntityDefinitionByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEntityDefinitionByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -617,11 +631,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByGuid_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEntityDefinitionByGuid("<guid>", new RequestContext());
+            Response response = client.GetEntityDefinitionByGuid("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
@@ -629,7 +643,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -638,12 +652,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -652,7 +666,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -679,7 +693,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -690,27 +704,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntityDefinitionByGuid_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEntityDefinitionByGuid_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>", new RequestContext());
+            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
@@ -718,7 +718,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -727,12 +727,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -741,7 +741,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -768,7 +768,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -781,11 +781,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByName()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEntityDefinitionByName("<name>", new RequestContext());
+            Response response = client.GetEntityDefinitionByName("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEntityDefinitionByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetEntityDefinitionByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -795,11 +809,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByName_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEntityDefinitionByName("<name>", new RequestContext());
+            Response response = client.GetEntityDefinitionByName("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
@@ -807,7 +821,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -816,12 +830,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -830,7 +844,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -857,7 +871,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -868,27 +882,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntityDefinitionByName_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetEntityDefinitionByNameAsync("<name>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEntityDefinitionByName_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEntityDefinitionByNameAsync("<name>", new RequestContext());
+            Response response = await client.GetEntityDefinitionByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
@@ -896,7 +896,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -905,12 +905,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -919,7 +919,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -946,7 +946,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -959,11 +959,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByGuid()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEnumDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetEnumDefByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnumDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetEnumDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -973,11 +987,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByGuid_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEnumDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetEnumDefByGuid("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("defaultValue").ToString());
@@ -1007,7 +1021,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1018,27 +1032,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnumDefByGuid_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetEnumDefByGuidAsync("<guid>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEnumDefByGuid_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEnumDefByGuidAsync("<guid>", new RequestContext());
+            Response response = await client.GetEnumDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("defaultValue").ToString());
@@ -1068,7 +1068,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1081,11 +1081,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByName()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEnumDefByName("<name>", new RequestContext());
+            Response response = client.GetEnumDefByName("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnumDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetEnumDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1095,11 +1109,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByName_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEnumDefByName("<name>", new RequestContext());
+            Response response = client.GetEnumDefByName("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("defaultValue").ToString());
@@ -1129,7 +1143,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1140,27 +1154,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnumDefByName_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetEnumDefByNameAsync("<name>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEnumDefByName_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEnumDefByNameAsync("<name>", new RequestContext());
+            Response response = await client.GetEnumDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("defaultValue").ToString());
@@ -1190,7 +1190,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1203,11 +1203,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelationshipDefByGuid()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetRelationshipDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetRelationshipDefByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRelationshipDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetRelationshipDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1217,11 +1231,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelationshipDefByGuid_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetRelationshipDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetRelationshipDefByGuid("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
@@ -1239,7 +1253,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -1248,7 +1262,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -1275,7 +1289,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1286,27 +1300,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelationshipDefByGuid_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetRelationshipDefByGuidAsync("<guid>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRelationshipDefByGuid_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetRelationshipDefByGuidAsync("<guid>", new RequestContext());
+            Response response = await client.GetRelationshipDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
@@ -1324,7 +1324,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -1333,7 +1333,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -1360,7 +1360,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1373,11 +1373,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelationshipDefByName()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetRelationshipDefByName("<name>", new RequestContext());
+            Response response = client.GetRelationshipDefByName("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRelationshipDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetRelationshipDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1387,11 +1401,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelationshipDefByName_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetRelationshipDefByName("<name>", new RequestContext());
+            Response response = client.GetRelationshipDefByName("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
@@ -1409,7 +1423,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -1418,7 +1432,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -1445,7 +1459,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1456,27 +1470,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelationshipDefByName_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetRelationshipDefByNameAsync("<name>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRelationshipDefByName_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetRelationshipDefByNameAsync("<name>", new RequestContext());
+            Response response = await client.GetRelationshipDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
@@ -1494,7 +1494,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -1503,7 +1503,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -1530,7 +1530,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1543,11 +1543,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByGuid()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetStructDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetStructDefByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetStructDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetStructDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1557,15 +1571,15 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByGuid_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetStructDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetStructDefByGuid("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -1574,7 +1588,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -1601,7 +1615,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1612,31 +1626,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetStructDefByGuid_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetStructDefByGuidAsync("<guid>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetStructDefByGuid_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetStructDefByGuidAsync("<guid>", new RequestContext());
+            Response response = await client.GetStructDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -1645,7 +1645,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -1672,7 +1672,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1685,11 +1685,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByName()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetStructDefByName("<name>", new RequestContext());
+            Response response = client.GetStructDefByName("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetStructDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetStructDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1699,15 +1713,15 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByName_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetStructDefByName("<name>", new RequestContext());
+            Response response = client.GetStructDefByName("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -1716,7 +1730,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -1743,7 +1757,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1754,31 +1768,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetStructDefByName_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetStructDefByNameAsync("<name>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetStructDefByName_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetStructDefByNameAsync("<name>", new RequestContext());
+            Response response = await client.GetStructDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -1787,7 +1787,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -1814,7 +1814,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1827,11 +1827,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByGuid()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionByGuid("<guid>", new RequestContext());
+            Response response = client.GetTypeDefinitionByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTypeDefinitionByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1841,11 +1855,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByGuid_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionByGuid("<guid>", new RequestContext());
+            Response response = client.GetTypeDefinitionByGuid("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("category").ToString());
@@ -1871,7 +1885,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1882,27 +1896,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTypeDefinitionByGuid_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTypeDefinitionByGuid_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>", new RequestContext());
+            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("category").ToString());
@@ -1928,7 +1928,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1941,11 +1941,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByName()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionByName("<name>", new RequestContext());
+            Response response = client.GetTypeDefinitionByName("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTypeDefinitionByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTypeDefinitionByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1955,11 +1969,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByName_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionByName("<name>", new RequestContext());
+            Response response = client.GetTypeDefinitionByName("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("category").ToString());
@@ -1985,7 +1999,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -1996,27 +2010,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTypeDefinitionByName_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTypeDefinitionByNameAsync("<name>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTypeDefinitionByName_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTypeDefinitionByNameAsync("<name>", new RequestContext());
+            Response response = await client.GetTypeDefinitionByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("category").ToString());
@@ -2042,7 +2042,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -2055,21 +2055,9 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTypeByName()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = client.DeleteTypeByName("<name>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTypeByName_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = client.DeleteTypeByName("<name>");
             Console.WriteLine(response.Status);
@@ -2079,9 +2067,9 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTypeByName_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = await client.DeleteTypeByNameAsync("<name>");
             Console.WriteLine(response.Status);
@@ -2089,11 +2077,23 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTypeByName_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = client.DeleteTypeByName("<name>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTypeByName_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = await client.DeleteTypeByNameAsync("<name>");
             Console.WriteLine(response.Status);
@@ -2103,11 +2103,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllTypeDefinitions()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetAllTypeDefinitions(true, "<type>", new RequestContext());
+            Response response = client.GetAllTypeDefinitions(null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAllTypeDefinitions_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetAllTypeDefinitionsAsync(null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2117,15 +2131,15 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllTypeDefinitions_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetAllTypeDefinitions(true, "<type>", new RequestContext());
+            Response response = client.GetAllTypeDefinitions(true, "enum", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2134,7 +2148,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2161,7 +2175,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
@@ -2172,7 +2186,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2181,7 +2195,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2208,7 +2222,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
@@ -2220,7 +2234,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -2229,12 +2243,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2243,7 +2257,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2270,7 +2284,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
@@ -2304,7 +2318,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
@@ -2326,7 +2340,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2335,7 +2349,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2362,7 +2376,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
@@ -2370,7 +2384,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2379,7 +2393,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2406,7 +2420,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
@@ -2414,7 +2428,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2423,7 +2437,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2450,7 +2464,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
@@ -2461,31 +2475,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllTypeDefinitions_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetAllTypeDefinitionsAsync(true, "<type>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllTypeDefinitions_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetAllTypeDefinitionsAsync(true, "<type>", new RequestContext());
+            Response response = await client.GetAllTypeDefinitionsAsync(true, "enum", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2494,7 +2494,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2521,7 +2521,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
@@ -2532,7 +2532,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2541,7 +2541,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2568,7 +2568,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
@@ -2580,7 +2580,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -2589,12 +2589,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2603,7 +2603,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2630,7 +2630,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
@@ -2664,7 +2664,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
@@ -2686,7 +2686,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2695,7 +2695,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2722,7 +2722,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
@@ -2730,7 +2730,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2739,7 +2739,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2766,7 +2766,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
@@ -2774,7 +2774,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -2783,7 +2783,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -2810,7 +2810,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
@@ -2823,13 +2823,27 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateTypeDefinitions()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.CreateTypeDefinitions(content);
 
-            Response response = client.CreateTypeDefinitions(RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateTypeDefinitions_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateTypeDefinitionsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2839,592 +2853,329 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateTypeDefinitions_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                classificationDefs = new[] {
-        new {
-            entityTypes = new[] {
-                "<String>"
-            },
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                entityDefs = new[] {
-        new {
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            relationshipAttributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                enumDefs = new[] {
-        new {
-            defaultValue = "<defaultValue>",
-            elementDefs = new[] {
-                new {
-                    description = "<description>",
-                    ordinal = 123.45f,
-                    value = "<value>",
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                relationshipDefs = new[] {
-        new {
-            endDef1 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            endDef2 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            relationshipCategory = "ASSOCIATION",
-            relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                structDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                termTemplateDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-            };
-
-            Response response = client.CreateTypeDefinitions(RequestContent.Create(data));
+                businessMetadataDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+new
+{
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+new Dictionary<string, object>()
+{
+["params"] = new
+{
+key = new object(),
+},
+["type"] = "<type>",
+}
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+dateFormatter = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+calendar = 123.45F,
+lenient = true,
+numberFormat = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+currency = "<currency>",
+groupingUsed = true,
+maximumFractionDigits = 1234,
+maximumIntegerDigits = 1234,
+minimumFractionDigits = 1234,
+minimumIntegerDigits = 1234,
+parseIntegerOnly = true,
+roundingMode = "UP",
+},
+timeZone = new Dictionary<string, object>()
+{
+["dstSavings"] = 1234,
+["id"] = "<id>",
+["availableIds"] = new List<object>()
+{
+"<availableIds>"
+},
+["default"] = null
+,
+["displayName"] = "<displayName>",
+["rawOffset"] = 1234,
+},
+},
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                classificationDefs = new List<object>()
+{
+new
+{
+entityTypes = new List<object>()
+{
+"<entityTypes>"
+},
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                entityDefs = new List<object>()
+{
+new
+{
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+relationshipAttributeDefs = new List<object>()
+{
+new
+{
+isLegacyAttribute = true,
+relationshipTypeName = "<relationshipTypeName>",
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+null
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                enumDefs = new List<object>()
+{
+new
+{
+defaultValue = "<defaultValue>",
+elementDefs = new List<object>()
+{
+new
+{
+description = "<description>",
+ordinal = 123.45F,
+value = "<value>",
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                relationshipDefs = new List<object>()
+{
+new
+{
+endDef1 = new
+{
+cardinality = "SINGLE",
+description = "<description>",
+isContainer = true,
+isLegacyAttribute = true,
+name = "<name>",
+type = "<type>",
+},
+relationshipCategory = "ASSOCIATION",
+relationshipLabel = "<relationshipLabel>",
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                structDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                termTemplateDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+            });
+            Response response = client.CreateTypeDefinitions(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -3433,7 +3184,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -3460,7 +3211,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
@@ -3471,7 +3222,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -3480,7 +3231,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -3507,7 +3258,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
@@ -3519,7 +3270,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -3528,12 +3279,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -3542,7 +3293,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -3569,7 +3320,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
@@ -3603,7 +3354,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
@@ -3625,7 +3376,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -3634,7 +3385,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -3661,7 +3412,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
@@ -3669,7 +3420,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -3678,7 +3429,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -3705,7 +3456,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
@@ -3713,7 +3464,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -3722,7 +3473,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -3749,7 +3500,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
@@ -3760,610 +3511,331 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateTypeDefinitions_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            var data = new { };
-
-            Response response = await client.CreateTypeDefinitionsAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateTypeDefinitions_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                classificationDefs = new[] {
-        new {
-            entityTypes = new[] {
-                "<String>"
-            },
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                entityDefs = new[] {
-        new {
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            relationshipAttributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                enumDefs = new[] {
-        new {
-            defaultValue = "<defaultValue>",
-            elementDefs = new[] {
-                new {
-                    description = "<description>",
-                    ordinal = 123.45f,
-                    value = "<value>",
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                relationshipDefs = new[] {
-        new {
-            endDef1 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            endDef2 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            relationshipCategory = "ASSOCIATION",
-            relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                structDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                termTemplateDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-            };
-
-            Response response = await client.CreateTypeDefinitionsAsync(RequestContent.Create(data));
+                businessMetadataDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+new
+{
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+new Dictionary<string, object>()
+{
+["params"] = new
+{
+key = new object(),
+},
+["type"] = "<type>",
+}
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+dateFormatter = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+calendar = 123.45F,
+lenient = true,
+numberFormat = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+currency = "<currency>",
+groupingUsed = true,
+maximumFractionDigits = 1234,
+maximumIntegerDigits = 1234,
+minimumFractionDigits = 1234,
+minimumIntegerDigits = 1234,
+parseIntegerOnly = true,
+roundingMode = "UP",
+},
+timeZone = new Dictionary<string, object>()
+{
+["dstSavings"] = 1234,
+["id"] = "<id>",
+["availableIds"] = new List<object>()
+{
+"<availableIds>"
+},
+["default"] = null
+,
+["displayName"] = "<displayName>",
+["rawOffset"] = 1234,
+},
+},
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                classificationDefs = new List<object>()
+{
+new
+{
+entityTypes = new List<object>()
+{
+"<entityTypes>"
+},
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                entityDefs = new List<object>()
+{
+new
+{
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+relationshipAttributeDefs = new List<object>()
+{
+new
+{
+isLegacyAttribute = true,
+relationshipTypeName = "<relationshipTypeName>",
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+null
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                enumDefs = new List<object>()
+{
+new
+{
+defaultValue = "<defaultValue>",
+elementDefs = new List<object>()
+{
+new
+{
+description = "<description>",
+ordinal = 123.45F,
+value = "<value>",
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                relationshipDefs = new List<object>()
+{
+new
+{
+endDef1 = new
+{
+cardinality = "SINGLE",
+description = "<description>",
+isContainer = true,
+isLegacyAttribute = true,
+name = "<name>",
+type = "<type>",
+},
+relationshipCategory = "ASSOCIATION",
+relationshipLabel = "<relationshipLabel>",
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                structDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                termTemplateDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+            });
+            Response response = await client.CreateTypeDefinitionsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -4372,7 +3844,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -4399,7 +3871,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
@@ -4410,7 +3882,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -4419,7 +3891,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -4446,7 +3918,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
@@ -4458,7 +3930,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -4467,12 +3939,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -4481,7 +3953,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -4508,7 +3980,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
@@ -4542,7 +4014,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
@@ -4564,7 +4036,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -4573,7 +4045,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -4600,7 +4072,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
@@ -4608,7 +4080,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -4617,7 +4089,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -4644,7 +4116,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
@@ -4652,7 +4124,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -4661,7 +4133,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -4688,7 +4160,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
@@ -4701,13 +4173,27 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateAtlasTypeDefinitions()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.UpdateAtlasTypeDefinitions(content);
 
-            Response response = client.UpdateAtlasTypeDefinitions(RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateAtlasTypeDefinitions_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateAtlasTypeDefinitionsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -4717,592 +4203,329 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateAtlasTypeDefinitions_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                classificationDefs = new[] {
-        new {
-            entityTypes = new[] {
-                "<String>"
-            },
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                entityDefs = new[] {
-        new {
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            relationshipAttributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                enumDefs = new[] {
-        new {
-            defaultValue = "<defaultValue>",
-            elementDefs = new[] {
-                new {
-                    description = "<description>",
-                    ordinal = 123.45f,
-                    value = "<value>",
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                relationshipDefs = new[] {
-        new {
-            endDef1 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            endDef2 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            relationshipCategory = "ASSOCIATION",
-            relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                structDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                termTemplateDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-            };
-
-            Response response = client.UpdateAtlasTypeDefinitions(RequestContent.Create(data));
+                businessMetadataDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+new
+{
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+new Dictionary<string, object>()
+{
+["params"] = new
+{
+key = new object(),
+},
+["type"] = "<type>",
+}
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+dateFormatter = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+calendar = 123.45F,
+lenient = true,
+numberFormat = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+currency = "<currency>",
+groupingUsed = true,
+maximumFractionDigits = 1234,
+maximumIntegerDigits = 1234,
+minimumFractionDigits = 1234,
+minimumIntegerDigits = 1234,
+parseIntegerOnly = true,
+roundingMode = "UP",
+},
+timeZone = new Dictionary<string, object>()
+{
+["dstSavings"] = 1234,
+["id"] = "<id>",
+["availableIds"] = new List<object>()
+{
+"<availableIds>"
+},
+["default"] = null
+,
+["displayName"] = "<displayName>",
+["rawOffset"] = 1234,
+},
+},
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                classificationDefs = new List<object>()
+{
+new
+{
+entityTypes = new List<object>()
+{
+"<entityTypes>"
+},
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                entityDefs = new List<object>()
+{
+new
+{
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+relationshipAttributeDefs = new List<object>()
+{
+new
+{
+isLegacyAttribute = true,
+relationshipTypeName = "<relationshipTypeName>",
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+null
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                enumDefs = new List<object>()
+{
+new
+{
+defaultValue = "<defaultValue>",
+elementDefs = new List<object>()
+{
+new
+{
+description = "<description>",
+ordinal = 123.45F,
+value = "<value>",
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                relationshipDefs = new List<object>()
+{
+new
+{
+endDef1 = new
+{
+cardinality = "SINGLE",
+description = "<description>",
+isContainer = true,
+isLegacyAttribute = true,
+name = "<name>",
+type = "<type>",
+},
+relationshipCategory = "ASSOCIATION",
+relationshipLabel = "<relationshipLabel>",
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                structDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                termTemplateDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+            });
+            Response response = client.UpdateAtlasTypeDefinitions(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -5311,7 +4534,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -5338,7 +4561,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
@@ -5349,7 +4572,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -5358,7 +4581,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -5385,7 +4608,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
@@ -5397,7 +4620,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -5406,12 +4629,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -5420,7 +4643,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -5447,7 +4670,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
@@ -5481,7 +4704,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
@@ -5503,7 +4726,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -5512,7 +4735,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -5539,7 +4762,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
@@ -5547,7 +4770,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -5556,7 +4779,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -5583,7 +4806,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
@@ -5591,7 +4814,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -5600,7 +4823,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -5627,7 +4850,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
@@ -5638,610 +4861,331 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateAtlasTypeDefinitions_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            var data = new { };
-
-            Response response = await client.UpdateAtlasTypeDefinitionsAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateAtlasTypeDefinitions_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                classificationDefs = new[] {
-        new {
-            entityTypes = new[] {
-                "<String>"
-            },
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                entityDefs = new[] {
-        new {
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            relationshipAttributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                enumDefs = new[] {
-        new {
-            defaultValue = "<defaultValue>",
-            elementDefs = new[] {
-                new {
-                    description = "<description>",
-                    ordinal = 123.45f,
-                    value = "<value>",
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                relationshipDefs = new[] {
-        new {
-            endDef1 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            endDef2 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            relationshipCategory = "ASSOCIATION",
-            relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                structDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                termTemplateDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-            };
-
-            Response response = await client.UpdateAtlasTypeDefinitionsAsync(RequestContent.Create(data));
+                businessMetadataDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+new
+{
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+new Dictionary<string, object>()
+{
+["params"] = new
+{
+key = new object(),
+},
+["type"] = "<type>",
+}
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+dateFormatter = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+calendar = 123.45F,
+lenient = true,
+numberFormat = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+currency = "<currency>",
+groupingUsed = true,
+maximumFractionDigits = 1234,
+maximumIntegerDigits = 1234,
+minimumFractionDigits = 1234,
+minimumIntegerDigits = 1234,
+parseIntegerOnly = true,
+roundingMode = "UP",
+},
+timeZone = new Dictionary<string, object>()
+{
+["dstSavings"] = 1234,
+["id"] = "<id>",
+["availableIds"] = new List<object>()
+{
+"<availableIds>"
+},
+["default"] = null
+,
+["displayName"] = "<displayName>",
+["rawOffset"] = 1234,
+},
+},
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                classificationDefs = new List<object>()
+{
+new
+{
+entityTypes = new List<object>()
+{
+"<entityTypes>"
+},
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                entityDefs = new List<object>()
+{
+new
+{
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+relationshipAttributeDefs = new List<object>()
+{
+new
+{
+isLegacyAttribute = true,
+relationshipTypeName = "<relationshipTypeName>",
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+null
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                enumDefs = new List<object>()
+{
+new
+{
+defaultValue = "<defaultValue>",
+elementDefs = new List<object>()
+{
+new
+{
+description = "<description>",
+ordinal = 123.45F,
+value = "<value>",
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                relationshipDefs = new List<object>()
+{
+new
+{
+endDef1 = new
+{
+cardinality = "SINGLE",
+description = "<description>",
+isContainer = true,
+isLegacyAttribute = true,
+name = "<name>",
+type = "<type>",
+},
+relationshipCategory = "ASSOCIATION",
+relationshipLabel = "<relationshipLabel>",
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                structDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                termTemplateDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+            });
+            Response response = await client.UpdateAtlasTypeDefinitionsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -6250,7 +5194,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -6277,7 +5221,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
@@ -6288,7 +5232,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -6297,7 +5241,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -6324,7 +5268,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
@@ -6336,7 +5280,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
@@ -6345,12 +5289,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -6359,7 +5303,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -6386,7 +5330,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
@@ -6420,7 +5364,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
@@ -6442,7 +5386,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -6451,7 +5395,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -6478,7 +5422,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
@@ -6486,7 +5430,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -6495,7 +5439,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -6522,7 +5466,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
@@ -6530,7 +5474,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -6539,7 +5483,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -6566,7 +5510,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
@@ -6579,602 +5523,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTypeDefinitions()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            var data = new { };
-
-            Response response = client.DeleteTypeDefinitions(RequestContent.Create(data));
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTypeDefinitions_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            var data = new
-            {
-                businessMetadataDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                classificationDefs = new[] {
-        new {
-            entityTypes = new[] {
-                "<String>"
-            },
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                entityDefs = new[] {
-        new {
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            relationshipAttributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                enumDefs = new[] {
-        new {
-            defaultValue = "<defaultValue>",
-            elementDefs = new[] {
-                new {
-                    description = "<description>",
-                    ordinal = 123.45f,
-                    value = "<value>",
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                relationshipDefs = new[] {
-        new {
-            endDef1 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            endDef2 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            relationshipCategory = "ASSOCIATION",
-            relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                structDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                termTemplateDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-            };
-
-            Response response = client.DeleteTypeDefinitions(RequestContent.Create(data));
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.DeleteTypeDefinitions(content);
             Console.WriteLine(response.Status);
         }
 
@@ -7182,13 +5536,338 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTypeDefinitions_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.DeleteTypeDefinitionsAsync(content);
+            Console.WriteLine(response.Status);
+        }
 
-            Response response = await client.DeleteTypeDefinitionsAsync(RequestContent.Create(data));
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTypeDefinitions_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            RequestContent content = RequestContent.Create(new
+            {
+                businessMetadataDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+new
+{
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+new Dictionary<string, object>()
+{
+["params"] = new
+{
+key = new object(),
+},
+["type"] = "<type>",
+}
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+dateFormatter = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+calendar = 123.45F,
+lenient = true,
+numberFormat = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+currency = "<currency>",
+groupingUsed = true,
+maximumFractionDigits = 1234,
+maximumIntegerDigits = 1234,
+minimumFractionDigits = 1234,
+minimumIntegerDigits = 1234,
+parseIntegerOnly = true,
+roundingMode = "UP",
+},
+timeZone = new Dictionary<string, object>()
+{
+["dstSavings"] = 1234,
+["id"] = "<id>",
+["availableIds"] = new List<object>()
+{
+"<availableIds>"
+},
+["default"] = null
+,
+["displayName"] = "<displayName>",
+["rawOffset"] = 1234,
+},
+},
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                classificationDefs = new List<object>()
+{
+new
+{
+entityTypes = new List<object>()
+{
+"<entityTypes>"
+},
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                entityDefs = new List<object>()
+{
+new
+{
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+relationshipAttributeDefs = new List<object>()
+{
+new
+{
+isLegacyAttribute = true,
+relationshipTypeName = "<relationshipTypeName>",
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+null
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                enumDefs = new List<object>()
+{
+new
+{
+defaultValue = "<defaultValue>",
+elementDefs = new List<object>()
+{
+new
+{
+description = "<description>",
+ordinal = 123.45F,
+value = "<value>",
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                relationshipDefs = new List<object>()
+{
+new
+{
+endDef1 = new
+{
+cardinality = "SINGLE",
+description = "<description>",
+isContainer = true,
+isLegacyAttribute = true,
+name = "<name>",
+type = "<type>",
+},
+relationshipCategory = "ASSOCIATION",
+relationshipLabel = "<relationshipLabel>",
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                structDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                termTemplateDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+            });
+            Response response = client.DeleteTypeDefinitions(content);
             Console.WriteLine(response.Status);
         }
 
@@ -7196,588 +5875,325 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTypeDefinitions_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                classificationDefs = new[] {
-        new {
-            entityTypes = new[] {
-                "<String>"
-            },
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                entityDefs = new[] {
-        new {
-            subTypes = new[] {
-                "<String>"
-            },
-            superTypes = new[] {
-                "<String>"
-            },
-            relationshipAttributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                enumDefs = new[] {
-        new {
-            defaultValue = "<defaultValue>",
-            elementDefs = new[] {
-                new {
-                    description = "<description>",
-                    ordinal = 123.45f,
-                    value = "<value>",
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                relationshipDefs = new[] {
-        new {
-            endDef1 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            endDef2 = new {
-                cardinality = "SINGLE",
-                description = "<description>",
-                isContainer = true,
-                isLegacyAttribute = true,
-                name = "<name>",
-                type = "<type>",
-            },
-            relationshipCategory = "ASSOCIATION",
-            relationshipLabel = "<relationshipLabel>",
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                structDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-                termTemplateDefs = new[] {
-        new {
-            attributeDefs = new[] {
-                new {
-                    isLegacyAttribute = true,
-                    relationshipTypeName = "<relationshipTypeName>",
-                    cardinality = "SINGLE",
-                    constraints = new[] {
-                        new {
-                            @params = new {
-                                key = new {},
-                            },
-                            type = "<type>",
-                        }
-                    },
-                    defaultValue = "<defaultValue>",
-                    description = "<description>",
-                    includeInNotification = true,
-                    isIndexable = true,
-                    isOptional = true,
-                    isUnique = true,
-                    name = "<name>",
-                    options = new {
-                        key = "<String>",
-                    },
-                    typeName = "<typeName>",
-                    valuesMaxCount = 1234,
-                    valuesMinCount = 1234,
-                }
-            },
-            category = "PRIMITIVE",
-            createTime = 123.45f,
-            createdBy = "<createdBy>",
-            dateFormatter = new {
-                availableLocales = new[] {
-                    "<String>"
-                },
-                calendar = 123.45f,
-                lenient = true,
-                numberFormat = new {
-                    availableLocales = new[] {
-                        "<String>"
-                    },
-                    currency = "<currency>",
-                    groupingUsed = true,
-                    maximumFractionDigits = 1234,
-                    maximumIntegerDigits = 1234,
-                    minimumFractionDigits = 1234,
-                    minimumIntegerDigits = 1234,
-                    parseIntegerOnly = true,
-                    roundingMode = "UP",
-                },
-                timeZone = new {
-                    dstSavings = 1234,
-                    id = "<id>",
-                    availableIds = new[] {
-                        "<String>"
-                    },
-                    displayName = "<displayName>",
-                    rawOffset = 1234,
-                },
-            },
-            description = "<description>",
-            guid = "<guid>",
-            name = "<name>",
-            options = new {
-                key = "<String>",
-            },
-            serviceType = "<serviceType>",
-            typeVersion = "<typeVersion>",
-            updateTime = 123.45f,
-            updatedBy = "<updatedBy>",
-            version = 123.45f,
-            lastModifiedTS = "<lastModifiedTS>",
-        }
-    },
-            };
-
-            Response response = await client.DeleteTypeDefinitionsAsync(RequestContent.Create(data));
+                businessMetadataDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+new
+{
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+new Dictionary<string, object>()
+{
+["params"] = new
+{
+key = new object(),
+},
+["type"] = "<type>",
+}
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+dateFormatter = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+calendar = 123.45F,
+lenient = true,
+numberFormat = new
+{
+availableLocales = new List<object>()
+{
+"<availableLocales>"
+},
+currency = "<currency>",
+groupingUsed = true,
+maximumFractionDigits = 1234,
+maximumIntegerDigits = 1234,
+minimumFractionDigits = 1234,
+minimumIntegerDigits = 1234,
+parseIntegerOnly = true,
+roundingMode = "UP",
+},
+timeZone = new Dictionary<string, object>()
+{
+["dstSavings"] = 1234,
+["id"] = "<id>",
+["availableIds"] = new List<object>()
+{
+"<availableIds>"
+},
+["default"] = null
+,
+["displayName"] = "<displayName>",
+["rawOffset"] = 1234,
+},
+},
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                classificationDefs = new List<object>()
+{
+new
+{
+entityTypes = new List<object>()
+{
+"<entityTypes>"
+},
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                entityDefs = new List<object>()
+{
+new
+{
+subTypes = new List<object>()
+{
+"<subTypes>"
+},
+superTypes = new List<object>()
+{
+"<superTypes>"
+},
+relationshipAttributeDefs = new List<object>()
+{
+new
+{
+isLegacyAttribute = true,
+relationshipTypeName = "<relationshipTypeName>",
+cardinality = "SINGLE",
+constraints = new List<object>()
+{
+null
+},
+defaultValue = "<defaultValue>",
+description = "<description>",
+includeInNotification = true,
+isIndexable = true,
+isOptional = true,
+isUnique = true,
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+typeName = "<typeName>",
+valuesMaxCount = 1234,
+valuesMinCount = 1234,
+}
+},
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                enumDefs = new List<object>()
+{
+new
+{
+defaultValue = "<defaultValue>",
+elementDefs = new List<object>()
+{
+new
+{
+description = "<description>",
+ordinal = 123.45F,
+value = "<value>",
+}
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                relationshipDefs = new List<object>()
+{
+new
+{
+endDef1 = new
+{
+cardinality = "SINGLE",
+description = "<description>",
+isContainer = true,
+isLegacyAttribute = true,
+name = "<name>",
+type = "<type>",
+},
+relationshipCategory = "ASSOCIATION",
+relationshipLabel = "<relationshipLabel>",
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                structDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+                termTemplateDefs = new List<object>()
+{
+new
+{
+attributeDefs = new List<object>()
+{
+null
+},
+category = "PRIMITIVE",
+createTime = 123.45F,
+createdBy = "<createdBy>",
+description = "<description>",
+guid = "<guid>",
+name = "<name>",
+options = new
+{
+key = "<options>",
+},
+serviceType = "<serviceType>",
+typeVersion = "<typeVersion>",
+updateTime = 123.45F,
+updatedBy = "<updatedBy>",
+version = 123.45F,
+lastModifiedTS = "<lastModifiedTS>",
+}
+},
+            });
+            Response response = await client.DeleteTypeDefinitionsAsync(content);
             Console.WriteLine(response.Status);
         }
 
@@ -7785,11 +6201,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionHeaders()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionHeaders(true, "<type>", new RequestContext());
+            Response response = client.GetTypeDefinitionHeaders(null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTypeDefinitionHeaders_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTypeDefinitionHeadersAsync(null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -7799,11 +6229,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionHeaders_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionHeaders(true, "<type>", new RequestContext());
+            Response response = client.GetTypeDefinitionHeaders(true, "enum", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("category").ToString());
@@ -7813,27 +6243,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTypeDefinitionHeaders_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTypeDefinitionHeadersAsync(true, "<type>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTypeDefinitionHeaders_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTypeDefinitionHeadersAsync(true, "<type>", new RequestContext());
+            Response response = await client.GetTypeDefinitionHeadersAsync(true, "enum", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("category").ToString());
@@ -7845,11 +6261,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermTemplateDefByGuid()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTermTemplateDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetTermTemplateDefByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTermTemplateDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -7859,15 +6289,15 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermTemplateDefByGuid_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTermTemplateDefByGuid("<guid>", new RequestContext());
+            Response response = client.GetTermTemplateDefByGuid("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -7876,7 +6306,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -7903,7 +6333,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -7914,31 +6344,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTermTemplateDefByGuid_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTermTemplateDefByGuid_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>", new RequestContext());
+            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -7947,7 +6363,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -7974,7 +6390,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -7987,11 +6403,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermTemplateDefByName()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTermTemplateDefByName("<name>", new RequestContext());
+            Response response = client.GetTermTemplateDefByName("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTermTemplateDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTermTemplateDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -8001,15 +6431,15 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermTemplateDefByName_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTermTemplateDefByName("<name>", new RequestContext());
+            Response response = client.GetTermTemplateDefByName("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -8018,7 +6448,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -8045,7 +6475,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());
@@ -8056,31 +6486,17 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTermTemplateDefByName_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTermTemplateDefByNameAsync("<name>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTermTemplateDefByName_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTermTemplateDefByNameAsync("<name>", new RequestContext());
+            Response response = await client.GetTermTemplateDefByNameAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
@@ -8089,7 +6505,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
@@ -8116,7 +6532,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("serviceType").ToString());
             Console.WriteLine(result.GetProperty("typeVersion").ToString());
             Console.WriteLine(result.GetProperty("updateTime").ToString());

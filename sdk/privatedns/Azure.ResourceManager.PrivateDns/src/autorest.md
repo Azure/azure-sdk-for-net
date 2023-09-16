@@ -14,6 +14,7 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  sample: false
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -28,7 +29,7 @@ format-by-name-rules:
   'ifMatch': 'etag'
   'IPv6Address': 'ip-address'
   'IPv4Address': 'ip-address'
-  
+
 acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
@@ -59,7 +60,7 @@ acronym-mapping:
   SoaRecord: PrivateDnsSoaRecordInfo
   SrvRecord: PrivateDnsSrvRecordInfo
   TxtRecord: PrivateDnsTxtRecordInfo
-  ProvisioningState : PrivateDnsProvisioningState 
+  ProvisioningState : PrivateDnsProvisioningState
 
 override-operation-name:
   RecordSets_List: GetRecords

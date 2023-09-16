@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus;
@@ -73,6 +74,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// The default value is 5 minutes. This does not apply for functions that receive a batch of messages.
+        /// To specify an infinite duration, use <see cref="Timeout.InfiniteTimeSpan"/> or <value>-00:00:00.0010000</value>
+        /// if specifying via host.json.
         /// </summary>
         public TimeSpan MaxAutoLockRenewalDuration
         {
@@ -80,7 +83,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
             set
             {
-                Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
+                if (value != Timeout.InfiniteTimeSpan)
+                {
+                    Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
+                }
+
                 _maxAutoRenewDuration = value;
             }
         }
