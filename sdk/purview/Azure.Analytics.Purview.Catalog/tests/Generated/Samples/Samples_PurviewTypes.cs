@@ -35,6 +35,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetBusinessMetadataDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByGuid_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -88,20 +102,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBusinessMetadataDefByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -177,6 +177,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetBusinessMetadataDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByName_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -230,20 +244,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBusinessMetadataDefByName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -319,6 +319,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassificationDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetClassificationDefByGuidAsync("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByGuid_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -375,20 +389,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationDefByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetClassificationDefByGuidAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -467,6 +467,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassificationDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetClassificationDefByNameAsync("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByName_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -523,20 +537,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationDefByName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetClassificationDefByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -615,6 +615,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEntityDefinitionByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByGuid_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -686,20 +700,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntityDefinitionByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -793,6 +793,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEntityDefinitionByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetEntityDefinitionByNameAsync("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByName_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -864,20 +878,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntityDefinitionByName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetEntityDefinitionByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -971,6 +971,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnumDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetEnumDefByGuidAsync("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByGuid_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1014,20 +1028,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnumDefByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetEnumDefByGuidAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1093,6 +1093,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnumDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetEnumDefByNameAsync("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByName_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1136,20 +1150,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnumDefByName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetEnumDefByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1208,6 +1208,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = client.GetRelationshipDefByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRelationshipDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetRelationshipDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1282,20 +1296,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelationshipDefByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetRelationshipDefByGuidAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1385,6 +1385,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRelationshipDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetRelationshipDefByNameAsync("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetRelationshipDefByName_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1452,20 +1466,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelationshipDefByName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetRelationshipDefByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1555,6 +1555,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetStructDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetStructDefByGuidAsync("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByGuid_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1608,20 +1622,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetStructDefByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetStructDefByGuidAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1697,6 +1697,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetStructDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetStructDefByNameAsync("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByName_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1750,20 +1764,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetStructDefByName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetStructDefByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1839,6 +1839,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTypeDefinitionByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByGuid_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1878,20 +1892,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTypeDefinitionByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1953,6 +1953,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTypeDefinitionByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTypeDefinitionByNameAsync("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByName_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1992,20 +2006,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTypeDefinitionByName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTypeDefinitionByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -2065,18 +2065,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTypeByName_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = client.DeleteTypeByName("<name>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTypeByName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2084,6 +2072,18 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = await client.DeleteTypeByNameAsync("<name>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTypeByName_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = client.DeleteTypeByName("<name>");
             Console.WriteLine(response.Status);
         }
 
@@ -2108,6 +2108,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = client.GetAllTypeDefinitions(null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAllTypeDefinitions_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetAllTypeDefinitionsAsync(null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2457,20 +2471,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllTypeDefinitions_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetAllTypeDefinitionsAsync(null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -2829,6 +2829,21 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateTypeDefinitions(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateTypeDefinitions_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateTypeDefinitionsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -3492,21 +3507,6 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateTypeDefinitions_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateTypeDefinitionsAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -4186,6 +4186,21 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateAtlasTypeDefinitions_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateAtlasTypeDefinitionsAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_UpdateAtlasTypeDefinitions_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4842,21 +4857,6 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateAtlasTypeDefinitions_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateAtlasTypeDefinitionsAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -5534,6 +5534,19 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteTypeDefinitions_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.DeleteTypeDefinitionsAsync(content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTypeDefinitions_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -5855,19 +5868,6 @@ lastModifiedTS = "<lastModifiedTS>",
 },
             });
             Response response = client.DeleteTypeDefinitions(content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTypeDefinitions_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.DeleteTypeDefinitionsAsync(content);
             Console.WriteLine(response.Status);
         }
 
@@ -6213,6 +6213,20 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTypeDefinitionHeaders_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTypeDefinitionHeadersAsync(null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionHeaders_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -6225,20 +6239,6 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("category").ToString());
             Console.WriteLine(result[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTypeDefinitionHeaders_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTypeDefinitionHeadersAsync(null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -6266,6 +6266,20 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
             Response response = client.GetTermTemplateDefByGuid("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTermTemplateDefByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6326,20 +6340,6 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTermTemplateDefByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -6415,6 +6415,20 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTermTemplateDefByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+
+            Response response = await client.GetTermTemplateDefByNameAsync("<name>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetTermTemplateDefByName_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -6468,20 +6482,6 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTermTemplateDefByName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-
-            Response response = await client.GetTermTemplateDefByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
