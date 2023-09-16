@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), _edgeOrderItemClientDiagnostics, Pipeline, "EdgeOrderItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), _edgeOrderItemClientDiagnostics, Pipeline, "EdgeOrderItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), _edgeOrderItemClientDiagnostics, Pipeline, "EdgeOrderItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), _edgeOrderItemClientDiagnostics, Pipeline, "EdgeOrderItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

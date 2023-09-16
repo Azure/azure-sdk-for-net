@@ -1,6 +1,16 @@
 # Release History
 
-## 5.2.0 (2023-08-23)
+## 5.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0 (2023-08-29)
 
 ### Bugs Fixed
 - Updating ParameterBindingData  "Connection" value to the full connection name instead of the connection section key

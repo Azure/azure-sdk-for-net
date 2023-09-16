@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricRoutePolicyData data = new NetworkFabricRoutePolicyData(new AzureLocation("eastus"), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
             {
                 Annotation = "annotation",
+                DefaultAction = CommunityActionType.Deny,
                 Statements =
 {
 new RoutePolicyStatementProperties(7,new StatementConditionProperties()
