@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ServiceModel.Rest;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -12,7 +13,7 @@ namespace Azure
     /// <summary>
     /// Options that can be used to control the behavior of a request sent by a client.
     /// </summary>
-    public class RequestContext
+    public class RequestContext : RequestOptions
     {
         private bool _frozen;
 
@@ -28,11 +29,6 @@ namespace Azure
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
         public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
-
-        /// <summary>
-        /// The token to check for cancellation.
-        /// </summary>
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
