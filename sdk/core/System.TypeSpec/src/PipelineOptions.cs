@@ -1,17 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-
-namespace System.ServiceModel.Rest;
-
-/// <summary>
-/// TBD.
-/// </summary>
-public class PipelineOptions
+namespace System.ServiceModel.Rest
 {
     /// <summary>
     /// TBD.
     /// </summary>
-    public CancellationToken CancellationToken { get; set; }
+    public abstract class PipelineOptions
+    {
+        // TODO: Why does this need a CancellationToken?  I think this is what
+        // prevents ClientOptions from inheriting from this.
+
+        ///// <summary>
+        ///// TBD.
+        ///// </summary>
+        //public CancellationToken CancellationToken { get; set; }
+    }
 }

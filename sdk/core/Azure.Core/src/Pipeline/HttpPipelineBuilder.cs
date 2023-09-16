@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Rest;
 using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
@@ -13,6 +14,17 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public static class HttpPipelineBuilder
     {
+        /// <summary>
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+        /// </summary>
+        /// <param name="options">The customer provided pipeline options object.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
+        /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
+        public static HttpPipeline Build(PipelineOptions options, params HttpPipelinePolicy[] perRetryPolicies)
+        {
+            return Build(options, perRetryPolicies);
+        }
+
         /// <summary>
         /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
