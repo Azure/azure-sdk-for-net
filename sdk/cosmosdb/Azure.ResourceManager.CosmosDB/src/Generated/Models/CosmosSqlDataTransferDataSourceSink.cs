@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> A CosmosDB Cassandra API data source/sink. </summary>
+    /// <summary> A CosmosDB No Sql API data source/sink. </summary>
     public partial class CosmosSqlDataTransferDataSourceSink : DataTransferDataSourceSink
     {
         /// <summary> Initializes a new instance of CosmosSqlDataTransferDataSourceSink. </summary>

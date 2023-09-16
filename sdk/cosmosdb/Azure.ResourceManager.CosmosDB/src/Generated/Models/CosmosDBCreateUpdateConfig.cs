@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of CosmosDBCreateUpdateConfig. </summary>
         /// <param name="throughput"> Request Units per second. For example, "throughput": 10000. </param>
-        /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
+        /// <param name="autoscaleSettings"> Specifies the Autoscale settings. Note: Either throughput or autoscaleSettings is required, but not both. </param>
         internal CosmosDBCreateUpdateConfig(int? throughput, AutoscaleSettings autoscaleSettings)
         {
             Throughput = throughput;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Request Units per second. For example, "throughput": 10000. </summary>
         public int? Throughput { get; set; }
-        /// <summary> Specifies the Autoscale settings. </summary>
+        /// <summary> Specifies the Autoscale settings. Note: Either throughput or autoscaleSettings is required, but not both. </summary>
         internal AutoscaleSettings AutoscaleSettings { get; set; }
         /// <summary> Represents maximum throughput, the resource can scale up to. </summary>
         public int? AutoscaleMaxThroughput

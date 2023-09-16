@@ -9,13 +9,18 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/35215554aef59a30fa709e4b058931101a5ef26b/specification/cosmos-db/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4e7b400ffe0f0d5fabf7b2dcc1e2c65f0be579f5/specification/cosmos-db/resource-manager/readme.md
+#tag: package-preview-2023-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
+
 # mgmt-debug:
 #   show-serialized-names: true
 
