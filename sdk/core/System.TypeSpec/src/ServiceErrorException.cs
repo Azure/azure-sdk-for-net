@@ -59,8 +59,8 @@ namespace System.ServiceModel.Rest
 
         private static string GetMessageFromResult(Result result)
         {
-            // TODO: implement
-            throw new NotImplementedException();
+            // TODO: implement for real
+            return $"Service error: {result.Status}";
         }
 
         /// <summary>
