@@ -5,6 +5,7 @@
 
 using System;
 using System.ServiceModel.Rest;
+using System.Text.Json;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -32,6 +33,8 @@ namespace Azure.AI.OpenAI
 
         public Result<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
         {
+            // TODO: Check args
+
             HttpMessage message = _pipeline.CreateMessage();
             message.BufferResponse = true;
             Request request = message.Request;
@@ -52,12 +55,17 @@ namespace Azure.AI.OpenAI
             _pipeline.Send(message, cancellationToken);
             if (message.Response.IsError)
             {
+                // TODO: exception
                 throw new Exception("");
             }
-            var completions = Completions.Deserialize(message.Response.Content);
+
+            using JsonDocument document = JsonDocument.Parse(message.Response.Content);
+            Completions completions = Completions.Deserialize(document.RootElement);
 
             return Result.FromValue(completions, message.Response);
         }
+
+        // TODO: protocol method
 
         // TODO: refactor
         private class PipelineBuilderOptions : ClientOptions { }
