@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BastionHostPropertiesFormatNetworkAcls. </summary>
         public BastionHostPropertiesFormatNetworkAcls()
         {
-            IPRules = new ChangeTrackingList<IPRule>();
+            IPRules = new ChangeTrackingList<BastionHostIPRule>();
         }
 
         /// <summary> Initializes a new instance of BastionHostPropertiesFormatNetworkAcls. </summary>
         /// <param name="ipRules"> Sets the IP ACL rules for Developer Bastion Host. </param>
-        internal BastionHostPropertiesFormatNetworkAcls(IList<IPRule> ipRules)
+        internal BastionHostPropertiesFormatNetworkAcls(IList<BastionHostIPRule> ipRules)
         {
             IPRules = ipRules;
         }
 
         /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
-        public IList<IPRule> IPRules { get; }
+        public IList<BastionHostIPRule> IPRules { get; }
     }
 }

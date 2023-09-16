@@ -227,7 +227,7 @@ Name = "bastionHostIpConfiguration",
                 VirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Network/virtualNetworks/vnet2"),
                 NetworkAclsIPRules =
 {
-new IPRule()
+new BastionHostIPRule()
 {
 AddressPrefix = "1.1.1.1/16",
 }

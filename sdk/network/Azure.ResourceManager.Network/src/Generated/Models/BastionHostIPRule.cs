@@ -7,17 +7,17 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The IPRule. </summary>
-    public partial class IPRule
+    /// <summary> The BastionHostIPRule. </summary>
+    public partial class BastionHostIPRule
     {
-        /// <summary> Initializes a new instance of IPRule. </summary>
-        public IPRule()
+        /// <summary> Initializes a new instance of BastionHostIPRule. </summary>
+        public BastionHostIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of IPRule. </summary>
+        /// <summary> Initializes a new instance of BastionHostIPRule. </summary>
         /// <param name="addressPrefix"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
-        internal IPRule(string addressPrefix)
+        internal BastionHostIPRule(string addressPrefix)
         {
             AddressPrefix = addressPrefix;
         }

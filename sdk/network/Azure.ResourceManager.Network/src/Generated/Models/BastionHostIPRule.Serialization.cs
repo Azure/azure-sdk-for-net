@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPRule : IUtf8JsonSerializable
+    public partial class BastionHostIPRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static IPRule DeserializeIPRule(JsonElement element)
+        internal static BastionHostIPRule DeserializeBastionHostIPRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IPRule(addressPrefix.Value);
+            return new BastionHostIPRule(addressPrefix.Value);
         }
     }
 }

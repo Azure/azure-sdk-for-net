@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets the network acls. </summary>
         internal BastionHostPropertiesFormatNetworkAcls NetworkAcls { get; set; }
         /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
-        public IList<IPRule> NetworkAclsIPRules
+        public IList<BastionHostIPRule> NetworkAclsIPRules
         {
             get
             {

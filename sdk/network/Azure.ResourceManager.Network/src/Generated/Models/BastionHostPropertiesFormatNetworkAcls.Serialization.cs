@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<IPRule>> ipRules = default;
+            Optional<IList<BastionHostIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipRules"u8))
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<IPRule> array = new List<IPRule>();
+                    List<BastionHostIPRule> array = new List<BastionHostIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPRule.DeserializeIPRule(item));
+                        array.Add(BastionHostIPRule.DeserializeBastionHostIPRule(item));
                     }
                     ipRules = array;
                     continue;

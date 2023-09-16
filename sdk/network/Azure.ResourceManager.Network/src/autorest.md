@@ -30,7 +30,7 @@ rename-mapping:
   PacketCapture: PacketCaptureInput
   PacketCaptureResult: PacketCapture
   IPConfigurationBgpPeeringAddress.ipconfigurationId: IPConfigurationId
-  VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType   # VirtualNetworkGatewayNatRuleProperties is flatten in VirtualNetworkGatewayNatRule
+  VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType
   SubResource: NetworkSubResource
   ProvisioningState: NetworkProvisioningState
   IpAllocation.properties.type: IPAllocationType
@@ -180,6 +180,7 @@ rename-mapping:
   AdminState: ExpressRouteGatewayAdminState
   SyncMode: BackendAddressSyncMode
   MigratedPools: MigrateLoadBalancerToIPBasedResult
+  IPRule: BastionHostIPRule
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
