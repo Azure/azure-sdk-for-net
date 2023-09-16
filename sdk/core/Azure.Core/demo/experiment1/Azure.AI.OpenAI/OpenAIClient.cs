@@ -21,6 +21,9 @@ namespace Azure.AI.OpenAI
         // TODO: Diagnostic scopes
 
         // TODO: What's in the REST client?  DPG client?
+
+        // TODO: XML comments
+
         public OpenAIClient(KeyCredential credential, OpenAIClientOptions options = default)
         {
             _credential = credential;
@@ -56,6 +59,7 @@ namespace Azure.AI.OpenAI
             return Result.FromValue(completions, message.Response);
         }
 
+        // TODO: refactor
         private class PipelineBuilderOptions : ClientOptions { }
     }
 }

@@ -7,26 +7,21 @@ using System;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Client options for MapsRenderClient. </summary>
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2022_08_01;
+        internal const ServiceVersion LatestVersion = ServiceVersion.TODO_Version;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2022-08-01". </summary>
-            V2022_08_01 = 1,
+            TODO_Version = 1,
         }
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of MapsRenderClientOptions. </summary>
-        /// <param name="version"> Azure Maps Render API version. </param>
-        /// <param name="endpoint"> The endpoint for Azure Maps. </param>
-        public MapsRenderingClientOptions(ServiceVersion version = LatestVersion)
+        public OpenAIClientOptions(ServiceVersion version = LatestVersion)
         {
-            // TODO: Wire version
+            // TODO: Wire up setting version
         }
     }
 }
