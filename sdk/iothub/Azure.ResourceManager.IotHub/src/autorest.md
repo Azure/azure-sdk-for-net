@@ -12,6 +12,9 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/624dbc769880e5676ae8
 #tag: package-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -112,7 +115,7 @@ format-by-name-rules:
   'certificate': 'any'
   'UserAssignedIdentity': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
