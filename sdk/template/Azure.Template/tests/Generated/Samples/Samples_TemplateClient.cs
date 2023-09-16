@@ -33,6 +33,19 @@ namespace Azure.Template.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSecret_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
+
+            Response response = await client.GetSecretAsync("<secretName>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetSecret_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -47,19 +60,6 @@ namespace Azure.Template.Samples
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("kid").ToString());
             Console.WriteLine(result.GetProperty("managed").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSecret_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
-
-            Response response = await client.GetSecretAsync("<secretName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]

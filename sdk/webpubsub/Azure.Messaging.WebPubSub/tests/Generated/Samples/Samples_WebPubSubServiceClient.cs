@@ -31,6 +31,16 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CloseAllConnections_Async()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            Response response = await client.CloseAllConnectionsAsync();
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CloseAllConnections_AllParameters()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
@@ -39,16 +49,6 @@ namespace Azure.Messaging.WebPubSub.Samples
 {
 "<excluded>"
 }, reason: "<reason>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CloseAllConnections_Async()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = await client.CloseAllConnectionsAsync();
             Console.WriteLine(response.Status);
         }
 
@@ -78,6 +78,17 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_SendToAll_Async()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            Response response = await client.SendToAllAsync(content, new ContentType("application/json"));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_SendToAll_AllParameters()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
@@ -87,17 +98,6 @@ namespace Azure.Messaging.WebPubSub.Samples
 {
 "<excluded>"
 }, filter: "<filter>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SendToAll_Async()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = await client.SendToAllAsync(content, new ContentType("application/json"));
             Console.WriteLine(response.Status);
         }
 
@@ -127,21 +127,21 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CloseConnection_AllParameters()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = client.CloseConnection("<connectionId>", reason: "<reason>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_CloseConnection_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
             Response response = await client.CloseConnectionAsync("<connectionId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CloseConnection_AllParameters()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            Response response = client.CloseConnection("<connectionId>", reason: "<reason>");
             Console.WriteLine(response.Status);
         }
 
@@ -168,23 +168,23 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SendToConnection_AllParameters()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = client.SendToConnection("<connectionId>", content, new ContentType("application/json"));
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_SendToConnection_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
             RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToConnectionAsync("<connectionId>", content, new ContentType("application/json"));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_SendToConnection_AllParameters()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            Response response = client.SendToConnection("<connectionId>", content, new ContentType("application/json"));
             Console.WriteLine(response.Status);
         }
 
@@ -211,21 +211,21 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveConnectionFromAllGroups_AllParameters()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = client.RemoveConnectionFromAllGroups("<connectionId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_RemoveConnectionFromAllGroups_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
             Response response = await client.RemoveConnectionFromAllGroupsAsync("<connectionId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_RemoveConnectionFromAllGroups_AllParameters()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            Response response = client.RemoveConnectionFromAllGroups("<connectionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -251,6 +251,16 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CloseGroupConnections_Async()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            Response response = await client.CloseGroupConnectionsAsync("<group>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CloseGroupConnections_AllParameters()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
@@ -259,16 +269,6 @@ namespace Azure.Messaging.WebPubSub.Samples
 {
 "<excluded>"
 }, reason: "<reason>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CloseGroupConnections_Async()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = await client.CloseGroupConnectionsAsync("<group>");
             Console.WriteLine(response.Status);
         }
 
@@ -298,6 +298,17 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_SendToGroup_Async()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            Response response = await client.SendToGroupAsync("<group>", content, new ContentType("application/json"));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_SendToGroup_AllParameters()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
@@ -307,17 +318,6 @@ namespace Azure.Messaging.WebPubSub.Samples
 {
 "<excluded>"
 }, filter: "<filter>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SendToGroup_Async()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = await client.SendToGroupAsync("<group>", content, new ContentType("application/json"));
             Console.WriteLine(response.Status);
         }
 
@@ -347,21 +347,21 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveConnectionFromGroup_AllParameters()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = client.RemoveConnectionFromGroup("<group>", "<connectionId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_RemoveConnectionFromGroup_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
             Response response = await client.RemoveConnectionFromGroupAsync("<group>", "<connectionId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_RemoveConnectionFromGroup_AllParameters()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            Response response = client.RemoveConnectionFromGroup("<group>", "<connectionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -387,21 +387,21 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddConnectionToGroup_AllParameters()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = client.AddConnectionToGroup("<group>", "<connectionId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_AddConnectionToGroup_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
             Response response = await client.AddConnectionToGroupAsync("<group>", "<connectionId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AddConnectionToGroup_AllParameters()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            Response response = client.AddConnectionToGroup("<group>", "<connectionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -427,6 +427,16 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CloseUserConnections_Async()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            Response response = await client.CloseUserConnectionsAsync("<userId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CloseUserConnections_AllParameters()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
@@ -435,16 +445,6 @@ namespace Azure.Messaging.WebPubSub.Samples
 {
 "<excluded>"
 }, reason: "<reason>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CloseUserConnections_Async()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = await client.CloseUserConnectionsAsync("<userId>");
             Console.WriteLine(response.Status);
         }
 
@@ -474,23 +474,23 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SendToUser_AllParameters()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = client.SendToUser("<userId>", content, new ContentType("application/json"), filter: "<filter>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_SendToUser_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
             RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Response response = await client.SendToUserAsync("<userId>", content, new ContentType("application/json"));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_SendToUser_AllParameters()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            Response response = client.SendToUser("<userId>", content, new ContentType("application/json"), filter: "<filter>");
             Console.WriteLine(response.Status);
         }
 
@@ -517,21 +517,21 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveUserFromAllGroups_AllParameters()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = client.RemoveUserFromAllGroups("<userId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_RemoveUserFromAllGroups_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
             Response response = await client.RemoveUserFromAllGroupsAsync("<userId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_RemoveUserFromAllGroups_AllParameters()
+        {
+            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
+
+            Response response = client.RemoveUserFromAllGroups("<userId>");
             Console.WriteLine(response.Status);
         }
 

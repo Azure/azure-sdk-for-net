@@ -36,22 +36,6 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Upload_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.Upload("<ruleId>", "<streamName>", content, contentEncoding: "<contentEncoding>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_Upload_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -63,6 +47,22 @@ new object()
 new object()
 });
             Response response = await client.UploadAsync("<ruleId>", "<streamName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Upload_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = client.Upload("<ruleId>", "<streamName>", content, contentEncoding: "<contentEncoding>");
             Console.WriteLine(response.Status);
         }
 
