@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     public class Choice
     {

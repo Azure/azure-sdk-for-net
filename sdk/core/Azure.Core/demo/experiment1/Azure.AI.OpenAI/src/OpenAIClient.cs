@@ -1,16 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
-using System;
 using System.ServiceModel.Rest;
 using System.Text.Json;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> The Render service client. </summary>
     public partial class OpenAIClient
@@ -59,8 +55,11 @@ namespace Azure.AI.OpenAI
                 throw new Exception("");
             }
 
-            using JsonDocument document = JsonDocument.Parse(message.Response.Content);
-            Completions completions = Completions.Deserialize(document.RootElement);
+            Completions completions;
+            using (JsonDocument document = JsonDocument.Parse(message.Response.Content))
+            {
+                completions = Completions.Deserialize(document.RootElement);
+            }
 
             return Result.FromValue(completions, message.Response);
         }

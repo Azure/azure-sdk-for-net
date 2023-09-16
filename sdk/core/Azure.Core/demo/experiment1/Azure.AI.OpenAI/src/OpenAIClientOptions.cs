@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
