@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.IO;
+using System.ServiceModel.Rest;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -16,7 +17,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents the content sent as part of the <see cref="Request"/>.
     /// </summary>
-    public abstract class RequestContent : IDisposable
+    public abstract class RequestContent : RequestBody
     {
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
 
@@ -130,31 +131,6 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
-
-        /// <summary>
-        /// Writes contents of this object to an instance of <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        /// <param name="cancellation">To cancellation token to use.</param>
-        public abstract Task WriteToAsync(Stream stream, CancellationToken cancellation);
-
-        /// <summary>
-        /// Writes contents of this object to an instance of <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        /// <param name="cancellation">To cancellation token to use.</param>
-        public abstract void WriteTo(Stream stream, CancellationToken cancellation);
-
-        /// <summary>
-        /// Attempts to compute the length of the underlying content, if available.
-        /// </summary>
-        /// <param name="length">The length of the underlying data.</param>
-        public abstract bool TryComputeLength(out long length);
-
-        /// <summary>
-        /// Frees resources held by the <see cref="RequestContent"/> object.
-        /// </summary>
-        public abstract void Dispose();
 
         private sealed class StreamContent : RequestContent
         {
