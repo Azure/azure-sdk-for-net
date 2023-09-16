@@ -34,6 +34,20 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProject_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevCenterClient client = new DevCenterClient(endpoint, credential);
+
+            Response response = await client.GetProjectAsync("<projectName>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -45,20 +59,6 @@ namespace Azure.Developer.DevCenter.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("description").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            Response response = await client.GetProjectAsync("<projectName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -93,6 +93,21 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProjects_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevCenterClient client = new DevCenterClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetProjectsAsync(null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetProjects_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -104,21 +119,6 @@ namespace Azure.Developer.DevCenter.Samples
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("name").ToString());
                 Console.WriteLine(result[0].GetProperty("description").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetProjectsAsync(null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -147,6 +147,21 @@ namespace Azure.Developer.DevCenter.Samples
             DevCenterClient client = new DevCenterClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetAllDevBoxes(null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("poolName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAllDevBoxes_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevCenterClient client = new DevCenterClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetAllDevBoxesAsync(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("poolName").ToString());
@@ -188,21 +203,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
                 Console.WriteLine(result[0].GetProperty("createdTime").ToString());
                 Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDevBoxes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetAllDevBoxesAsync(null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
             }
         }
 
@@ -261,6 +261,21 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAllDevBoxesByUser_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevCenterClient client = new DevCenterClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetAllDevBoxesByUserAsync("me", null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("poolName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetAllDevBoxesByUser_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -294,21 +309,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("imageReference").GetProperty("publishedDate").ToString());
                 Console.WriteLine(result[0].GetProperty("createdTime").ToString());
                 Console.WriteLine(result[0].GetProperty("localAdministrator").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDevBoxesByUser_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevCenterClient client = new DevCenterClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetAllDevBoxesByUserAsync("me", null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("poolName").ToString());
             }
         }
 

@@ -35,6 +35,20 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -80,20 +94,6 @@ type = "<type>",
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -160,6 +160,19 @@ type = "<type>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeviceDataModel_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceDataModel_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -184,19 +197,6 @@ type = "<type>",
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceDataModel_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -240,23 +240,23 @@ type = "<type>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
-
-            Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Delete_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+
+            Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>");
             Console.WriteLine(response.Status);
         }
 
@@ -279,6 +279,20 @@ type = "<type>",
             DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetDeviceDataModels("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeviceDataModels_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+
+            await foreach (BinaryData item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].ToString());
@@ -323,20 +337,6 @@ type = "<type>",
                 Console.WriteLine(result[0].GetProperty("createdBy").ToString());
                 Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
                 Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceDataModels_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
-
-            await foreach (BinaryData item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 
