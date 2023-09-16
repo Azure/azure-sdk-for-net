@@ -208,32 +208,30 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext
+    public partial class RequestContext : System.ServiceModel.Rest.RequestOptions
     {
         public RequestContext() { }
-        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
-    public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
+    public partial class RequestFailedException : System.ServiceModel.Rest.ServiceErrorException, System.Runtime.Serialization.ISerializable
     {
-        public RequestFailedException(Azure.Response response) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) { }
+        public RequestFailedException(Azure.Response response) : base (default(System.ServiceModel.Rest.Result)) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.ServiceModel.Rest.Result)) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) : base (default(System.ServiceModel.Rest.Result)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message) { }
+        public RequestFailedException(int status, string message) : base (default(System.ServiceModel.Rest.Result)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, System.Exception? innerException) { }
+        public RequestFailedException(int status, string message, System.Exception? innerException) : base (default(System.ServiceModel.Rest.Result)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
-        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public RequestFailedException(string message) { }
-        public RequestFailedException(string message, System.Exception? innerException) { }
+        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) : base (default(System.ServiceModel.Rest.Result)) { }
+        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(System.ServiceModel.Rest.Result)) { }
+        public RequestFailedException(string message) : base (default(System.ServiceModel.Rest.Result)) { }
+        public RequestFailedException(string message, System.Exception? innerException) : base (default(System.ServiceModel.Rest.Result)) { }
         public string? ErrorCode { get { throw null; } }
-        public int Status { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Azure.Response? GetRawResponse() { throw null; }
     }
@@ -371,7 +369,7 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class ClientOptions
+    public abstract partial class ClientOptions : System.ServiceModel.Rest.PipelineOptions
     {
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
@@ -531,7 +529,7 @@ namespace Azure.Core
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class RequestContent : System.IDisposable
+    public abstract partial class RequestContent : System.ServiceModel.Rest.RequestBody
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
@@ -545,13 +543,9 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
-        public abstract void Dispose();
         public static implicit operator Azure.Core.RequestContent (Azure.Core.Serialization.DynamicData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (string content) { throw null; }
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
     }
     public abstract partial class RequestFailedDetailsParser
     {
@@ -1002,6 +996,7 @@ namespace Azure.Core.Pipeline
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.Pipeline.HttpPipelineOptions options) { throw null; }
         public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.Pipeline.HttpPipelineOptions options, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(System.ServiceModel.Rest.PipelineOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
     }
     public partial class HttpPipelineOptions
     {
