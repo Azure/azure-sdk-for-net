@@ -40,6 +40,25 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetWorkflow_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            Response response = await client.GetWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("actionDag").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("isEnabled").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflow_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -59,25 +78,6 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("isEnabled").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflow_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            Response response = await client.GetWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("actionDag").ToString());
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("isEnabled").ToString());
             Console.WriteLine(result.GetProperty("description").ToString());
@@ -143,6 +143,38 @@ type = "when_term_creation_is_requested",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrReplaceWorkflow_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                triggers = new List<object>()
+{
+new
+{
+type = "when_term_creation_is_requested",
+}
+},
+                name = "<name>",
+                isEnabled = true,
+                description = "<description>",
+            });
+            Response response = await client.CreateOrReplaceWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("actionDag").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("isEnabled").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrReplaceWorkflow_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -179,38 +211,6 @@ underGlossary = "<underGlossary>",
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("isEnabled").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrReplaceWorkflow_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                triggers = new List<object>()
-{
-new
-{
-type = "when_term_creation_is_requested",
-}
-},
-                name = "<name>",
-                isEnabled = true,
-                description = "<description>",
-            });
-            Response response = await client.CreateOrReplaceWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("actionDag").ToString());
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("isEnabled").ToString());
             Console.WriteLine(result.GetProperty("description").ToString());
@@ -273,18 +273,6 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteWorkflow_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            Response response = client.DeleteWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteWorkflow_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -292,6 +280,18 @@ underGlossary = "<underGlossary>",
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
             Response response = await client.DeleteWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteWorkflow_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            Response response = client.DeleteWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
             Console.WriteLine(response.Status);
         }
 
@@ -338,6 +338,35 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_SubmitUserRequests_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                operations = new List<object>()
+{
+new
+{
+type = "CreateTerm",
+payload = new object(),
+}
+},
+            });
+            Response response = await client.SubmitUserRequestsAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("requestId").ToString());
+            Console.WriteLine(result.GetProperty("requestor").ToString());
+            Console.WriteLine(result.GetProperty("operations")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("operations")[0].GetProperty("payload").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_SubmitUserRequests_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -365,35 +394,6 @@ payload = new object(),
             Console.WriteLine(result.GetProperty("operations")[0].GetProperty("payload").ToString());
             Console.WriteLine(result.GetProperty("operations")[0].GetProperty("workflowRunIds")[0].ToString());
             Console.WriteLine(result.GetProperty("comment").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SubmitUserRequests_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                operations = new List<object>()
-{
-new
-{
-type = "CreateTerm",
-payload = new object(),
-}
-},
-            });
-            Response response = await client.SubmitUserRequestsAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("requestId").ToString());
-            Console.WriteLine(result.GetProperty("requestor").ToString());
-            Console.WriteLine(result.GetProperty("operations")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("operations")[0].GetProperty("payload").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -447,6 +447,22 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetWorkflowRun_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            Response response = await client.GetWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("actionDag").ToString());
+            Console.WriteLine(result.GetProperty("detail").GetProperty("runInput").ToString());
+            Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflowRun_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -468,22 +484,6 @@ payload = new object(),
             Console.WriteLine(result.GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("cancelTime").ToString());
             Console.WriteLine(result.GetProperty("cancelComment").ToString());
-            Console.WriteLine(result.GetProperty("actionDag").ToString());
-            Console.WriteLine(result.GetProperty("detail").GetProperty("runInput").ToString());
-            Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowRun_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            Response response = await client.GetWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("actionDag").ToString());
             Console.WriteLine(result.GetProperty("detail").GetProperty("runInput").ToString());
             Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString());
@@ -532,6 +532,19 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CancelWorkflowRun_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CancelWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CancelWorkflowRun_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -543,19 +556,6 @@ payload = new object(),
                 comment = "<comment>",
             });
             Response response = client.CancelWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelWorkflowRun_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CancelWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
             Console.WriteLine(response.Status);
         }
 
@@ -599,6 +599,28 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetWorkflowTask_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            Response response = await client.GetWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("workflowRunId").ToString());
+            Console.WriteLine(result.GetProperty("workflowId").ToString());
+            Console.WriteLine(result.GetProperty("requestor").ToString());
+            Console.WriteLine(result.GetProperty("createdTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+            Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflowTask_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -627,28 +649,6 @@ payload = new object(),
             Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expiryTime").ToString());
             Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("expireAfter").ToString());
             Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowTask_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            Response response = await client.GetWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("workflowRunId").ToString());
-            Console.WriteLine(result.GetProperty("workflowId").ToString());
-            Console.WriteLine(result.GetProperty("requestor").ToString());
-            Console.WriteLine(result.GetProperty("createdTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
-            Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
         }
 
         [Test]
@@ -698,6 +698,19 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_ApproveApprovalTask_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.ApproveApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_ApproveApprovalTask_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -709,19 +722,6 @@ payload = new object(),
                 comment = "<comment>",
             });
             Response response = client.ApproveApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ApproveApprovalTask_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.ApproveApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
             Console.WriteLine(response.Status);
         }
 
@@ -756,6 +756,19 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_RejectApprovalTask_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.RejectApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_RejectApprovalTask_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -767,19 +780,6 @@ payload = new object(),
                 comment = "<comment>",
             });
             Response response = client.RejectApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_RejectApprovalTask_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.RejectApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
             Console.WriteLine(response.Status);
         }
 
@@ -814,6 +814,19 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_ReassignWorkflowTask_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.ReassignWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_ReassignWorkflowTask_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -832,19 +845,6 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 },
             });
             Response response = client.ReassignWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReassignWorkflowTask_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.ReassignWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
             Console.WriteLine(response.Status);
         }
 
@@ -889,6 +889,22 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateTaskStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                newStatus = "NotStarted",
+            });
+            Response response = await client.UpdateTaskStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_UpdateTaskStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -901,22 +917,6 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 comment = "<comment>",
             });
             Response response = client.UpdateTaskStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateTaskStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                newStatus = "NotStarted",
-            });
-            Response response = await client.UpdateTaskStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
             Console.WriteLine(response.Status);
         }
 
@@ -958,6 +958,25 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetWorkflows_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetWorkflowsAsync(null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("isEnabled").ToString());
+                Console.WriteLine(result[0].GetProperty("description").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflows_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -976,25 +995,6 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 Console.WriteLine(result[0].GetProperty("createdBy").ToString());
                 Console.WriteLine(result[0].GetProperty("lastUpdateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("updatedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("isEnabled").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflows_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetWorkflowsAsync(null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("triggers")[0].GetProperty("type").ToString());
                 Console.WriteLine(result[0].GetProperty("name").ToString());
                 Console.WriteLine(result[0].GetProperty("isEnabled").ToString());
                 Console.WriteLine(result[0].GetProperty("description").ToString());
@@ -1050,6 +1050,27 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetWorkflowRuns_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetWorkflowRunsAsync(null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("requestor").ToString());
+                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("targetValue").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflowRuns_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1076,27 +1097,6 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 Console.WriteLine(result[0].GetProperty("endTime").ToString());
                 Console.WriteLine(result[0].GetProperty("cancelTime").ToString());
                 Console.WriteLine(result[0].GetProperty("cancelComment").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowRuns_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetWorkflowRunsAsync(null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("runPayload").GetProperty("targetValue").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
             }
         }
 
@@ -1156,6 +1156,29 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetWorkflowTasks_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetWorkflowTasksAsync(null, null, null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("workflowRunId").ToString());
+                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
+                Console.WriteLine(result[0].GetProperty("requestor").ToString());
+                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
+                Console.WriteLine(result[0].GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("payload").GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("payload").GetProperty("targetValue").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkflowTasks_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1193,29 +1216,6 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("expiryTime").ToString());
                 Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("expireAfter").ToString());
                 Console.WriteLine(result[0].GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowTasks_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetWorkflowTasksAsync(null, null, null, null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowRunId").ToString());
-                Console.WriteLine(result[0].GetProperty("workflowId").ToString());
-                Console.WriteLine(result[0].GetProperty("requestor").ToString());
-                Console.WriteLine(result[0].GetProperty("createdTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("payload").GetProperty("targetValue").ToString());
             }
         }
 

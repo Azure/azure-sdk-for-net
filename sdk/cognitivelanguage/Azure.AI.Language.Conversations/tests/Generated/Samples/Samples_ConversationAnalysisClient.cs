@@ -52,6 +52,37 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversation_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                analysisInput = new
+                {
+                    conversationItem = new
+                    {
+                        id = "<id>",
+                        participantId = "<participantId>",
+                    },
+                },
+                parameters = new
+                {
+                    projectName = "<projectName>",
+                    deploymentName = "<deploymentName>",
+                },
+                kind = "Conversation",
+            });
+            Response response = await client.AnalyzeConversationAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversation_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -101,37 +132,6 @@ namespace Azure.AI.Language.Conversations.Samples
                 kind = "Conversation",
             });
             Response response = client.AnalyzeConversation(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversation_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                analysisInput = new
-                {
-                    conversationItem = new
-                    {
-                        id = "<id>",
-                        participantId = "<participantId>",
-                    },
-                },
-                parameters = new
-                {
-                    projectName = "<projectName>",
-                    deploymentName = "<deploymentName>",
-                },
-                kind = "Conversation",
-            });
-            Response response = await client.AnalyzeConversationAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -212,6 +212,23 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAnalyzeConversationJobStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+
+            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetAnalyzeConversationJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -242,23 +259,6 @@ namespace Azure.AI.Language.Conversations.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("nextLink").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAnalyzeConversationJobStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
-
-            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
@@ -335,6 +335,55 @@ kind = "ConversationalSummarizationTask",
 },
             });
             Operation<BinaryData> operation = client.AnalyzeConversations(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversations_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                analysisInput = new
+                {
+                    conversations = new List<object>()
+{
+new
+{
+conversationItems = new List<object>()
+{
+new
+{
+text = "<text>",
+id = "<id>",
+participantId = "<participantId>",
+}
+},
+id = "<id>",
+language = "<language>",
+modality = "text",
+}
+},
+                },
+                tasks = new List<object>()
+{
+new
+{
+kind = "ConversationalSummarizationTask",
+}
+},
+            });
+            Operation<BinaryData> operation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -423,55 +472,6 @@ taskName = "<taskName>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("nextLink").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversations_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                analysisInput = new
-                {
-                    conversations = new List<object>()
-{
-new
-{
-conversationItems = new List<object>()
-{
-new
-{
-text = "<text>",
-id = "<id>",
-participantId = "<participantId>",
-}
-},
-id = "<id>",
-language = "<language>",
-modality = "text",
-}
-},
-                },
-                tasks = new List<object>()
-{
-new
-{
-kind = "ConversationalSummarizationTask",
-}
-},
-            });
-            Operation<BinaryData> operation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
@@ -568,17 +568,6 @@ taskName = "<taskName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CancelAnalyzeConversations_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
-
-            Operation operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelAnalyzeConversations_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -586,6 +575,17 @@ taskName = "<taskName>",
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
             Operation operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CancelAnalyzeConversations_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+
+            Operation operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]

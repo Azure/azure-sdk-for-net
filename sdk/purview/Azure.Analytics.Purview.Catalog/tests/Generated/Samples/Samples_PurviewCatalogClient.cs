@@ -36,6 +36,21 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_Search_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.SearchAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_Search_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -105,21 +120,6 @@ sort = new object(),
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Search_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.SearchAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -212,6 +212,21 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_Suggest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.SuggestAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_Suggest_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -244,21 +259,6 @@ sort = new object(),
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Suggest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.SuggestAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -314,6 +314,21 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_Browse_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.BrowseAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_Browse_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -341,21 +356,6 @@ sort = new object(),
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("contactType").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("path").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Browse_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.BrowseAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -406,6 +406,21 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_AutoComplete_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.AutoCompleteAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_AutoComplete_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -423,21 +438,6 @@ sort = new object(),
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AutoComplete_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.AutoCompleteAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]

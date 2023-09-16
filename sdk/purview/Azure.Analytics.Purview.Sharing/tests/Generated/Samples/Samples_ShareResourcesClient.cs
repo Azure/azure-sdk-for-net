@@ -34,6 +34,21 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAllShareResources_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetAllShareResourcesAsync(null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetAllShareResources_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -50,21 +65,6 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                 Console.WriteLine(result[0].GetProperty("storeReference").GetProperty("type").ToString());
                 Console.WriteLine(result[0].GetProperty("id").ToString());
                 Console.WriteLine(result[0].GetProperty("type").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllShareResources_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetAllShareResourcesAsync(null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 

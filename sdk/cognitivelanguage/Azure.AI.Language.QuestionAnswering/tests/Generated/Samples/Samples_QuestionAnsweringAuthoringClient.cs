@@ -35,6 +35,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProjectDetails_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetProjectDetailsAsync("<projectName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetProjectDetails_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -52,20 +66,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjectDetails_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetProjectDetailsAsync("<projectName>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -109,6 +109,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateProject_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                language = "<language>",
+            });
+            Response response = await client.CreateProjectAsync("<projectName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -136,24 +154,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                language = "<language>",
-            });
-            Response response = await client.CreateProjectAsync("<projectName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -206,6 +206,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeleteStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetDeleteStatusAsync("<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeleteStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -217,23 +234,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeleteStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetDeleteStatusAsync("<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -276,6 +276,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetExportStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetExportStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -287,23 +304,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExportStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -346,6 +346,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetImportStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetImportStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -357,23 +374,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -416,6 +416,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeployStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -427,23 +444,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -482,6 +482,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateSynonyms_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateSynonymsAsync("<projectName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_UpdateSynonyms_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -503,19 +516,6 @@ alterations = new List<object>()
                 nextLink = "<nextLink>",
             });
             Response response = client.UpdateSynonyms("<projectName>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSynonyms_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateSynonymsAsync("<projectName>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -564,6 +564,23 @@ alterations = new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUpdateSourcesStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdateSourcesStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -575,23 +592,6 @@ alterations = new List<object>()
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateSourcesStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -634,6 +634,23 @@ alterations = new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUpdateQnasStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdateQnasStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -645,23 +662,6 @@ alterations = new List<object>()
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateQnasStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -700,6 +700,19 @@ alterations = new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddFeedback_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.AddFeedbackAsync("<projectName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_AddFeedback_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -719,19 +732,6 @@ qnaId = 1234,
 },
             });
             Response response = client.AddFeedback("<projectName>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddFeedback_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.AddFeedbackAsync("<projectName>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -776,6 +776,21 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProjects_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetProjectsAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetProjects_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -793,21 +808,6 @@ qnaId = 1234,
                 Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("lastModifiedDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetProjectsAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -850,6 +850,21 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeployments_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployments_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -861,21 +876,6 @@ qnaId = 1234,
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("deploymentName").ToString());
                 Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployments_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -912,13 +912,13 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSynonyms_AllParameters()
+        public async Task Example_GetSynonyms_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetSynonyms("<projectName>"))
+            await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("alterations")[0].ToString());
@@ -927,13 +927,13 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSynonyms_Async()
+        public void Example_GetSynonyms_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
+            foreach (BinaryData item in client.GetSynonyms("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("alterations")[0].ToString());
@@ -973,6 +973,22 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSources_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
+                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetSources_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -987,22 +1003,6 @@ qnaId = 1234,
                 Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
                 Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
                 Console.WriteLine(result[0].GetProperty("contentStructureKind").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSources_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
             }
         }
 
@@ -1042,6 +1042,21 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetQnas_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetQnasAsync("<projectName>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetQnas_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1073,21 +1088,6 @@ qnaId = 1234,
                 Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
                 Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
                 Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetQnas_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetQnasAsync("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -1140,17 +1140,6 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteProject_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteProject_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1158,6 +1147,17 @@ qnaId = 1234,
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
             Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteProject_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
         }
 
         [Test]
@@ -1191,6 +1191,24 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_Export_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Operation<BinaryData> operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_Export_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1203,24 +1221,6 @@ qnaId = 1234,
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Export_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Operation<BinaryData> operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1255,6 +1255,25 @@ qnaId = 1234,
 
             RequestContent content = null;
             Operation<BinaryData> operation = client.Import(WaitUntil.Completed, "<projectName>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Import_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            RequestContent content = null;
+            Operation<BinaryData> operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1369,25 +1388,6 @@ null
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Import_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            RequestContent content = null;
-            Operation<BinaryData> operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1520,6 +1520,21 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeployProject_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            Operation<BinaryData> operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeployProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1532,21 +1547,6 @@ null
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeployProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            Operation<BinaryData> operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1596,6 +1596,35 @@ sourceKind = "file",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateSources_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new
+{
+op = "add",
+value = new
+{
+sourceUri = "http://localhost:3000",
+sourceKind = "file",
+},
+}
+});
+            Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
+            await foreach (BinaryData item in operation.Value)
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
+                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_UpdateSources_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1626,35 +1655,6 @@ contentStructureKind = "unstructured",
                 Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
                 Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
                 Console.WriteLine(result[0].GetProperty("contentStructureKind").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSources_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-op = "add",
-value = new
-{
-sourceUri = "http://localhost:3000",
-sourceKind = "file",
-},
-}
-});
-            Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
-            await foreach (BinaryData item in operation.Value)
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("sourceUri").ToString());
-                Console.WriteLine(result[0].GetProperty("sourceKind").ToString());
             }
         }
 
@@ -1711,6 +1711,30 @@ value = new object(),
 });
             Operation<Pageable<BinaryData>> operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", content);
             foreach (BinaryData item in operation.Value)
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateQnas_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new
+{
+op = "add",
+value = new object(),
+}
+});
+            Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
+            await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].ToString());
@@ -1801,30 +1825,6 @@ autoSuggestedCount = 1234,
                 Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
                 Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
                 Console.WriteLine(result[0].GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateQnas_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-op = "add",
-value = new object(),
-}
-});
-            Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
-            await foreach (BinaryData item in operation.Value)
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 

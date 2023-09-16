@@ -35,6 +35,21 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateTest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateTestAsync("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateTest_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -159,21 +174,6 @@ namespace Azure.Developer.LoadTesting.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateTest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateTestAsync("<testId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -318,18 +318,6 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTest_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = client.DeleteTest("<testId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -337,6 +325,18 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestAsync("<testId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTest_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = client.DeleteTest("<testId>");
             Console.WriteLine(response.Status);
         }
 
@@ -361,6 +361,20 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = client.GetTest("<testId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = await client.GetTestAsync("<testId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -438,20 +452,6 @@ namespace Azure.Developer.LoadTesting.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = await client.GetTestAsync("<testId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -544,6 +544,20 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTestFile_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = await client.GetTestFileAsync("<testId>", "<fileName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetTestFile_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -559,20 +573,6 @@ namespace Azure.Developer.LoadTesting.Samples
             Console.WriteLine(result.GetProperty("expireDateTime").ToString());
             Console.WriteLine(result.GetProperty("validationStatus").ToString());
             Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTestFile_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = await client.GetTestFileAsync("<testId>", "<fileName>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -608,18 +608,6 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTestFile_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = client.DeleteTestFile("<testId>", "<fileName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTestFile_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -627,6 +615,18 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTestFile_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = client.DeleteTestFile("<testId>", "<fileName>");
             Console.WriteLine(response.Status);
         }
 
@@ -658,6 +658,27 @@ namespace Azure.Developer.LoadTesting.Samples
                 },
             });
             Response response = client.CreateOrUpdateAppComponents("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateAppComponents_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                components = new
+                {
+                    key = new object(),
+                },
+            });
+            Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
@@ -699,27 +720,6 @@ namespace Azure.Developer.LoadTesting.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateAppComponents_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                components = new
-                {
-                    key = new object(),
-                },
-            });
-            Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -776,6 +776,20 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAppComponents_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = await client.GetAppComponentsAsync("<testId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetAppComponents_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -797,20 +811,6 @@ namespace Azure.Developer.LoadTesting.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAppComponents_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = await client.GetAppComponentsAsync("<testId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -848,6 +848,21 @@ namespace Azure.Developer.LoadTesting.Samples
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateServerMetricsConfig_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -893,21 +908,6 @@ namespace Azure.Developer.LoadTesting.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateServerMetricsConfig_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -968,6 +968,20 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetServerMetricsConfig_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = await client.GetServerMetricsConfigAsync("<testId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetServerMetricsConfig_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -990,20 +1004,6 @@ namespace Azure.Developer.LoadTesting.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetServerMetricsConfig_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = await client.GetServerMetricsConfigAsync("<testId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1049,6 +1049,21 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTestFiles_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetTestFiles_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1064,21 +1079,6 @@ namespace Azure.Developer.LoadTesting.Samples
                 Console.WriteLine(result[0].GetProperty("expireDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("validationStatus").ToString());
                 Console.WriteLine(result[0].GetProperty("validationFailureDetails").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTestFiles_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 

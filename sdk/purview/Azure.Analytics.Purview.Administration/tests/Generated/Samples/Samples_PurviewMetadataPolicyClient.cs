@@ -36,6 +36,21 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateMetadataPolicy_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+
+            RequestContent content = null;
+            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_UpdateMetadataPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -124,21 +139,6 @@ null
             Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateMetadataPolicy_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
-
-            RequestContent content = null;
-            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -249,6 +249,20 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetMetadataPolicy_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+
+            Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -280,20 +294,6 @@ null
             Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataPolicy_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
-
-            Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -348,13 +348,13 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataPolicies_AllParameters()
+        public async Task Example_GetMetadataPolicies_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
-            foreach (BinaryData item in client.GetMetadataPolicies(null))
+            await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -363,13 +363,13 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataPolicies_Async()
+        public void Example_GetMetadataPolicies_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
-            await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
+            foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());

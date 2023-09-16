@@ -35,6 +35,21 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentByUser_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            Response response = await client.GetEnvironmentByUserAsync("me", "<environmentName>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("environmentType").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironmentByUser_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -57,21 +72,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("enabled").ToString());
             Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentByUser_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            Response response = await client.GetEnvironmentByUserAsync("me", "<environmentName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("environmentType").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -110,6 +110,22 @@ namespace Azure.Developer.DevCenter.Samples
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateEnvironment("me", "<environmentName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("environmentType").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateEnvironment_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateEnvironmentAsync("me", "<environmentName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -160,22 +176,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("enabled").ToString());
             Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateEnvironment_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateEnvironmentAsync("me", "<environmentName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("environmentType").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -240,6 +240,20 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCatalogItem_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            Response response = await client.GetCatalogItemAsync("<catalogItemId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetCatalogItem_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -252,20 +266,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalogItem_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            Response response = await client.GetCatalogItemAsync("<catalogItemId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -293,6 +293,20 @@ namespace Azure.Developer.DevCenter.Samples
             EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
 
             Response response = client.GetCatalogItemVersion("<catalogItemId>", "<version>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCatalogItemVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -343,20 +357,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("runner").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalogItemVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -424,6 +424,22 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironments_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            await foreach (BinaryData item in client.GetEnvironmentsAsync(null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironments_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -446,22 +462,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("enabled").ToString());
                 Console.WriteLine(result[0].GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("startTime").ToString());
                 Console.WriteLine(result[0].GetProperty("tags").GetProperty("<key>").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironments_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            await foreach (BinaryData item in client.GetEnvironmentsAsync(null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -510,6 +510,22 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentsByUser_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            await foreach (BinaryData item in client.GetEnvironmentsByUserAsync("me", null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironmentsByUser_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -532,22 +548,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("enabled").ToString());
                 Console.WriteLine(result[0].GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("startTime").ToString());
                 Console.WriteLine(result[0].GetProperty("tags").GetProperty("<key>").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentsByUser_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            await foreach (BinaryData item in client.GetEnvironmentsByUserAsync("me", null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -595,6 +595,21 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCatalogItems_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            await foreach (BinaryData item in client.GetCatalogItemsAsync(null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetCatalogItems_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -607,21 +622,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("id").ToString());
                 Console.WriteLine(result[0].GetProperty("name").ToString());
                 Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalogItems_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            await foreach (BinaryData item in client.GetCatalogItemsAsync(null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -651,6 +651,21 @@ namespace Azure.Developer.DevCenter.Samples
             EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
 
             foreach (BinaryData item in client.GetCatalogItemVersions("<catalogItemId>", null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCatalogItemVersions_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            await foreach (BinaryData item in client.GetCatalogItemVersionsAsync("<catalogItemId>", null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].ToString());
@@ -702,21 +717,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("runner").ToString());
                 Console.WriteLine(result[0].GetProperty("status").ToString());
                 Console.WriteLine(result[0].GetProperty("eligibleForLatestVersion").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalogItemVersions_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            await foreach (BinaryData item in client.GetCatalogItemVersionsAsync("<catalogItemId>", null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -785,6 +785,21 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnvironmentTypes_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            await foreach (BinaryData item in client.GetEnvironmentTypesAsync(null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEnvironmentTypes_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -797,21 +812,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("name").ToString());
                 Console.WriteLine(result[0].GetProperty("deploymentTargetId").ToString());
                 Console.WriteLine(result[0].GetProperty("status").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentTypes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            await foreach (BinaryData item in client.GetEnvironmentTypesAsync(null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -845,6 +845,26 @@ namespace Azure.Developer.DevCenter.Samples
                 environmentType = "<environmentType>",
             });
             Operation<BinaryData> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "me", "<environmentName>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("environmentType").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateEnvironment_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                environmentType = "<environmentType>",
+            });
+            Operation<BinaryData> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "me", "<environmentName>", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -899,26 +919,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("enabled").ToString());
             Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<key>").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEnvironment_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                environmentType = "<environmentType>",
-            });
-            Operation<BinaryData> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "me", "<environmentName>", content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("environmentType").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -983,17 +983,6 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteEnvironment_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            Operation operation = client.DeleteEnvironment(WaitUntil.Completed, "me", "<environmentName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteEnvironment_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1001,6 +990,17 @@ namespace Azure.Developer.DevCenter.Samples
             EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
 
             Operation operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "me", "<environmentName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteEnvironment_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            Operation operation = client.DeleteEnvironment(WaitUntil.Completed, "me", "<environmentName>");
         }
 
         [Test]
@@ -1031,6 +1031,21 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeployEnvironmentAction_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                actionId = "<actionId>",
+            });
+            Operation operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "me", "<environmentName>", content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeployEnvironmentAction_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1043,21 +1058,6 @@ namespace Azure.Developer.DevCenter.Samples
                 parameters = new object(),
             });
             Operation operation = client.DeployEnvironmentAction(WaitUntil.Completed, "me", "<environmentName>", content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeployEnvironmentAction_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                actionId = "<actionId>",
-            });
-            Operation operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "me", "<environmentName>", content);
         }
 
         [Test]
@@ -1093,6 +1093,21 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CustomEnvironmentAction_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                actionId = "<actionId>",
+            });
+            Operation operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "me", "<environmentName>", content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CustomEnvironmentAction_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1105,21 +1120,6 @@ namespace Azure.Developer.DevCenter.Samples
                 parameters = new object(),
             });
             Operation operation = client.CustomEnvironmentAction(WaitUntil.Completed, "me", "<environmentName>", content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CustomEnvironmentAction_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EnvironmentsClient client = new EnvironmentsClient(endpoint, "<ProjectName>", credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                actionId = "<actionId>",
-            });
-            Operation operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "me", "<environmentName>", content);
         }
 
         [Test]

@@ -37,6 +37,21 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -212,21 +227,6 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -427,6 +427,23 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetByGuids_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetByGuidsAsync(new List<string>()
+{
+"<guids>"
+}, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetByGuids_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -528,23 +545,6 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByGuids_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -662,6 +662,21 @@ info = "<info>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateEntities(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateEntities_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateEntitiesAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -847,21 +862,6 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntities_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateEntitiesAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1065,6 +1065,23 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteByGuids_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.DeleteByGuidsAsync(new List<string>()
+{
+"<guids>"
+}, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteByGuids_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1140,23 +1157,6 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByGuids_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.DeleteByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1253,6 +1253,19 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddClassification_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.AddClassificationAsync(content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_AddClassification_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1293,19 +1306,6 @@ timeZone = "<timeZone>",
 },
             });
             Response response = client.AddClassification(content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddClassification_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.AddClassificationAsync(content);
             Console.WriteLine(response.Status);
         }
 
@@ -1363,6 +1363,20 @@ timeZone = "<timeZone>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.GetByGuid("<guid>", null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetByGuidAsync("<guid>", null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1465,20 +1479,6 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetByGuidAsync("<guid>", null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1597,6 +1597,21 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateEntityAttributeByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateEntityAttributeByGuid_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1670,21 +1685,6 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateEntityAttributeByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1780,6 +1780,20 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.DeleteByGuidAsync("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteByGuid_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1852,20 +1866,6 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.DeleteByGuidAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1960,6 +1960,20 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassification_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetClassification_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1980,20 +1994,6 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassification_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -2034,18 +2034,6 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteClassification_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = client.DeleteClassification("<guid>", "<classificationName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteClassification_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2053,6 +2041,18 @@ timeZone = "<timeZone>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteClassification_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = client.DeleteClassification("<guid>", "<classificationName>");
             Console.WriteLine(response.Status);
         }
 
@@ -2084,6 +2084,20 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassifications_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetClassificationsAsync("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetClassifications_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2099,20 +2113,6 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("sortType").ToString());
             Console.WriteLine(result.GetProperty("startIndex").ToString());
             Console.WriteLine(result.GetProperty("totalCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassifications_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetClassificationsAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -2147,6 +2147,22 @@ timeZone = "<timeZone>",
 new object()
 });
             Response response = client.AddClassifications("<guid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddClassifications_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = await client.AddClassificationsAsync("<guid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -2188,22 +2204,6 @@ lastModifiedTS = "<lastModifiedTS>",
 }
 });
             Response response = client.AddClassifications("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddClassifications_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.AddClassificationsAsync("<guid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -2266,6 +2266,22 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateClassifications_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = await client.UpdateClassificationsAsync("<guid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_UpdateClassifications_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2302,22 +2318,6 @@ lastModifiedTS = "<lastModifiedTS>",
 }
 });
             Response response = client.UpdateClassifications("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateClassifications_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.UpdateClassificationsAsync("<guid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -2371,6 +2371,20 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.GetByUniqueAttributes("<typeName>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetByUniqueAttributes_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetByUniqueAttributesAsync("<typeName>", null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2473,20 +2487,6 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByUniqueAttributes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetByUniqueAttributesAsync("<typeName>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -2598,6 +2598,21 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateEntityByUniqueAttributes_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2780,21 +2795,6 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateEntityByUniqueAttributes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -2992,6 +2992,20 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteByUniqueAttribute_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteByUniqueAttribute_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3064,20 +3078,6 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -3170,18 +3170,6 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteClassificationByUniqueAttribute_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", attrQualifiedName: "<attrQualifiedName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteClassificationByUniqueAttribute_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3189,6 +3177,18 @@ info = "<info>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteClassificationByUniqueAttribute_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", attrQualifiedName: "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3217,6 +3217,22 @@ info = "<info>",
 new object()
 });
             Response response = client.AddClassificationsByUniqueAttribute("<typeName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddClassificationsByUniqueAttribute_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -3258,22 +3274,6 @@ lastModifiedTS = "<lastModifiedTS>",
 }
 });
             Response response = client.AddClassificationsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddClassificationsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -3336,6 +3336,22 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateClassificationsByUniqueAttribute_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_UpdateClassificationsByUniqueAttribute_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3372,22 +3388,6 @@ lastModifiedTS = "<lastModifiedTS>",
 }
 });
             Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateClassificationsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -3442,6 +3442,21 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.SetClassifications(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_SetClassifications_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.SetClassificationsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -3532,21 +3547,6 @@ termGuid = "<termGuid>",
                 },
             });
             Response response = client.SetClassifications(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SetClassifications_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.SetClassificationsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -3658,6 +3658,20 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEntitiesByUniqueAttributes_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetEntitiesByUniqueAttributes_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3753,20 +3767,6 @@ termGuid = "<termGuid>",
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntitiesByUniqueAttributes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -3884,6 +3884,20 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetHeader_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetHeaderAsync("<guid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetHeader_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3924,20 +3938,6 @@ termGuid = "<termGuid>",
             Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetHeader_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetHeaderAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -3999,6 +3999,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteBusinessMetadata_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.DeleteBusinessMetadataAsync("<guid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteBusinessMetadata_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4010,19 +4023,6 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = client.DeleteBusinessMetadata("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteBusinessMetadata_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.DeleteBusinessMetadataAsync("<guid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4057,6 +4057,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddOrUpdateBusinessMetadata_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_AddOrUpdateBusinessMetadata_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4068,19 +4081,6 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = client.AddOrUpdateBusinessMetadata("<guid>", content, isOverwrite: true);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddOrUpdateBusinessMetadata_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4115,6 +4115,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteBusinessMetadataAttributes_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteBusinessMetadataAttributes_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4126,19 +4139,6 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteBusinessMetadataAttributes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4173,6 +4173,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddOrUpdateBusinessMetadataAttributes_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_AddOrUpdateBusinessMetadataAttributes_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4184,19 +4197,6 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddOrUpdateBusinessMetadataAttributes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4236,13 +4236,13 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSampleBusinessMetadataTemplate_AllParameters()
+        public async Task Example_GetSampleBusinessMetadataTemplate_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetSampleBusinessMetadataTemplate(null);
+            Response response = await client.GetSampleBusinessMetadataTemplateAsync(null);
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filepath>"))
@@ -4254,13 +4254,13 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSampleBusinessMetadataTemplate_Async()
+        public void Example_GetSampleBusinessMetadataTemplate_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetSampleBusinessMetadataTemplateAsync(null);
+            Response response = client.GetSampleBusinessMetadataTemplate(null);
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filepath>"))
@@ -4305,6 +4305,21 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_ImportBusinessMetadata_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.ImportBusinessMetadataAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_ImportBusinessMetadata_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4323,21 +4338,6 @@ termGuid = "<termGuid>",
             Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("importStatus").ToString());
             Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("parentObjectName").ToString());
             Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportBusinessMetadata_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.ImportBusinessMetadataAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -4377,6 +4377,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteLabels_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.DeleteLabelsAsync("<guid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteLabels_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4388,19 +4401,6 @@ termGuid = "<termGuid>",
 "<body>"
 });
             Response response = client.DeleteLabels("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteLabels_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.DeleteLabelsAsync("<guid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4435,6 +4435,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_SetLabels_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.SetLabelsAsync("<guid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_SetLabels_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4446,19 +4459,6 @@ termGuid = "<termGuid>",
 "<body>"
 });
             Response response = client.SetLabels("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SetLabels_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.SetLabelsAsync("<guid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4493,6 +4493,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddLabel_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.AddLabelAsync("<guid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_AddLabel_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4504,19 +4517,6 @@ termGuid = "<termGuid>",
 "<body>"
 });
             Response response = client.AddLabel("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddLabel_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.AddLabelAsync("<guid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4551,6 +4551,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteLabelsByUniqueAttribute_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteLabelsByUniqueAttribute_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4562,19 +4575,6 @@ termGuid = "<termGuid>",
 "<body>"
 });
             Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteLabelsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4609,6 +4609,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_SetLabelsByUniqueAttribute_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_SetLabelsByUniqueAttribute_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4620,19 +4633,6 @@ termGuid = "<termGuid>",
 "<body>"
 });
             Response response = client.SetLabelsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SetLabelsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4667,6 +4667,19 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddLabelsByUniqueAttribute_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            RequestContent content = null;
+            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_AddLabelsByUniqueAttribute_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4678,19 +4691,6 @@ termGuid = "<termGuid>",
 "<body>"
 });
             Response response = client.AddLabelsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddLabelsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", content);
             Console.WriteLine(response.Status);
         }
 

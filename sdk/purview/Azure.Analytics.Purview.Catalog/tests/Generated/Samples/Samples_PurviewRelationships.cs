@@ -35,6 +35,21 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_Create_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_Create_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -91,21 +106,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Create_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -185,6 +185,21 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_Update_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_Update_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -241,21 +256,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Update_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -334,6 +334,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPurviewRelationship_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+
+            Response response = await client.GetPurviewRelationshipAsync("<guid>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetPurviewRelationship_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -393,20 +407,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationship").GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPurviewRelationship_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-
-            Response response = await client.GetPurviewRelationshipAsync("<guid>", null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -486,18 +486,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-
-            Response response = client.Delete("<guid>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -505,6 +493,18 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
             Response response = await client.DeleteAsync("<guid>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Delete_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+
+            Response response = client.Delete("<guid>");
             Console.WriteLine(response.Status);
         }
 

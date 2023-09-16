@@ -35,6 +35,20 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetResourceSetRule_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+            Response response = await client.GetResourceSetRuleAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetResourceSetRule_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -129,20 +143,6 @@ namespace Azure.Analytics.Purview.Administration.Samples
             Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
             Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
             Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetResourceSetRule_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
-
-            Response response = await client.GetResourceSetRuleAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -253,6 +253,21 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateResourceSetRule(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateResourceSetRule_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -465,21 +480,6 @@ storeType = "<storeType>",
             Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
             Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
             Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateResourceSetRule_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -705,18 +705,6 @@ storeType = "<storeType>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteResourceSetRule_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
-
-            Response response = client.DeleteResourceSetRule();
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteResourceSetRule_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -724,6 +712,18 @@ storeType = "<storeType>",
             PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
             Response response = await client.DeleteResourceSetRuleAsync();
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteResourceSetRule_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+            Response response = client.DeleteResourceSetRule();
             Console.WriteLine(response.Status);
         }
 

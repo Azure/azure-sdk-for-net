@@ -35,6 +35,20 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetFilter_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.GetFilterAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetFilter_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -48,20 +62,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetFilter_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            Response response = await client.GetFilterAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -98,6 +98,21 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateFilter_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            RequestContent content = null;
+            Response response = await client.CreateOrUpdateFilterAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateFilter_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -125,21 +140,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateFilter_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            RequestContent content = null;
-            Response response = await client.CreateOrUpdateFilterAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -186,6 +186,25 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "AzureSubscriptionCredential",
             });
             Response response = client.CreateOrUpdate(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                kind = "AzureSubscriptionCredential",
+            });
+            Response response = await client.CreateOrUpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -282,25 +301,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                kind = "AzureSubscriptionCredential",
-            });
-            Response response = await client.CreateOrUpdateAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -412,6 +412,21 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProperties_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.GetPropertiesAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -449,21 +464,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProperties_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            Response response = await client.GetPropertiesAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -524,6 +524,21 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_Delete_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.DeleteAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -561,21 +576,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            Response response = await client.DeleteAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -635,6 +635,20 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_RunScan_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.RunScanAsync("<runId>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_RunScan_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -654,20 +668,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_RunScan_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            Response response = await client.RunScanAsync("<runId>", null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -709,6 +709,20 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CancelScan_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.CancelScanAsync("<runId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CancelScan_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -728,20 +742,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelScan_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            Response response = await client.CancelScanAsync("<runId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -783,6 +783,20 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTrigger_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.GetTriggerAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetTrigger_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -813,20 +827,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrigger_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            Response response = await client.GetTriggerAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -873,6 +873,21 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateTrigger(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateTrigger_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateTriggerAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -962,21 +977,6 @@ occurrence = 1234,
             Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateTrigger_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateTriggerAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1081,6 +1081,20 @@ occurrence = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteTrigger_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.DeleteTriggerAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTrigger_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1111,20 +1125,6 @@ occurrence = 1234,
             Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTrigger_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            Response response = await client.DeleteTriggerAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1178,6 +1178,21 @@ occurrence = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRuns_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            await foreach (BinaryData item in client.GetRunsAsync(null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetRuns_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1212,21 +1227,6 @@ occurrence = 1234,
                 Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
                 Console.WriteLine(result[0].GetProperty("runType").ToString());
                 Console.WriteLine(result[0].GetProperty("dataSourceType").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRuns_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
-
-            await foreach (BinaryData item in client.GetRunsAsync(null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 
