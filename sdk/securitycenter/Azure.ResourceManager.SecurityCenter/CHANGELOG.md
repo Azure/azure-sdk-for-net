@@ -1,21 +1,22 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.3 (2023-09-18)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Bump api-version of `Pricings` to `2023-03-01`.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.32.0 to 1.35.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0
 
 ## 1.2.0-beta.2 (2023-06-02)
 
-### Other Changes
+### Features Added
 
 - Bump api-version of `SqlVulnerabilityAssessmentsScanOperations` to `2023-02-01-preview`.
-- Bump api-version of `sqlVulnerabilityAssessmentsScanResultsOperations` to `2023-02-01-preview`.
+- Bump api-version of `SqlVulnerabilityAssessmentsScanResultsOperations` to `2023-02-01-preview`.
 - Bump api-version of `SqlVulnerabilityAssessmentsBaselineRuleOperations` to `2023-02-01-preview`.
 
 ## 1.2.0-beta.1 (2023-05-31)
