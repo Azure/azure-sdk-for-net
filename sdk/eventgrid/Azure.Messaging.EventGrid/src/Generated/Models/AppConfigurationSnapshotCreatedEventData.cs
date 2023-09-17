@@ -17,9 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of AppConfigurationSnapshotCreatedEventData. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        internal AppConfigurationSnapshotCreatedEventData(string name, string etag, string syncToken) : base(name, etag, syncToken)
+        internal AppConfigurationSnapshotCreatedEventData(string name, string eTag, string syncToken) : base(name, eTag, syncToken)
         {
         }
     }

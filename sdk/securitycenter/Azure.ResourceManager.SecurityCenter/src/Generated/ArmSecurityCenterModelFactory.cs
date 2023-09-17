@@ -97,17 +97,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="pricingTier"> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </param>
+        /// <param name="pricingTier"> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </param>
         /// <param name="subPlan"> The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied. </param>
         /// <param name="freeTrialRemainingTime"> The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S). </param>
+        /// <param name="enabledOn"> Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z). </param>
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
+        /// <param name="extensions"> Optional. List of extensions offered under a plan. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCenterPricingData"/> instance for mocking. </returns>
-        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityCenterPricingTier? pricingTier = null, string subPlan = null, TimeSpan? freeTrialRemainingTime = null, bool? isDeprecated = null, IEnumerable<string> replacedBy = null)
+        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityCenterPricingTier? pricingTier = null, string subPlan = null, TimeSpan? freeTrialRemainingTime = null, DateTimeOffset? enabledOn = null, bool? isDeprecated = null, IEnumerable<string> replacedBy = null, IEnumerable<PlanExtension> extensions = null)
         {
             replacedBy ??= new List<string>();
+            extensions ??= new List<PlanExtension>();
 
-            return new SecurityCenterPricingData(id, name, resourceType, systemData, pricingTier, subPlan, freeTrialRemainingTime, isDeprecated, replacedBy?.ToList());
+            return new SecurityCenterPricingData(id, name, resourceType, systemData, pricingTier, subPlan, freeTrialRemainingTime, enabledOn, isDeprecated, replacedBy?.ToList(), extensions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PlanExtension. </summary>
+        /// <param name="name">
+        /// The extension name. Supported values are: &lt;br&gt;&lt;br&gt;**AgentlessDiscoveryForKubernetes** - API-based discovery of information about Kubernetes cluster architecture, workload objects, and setup. Required for Kubernetes inventory, identity and network exposure detection, attack path analysis and risk hunting as part of the cloud security explorer.
+        /// Available for CloudPosture plan.&lt;br&gt;&lt;br&gt;**OnUploadMalwareScanning** - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.
+        /// Available for StorageAccounts plan.&lt;br&gt;&lt;br&gt;**SensitiveDataDiscovery** - Sensitive data discovery identifies Blob storage container with sensitive data such as credentials, credit cards, and more, to help prioritize and investigate security events.
+        /// Available for StorageAccounts and CloudPosture plans.&lt;br&gt;&lt;br&gt;**ContainerRegistriesVulnerabilityAssessments** - Provides vulnerability management for images stored in your container registries.
+        /// Available for CloudPosture and Containers plans.
+        /// </param>
+        /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
+        /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
+        /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
+        /// <returns> A new <see cref="Models.PlanExtension"/> instance for mocking. </returns>
+        public static PlanExtension PlanExtension(string name = null, IsExtensionEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = null, ExtensionOperationStatus operationStatus = null)
+        {
+            additionalExtensionProperties ??= new Dictionary<string, BinaryData>();
+
+            return new PlanExtension(name, isEnabled, additionalExtensionProperties, operationStatus);
+        }
+
+        /// <summary> Initializes a new instance of ExtensionOperationStatus. </summary>
+        /// <param name="code"> The operation status code. </param>
+        /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
+        /// <returns> A new <see cref="Models.ExtensionOperationStatus"/> instance for mocking. </returns>
+        public static ExtensionOperationStatus ExtensionOperationStatus(ExtensionOperationStatusCode? code = null, string message = null)
+        {
+            return new ExtensionOperationStatus(code, message);
         }
 
         /// <summary> Initializes a new instance of AdvancedThreatProtectionSettingData. </summary>
