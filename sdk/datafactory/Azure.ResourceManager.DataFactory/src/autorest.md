@@ -12,11 +12,16 @@ namespace: Azure.ResourceManager.DataFactory
 require: https://github.com/Azure/azure-rest-api-specs/blob/6885351bec8d6a2cea85c5aa793e53616e5f517b/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - ChangeDataCapture_CreateOrUpdate  # Missing required property
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -32,7 +37,7 @@ format-by-name-rules:
   'sessionId': 'uuid'
   'dataFactoryLocation': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -210,7 +215,7 @@ rename-mapping:
   SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
   SelfHostedIntegrationRuntimeNode.expiryTime: ExpireOn
   SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId: -|uuid
-  SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: serviceUris
+  SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: ServiceUriStringList
   SubResourceDebugResource: DataFactoryDebugInfo
   SsisObjectMetadataListResponse: SsisObjectMetadataListResult
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult

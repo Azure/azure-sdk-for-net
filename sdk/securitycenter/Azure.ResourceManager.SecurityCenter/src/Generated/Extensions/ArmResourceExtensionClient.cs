@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, InformationProtectionPolicy.DeserializeInformationProtectionPolicy, InformationProtectionPoliciesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAssessmentAssessmentsRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAssessmentAssessmentsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAssessmentAssessmentsRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAssessmentAssessmentsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);
         }
     }
 }

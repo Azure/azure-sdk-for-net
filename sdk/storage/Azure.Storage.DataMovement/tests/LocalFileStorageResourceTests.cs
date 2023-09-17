@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Tests
             "C:\\Users\\user1\\Documents\file.txt",
             "C:\\Users\\user1\\Documents\file",
             "C:\\Users\\user1\\Documents\file\\",
-            "user1\\Documents\file\\",
+            "/user1/Documents/file/",
         };
 
         private void AllowReadData(string path, bool isDirectory, bool allowRead)
@@ -68,8 +68,7 @@ namespace Azure.Storage.DataMovement.Tests
                 LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
                 // Assert
-                Assert.AreEqual(path, storageResource.Path);
-                Assert.IsFalse(storageResource.CanProduceUri);
+                Assert.AreEqual(path, storageResource.Uri.LocalPath);
             }
         }
 
@@ -83,7 +82,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource("   "));
 
             Assert.Catch<ArgumentException>(() =>
-                new LocalFileStorageResource(default));
+                new LocalFileStorageResource((string)default));
         }
 
         [Test]
@@ -196,8 +195,8 @@ namespace Azure.Storage.DataMovement.Tests
                     stream,
                     streamLength: length,
                     overwrite: false,
-                    position: writePosition,
-                    completeLength: length);
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions() { Position = writePosition });
             }
 
             // Assert
@@ -220,7 +219,11 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 using (var stream = new MemoryStream(data))
                 {
-                    await storageResource.CopyFromStreamAsync(stream, length, false);
+                    await storageResource.CopyFromStreamAsync(
+                        stream: stream,
+                        streamLength: length,
+                        overwrite: false,
+                        completeLength: length);
                 }
             }
             catch (IOException ex)

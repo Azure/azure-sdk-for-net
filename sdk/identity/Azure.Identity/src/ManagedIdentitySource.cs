@@ -67,6 +67,17 @@ namespace Azure.Identity
                 exception = e;
             }
 
+            //This is a special case for Docker Desktop which responds with a 403 with a message that contains "A socket operation was attempted to an unreachable network"
+            // rather than just timing out, as expected.
+            if (response.Status == 403)
+            {
+                string message = response.Content.ToString();
+                if (message.Contains("A socket operation was attempted to an unreachable network"))
+                {
+                    throw new CredentialUnavailableException(UnexpectedResponse, new Exception(message));
+                }
+            }
+
             throw new RequestFailedException(response, exception);
         }
 

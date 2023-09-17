@@ -23,9 +23,9 @@ namespace Azure.AI.ContentSafety
     }
     public partial class AnalyzeImageOptions
     {
-        public AnalyzeImageOptions(Azure.AI.ContentSafety.ImageData image) { }
+        public AnalyzeImageOptions(Azure.AI.ContentSafety.ContentSafetyImageData image) { }
         public System.Collections.Generic.IList<Azure.AI.ContentSafety.ImageCategory> Categories { get { throw null; } }
-        public Azure.AI.ContentSafety.ImageData Image { get { throw null; } }
+        public Azure.AI.ContentSafety.ContentSafetyImageData Image { get { throw null; } }
     }
     public partial class AnalyzeImageResult
     {
@@ -103,6 +103,12 @@ namespace Azure.AI.ContentSafety
             V2023_04_30_Preview = 1,
         }
     }
+    public partial class ContentSafetyImageData
+    {
+        public ContentSafetyImageData() { }
+        public System.Uri BlobUrl { get { throw null; } set { } }
+        public System.BinaryData Content { get { throw null; } set { } }
+    }
     public partial class ImageAnalyzeSeverityResult
     {
         internal ImageAnalyzeSeverityResult() { }
@@ -128,12 +134,6 @@ namespace Azure.AI.ContentSafety
         public static implicit operator Azure.AI.ContentSafety.ImageCategory (string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentSafety.ImageCategory left, Azure.AI.ContentSafety.ImageCategory right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ImageData
-    {
-        public ImageData() { }
-        public System.Uri BlobUrl { get { throw null; } set { } }
-        public System.BinaryData Content { get { throw null; } set { } }
     }
     public partial class RemoveBlockItemsOptions
     {

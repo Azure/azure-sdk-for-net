@@ -48,13 +48,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/38635")]
         public async Task GetAndListOperations(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
 
             // Guarantee there is going to be at least one operation
-            var modelId = Recording.GenerateId();
-            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync();
 
             var modelOperationFromList = client.GetOperationsAsync().ToEnumerableAsync().Result;
             Assert.GreaterOrEqual(modelOperationFromList.Count, 1);
@@ -166,7 +166,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(model.ModelId);
             Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 if (model.ExpiresOn.HasValue)
                 {

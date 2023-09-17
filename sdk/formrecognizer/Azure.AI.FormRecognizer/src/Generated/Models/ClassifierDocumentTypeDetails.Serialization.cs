@@ -34,8 +34,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<AzureBlobContentSource> azureBlobSource = default;
-            Optional<AzureBlobFileListSource> azureBlobFileListSource = default;
+            Optional<BlobContentSource> azureBlobSource = default;
+            Optional<BlobFileListContentSource> azureBlobFileListSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBlobSource"u8))
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value);
+                    azureBlobSource = BlobContentSource.DeserializeBlobContentSource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureBlobFileListSource"u8))
@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    azureBlobFileListSource = DocumentAnalysis.AzureBlobFileListSource.DeserializeAzureBlobFileListSource(property.Value);
+                    azureBlobFileListSource = BlobFileListContentSource.DeserializeBlobFileListContentSource(property.Value);
                     continue;
                 }
             }
