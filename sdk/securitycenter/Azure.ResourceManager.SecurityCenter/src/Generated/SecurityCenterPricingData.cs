@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public SecurityCenterPricingData()
         {
             ReplacedBy = new ChangeTrackingList<string>();
-            Extensions = new ChangeTrackingList<Extension>();
+            Extensions = new ChangeTrackingList<PlanExtension>();
         }
 
         /// <summary> Initializes a new instance of SecurityCenterPricingData. </summary>
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="pricingTier"> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </param>
         /// <param name="subPlan"> The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied. </param>
         /// <param name="freeTrialRemainingTime"> The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S). </param>
-        /// <param name="enablementOn"> Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z). </param>
+        /// <param name="enabledOn"> Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z). </param>
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <param name="extensions"> Optional. List of extensions offered under a plan. </param>
-        internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterPricingTier? pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, bool? isDeprecated, IReadOnlyList<string> replacedBy, IList<Extension> extensions) : base(id, name, resourceType, systemData)
+        internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterPricingTier? pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enabledOn, bool? isDeprecated, IReadOnlyList<string> replacedBy, IList<PlanExtension> extensions) : base(id, name, resourceType, systemData)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;
             FreeTrialRemainingTime = freeTrialRemainingTime;
-            EnablementOn = enablementOn;
+            EnabledOn = enabledOn;
             IsDeprecated = isDeprecated;
             ReplacedBy = replacedBy;
             Extensions = extensions;
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S). </summary>
         public TimeSpan? FreeTrialRemainingTime { get; }
         /// <summary> Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z). </summary>
-        public DateTimeOffset? EnablementOn { get; }
+        public DateTimeOffset? EnabledOn { get; }
         /// <summary> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </summary>
         public bool? IsDeprecated { get; }
         /// <summary> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </summary>
         public IReadOnlyList<string> ReplacedBy { get; }
         /// <summary> Optional. List of extensions offered under a plan. </summary>
-        public IList<Extension> Extensions { get; }
+        public IList<PlanExtension> Extensions { get; }
     }
 }

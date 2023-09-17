@@ -76,6 +76,7 @@ rename-mapping:
   IoTSecuritySolutionModel: IotSecuritySolution
   MdeOnboardingData: MdeOnboarding
   Pricing.properties.deprecated: IsDeprecated
+  Pricing.properties.enablementTime: EnabledOn
   SecuritySubAssessment.properties.id: VulnerabilityId
   SecuritySubAssessment.properties.timeGenerated: GeneratedOn
   SecurityTask.properties.creationTimeUtc: CreatedOn
@@ -242,6 +243,10 @@ rename-mapping:
   InformationType: SecurityInformationTypeInfo
   InformationType.enabled: IsEnabled
   Rank: SensitivityLabelRank
+  Extension: PlanExtension
+  Code: ExtensionOperationStatusCode
+  OperationStatus: ExtensionOperationStatus
+  IsEnabled: IsExtensionEnabled
 
 prepend-rp-prefix:
   - CloudName

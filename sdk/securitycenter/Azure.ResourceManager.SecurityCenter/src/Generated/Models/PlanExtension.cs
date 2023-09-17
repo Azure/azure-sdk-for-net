@@ -12,9 +12,9 @@ using Azure.Core;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> A plan's extension properties. </summary>
-    public partial class Extension
+    public partial class PlanExtension
     {
-        /// <summary> Initializes a new instance of Extension. </summary>
+        /// <summary> Initializes a new instance of PlanExtension. </summary>
         /// <param name="name">
         /// The extension name. Supported values are: &lt;br&gt;&lt;br&gt;**AgentlessDiscoveryForKubernetes** - API-based discovery of information about Kubernetes cluster architecture, workload objects, and setup. Required for Kubernetes inventory, identity and network exposure detection, attack path analysis and risk hunting as part of the cloud security explorer.
         /// Available for CloudPosture plan.&lt;br&gt;&lt;br&gt;**OnUploadMalwareScanning** - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </param>
         /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Extension(string name, IsEnabled isEnabled)
+        public PlanExtension(string name, IsExtensionEnabled isEnabled)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AdditionalExtensionProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of Extension. </summary>
+        /// <summary> Initializes a new instance of PlanExtension. </summary>
         /// <param name="name">
         /// The extension name. Supported values are: &lt;br&gt;&lt;br&gt;**AgentlessDiscoveryForKubernetes** - API-based discovery of information about Kubernetes cluster architecture, workload objects, and setup. Required for Kubernetes inventory, identity and network exposure detection, attack path analysis and risk hunting as part of the cloud security explorer.
         /// Available for CloudPosture plan.&lt;br&gt;&lt;br&gt;**OnUploadMalwareScanning** - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
         /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
         /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
-        internal Extension(string name, IsEnabled isEnabled, IDictionary<string, BinaryData> additionalExtensionProperties, OperationStatus operationStatus)
+        internal PlanExtension(string name, IsExtensionEnabled isEnabled, IDictionary<string, BinaryData> additionalExtensionProperties, ExtensionOperationStatus operationStatus)
         {
             Name = name;
             IsEnabled = isEnabled;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         public string Name { get; set; }
         /// <summary> Indicates whether the extension is enabled. </summary>
-        public IsEnabled IsEnabled { get; set; }
+        public IsExtensionEnabled IsEnabled { get; set; }
         /// <summary>
         /// Property values associated with the extension.
         /// <para>
@@ -94,6 +94,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         public IDictionary<string, BinaryData> AdditionalExtensionProperties { get; }
         /// <summary> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </summary>
-        public OperationStatus OperationStatus { get; }
+        public ExtensionOperationStatus OperationStatus { get; }
     }
 }

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class Extension : IUtf8JsonSerializable
+    public partial class PlanExtension : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static Extension DeserializeExtension(JsonElement element)
+        internal static PlanExtension DeserializePlanExtension(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            IsEnabled isEnabled = default;
+            IsExtensionEnabled isEnabled = default;
             Optional<IDictionary<string, BinaryData>> additionalExtensionProperties = default;
-            Optional<OperationStatus> operationStatus = default;
+            Optional<ExtensionOperationStatus> operationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("isEnabled"u8))
                 {
-                    isEnabled = new IsEnabled(property.Value.GetString());
+                    isEnabled = new IsExtensionEnabled(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("additionalExtensionProperties"u8))
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    operationStatus = OperationStatus.DeserializeOperationStatus(property.Value);
+                    operationStatus = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property.Value);
                     continue;
                 }
             }
-            return new Extension(name, isEnabled, Optional.ToDictionary(additionalExtensionProperties), operationStatus.Value);
+            return new PlanExtension(name, isEnabled, Optional.ToDictionary(additionalExtensionProperties), operationStatus.Value);
         }
     }
 }

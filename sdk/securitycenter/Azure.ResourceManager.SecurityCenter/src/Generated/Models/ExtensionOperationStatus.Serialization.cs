@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class OperationStatus
+    public partial class ExtensionOperationStatus
     {
-        internal static OperationStatus DeserializeOperationStatus(JsonElement element)
+        internal static ExtensionOperationStatus DeserializeExtensionOperationStatus(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Code> code = default;
+            Optional<ExtensionOperationStatusCode> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    code = new Code(property.Value.GetString());
+                    code = new ExtensionOperationStatusCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new OperationStatus(Optional.ToNullable(code), message.Value);
+            return new ExtensionOperationStatus(Optional.ToNullable(code), message.Value);
         }
     }
 }

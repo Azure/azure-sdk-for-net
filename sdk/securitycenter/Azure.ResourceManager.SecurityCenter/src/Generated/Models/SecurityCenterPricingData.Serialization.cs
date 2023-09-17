@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<DateTimeOffset> enablementTime = default;
             Optional<bool> deprecated = default;
             Optional<IReadOnlyList<string>> replacedBy = default;
-            Optional<IList<Extension>> extensions = default;
+            Optional<IList<PlanExtension>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            List<Extension> array = new List<Extension>();
+                            List<PlanExtension> array = new List<PlanExtension>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Extension.DeserializeExtension(item));
+                                array.Add(PlanExtension.DeserializePlanExtension(item));
                             }
                             extensions = array;
                             continue;
