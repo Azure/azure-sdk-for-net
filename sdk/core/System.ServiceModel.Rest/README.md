@@ -17,6 +17,33 @@ it will be installed for you when you install one of the client libraries using 
 In case you want to install it explicitly (to implement your own client library, for example),
 you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core).
 
+### Install the package
+
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
+
+```dotnetcli
+dotnet add package Azure.Maps.Rendering --prerelease
+dotnet add package Azure.Maps.Routing --prerelease
+dotnet add package Azure.Maps.Search --prerelease
+dotnet add package Azure.Maps.Geolocation --prerelease
+```
+
+Azure.Maps.Common will be automatically installed when you install other packages.
+
+### Prerequisites
+
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://docs.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
+
+To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
+
+```powershell
+az maps account create --kind "Gen2" --account-name "myMapAccountName" --resource-group "<resource group>" --sku "G2"
+```
+
+### Authenticate the client
+
+There are 2 ways to authenticate the client: Shared key authentication and Azure AD. Please refer to each package's README for details.
+
 ## Key concepts
 
 The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.Core) include:
