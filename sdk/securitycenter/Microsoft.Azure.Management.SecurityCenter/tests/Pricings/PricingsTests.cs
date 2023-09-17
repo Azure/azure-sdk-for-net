@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Security;
@@ -70,37 +68,11 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var pricing = await securityCenterClient.Pricings.UpdateAsync("VirtualMachines", new Pricing("Standard"));
+                var pricing = await securityCenterClient.Pricings.UpdateAsync("VirtualMachines", "Standard");
                 ValidatePricing(pricing);
             }
         }
 
-        [Fact]
-        public void Pricings_GetSubscriptionPricingWithExtensions()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var securityCenterClient = GetSecurityCenterClient(context);
-                var pricing = securityCenterClient.Pricings.Get("CloudPosture");
-                ValidateExtensions(pricing);
-            }
-        }
-
-        [Fact]
-        public async Task Pricings_UpdateSubscriptionPricingExtension()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var securityCenterClient = GetSecurityCenterClient(context);
-                var extensions = new List<Extension>()
-                {
-                    new Extension("AgentlessVmScanning", "True"),
-                    new Extension("AgentlessDiscoveryForKubernetes", "False")
-                };
-                var pricing = await securityCenterClient.Pricings.UpdateAsync("CloudPosture", new Pricing("Standard", extensions: extensions));
-                ValidateExtensionsUpdate(pricing, extensions);
-            }
-        }
         #endregion
 
         #region Validations
@@ -116,24 +88,6 @@ namespace SecurityCenter.Tests
         {
             Assert.NotNull(pricing);
         }
-
-        private void ValidateExtensions(Pricing pricing)
-        {
-            Assert.NotNull(pricing);
-            Assert.NotNull(pricing.Extensions);
-            Assert.NotEmpty(pricing.Extensions);
-        }
-
-        private void ValidateExtensionsUpdate(Pricing pricing, List<Extension> desiredExtensions)
-        {
-            Assert.NotNull(pricing);
-            Assert.NotNull(pricing.Extensions);
-            Assert.NotEmpty(pricing.Extensions);
-            var flatenDesired = desiredExtensions.ToDictionary(extension => extension.Name, extension => extension);
-            var validExtensionsCount = pricing.Extensions.Where(extension => flatenDesired.ContainsKey(extension.Name) && flatenDesired[extension.Name].IsEnabled.Equals(extension.IsEnabled)).Count();
-            Assert.Equal(desiredExtensions.Count, validExtensionsCount);
-        }
-
 
         #endregion
     }
