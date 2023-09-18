@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public override async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
-            await OnJobStatusChangedAsync(DataTransferStatus.InProgress).ConfigureAwait(false);
+            await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
             int partNumber = 0;
 
             if (_jobParts.Count == 0)
@@ -106,9 +106,9 @@ namespace Azure.Storage.DataMovement
                 bool isFinalPartFound = false;
                 foreach (JobPartInternal part in _jobParts)
                 {
-                    if (part.JobPartStatus != DataTransferStatus.Completed)
+                    if (!part.JobPartStatus.HasCompletedSuccessfully)
                     {
-                        part.JobPartStatus = DataTransferStatus.Queued;
+                        part.JobPartStatus.TrySetTransferStateChange(DataTransferState.Queued);
                         yield return part;
 
                         if (part.IsFinalPart)

@@ -82,7 +82,7 @@ If for any reason there is an update to the build tools, you will then need to f
 
 We have created a dotnet template to make creating new management SDK library easier than ever.
 
-See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/main/eng/templates/README.md)].
+See [README file](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/templates/README.md).
 
 ----
 

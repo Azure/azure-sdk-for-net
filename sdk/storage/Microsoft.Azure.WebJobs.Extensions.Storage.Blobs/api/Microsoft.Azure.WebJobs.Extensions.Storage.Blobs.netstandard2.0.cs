@@ -54,5 +54,7 @@ namespace Microsoft.Extensions.Hosting
     public static partial class StorageBlobsWebJobsBuilderExtensions
     {
         public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddAzureStorageBlobs(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder, System.Action<Microsoft.Azure.WebJobs.Host.BlobsOptions> configureBlobs = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddAzureStorageBlobsScaleForTrigger(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder, Microsoft.Azure.WebJobs.Host.Scale.TriggerMetadata triggerMetadata) { throw null; }
     }
 }

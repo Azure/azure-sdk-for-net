@@ -8,7 +8,8 @@ azure-arm: true
 csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
-require: https://github.com/Azure/azure-rest-api-specs/blob/44e83346defd3d4ca99efade8b1ee90c67d9f249/specification/security/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/def187e2e78d7173d8fdd7f77740dd9719e1dfbf/specification/security/resource-manager/readme.md
+#tag: package-composite-v3
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -24,6 +25,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 keep-orphaned-models:
   - ExternalSecuritySolutionKind
@@ -72,6 +76,7 @@ rename-mapping:
   IoTSecuritySolutionModel: IotSecuritySolution
   MdeOnboardingData: MdeOnboarding
   Pricing.properties.deprecated: IsDeprecated
+  Pricing.properties.enablementTime: EnabledOn
   SecuritySubAssessment.properties.id: VulnerabilityId
   SecuritySubAssessment.properties.timeGenerated: GeneratedOn
   SecurityTask.properties.creationTimeUtc: CreatedOn
@@ -238,6 +243,10 @@ rename-mapping:
   InformationType: SecurityInformationTypeInfo
   InformationType.enabled: IsEnabled
   Rank: SensitivityLabelRank
+  Extension: PlanExtension
+  Code: ExtensionOperationStatusCode
+  OperationStatus: ExtensionOperationStatus
+  IsEnabled: IsExtensionEnabled
 
 prepend-rp-prefix:
   - CloudName
