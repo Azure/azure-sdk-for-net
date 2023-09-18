@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -16,7 +17,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of VirtualMachineResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
-        public VirtualMachineResourceSettings(string targetResourceName) : base(targetResourceName)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public VirtualMachineResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -13,7 +14,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of DiskEncryptionSetResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
-        public DiskEncryptionSetResourceSettings(string targetResourceName) : base(targetResourceName)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DiskEncryptionSetResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
             ResourceType = "Microsoft.Compute/diskEncryptionSets";

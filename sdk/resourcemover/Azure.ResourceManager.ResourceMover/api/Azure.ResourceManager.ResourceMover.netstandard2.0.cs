@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceProperties MoverResourceProperties(Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? provisioningState = default(Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState?), Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, Azure.Core.ResourceIdentifier existingTargetId = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings resourceSettings = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings sourceResourceSettings = null, Azure.ResourceManager.ResourceMover.Models.MoverResourcePropertiesMoveStatus moveStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceMover.Models.MoverResourceDependency> dependsOn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceMover.Models.MoverResourceDependencyOverride> dependsOnOverrides = null, bool? isResolveRequired = default(bool?), Azure.ResponseError errorsProperties = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourcePropertiesMoveStatus MoverResourcePropertiesMoveStatus(Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState? moveState = default(Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState?), Azure.ResourceManager.ResourceMover.Models.MoverResourceJobStatus jobStatus = null, Azure.ResponseError errorsProperties = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.MoverResourceSetData MoverResourceSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ResourceMover.Models.MoverResourceSetProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ResourceMover.Models.MoverResourceSetProperties MoverResourceSetProperties(Azure.Core.AzureLocation? sourceRegion = default(Azure.Core.AzureLocation?), Azure.Core.AzureLocation? targetRegion = default(Azure.Core.AzureLocation?), string moveRegion = null, Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? provisioningState = default(Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState?), string version = null, Azure.ResourceManager.ResourceMover.Models.MoveType? moveType = default(Azure.ResourceManager.ResourceMover.Models.MoveType?), Azure.ResponseError errorsProperties = null) { throw null; }
+        public static Azure.ResourceManager.ResourceMover.Models.MoverResourceSetProperties MoverResourceSetProperties(Azure.Core.AzureLocation? sourceLocation = default(Azure.Core.AzureLocation?), Azure.Core.AzureLocation? targetLocation = default(Azure.Core.AzureLocation?), Azure.Core.AzureLocation? moveLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? provisioningState = default(Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState?), string version = null, Azure.ResourceManager.ResourceMover.Models.MoveType? moveType = default(Azure.ResourceManager.ResourceMover.Models.MoveType?), Azure.ResponseError errorsProperties = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverResourceStatus MoverResourceStatus(Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState? moveState = default(Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveState?), Azure.ResourceManager.ResourceMover.Models.MoverResourceJobStatus jobStatus = null, Azure.ResponseError errorsProperties = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.MoverUnresolvedDependency MoverUnresolvedDependency(int? count = default(int?), Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.ResourceMover.Models.RequiredForResourcesList RequiredForResourcesList(System.Collections.Generic.IEnumerable<string> sourceIds = null) { throw null; }
@@ -137,10 +137,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class DiskEncryptionSetResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public DiskEncryptionSetResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public DiskEncryptionSetResourceSettings(string targetResourceName) { }
     }
     public partial class KeyVaultResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public KeyVaultResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public KeyVaultResourceSettings(string targetResourceName) { }
     }
     public partial class LoadBalancerBackendAddressPoolReferenceInfo : Azure.ResourceManager.ResourceMover.Models.ProxyResourceReferenceInfo
     {
@@ -167,6 +171,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class LoadBalancerResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public LoadBalancerResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public LoadBalancerResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerBackendAddressPoolResourceSettings> BackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.LoadBalancerFrontendIPConfigurationResourceSettings> FrontendIPConfigurations { get { throw null; } }
         public string Sku { get { throw null; } set { } }
@@ -176,6 +182,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverAvailabilitySetResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public MoverAvailabilitySetResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public MoverAvailabilitySetResourceSettings(string targetResourceName) { }
         public int? FaultDomain { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public int? UpdateDomain { get { throw null; } set { } }
@@ -453,17 +461,24 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverResourceSetProperties
     {
         public MoverResourceSetProperties() { }
+        public MoverResourceSetProperties(Azure.Core.AzureLocation sourceRegion, Azure.Core.AzureLocation targetRegion) { }
         public Azure.ResponseError ErrorsProperties { get { throw null; } }
-        public string MoveRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? MoveLocation { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoveType? MoveType { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.Core.AzureLocation? SourceRegion { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? TargetRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? SourceLocation { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Core.AzureLocation SourceRegion { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? TargetLocation { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Core.AzureLocation TargetRegion { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
     public abstract partial class MoverResourceSettings
     {
         protected MoverResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected MoverResourceSettings(string targetResourceName) { }
         public string TargetResourceGroupName { get { throw null; } set { } }
         public string TargetResourceName { get { throw null; } set { } }
     }
@@ -503,6 +518,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class MoverVirtualNetworkResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public MoverVirtualNetworkResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public MoverVirtualNetworkResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IList<string> AddressSpace { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } set { } }
         public bool? EnableDdosProtection { get { throw null; } set { } }
@@ -530,6 +547,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class NetworkInterfaceResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public NetworkInterfaceResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public NetworkInterfaceResourceSettings(string targetResourceName) { }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.NicIPConfigurationResourceSettings> IPConfigurations { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -537,6 +556,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class NetworkSecurityGroupResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public NetworkSecurityGroupResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public NetworkSecurityGroupResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ResourceMover.Models.NetworkSecurityGroupSecurityRule> SecurityRules { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -574,6 +595,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class PublicIPAddressResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public PublicIPAddressResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public PublicIPAddressResourceSettings(string targetResourceName) { }
         public string DomainNameLabel { get { throw null; } set { } }
         public string Fqdn { get { throw null; } set { } }
         public string PublicIPAllocationMethod { get { throw null; } set { } }
@@ -589,6 +612,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class ResourceGroupResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public ResourceGroupResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public ResourceGroupResourceSettings(string targetResourceName) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceZoneRedundantSetting : System.IEquatable<Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting>
@@ -611,18 +636,24 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class SqlDatabaseResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public SqlDatabaseResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public SqlDatabaseResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting? ZoneRedundant { get { throw null; } set { } }
     }
     public partial class SqlElasticPoolResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public SqlElasticPoolResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public SqlElasticPoolResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.ResourceMover.Models.ResourceZoneRedundantSetting? ZoneRedundant { get { throw null; } set { } }
     }
     public partial class SqlServerResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public SqlServerResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public SqlServerResourceSettings(string targetResourceName) { }
     }
     public partial class SubnetReferenceInfo : Azure.ResourceManager.ResourceMover.Models.ProxyResourceReferenceInfo
     {
@@ -638,6 +669,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
     public partial class VirtualMachineResourceSettings : Azure.ResourceManager.ResourceMover.Models.MoverResourceSettings
     {
         public VirtualMachineResourceSettings() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public VirtualMachineResourceSettings(string targetResourceName) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetAvailabilitySetId { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverTargetAvailabilityZone? TargetAvailabilityZone { get { throw null; } set { } }

@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -14,7 +15,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of SqlServerResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
-        public SqlServerResourceSettings(string targetResourceName) : base(targetResourceName)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public SqlServerResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
             ResourceType = "Microsoft.Sql/servers";

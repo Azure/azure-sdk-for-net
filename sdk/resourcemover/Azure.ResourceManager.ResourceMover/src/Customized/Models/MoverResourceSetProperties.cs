@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
         /// <param name="sourceRegion"> Gets or sets the source region. </param>
         /// <param name="targetRegion"> Gets or sets the target region. </param>
-        public MoverResourceSetProperties(AzureLocation sourceRegion, AzureLocation targetRegion)
+        public MoverResourceSetProperties(AzureLocation sourceRegion, AzureLocation targetRegion) : this()
         {
             SourceLocation = sourceRegion;
             TargetLocation = targetRegion;
