@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<bool> restrictOutboundNetworkAccess = default;
             Optional<IList<string>> allowedFqdnList = default;
             Optional<IotHubPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<IotHubIPFilterRule>> ipFilterRules = default;
+            Optional<IList<IPFilterRule>> ipFilterRules = default;
             Optional<IotHubNetworkRuleSetProperties> networkRuleSets = default;
             Optional<string> minTlsVersion = default;
             Optional<IList<IotHubPrivateEndpointConnectionData>> privateEndpointConnections = default;
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    List<IotHubIPFilterRule> array = new List<IotHubIPFilterRule>();
+                    List<IPFilterRule> array = new List<IPFilterRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubIPFilterRule.DeserializeIotHubIPFilterRule(item));
+                        array.Add(IPFilterRule.DeserializeIPFilterRule(item));
                     }
                     ipFilterRules = array;
                     continue;
