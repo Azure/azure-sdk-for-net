@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesIPRule : IUtf8JsonSerializable
+    public partial class IPRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteEndObject();
         }
 
-        internal static CognitiveServicesIPRule DeserializeCognitiveServicesIPRule(JsonElement element)
+        internal static IPRule DeserializeIPRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesIPRule(value);
+            return new IPRule(value);
         }
     }
 }
