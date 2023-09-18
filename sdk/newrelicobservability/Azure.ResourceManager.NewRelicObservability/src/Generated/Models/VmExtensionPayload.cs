@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Response of payload to be passed while installing VM agent. </summary>
-    public partial class NewRelicObservabilityVmExtensionPayload
+    public partial class VmExtensionPayload
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmExtensionPayload. </summary>
-        internal NewRelicObservabilityVmExtensionPayload()
+        /// <summary> Initializes a new instance of VmExtensionPayload. </summary>
+        internal VmExtensionPayload()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmExtensionPayload. </summary>
+        /// <summary> Initializes a new instance of VmExtensionPayload. </summary>
         /// <param name="ingestionKey"> Ingestion key of the account. </param>
-        internal NewRelicObservabilityVmExtensionPayload(string ingestionKey)
+        internal VmExtensionPayload(string ingestionKey)
         {
             IngestionKey = ingestionKey;
         }

@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityAppServiceInfo(azureResourceId, agentVersion, agentStatus);
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmInfo. </summary>
+        /// <summary> Initializes a new instance of VmInfo. </summary>
         /// <param name="vmId"> Azure VM resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the VM. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the VM. </param>
-        /// <returns> A new <see cref="Models.NewRelicObservabilityVmInfo"/> instance for mocking. </returns>
-        public static NewRelicObservabilityVmInfo NewRelicObservabilityVmInfo(ResourceIdentifier vmId = null, string agentVersion = null, string agentStatus = null)
+        /// <returns> A new <see cref="Models.VmInfo"/> instance for mocking. </returns>
+        public static VmInfo VmInfo(ResourceIdentifier vmId = null, string agentVersion = null, string agentStatus = null)
         {
-            return new NewRelicObservabilityVmInfo(vmId, agentVersion, agentStatus);
+            return new VmInfo(vmId, agentVersion, agentStatus);
         }
 
         /// <summary> Initializes a new instance of NewRelicResourceMonitorResult. </summary>
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityTagRuleData(id, name, resourceType, systemData, provisioningState, logRules, metricRules);
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmExtensionPayload. </summary>
+        /// <summary> Initializes a new instance of VmExtensionPayload. </summary>
         /// <param name="ingestionKey"> Ingestion key of the account. </param>
-        /// <returns> A new <see cref="Models.NewRelicObservabilityVmExtensionPayload"/> instance for mocking. </returns>
-        public static NewRelicObservabilityVmExtensionPayload NewRelicObservabilityVmExtensionPayload(string ingestionKey = null)
+        /// <returns> A new <see cref="Models.VmExtensionPayload"/> instance for mocking. </returns>
+        public static VmExtensionPayload VmExtensionPayload(string ingestionKey = null)
         {
-            return new NewRelicObservabilityVmExtensionPayload(ingestionKey);
+            return new VmExtensionPayload(ingestionKey);
         }
     }
 }
