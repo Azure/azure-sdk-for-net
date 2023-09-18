@@ -87,6 +87,7 @@ jobs:
           LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
       - script: >-
           dotnet pack eng/service.proj -warnaserror
+          /p:ValidateRunApiCompat=true
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeTests=false
