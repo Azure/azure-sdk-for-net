@@ -2,6 +2,5 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DataFactory.csproj" />
     <PackageReference Include="Azure.ResourceManager.Storage" />
-    <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 </Project>

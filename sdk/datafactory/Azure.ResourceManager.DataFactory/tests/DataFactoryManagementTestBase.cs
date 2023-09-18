@@ -171,21 +171,6 @@ namespace Azure.ResourceManager.DataFactory.Tests
             return pipeline.Value;
         }
 
-        protected async Task<string> CreateAzureBlobStorageResource(ResourceGroupResource resourceGroup, string storageAccountName, string containerName, string blobName)
-        {
-            StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, AzureLocation.WestUS2)
-            {
-                AccessTier = StorageAccountAccessTier.Hot,
-            };
-            var storage = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, data);
-            BlobContainerData blobContainerData = new BlobContainerData();
-            var containerResult = await storage.Value.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(Azure.WaitUntil.Completed, containerName, blobContainerData);
-            var key = await storage.Value.GetKeysAsync().FirstOrDefaultAsync(_ => true);
-            var storageConnectionString = $"DefaultEndpointsProtocol=https;AccountName={storageAccountName};AccountKey={key}";
-            BlobContainerClient container = new BlobContainerClient(storageConnectionString, containerName);
-            return key.Value;
-        }
-
         protected async Task<DataFactoryLinkedServiceResource> CreateAzureBlobStorageLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
         {
             AzureBlobStorageLinkedService azureBlobStorageLinkedService = new AzureBlobStorageLinkedService()

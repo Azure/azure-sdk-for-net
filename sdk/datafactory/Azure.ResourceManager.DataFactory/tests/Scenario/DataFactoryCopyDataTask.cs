@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
