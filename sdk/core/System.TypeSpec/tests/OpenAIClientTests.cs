@@ -24,8 +24,8 @@ public partial class OpenAIClientTests
     [Fact]
     public void Options()
     {
-        PipelineOptions.DefaultLoggingPolicy = new LoggingPolicy(isLoggingEnabled: true);
-        PipelineOptions.DefaultRetryPolicy = new RetryPolicy(maxRetries: 3);
+        RequestOptions.DefaultLoggingPolicy = new LoggingPolicy(isLoggingEnabled: true);
+        RequestOptions.DefaultRetryPolicy = new RetryPolicy(maxRetries: 3);
 
         var options = new OpenAIClientOptions();
         options.RetryPolicy = new CustomRetryPolicy();

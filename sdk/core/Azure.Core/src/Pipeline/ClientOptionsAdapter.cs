@@ -11,8 +11,8 @@ namespace Azure.Core.Pipeline
     {
         private class ClientOptionsAdapter : ClientOptions
         {
-            private PipelineOptions _options;
-            public ClientOptionsAdapter(PipelineOptions options)
+            private RequestOptions _options;
+            public ClientOptionsAdapter(RequestOptions options)
                 => _options = options;
         }
 

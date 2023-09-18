@@ -22,7 +22,7 @@ public class OpenAIClient
         _pipeline = HttpPipelineBuilder.Build(options);
     }
 
-    public Result<Completions> GetCompletions(string prompt, PipelineOptions options = default)
+    public Result<Completions> GetCompletions(string prompt, RequestOptions options = default)
     {
         options ??= _options;
 

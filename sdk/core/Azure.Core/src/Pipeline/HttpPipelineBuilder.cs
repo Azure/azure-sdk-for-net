@@ -20,7 +20,7 @@ namespace Azure.Core.Pipeline
         /// <param name="options"></param>
         /// <param name="perRetryPolicies"></param>
         /// <returns></returns>
-        public static HttpPipeline Build(PipelineOptions options, params PipelinePolicy[] perRetryPolicies)
+        public static HttpPipeline Build(RequestOptions options, params PipelinePolicy[] perRetryPolicies)
         {
             HttpPipelinePolicy[] adaptedPolicies = new HttpPipelinePolicy[perRetryPolicies.Length];
             for (int i=0; i<perRetryPolicies.Length; i++)

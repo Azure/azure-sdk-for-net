@@ -8,7 +8,7 @@ namespace System.ServiceModel.Rest;
 /// <summary>
 /// TBD.
 /// </summary>
-public class PipelineOptions // base of ClientOptions and RequestContext
+public class RequestOptions // base of ClientOptions and RequestContext
 {
     /// <summary>
     /// TBD.
