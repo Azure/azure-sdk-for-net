@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +364,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
     }
 }

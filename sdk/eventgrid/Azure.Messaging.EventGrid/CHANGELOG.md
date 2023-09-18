@@ -1,5 +1,26 @@
 # Release History
 
+## 4.19.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.18.0 (2023-09-12)
+
+### Features Added
+
+- Added new system events for Event Grid and App Configuration.
+- Added `Recipient` property to `AcsEmailEngagementTrackingReportReceivedEventData` event.
+
+### Breaking Changes
+
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
 ## 4.18.0-beta.1 (2023-07-16)
 
 ### Other Changes

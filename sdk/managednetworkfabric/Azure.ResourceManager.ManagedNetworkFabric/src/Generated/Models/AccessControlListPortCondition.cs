@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="portType"> Port type that needs to be matched. </param>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
-        /// <param name="portGroupNames"> List of the port Group Names that to be matched. </param>
-        /// <param name="flags"> List of protocol flags that needs to be matched. </param>
+        /// <param name="portGroupNames"> List of the port Group Names that need to be matched. </param>
+        /// <param name="flags"> List of protocol flags that need to be matched. </param>
         internal AccessControlListPortCondition(NetworkFabricPortType? portType, Layer4Protocol layer4Protocol, IList<string> ports, IList<string> portGroupNames, IList<string> flags) : base(portType, layer4Protocol, ports, portGroupNames)
         {
             Flags = flags;
         }
 
-        /// <summary> List of protocol flags that needs to be matched. </summary>
+        /// <summary> List of protocol flags that need to be matched. </summary>
         public IList<string> Flags { get; }
     }
 }

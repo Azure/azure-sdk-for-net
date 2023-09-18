@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual AsyncPageable<AvailableCluster> GetAvailableClusterRegionClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsClusterClustersRestClient.CreateListAvailableClusterRegionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AvailableCluster.DeserializeAvailableCluster, EventHubsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AvailableCluster.DeserializeAvailableCluster, EventHubsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Pageable<AvailableCluster> GetAvailableClusterRegionClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsClusterClustersRestClient.CreateListAvailableClusterRegionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AvailableCluster.DeserializeAvailableCluster, EventHubsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AvailableCluster.DeserializeAvailableCluster, EventHubsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventHubsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsClusterResource(Client, EventHubsClusterData.DeserializeEventHubsClusterData(e)), EventHubsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventHubsClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsClusterResource(Client, EventHubsClusterData.DeserializeEventHubsClusterData(e)), EventHubsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventHubsClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventHubsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsClusterResource(Client, EventHubsClusterData.DeserializeEventHubsClusterData(e)), EventHubsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventHubsClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsClusterResource(Client, EventHubsClusterData.DeserializeEventHubsClusterData(e)), EventHubsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventHubsClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventHubsNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsNamespaceResource(Client, EventHubsNamespaceData.DeserializeEventHubsNamespaceData(e)), EventHubsNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventHubsNamespaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsNamespaceResource(Client, EventHubsNamespaceData.DeserializeEventHubsNamespaceData(e)), EventHubsNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventHubsNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventHubsNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsNamespaceResource(Client, EventHubsNamespaceData.DeserializeEventHubsNamespaceData(e)), EventHubsNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventHubsNamespaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsNamespaceResource(Client, EventHubsNamespaceData.DeserializeEventHubsNamespaceData(e)), EventHubsNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventHubsNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

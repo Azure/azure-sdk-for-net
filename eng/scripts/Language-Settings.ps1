@@ -298,6 +298,7 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
     DocsMsReadMeName = $readmeName
     LatestReadMeLocation = 'api/overview/azure/latest'
     PreviewReadMeLocation = 'api/overview/azure/preview'
+    LegacyReadMeLocation = 'api/overview/azure/legacy'
     Suffix = ''
   }
 }
@@ -491,6 +492,25 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       # If we are in preview mode and the package does not have a superseding
       # preview version, remove the package from the list.
       Write-Host "Remove superseded preview package: $($package.Name)"
+      continue
+    }
+
+    if ($matchingPublishedPackage.Support -eq 'deprecated') { 
+      if ($Mode -eq 'legacy') { 
+
+        # Select the GA version, if none use the preview version
+        $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
+        if (!$updatedVersion) { 
+          $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
+        }
+        $package.Versions = @($updatedVersion)
+
+        Write-Host "Add deprecated package to legacy moniker: $($package.Name)"
+        $outputPackages += $package
+      } else { 
+        Write-Host "Removing deprecated package: $($package.Name)"
+      }
+
       continue
     }
 

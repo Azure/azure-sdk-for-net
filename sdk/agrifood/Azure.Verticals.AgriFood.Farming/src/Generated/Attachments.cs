@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -392,7 +393,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachmentsByPartyIdRequest(partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachmentsByPartyIdNextPageRequest(nextLink, partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -439,7 +440,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachmentsByPartyIdRequest(partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachmentsByPartyIdNextPageRequest(nextLink, partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetAttachmentsByPartyIdRequest(string partyId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)

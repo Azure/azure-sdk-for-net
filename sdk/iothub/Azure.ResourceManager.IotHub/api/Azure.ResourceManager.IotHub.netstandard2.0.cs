@@ -267,6 +267,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.RouteCompilationError RouteCompilationError(string message = null, Azure.ResourceManager.IotHub.Models.RouteErrorSeverity? severity = default(Azure.ResourceManager.IotHub.Models.RouteErrorSeverity?), Azure.ResourceManager.IotHub.Models.RouteErrorRange location = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RouteErrorPosition RouteErrorPosition(int? line = default(int?), int? column = default(int?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RouteErrorRange RouteErrorRange(Azure.ResourceManager.IotHub.Models.RouteErrorPosition start = null, Azure.ResourceManager.IotHub.Models.RouteErrorPosition end = null) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = null, string id = null, string subscriptionId = null, string resourceGroup = null, System.Uri endpointUri = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string primaryKey = null, string secondaryKey = null, string databaseName = null, string containerName = null, string partitionKeyName = null, string partitionKeyTemplate = null) { throw null; }
     }
     public partial class CloudToDeviceFeedbackQueueProperties
     {
@@ -924,9 +925,27 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator !=(Azure.ResourceManager.IotHub.Models.RouteErrorSeverity left, Azure.ResourceManager.IotHub.Models.RouteErrorSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class RoutingCosmosDBSqlApiProperties
+    {
+        public RoutingCosmosDBSqlApiProperties(string name, System.Uri endpointUri, string databaseName, string containerName) { }
+        public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } set { } }
+        public string DatabaseName { get { throw null; } set { } }
+        public System.Uri EndpointUri { get { throw null; } set { } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public string PartitionKeyName { get { throw null; } set { } }
+        public string PartitionKeyTemplate { get { throw null; } set { } }
+        public string PrimaryKey { get { throw null; } set { } }
+        public string ResourceGroup { get { throw null; } set { } }
+        public string SecondaryKey { get { throw null; } set { } }
+        public string SubscriptionId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
+    }
     public partial class RoutingEndpoints
     {
         public RoutingEndpoints() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.RoutingCosmosDBSqlApiProperties> CosmosDBSqlContainers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.RoutingEventHubProperties> EventHubs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.RoutingServiceBusQueueEndpointProperties> ServiceBusQueues { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.RoutingServiceBusTopicEndpointProperties> ServiceBusTopics { get { throw null; } }

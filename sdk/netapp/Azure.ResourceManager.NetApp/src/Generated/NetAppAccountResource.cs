@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -653,7 +654,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeGroupVolumeGroupsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -674,7 +675,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeGroupVolumeGroupsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
