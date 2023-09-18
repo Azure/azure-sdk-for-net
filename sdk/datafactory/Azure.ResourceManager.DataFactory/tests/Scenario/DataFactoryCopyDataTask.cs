@@ -31,7 +31,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         private string _azureDataLakeGen2SourceName;
         private string _azureDataLakeGen2SinkName;
 
-        public DataFactoryCopyDataTask(bool isAsync) : base(isAsync) { }
+        public DataFactoryCopyDataTask(bool isAsync) : base(isAsync)
+        {
+            JsonPathSanitizers.Add("$..value");
+            JsonPathSanitizers.Add("$..encryptedCredential");
+            JsonPathSanitizers.Add("$..url");
+            JsonPathSanitizers.Add("$..accountKey");
+        }
 
         [OneTimeSetUp]
         public async Task GlobalSetUp()

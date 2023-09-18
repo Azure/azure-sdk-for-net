@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        private async Task CreateOrUpdate()
+        public async Task CreateOrUpdate()
         {
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
             var integrationRuntime = await CreateDefaultManagedIntegrationRuntime(integrationRuntimeName);

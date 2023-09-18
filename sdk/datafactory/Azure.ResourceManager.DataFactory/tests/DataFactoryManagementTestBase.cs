@@ -14,7 +14,6 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
-using Azure.Storage.Blobs;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests
