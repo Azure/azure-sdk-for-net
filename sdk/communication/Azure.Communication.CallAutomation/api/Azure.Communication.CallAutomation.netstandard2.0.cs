@@ -1,5 +1,12 @@
 namespace Azure.Communication.CallAutomation
 {
+    public partial class AddParticipantCancelled : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal AddParticipantCancelled() { }
+        public string InvitationId { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public static Azure.Communication.CallAutomation.AddParticipantCancelled Deserialize(string content) { throw null; }
+    }
     public partial class AddParticipantEventResult
     {
         internal AddParticipantEventResult() { }
@@ -389,6 +396,21 @@ namespace Azure.Communication.CallAutomation
         internal CallTransferFailed() { }
         public static Azure.Communication.CallAutomation.CallTransferFailed Deserialize(string content) { throw null; }
     }
+    public partial class CancelAddParticipantEventResult
+    {
+        internal CancelAddParticipantEventResult() { }
+        public Azure.Communication.CallAutomation.CancelAddParticipantFailed FailureResult { get { throw null; } }
+        public string InvitationId { get { throw null; } }
+        public bool IsSuccess { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public Azure.Communication.CallAutomation.AddParticipantCancelled SuccessResult { get { throw null; } }
+    }
+    public partial class CancelAddParticipantFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal CancelAddParticipantFailed() { }
+        public string InvitationId { get { throw null; } }
+        public static Azure.Communication.CallAutomation.CancelAddParticipantFailed Deserialize(string content) { throw null; }
+    }
     public partial class CancelAddParticipantOptions
     {
         public CancelAddParticipantOptions(string invitationId) { }
@@ -401,8 +423,8 @@ namespace Azure.Communication.CallAutomation
         internal CancelAddParticipantResult() { }
         public string InvitationId { get { throw null; } }
         public string OperationContext { get { throw null; } }
-        public Azure.Communication.CallAutomation.AddParticipantEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AddParticipantEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.Communication.CallAutomation.CancelAddParticipantEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CancelAddParticipantEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CancelAllMediaOperationsEventResult
     {
@@ -439,6 +461,7 @@ namespace Azure.Communication.CallAutomation
     }
     public static partial class CommunicationCallAutomationModelFactory
     {
+        public static Azure.Communication.CallAutomation.AddParticipantCancelled AddParticipantCancelled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string invitationId = null, Azure.Communication.CommunicationIdentifier participant = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.AddParticipantFailed AddParticipantFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CommunicationIdentifier participant = null) { throw null; }
         public static Azure.Communication.CallAutomation.AddParticipantResult AddParticipantsResult(Azure.Communication.CallAutomation.CallParticipant participant = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.AddParticipantSucceeded AddParticipantSucceeded(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CommunicationIdentifier participant = null) { throw null; }
@@ -449,6 +472,8 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.CallParticipant CallParticipant(Azure.Communication.CommunicationIdentifier identifier = null, bool isMuted = false) { throw null; }
         public static Azure.Communication.CallAutomation.CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CommunicationIdentifier transferee = null, Azure.Communication.CommunicationIdentifier transferTarget = null) { throw null; }
         public static Azure.Communication.CallAutomation.CallTransferFailed CallTransferFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
+        public static Azure.Communication.CallAutomation.CancelAddParticipantFailed CancelAddParticipantFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string invitationId = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string operationContext = null) { throw null; }
+        public static Azure.Communication.CallAutomation.CancelAddParticipantResult CancelAddParticipantResult(string invitationId = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null) { throw null; }
         public static Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.DtmfTone> tones = null) { throw null; }
         public static Azure.Communication.CallAutomation.ContinuousDtmfRecognitionStopped ContinuousDtmfRecognitionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
