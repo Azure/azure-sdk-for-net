@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertType))
+            if (Optional.IsDefined(CostManagementAlertType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(AlertType.Value.ToString());
+                writer.WriteStringValue(CostManagementAlertType.Value.ToString());
             }
             if (Optional.IsDefined(Category))
             {

@@ -490,8 +490,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="timeoutInSeconds"> Run timeout in seconds. </param>
         /// <param name="step">
         /// The properties of a task step.
-        /// Please note <see cref="ContainerRegistryTaskStepProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryEncodedTaskStep"/> and <see cref="ContainerRegistryFileTaskStep"/>.
+        /// Please note <see cref="Models.ContainerRegistryTaskStepProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ContainerRegistryDockerBuildStep"/>, <see cref="Models.ContainerRegistryEncodedTaskStep"/> and <see cref="Models.ContainerRegistryFileTaskStep"/>.
         /// </param>
         /// <param name="trigger"> The properties that describe all triggers for the task. </param>
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
@@ -506,16 +506,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
-        /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
+        /// <param name="stepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTaskStepProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(string containerRegistryTaskStepType = "Unknown", IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null)
+        public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(string stepType = "Unknown", IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null)
         {
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
 
-            return new UnknownTaskStepProperties(containerRegistryTaskStepType, baseImageDependencies?.ToList(), contextPath, contextAccessToken);
+            return new UnknownTaskStepProperties(stepType, baseImageDependencies?.ToList(), contextPath, contextAccessToken);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryBaseImageDependency. </summary>

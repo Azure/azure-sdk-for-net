@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
     /// Serialized Name: FirewallAllowAzureIpsState
     /// </summary>
-    public enum DataLakeAnalyticsFirewallAllowAzureIPsState
+    public enum FirewallAllowAzureIPsState
     {
         /// <summary>
         /// Enabled
