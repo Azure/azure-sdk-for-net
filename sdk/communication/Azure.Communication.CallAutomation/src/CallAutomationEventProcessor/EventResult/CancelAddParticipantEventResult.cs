@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
         public CancelAddParticipantFailed FailureResult { get; }
 
         /// <summary>
-        /// <see cref="CommunicationIdentifier"/> Participant whoose invitation was cancelled. Only applicable for 
+        /// <see cref="CommunicationIdentifier"/> Participant whoose invitation was cancelled. Only applicable for
         /// <see cref="AddParticipantCancelled"/> event
         /// </summary>
         public CommunicationIdentifier Participant { get; }
