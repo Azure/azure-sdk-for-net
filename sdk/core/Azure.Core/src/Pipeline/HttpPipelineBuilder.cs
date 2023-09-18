@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Factory for creating instances of <see cref="HttpPipeline"/> populated with default policies.
     /// </summary>
-    public static class HttpPipelineBuilder
+    public static partial class HttpPipelineBuilder
     {
         /// <summary>
         /// TBD.
@@ -23,14 +23,12 @@ namespace Azure.Core.Pipeline
         public static HttpPipeline Build(PipelineOptions options, params PipelinePolicy[] perRetryPolicies)
         {
             HttpPipelinePolicy[] adaptedPolicies = new HttpPipelinePolicy[perRetryPolicies.Length];
+            for (int i=0; i<perRetryPolicies.Length; i++)
+            {
+                adaptedPolicies[i]= new PolicyAdapter(perRetryPolicies[i]);
+            }
             ClientOptions adaptedOptions = new ClientOptionsAdapter(options);
             return Build(adaptedOptions, Array.Empty<HttpPipelinePolicy>(), adaptedPolicies, ResponseClassifier.Shared);
-        }
-        private class ClientOptionsAdapter : ClientOptions
-        {
-            private PipelineOptions _options;
-            public ClientOptionsAdapter(PipelineOptions options)
-                => _options = options;
         }
 
         /// <summary>

@@ -13,15 +13,19 @@ public class OpenAIClient
 {
     private readonly HttpPipeline _pipeline;
     private readonly KeyCredential _credential;
+    private readonly OpenAIClientOptions _options;
 
-    public OpenAIClient(KeyCredential credential, OpenAIOptions options = default)
+    public OpenAIClient(KeyCredential credential, OpenAIClientOptions options = default)
     {
+        _options = options;
         _credential = credential;
         _pipeline = HttpPipelineBuilder.Build(options);
     }
 
-    public Result<Completions> GetCompletions(string prompt, OpenAIOptions options = default)
+    public Result<Completions> GetCompletions(string prompt, PipelineOptions options = default)
     {
+        options ??= _options;
+
         HttpMessage message = _pipeline.CreateMessage();
         message.BufferResponse = true;
         Request request = message.Request;

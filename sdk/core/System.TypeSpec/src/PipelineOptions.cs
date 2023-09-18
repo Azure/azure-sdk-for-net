@@ -13,7 +13,7 @@ public class PipelineOptions // base of ClientOptions and RequestContext
     /// <summary>
     /// TBD.
     /// </summary>
-    public CancellationToken CancellationToken { get; set; }
+    public CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
 
     /// <summary>
     /// TBD.
@@ -34,4 +34,9 @@ public class PipelineOptions // base of ClientOptions and RequestContext
     /// TBD.
     /// </summary>
     public static PipelinePolicy DefaultLoggingPolicy { get; set; } = new LoggingPolicy();
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public static CancellationToken DefaultCancellationToken { get; set; } = CancellationToken.None;
 }

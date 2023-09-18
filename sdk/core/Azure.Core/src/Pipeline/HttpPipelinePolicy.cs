@@ -76,28 +76,5 @@ namespace Azure.Core.Pipeline
         {
             pipeline.Span[0].Process(message, pipeline.Slice(1));
         }
-
-        /// <summary>
-        /// Invokes the next <see cref="HttpPipelinePolicy"/> in the <paramref name="pipeline"/>.
-        /// </summary>
-        /// <param name="message">The <see cref="HttpMessage"/> next policy would be applied to.</param>
-        /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after next one.</param>
-        /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        protected static ValueTask ProcessNextAsync(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
-        {
-            if (!pipeline.MoveNext()) return default(ValueTask);
-            return pipeline.Current.ProcessAsync(message, pipeline);
-        }
-
-        /// <summary>
-        /// Invokes the next <see cref="HttpPipelinePolicy"/> in the <paramref name="pipeline"/>.
-        /// </summary>
-        /// <param name="message">The <see cref="HttpMessage"/> next policy would be applied to.</param>
-        /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after next one.</param>
-        protected static void ProcessNext(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
-        {
-            if (!pipeline.MoveNext()) return;
-            pipeline.Current.ProcessAsync(message, pipeline);
-        }
     }
 }
