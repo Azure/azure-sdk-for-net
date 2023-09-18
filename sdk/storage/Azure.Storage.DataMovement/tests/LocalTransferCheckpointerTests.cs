@@ -14,6 +14,8 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class LocalTransferCheckpointerTests : DataMovementTestBase
     {
+        private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferState.Completed, false, false);
+
         public LocalTransferCheckpointerTests(bool async)
             : base(async, null)
         {
@@ -796,7 +798,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
             int chunksTotal = 1;
-            DataTransferStatus newStatus = DataTransferStatus.Completed;
+            DataTransferStatus newStatus = SuccessfulCompletedStatus;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
@@ -838,7 +840,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
             int chunksTotal = 1;
-            DataTransferStatus newStatus = DataTransferStatus.Completed;
+            DataTransferStatus newStatus = SuccessfulCompletedStatus;
             JobPartPlanHeader header1 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 0);
@@ -947,7 +949,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
             int partNumber = 0;
-            DataTransferStatus newStatus = DataTransferStatus.Completed;
+            DataTransferStatus newStatus = SuccessfulCompletedStatus;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
@@ -969,7 +971,7 @@ namespace Azure.Storage.DataMovement.Tests
             int partNumber = 0;
             int chunksTotal = 1;
             // originally the default is set to Queued
-            DataTransferStatus newStatus = DataTransferStatus.Completed;
+            DataTransferStatus newStatus = SuccessfulCompletedStatus;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
@@ -1012,7 +1014,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
             // originally the default is set to Queued
-            DataTransferStatus newStatus = DataTransferStatus.Completed;
+            DataTransferStatus newStatus = SuccessfulCompletedStatus;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);

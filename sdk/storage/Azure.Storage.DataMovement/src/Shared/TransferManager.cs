@@ -260,7 +260,7 @@ namespace Azure.Storage.DataMovement
         /// If specified, the returned list of transfers will have only have the transfers
         /// of which match the status specified.
         ///
-        /// If not specified or specified to <see cref="DataTransferStatus.None"/>,
+        /// If not specified or specified to <see cref="DataTransferState.None"/>,
         /// all transfers will be returned regardless of status.
         /// </param>
         /// <returns></returns>

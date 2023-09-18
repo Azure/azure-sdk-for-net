@@ -14,6 +14,14 @@ namespace Azure.Storage.DataMovement.Tests
     /// </summary>
     public class GetTransfersTests
     {
+        private static DataTransferStatus QueuedStatus => new DataTransferStatus(DataTransferState.Queued, false, false);
+        private static DataTransferStatus InProgressStatus => new DataTransferStatus(DataTransferState.InProgress, false, false);
+        private static DataTransferStatus PausedStatus => new DataTransferStatus(DataTransferState.Paused, false, false);
+        private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferState.Completed, false, false);
+        private static DataTransferStatus FailedCompletedStatus => new DataTransferStatus(DataTransferState.Completed, true, false);
+        private static DataTransferStatus SkippedCompletedStatus => new DataTransferStatus(DataTransferState.Completed, true, false);
+        private static DataTransferStatus FailedSkippedCompletedStatus => new DataTransferStatus(DataTransferState.Completed, true, false);
+
         private TransferManagerOptions GetDefaultManagerOptions(string checkpointerPath) =>
             new TransferManagerOptions()
             {
@@ -38,7 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         private DataTransfer GetNewDataTransfer(
-            DataTransferStatus status = DataTransferStatus.Queued)
+            DataTransferStatus status = default)
         {
             return new DataTransfer(
                 id: Guid.NewGuid().ToString(),
@@ -83,38 +91,41 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase(DataTransferStatus.Queued)]
-        [TestCase(DataTransferStatus.InProgress)]
-        [TestCase(DataTransferStatus.Paused)]
-        [TestCase(DataTransferStatus.Completed)]
-        [TestCase(DataTransferStatus.CompletedWithFailedTransfers)]
-        public async Task GetTransfers_Filtered(DataTransferStatus status)
+        [TestCase(DataTransferState.Queued, false, false)]
+        [TestCase(DataTransferState.InProgress, false, false)]
+        [TestCase(DataTransferState.Paused, false, false)]
+        [TestCase(DataTransferState.Completed, false, false)]
+        [TestCase(DataTransferState.Completed, true, false)]
+        public async Task GetTransfers_Filtered(
+            DataTransferState state,
+            bool hasFailedItems,
+            bool hasSkippedItems)
         {
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             // Arrange - Set up transfer manager with multiple transfers
             List<DataTransfer> storedTransfers = new List<DataTransfer>
             {
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.InProgress),
-                GetNewDataTransfer(DataTransferStatus.InProgress),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.Completed),
-                GetNewDataTransfer(DataTransferStatus.Completed),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(InProgressStatus),
+                GetNewDataTransfer(InProgressStatus),
+                GetNewDataTransfer(PausedStatus),
+                GetNewDataTransfer(PausedStatus),
+                GetNewDataTransfer(FailedCompletedStatus),
+                GetNewDataTransfer(FailedCompletedStatus),
+                GetNewDataTransfer(FailedCompletedStatus),
+                GetNewDataTransfer(SuccessfulCompletedStatus),
+                GetNewDataTransfer(SuccessfulCompletedStatus),
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
-            DataTransferStatus[] statuses = new DataTransferStatus[] { status };
-            IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
+            DataTransferStatus status = new DataTransferStatus(state, hasFailedItems, hasSkippedItems);
+            IList<DataTransfer> result = await manager.GetTransfersAsync(status).ToListAsync();
 
             // Assert
             AssertListTransfersEquals(storedTransfers.Where( d => d.TransferStatus == status).ToList(), result);
@@ -127,20 +138,20 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange - Set up transfer manager with multiple transfers
             List<DataTransfer> storedTransfers = new List<DataTransfer>
             {
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.InProgress),
-                GetNewDataTransfer(DataTransferStatus.InProgress),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.Completed),
-                GetNewDataTransfer(DataTransferStatus.Completed),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithSkippedTransfers)
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(InProgressStatus),
+                GetNewDataTransfer(InProgressStatus),
+                GetNewDataTransfer(PausedStatus),
+                GetNewDataTransfer(PausedStatus),
+                GetNewDataTransfer(FailedCompletedStatus),
+                GetNewDataTransfer(FailedCompletedStatus),
+                GetNewDataTransfer(FailedCompletedStatus),
+                GetNewDataTransfer(SuccessfulCompletedStatus),
+                GetNewDataTransfer(SuccessfulCompletedStatus),
+                GetNewDataTransfer(SkippedCompletedStatus)
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
@@ -148,9 +159,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             DataTransferStatus[] statuses = new DataTransferStatus[] {
-                DataTransferStatus.Completed,
-                DataTransferStatus.CompletedWithFailedTransfers,
-                DataTransferStatus.CompletedWithSkippedTransfers };
+                SuccessfulCompletedStatus,
+                FailedCompletedStatus,
+                SkippedCompletedStatus };
             IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
 
             // Assert
@@ -164,26 +175,26 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange - Set up transfer manager with multiple transfers
             List<DataTransfer> storedTransfers = new List<DataTransfer>
             {
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.Queued),
-                GetNewDataTransfer(DataTransferStatus.InProgress),
-                GetNewDataTransfer(DataTransferStatus.InProgress),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.Completed),
-                GetNewDataTransfer(DataTransferStatus.Completed),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(QueuedStatus),
+                GetNewDataTransfer(InProgressStatus),
+                GetNewDataTransfer(InProgressStatus),
+                GetNewDataTransfer(PausedStatus),
+                GetNewDataTransfer(PausedStatus),
+                GetNewDataTransfer(FailedCompletedStatus),
+                GetNewDataTransfer(FailedCompletedStatus),
+                GetNewDataTransfer(FailedCompletedStatus),
+                GetNewDataTransfer(SuccessfulCompletedStatus),
+                GetNewDataTransfer(SuccessfulCompletedStatus),
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act - With a transfer status not in the above stored transfers
-            DataTransferStatus[] statuses = new DataTransferStatus[] { DataTransferStatus.CancellationInProgress };
+            DataTransferStatus[] statuses = new DataTransferStatus[] { new DataTransferStatus(DataTransferState.Stopping, true, false) };
             IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
 
             // Assert
@@ -275,7 +286,7 @@ namespace Azure.Storage.DataMovement.Tests
                 test.DirectoryPath,
                 transferId1,
                 3 /* jobPartCount */,
-                DataTransferStatus.Completed);
+                SuccessfulCompletedStatus);
 
             string transferId2 = Guid.NewGuid().ToString();
             factory.CreateStubJobPlanFile(test.DirectoryPath, transferId2);
@@ -283,7 +294,7 @@ namespace Azure.Storage.DataMovement.Tests
                 test.DirectoryPath,
                 transferId2,
                 3 /* jobPartCount */,
-                DataTransferStatus.Queued);
+                QueuedStatus);
 
             // Build TransferManager with the stored transfers
             TransferManagerOptions options = new TransferManagerOptions()
@@ -331,7 +342,7 @@ namespace Azure.Storage.DataMovement.Tests
                     checkpointerPath,
                     properties.TransferId,
                     numParts, /* jobPartCount */
-                    DataTransferStatus.InProgress,
+                    InProgressStatus,
                     sourcePaths,
                     destinationPaths,
                     sourceResourceId: properties.SourceTypeId,
@@ -343,7 +354,7 @@ namespace Azure.Storage.DataMovement.Tests
                     checkpointerPath,
                     properties.TransferId,
                     1, /* jobPartCount */
-                    DataTransferStatus.InProgress,
+                    InProgressStatus,
                     new List<string> { properties.SourcePath },
                     new List<string> { properties.DestinationPath },
                     sourceResourceId: properties.SourceTypeId,

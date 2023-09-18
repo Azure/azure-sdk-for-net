@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             bool isFinalPart,
-            DataTransferStatus jobPartStatus = DataTransferStatus.Queued,
+            DataTransferStatus jobPartStatus = default,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
@@ -147,7 +147,7 @@ namespace Azure.Storage.DataMovement
         {
             // we can default the length to 0 because we know the destination is local and
             // does not require a length to be created.
-            await OnTransferStatusChanged(DataTransferStatus.InProgress).ConfigureAwait(false);
+            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.Storage.DataMovement
                 }
                 else
                 {
-                    await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                    await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -340,7 +340,7 @@ namespace Azure.Storage.DataMovement
                 await DisposeHandlers().ConfigureAwait(false);
 
                 // Update the transfer status
-                await OnTransferStatusChanged(DataTransferStatus.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -512,7 +512,7 @@ namespace Azure.Storage.DataMovement
             }
             else
             {
-                await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
         }
     }

@@ -70,17 +70,25 @@ namespace Azure.Storage.DataMovement
         public virtual string SourceTypeId { get { throw null; } }
         public virtual string TransferId { get { throw null; } }
     }
-    public enum DataTransferStatus
+    public enum DataTransferState
     {
         None = 0,
         Queued = 1,
         InProgress = 2,
-        Paused = 3,
-        Completed = 4,
-        CompletedWithSkippedTransfers = 5,
-        CompletedWithFailedTransfers = 6,
-        PauseInProgress = 7,
-        CancellationInProgress = 8,
+        Pausing = 3,
+        Stopping = 4,
+        Paused = 5,
+        Completed = 6,
+    }
+    public partial class DataTransferStatus : System.IEquatable<Azure.Storage.DataMovement.DataTransferStatus>
+    {
+        protected internal DataTransferStatus() { }
+        protected internal DataTransferStatus(Azure.Storage.DataMovement.DataTransferState state, bool hasFailureItems, bool hasSkippedItems) { }
+        public bool HasCompletedSuccessfully { get { throw null; } }
+        public bool HasFailedItems { get { throw null; } }
+        public bool HasSkippedItems { get { throw null; } }
+        public Azure.Storage.DataMovement.DataTransferState State { get { throw null; } }
+        public bool Equals(Azure.Storage.DataMovement.DataTransferStatus other) { throw null; }
     }
     public partial class LocalFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
@@ -213,6 +221,6 @@ namespace Azure.Storage.DataMovement
     public partial class TransferStatusEventArgs : Azure.Storage.DataMovement.DataTransferEventArgs
     {
         public TransferStatusEventArgs(string transferId, Azure.Storage.DataMovement.DataTransferStatus transferStatus, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
-        public Azure.Storage.DataMovement.DataTransferStatus StorageTransferStatus { get { throw null; } }
+        public Azure.Storage.DataMovement.DataTransferStatus TransferStatus { get { throw null; } }
     }
 }
