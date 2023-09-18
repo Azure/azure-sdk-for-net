@@ -4,7 +4,7 @@
 using System;
 using System.Buffers;
 using System.IO;
-using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using System.Text;
 using System.Text.Json;
 using System.Threading;

@@ -8,7 +8,7 @@ namespace System.ServiceModel.Rest
     /// <summary>
     /// TODO
     /// </summary>
-    public class ServiceErrorException : Exception
+    public class RequestErrorException : Exception
     {
         /// <summary>
         /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
@@ -19,7 +19,7 @@ namespace System.ServiceModel.Rest
         /// TBD
         /// </summary>
         /// <param name="result"></param>
-        public ServiceErrorException(Result result) : base(GetMessageFromResult(result))
+        public RequestErrorException(Result result) : base(GetMessageFromResult(result))
         {
             Status = result.Status;
         }
@@ -30,7 +30,7 @@ namespace System.ServiceModel.Rest
         /// <param name="result"></param>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
-        protected ServiceErrorException(Result result, string message, Exception? innerException)
+        protected RequestErrorException(Result result, string message, Exception? innerException)
             // TODO: what is the actual behavior of the EBN RFE constructor that takes both erroCode and message?
             // Duplicate that here.
             : base(message, innerException)
@@ -49,7 +49,7 @@ namespace System.ServiceModel.Rest
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
-        protected ServiceErrorException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected RequestErrorException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             Status = info.GetInt32(nameof(Status));
         }

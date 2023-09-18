@@ -19,7 +19,7 @@ namespace Azure
     /// An exception thrown when service request fails.
     /// </summary>
     [Serializable]
-    public class RequestFailedException : ServiceErrorException, ISerializable
+    public class RequestFailedException : RequestErrorException, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
 
