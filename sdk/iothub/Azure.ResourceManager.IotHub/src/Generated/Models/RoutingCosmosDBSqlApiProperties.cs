@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </summary>
         public string Name { get; set; }
         /// <summary> Id of the cosmos DB sql container endpoint. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
         /// <summary> The subscription identifier of the cosmos DB account. </summary>
         public string SubscriptionId { get; set; }
         /// <summary> The name of the resource group of the cosmos DB account. </summary>

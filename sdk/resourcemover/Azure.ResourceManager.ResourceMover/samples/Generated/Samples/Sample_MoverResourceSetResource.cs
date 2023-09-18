@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_MoveCollectionsUpdate()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Update.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Update.json
             // this example is just showing the usage of "MoveCollections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MoveCollectionsGet()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Get.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Get.json
             // this example is just showing the usage of "MoveCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Prepare_MoveCollectionsPrepare()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Prepare.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Prepare.json
             // this example is just showing the usage of "MoveCollections_Prepare" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,7 +130,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task InitiateMove_MoveCollectionsInitiateMove()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_InitiateMove.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_InitiateMove.json
             // this example is just showing the usage of "MoveCollections_InitiateMove" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Commit_MoveCollectionsCommit()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Commit.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Commit.json
             // this example is just showing the usage of "MoveCollections_Commit" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -200,7 +200,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Discard_MoveCollectionsDiscard()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Discard.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Discard.json
             // this example is just showing the usage of "MoveCollections_Discard" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -235,7 +235,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ResolveDependencies_MoveCollectionsResolveDependencies()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_ResolveDependencies.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_ResolveDependencies.json
             // this example is just showing the usage of "MoveCollections_ResolveDependencies" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -263,7 +263,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task BulkRemove_MoveCollectionsBulkRemove()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_BulkRemove.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_BulkRemove.json
             // this example is just showing the usage of "MoveCollections_BulkRemove" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -299,7 +299,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMoverResourceSets_MoveCollectionsListMoveCollectionsBySubscription()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_ListMoveCollectionsBySubscription.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_ListMoveCollectionsBySubscription.json
             // this example is just showing the usage of "MoveCollections_ListMoveCollectionsBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -331,7 +331,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetRequiredForResources_RequiredForGet()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/RequiredFor_Get.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/RequiredFor_Get.json
             // this example is just showing the usage of "MoveCollections_ListRequiredFor" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -359,7 +359,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUnresolvedDependencies_UnresolvedDependenciesGet()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/UnresolvedDependencies_Get.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/UnresolvedDependencies_Get.json
             // this example is just showing the usage of "UnresolvedDependencies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -69,7 +69,7 @@ prepend-rp-prefix:
 - Action
 - Recurrence
 - Response
-- OdataType
+- Odatatype
 - Metric
 - Incident
 - Enabled
