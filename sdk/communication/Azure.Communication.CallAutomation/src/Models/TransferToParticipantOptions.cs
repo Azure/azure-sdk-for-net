@@ -45,8 +45,8 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifier Target { get; }
 
         /// <summary>
-        /// The callback URI override for this transfer call request.
+        /// The operationContext for this transfer call.
         /// </summary>
-        public Uri CallbackUri { get; set; }
+        public string OperationContext { get; set; }
     }
 }

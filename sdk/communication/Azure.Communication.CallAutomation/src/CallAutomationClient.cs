@@ -26,7 +26,6 @@ namespace Azure.Communication.CallAutomation
         internal AzureCommunicationServicesRestClient AzureCommunicationServicesRestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
         internal CallRecordingRestClient CallRecordingRestClient { get; }
-        internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
@@ -76,13 +75,6 @@ namespace Azure.Communication.CallAutomation
             : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
         { }
 
-        private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
-        : this(
-        endpoint: endpoint,
-        httpPipeline: options.CustomBuildHttpPipeline(connectionString),
-        options: options)
-        { }
-
         private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
         {
             _pipeline = httpPipeline;
@@ -92,7 +84,6 @@ namespace Azure.Communication.CallAutomation
             CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallDialogRestClient = new CallDialogRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
         }
@@ -250,7 +241,6 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
-
 
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(request, cancellationToken).ConfigureAwait(false);
             }
@@ -629,7 +619,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, CallDialogRestClient, _clientDiagnostics, EventProcessor);
+                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics, EventProcessor);
             }
             catch (Exception ex)
             {

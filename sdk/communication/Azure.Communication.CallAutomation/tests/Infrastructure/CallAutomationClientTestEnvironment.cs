@@ -27,8 +27,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private string servicebusString = "SERVICEBUS_STRING";
 
-        private string botAppId = "BOT_APP_ID";
-
         /// <summary>
         /// The resource identifier associated with the Azure Communication Service.
         /// </summary>
@@ -57,11 +55,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// Dispatcher endpoint for automated testing
         /// </summary>
         public string DispatcherEndpoint => GetRecordedOptionalVariable(dispatcherEndpoint, options => options.IsSecret("https://sanitized.skype.com"));
-
-        /// <summary>
-        /// Bot App Id for Dialog tests.
-        /// </summary>
-        public string BotAppId => GetRecordedOptionalVariable(botAppId, options => options.IsSecret("Sanitized"));
 
         /// <summary>
         /// ServiceBus string

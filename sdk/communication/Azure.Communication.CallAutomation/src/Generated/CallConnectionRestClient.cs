@@ -166,7 +166,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateTerminateCallRequest(string callConnectionId, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
+        internal HttpMessage CreateTerminateCallRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,32 +178,24 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":terminate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "R");
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Terminate a call using CallConnectionId. </summary>
         /// <param name="callConnectionId"> The terminate call request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response> TerminateCallAsync(string callConnectionId, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response> TerminateCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateTerminateCallRequest(callConnectionId, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateTerminateCallRequest(callConnectionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -216,18 +208,16 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Terminate a call using CallConnectionId. </summary>
         /// <param name="callConnectionId"> The terminate call request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response TerminateCall(string callConnectionId, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response TerminateCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateTerminateCallRequest(callConnectionId, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateTerminateCallRequest(callConnectionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -238,7 +228,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
+        internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -250,14 +240,8 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":transferToParticipant", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "R");
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -269,11 +253,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
-        public async Task<Response<TransferCallToParticipantResult>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TransferCallToParticipantResult>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -284,7 +266,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(transferToParticipantRequest));
             }
 
-            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -303,11 +285,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
-        public Response<TransferCallToParticipantResult> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<TransferCallToParticipantResult> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -318,7 +298,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(transferToParticipantRequest));
             }
 
-            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -404,7 +384,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, AddParticipantRequestInternal addParticipantRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
+        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, AddParticipantRequestInternal addParticipantRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -416,14 +396,8 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath("/participants:add", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "R");
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -435,11 +409,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="addParticipantRequest"> The AddParticipantRequest to use. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantRequest"/> is null. </exception>
-        public async Task<Response<AddParticipantResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantRequestInternal addParticipantRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AddParticipantResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantRequestInternal addParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -450,7 +422,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(addParticipantRequest));
             }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -469,11 +441,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="addParticipantRequest"> The AddParticipantRequest to use. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantRequest"/> is null. </exception>
-        public Response<AddParticipantResponseInternal> AddParticipant(string callConnectionId, AddParticipantRequestInternal addParticipantRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<AddParticipantResponseInternal> AddParticipant(string callConnectionId, AddParticipantRequestInternal addParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -484,7 +454,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(addParticipantRequest));
             }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -500,7 +470,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateRemoveParticipantRequest(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
+        internal HttpMessage CreateRemoveParticipantRequest(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -512,14 +482,8 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath("/participants:remove", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "R");
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -531,11 +495,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Remove a participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="removeParticipantRequest"> The participant to be removed from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantRequest"/> is null. </exception>
-        public async Task<Response<RemoveParticipantResponseInternal>> RemoveParticipantAsync(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RemoveParticipantResponseInternal>> RemoveParticipantAsync(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -546,7 +508,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(removeParticipantRequest));
             }
 
-            using var message = CreateRemoveParticipantRequest(callConnectionId, removeParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateRemoveParticipantRequest(callConnectionId, removeParticipantRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -565,11 +527,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Remove a participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="removeParticipantRequest"> The participant to be removed from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantRequest"/> is null. </exception>
-        public Response<RemoveParticipantResponseInternal> RemoveParticipant(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<RemoveParticipantResponseInternal> RemoveParticipant(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -580,7 +540,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(removeParticipantRequest));
             }
 
-            using var message = CreateRemoveParticipantRequest(callConnectionId, removeParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateRemoveParticipantRequest(callConnectionId, removeParticipantRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -596,7 +556,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateMuteRequest(string callConnectionId, MuteParticipantRequestInternal muteParticipantsRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
+        internal HttpMessage CreateMuteRequest(string callConnectionId, MuteParticipantRequestInternal muteParticipantsRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -608,14 +568,8 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath("/participants:mute", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "R");
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -627,11 +581,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Mute participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="muteParticipantsRequest"> The participants to be muted from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequest"/> is null. </exception>
-        public async Task<Response<MuteParticipantsResult>> MuteAsync(string callConnectionId, MuteParticipantRequestInternal muteParticipantsRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MuteParticipantsResult>> MuteAsync(string callConnectionId, MuteParticipantRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -642,7 +594,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(muteParticipantsRequest));
             }
 
-            using var message = CreateMuteRequest(callConnectionId, muteParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateMuteRequest(callConnectionId, muteParticipantsRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -661,11 +613,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Mute participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="muteParticipantsRequest"> The participants to be muted from the call. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequest"/> is null. </exception>
-        public Response<MuteParticipantsResult> Mute(string callConnectionId, MuteParticipantRequestInternal muteParticipantsRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<MuteParticipantsResult> Mute(string callConnectionId, MuteParticipantRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -676,7 +626,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(muteParticipantsRequest));
             }
 
-            using var message = CreateMuteRequest(callConnectionId, muteParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateMuteRequest(callConnectionId, muteParticipantsRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

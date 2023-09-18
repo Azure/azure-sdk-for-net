@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
-    internal partial class DialogConsentInternal
+    public partial class CallTransferAccepted
     {
-        internal static DialogConsentInternal DeserializeDialogConsentInternal(JsonElement element)
+        internal static CallTransferAccepted DeserializeCallTransferAccepted(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -24,9 +23,6 @@ namespace Azure.Communication.CallAutomation.Models.Events
             Optional<string> correlationId = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
-            Optional<DialogInputType> dialogInputType = default;
-            Optional<UserConsent> userConsent = default;
-            Optional<string> dialogId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -58,31 +54,8 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dialogInputType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dialogInputType = new DialogInputType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("userConsent"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userConsent = UserConsent.DeserializeUserConsent(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("dialogId"u8))
-                {
-                    dialogId = property.Value.GetString();
-                    continue;
-                }
             }
-            return new DialogConsentInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), userConsent.Value, dialogId.Value);
+            return new CallTransferAccepted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
         }
     }
 }

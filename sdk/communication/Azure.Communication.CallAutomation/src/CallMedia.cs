@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallAutomation
@@ -202,7 +201,6 @@ namespace Azure.Communication.CallAutomation
                 PlayOptions playOptions = new PlayOptions(options.PlaySources, Enumerable.Empty<CommunicationIdentifier>());
                 playOptions.OperationContext = options.OperationContext;
                 playOptions.Loop = options.Loop;
-                playOptions.CallbackUri = options.CallbackUri;
                 return await PlayAsync(playOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -248,7 +246,6 @@ namespace Azure.Communication.CallAutomation
                 PlayOptions playOptions = new PlayOptions(options.PlaySources, Enumerable.Empty<CommunicationIdentifier>());
                 playOptions.OperationContext = options.OperationContext;
                 playOptions.Loop = options.Loop;
-                playOptions.CallbackUri = options.CallbackUri;
                 return Play(playOptions, cancellationToken);
             }
             catch (Exception ex)
@@ -688,10 +685,7 @@ namespace Azure.Communication.CallAutomation
                     OperationContext = operationContext
                 };
 
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-
-                var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
+                var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = new SendDtmfTonesResult(response.Value.OperationContext);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
@@ -725,10 +719,7 @@ namespace Azure.Communication.CallAutomation
                     OperationContext = operationContext
                 };
 
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-
-                var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken);
+                var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, cancellationToken);
 
                 var result = new SendDtmfTonesResult(response.Value.OperationContext);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);

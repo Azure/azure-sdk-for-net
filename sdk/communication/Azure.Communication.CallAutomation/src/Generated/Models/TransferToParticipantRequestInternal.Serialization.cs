@@ -22,16 +22,6 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(Transferee))
-            {
-                writer.WritePropertyName("transferee"u8);
-                writer.WriteObjectValue(Transferee);
-            }
-            if (Optional.IsDefined(CallbackUri))
-            {
-                writer.WritePropertyName("callbackUri"u8);
-                writer.WriteStringValue(CallbackUri);
-            }
             writer.WriteEndObject();
         }
     }

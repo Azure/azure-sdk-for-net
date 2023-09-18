@@ -19,7 +19,6 @@ namespace Azure.Communication.CallAutomation
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CallConnectionRestClient RestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
-        internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
@@ -27,12 +26,11 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient,CallDialogRestClient callDialogRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
+        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
             CallMediaRestClient = callCallMediaRestClient;
-            CallDialogRestClient = callDialogRestClient;
             _clientDiagnostics = clientDiagnostics;
             EventProcessor = eventProcessor;
         }
@@ -577,7 +575,6 @@ namespace Azure.Communication.CallAutomation
 
                 options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
 
-                request.CallbackUri = options.CallbackUri?.AbsoluteUri;
                 var response = RestClient.RemoveParticipant(CallConnectionId, request, cancellationToken);
 
                 var result = new RemoveParticipantResult(response);
@@ -632,8 +629,6 @@ namespace Azure.Communication.CallAutomation
                 var response = RestClient.Mute(
                     CallConnectionId,
                     request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken);
 
                 return Response.FromValue(new MuteParticipantResult(response.Value), response.GetRawResponse());
@@ -662,15 +657,12 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 MuteParticipantRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(targetParticipant) });
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 request.OperationContext = operationContext;
 
                 var response = await RestClient.MuteAsync(
                     CallConnectionId,
                     request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(new MuteParticipantResult(response.Value), response.GetRawResponse());

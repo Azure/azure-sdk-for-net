@@ -35,7 +35,5 @@ namespace Azure.Communication.CallAutomation
         public RecognizeOptionsInternal RecognizeOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
-        /// <summary> The callback URI to override the main callback URI. </summary>
-        public string CallbackUri { get; set; }
     }
 }

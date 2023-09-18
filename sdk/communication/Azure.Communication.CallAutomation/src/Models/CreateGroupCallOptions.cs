@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation
         {
             Targets = targets;
             CallbackUri = callbackUri;
-            CustomContext = new CustomContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
