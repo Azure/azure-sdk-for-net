@@ -17,17 +17,6 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
-        /// <param name="options">The customer provided pipeline options object.</param>
-        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
-        /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
-        public static HttpPipeline Build(PipelineOptions options, params HttpPipelinePolicy[] perRetryPolicies)
-        {
-            return Build(options, perRetryPolicies);
-        }
-
-        /// <summary>
-        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
-        /// </summary>
         /// <param name="options">The customer provided client options object.</param>
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
@@ -49,13 +38,49 @@ namespace Azure.Core.Pipeline
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
             ResponseClassifier? responseClassifier)
+            => Build(options, perCallPolicies, perRetryPolicies, responseClassifier);
+
+        /// <summary>
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+        /// </summary>
+        /// <param name="options">The customer provided pipeline options object.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
+        /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
+        public static HttpPipeline Build(PipelineOptions options, params HttpPipelinePolicy[] perRetryPolicies)
+            => Build(options, Array.Empty<HttpPipelinePolicy>(), perRetryPolicies, ResponseClassifier.Shared);
+
+        /// <summary>
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+        /// </summary>
+        /// <param name="options">The customer provided client options object.</param>
+        /// <param name="perCallPolicies">Client provided per-call policies.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
+        /// <param name="responseClassifier">The client provided response classifier.</param>
+        /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
+        private static HttpPipeline Build(
+            PipelineOptions options,
+            HttpPipelinePolicy[] perCallPolicies,
+            HttpPipelinePolicy[] perRetryPolicies,
+            ResponseClassifier? responseClassifier)
         {
-            var pipelineOptions = new HttpPipelineOptions(options) { ResponseClassifier = responseClassifier };
+            ClientOptions clientOptions = FromPipelineOptions(options);
+
+            HttpPipelineOptions pipelineOptions = new HttpPipelineOptions(clientOptions) { ResponseClassifier = responseClassifier };
             ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
             ((List<HttpPipelinePolicy>)pipelineOptions.PerRetryPolicies).AddRange(perRetryPolicies);
-            var result = BuildInternal(pipelineOptions, null);
+            BuildInternalContext result = BuildInternal(pipelineOptions, null);
 
             return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
+        }
+
+        private static ClientOptions FromPipelineOptions(PipelineOptions pipelineOptions)
+        {
+            if (pipelineOptions is not ClientOptions clientOptions)
+            {
+                clientOptions = ClientOptions.Default;
+            }
+
+            return clientOptions;
         }
 
         /// <summary>
@@ -102,7 +127,7 @@ namespace Azure.Core.Pipeline
             return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
         }
 
-        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies, bool IsTransportOwned) BuildInternal(
+        private static BuildInternalContext BuildInternal(
             HttpPipelineOptions buildOptions,
             HttpPipelineTransportOptions? defaultTransportOptions)
         {
@@ -221,7 +246,34 @@ namespace Azure.Core.Pipeline
 
             buildOptions.ResponseClassifier ??= ResponseClassifier.Shared;
 
-            return (buildOptions.ResponseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated);
+            return new BuildInternalContext(buildOptions.ResponseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated);
+        }
+
+        private class BuildInternalContext
+        {
+            public BuildInternalContext(
+                ResponseClassifier classifier,
+                HttpPipelineTransport transport,
+                int perCallIndex,
+                int perRetryIndex,
+                HttpPipelinePolicy[] policies,
+                bool isTransportOwned)
+            {
+                Classifier = classifier;
+                Transport = transport;
+                PerCallIndex = perCallIndex;
+                PerRetryIndex = perRetryIndex;
+                Policies = policies;
+                IsTransportOwned = isTransportOwned;
+            }
+
+            public ResponseClassifier Classifier { get; }
+            public HttpPipelineTransport Transport { get; }
+
+            public int PerCallIndex { get; }
+            public int PerRetryIndex { get; }
+            public HttpPipelinePolicy[] Policies { get; }
+            public bool IsTransportOwned { get; }
         }
 
         // internal for testing
