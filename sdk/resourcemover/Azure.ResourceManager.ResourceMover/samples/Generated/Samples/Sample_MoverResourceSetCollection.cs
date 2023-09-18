@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_MoveCollectionsCreate()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Create.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Create.json
             // this example is just showing the usage of "MoveCollections_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,7 +48,12 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             MoverResourceSetData data = new MoverResourceSetData(new AzureLocation("eastus2"))
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
-                Properties = new MoverResourceSetProperties(new AzureLocation("eastus"), new AzureLocation("westus")),
+                Properties = new MoverResourceSetProperties()
+                {
+                    SourceLocation = new AzureLocation("eastus"),
+                    TargetLocation = new AzureLocation("westus"),
+                    MoveType = MoveType.RegionToRegion,
+                },
             };
             ArmOperation<MoverResourceSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, moverResourceSetName, data);
             MoverResourceSetResource result = lro.Value;
@@ -65,7 +70,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MoveCollectionsGet()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Get.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Get.json
             // this example is just showing the usage of "MoveCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +104,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_MoveCollectionsGet()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Get.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Get.json
             // this example is just showing the usage of "MoveCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +134,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_MoveCollectionsListMoveCollectionsByResourceGroup()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_ListMoveCollectionsByResourceGroup.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_ListMoveCollectionsByResourceGroup.json
             // this example is just showing the usage of "MoveCollections_ListMoveCollectionsByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

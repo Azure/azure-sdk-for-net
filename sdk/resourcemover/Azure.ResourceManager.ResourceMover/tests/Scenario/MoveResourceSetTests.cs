@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,12 +15,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceMover.Tests
 {
-    internal class MoverResourceSetTests : ResourceMoverManagementTestBase
+    internal class MoveResourceSetTests : ResourceMoverManagementTestBase
     {
         protected internal const string ExpectedKey = "tagKey";
         protected internal const string ExpectedValue = "tagValue";
 
-        public MoverResourceSetTests(bool isAsync)
+        public MoveResourceSetTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -116,6 +115,8 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             string vnetName = Recording.GenerateAssetName("Vnet-");
             string moverResourceName = Recording.GenerateAssetName("MoverResource-");
             string targetVnetName = Recording.GenerateAssetName("targetVnet-");
+            string targetRgName = Recording.GenerateAssetName("testRg-ResourceMover-Target-");
+            string moverDependentResourceName = Recording.GenerateAssetName("MoverResource-");
             VirtualNetworkResource virtualNetwork = await CreareVirtualNetwork(rg, vnetName);
             MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName, targetVnetName);
 
@@ -261,8 +262,8 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             {
                 Assert.NotNull(model.Data.Properties);
                 Assert.NotNull(getResult.Data.Properties);
-                Assert.AreEqual(model.Data.Properties.SourceLocation, getResult.Data.Properties.SourceLocation);
-                Assert.AreEqual(model.Data.Properties.TargetLocation, getResult.Data.Properties.TargetLocation);
+                Assert.AreEqual(model.Data.Properties.SourceRegion, getResult.Data.Properties.SourceRegion);
+                Assert.AreEqual(model.Data.Properties.TargetRegion, getResult.Data.Properties.TargetRegion);
             }
         }
     }
