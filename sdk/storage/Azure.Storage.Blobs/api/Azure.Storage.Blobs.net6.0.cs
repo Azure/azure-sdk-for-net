@@ -357,7 +357,6 @@ namespace Azure.Storage.Blobs.Models
         public bool Equals(Azure.Storage.Blobs.Models.BlobAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        public bool Equals(string other) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobAudience GetBlobServiceAccountAudience(string storageAccountName) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }

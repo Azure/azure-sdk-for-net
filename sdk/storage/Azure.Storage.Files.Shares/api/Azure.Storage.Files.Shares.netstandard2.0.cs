@@ -522,7 +522,6 @@ namespace Azure.Storage.Files.Shares.Models
         public bool Equals(Azure.Storage.Files.Shares.Models.ShareAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        public bool Equals(string other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareAudience GetShareServiceAccountAudience(string storageAccountName) { throw null; }

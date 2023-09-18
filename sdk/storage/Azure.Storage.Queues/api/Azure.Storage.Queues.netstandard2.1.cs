@@ -195,7 +195,6 @@ namespace Azure.Storage.Queues.Models
         public bool Equals(Azure.Storage.Queues.Models.QueueAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        public bool Equals(string other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static Azure.Storage.Queues.Models.QueueAudience GetQueueServiceAccountAudience(string storageAccountName) { throw null; }

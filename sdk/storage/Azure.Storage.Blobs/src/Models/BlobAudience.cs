@@ -60,13 +60,6 @@ namespace Azure.Storage.Blobs.Models
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlobAudience other && Equals(other);
-
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">The string to compare with this object.</param>
-        /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
-        public bool Equals(string other) => string.Equals(_value, other, StringComparison.InvariantCultureIgnoreCase);
         /// <inheritdoc />
         public bool Equals(BlobAudience other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
