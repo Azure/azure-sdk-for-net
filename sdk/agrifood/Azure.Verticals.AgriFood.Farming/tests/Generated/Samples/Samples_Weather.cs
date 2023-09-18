@@ -35,6 +35,21 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDataDeleteJobDetails_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("extensionId").ToString());
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetDataDeleteJobDetails_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -64,21 +79,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDataDeleteJobDetails_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("extensionId").ToString());
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
         }
 
         [Test]
@@ -133,6 +133,23 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDataIngestionJobDetails_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("extensionId").ToString());
+            Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+            Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetDataIngestionJobDetails_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -162,23 +179,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDataIngestionJobDetails_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("extensionId").ToString());
-            Console.WriteLine(result.GetProperty("extensionApiName").ToString());
-            Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -222,6 +222,28 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("partyId").ToString());
+                Console.WriteLine(result[0].GetProperty("boundaryId").ToString());
+                Console.WriteLine(result[0].GetProperty("extensionId").ToString());
+                Console.WriteLine(result[0].GetProperty("location").GetProperty("latitude").ToString());
+                Console.WriteLine(result[0].GetProperty("location").GetProperty("longitude").ToString());
+                Console.WriteLine(result[0].GetProperty("dateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("extensionVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("weatherDataType").ToString());
+                Console.WriteLine(result[0].GetProperty("granularity").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetWeathers_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+            await foreach (BinaryData item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -291,28 +313,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWeathers_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
-
-            await foreach (BinaryData item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("boundaryId").ToString());
-                Console.WriteLine(result[0].GetProperty("extensionId").ToString());
-                Console.WriteLine(result[0].GetProperty("location").GetProperty("latitude").ToString());
-                Console.WriteLine(result[0].GetProperty("location").GetProperty("longitude").ToString());
-                Console.WriteLine(result[0].GetProperty("dateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("extensionVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("weatherDataType").ToString());
-                Console.WriteLine(result[0].GetProperty("granularity").ToString());
             }
         }
 
@@ -398,6 +398,28 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateDataDeleteJob_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+            RequestContent content = RequestContent.Create(new
+            {
+                extensionId = "<extensionId>",
+                partyId = "<partyId>",
+                boundaryId = "<boundaryId>",
+            });
+            Operation<BinaryData> operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("extensionId").ToString());
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateDataDeleteJob_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -444,28 +466,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateDataDeleteJob_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = RequestContent.Create(new
-            {
-                extensionId = "<extensionId>",
-                partyId = "<partyId>",
-                boundaryId = "<boundaryId>",
-            });
-            Operation<BinaryData> operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("extensionId").ToString());
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
         }
 
         [Test]
@@ -549,6 +549,35 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateDataIngestionJob_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+            RequestContent content = RequestContent.Create(new
+            {
+                boundaryId = "<boundaryId>",
+                partyId = "<partyId>",
+                extensionId = "<extensionId>",
+                extensionApiName = "<extensionApiName>",
+                extensionApiInput = new
+                {
+                    key = new object(),
+                },
+            });
+            Operation<BinaryData> operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("extensionId").ToString());
+            Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+            Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateDataIngestionJob_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -598,35 +627,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateDataIngestionJob_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = RequestContent.Create(new
-            {
-                boundaryId = "<boundaryId>",
-                partyId = "<partyId>",
-                extensionId = "<extensionId>",
-                extensionApiName = "<extensionApiName>",
-                extensionApiInput = new
-                {
-                    key = new object(),
-                },
-            });
-            Operation<BinaryData> operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("extensionId").ToString());
-            Console.WriteLine(result.GetProperty("extensionApiName").ToString());
-            Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
         }
 
         [Test]

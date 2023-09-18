@@ -29,6 +29,9 @@ These settings apply only when `--tag=package-common-type` is specified on the c
 
 ``` yaml $(tag) == 'package-common-type'
 output-folder: $(this-folder)/Common/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
@@ -168,6 +171,9 @@ These settings apply only when `--tag=package-resources` is specified on the com
 
 ``` yaml $(tag) == 'package-resources'
 output-folder: $(this-folder)/Resources/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: false
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
@@ -689,6 +695,9 @@ These settings apply only when `--tag=package-management` is specified on the co
 
 ``` yaml $(tag) == 'package-management'
 output-folder: $(this-folder)/ManagementGroup/Generated
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: false
 namespace: Azure.ResourceManager.ManagementGroups
 title: ManagementClient
 input-file:
