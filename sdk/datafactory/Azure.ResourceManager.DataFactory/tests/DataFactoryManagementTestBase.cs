@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -12,6 +14,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
+using Azure.Storage.Blobs;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests
@@ -100,13 +103,13 @@ namespace Azure.ResourceManager.DataFactory.Tests
             return dataSet.Value;
         }
 
-        protected async Task<DataFactoryPipelineResource> CreateCopyDataPipeline(DataFactoryResource dataFactory, string pipelineName, string copyTaskName, string dataSetSourceName, string dataSetSinkName)
+        protected async Task<DataFactoryPipelineResource> CreateCopyDataPipeline(DataFactoryResource dataFactory, string pipelineName, string dataSetAzureSqlSource, string dataSetAzureSqlSink, string dataSetAzureStorageSource, string dataSetAzureStorageSink, string dataSetAzureGen2Source, string dataSetAzureGen2Sink)
         {
             DataFactoryPipelineData pipelineData = new DataFactoryPipelineData()
             {
                 Activities =
                 {
-                    new CopyActivity(copyTaskName,new CopyActivitySource(),new CopySink())
+                    new CopyActivity("TestAzureSQL",new CopyActivitySource(),new CopySink())
                     {
                         State = PipelineActivityState.Active,
                         Source = new AzureSqlSource()
@@ -119,17 +122,138 @@ namespace Azure.ResourceManager.DataFactory.Tests
                         },
                         Inputs =
                         {
-                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetSourceName)
+                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureSqlSource)
                         },
                         Outputs =
                         {
-                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetSinkName)
+                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureSqlSink)
+                        }
+                    },
+                    new CopyActivity("TestAzureBlob",new CopyActivitySource(),new CopySink())
+                    {
+                        State = PipelineActivityState.Active,
+                        Inputs =
+                        {
+                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureStorageSource)
+                        },
+                        Outputs =
+                        {
+                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureStorageSink)
+                        },
+                        Source = new DelimitedTextSource()
+                        {
+                        },
+                        Sink = new DelimitedTextSink()
+                        {
+                        }
+                    },
+                    new CopyActivity("TestAzureGen2",new CopyActivitySource(),new CopySink())
+                    {
+                        State = PipelineActivityState.Active,
+                        Inputs =
+                        {
+                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureGen2Source)
+                        },
+                        Outputs =
+                        {
+                            new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureGen2Sink)
+                        },
+                        Source = new DelimitedTextSource()
+                        {
+                        },
+                        Sink = new DelimitedTextSink()
+                        {
                         }
                     }
                 }
             };
             var pipeline = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(Azure.WaitUntil.Completed, pipelineName, pipelineData);
             return pipeline.Value;
+        }
+
+        protected async Task<string> CreateAzureBlobStorageResource(ResourceGroupResource resourceGroup, string storageAccountName, string containerName, string blobName)
+        {
+            StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, AzureLocation.WestUS2)
+            {
+                AccessTier = StorageAccountAccessTier.Hot,
+            };
+            var storage = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, data);
+            BlobContainerData blobContainerData = new BlobContainerData();
+            var containerResult = await storage.Value.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(Azure.WaitUntil.Completed, containerName, blobContainerData);
+            var key = await storage.Value.GetKeysAsync().FirstOrDefaultAsync(_ => true);
+            var storageConnectionString = $"DefaultEndpointsProtocol=https;AccountName={storageAccountName};AccountKey={key}";
+            BlobContainerClient container = new BlobContainerClient(storageConnectionString, containerName);
+            return key.Value;
+        }
+
+        protected async Task<DataFactoryLinkedServiceResource> CreateAzureBlobStorageLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
+        {
+            AzureBlobStorageLinkedService azureBlobStorageLinkedService = new AzureBlobStorageLinkedService()
+            {
+                ConnectionString = DataFactoryElement<string>.FromSecretString(accessKey)
+            };
+            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(azureBlobStorageLinkedService);
+            var linkedService = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
+            return linkedService.Value;
+        }
+
+        protected async Task<DataFactoryLinkedServiceResource> CreateAzureDataLakeGen2LinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
+        {
+            AzureBlobFSLinkedService azureDataLakeGen2LinkedService = new AzureBlobFSLinkedService()
+            {
+                AccountKey = accessKey,
+                Uri = "https://testazuresdkstoragegen2.dfs.core.windows.net/"
+            };
+            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(azureDataLakeGen2LinkedService);
+            var linkedService = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
+            return linkedService.Value;
+        }
+
+        protected async Task<DataFactoryDatasetResource> CreateAzureBlobStorageDataSet(DataFactoryResource dataFactory, string dataSetName, string linkedServiceName)
+        {
+            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
+            DataFactoryDatasetData dataFactoryDatasetData = new DataFactoryDatasetData(new DelimitedTextDataset(dataFactoryLinkedServiceReference)
+            {
+                Schema = new List<DatasetSchemaDataElement>()
+                {
+                    new DatasetSchemaDataElement(){ SchemaColumnName = "Id",SchemaColumnType="String"},
+                    new DatasetSchemaDataElement(){ SchemaColumnName = "Content",SchemaColumnType="String"}
+                },
+                DataLocation = new AzureBlobStorageLocation()
+                {
+                    Container = "testcontainer",
+                    FileName = "TestData.csv"
+                },
+                ColumnDelimiter = ",",
+                FirstRowAsHeader = true
+            });
+
+            var dataSet = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, dataFactoryDatasetData);
+            return dataSet.Value;
+        }
+
+        protected async Task<DataFactoryDatasetResource> CreateAzureDataLakeGen2DataSet(DataFactoryResource dataFactory, string dataSetName, string linkedServiceName)
+        {
+            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
+            DataFactoryDatasetData dataFactoryDatasetData = new DataFactoryDatasetData(new DelimitedTextDataset(dataFactoryLinkedServiceReference)
+            {
+                Schema = new List<DatasetSchemaDataElement>()
+                {
+                    new DatasetSchemaDataElement(){ SchemaColumnName = "Id",SchemaColumnType="String"},
+                    new DatasetSchemaDataElement(){ SchemaColumnName = "Content",SchemaColumnType="String"}
+                },
+                DataLocation = new AzureBlobStorageLocation()
+                {
+                    Container = "testcontainer",
+                    FileName = "TestData.csv",
+                    FolderPath = "testfolder"
+                },
+                ColumnDelimiter = ",",
+                FirstRowAsHeader = true
+            });
+
+            var dataSet = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, dataFactoryDatasetData);
+            return dataSet.Value;
         }
     }
 }
