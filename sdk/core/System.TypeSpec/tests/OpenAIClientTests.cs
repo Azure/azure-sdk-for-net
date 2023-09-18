@@ -24,13 +24,16 @@ public class OpenAIClientTests
     [Fact]
     public void Options()
     {
+        PipelineOptions.DefaultLoggingPolicy = new LoggingPolicy(isLoggingEnabled: true);
+        PipelineOptions.DefaultRetryPolicy = new RetryPolicy(maxRetries: 3);
+
         string key = Environment.GetEnvironmentVariable("OPENAI_KEY");
         var credential = new KeyCredential(key);
 
         var options = new OpenAIOptions();
         options.RetryPolicy = new RetryPolicy(maxRetries: 5);
         options.LoggingPolicy = new LoggingPolicy(isLoggingEnabled: false);
- 
+
         var client = new OpenAIClient(credential, options);
 
         Result<Completions> result = client.GetCompletions("tell me something about life.");
