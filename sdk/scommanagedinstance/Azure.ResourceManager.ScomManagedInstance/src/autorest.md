@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: ScomManagedInstance
 namespace: Azure.ResourceManager.ScomManagedInstance
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/scommanagedinstance/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/def187e2e78d7173d8fdd7f77740dd9719e1dfbf/specification/scom/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
