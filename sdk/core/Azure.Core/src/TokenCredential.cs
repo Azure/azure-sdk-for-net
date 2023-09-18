@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.ServiceModel.Rest;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
     /// <summary>
     /// Represents a credential capable of providing an OAuth token.
     /// </summary>
-    public abstract class TokenCredential
+    public abstract class TokenCredential : Credential
     {
         /// <summary>
         /// Gets an <see cref="AccessToken"/> for the specified set of scopes.

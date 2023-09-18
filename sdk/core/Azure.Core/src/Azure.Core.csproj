@@ -83,4 +83,8 @@
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.ServiceModel.Rest\src\System.ServiceModel.Rest.csproj" />
+  </ItemGroup>
+
 </Project>
