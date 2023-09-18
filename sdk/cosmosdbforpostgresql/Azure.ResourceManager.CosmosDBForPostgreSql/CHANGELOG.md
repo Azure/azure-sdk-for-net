@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2023-08-25)
+## 1.0.0 (2023-09-25)
 
 This release is the first stable release of the CosmosDBForPostgreSql library.
 
