@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of CancelAddParticipantFailedEvent. </summary>
         /// <param name="internalEvent">Internal Representation of the CancelAddParticipantFailedEvent. </param>
-        internal CancelAddParticipantFailed(CanceladdParticipantFailedInternal internalEvent)
+        internal CancelAddParticipantFailed(CancelAddParticipantFailedInternal internalEvent)
         {
             OperationContext = internalEvent.OperationContext;
             CallConnectionId = internalEvent.CallConnectionId;
