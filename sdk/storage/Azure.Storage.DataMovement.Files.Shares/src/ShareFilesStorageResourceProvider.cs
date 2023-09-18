@@ -260,31 +260,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// Creates a storage resource pointing towards the given container URI.
         /// </summary>
-        /// <param name="shareUri">
-        /// Target location.
-        /// </param>
-        /// <param name="options">
-        /// Options for creating the storage resource.
-        /// </param>
-        /// <returns>
-        /// The configured storage resource.
-        /// </returns>
-        public StorageResource FromShare(string shareUri, ShareFileStorageResourceOptions options = default)
-        {
-            ShareClient client = _credentialType switch
-            {
-                CredentialType.None => new ShareClient(new Uri(shareUri)),
-                CredentialType.SharedKey => new ShareClient(new Uri(shareUri), _getStorageSharedKeyCredential(shareUri, false)),
-                CredentialType.Token => new ShareClient(new Uri(shareUri), _getTokenCredential(shareUri, false)),
-                CredentialType.Sas => new ShareClient(new Uri(shareUri), _getAzureSasCredential(shareUri, false)),
-                _ => throw BadCredentialTypeException(_credentialType),
-            };
-            return new ShareStorageResourceContainer(client, options);
-        }
-
-        /// <summary>
-        /// Creates a storage resource pointing towards the given container URI.
-        /// </summary>
         /// <param name="directoryUri">
         /// Target location.
         /// </param>
@@ -334,25 +309,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         #endregion
 
         #region From Client
-        /// <summary>
-        /// Creates a storage resource pointing towards the given Azure SDK client.
-        /// </summary>
-        /// <param name="client">
-        /// Target resource presented within an Azure SDK client.
-        /// </param>
-        /// <param name="options">
-        /// Options for creating the storage resource.
-        /// </param>
-        /// <returns>
-        /// The configured storage resource.
-        /// </returns>
-        public StorageResource FromClient(
-            ShareClient client,
-            ShareFileStorageResourceOptions options = default)
-        {
-            return new ShareStorageResourceContainer(client, options);
-        }
-
         /// <summary>
         /// Creates a storage resource pointing towards the given Azure SDK client.
         /// </summary>
