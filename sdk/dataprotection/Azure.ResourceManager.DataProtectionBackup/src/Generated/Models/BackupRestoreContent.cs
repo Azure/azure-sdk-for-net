@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </summary>
-        public IdentityDetails IdentityDetails { get; set; }
+        public DataProtectionIdentityDetails IdentityDetails { get; set; }
     }
 }

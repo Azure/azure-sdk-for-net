@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Security Settings. </summary>
         public BackupVaultSecuritySettings SecuritySettings { get; set; }
         /// <summary> Feature Settings. </summary>
-        public FeatureSettings FeatureSettings { get; set; }
+        public BackupVaultFeatureSettings FeatureSettings { get; set; }
     }
 }

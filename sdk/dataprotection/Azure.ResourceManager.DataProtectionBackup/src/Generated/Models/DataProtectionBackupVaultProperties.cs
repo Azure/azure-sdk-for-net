@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
         /// <param name="secureScore"> Secure Score of Backup Vault. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, FeatureSettings featureSettings, SecureScoreLevel? secureScore)
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Storage Settings. </summary>
         public IList<DataProtectionBackupStorageSetting> StorageSettings { get; }
         /// <summary> Feature Settings. </summary>
-        public FeatureSettings FeatureSettings { get; set; }
+        public BackupVaultFeatureSettings FeatureSettings { get; set; }
         /// <summary> Secure Score of Backup Vault. </summary>
-        public SecureScoreLevel? SecureScore { get; }
+        public BackupVaultSecureScoreLevel? SecureScore { get; }
     }
 }

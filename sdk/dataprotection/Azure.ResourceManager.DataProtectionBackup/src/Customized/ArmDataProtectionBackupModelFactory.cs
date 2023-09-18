@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures = null, DataProtectionBackupProvisioningState? provisioningState = null, BackupVaultResourceMoveState? resourceMoveState = null, BackupVaultResourceMoveDetails resourceMoveDetails = null, BackupVaultSecuritySettings securitySettings = null, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = null, DataProtectionBackupCrossSubscriptionRestoreState? crossSubscriptionRestoreState = null)
         {
             storageSettings ??= new List<DataProtectionBackupStorageSetting>();
-            FeatureSettings featureSettings = null;
+            BackupVaultFeatureSettings featureSettings = null;
 
             if (crossSubscriptionRestoreState != null)
             {
-                featureSettings = new FeatureSettings();
+                featureSettings = new BackupVaultFeatureSettings();
                 featureSettings.CrossSubscriptionRestoreState = crossSubscriptionRestoreState;
             }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of DataProtectionBackupDataSourceProperties.
         /// </summary>
         /// <param name="friendlyName"></param>
         /// <param name="dataSourceInfo"></param>

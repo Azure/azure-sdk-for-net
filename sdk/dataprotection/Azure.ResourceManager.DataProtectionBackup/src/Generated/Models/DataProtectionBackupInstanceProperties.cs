@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="objectType"></param>
-        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, IdentityDetails identityDetails, string objectType)
+        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType)
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </summary>
-        public IdentityDetails IdentityDetails { get; set; }
+        public DataProtectionIdentityDetails IdentityDetails { get; set; }
         /// <summary> Gets or sets the object type. </summary>
         public string ObjectType { get; set; }
     }

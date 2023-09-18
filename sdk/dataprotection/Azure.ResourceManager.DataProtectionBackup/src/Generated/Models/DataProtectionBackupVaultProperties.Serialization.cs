@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<BackupVaultSecuritySettings> securitySettings = default;
             IList<DataProtectionBackupStorageSetting> storageSettings = default;
             Optional<bool> isVaultProtectedByResourceGuard = default;
-            Optional<FeatureSettings> featureSettings = default;
-            Optional<SecureScoreLevel> secureScore = default;
+            Optional<BackupVaultFeatureSettings> featureSettings = default;
+            Optional<BackupVaultSecureScoreLevel> secureScore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSettings"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    featureSettings = FeatureSettings.DeserializeFeatureSettings(property.Value);
+                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secureScore"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    secureScore = new SecureScoreLevel(property.Value.GetString());
+                    secureScore = new BackupVaultSecureScoreLevel(property.Value.GetString());
                     continue;
                 }
             }

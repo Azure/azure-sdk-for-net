@@ -9,18 +9,18 @@ using System;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The IdentityDetails. </summary>
-    public partial class IdentityDetails
+    /// <summary> The DataProtectionIdentityDetails. </summary>
+    public partial class DataProtectionIdentityDetails
     {
-        /// <summary> Initializes a new instance of IdentityDetails. </summary>
-        public IdentityDetails()
+        /// <summary> Initializes a new instance of DataProtectionIdentityDetails. </summary>
+        public DataProtectionIdentityDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityDetails. </summary>
+        /// <summary> Initializes a new instance of DataProtectionIdentityDetails. </summary>
         /// <param name="useSystemAssignedIdentity"> Specifies if the BI is protected by System Identity. </param>
         /// <param name="userAssignedIdentityArmUri"> ARM URL for User Assigned Identity. </param>
-        internal IdentityDetails(bool? useSystemAssignedIdentity, Uri userAssignedIdentityArmUri)
+        internal DataProtectionIdentityDetails(bool? useSystemAssignedIdentity, Uri userAssignedIdentityArmUri)
         {
             UseSystemAssignedIdentity = useSystemAssignedIdentity;
             UserAssignedIdentityArmUri = userAssignedIdentityArmUri;

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> provisioningState = default;
             Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
             Optional<BackupValidationType> validationType = default;
-            Optional<IdentityDetails> identityDetails = default;
+            Optional<DataProtectionIdentityDetails> identityDetails = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityDetails = IdentityDetails.DeserializeIdentityDetails(property.Value);
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

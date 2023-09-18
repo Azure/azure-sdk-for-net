@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             set
             {
                 if (FeatureSettings is null)
-                    FeatureSettings = new FeatureSettings();
+                    FeatureSettings = new BackupVaultFeatureSettings();
                 FeatureSettings.CrossSubscriptionRestoreState = value;
             }
         }

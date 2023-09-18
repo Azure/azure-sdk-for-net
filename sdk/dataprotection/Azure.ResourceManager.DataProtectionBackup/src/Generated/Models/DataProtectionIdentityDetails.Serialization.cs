@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class IdentityDetails : IUtf8JsonSerializable
+    public partial class DataProtectionIdentityDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static IdentityDetails DeserializeIdentityDetails(JsonElement element)
+        internal static DataProtectionIdentityDetails DeserializeDataProtectionIdentityDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new IdentityDetails(Optional.ToNullable(useSystemAssignedIdentity), userAssignedIdentityArmUrl.Value);
+            return new DataProtectionIdentityDetails(Optional.ToNullable(useSystemAssignedIdentity), userAssignedIdentityArmUrl.Value);
         }
     }
 }
