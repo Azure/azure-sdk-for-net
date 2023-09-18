@@ -9,6 +9,7 @@ csharp: true
 library-name: ResourceMover
 namespace: Azure.ResourceManager.ResourceMover
 require: https://github.com/Azure/azure-rest-api-specs/blob/bf2585e9f0696cc8d5f230481612a37eac542f39/specification/resourcemover/resource-manager/readme.md
+#tag: package-2023-08-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
