@@ -7,7 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fix LRO for issue: https://github.com/Azure/azure-sdk-for-net/issues/37904
+- Fix LRO in ProtectionContainers PUT operation
 
 ### Other Changes
 

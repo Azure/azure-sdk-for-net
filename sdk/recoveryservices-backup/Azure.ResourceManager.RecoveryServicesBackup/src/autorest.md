@@ -476,6 +476,7 @@ directive:
     where: $.definitions.RecoveryPointProperties.properties.expiryTime
     transform: >
       $["format"] = "date-time";
+  # TODO: Remove this workaround once we have the swagger issue fixed
   - from: bms.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}']
     transform: >
