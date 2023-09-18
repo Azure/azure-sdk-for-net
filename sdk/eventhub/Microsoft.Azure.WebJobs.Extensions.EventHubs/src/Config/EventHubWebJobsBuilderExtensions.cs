@@ -95,14 +95,14 @@ namespace Microsoft.Extensions.Hosting
 
         internal static IWebJobsBuilder AddEventHubsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
-            EventHubsScalerProvider serviceBusScalerProvider = null;
+            EventHubsScalerProvider eventHubsScalerProvider  = null;
             builder.Services.AddSingleton(serviceProvider =>
             {
-                serviceBusScalerProvider = new EventHubsScalerProvider(serviceProvider, triggerMetadata);
-                return serviceBusScalerProvider;
+                eventHubsScalerProvider  = new EventHubsScalerProvider(serviceProvider, triggerMetadata);
+                return eventHubsScalerProvider ;
             });
-            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Single(x => x == serviceBusScalerProvider));
-            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Single(x => x == serviceBusScalerProvider));
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Single(x => x == eventHubsScalerProvider ));
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Single(x => x == eventHubsScalerProvider ));
 
             return builder;
         }
