@@ -121,7 +121,7 @@ namespace Azure.Storage.Blobs.Specialized
             LiveResponse.Headers;
 
         /// <inheritdoc />
-        protected override bool TryGetHeader(string name, out string value) =>
+        public override bool TryGetHeader(string name, out string value) =>
             LiveResponse.Headers.TryGetValue(name, out value);
 
         /// <inheritdoc />

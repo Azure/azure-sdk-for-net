@@ -52,7 +52,7 @@ namespace Azure.Core
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
-        protected override bool TryGetHeader(string name, out string value)
+        public override bool TryGetHeader(string name, out string value)
         {
             if (_headers.TryGetValue(name, out List<string> values))
             {

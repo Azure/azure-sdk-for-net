@@ -52,7 +52,7 @@ namespace Azure.AI.Personalizer
         protected override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.Select(h => new HttpHeader(h.Key, string.Join(",", h.Value)));
 
         /// <summary> Try to get the header </summary>
-        protected override bool TryGetHeader(string name, out string value)
+        public override bool TryGetHeader(string name, out string value)
         {
             if (_headers.TryGetValue(name, out List<string> values))
             {
