@@ -4,7 +4,7 @@
 
 ### Features Added
 
--   Support for Experiment Query Selectors
+-   Support for Experiment Query Selectors.
 
 ## 1.0.0-beta.4 (2023-05-29)
 
