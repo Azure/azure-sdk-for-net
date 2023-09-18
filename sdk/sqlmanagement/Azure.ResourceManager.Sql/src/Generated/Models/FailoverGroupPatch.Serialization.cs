@@ -44,7 +44,22 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PartnerServers))
+            {
+                writer.WritePropertyName("partnerServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in PartnerServers)
+                {
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
