@@ -476,4 +476,8 @@ directive:
     where: $.definitions.RecoveryPointProperties.properties.expiryTime
     transform: >
       $["format"] = "date-time";
+  - from: bms.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}']
+    transform: >
+      $.put['x-ms-long-running-operation'] = true;
 ```
