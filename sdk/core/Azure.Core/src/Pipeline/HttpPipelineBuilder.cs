@@ -38,7 +38,7 @@ namespace Azure.Core.Pipeline
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
             ResponseClassifier? responseClassifier)
-            => Build(options, perCallPolicies, perRetryPolicies, responseClassifier);
+            => Build((PipelineOptions)options, perCallPolicies, perRetryPolicies, responseClassifier);
 
         /// <summary>
         /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
@@ -269,7 +269,6 @@ namespace Azure.Core.Pipeline
 
             public ResponseClassifier Classifier { get; }
             public HttpPipelineTransport Transport { get; }
-
             public int PerCallIndex { get; }
             public int PerRetryIndex { get; }
             public HttpPipelinePolicy[] Policies { get; }
