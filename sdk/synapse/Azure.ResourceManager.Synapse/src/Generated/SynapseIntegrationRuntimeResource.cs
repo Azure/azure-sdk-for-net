@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
-        public virtual async Task<Response<IntegrationRuntimeNodeIPAddress>> GetIntegrationRuntimeNodeIPAddressAsync(string nodeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseIntegrationRuntimeNodeIPAddress>> GetIntegrationRuntimeNodeIPAddressAsync(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
-        public virtual Response<IntegrationRuntimeNodeIPAddress> GetIntegrationRuntimeNodeIPAddress(string nodeName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseIntegrationRuntimeNodeIPAddress> GetIntegrationRuntimeNodeIPAddress(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 

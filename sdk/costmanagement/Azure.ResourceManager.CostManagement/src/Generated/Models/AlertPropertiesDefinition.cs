@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of AlertPropertiesDefinition. </summary>
-        /// <param name="costManagementAlertType"> type of alert. </param>
+        /// <param name="alertType"> type of alert. </param>
         /// <param name="category"> Alert category. </param>
         /// <param name="criteria"> Criteria that triggered alert. </param>
-        internal AlertPropertiesDefinition(CostManagementAlertType? costManagementAlertType, CostManagementAlertCategory? category, AlertCriterion? criteria)
+        internal AlertPropertiesDefinition(CostManagementAlertType? alertType, CostManagementAlertCategory? category, AlertCriterion? criteria)
         {
-            CostManagementAlertType = costManagementAlertType;
+            AlertType = alertType;
             Category = category;
             Criteria = criteria;
         }
 
         /// <summary> type of alert. </summary>
-        public CostManagementAlertType? CostManagementAlertType { get; set; }
+        public CostManagementAlertType? AlertType { get; set; }
         /// <summary> Alert category. </summary>
         public CostManagementAlertCategory? Category { get; set; }
         /// <summary> Criteria that triggered alert. </summary>

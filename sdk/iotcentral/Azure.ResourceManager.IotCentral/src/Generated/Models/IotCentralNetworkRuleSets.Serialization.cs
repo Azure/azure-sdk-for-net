@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             Optional<bool> applyToDevices = default;
             Optional<bool> applyToIoTCentral = default;
             Optional<IotCentralNetworkAction> defaultAction = default;
-            Optional<IList<NetworkRuleSetIPRule>> ipRules = default;
+            Optional<IList<IotCentralNetworkRuleSetIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applyToDevices"u8))
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.IotCentral.Models
                     {
                         continue;
                     }
-                    List<NetworkRuleSetIPRule> array = new List<NetworkRuleSetIPRule>();
+                    List<IotCentralNetworkRuleSetIPRule> array = new List<IotCentralNetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkRuleSetIPRule.DeserializeNetworkRuleSetIPRule(item));
+                        array.Add(IotCentralNetworkRuleSetIPRule.DeserializeIotCentralNetworkRuleSetIPRule(item));
                     }
                     ipRules = array;
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of NetworkCloudStorageProfile. </summary>
         /// <param name="osDisk"> The disk to use with this virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osDisk"/> is null. </exception>
-        public NetworkCloudStorageProfile(OSDisk osDisk)
+        public NetworkCloudStorageProfile(NetworkCloudOSDisk osDisk)
         {
             Argument.AssertNotNull(osDisk, nameof(osDisk));
 
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of NetworkCloudStorageProfile. </summary>
         /// <param name="osDisk"> The disk to use with this virtual machine. </param>
         /// <param name="volumeAttachments"> The resource IDs of volumes that are requested to be attached to the virtual machine. </param>
-        internal NetworkCloudStorageProfile(OSDisk osDisk, IList<ResourceIdentifier> volumeAttachments)
+        internal NetworkCloudStorageProfile(NetworkCloudOSDisk osDisk, IList<ResourceIdentifier> volumeAttachments)
         {
             OSDisk = osDisk;
             VolumeAttachments = volumeAttachments;
         }
 
         /// <summary> The disk to use with this virtual machine. </summary>
-        public OSDisk OSDisk { get; set; }
+        public NetworkCloudOSDisk OSDisk { get; set; }
         /// <summary> The resource IDs of volumes that are requested to be attached to the virtual machine. </summary>
         public IList<ResourceIdentifier> VolumeAttachments { get; }
     }

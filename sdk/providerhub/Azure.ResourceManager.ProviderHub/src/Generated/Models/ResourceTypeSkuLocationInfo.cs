@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="zones"></param>
         /// <param name="zoneDetails"></param>
         /// <param name="extendedLocations"></param>
-        /// <param name="providerHubExtendedLocationType"></param>
-        internal ResourceTypeSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceTypeSkuZoneDetail> zoneDetails, IList<string> extendedLocations, ProviderHubExtendedLocationType? providerHubExtendedLocationType)
+        /// <param name="extendedLocationType"></param>
+        internal ResourceTypeSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceTypeSkuZoneDetail> zoneDetails, IList<string> extendedLocations, ProviderHubExtendedLocationType? extendedLocationType)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
             ExtendedLocations = extendedLocations;
-            ProviderHubExtendedLocationType = providerHubExtendedLocationType;
+            ExtendedLocationType = extendedLocationType;
         }
 
         /// <summary> Gets or sets the location. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<ResourceTypeSkuZoneDetail> ZoneDetails { get; }
         /// <summary> Gets the extended locations. </summary>
         public IList<string> ExtendedLocations { get; }
-        /// <summary> Gets or sets the provider hub extended location type. </summary>
-        public ProviderHubExtendedLocationType? ProviderHubExtendedLocationType { get; set; }
+        /// <summary> Gets or sets the extended location type. </summary>
+        public ProviderHubExtendedLocationType? ExtendedLocationType { get; set; }
     }
 }

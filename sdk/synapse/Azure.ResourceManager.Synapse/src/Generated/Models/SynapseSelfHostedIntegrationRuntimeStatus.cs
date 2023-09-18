@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Synapse.Models
             ServiceUrls = new ChangeTrackingList<string>();
             Links = new ChangeTrackingList<SynapseLinkedIntegrationRuntime>();
             NewerVersions = new ChangeTrackingList<string>();
-            IntegrationRuntimeType = IntegrationRuntimeType.SelfHosted;
+            RuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 
         /// <summary> Initializes a new instance of SynapseSelfHostedIntegrationRuntimeStatus. </summary>
-        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
+        /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="autoUpdateEta"> The estimated time when the self-hosted integration runtime will be updated. </param>
         /// <param name="serviceRegion"> The service region of the integration runtime. </param>
         /// <param name="newerVersions"> The newer versions on download center. </param>
-        internal SynapseSelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType integrationRuntimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, string taskQueueId, string nodeCommunicationChannelEncryptionMode, SynapseIntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SynapseSelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, string updateDelayOffset, string localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUrls, SynapseIntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<SynapseLinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateEta, string serviceRegion, IReadOnlyList<string> newerVersions) : base(integrationRuntimeType, dataFactoryName, state, additionalProperties)
+        internal SynapseSelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, string taskQueueId, string nodeCommunicationChannelEncryptionMode, SynapseIntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SynapseSelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, string updateDelayOffset, string localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUrls, SynapseIntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<SynapseLinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateEta, string serviceRegion, IReadOnlyList<string> newerVersions) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             CreateOn = createOn;
             TaskQueueId = taskQueueId;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse.Models
             AutoUpdateEta = autoUpdateEta;
             ServiceRegion = serviceRegion;
             NewerVersions = newerVersions;
-            IntegrationRuntimeType = integrationRuntimeType;
+            RuntimeType = runtimeType;
         }
 
         /// <summary> The time at which the integration runtime was created, in ISO8601 format. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="applyToBuiltInEventHubEndpoint"> If True, then Network Rule Set is also applied to BuiltIn EventHub EndPoint of IotHub. </param>
         /// <param name="ipRules"> List of IP Rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipRules"/> is null. </exception>
-        public IotHubNetworkRuleSetProperties(bool applyToBuiltInEventHubEndpoint, IEnumerable<NetworkRuleSetIPRule> ipRules)
+        public IotHubNetworkRuleSetProperties(bool applyToBuiltInEventHubEndpoint, IEnumerable<IotHubNetworkRuleSetIPRule> ipRules)
         {
             Argument.AssertNotNull(ipRules, nameof(ipRules));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="applyToBuiltInEventHubEndpoint"> If True, then Network Rule Set is also applied to BuiltIn EventHub EndPoint of IotHub. </param>
         /// <param name="ipRules"> List of IP Rules. </param>
-        internal IotHubNetworkRuleSetProperties(IotHubNetworkRuleSetDefaultAction? defaultAction, bool applyToBuiltInEventHubEndpoint, IList<NetworkRuleSetIPRule> ipRules)
+        internal IotHubNetworkRuleSetProperties(IotHubNetworkRuleSetDefaultAction? defaultAction, bool applyToBuiltInEventHubEndpoint, IList<IotHubNetworkRuleSetIPRule> ipRules)
         {
             DefaultAction = defaultAction;
             ApplyToBuiltInEventHubEndpoint = applyToBuiltInEventHubEndpoint;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> If True, then Network Rule Set is also applied to BuiltIn EventHub EndPoint of IotHub. </summary>
         public bool ApplyToBuiltInEventHubEndpoint { get; set; }
         /// <summary> List of IP Rules. </summary>
-        public IList<NetworkRuleSetIPRule> IPRules { get; }
+        public IList<IotHubNetworkRuleSetIPRule> IPRules { get; }
     }
 }

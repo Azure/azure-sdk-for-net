@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // invoke the operation
             string nodeName = "Node_1";
-            IntegrationRuntimeNodeIPAddress result = await synapseIntegrationRuntime.GetIntegrationRuntimeNodeIPAddressAsync(nodeName);
+            SynapseIntegrationRuntimeNodeIPAddress result = await synapseIntegrationRuntime.GetIntegrationRuntimeNodeIPAddressAsync(nodeName);
 
             Console.WriteLine($"Succeeded: {result}");
         }

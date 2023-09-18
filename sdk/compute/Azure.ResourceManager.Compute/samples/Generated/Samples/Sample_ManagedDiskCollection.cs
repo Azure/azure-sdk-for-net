@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 DiskMBpsReadWrite = 3000,
                 Encryption = new DiskEncryption()
                 {
-                    ComputeEncryptionType = ComputeEncryptionType.EncryptionAtRestWithPlatformKey,
+                    EncryptionType = ComputeEncryptionType.EncryptionAtRestWithPlatformKey,
                 },
             };
             ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);

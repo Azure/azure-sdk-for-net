@@ -110,7 +110,7 @@ MinPriorityPerJob = 1,
 new FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent("test_rule",IPAddress.Parse("1.1.1.1"),IPAddress.Parse("2.2.2.2"))
 },
                 FirewallState = DataLakeAnalyticsFirewallState.Enabled,
-                FirewallAllowAzureIPs = FirewallAllowAzureIPsState.Enabled,
+                FirewallAllowAzureIPs = DataLakeAnalyticsFirewallAllowAzureIPsState.Enabled,
                 NewTier = DataLakeAnalyticsCommitmentTierType.Consumption,
                 MaxJobCount = 3,
                 MaxDegreeOfParallelism = 30,

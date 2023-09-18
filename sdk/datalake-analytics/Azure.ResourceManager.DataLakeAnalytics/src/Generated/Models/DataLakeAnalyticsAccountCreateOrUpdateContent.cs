@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallAllowAzureIps
         /// </summary>
-        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
+        public DataLakeAnalyticsFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
         /// <summary>
         /// The commitment tier for the next month.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.newTier

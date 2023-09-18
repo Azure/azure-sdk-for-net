@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseEntityReference. </summary>
-        /// <param name="referenceType"> The type of this referenced entity. </param>
+        /// <param name="integrationRuntimeEntityReferenceType"> The type of this referenced entity. </param>
         /// <param name="referenceName"> The name of this referenced entity. </param>
-        internal SynapseEntityReference(SynapseIntegrationRuntimeEntityReferenceType? referenceType, string referenceName)
+        internal SynapseEntityReference(SynapseIntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType, string referenceName)
         {
-            ReferenceType = referenceType;
+            IntegrationRuntimeEntityReferenceType = integrationRuntimeEntityReferenceType;
             ReferenceName = referenceName;
         }
 
         /// <summary> The type of this referenced entity. </summary>
-        public SynapseIntegrationRuntimeEntityReferenceType? ReferenceType { get; set; }
+        public SynapseIntegrationRuntimeEntityReferenceType? IntegrationRuntimeEntityReferenceType { get; set; }
         /// <summary> The name of this referenced entity. </summary>
         public string ReferenceName { get; set; }
     }

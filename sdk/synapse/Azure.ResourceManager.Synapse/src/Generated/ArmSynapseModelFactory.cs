@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseAadOnlyAuthenticationData(id, name, resourceType, systemData, isAadOnlyAuthenticationEnabled, state, createdOn);
         }
 
-        /// <summary> Initializes a new instance of IPFirewallRuleInfoData. </summary>
+        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. </param>
-        /// <returns> A new <see cref="Synapse.IPFirewallRuleInfoData"/> instance for mocking. </returns>
-        public static IPFirewallRuleInfoData IPFirewallRuleInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress endIPAddress = null, SynapseProvisioningState? provisioningState = null, IPAddress startIPAddress = null)
+        /// <returns> A new <see cref="Synapse.SynapseIPFirewallRuleInfoData"/> instance for mocking. </returns>
+        public static SynapseIPFirewallRuleInfoData SynapseIPFirewallRuleInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress endIPAddress = null, SynapseProvisioningState? provisioningState = null, IPAddress startIPAddress = null)
         {
-            return new IPFirewallRuleInfoData(id, name, resourceType, systemData, endIPAddress, provisioningState, startIPAddress);
+            return new SynapseIPFirewallRuleInfoData(id, name, resourceType, systemData, endIPAddress, provisioningState, startIPAddress);
         }
 
         /// <summary> Initializes a new instance of ReplaceAllFirewallRulesOperationResult. </summary>
@@ -1368,12 +1368,12 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseIntegrationRuntimeData(id, name, resourceType, systemData, properties, etag);
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeIPAddress. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
-        /// <returns> A new <see cref="Models.IntegrationRuntimeNodeIPAddress"/> instance for mocking. </returns>
-        public static IntegrationRuntimeNodeIPAddress IntegrationRuntimeNodeIPAddress(IPAddress ipAddress = null)
+        /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeNodeIPAddress"/> instance for mocking. </returns>
+        public static SynapseIntegrationRuntimeNodeIPAddress SynapseIntegrationRuntimeNodeIPAddress(IPAddress ipAddress = null)
         {
-            return new IntegrationRuntimeNodeIPAddress(ipAddress);
+            return new SynapseIntegrationRuntimeNodeIPAddress(ipAddress);
         }
 
         /// <summary> Initializes a new instance of SynapseSsisObjectMetadata. </summary>
@@ -1446,16 +1446,16 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeStatus. </summary>
-        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
+        /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeStatus SynapseIntegrationRuntimeStatus(string integrationRuntimeType = "Unknown", string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseIntegrationRuntimeStatus SynapseIntegrationRuntimeStatus(string runtimeType = "Unknown", string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SynapseIntegrationRuntimeStatus(integrationRuntimeType, dataFactoryName, state, additionalProperties);
+            return new SynapseIntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeAuthKeys. </summary>

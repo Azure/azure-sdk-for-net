@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>
         public IotCentralNetworkRuleSets()
         {
-            IPRules = new ChangeTrackingList<NetworkRuleSetIPRule>();
+            IPRules = new ChangeTrackingList<IotCentralNetworkRuleSetIPRule>();
         }
 
         /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <param name="applyToIotCentral"> Whether these rules apply for connectivity via IoT Central web portal and APIs. </param>
         /// <param name="defaultAction"> The default network action to apply. </param>
         /// <param name="ipRules"> List of IP rules. </param>
-        internal IotCentralNetworkRuleSets(bool? applyToDevices, bool? applyToIotCentral, IotCentralNetworkAction? defaultAction, IList<NetworkRuleSetIPRule> ipRules)
+        internal IotCentralNetworkRuleSets(bool? applyToDevices, bool? applyToIotCentral, IotCentralNetworkAction? defaultAction, IList<IotCentralNetworkRuleSetIPRule> ipRules)
         {
             ApplyToDevices = applyToDevices;
             ApplyToIotCentral = applyToIotCentral;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> The default network action to apply. </summary>
         public IotCentralNetworkAction? DefaultAction { get; set; }
         /// <summary> List of IP rules. </summary>
-        public IList<NetworkRuleSetIPRule> IPRules { get; }
+        public IList<IotCentralNetworkRuleSetIPRule> IPRules { get; }
     }
 }

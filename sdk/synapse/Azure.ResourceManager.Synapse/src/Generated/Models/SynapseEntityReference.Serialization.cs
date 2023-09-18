@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReferenceType))
+            if (Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ReferenceType.Value.ToString());
+                writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToString());
             }
             if (Optional.IsDefined(ReferenceName))
             {

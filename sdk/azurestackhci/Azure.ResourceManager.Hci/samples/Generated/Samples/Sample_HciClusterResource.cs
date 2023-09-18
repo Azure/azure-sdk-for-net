@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Samples
                     WindowsServerSubscription = WindowsServerSubscription.Enabled,
                     DiagnosticLevel = HciClusterDiagnosticLevel.Basic,
                 },
-                HciManagedServiceIdentityType = HciManagedServiceIdentityType.SystemAssigned,
+                ManagedServiceIdentityType = HciManagedServiceIdentityType.SystemAssigned,
             };
             HciClusterResource result = await hciCluster.UpdateAsync(patch);
 

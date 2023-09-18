@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ConsistencyPolicy> consistencyPolicy = default;
             IList<CosmosDBAccountLocation> locations = default;
             CosmosDBAccountOfferType databaseAccountOfferType = default;
-            Optional<IList<IPAddressOrRange>> ipRules = default;
+            Optional<IList<CosmosDBIPAddressOrRange>> ipRules = default;
             Optional<bool> isVirtualNetworkFilterEnabled = default;
             Optional<bool> enableAutomaticFailover = default;
             Optional<IList<CosmosDBAccountCapability>> capabilities = default;
@@ -387,10 +387,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            List<IPAddressOrRange> array = new List<IPAddressOrRange>();
+                            List<CosmosDBIPAddressOrRange> array = new List<CosmosDBIPAddressOrRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddressOrRange.DeserializeIPAddressOrRange(item));
+                                array.Add(CosmosDBIPAddressOrRange.DeserializeCosmosDBIPAddressOrRange(item));
                             }
                             ipRules = array;
                             continue;

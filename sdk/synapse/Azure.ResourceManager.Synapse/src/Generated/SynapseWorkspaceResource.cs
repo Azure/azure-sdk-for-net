@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Synapse
 
         private readonly ClientDiagnostics _synapseWorkspaceWorkspacesClientDiagnostics;
         private readonly WorkspacesRestOperations _synapseWorkspaceWorkspacesRestClient;
-        private readonly ClientDiagnostics _ipFirewallRuleInfoIPFirewallRulesClientDiagnostics;
-        private readonly IpFirewallRulesRestOperations _ipFirewallRuleInfoIPFirewallRulesRestClient;
+        private readonly ClientDiagnostics _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics;
+        private readonly IpFirewallRulesRestOperations _synapseIPFirewallRuleInfoIPFirewallRulesRestClient;
         private readonly ClientDiagnostics _workspaceManagedSqlServerUsagesClientDiagnostics;
         private readonly WorkspaceManagedSqlServerUsagesRestOperations _workspaceManagedSqlServerUsagesRestClient;
         private readonly SynapseWorkspaceData _data;
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Synapse
             _synapseWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string synapseWorkspaceWorkspacesApiVersion);
             _synapseWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, synapseWorkspaceWorkspacesApiVersion);
-            _ipFirewallRuleInfoIPFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", IPFirewallRuleInfoResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(IPFirewallRuleInfoResource.ResourceType, out string ipFirewallRuleInfoIPFirewallRulesApiVersion);
-            _ipFirewallRuleInfoIPFirewallRulesRestClient = new IpFirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ipFirewallRuleInfoIPFirewallRulesApiVersion);
+            _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", SynapseIPFirewallRuleInfoResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SynapseIPFirewallRuleInfoResource.ResourceType, out string synapseIPFirewallRuleInfoIPFirewallRulesApiVersion);
+            _synapseIPFirewallRuleInfoIPFirewallRulesRestClient = new IpFirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, synapseIPFirewallRuleInfoIPFirewallRulesApiVersion);
             _workspaceManagedSqlServerUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _workspaceManagedSqlServerUsagesRestClient = new WorkspaceManagedSqlServerUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Synapse
             return GetSynapseAadOnlyAuthentications().Get(azureADOnlyAuthenticationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPFirewallRuleInfoResources in the SynapseWorkspace. </summary>
-        /// <returns> An object representing collection of IPFirewallRuleInfoResources and their operations over a IPFirewallRuleInfoResource. </returns>
-        public virtual IPFirewallRuleInfoCollection GetIPFirewallRuleInfos()
+        /// <summary> Gets a collection of SynapseIPFirewallRuleInfoResources in the SynapseWorkspace. </summary>
+        /// <returns> An object representing collection of SynapseIPFirewallRuleInfoResources and their operations over a SynapseIPFirewallRuleInfoResource. </returns>
+        public virtual SynapseIPFirewallRuleInfoCollection GetSynapseIPFirewallRuleInfos()
         {
-            return GetCachedClient(Client => new IPFirewallRuleInfoCollection(Client, Id));
+            return GetCachedClient(Client => new SynapseIPFirewallRuleInfoCollection(Client, Id));
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IPFirewallRuleInfoResource>> GetIPFirewallRuleInfoAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseIPFirewallRuleInfoResource>> GetSynapseIPFirewallRuleInfoAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            return await GetIPFirewallRuleInfos().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetSynapseIPFirewallRuleInfos().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IPFirewallRuleInfoResource> GetIPFirewallRuleInfo(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseIPFirewallRuleInfoResource> GetSynapseIPFirewallRuleInfo(string ruleName, CancellationToken cancellationToken = default)
         {
-            return GetIPFirewallRuleInfos().Get(ruleName, cancellationToken);
+            return GetSynapseIPFirewallRuleInfos().Get(ruleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SynapseKeyResources in the SynapseWorkspace. </summary>
@@ -1334,12 +1334,12 @@ namespace Azure.ResourceManager.Synapse
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _ipFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseWorkspaceResource.ReplaceAllIpFirewallRule");
+            using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseWorkspaceResource.ReplaceAllIpFirewallRule");
             scope.Start();
             try
             {
-                var response = await _ipFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAllAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _ipFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _ipFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAllAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1372,12 +1372,12 @@ namespace Azure.ResourceManager.Synapse
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _ipFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseWorkspaceResource.ReplaceAllIpFirewallRule");
+            using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseWorkspaceResource.ReplaceAllIpFirewallRule");
             scope.Start();
             try
             {
-                var response = _ipFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAll(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _ipFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _ipFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAll(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             Optional<IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule>> virtualNetworkRules = default;
             Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> firewallRules = default;
             Optional<DataLakeAnalyticsFirewallState> firewallState = default;
-            Optional<FirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
+            Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
             Optional<DataLakeAnalyticsCommitmentTierType> newTier = default;
             Optional<DataLakeAnalyticsCommitmentTierType> currentTier = default;
             Optional<int> maxJobCount = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             {
                                 continue;
                             }
-                            firewallAllowAzureIPs = property0.Value.GetString().ToFirewallAllowAzureIPsState();
+                            firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeAnalyticsFirewallAllowAzureIPsState();
                             continue;
                         }
                         if (property0.NameEquals("newTier"u8))

@@ -127,7 +127,7 @@ EndIPAddress = IPAddress.Parse("2.2.2.2"),
 }
 },
                 FirewallState = DataLakeAnalyticsFirewallState.Enabled,
-                FirewallAllowAzureIPs = FirewallAllowAzureIPsState.Enabled,
+                FirewallAllowAzureIPs = DataLakeAnalyticsFirewallAllowAzureIPsState.Enabled,
                 NewTier = DataLakeAnalyticsCommitmentTierType.Consumption,
                 MaxJobCount = 1,
                 MaxDegreeOfParallelism = 1,
