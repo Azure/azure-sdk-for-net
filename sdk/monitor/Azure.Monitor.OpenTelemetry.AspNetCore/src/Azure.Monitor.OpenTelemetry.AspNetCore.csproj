@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
@@ -10,14 +10,15 @@
 
   <ItemGroup>
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" />
     <PackageReference Include="OpenTelemetry.ResourceDetectors.Azure" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+    <ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Instrumentation\Azure.Monitor.OpenTelemetry.Instrumentation.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <Reference Include="$(OutputPath)\..\..\..\Azure.Monitor.OpenTelemetry.Instrumentation\$(Configuration)\netstandard2.0\Azure.Monitor.OpenTelemetry.ShadedInstrumentation.dll" />
   </ItemGroup>
 
   <!-- Shared source from Exporter -->

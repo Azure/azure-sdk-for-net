@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>A shaded and repacked internal OpenTelemetry .NET instrumentation for ASP.NET Core, HTTP, and SQLClient</Description>
+    <AssemblyTitle>AzureMonitor OpenTelemetry Shaded Instrumentation</AssemblyTitle>
+    <Version>1.0.0-beta.7</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RepackedDLLName>Azure.Monitor.OpenTelemetry.ShadedInstrumentation.dll</RepackedDLLName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>AZC0011</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ILRepack" VersionOverride="2.0.18" GeneratePathProperty="true" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" GeneratePathProperty="true" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" GeneratePathProperty="true"/>
+    <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" GeneratePathProperty="true"/>
+  </ItemGroup>
+
+  <Target Name="ILRepack" AfterTargets="AfterBuild">
+    <PropertyGroup Condition="'$(PublicRelease)' == 'True'">
+      <DelaySignAssembly>/delaysign</DelaySignAssembly>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(PublicRelease)' != 'True'">
+      <DelaySignAssembly></DelaySignAssembly>
+    </PropertyGroup>
+    <ItemGroup>
+      <Binaries Include='"$(OutputPath)\Azure.Monitor.OpenTelemetry.Instrumentation.dll"' />
+      <Binaries Include='"$(PkgOpenTelemetry_Instrumentation_AspNetCore)\lib\netstandard2.0\OpenTelemetry.Instrumentation.AspNetCore.dll"' />
+      <Binaries Include='"$(PkgOpenTelemetry_Instrumentation_Http)\lib\netstandard2.0\OpenTelemetry.Instrumentation.Http.dll"' />
+      <Binaries Include='"$(PkgOpenTelemetry_Instrumentation_SqlClient)\lib\netstandard2.0\OpenTelemetry.Instrumentation.SqlClient.dll"' />
+    </ItemGroup>
+    <!--Run ILRepack-->
+    <Exec Command="$(PkgILRepack)\tools\ilrepack $(DelaySignAssembly) /internalize /verbose /keyfile:$(AssemblyOriginatorKeyFile) /allowdup:OpenTelemetry.Metrics.MeterProviderBuilderExtensions /allowdup:OpenTelemetry.Trace.TracerProviderBuilderExtensions @(Binaries, ' ') /out:$(OutputPath)\$(RepackedDLLName)" />
+  </Target>
+
+</Project>
