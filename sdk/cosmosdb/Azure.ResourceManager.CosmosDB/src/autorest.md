@@ -305,7 +305,7 @@ rename-mapping:
   CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
   CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
   NodeGroupProperties.diskSizeGB: DiskSizeInGB
-
+  IpAddressOrRange: CosmosDBIPAddressOrRange
 
 prepend-rp-prefix:
 - UniqueKey
@@ -320,7 +320,6 @@ prepend-rp-prefix:
 - MetricAvailability
 - LocationProperties
 - LocationListResult
-- IPAddressOrRange
 - DataType
 - IndexingPolicy
 - ExcludedPath
