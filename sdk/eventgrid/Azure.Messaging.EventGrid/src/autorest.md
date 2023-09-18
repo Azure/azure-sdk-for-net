@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/0d41e635294dce73dfa99b07f3da4b68a9c9e29c/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/20312e2b31df58f0ea7560e87062d62aa92f0a14/specification/eventgrid/data-plane/readme.md
 generation1-convenience-client: true
 model-factory-for-hlc:
 - MediaJobOutputAsset
@@ -146,6 +146,14 @@ directive:
       {
           $[path]["properties"]["status"]["x-namespace"] = namespace;
           $[path]["properties"]["summaryReportBlobUrl"]["x-ms-client-name"] = "SummaryReportBlobUri";
+      }
+      if (path.includes("EventGridMQTTClientCreatedOrUpdatedEventData"))
+      {
+          $[path]["properties"]["state"]["x-namespace"] = namespace;
+      }
+      if (path.includes("EventGridMQTTClientSessionDisconnectedEventData"))
+      {
+          $[path]["properties"]["disconnectionReason"]["x-namespace"] = namespace;
       }
     }
 ```
