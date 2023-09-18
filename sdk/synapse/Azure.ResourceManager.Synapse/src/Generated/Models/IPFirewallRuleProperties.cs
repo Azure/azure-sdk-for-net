@@ -10,10 +10,10 @@ using System.Net;
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> IP firewall rule properties. </summary>
-    public partial class SynapseIPFirewallRuleProperties
+    public partial class IPFirewallRuleProperties
     {
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleProperties. </summary>
-        public SynapseIPFirewallRuleProperties()
+        /// <summary> Initializes a new instance of IPFirewallRuleProperties. </summary>
+        public IPFirewallRuleProperties()
         {
         }
 

@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Synapse
         }
         #endregion
 
-        #region SynapseIPFirewallRuleInfoResource
+        #region IPFirewallRuleInfoResource
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseIPFirewallRuleInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseIPFirewallRuleInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIPFirewallRuleInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IPFirewallRuleInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPFirewallRuleInfoResource.CreateResourceIdentifier" /> to create an <see cref="IPFirewallRuleInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseIPFirewallRuleInfoResource" /> object. </returns>
-        public static SynapseIPFirewallRuleInfoResource GetSynapseIPFirewallRuleInfoResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPFirewallRuleInfoResource" /> object. </returns>
+        public static IPFirewallRuleInfoResource GetIPFirewallRuleInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SynapseIPFirewallRuleInfoResource.ValidateResourceId(id);
-                return new SynapseIPFirewallRuleInfoResource(client, id);
+                IPFirewallRuleInfoResource.ValidateResourceId(id);
+                return new IPFirewallRuleInfoResource(client, id);
             }
             );
         }
