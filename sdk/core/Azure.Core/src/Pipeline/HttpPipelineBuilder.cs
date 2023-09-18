@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Rest;
 using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
@@ -13,6 +14,25 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public static class HttpPipelineBuilder
     {
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="perRetryPolicies"></param>
+        /// <returns></returns>
+        public static HttpPipeline Build(PipelineOptions options, params PipelinePolicy[] perRetryPolicies)
+        {
+            HttpPipelinePolicy[] adaptedPolicies = new HttpPipelinePolicy[perRetryPolicies.Length];
+            ClientOptions adaptedOptions = new ClientOptionsAdapter(options);
+            return Build(adaptedOptions, Array.Empty<HttpPipelinePolicy>(), adaptedPolicies, ResponseClassifier.Shared);
+        }
+        private class ClientOptionsAdapter : ClientOptions
+        {
+            private PipelineOptions _options;
+            public ClientOptionsAdapter(PipelineOptions options)
+                => _options = options;
+        }
+
         /// <summary>
         /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>

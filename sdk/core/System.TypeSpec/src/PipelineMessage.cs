@@ -8,10 +8,10 @@ namespace System.ServiceModel.Rest;
 /// <summary>
 /// TBD.
 /// </summary>
-public class PipelineOptions
+public class PipelineMessage
 {
     /// <summary>
-    /// TBD.
+    /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="PipelineMessage"/> processing.
     /// </summary>
     public CancellationToken CancellationToken { get; set; }
 }

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
 using System.ServiceModel.Rest;
-using System.Threading;
 
 namespace OpenAI;
 
@@ -14,13 +14,13 @@ public class OpenAIClient
     private readonly HttpPipeline _pipeline;
     private readonly KeyCredential _credential;
 
-    public OpenAIClient(KeyCredential credential, OpenAIClientOptions options = default)
+    public OpenAIClient(KeyCredential credential, OpenAIOptions options = default)
     {
         _credential = credential;
-        _pipeline = HttpPipelineBuilder.Build(new PipelineBuilderOptions());
+        _pipeline = HttpPipelineBuilder.Build(options);
     }
 
-    public Result<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
+    public Result<Completions> GetCompletions(string prompt, OpenAIOptions options = default)
     {
         HttpMessage message = _pipeline.CreateMessage();
         message.BufferResponse = true;
@@ -38,14 +38,12 @@ public class OpenAIClient
         };
         request.Content = RequestContent.Create(body);
 
-        _pipeline.Send(message, cancellationToken);
+        _pipeline.Send(message, options.CancellationToken);
         if (message.Response.IsError) {
-            throw new Exception("");
+            throw new RequestFailedException(message.Response);
         }
         var completions = Completions.Deserialize(message.Response.Content);
 
         return Result.FromValue(completions, message.Response);
     }
-
-    private class PipelineBuilderOptions : ClientOptions { }
 }

@@ -8,7 +8,7 @@ namespace System.ServiceModel.Rest;
 /// <summary>
 /// TBD.
 /// </summary>
-public abstract class Result
+public abstract class Result // base of Response
 {
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());

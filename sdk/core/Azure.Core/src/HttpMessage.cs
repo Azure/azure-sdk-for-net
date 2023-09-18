@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.ServiceModel.Rest;
 using System.Threading;
 using Azure.Core.Pipeline;
 
@@ -12,7 +13,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : IDisposable
+    public sealed class HttpMessage : PipelineMessage, IDisposable
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
@@ -61,11 +62,6 @@ namespace Azure.Core
         public bool HasResponse => _response != null;
 
         internal void ClearResponse() => _response = null;
-
-        /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
-        /// </summary>
-        public CancellationToken CancellationToken { get; internal set; }
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.

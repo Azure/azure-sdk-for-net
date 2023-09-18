@@ -4,6 +4,9 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ServiceModel.Rest;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -11,10 +14,35 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represent an extension point for the <see cref="HttpPipeline"/> that can mutate the <see cref="Request"/> and react to received <see cref="Response"/>.
     /// </summary>
-    public abstract class HttpPipelinePolicy
+    public abstract class HttpPipelinePolicy : PipelinePolicy
     {
         /// <summary>
-        /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync"/> and observe the <see cref="HttpMessage.Response"/> changes after.
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override void Process(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
+        {
+            ProcessNext(message, pipeline);
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ValueTask ProcessAsync(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
+        {
+            return ProcessNextAsync(message, pipeline);
+        }
+
+        /// <summary>
+        /// TBD.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
@@ -22,7 +50,7 @@ namespace Azure.Core.Pipeline
         public abstract ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
 
         /// <summary>
-        /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync"/> and observe the <see cref="HttpMessage.Response"/> changes after.
+        /// TBD.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
@@ -47,6 +75,29 @@ namespace Azure.Core.Pipeline
         protected static void ProcessNext(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             pipeline.Span[0].Process(message, pipeline.Slice(1));
+        }
+
+        /// <summary>
+        /// Invokes the next <see cref="HttpPipelinePolicy"/> in the <paramref name="pipeline"/>.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> next policy would be applied to.</param>
+        /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after next one.</param>
+        /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
+        protected static ValueTask ProcessNextAsync(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
+        {
+            if (!pipeline.MoveNext()) return default(ValueTask);
+            return pipeline.Current.ProcessAsync(message, pipeline);
+        }
+
+        /// <summary>
+        /// Invokes the next <see cref="HttpPipelinePolicy"/> in the <paramref name="pipeline"/>.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> next policy would be applied to.</param>
+        /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after next one.</param>
+        protected static void ProcessNext(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
+        {
+            if (!pipeline.MoveNext()) return;
+            pipeline.Current.ProcessAsync(message, pipeline);
         }
     }
 }
