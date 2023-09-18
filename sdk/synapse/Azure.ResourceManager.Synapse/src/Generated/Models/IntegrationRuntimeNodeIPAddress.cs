@@ -10,16 +10,16 @@ using System.Net;
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The IP address of self-hosted integration runtime node. </summary>
-    public partial class SynapseIntegrationRuntimeNodeIPAddress
+    public partial class IntegrationRuntimeNodeIPAddress
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeIPAddress. </summary>
-        internal SynapseIntegrationRuntimeNodeIPAddress()
+        /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
+        internal IntegrationRuntimeNodeIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
-        internal SynapseIntegrationRuntimeNodeIPAddress(IPAddress ipAddress)
+        internal IntegrationRuntimeNodeIPAddress(IPAddress ipAddress)
         {
             IPAddress = ipAddress;
         }
