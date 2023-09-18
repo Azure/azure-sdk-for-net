@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public KeyVaultResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            ResourceType = "Microsoft.KeyVault/vaults";
+            TargetResourceName = targetResourceName;
         }
     }
 }

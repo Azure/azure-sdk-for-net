@@ -19,8 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public PublicIPAddressResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            Tags = new ChangeTrackingDictionary<string, string>();
-            ResourceType = "Microsoft.Network/publicIPAddresses";
+            TargetResourceName = targetResourceName;
         }
     }
 }

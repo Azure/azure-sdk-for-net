@@ -19,8 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public MoverAvailabilitySetResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            Tags = new ChangeTrackingDictionary<string, string>();
-            ResourceType = "Microsoft.Compute/availabilitySets";
+            TargetResourceName = targetResourceName;
         }
     }
 }

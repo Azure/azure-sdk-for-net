@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public ResourceGroupResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            ResourceType = "resourceGroups";
+            TargetResourceName = targetResourceName;
         }
     }
 }

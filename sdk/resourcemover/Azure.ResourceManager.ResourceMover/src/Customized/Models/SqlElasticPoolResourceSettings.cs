@@ -21,8 +21,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public SqlElasticPoolResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            Tags = new ChangeTrackingDictionary<string, string>();
-            ResourceType = "Microsoft.Sql/servers/elasticPools";
+            TargetResourceName = targetResourceName;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public SqlServerResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            ResourceType = "Microsoft.Sql/servers";
+            TargetResourceName = targetResourceName;
         }
     }
 }

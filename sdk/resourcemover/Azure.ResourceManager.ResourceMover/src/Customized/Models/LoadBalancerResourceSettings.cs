@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public LoadBalancerResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            Tags = new ChangeTrackingDictionary<string, string>();
-            FrontendIPConfigurations = new ChangeTrackingList<LoadBalancerFrontendIPConfigurationResourceSettings>();
-            BackendAddressPools = new ChangeTrackingList<LoadBalancerBackendAddressPoolResourceSettings>();
-            ResourceType = "Microsoft.Network/loadBalancers";
+            TargetResourceName = targetResourceName;
         }
     }
 }

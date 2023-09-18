@@ -19,9 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public NetworkSecurityGroupResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            Tags = new ChangeTrackingDictionary<string, string>();
-            SecurityRules = new ChangeTrackingList<NetworkSecurityGroupSecurityRule>();
-            ResourceType = "Microsoft.Network/networkSecurityGroups";
+            TargetResourceName = targetResourceName;
         }
     }
 }

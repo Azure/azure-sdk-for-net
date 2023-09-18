@@ -21,9 +21,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public VirtualMachineResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            Tags = new ChangeTrackingDictionary<string, string>();
-            UserManagedIdentities = new ChangeTrackingList<ResourceIdentifier>();
-            ResourceType = "Microsoft.Compute/virtualMachines";
+            TargetResourceName = targetResourceName;
         }
     }
 }

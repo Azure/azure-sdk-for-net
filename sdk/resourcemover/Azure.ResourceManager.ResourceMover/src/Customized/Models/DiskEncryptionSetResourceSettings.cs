@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public DiskEncryptionSetResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            ResourceType = "Microsoft.Compute/diskEncryptionSets";
+            TargetResourceName = targetResourceName;
         }
     }
 }

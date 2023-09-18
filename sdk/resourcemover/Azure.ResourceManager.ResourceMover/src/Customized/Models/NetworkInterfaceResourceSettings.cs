@@ -19,9 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public NetworkInterfaceResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            Tags = new ChangeTrackingDictionary<string, string>();
-            IPConfigurations = new ChangeTrackingList<NicIPConfigurationResourceSettings>();
-            ResourceType = "Microsoft.Network/networkInterfaces";
+            TargetResourceName = targetResourceName;
         }
     }
 }

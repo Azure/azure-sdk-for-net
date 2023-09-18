@@ -19,11 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public MoverVirtualNetworkResourceSettings(string targetResourceName) : this()
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-            Tags = new ChangeTrackingDictionary<string, string>();
-            AddressSpace = new ChangeTrackingList<string>();
-            DnsServers = new ChangeTrackingList<string>();
-            Subnets = new ChangeTrackingList<SubnetResourceSettings>();
-            ResourceType = "Microsoft.Network/virtualNetworks";
+            TargetResourceName = targetResourceName;
         }
     }
 }
