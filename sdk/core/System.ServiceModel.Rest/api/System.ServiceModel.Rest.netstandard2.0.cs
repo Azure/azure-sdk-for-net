@@ -18,19 +18,14 @@ namespace System.ServiceModel.Rest
         public virtual T? Value { get { throw null; } }
         public virtual System.ServiceModel.Rest.Result GetRawResult() { throw null; }
     }
-    public abstract partial class PipelineOptions
+    public partial class RequestErrorException : System.Exception
     {
-        protected PipelineOptions() { }
+        protected RequestErrorException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public RequestErrorException(System.ServiceModel.Rest.Result result) { }
+        protected RequestErrorException(System.ServiceModel.Rest.Result result, string message, System.Exception? innerException) { }
+        public int Status { get { throw null; } }
     }
-    public abstract partial class RequestBody : System.IDisposable
-    {
-        protected RequestBody() { }
-        public abstract void Dispose();
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
-    }
-    public partial class RequestOptions : System.ServiceModel.Rest.PipelineOptions
+    public partial class RequestOptions : System.ServiceModel.Rest.Core.PipelineOptions
     {
         public RequestOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
@@ -52,11 +47,19 @@ namespace System.ServiceModel.Rest
         public override T Value { get { throw null; } }
         public override System.ServiceModel.Rest.Result GetRawResult() { throw null; }
     }
-    public partial class ServiceErrorException : System.Exception
+}
+namespace System.ServiceModel.Rest.Core
+{
+    public abstract partial class PipelineOptions
     {
-        protected ServiceErrorException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public ServiceErrorException(System.ServiceModel.Rest.Result result) { }
-        protected ServiceErrorException(System.ServiceModel.Rest.Result result, string message, System.Exception? innerException) { }
-        public int Status { get { throw null; } }
+        protected PipelineOptions() { }
+    }
+    public abstract partial class RequestBody : System.IDisposable
+    {
+        protected RequestBody() { }
+        public abstract void Dispose();
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
     }
 }
