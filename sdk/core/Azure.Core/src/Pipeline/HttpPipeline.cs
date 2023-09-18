@@ -84,17 +84,13 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="Request"/> instance.
         /// </summary>
         /// <returns>The request.</returns>
-        public Request CreateRequest()
-            => _transport.CreateRequest();
+        public Request CreateRequest() => _transport.CreateRequest();
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage()
-        {
-            return new HttpMessage(CreateRequest(), ResponseClassifier);
-        }
+        public HttpMessage CreateMessage() => new HttpMessage(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
