@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebPubSub.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.WebPubSub", "..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj", "{DD679056-5480-498A-BB09-B86EB454E935}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{9B2832C2-850B-405C-A13F-E84EC6A214E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DD679056-5480-498A-BB09-B86EB454E935}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD679056-5480-498A-BB09-B86EB454E935}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD679056-5480-498A-BB09-B86EB454E935}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B2832C2-850B-405C-A13F-E84EC6A214E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B2832C2-850B-405C-A13F-E84EC6A214E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B2832C2-850B-405C-A13F-E84EC6A214E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B2832C2-850B-405C-A13F-E84EC6A214E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
