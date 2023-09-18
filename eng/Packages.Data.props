@@ -130,6 +130,7 @@
     <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.5.1-beta.1" />
     <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0" />
     <PackageReference Update="OpenTelemetry.ResourceDetectors.Azure" Version="1.0.0-beta.2" />
+    <PackageReference Update="ILRepack" Version="2.0.18" />
   </ItemGroup>
 
   <!--

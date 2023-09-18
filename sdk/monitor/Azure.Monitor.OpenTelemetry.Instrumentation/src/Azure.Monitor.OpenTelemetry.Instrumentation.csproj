@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ILRepack" VersionOverride="2.0.18" GeneratePathProperty="true" />
+    <PackageReference Include="ILRepack" GeneratePathProperty="true" />
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" GeneratePathProperty="true" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" GeneratePathProperty="true"/>
     <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" GeneratePathProperty="true"/>

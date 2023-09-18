@@ -48,7 +48,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.AspNetCore.Tests", "Azure.Monitor.OpenTelemetry.AspNetCore\tests\Azure.Monitor.OpenTelemetry.AspNetCore.Tests\Azure.Monitor.OpenTelemetry.AspNetCore.Tests.csproj", "{8E1E087C-6620-44D9-871B-9E2E512F5C4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.OpenTelemetry.Instrumentation", "Azure.Monitor.OpenTelemetry.Instrumentation\Azure.Monitor.OpenTelemetry.Instrumentation.csproj", "{7223722D-7042-4A0E-A77F-5F52F1B9AB1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.OpenTelemetry.Instrumentation", "Azure.Monitor.OpenTelemetry.Instrumentation\src\Azure.Monitor.OpenTelemetry.Instrumentation.csproj", "{7223722D-7042-4A0E-A77F-5F52F1B9AB1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
