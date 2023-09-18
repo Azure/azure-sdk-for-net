@@ -623,14 +623,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the Hosts get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NewRelicObservabilityVmInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NewRelicObservabilityVmInfo> GetHostsAsync(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VmInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VmInfo> GetHostsAsync(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicObservabilityVmInfo.DeserializeNewRelicObservabilityVmInfo, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VmInfo.DeserializeVmInfo, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -649,14 +649,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the Hosts get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="NewRelicObservabilityVmInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NewRelicObservabilityVmInfo> GetHosts(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VmInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VmInfo> GetHosts(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicObservabilityVmInfo.DeserializeNewRelicObservabilityVmInfo, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VmInfo.DeserializeVmInfo, _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NewRelicObservabilityVmExtensionPayload>> VmHostPayloadAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VmExtensionPayload>> VmHostPayloadAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.VmHostPayload");
             scope.Start();
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NewRelicObservabilityVmExtensionPayload> VmHostPayload(CancellationToken cancellationToken = default)
+        public virtual Response<VmExtensionPayload> VmHostPayload(CancellationToken cancellationToken = default)
         {
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.VmHostPayload");
             scope.Start();
