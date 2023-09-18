@@ -1,0 +1,4 @@
+directory: specification/schemaregistry/SchemaRegistry
+commit: 85b0fb6b3ed44e25edbd1324cb79e41f2fd1c9f2
+repo: Azure/azure-rest-api-specs
+cleanup: false
