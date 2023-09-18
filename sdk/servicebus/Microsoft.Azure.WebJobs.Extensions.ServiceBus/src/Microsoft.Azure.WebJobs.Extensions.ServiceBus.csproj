@@ -37,4 +37,9 @@
     <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="Shared" />
   </ItemGroup>
 
+<!--Temp - remove after next release-->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
+  </ItemGroup>
+<!--End Temp-->
 </Project>

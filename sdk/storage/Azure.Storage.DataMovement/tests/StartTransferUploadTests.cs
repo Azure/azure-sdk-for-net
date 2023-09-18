@@ -1570,8 +1570,8 @@ namespace Azure.Storage.DataMovement.Tests
         {
             long fileSize = 5L * Constants.GB;
 
-            StorageResourceItem srcResource = MockStorageResource.MakeSourceResource(fileSize, false, maxChunkSize: Constants.GB);
-            StorageResourceItem dstResource = MockStorageResource.MakeDestinationResource(true, maxChunkSize: Constants.GB);
+            StorageResourceItem srcResource = MockStorageResource.MakeSourceResource(fileSize, maxChunkSize: Constants.GB);
+            StorageResourceItem dstResource = MockStorageResource.MakeDestinationResource(maxChunkSize: Constants.GB);
             TransferManager transferManager = new TransferManager();
 
             DataTransferOptions options = new();

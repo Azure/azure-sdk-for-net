@@ -107,6 +107,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         }
 
         [Test]
+        public void ToProcessorOptions_InfiniteTimeSpans_ReturnsExpectedValue()
+        {
+            ServiceBusOptions sbOptions = new ServiceBusOptions
+            {
+                AutoCompleteMessages = false,
+                PrefetchCount = 123,
+                MaxAutoLockRenewalDuration = Timeout.InfiniteTimeSpan,
+                SessionIdleTimeout = Timeout.InfiniteTimeSpan,
+                MaxConcurrentCalls = 123
+            };
+
+            ServiceBusProcessorOptions processorOptions = sbOptions.ToProcessorOptions(true, false);
+            Assert.AreEqual(true, processorOptions.AutoCompleteMessages);
+            Assert.AreEqual(sbOptions.PrefetchCount, processorOptions.PrefetchCount);
+            Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(sbOptions.MaxConcurrentCalls, processorOptions.MaxConcurrentCalls);
+        }
+
+        [Test]
         [Category("DynamicConcurrency")]
         public void ToProcessorOptions_DynamicConcurrencyEnabled_ReturnsExpectedValue()
         {

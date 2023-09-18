@@ -11,6 +11,10 @@ namespace: Azure.ResourceManager.PrivateDns
 require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/privatedns/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  sample: false
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -25,7 +29,7 @@ format-by-name-rules:
   'ifMatch': 'etag'
   'IPv6Address': 'ip-address'
   'IPv4Address': 'ip-address'
-  
+
 acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
@@ -56,7 +60,7 @@ acronym-mapping:
   SoaRecord: PrivateDnsSoaRecordInfo
   SrvRecord: PrivateDnsSrvRecordInfo
   TxtRecord: PrivateDnsTxtRecordInfo
-  ProvisioningState : PrivateDnsProvisioningState 
+  ProvisioningState : PrivateDnsProvisioningState
 
 override-operation-name:
   RecordSets_List: GetRecords

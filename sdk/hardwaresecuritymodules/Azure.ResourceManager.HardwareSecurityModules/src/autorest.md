@@ -11,6 +11,9 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/d2a5b3d3d4ff66a5c2c2
 #tag: package-2022-08-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

@@ -11,6 +11,9 @@ namespace: Azure.ResourceManager.AppComplianceAutomation
 require: https://github.com/Azure/azure-rest-api-specs/blob/da15318e582f0cd1ea01e7a2556190c98aa1578f/specification/appcomplianceautomation/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

@@ -9,6 +9,10 @@ namespace: Azure.ResourceManager.Dns
 require: https://github.com/Azure/azure-rest-api-specs/blob/48a49f06399fbdf21f17406b5042f96a5d573bf0/specification/dns/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  sample: false
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

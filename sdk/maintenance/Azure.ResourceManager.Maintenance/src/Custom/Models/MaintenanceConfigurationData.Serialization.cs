@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
@@ -12,93 +13,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
-    public partial class MaintenanceConfigurationData : IUtf8JsonSerializable
+    public partial class MaintenanceConfigurationData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void SerializeStartOn(Utf8JsonWriter writer)
         {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Namespace))
-            {
-                writer.WritePropertyName("namespace"u8);
-                writer.WriteStringValue(Namespace);
-            }
-            if (Optional.IsCollectionDefined(ExtensionProperties))
-            {
-                writer.WritePropertyName("extensionProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ExtensionProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(MaintenanceScope))
-            {
-                writer.WritePropertyName("maintenanceScope"u8);
-                writer.WriteStringValue(MaintenanceScope.Value.ToString());
-            }
-            if (Optional.IsDefined(Visibility))
-            {
-                writer.WritePropertyName("visibility"u8);
-                writer.WriteStringValue(Visibility.Value.ToString());
-            }
-            if (Optional.IsDefined(InstallPatches))
-            {
-                writer.WritePropertyName("installPatches"u8);
-                writer.WriteObjectValue(InstallPatches);
-            }
-            writer.WritePropertyName("maintenanceWindow"u8);
-            writer.WriteStartObject();
-            // Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
-            // Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "yyyy-MM-dd hh:mm");
-            }
-            // Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
-            // Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
-            if (Optional.IsDefined(ExpireOn))
-            {
-                writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "yyyy-MM-dd hh:mm");
-            }
-            if (Optional.IsDefined(Duration))
-            {
-                writer.WritePropertyName("duration"u8);
-                writer.WriteStringValue(Duration.Value, "c");
-            }
-            if (Optional.IsDefined(TimeZone))
-            {
-                writer.WritePropertyName("timeZone"u8);
-                writer.WriteStringValue(TimeZone);
-            }
-            if (Optional.IsDefined(RecurEvery))
-            {
-                writer.WritePropertyName("recurEvery"u8);
-                writer.WriteStringValue(RecurEvery);
-            }
+            writer.WriteStringValue(StartOn.Value, "yyyy-MM-dd HH:mm");
+        }
 
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-            writer.WriteEndObject();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void SerializeExpireOn(Utf8JsonWriter writer)
+        {
+            writer.WriteStringValue(ExpireOn.Value, "yyyy-MM-dd HH:mm");
         }
     }
 }
