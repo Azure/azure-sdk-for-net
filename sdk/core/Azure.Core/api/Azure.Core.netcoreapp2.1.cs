@@ -208,7 +208,7 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext : System.ServiceModel.Rest.RequestOptions
+    public partial class RequestContext : System.ServiceModel.Rest.PipelineOptions
     {
         public RequestContext() { }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
@@ -369,7 +369,7 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class ClientOptions : System.ServiceModel.Rest.Core.PipelineOptions
+    public abstract partial class ClientOptions : System.ServiceModel.Rest.PipelineOptions
     {
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
@@ -983,7 +983,7 @@ namespace Azure.Core.Pipeline
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context) { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier) { throw null; }
-        public Azure.Core.HttpMessage CreateMessage(System.ServiceModel.Rest.RequestOptions? options, Azure.Core.ResponseClassifier? classifier = null) { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(System.ServiceModel.Rest.PipelineOptions? options, Azure.Core.ResponseClassifier? classifier = null) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -997,7 +997,7 @@ namespace Azure.Core.Pipeline
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.Pipeline.HttpPipelineOptions options) { throw null; }
         public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.Pipeline.HttpPipelineOptions options, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { throw null; }
-        public static Azure.Core.Pipeline.HttpPipeline Build(System.ServiceModel.Rest.Core.PipelineOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(System.ServiceModel.Rest.PipelineOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
     }
     public partial class HttpPipelineOptions
     {

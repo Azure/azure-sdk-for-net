@@ -18,17 +18,18 @@ namespace System.ServiceModel.Rest
         public virtual T? Value { get { throw null; } }
         public virtual System.ServiceModel.Rest.Result GetRawResult() { throw null; }
     }
+    public partial class PipelineOptions
+    {
+        public PipelineOptions() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
+    }
     public partial class RequestErrorException : System.Exception
     {
         protected RequestErrorException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public RequestErrorException(System.ServiceModel.Rest.Result result) { }
         protected RequestErrorException(System.ServiceModel.Rest.Result result, string message, System.Exception? innerException) { }
         public int Status { get { throw null; } }
-    }
-    public partial class RequestOptions : System.ServiceModel.Rest.Core.PipelineOptions
-    {
-        public RequestOptions() { }
-        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
     }
     public abstract partial class Result
     {
@@ -50,10 +51,6 @@ namespace System.ServiceModel.Rest
 }
 namespace System.ServiceModel.Rest.Core
 {
-    public abstract partial class PipelineOptions
-    {
-        protected PipelineOptions() { }
-    }
     public abstract partial class RequestBody : System.IDisposable
     {
         protected RequestBody() { }

@@ -1,19 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.ServiceModel.Rest.Core
+using System.Threading;
+
+namespace System.ServiceModel.Rest
 {
     /// <summary>
     /// TBD.
     /// </summary>
-    public abstract class PipelineOptions
+    public class PipelineOptions
     {
-        // TODO: Why does this need a CancellationToken?  I think this is what
-        // prevents ClientOptions from inheriting from this.
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        public CancellationToken CancellationToken { get; set; }
 
-        ///// <summary>
-        ///// TBD.
-        ///// </summary>
-        //public CancellationToken CancellationToken { get; set; }
+        /// <summary>
+        /// TBD
+        /// </summary>
+        public static CancellationToken DefaultCancellationToken { get; set; } = CancellationToken.None;
     }
 }
