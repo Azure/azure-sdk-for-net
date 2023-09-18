@@ -982,7 +982,8 @@ namespace Azure.Core.Pipeline
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context) { throw null; }
-        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier = null) { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier) { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(System.ServiceModel.Rest.RequestOptions? options, Azure.Core.ResponseClassifier? classifier = null) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
