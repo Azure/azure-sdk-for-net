@@ -109,6 +109,8 @@ namespace Microsoft.Extensions.Hosting
 
         internal static IWebJobsBuilder AddServiceBusScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
+            // We need to register an instance of ServiceBusScalerProvider in the DI container and then map it to the interfaces IScaleMonitorProvider and ITargetScalerProvider.
+            // Since there can be more than one instance of ServiceBusScalerProvider, we have to store a reference to the created instance to filter it out later.
             ServiceBusScalerProvider serviceBusScalerProvider = null;
             builder.Services.AddSingleton(serviceProvider => {
                 serviceBusScalerProvider = new ServiceBusScalerProvider(serviceProvider, triggerMetadata);

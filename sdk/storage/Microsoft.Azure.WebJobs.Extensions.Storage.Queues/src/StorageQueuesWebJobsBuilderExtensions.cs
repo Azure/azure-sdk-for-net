@@ -77,6 +77,8 @@ namespace Microsoft.Extensions.Hosting
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IWebJobsBuilder AddAzureStorageQueuesScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
+            // We need to register an instance of QueueScalerProvider in the DI container and then map it to the interfaces IScaleMonitorProvider and ITargetScalerProvider.
+            // Since there can be more than one instance of QueueScalerProvider, we have to store a reference to the created instance to filter it out later.
             QueueScalerProvider serviceBusScalerProvider = null;
             builder.Services.AddSingleton(serviceProvider =>
             {
