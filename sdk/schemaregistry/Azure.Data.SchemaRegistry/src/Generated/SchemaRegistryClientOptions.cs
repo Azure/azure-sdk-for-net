@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.SchemaRegistry
+namespace Azure.Data.SchemaRegistry
 {
     /// <summary> Client options for SchemaRegistryClient. </summary>
     public partial class SchemaRegistryClientOptions : ClientOptions

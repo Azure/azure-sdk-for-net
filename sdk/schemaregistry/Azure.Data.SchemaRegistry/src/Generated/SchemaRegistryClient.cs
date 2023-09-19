@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.SchemaRegistry.Models;
 
-namespace Azure.SchemaRegistry
+namespace Azure.Data.SchemaRegistry
 {
     // Data plane generated client.
     /// <summary> The SchemaRegistry service client. </summary>

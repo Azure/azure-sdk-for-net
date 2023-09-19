@@ -7,7 +7,7 @@
 
 using System;
 using Azure.Core.Extensions;
-using Azure.SchemaRegistry;
+using Azure.Data.SchemaRegistry;
 
 namespace Microsoft.Extensions.Azure
 {

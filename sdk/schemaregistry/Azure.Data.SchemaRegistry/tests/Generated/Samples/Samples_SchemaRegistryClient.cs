@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.SchemaRegistry;
-using Azure.SchemaRegistry.Models;
+using Azure.Data.SchemaRegistry;
+using Azure.Data.SchemaRegistry.Models;
 using NUnit.Framework;
 
-namespace Azure.SchemaRegistry.Samples
+namespace Azure.Data.SchemaRegistry.Samples
 {
     public class Samples_SchemaRegistryClient
     {

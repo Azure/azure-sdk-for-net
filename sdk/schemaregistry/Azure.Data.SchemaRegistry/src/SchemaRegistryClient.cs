@@ -295,7 +295,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<Stream, SchemaGetByIdHeaders> response;
+                var response;
                 if (async)
                 {
                     response = await RestClient.GetByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);

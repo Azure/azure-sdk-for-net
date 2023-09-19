@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.SchemaRegistry.Models
+namespace Azure.Data.SchemaRegistry.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class SchemaRegistryModelFactory
