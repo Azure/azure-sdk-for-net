@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Castle.DynamicProxy;
+using Azure.Core.Shared;
 
 namespace Azure.Core.TestFramework
 {
