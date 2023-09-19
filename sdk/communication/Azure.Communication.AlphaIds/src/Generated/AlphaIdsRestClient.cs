@@ -55,6 +55,7 @@ namespace Azure.Communication.AlphaIds
 
         /// <summary> Get the Alpha IDs configuration that's applied for the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the Alpha IDs configuration that's applied for the current resource. </remarks>
         public async Task<Response<AlphaIdConfiguration>> GetConfigurationAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetConfigurationRequest();
@@ -75,6 +76,7 @@ namespace Azure.Communication.AlphaIds
 
         /// <summary> Get the Alpha IDs configuration that's applied for the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the Alpha IDs configuration that's applied for the current resource. </remarks>
         public Response<AlphaIdConfiguration> GetConfiguration(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetConfigurationRequest();
@@ -115,6 +117,7 @@ namespace Azure.Communication.AlphaIds
         /// <summary> Creates or updates Alpha ID Configuration for the current resource. </summary>
         /// <param name="enabled"> Indicates whether the use of Alpha IDs is supported for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Creates or updates Alpha ID Configuration for the current resource. </remarks>
         public async Task<Response<AlphaIdConfiguration>> UpsertConfigurationAsync(bool enabled, CancellationToken cancellationToken = default)
         {
             using var message = CreateUpsertConfigurationRequest(enabled);
@@ -136,6 +139,7 @@ namespace Azure.Communication.AlphaIds
         /// <summary> Creates or updates Alpha ID Configuration for the current resource. </summary>
         /// <param name="enabled"> Indicates whether the use of Alpha IDs is supported for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Creates or updates Alpha ID Configuration for the current resource. </remarks>
         public Response<AlphaIdConfiguration> UpsertConfiguration(bool enabled, CancellationToken cancellationToken = default)
         {
             using var message = CreateUpsertConfigurationRequest(enabled);

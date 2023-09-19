@@ -62,6 +62,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="createCallRequest"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createCallRequest"/> is null. </exception>
+        /// <remarks> Create an outbound call. </remarks>
         public async Task<Response<CallConnectionPropertiesInternal>> CreateCallAsync(CreateCallRequestInternal createCallRequest, CancellationToken cancellationToken = default)
         {
             if (createCallRequest == null)
@@ -89,6 +90,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="createCallRequest"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createCallRequest"/> is null. </exception>
+        /// <remarks> Create an outbound call. </remarks>
         public Response<CallConnectionPropertiesInternal> CreateCall(CreateCallRequestInternal createCallRequest, CancellationToken cancellationToken = default)
         {
             if (createCallRequest == null)
@@ -211,6 +213,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
+        /// <remarks> Redirect a call. </remarks>
         public async Task<Response> RedirectCallAsync(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)
         {
             if (redirectCallRequest == null)
@@ -233,6 +236,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="redirectCallRequest"> The RedirectCallRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
+        /// <remarks> Redirect a call. </remarks>
         public Response RedirectCall(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)
         {
             if (redirectCallRequest == null)
@@ -274,6 +278,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="rejectCallRequest"> The reject call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequest"/> is null. </exception>
+        /// <remarks> Reject the call. </remarks>
         public async Task<Response> RejectCallAsync(RejectCallRequestInternal rejectCallRequest, CancellationToken cancellationToken = default)
         {
             if (rejectCallRequest == null)
@@ -296,6 +301,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="rejectCallRequest"> The reject call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequest"/> is null. </exception>
+        /// <remarks> Reject the call. </remarks>
         public Response RejectCall(RejectCallRequestInternal rejectCallRequest, CancellationToken cancellationToken = default)
         {
             if (rejectCallRequest == null)

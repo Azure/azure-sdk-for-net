@@ -62,6 +62,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="playRequest"> The PlayRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
+        /// <remarks> Plays audio to participants in the call. </remarks>
         public async Task<Response> PlayAsync(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -89,6 +90,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="playRequest"> The PlayRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
+        /// <remarks> Plays audio to participants in the call. </remarks>
         public Response Play(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -130,6 +132,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        /// <remarks> Cancel all media operations in a call. </remarks>
         public async Task<Response> CancelAllMediaOperationsAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -152,6 +155,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        /// <remarks> Cancel all media operations in a call. </remarks>
         public Response CancelAllMediaOperations(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -194,6 +198,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recognizeRequest"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequest"/> is null. </exception>
+        /// <remarks> Recognize media from call. </remarks>
         public async Task<Response> RecognizeAsync(string callConnectionId, RecognizeRequestInternal recognizeRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -221,6 +226,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recognizeRequest"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequest"/> is null. </exception>
+        /// <remarks> Recognize media from call. </remarks>
         public Response Recognize(string callConnectionId, RecognizeRequestInternal recognizeRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -267,6 +273,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="startCallRecording"> The request body of start call recording request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
+        /// <remarks> Start recording the call. </remarks>
         public async Task<Response<RecordingStateResult>> RecordingAsync(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
@@ -294,6 +301,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="startCallRecording"> The request body of start call recording request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
+        /// <remarks> Start recording the call. </remarks>
         public Response<RecordingStateResult> Recording(StartCallRecordingRequestInternal startCallRecording, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
