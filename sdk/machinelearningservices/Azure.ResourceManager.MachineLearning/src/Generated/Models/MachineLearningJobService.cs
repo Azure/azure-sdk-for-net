@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nodes">
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
-        /// Please note <see cref="Nodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.Nodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AllNodes"/>.
         /// </param>
         /// <param name="port"> Port for endpoint set by user. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
-        /// Please note <see cref="Nodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.Nodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AllNodes"/>.
         /// </summary>
         public Nodes Nodes { get; set; }

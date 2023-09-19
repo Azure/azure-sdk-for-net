@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="labelCategories"> Label categories of the job. </param>
         /// <param name="labelingJobMediaProperties">
         /// Media type specific properties in the job.
-        /// Please note <see cref="LabelingJobMediaProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.LabelingJobMediaProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LabelingJobImageProperties"/> and <see cref="LabelingJobTextProperties"/>.
         /// </param>
         /// <param name="mlAssistConfiguration">
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, LabelCategory> LabelCategories { get; set; }
         /// <summary>
         /// Media type specific properties in the job.
-        /// Please note <see cref="LabelingJobMediaProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.LabelingJobMediaProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LabelingJobImageProperties"/> and <see cref="LabelingJobTextProperties"/>.
         /// </summary>
         public LabelingJobMediaProperties LabelingJobMediaProperties { get; set; }

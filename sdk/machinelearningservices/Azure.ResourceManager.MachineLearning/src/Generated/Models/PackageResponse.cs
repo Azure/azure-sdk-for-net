@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of PackageResponse. </summary>
         /// <param name="baseEnvironmentSource">
         /// Base environment to start with.
-        /// Please note <see cref="BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BaseEnvironmentId"/>.
         /// </param>
         /// <param name="buildId"> Build id of the image build operation. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="environmentVariables"> Collection of environment variables. </param>
         /// <param name="inferencingServer">
         /// Inferencing server configurations.
-        /// Please note <see cref="InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureMLBatchInferencingServer"/>, <see cref="AzureMLOnlineInferencingServer"/>, <see cref="CustomInferencingServer"/> and <see cref="TritonInferencingServer"/>.
         /// </param>
         /// <param name="inputs"> Collection of inputs. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Base environment to start with.
-        /// Please note <see cref="BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BaseEnvironmentId"/>.
         /// </summary>
         public BaseEnvironmentSource BaseEnvironmentSource { get; }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IReadOnlyDictionary<string, string> EnvironmentVariables { get; }
         /// <summary>
         /// Inferencing server configurations.
-        /// Please note <see cref="InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureMLBatchInferencingServer"/>, <see cref="AzureMLOnlineInferencingServer"/>, <see cref="CustomInferencingServer"/> and <see cref="TritonInferencingServer"/>.
         /// </summary>
         public InferencingServer InferencingServer { get; }
