@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerConfigurationData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerConfigurationData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlServerConfigurationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBForPostgreSqlServerConfigurationData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,12 +191,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerConfigurationData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerConfigurationData> GetConfigurations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlServerConfigurationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBForPostgreSqlServerConfigurationData> GetConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
     }
 }

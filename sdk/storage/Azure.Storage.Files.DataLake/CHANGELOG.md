@@ -3,6 +3,7 @@
 ## 12.17.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for DataLakeClientOptions.Audience
 
 ### Breaking Changes
 
