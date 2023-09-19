@@ -75,6 +75,9 @@ rename-mapping:
   WebTestPropertiesValidationRules.SSLCheck: CheckSsl
   ApplicationInsightsComponentFeature.ResouceId: ResourceId
   ItemScopePath.myanalyticsItems: MyAnalyticsItems
+  MyWorkbookResource: MyWorkbookResourceContent
+  PrivateLinkScopedResource: PrivateLinkScopedResourceContent
+  TagsResource: ComponentTag
 
 directive:
   - from: webTestLocations_API.json
