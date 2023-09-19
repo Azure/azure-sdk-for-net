@@ -341,15 +341,15 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 
 ## Troubleshoot WAM+MSA login issues
 
-When using `InteractiveBrowserCredential`, by default, only AAD account is listed:
+When using `InteractiveBrowserCredential`, by default, only the Azure AD account is listed:
 
-![MSA AAD only](./images/MSA1.png)
+![MSA Azure AD only](./images/MSA1.png)
 
 If you choose "Use another account" and type in an MSA outlook.com account, it fails:
 
 ![Fail on use another account](./images/MSA2.png)
 
-Since Azure.Identity.BrokeredAuthentication 1.0.0-beta.4, you can set `IsMsaPassthroughEnabled` on `InteractiveBrowserCredentialBrokerOptions` or `SharedTokenCacheCredentialBrokerOptions` to `True`, and MSA outlook.com accounts that are logged in to Windows are automatically listed:
+Since version `1.0.0-beta.4` of [Azure.Identity.BrokeredAuthentication](https://www.nuget.org/packages/Azure.Identity.BrokeredAuthentication), you can set the `IsMsaPassthroughEnabled` property on `InteractiveBrowserCredentialBrokerOptions` or `SharedTokenCacheCredentialBrokerOptions` to `true`. MSA outlook.com accounts that are logged in to Windows are automatically listed:
 
 ![Enable MSA](./images/MSA3.png)
 

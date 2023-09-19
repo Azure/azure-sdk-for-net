@@ -97,7 +97,7 @@ The `DefaultAzureCredential` attempts to authenticate via the following mechanis
 
 #### Continuation policy
 
-As of version 1.10.1, `DefaultAzureCredential` will attempt to authenticate with all developer credentials until one succeeds, regardless of any errors previous developer credentials experienced. For example, a developer credential may attempt to get a token and fail, so `DefaultAzureCredential` will continue to the next credential in the flow. Deployed service credentials will stop the flow with a thrown exception if they're able to attempt token retrieval, but don't receive one. Prior to version 1.10.1, developer credentials would similarly stop the authentication flow if token retrieval failed, but this is no longer the case.
+As of version 1.10.1, `DefaultAzureCredential` will attempt to authenticate with all developer credentials until one succeeds, regardless of any errors previous developer credentials experienced. For example, a developer credential may attempt to get a token and fail, so `DefaultAzureCredential` will continue to the next credential in the flow. Deployed service credentials will stop the flow with a thrown exception if they're able to attempt token retrieval, but don't receive one. Prior to version 1.10.1, developer credentials would similarly stop the authentication flow if token retrieval failed.
 
 This allows for trying all of the developer credentials on your machine while having predictable deployed behavior.
 
