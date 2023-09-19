@@ -35,7 +35,7 @@
       <Binaries Include='"$(PkgOpenTelemetry_Instrumentation_SqlClient)\lib\netstandard2.0\OpenTelemetry.Instrumentation.SqlClient.dll"' />
     </ItemGroup>
     <!--Run ILRepack-->
-    <Exec Command="$(PkgILRepack)\tools\ilrepack.exe $(DelaySignAssembly) /internalize /verbose /keyfile:$(AssemblyOriginatorKeyFile) /allowdup:OpenTelemetry.Metrics.MeterProviderBuilderExtensions /allowdup:OpenTelemetry.Trace.TracerProviderBuilderExtensions @(Binaries, ' ') /out:$(OutputPath)\$(RepackedDLLName)" />
+    <Exec Command="$(PkgILRepack)\tools\ILRepack.exe $(DelaySignAssembly) /internalize /verbose /keyfile:$(AssemblyOriginatorKeyFile) /allowdup:OpenTelemetry.Metrics.MeterProviderBuilderExtensions /allowdup:OpenTelemetry.Trace.TracerProviderBuilderExtensions @(Binaries, ' ') /out:$(OutputPath)\$(RepackedDLLName)" />
   </Target>
 
 </Project>
