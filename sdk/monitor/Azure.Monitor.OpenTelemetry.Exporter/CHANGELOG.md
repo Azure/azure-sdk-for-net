@@ -1,12 +1,6 @@
 # Release History
 
-## 1.0.0-beta.15 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0 (2023-10-10)
 
 * Fixed an issue during network failures which prevented the exporter to store
 the telemetry offline for retrying at a later time.
