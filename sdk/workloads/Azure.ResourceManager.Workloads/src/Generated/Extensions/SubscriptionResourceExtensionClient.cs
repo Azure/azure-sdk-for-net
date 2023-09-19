@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -348,7 +349,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -370,7 +371,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapMonitormonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -392,7 +393,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapMonitormonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
         }
     }
 }
