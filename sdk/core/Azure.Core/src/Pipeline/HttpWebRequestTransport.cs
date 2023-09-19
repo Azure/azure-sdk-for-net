@@ -306,7 +306,7 @@ namespace Azure.Core.Pipeline
                 DisposeStreamIfNotBuffered(ref _contentStream);
             }
 
-            public override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+            protected override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
             {
                 value = _webResponse.Headers.Get(name);
                 return value != null;
