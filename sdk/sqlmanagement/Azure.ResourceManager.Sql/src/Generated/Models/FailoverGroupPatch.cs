@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         public FailoverGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Databases = new ChangeTrackingList<ResourceIdentifier>();
+            FailoverDatabases = new ChangeTrackingList<ResourceIdentifier>();
             PartnerServers = new ChangeTrackingList<PartnerServerInfo>();
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Read-only endpoint of the failover group instance. </summary>
         public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
         /// <summary> List of databases in the failover group. </summary>
-        public IList<ResourceIdentifier> Databases { get; }
+        public IList<ResourceIdentifier> FailoverDatabases { get; }
         /// <summary> List of partner server information for the failover group. </summary>
         public IList<PartnerServerInfo> PartnerServers { get; }
     }

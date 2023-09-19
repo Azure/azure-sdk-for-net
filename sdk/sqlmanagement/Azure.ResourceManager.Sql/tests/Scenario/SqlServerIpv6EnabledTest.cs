@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             // 1. Create a new server with IPv6 enabled
             string sqlServerName = Recording.GenerateAssetName("sqlserver1-");
-            SqlServerData data = new SqlServerData(AzureLocation.WestUS2)
+            SqlServerData data = new SqlServerData(AzureLocation.SouthCentralUS)
             {
                 AdministratorLogin = "Admin-" + sqlServerName,
                 AdministratorLoginPassword = CreateGeneralPassword(),
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             // Verify IPv6 is enabled
             Assert.IsNotNull(SqlServer.Value);
-            Assert.AreEqual("Enabled", SqlServer.Value.Data.IsIPv6Enabled);
+            Assert.AreEqual("Enabled", SqlServer.Value.Data.IsIPv6Enabled.ToString());
 
             // 2. Disable IPv6
             data.IsIPv6Enabled = Models.ServerNetworkAccessFlag.Disabled;
             SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, sqlServerName, data);
 
             // Verify IPv6 is disabled
-            Assert.AreEqual("Disabled", SqlServer.Value.Data.IsIPv6Enabled);
+            Assert.AreEqual("Disabled", SqlServer.Value.Data.IsIPv6Enabled.ToString());
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             // 1. Create a new server
             string sqlServerName = Recording.GenerateAssetName("sqlserver2-");
-            SqlServerData data = new SqlServerData(AzureLocation.WestUS2)
+            SqlServerData data = new SqlServerData(AzureLocation.SouthCentralUS)
             {
                 AdministratorLogin = "Admin-" + sqlServerName,
                 AdministratorLoginPassword = CreateGeneralPassword(),
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             SqlServer = await _resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, sqlServerName, data);
 
             // Verify IPv6 is enabled
-            Assert.AreEqual("Enabled", SqlServer.Value.Data.IsIPv6Enabled);
+            Assert.AreEqual("Enabled", SqlServer.Value.Data.IsIPv6Enabled.ToString());
         }
     }
 }

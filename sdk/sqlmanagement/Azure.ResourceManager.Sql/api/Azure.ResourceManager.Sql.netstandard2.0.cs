@@ -474,6 +474,8 @@ namespace Azure.ResourceManager.Sql
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.PartnerServerInfo> PartnerServers { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReplicationRole? ReplicationRole { get { throw null; } }
         public string ReplicationState { get { throw null; } }
@@ -6187,9 +6189,14 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class FailoverGroupPatch
     {
         public FailoverGroupPatch() { }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> Databases { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use FailoverDatabases instead.", false)]
+        public System.Collections.Generic.IList<string> Databases { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> FailoverDatabases { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.PartnerServerInfo> PartnerServers { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Sql.Models.ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }

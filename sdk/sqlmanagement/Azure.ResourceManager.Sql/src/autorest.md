@@ -340,6 +340,7 @@ rename-mapping:
   FailoverGroup.properties.databases: FailoverDatabases
   ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
   ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
+  FailoverGroupUpdate.properties.databases: FailoverDatabases
 
 # mgmt-debug: 
 #  show-serialized-names: true
