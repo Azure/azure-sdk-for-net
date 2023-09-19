@@ -243,6 +243,80 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionId"> The workflow versionId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<LogicWorkflowVersionResource>> GetIfExistsAsync(string versionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+
+            using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _logicWorkflowVersionWorkflowVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LogicWorkflowVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionId"> The workflow versionId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        public virtual NullableResponse<LogicWorkflowVersionResource> GetIfExists(string versionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+
+            using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _logicWorkflowVersionWorkflowVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LogicWorkflowVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LogicWorkflowVersionResource> IEnumerable<LogicWorkflowVersionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
