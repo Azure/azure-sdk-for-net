@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.ComponentModel;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
@@ -76,9 +77,16 @@ namespace Microsoft.Extensions.Hosting
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IWebJobsBuilder AddAzureStorageQueuesScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
-            builder.Services.AddSingleton(serviceProvider => new QueueScalerProvider(serviceProvider, triggerMetadata));
-            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetRequiredService<QueueScalerProvider>());
-            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetRequiredService<QueueScalerProvider>());
+            // We need to register an instance of QueueScalerProvider in the DI container and then map it to the interfaces IScaleMonitorProvider and ITargetScalerProvider.
+            // Since there can be more than one instance of QueueScalerProvider, we have to store a reference to the created instance to filter it out later.
+            QueueScalerProvider serviceBusScalerProvider = null;
+            builder.Services.AddSingleton(serviceProvider =>
+            {
+                serviceBusScalerProvider = new QueueScalerProvider(serviceProvider, triggerMetadata);
+                return serviceBusScalerProvider;
+            });
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Single(x => x == serviceBusScalerProvider));
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Single(x => x == serviceBusScalerProvider));
 
             return builder;
         }
