@@ -1,4 +1,4 @@
-# Azure Monitor OpenTelemetry Shaded Instrumentation library for .NET
+# Azure Monitor OpenTelemetry Shaded Instrumentation client library for .NET
 
 TODO
 

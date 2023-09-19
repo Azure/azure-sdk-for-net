@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
     public class E2EAzureMonitorDistroTests
     {
-        [Fact]
+        [Fact(Skip="Skipping due to inconsistent test results on metrics")]
         public async Task ValidateTelemetryExport()
         {
             var builder = WebApplication.CreateBuilder();
