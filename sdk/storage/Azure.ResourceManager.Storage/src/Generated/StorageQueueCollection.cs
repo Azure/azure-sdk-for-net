@@ -327,6 +327,80 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StorageQueueResource>> GetIfExistsAsync(string queueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _storageQueueQueueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageQueueResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public virtual NullableResponse<StorageQueueResource> GetIfExists(string queueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _storageQueueQueueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageQueueResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<StorageQueueResource> IEnumerable<StorageQueueResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

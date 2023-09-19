@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alias_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SubscriptionAliasResource>> GetIfExistsAsync(string aliasName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+
+            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _subscriptionAliasAliasRestClient.GetAsync(aliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionAliasResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alias_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        public virtual NullableResponse<SubscriptionAliasResource> GetIfExists(string aliasName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+
+            using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionAliasAliasRestClient.Get(aliasName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionAliasResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SubscriptionAliasResource> IEnumerable<SubscriptionAliasResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
