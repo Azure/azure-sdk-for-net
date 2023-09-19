@@ -227,6 +227,72 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmergingIssues_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="issueName"> The name of the emerging issue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ServiceEmergingIssueResource>> GetIfExistsAsync(EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceEmergingIssueEmergingIssuesRestClient.GetAsync(issueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceEmergingIssueResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmergingIssues_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="issueName"> The name of the emerging issue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ServiceEmergingIssueResource> GetIfExists(EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serviceEmergingIssueEmergingIssuesClientDiagnostics.CreateScope("ServiceEmergingIssueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceEmergingIssueEmergingIssuesRestClient.Get(issueName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceEmergingIssueResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ServiceEmergingIssueResource> IEnumerable<ServiceEmergingIssueResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
