@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 {
                     FailoverWithDataLossGracePeriodMinutes = 120,
                 },
-                Databases =
+                FailoverDatabases =
 {
 new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/failover-group-primary-server/databases/testdb-1")
 },
