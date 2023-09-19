@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
         }
 
+        /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
+        public CommunityActionType? DefaultAction { get; set; }
         /// <summary> Route Policy statements. </summary>
         public IList<RoutePolicyStatementProperties> Statements { get; }
     }

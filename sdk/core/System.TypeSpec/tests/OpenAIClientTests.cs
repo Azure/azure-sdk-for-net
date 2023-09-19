@@ -4,6 +4,7 @@
 using OpenAI;
 using System.Diagnostics;
 using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using Xunit;
 
 namespace System.Tests;

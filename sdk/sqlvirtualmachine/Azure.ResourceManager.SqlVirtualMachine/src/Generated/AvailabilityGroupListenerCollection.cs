@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilityGroupListenerRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availabilityGroupListenerRestClient.CreateListByGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailabilityGroupListenerResource(Client, AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(e)), _availabilityGroupListenerClientDiagnostics, Pipeline, "AvailabilityGroupListenerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailabilityGroupListenerResource(Client, AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(e)), _availabilityGroupListenerClientDiagnostics, Pipeline, "AvailabilityGroupListenerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilityGroupListenerRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availabilityGroupListenerRestClient.CreateListByGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailabilityGroupListenerResource(Client, AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(e)), _availabilityGroupListenerClientDiagnostics, Pipeline, "AvailabilityGroupListenerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailabilityGroupListenerResource(Client, AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(e)), _availabilityGroupListenerClientDiagnostics, Pipeline, "AvailabilityGroupListenerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,6 +11,11 @@ require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b32e1896f3
 tag: package-2022-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - Datastores_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -23,7 +28,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

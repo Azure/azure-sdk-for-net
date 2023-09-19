@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
@@ -72,22 +73,12 @@ namespace Microsoft.Extensions.Hosting
         /// <param name="builder"></param>
         /// <param name="triggerMetadata">Trigger metadata.</param>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IWebJobsBuilder AddAzureStorageQueuesScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
-            IServiceProvider serviceProvider = null;
-            Lazy<QueueScalerProvider> scalerProvider = new Lazy<QueueScalerProvider>(() => new QueueScalerProvider(serviceProvider, triggerMetadata));
-
-            builder.Services.AddSingleton<IScaleMonitorProvider>(resolvedServiceProvider =>
-            {
-                serviceProvider = serviceProvider ?? resolvedServiceProvider;
-                return scalerProvider.Value;
-            });
-
-            builder.Services.AddSingleton<ITargetScalerProvider>(resolvedServiceProvider =>
-            {
-                serviceProvider = serviceProvider ?? resolvedServiceProvider;
-                return scalerProvider.Value;
-            });
+            builder.Services.AddSingleton(serviceProvider => new QueueScalerProvider(serviceProvider, triggerMetadata));
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetRequiredService<QueueScalerProvider>());
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetRequiredService<QueueScalerProvider>());
 
             return builder;
         }
