@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingQuotaQuotasRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingQuotaQuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingQuotaResource(Client, LoadTestingQuotaData.DeserializeLoadTestingQuotaData(e)), _loadTestingQuotaQuotasClientDiagnostics, Pipeline, "LoadTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingQuotaResource(Client, LoadTestingQuotaData.DeserializeLoadTestingQuotaData(e)), _loadTestingQuotaQuotasClientDiagnostics, Pipeline, "LoadTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingQuotaQuotasRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingQuotaQuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingQuotaResource(Client, LoadTestingQuotaData.DeserializeLoadTestingQuotaData(e)), _loadTestingQuotaQuotasClientDiagnostics, Pipeline, "LoadTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingQuotaResource(Client, LoadTestingQuotaData.DeserializeLoadTestingQuotaData(e)), _loadTestingQuotaQuotasClientDiagnostics, Pipeline, "LoadTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

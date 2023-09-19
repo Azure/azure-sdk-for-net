@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// A resource listing all tags.
-    /// Serialized Name: TagsResult
-    /// </summary>
+    /// <summary> A resource listing all tags. </summary>
     public partial class ConsumptionTagsResult : ResourceData
     {
         /// <summary> Initializes a new instance of ConsumptionTagsResult. </summary>
@@ -29,22 +26,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags">
-        /// A list of Tag.
-        /// Serialized Name: TagsResult.properties.tags
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: TagsResult.properties.nextLink
-        /// </param>
-        /// <param name="previousLink">
-        /// The link (url) to the previous page of results.
-        /// Serialized Name: TagsResult.properties.previousLink
-        /// </param>
-        /// <param name="etag">
-        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
-        /// Serialized Name: ProxyResource.eTag
-        /// </param>
+        /// <param name="tags"> A list of Tag. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="previousLink"> The link (url) to the previous page of results. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         internal ConsumptionTagsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ConsumptionTag> tags, string nextLink, string previousLink, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
@@ -53,25 +38,13 @@ namespace Azure.ResourceManager.Consumption.Models
             ETag = etag;
         }
 
-        /// <summary>
-        /// A list of Tag.
-        /// Serialized Name: TagsResult.properties.tags
-        /// </summary>
+        /// <summary> A list of Tag. </summary>
         public IList<ConsumptionTag> Tags { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: TagsResult.properties.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// The link (url) to the previous page of results.
-        /// Serialized Name: TagsResult.properties.previousLink
-        /// </summary>
+        /// <summary> The link (url) to the previous page of results. </summary>
         public string PreviousLink { get; }
-        /// <summary>
-        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
-        /// Serialized Name: ProxyResource.eTag
-        /// </summary>
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
     }
 }

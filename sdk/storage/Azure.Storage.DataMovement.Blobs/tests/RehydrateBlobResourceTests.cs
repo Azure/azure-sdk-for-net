@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Models.JobPlan;
 using Azure.Storage.Test;
+using DMBlobs::Azure.Storage.DataMovement.JobPlan;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
 using static Azure.Storage.DataMovement.Tests.TransferUtility;
@@ -19,25 +18,6 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class RehydrateBlobResourceTests
     {
-        public enum RehydrateApi
-        {
-            /// <summary>
-            /// The internal, resource-specific static API for rehydrating.
-            /// </summary>
-            ResourceStaticApi,
-
-            /// <summary>
-            /// Instance of the provider the user is given to invoke rehydration on.
-            /// </summary>
-            ProviderInstance,
-
-            /// <summary>
-            /// The public, package-wide static API for rehydrating.
-            /// </summary>
-            PublicStaticApi
-        }
-        public static IEnumerable<RehydrateApi> GetRehydrateApis() => Enum.GetValues(typeof(RehydrateApi)).Cast<RehydrateApi>();
-
         public RehydrateBlobResourceTests()
         { }
 
@@ -72,11 +52,11 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
-            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointerOptions(checkpointerPath));
+            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointStoreOptions(checkpointerPath));
             mock.Setup(p => p.SourcePath).Returns(sourcePath);
             mock.Setup(p => p.DestinationPath).Returns(destinationPath);
-            mock.Setup(p => p.SourceScheme).Returns(sourceResourceId);
-            mock.Setup(p => p.DestinationScheme).Returns(destinationResourceId);
+            mock.Setup(p => p.SourceTypeId).Returns(sourceResourceId);
+            mock.Setup(p => p.DestinationTypeId).Returns(destinationResourceId);
             mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
         }
@@ -127,9 +107,14 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
 
-            JobPlanOperation fromTo = GetPlanOperation(sourceType, destinationType);
+            JobPlanOperation operationType = GetPlanOperation(sourceType, destinationType);
 
-            await checkpointer.AddNewJobAsync(transferId);
+            // Use mock resources that don't correspond to correct paths
+            var sourceMock = new Mock<StorageResource>();
+            sourceMock.Setup(s => s.Uri).Returns(new Uri(CheckpointerTesting.DefaultWebSourcePath));
+            var destMock = new Mock<StorageResource>();
+            destMock.Setup(s => s.Uri).Returns(new Uri(CheckpointerTesting.DefaultWebDestinationPath));
+            await checkpointer.AddNewJobAsync(transferId, sourceMock.Object, destMock.Object);
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
@@ -138,7 +123,7 @@ namespace Azure.Storage.DataMovement.Tests
                     partNumber: currentPart,
                     sourcePath: sourcePaths[currentPart],
                     destinationPath: destinationPaths[currentPart],
-                    fromTo: fromTo);
+                    fromTo: operationType);
 
                 using (Stream stream = new MemoryStream())
                 {
@@ -153,26 +138,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        /// <summary>
-        /// Inlines the tryget to allow for switch expressions in tests.
-        /// </summary>
-        private async Task<StorageResource> AzureBlobStorageResourcesInlineTryGet(DataTransferProperties info, bool getSource)
-        {
-            if (!BlobStorageResources.TryGetResourceProviders(
-                info,
-                out BlobStorageResourceProvider sourceProvider,
-                out BlobStorageResourceProvider destinationProvider))
-            {
-                return null;
-            }
-            return getSource ? await sourceProvider.MakeResourceAsync() : await destinationProvider.MakeResourceAsync();
-        }
-
         [Test]
-        [Combinatorial]
         public async Task RehydrateBlockBlob(
-            [Values(true, false)] bool isSource,
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+            [Values(true, false)] bool isSource)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -201,23 +169,16 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            BlockBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await BlockBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (BlockBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, isSource, BlobStorageResources.ResourceType.BlockBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (BlockBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            StorageResource storageResource = isSource
+                ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
         }
 
         [Test]
-        [Combinatorial]
-        public async Task RehydrateBlockBlob_Options(
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+        public async Task RehydrateBlockBlob_Options()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -259,15 +220,8 @@ namespace Azure.Storage.DataMovement.Tests
                 new List<string>() { destinationPath },
                 header: header);
 
-            BlockBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await BlockBlobStorageResource.RehydrateResourceAsync(transferProperties, false),
-                RehydrateApi.ProviderInstance => (BlockBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, false, BlobStorageResources.ResourceType.BlockBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (BlockBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, false),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            BlockBlobStorageResource storageResource = (BlockBlobStorageResource)await new BlobsStorageResourceProvider()
+                    .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
             Assert.AreEqual(AccessTier.Cool, storageResource._options.AccessTier);
@@ -276,10 +230,8 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [Combinatorial]
         public async Task RehydratePageBlob(
-            [Values(true, false)] bool isSource,
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+            [Values(true, false)] bool isSource)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -308,23 +260,16 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            PageBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await PageBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (PageBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, isSource, BlobStorageResources.ResourceType.PageBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (PageBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            StorageResource storageResource = isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.IsInstanceOf(typeof(PageBlobStorageResource), storageResource);
         }
 
         [Test]
-        [Combinatorial]
-        public async Task RehydratePageBlob_Options(
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+        public async Task RehydratePageBlob_Options()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -366,15 +311,8 @@ namespace Azure.Storage.DataMovement.Tests
                 new List<string>() { destinationPath },
                 header: header);
 
-            PageBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await PageBlobStorageResource.RehydrateResourceAsync(transferProperties, false),
-                RehydrateApi.ProviderInstance => (PageBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, false, BlobStorageResources.ResourceType.PageBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (PageBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, false),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            PageBlobStorageResource storageResource = (PageBlobStorageResource)await new BlobsStorageResourceProvider()
+                    .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
             Assert.AreEqual(AccessTier.P30, storageResource._options.AccessTier);
@@ -383,10 +321,8 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [Combinatorial]
         public async Task RehydrateAppendBlob(
-            [Values(true, false)] bool isSource,
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+            [Values(true, false)] bool isSource)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -415,23 +351,16 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            AppendBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await AppendBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (AppendBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, isSource, BlobStorageResources.ResourceType.AppendBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (AppendBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            StorageResource storageResource = isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.IsInstanceOf(typeof(AppendBlobStorageResource), storageResource);
         }
 
         [Test]
-        [Combinatorial]
-        public async Task RehydrateAppendBlob_Options(
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+        public async Task RehydrateAppendBlob_Options()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -472,15 +401,8 @@ namespace Azure.Storage.DataMovement.Tests
                 new List<string>() { destinationPath },
                 header: header);
 
-            AppendBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await AppendBlobStorageResource.RehydrateResourceAsync(transferProperties, false),
-                RehydrateApi.ProviderInstance => (AppendBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, false, BlobStorageResources.ResourceType.AppendBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (AppendBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, false),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            AppendBlobStorageResource storageResource = (AppendBlobStorageResource)await new BlobsStorageResourceProvider()
+                .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
             Assert.AreEqual(metadata, storageResource._options.Metadata);
@@ -490,8 +412,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [Combinatorial]
         public async Task RehydrateBlobContainer(
-            [Values(true, false)] bool isSource,
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+            [Values(true, false)] bool isSource)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -531,17 +452,12 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths,
                 jobPartCount);
 
-            BlobStorageResourceContainer storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await BlobStorageResourceContainer.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (BlobStorageResourceContainer)await new BlobStorageResourceProvider(
-                    transferProperties, isSource, BlobStorageResources.ResourceType.BlobContainer).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (BlobStorageResourceContainer)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            StorageResource storageResource = isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.IsInstanceOf(typeof(BlobStorageResourceContainer), storageResource);
         }
     }
 }

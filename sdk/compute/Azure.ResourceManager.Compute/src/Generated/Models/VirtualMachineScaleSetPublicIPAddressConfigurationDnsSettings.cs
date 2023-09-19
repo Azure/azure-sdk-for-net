@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machines scale sets network configuration's DNS settings. </summary>
-    internal partial class VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings
+    public partial class VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings. </summary>
         /// <param name="domainNameLabel"> The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </param>
@@ -23,7 +23,18 @@ namespace Azure.ResourceManager.Compute.Models
             DomainNameLabel = domainNameLabel;
         }
 
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings. </summary>
+        /// <param name="domainNameLabel"> The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </param>
+        /// <param name="domainNameLabelScope"> The Domain name label scope.The concatenation of the hashed domain name label that generated according to the policy from domain name label scope and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </param>
+        internal VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(string domainNameLabel, DomainNameLabelScopeType? domainNameLabelScope)
+        {
+            DomainNameLabel = domainNameLabel;
+            DomainNameLabelScope = domainNameLabelScope;
+        }
+
         /// <summary> The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </summary>
         public string DomainNameLabel { get; set; }
+        /// <summary> The Domain name label scope.The concatenation of the hashed domain name label that generated according to the policy from domain name label scope and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </summary>
+        public DomainNameLabelScopeType? DomainNameLabelScope { get; set; }
     }
 }

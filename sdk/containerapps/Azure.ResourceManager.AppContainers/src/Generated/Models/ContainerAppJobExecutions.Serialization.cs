@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -19,16 +20,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IReadOnlyList<ContainerAppJobExecution> value = default;
+            IReadOnlyList<ContainerAppJobExecutionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ContainerAppJobExecution> array = new List<ContainerAppJobExecution>();
+                    List<ContainerAppJobExecutionData> array = new List<ContainerAppJobExecutionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppJobExecution.DeserializeContainerAppJobExecution(item));
+                        array.Add(ContainerAppJobExecutionData.DeserializeContainerAppJobExecutionData(item));
                     }
                     value = array;
                     continue;

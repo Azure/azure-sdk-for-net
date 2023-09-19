@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         private const string AzureStorageBlobContainerValue = "AzureStorageBlobContainer";
         private const string NfsMountValue = "NfsMount";
+        private const string AzureStorageSmbFileShareValue = "AzureStorageSmbFileShare";
+        private const string SmbMountValue = "SmbMount";
 
         /// <summary> AzureStorageBlobContainer. </summary>
         public static EndpointType AzureStorageBlobContainer { get; } = new EndpointType(AzureStorageBlobContainerValue);
         /// <summary> NfsMount. </summary>
         public static EndpointType NfsMount { get; } = new EndpointType(NfsMountValue);
+        /// <summary> AzureStorageSmbFileShare. </summary>
+        public static EndpointType AzureStorageSmbFileShare { get; } = new EndpointType(AzureStorageSmbFileShareValue);
+        /// <summary> SmbMount. </summary>
+        public static EndpointType SmbMount { get; } = new EndpointType(SmbMountValue);
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>

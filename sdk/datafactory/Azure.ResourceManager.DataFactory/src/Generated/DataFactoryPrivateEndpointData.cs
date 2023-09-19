@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of DataFactoryPrivateEndpointData. </summary>
         /// <param name="properties"> Managed private endpoint properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFactoryPrivateEndpointData(ManagedPrivateEndpoint properties)
+        public DataFactoryPrivateEndpointData(DataFactoryPrivateEndpointProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed private endpoint properties. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedPrivateEndpoint properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateEndpointProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
         /// <summary> Managed private endpoint properties. </summary>
-        public ManagedPrivateEndpoint Properties { get; set; }
+        public DataFactoryPrivateEndpointProperties Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
     }

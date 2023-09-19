@@ -36,7 +36,6 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sparkJobs = null;
                         continue;
                     }
                     List<SparkJob> array = new List<SparkJob>();

@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A single Amazon Simple Storage Service (S3) object or a set of S3 objects. </summary>
-    public partial class AmazonS3Dataset : DataFactoryDatasetDefinition
+    public partial class AmazonS3Dataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AmazonS3Dataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

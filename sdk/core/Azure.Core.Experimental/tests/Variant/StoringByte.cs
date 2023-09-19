@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringByte
     {
@@ -11,7 +11,7 @@ namespace Azure
         [TestCase(byte.MaxValue)]
         public void ByteImplicit(byte testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<byte>());
             Assert.AreEqual(typeof(byte), value.Type);
 
@@ -26,10 +26,10 @@ namespace Azure
         [TestCase(byte.MaxValue)]
         public void ByteCreate(byte testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
-                value = Value.Create(testValue);
+                value = Variant.Create(testValue);
             }
 
             Assert.AreEqual(testValue, value.As<byte>());
@@ -39,7 +39,7 @@ namespace Azure
 
             using (MemoryWatch.Create())
             {
-                value = Value.Create(source);
+                value = Variant.Create(source);
             }
 
             Assert.AreEqual(source, value.As<byte?>());
@@ -51,7 +51,7 @@ namespace Azure
         [TestCase(byte.MaxValue)]
         public void ByteInOut(byte testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out byte result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -66,7 +66,7 @@ namespace Azure
         public void NullableByteInByteOut(byte? testValue)
         {
             byte? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out byte result);
             Assert.True(success);
@@ -83,7 +83,7 @@ namespace Azure
         public void ByteInNullableByteOut(byte testValue)
         {
             byte source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out byte? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -98,7 +98,7 @@ namespace Azure
         {
             byte i = testValue;
             object o = i;
-            Value value = new(o);
+            Variant value = new(o);
 
             Assert.AreEqual(typeof(byte), value.Type);
             Assert.True(value.TryGetValue(out byte result));
@@ -121,7 +121,7 @@ namespace Azure
         public void NullByte()
         {
             byte? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<byte?>());
             Assert.False(value.As<byte?>().HasValue);
@@ -132,7 +132,7 @@ namespace Azure
         [TestCase(byte.MaxValue)]
         public void OutAsObject(byte testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(byte), o.GetType());
             Assert.AreEqual(testValue, (byte)o);

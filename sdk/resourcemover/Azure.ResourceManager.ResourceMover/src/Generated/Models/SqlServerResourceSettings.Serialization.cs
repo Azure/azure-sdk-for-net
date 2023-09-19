@@ -17,8 +17,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName"u8);
-            writer.WriteStringValue(TargetResourceName);
+            if (Optional.IsDefined(TargetResourceName))
+            {
+                writer.WritePropertyName("targetResourceName"u8);
+                writer.WriteStringValue(TargetResourceName);
+            }
+            if (Optional.IsDefined(TargetResourceGroupName))
+            {
+                writer.WritePropertyName("targetResourceGroupName"u8);
+                writer.WriteStringValue(TargetResourceGroupName);
+            }
             writer.WriteEndObject();
         }
 
@@ -29,7 +37,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 return null;
             }
             string resourceType = default;
-            string targetResourceName = default;
+            Optional<string> targetResourceName = default;
+            Optional<string> targetResourceGroupName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -42,8 +51,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("targetResourceGroupName"u8))
+                {
+                    targetResourceGroupName = property.Value.GetString();
+                    continue;
+                }
             }
-            return new SqlServerResourceSettings(resourceType, targetResourceName);
+            return new SqlServerResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value);
         }
     }
 }

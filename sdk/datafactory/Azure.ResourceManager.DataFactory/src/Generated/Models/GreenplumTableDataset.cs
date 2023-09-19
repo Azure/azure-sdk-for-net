@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Greenplum Database dataset. </summary>
-    public partial class GreenplumTableDataset : DataFactoryDatasetDefinition
+    public partial class GreenplumTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of GreenplumTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

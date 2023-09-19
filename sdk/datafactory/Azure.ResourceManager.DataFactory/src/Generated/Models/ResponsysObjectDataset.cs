@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Responsys dataset. </summary>
-    public partial class ResponsysObjectDataset : DataFactoryDatasetDefinition
+    public partial class ResponsysObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of ResponsysObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

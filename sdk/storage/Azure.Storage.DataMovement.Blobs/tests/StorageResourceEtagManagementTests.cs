@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
 
@@ -19,6 +21,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
     [TestFixture]
     public class StorageResourceEtagManagementTests
     {
+        private const string ETag = "ETag";
+
         [Test]
         public async Task BlockBlobMaintainsEtagForDownloads()
         {
@@ -29,7 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             mock.Setup(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     new BlobProperties(),
-                    new MockResponse(200).WithHeader(Constants.HeaderNames.ETag, etag.ToString()))));
+                    new MockResponse(200).WithHeader(ETag, etag.ToString()))));
             mock.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
@@ -59,7 +63,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             mock.Setup(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     new BlobProperties(),
-                    new MockResponse(200).WithHeader(Constants.HeaderNames.ETag, etag.ToString()))));
+                    new MockResponse(200).WithHeader(ETag, etag.ToString()))));
             mock.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
@@ -89,7 +93,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             mock.Setup(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     new BlobProperties(),
-                    new MockResponse(200).WithHeader(Constants.HeaderNames.ETag, etag.ToString()))));
+                    new MockResponse(200).WithHeader(ETag, etag.ToString()))));
             mock.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),

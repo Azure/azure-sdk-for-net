@@ -26,7 +26,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
 {
     [NonParallelizable]
     [LiveOnly(true)]
@@ -54,6 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
         }
 
         [Test]
+        [Ignore("Consistently failing in CI; caused by #38673")]
         [TestCase(false)]
         [TestCase(true)]
         public async Task ScaleHostEndToEndTest(bool tbsEnabled)
