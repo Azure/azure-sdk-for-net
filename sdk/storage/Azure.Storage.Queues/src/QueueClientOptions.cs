@@ -303,5 +303,11 @@ namespace Azure.Storage.Queues
         {
             return this.Build(credentials, GeoRedundantSecondaryUri);
         }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="QueueAudience.PublicAudience" /> will be assumed.</value>
+        public QueueAudience? Audience { get; set; }
     }
 }

@@ -339,5 +339,11 @@ namespace Azure.Storage.Blobs
 
         /// <inheritdoc />
         public bool EnableTenantDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="BlobAudience.PublicAudience" /> will be assumed.</value>
+        public BlobAudience? Audience { get; set; }
     }
 }

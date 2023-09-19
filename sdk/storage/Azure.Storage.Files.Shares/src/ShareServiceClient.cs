@@ -273,7 +273,9 @@ namespace Azure.Storage.Files.Shares
             ShareClientOptions options = default)
             : this(
                   serviceUri: serviceUri,
-                  authentication: credential.AsPolicy(options),
+                  authentication: credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? ShareAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
                   options: options ?? new ShareClientOptions(),
                   sharedKeyCredential: null,
                   sasCredential: null,

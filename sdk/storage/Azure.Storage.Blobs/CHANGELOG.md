@@ -3,6 +3,7 @@
 ## 12.19.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for BlobClientOptions.Audience
 
 ### Breaking Changes
 

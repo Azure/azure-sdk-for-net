@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
@@ -107,6 +108,123 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new ShareFileClient(uri, new AzureSasCredential(sas)),
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+                [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await directoryClient.CreateIfNotExistsAsync();
+            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
+            await fileClient.CreateAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.PublicAudience);
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = fileClient.Path
+            };
+
+            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileClient.ExistsAsync();
+            Assert.IsNotNull(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await directoryClient.CreateIfNotExistsAsync();
+            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
+            await fileClient.CreateAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience($"https://{test.Share.AccountName}.file.core.windows.net/"));
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = fileClient.Path
+            };
+
+            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileClient.ExistsAsync();
+            Assert.IsNotNull(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await directoryClient.CreateIfNotExistsAsync();
+            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
+            await fileClient.CreateAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.GetShareServiceAccountAudience(test.Share.AccountName));
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = fileClient.Path
+            };
+
+            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileClient.ExistsAsync();
+            Assert.IsNotNull(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await directoryClient.CreateIfNotExistsAsync();
+            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
+            await fileClient.CreateAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience("https://badaudience.blob.core.windows.net"));
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = fileClient.Path
+            };
+
+            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadFileClient.ExistsAsync(),
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]
