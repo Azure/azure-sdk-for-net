@@ -57,6 +57,7 @@ namespace Azure.Communication.Email
         /// <param name="operationId"> ID of the long running operation (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks> Gets the status of the email send operation. </remarks>
         public async Task<ResponseWithHeaders<EmailSendResult, EmailGetSendResultHeaders>> GetSendResultAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
@@ -85,6 +86,7 @@ namespace Azure.Communication.Email
         /// <param name="operationId"> ID of the long running operation (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <remarks> Gets the status of the email send operation. </remarks>
         public ResponseWithHeaders<EmailSendResult, EmailGetSendResultHeaders> GetSendResult(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
@@ -136,6 +138,7 @@ namespace Azure.Communication.Email
         /// <param name="operationId"> This is the ID provided by the customer to identify the long running operation. If an ID is not provided by the customer, the service will generate one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        /// <remarks> Queues an email message to be sent to one or more recipients. </remarks>
         public async Task<ResponseWithHeaders<EmailSendHeaders>> SendAsync(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
         {
             if (message == null)
@@ -160,6 +163,7 @@ namespace Azure.Communication.Email
         /// <param name="operationId"> This is the ID provided by the customer to identify the long running operation. If an ID is not provided by the customer, the service will generate one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        /// <remarks> Queues an email message to be sent to one or more recipients. </remarks>
         public ResponseWithHeaders<EmailSendHeaders> Send(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
         {
             if (message == null)

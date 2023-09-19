@@ -77,6 +77,7 @@ namespace Azure.Communication.Rooms
         /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </param>
         /// <param name="participants"> (Optional) Participants to be invited to the room. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Creates a new room. </remarks>
         public async Task<Response<CommunicationRoom>> CreateAsync(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(validFrom, validUntil, participants);
@@ -100,6 +101,7 @@ namespace Azure.Communication.Rooms
         /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </param>
         /// <param name="participants"> (Optional) Participants to be invited to the room. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Creates a new room. </remarks>
         public Response<CommunicationRoom> Create(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(validFrom, validUntil, participants);
@@ -134,6 +136,7 @@ namespace Azure.Communication.Rooms
 
         /// <summary> Retrieves all created rooms. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves all created rooms. </remarks>
         public async Task<Response<RoomsCollection>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
@@ -154,6 +157,7 @@ namespace Azure.Communication.Rooms
 
         /// <summary> Retrieves all created rooms. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves all created rooms. </remarks>
         public Response<RoomsCollection> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
@@ -191,6 +195,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Retrieves an existing room by id. </remarks>
         public async Task<Response<CommunicationRoom>> GetAsync(string roomId, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -218,6 +223,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Retrieves an existing room by id. </remarks>
         public Response<CommunicationRoom> Get(string roomId, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -271,6 +277,7 @@ namespace Azure.Communication.Rooms
         /// <param name="validUntil"> (Optional) The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Update a room with given changes. </remarks>
         public async Task<Response<CommunicationRoom>> UpdateAsync(string roomId, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -300,6 +307,7 @@ namespace Azure.Communication.Rooms
         /// <param name="validUntil"> (Optional) The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Update a room with given changes. </remarks>
         public Response<CommunicationRoom> Update(string roomId, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -342,6 +350,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Delete a room. </remarks>
         public async Task<Response> DeleteAsync(string roomId, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -364,6 +373,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Delete a room. </remarks>
         public Response Delete(string roomId, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -399,6 +409,7 @@ namespace Azure.Communication.Rooms
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves all created rooms. </remarks>
         public async Task<Response<RoomsCollection>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -426,6 +437,7 @@ namespace Azure.Communication.Rooms
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves all created rooms. </remarks>
         public Response<RoomsCollection> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

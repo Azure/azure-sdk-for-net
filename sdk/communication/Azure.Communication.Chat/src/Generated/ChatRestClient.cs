@@ -65,6 +65,7 @@ namespace Azure.Communication.Chat
         /// <param name="maxPageSize"> The maximum number of chat threads returned per page. </param>
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the list of chat threads of a user. </remarks>
         public async Task<Response<ChatThreadsItemCollection>> ListChatThreadsAsync(int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListChatThreadsRequest(maxPageSize, startTime);
@@ -87,6 +88,7 @@ namespace Azure.Communication.Chat
         /// <param name="maxPageSize"> The maximum number of chat threads returned per page. </param>
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the list of chat threads of a user. </remarks>
         public Response<ChatThreadsItemCollection> ListChatThreads(int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListChatThreadsRequest(maxPageSize, startTime);
@@ -124,6 +126,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> Id of the thread to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Deletes a thread. </remarks>
         public async Task<Response> DeleteChatThreadAsync(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -146,6 +149,7 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> Id of the thread to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        /// <remarks> Deletes a thread. </remarks>
         public Response DeleteChatThread(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
@@ -183,6 +187,7 @@ namespace Azure.Communication.Chat
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Gets the list of chat threads of a user. </remarks>
         public async Task<Response<ChatThreadsItemCollection>> ListChatThreadsNextPageAsync(string nextLink, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -212,6 +217,7 @@ namespace Azure.Communication.Chat
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Gets the list of chat threads of a user. </remarks>
         public Response<ChatThreadsItemCollection> ListChatThreadsNextPage(string nextLink, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

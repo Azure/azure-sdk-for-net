@@ -75,6 +75,7 @@ namespace Azure.Communication.Identity
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Create a new identity, and optionally, an access token. </remarks>
         public async Task<Response<CommunicationUserIdentifierAndToken>> CreateAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
@@ -97,6 +98,7 @@ namespace Azure.Communication.Identity
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Create a new identity, and optionally, an access token. </remarks>
         public Response<CommunicationUserIdentifierAndToken> Create(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
@@ -134,6 +136,7 @@ namespace Azure.Communication.Identity
         /// <param name="id"> Identifier of the identity to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Delete the identity, revoke all tokens for the identity and delete all associated data. </remarks>
         public async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -156,6 +159,7 @@ namespace Azure.Communication.Identity
         /// <param name="id"> Identifier of the identity to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Delete the identity, revoke all tokens for the identity and delete all associated data. </remarks>
         public Response Delete(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -194,6 +198,7 @@ namespace Azure.Communication.Identity
         /// <param name="id"> Identifier of the identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Revoke all access tokens for the specific identity. </remarks>
         public async Task<Response> RevokeAccessTokensAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -216,6 +221,7 @@ namespace Azure.Communication.Identity
         /// <param name="id"> Identifier of the identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Revoke all access tokens for the specific identity. </remarks>
         public Response RevokeAccessTokens(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -259,6 +265,7 @@ namespace Azure.Communication.Identity
         /// <param name="userId"> Object ID of an Azure AD user (Teams User) to be verified against the oid claim in the Azure AD access token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="appId"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks> Exchange an Azure Active Directory (Azure AD) access token of a Teams user for a new Communication Identity access token with a matching expiration time. </remarks>
         public async Task<Response<CommunicationIdentityAccessToken>> ExchangeTeamsUserAccessTokenAsync(string token, string appId, string userId, CancellationToken cancellationToken = default)
         {
             if (token == null)
@@ -296,6 +303,7 @@ namespace Azure.Communication.Identity
         /// <param name="userId"> Object ID of an Azure AD user (Teams User) to be verified against the oid claim in the Azure AD access token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="appId"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks> Exchange an Azure Active Directory (Azure AD) access token of a Teams user for a new Communication Identity access token with a matching expiration time. </remarks>
         public Response<CommunicationIdentityAccessToken> ExchangeTeamsUserAccessToken(string token, string appId, string userId, CancellationToken cancellationToken = default)
         {
             if (token == null)
@@ -357,6 +365,7 @@ namespace Azure.Communication.Identity
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="scopes"/> is null. </exception>
+        /// <remarks> Issue a new token for an identity. </remarks>
         public async Task<Response<CommunicationIdentityAccessToken>> IssueAccessTokenAsync(string id, IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -390,6 +399,7 @@ namespace Azure.Communication.Identity
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="scopes"/> is null. </exception>
+        /// <remarks> Issue a new token for an identity. </remarks>
         public Response<CommunicationIdentityAccessToken> IssueAccessToken(string id, IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
             if (id == null)

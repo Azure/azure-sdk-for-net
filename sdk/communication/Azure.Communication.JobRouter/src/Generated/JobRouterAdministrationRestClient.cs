@@ -63,6 +63,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of classification policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a classification policy. </remarks>
         public async Task<Response<ClassificationPolicy>> UpsertClassificationPolicyAsync(string id, ClassificationPolicy patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -96,6 +97,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of classification policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a classification policy. </remarks>
         public Response<ClassificationPolicy> UpsertClassificationPolicy(string id, ClassificationPolicy patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -232,6 +234,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing classification policy by Id. </remarks>
         public async Task<Response<ClassificationPolicy>> GetClassificationPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -259,6 +262,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing classification policy by Id. </remarks>
         public Response<ClassificationPolicy> GetClassificationPolicy(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -301,6 +305,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Delete a classification policy by Id. </remarks>
         public async Task<Response> DeleteClassificationPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -323,6 +328,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Delete a classification policy by Id. </remarks>
         public Response DeleteClassificationPolicy(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -362,6 +368,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing classification policies. </remarks>
         public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListClassificationPoliciesRequest(maxpagesize);
@@ -383,6 +390,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing classification policies. </remarks>
         public Response<ClassificationPolicyCollection> ListClassificationPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListClassificationPoliciesRequest(maxpagesize);
@@ -425,6 +433,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of distribution policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a distribution policy. </remarks>
         public async Task<Response<DistributionPolicy>> UpsertDistributionPolicyAsync(string id, DistributionPolicy patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -458,6 +467,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of distribution policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a distribution policy. </remarks>
         public Response<DistributionPolicy> UpsertDistributionPolicy(string id, DistributionPolicy patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -594,6 +604,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing distribution policy by Id. </remarks>
         public async Task<Response<DistributionPolicy>> GetDistributionPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -621,6 +632,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing distribution policy by Id. </remarks>
         public Response<DistributionPolicy> GetDistributionPolicy(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -663,6 +675,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Delete a distribution policy by Id. </remarks>
         public async Task<Response> DeleteDistributionPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -685,6 +698,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Delete a distribution policy by Id. </remarks>
         public Response DeleteDistributionPolicy(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -724,6 +738,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing distribution policies. </remarks>
         public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDistributionPoliciesRequest(maxpagesize);
@@ -745,6 +760,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing distribution policies. </remarks>
         public Response<DistributionPolicyCollection> ListDistributionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListDistributionPoliciesRequest(maxpagesize);
@@ -787,6 +803,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of exception policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a exception policy. </remarks>
         public async Task<Response<ExceptionPolicy>> UpsertExceptionPolicyAsync(string id, ExceptionPolicy patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -820,6 +837,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of exception policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a exception policy. </remarks>
         public Response<ExceptionPolicy> UpsertExceptionPolicy(string id, ExceptionPolicy patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -956,6 +974,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the exception policy to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing exception policy by Id. </remarks>
         public async Task<Response<ExceptionPolicy>> GetExceptionPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -983,6 +1002,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the exception policy to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing exception policy by Id. </remarks>
         public Response<ExceptionPolicy> GetExceptionPolicy(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1025,6 +1045,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the exception policy to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Deletes a exception policy by Id. </remarks>
         public async Task<Response> DeleteExceptionPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1047,6 +1068,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the exception policy to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Deletes a exception policy by Id. </remarks>
         public Response DeleteExceptionPolicy(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1086,6 +1108,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing exception policies. </remarks>
         public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListExceptionPoliciesRequest(maxpagesize);
@@ -1107,6 +1130,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing exception policies. </remarks>
         public Response<ExceptionPolicyCollection> ListExceptionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListExceptionPoliciesRequest(maxpagesize);
@@ -1149,6 +1173,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of queue properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a queue. </remarks>
         public async Task<Response<RouterQueue>> UpsertQueueAsync(string id, RouterQueue patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1182,6 +1207,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of queue properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a queue. </remarks>
         public Response<RouterQueue> UpsertQueue(string id, RouterQueue patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1318,6 +1344,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the queue to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing queue by Id. </remarks>
         public async Task<Response<RouterQueue>> GetQueueAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1345,6 +1372,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the queue to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing queue by Id. </remarks>
         public Response<RouterQueue> GetQueue(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1387,6 +1415,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the queue to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Deletes a queue by Id. </remarks>
         public async Task<Response> DeleteQueueAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1409,6 +1438,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the queue to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Deletes a queue by Id. </remarks>
         public Response DeleteQueue(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1448,6 +1478,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing queues. </remarks>
         public async Task<Response<RouterQueueCollection>> ListQueuesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListQueuesRequest(maxpagesize);
@@ -1469,6 +1500,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing queues. </remarks>
         public Response<RouterQueueCollection> ListQueues(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListQueuesRequest(maxpagesize);
@@ -1492,6 +1524,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing classification policies. </remarks>
         public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1520,6 +1553,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing classification policies. </remarks>
         public Response<ClassificationPolicyCollection> ListClassificationPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1548,6 +1582,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing distribution policies. </remarks>
         public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1576,6 +1611,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing distribution policies. </remarks>
         public Response<DistributionPolicyCollection> ListDistributionPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1604,6 +1640,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing exception policies. </remarks>
         public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1632,6 +1669,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing exception policies. </remarks>
         public Response<ExceptionPolicyCollection> ListExceptionPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1660,6 +1698,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing queues. </remarks>
         public async Task<Response<RouterQueueCollection>> ListQueuesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1688,6 +1727,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing queues. </remarks>
         public Response<RouterQueueCollection> ListQueuesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

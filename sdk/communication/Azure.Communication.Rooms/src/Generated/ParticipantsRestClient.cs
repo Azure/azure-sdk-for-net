@@ -59,6 +59,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room to get participants from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Get participants in a room. </remarks>
         public async Task<Response<ParticipantsCollection>> ListAsync(string roomId, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -86,6 +87,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room to get participants from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Get participants in a room. </remarks>
         public Response<ParticipantsCollection> List(string roomId, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -143,6 +145,7 @@ namespace Azure.Communication.Rooms
         /// <param name="participants"> Participants to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Update participants in a room. </remarks>
         public async Task<Response<object>> UpdateAsync(string roomId, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -171,6 +174,7 @@ namespace Azure.Communication.Rooms
         /// <param name="participants"> Participants to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Update participants in a room. </remarks>
         public Response<object> Update(string roomId, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
@@ -212,6 +216,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room to get participants from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Get participants in a room. </remarks>
         public async Task<Response<ParticipantsCollection>> ListNextPageAsync(string nextLink, string roomId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -244,6 +249,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room to get participants from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="roomId"/> is null. </exception>
+        /// <remarks> Get participants in a room. </remarks>
         public Response<ParticipantsCollection> ListNextPage(string nextLink, string roomId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

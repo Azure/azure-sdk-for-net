@@ -63,6 +63,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of job properties to be created or patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a router job. </remarks>
         public async Task<Response<RouterJob>> UpsertJobAsync(string id, RouterJob patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -96,6 +97,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of job properties to be created or patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a router job. </remarks>
         public Response<RouterJob> UpsertJob(string id, RouterJob patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -232,6 +234,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the job to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing job by Id. </remarks>
         public async Task<Response<RouterJob>> GetJobAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -259,6 +262,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the job to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves an existing job by Id. </remarks>
         public Response<RouterJob> GetJob(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -301,6 +305,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Deletes a job and all of its traces. </remarks>
         public async Task<Response> DeleteJobAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -323,6 +328,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Deletes a job and all of its traces. </remarks>
         public Response DeleteJob(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -369,6 +375,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="reclassifyJobRequest"> Request object for reclassifying a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Reclassify a job. </remarks>
         public async Task<Response<object>> ReclassifyJobActionAsync(string id, object reclassifyJobRequest = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -397,6 +404,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="reclassifyJobRequest"> Request object for reclassifying a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Reclassify a job. </remarks>
         public Response<object> ReclassifyJobAction(string id, object reclassifyJobRequest = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -454,6 +462,7 @@ namespace Azure.Communication.JobRouter
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </remarks>
         public async Task<Response<object>> CancelJobActionAsync(string id, string note = null, string dispositionCode = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -486,6 +495,7 @@ namespace Azure.Communication.JobRouter
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </remarks>
         public Response<object> CancelJobAction(string id, string note = null, string dispositionCode = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -539,6 +549,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <remarks> Completes an assigned job. </remarks>
         public async Task<Response<object>> CompleteJobActionAsync(string id, string assignmentId, string note = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -572,6 +583,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <remarks> Completes an assigned job. </remarks>
         public Response<object> CompleteJobAction(string id, string assignmentId, string note = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -636,6 +648,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <remarks> Closes a completed job. </remarks>
         public async Task<Response<object>> CloseJobActionAsync(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeAt = null, string note = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -675,6 +688,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <remarks> Closes a completed job. </remarks>
         public Response<object> CloseJobAction(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeAt = null, string note = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -754,6 +768,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves list of jobs based on filter parameters. </remarks>
         public async Task<Response<RouterJobCollection>> ListJobsAsync(RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxpagesize);
@@ -781,6 +796,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves list of jobs based on filter parameters. </remarks>
         public Response<RouterJobCollection> ListJobs(RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxpagesize);
@@ -819,6 +835,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Gets a job's position details. </remarks>
         public async Task<Response<RouterJobPositionDetails>> GetInQueuePositionAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -846,6 +863,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Gets a job's position details. </remarks>
         public Response<RouterJobPositionDetails> GetInQueuePosition(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -900,6 +918,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="unassignJobRequest"> Request body for unassign route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <remarks> Un-assign a job. </remarks>
         public async Task<Response<UnassignJobResult>> UnassignJobActionAsync(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -933,6 +952,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="unassignJobRequest"> Request body for unassign route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <remarks> Un-assign a job. </remarks>
         public Response<UnassignJobResult> UnassignJobAction(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -983,6 +1003,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        /// <remarks> Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already. </remarks>
         public async Task<Response<AcceptJobOfferResult>> AcceptJobActionAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1015,6 +1036,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        /// <remarks> Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already. </remarks>
         public Response<AcceptJobOfferResult> AcceptJobAction(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1073,6 +1095,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="declineJobOfferRequest"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        /// <remarks> Declines an offer to work on a job. </remarks>
         public async Task<Response<object>> DeclineJobActionAsync(string workerId, string offerId, DeclineJobOfferRequest declineJobOfferRequest = null, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1106,6 +1129,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="declineJobOfferRequest"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        /// <remarks> Declines an offer to work on a job. </remarks>
         public Response<object> DeclineJobAction(string workerId, string offerId, DeclineJobOfferRequest declineJobOfferRequest = null, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1153,6 +1177,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the queue to retrieve statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves a queue's statistics. </remarks>
         public async Task<Response<RouterQueueStatistics>> GetQueueStatisticsAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1180,6 +1205,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the queue to retrieve statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Retrieves a queue's statistics. </remarks>
         public Response<RouterQueueStatistics> GetQueueStatistics(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -1227,6 +1253,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of worker properties to be created or patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a worker. </remarks>
         public async Task<Response<RouterWorker>> UpsertWorkerAsync(string workerId, RouterWorker patch, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1260,6 +1287,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of worker properties to be created or patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="patch"/> is null. </exception>
+        /// <remarks> Creates or updates a worker. </remarks>
         public Response<RouterWorker> UpsertWorker(string workerId, RouterWorker patch, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1396,6 +1424,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="workerId"> Id of the worker to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
+        /// <remarks> Retrieves an existing worker by Id. </remarks>
         public async Task<Response<RouterWorker>> GetWorkerAsync(string workerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1423,6 +1452,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="workerId"> Id of the worker to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
+        /// <remarks> Retrieves an existing worker by Id. </remarks>
         public Response<RouterWorker> GetWorker(string workerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1465,6 +1495,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="workerId"> Id of the worker to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
+        /// <remarks> Deletes a worker and all of its traces. </remarks>
         public async Task<Response> DeleteWorkerAsync(string workerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1487,6 +1518,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="workerId"> Id of the worker to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
+        /// <remarks> Deletes a worker and all of its traces. </remarks>
         public Response DeleteWorker(string workerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
@@ -1549,6 +1581,7 @@ namespace Azure.Communication.JobRouter
         /// </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing workers. </remarks>
         public async Task<Response<RouterWorkerCollection>> ListWorkersAsync(RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListWorkersRequest(state, channelId, queueId, hasCapacity, maxpagesize);
@@ -1577,6 +1610,7 @@ namespace Azure.Communication.JobRouter
         /// </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves existing workers. </remarks>
         public Response<RouterWorkerCollection> ListWorkers(RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListWorkersRequest(state, channelId, queueId, hasCapacity, maxpagesize);
@@ -1606,6 +1640,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves list of jobs based on filter parameters. </remarks>
         public async Task<Response<RouterJobCollection>> ListJobsNextPageAsync(string nextLink, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1640,6 +1675,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves list of jobs based on filter parameters. </remarks>
         public Response<RouterJobCollection> ListJobsNextPage(string nextLink, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1675,6 +1711,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing workers. </remarks>
         public async Task<Response<RouterWorkerCollection>> ListWorkersNextPageAsync(string nextLink, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1710,6 +1747,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Retrieves existing workers. </remarks>
         public Response<RouterWorkerCollection> ListWorkersNextPage(string nextLink, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

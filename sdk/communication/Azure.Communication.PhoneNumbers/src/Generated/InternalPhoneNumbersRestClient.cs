@@ -198,6 +198,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Search for available phone numbers to purchase. </remarks>
         public async Task<ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders>> SearchAvailablePhoneNumbersAsync(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
             if (twoLetterIsoCountryName == null)
@@ -226,6 +227,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Search for available phone numbers to purchase. </remarks>
         public ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders> SearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
             if (twoLetterIsoCountryName == null)
@@ -268,6 +270,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="searchId"> The search Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <remarks> Gets a phone number search result by search id. </remarks>
         public async Task<Response<PhoneNumberSearchResult>> GetSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
         {
             if (searchId == null)
@@ -295,6 +298,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="searchId"> The search Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <remarks> Gets a phone number search result by search id. </remarks>
         public Response<PhoneNumberSearchResult> GetSearchResult(string searchId, CancellationToken cancellationToken = default)
         {
             if (searchId == null)
@@ -343,6 +347,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Purchases phone numbers. </remarks>
         public async Task<ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePurchasePhoneNumbersRequest(searchId);
@@ -360,6 +365,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Purchases phone numbers. </remarks>
         public ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePurchasePhoneNumbersRequest(searchId);
@@ -405,6 +411,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        /// <remarks> Updates the capabilities of a phone number. </remarks>
         public async Task<ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders>> UpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -430,6 +437,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        /// <remarks> Updates the capabilities of a phone number. </remarks>
         public ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders> UpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -468,6 +476,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        /// <remarks> Gets the details of the given purchased phone number. </remarks>
         public async Task<Response<PurchasedPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -495,6 +504,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        /// <remarks> Gets the details of the given purchased phone number. </remarks>
         public Response<PurchasedPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -537,6 +547,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        /// <remarks> Releases a purchased phone number. </remarks>
         public async Task<ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders>> ReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
@@ -560,6 +571,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        /// <remarks> Releases a purchased phone number. </remarks>
         public ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders> ReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)

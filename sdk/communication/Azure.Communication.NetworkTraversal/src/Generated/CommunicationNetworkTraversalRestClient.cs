@@ -67,6 +67,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="routeType"> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </param>
         /// <param name="ttl"> The credential Time-To-Live (TTL), in seconds. The default value will be used if given value exceeds it. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Issue a configuration for an STUN/TURN server. </remarks>
         public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id = null, RouteType? routeType = null, int? ttl = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateIssueRelayConfigurationRequest(id, routeType, ttl);
@@ -90,6 +91,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="routeType"> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </param>
         /// <param name="ttl"> The credential Time-To-Live (TTL), in seconds. The default value will be used if given value exceeds it. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Issue a configuration for an STUN/TURN server. </remarks>
         public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id = null, RouteType? routeType = null, int? ttl = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateIssueRelayConfigurationRequest(id, routeType, ttl);
