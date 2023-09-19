@@ -53,7 +53,7 @@ namespace Azure.Core
             throw new RequestFailedException(message.Response);
         }
 
-        public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics, RequestContext? requestContext)
+        public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, DiagnosticScopeFactory clientDiagnostics, RequestContext? requestContext)
         {
             var response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
             switch (response.Status)
@@ -67,7 +67,7 @@ namespace Azure.Core
             }
         }
 
-        public static Response<bool> ProcessHeadAsBoolMessage(this HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics, RequestContext? requestContext)
+        public static Response<bool> ProcessHeadAsBoolMessage(this HttpPipeline pipeline, HttpMessage message, DiagnosticScopeFactory clientDiagnostics, RequestContext? requestContext)
         {
             var response = pipeline.ProcessMessage(message, requestContext);
             switch (response.Status)

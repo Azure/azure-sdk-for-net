@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading;
 
 namespace Azure.Core.Pipeline
@@ -28,13 +29,29 @@ namespace Azure.Core.Pipeline
 #endif
 
         /// <summary>
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="suppressNestedClientActivities"></param>
+        public DiagnosticScopeFactory(ClientOptions options,
+                                      bool? suppressNestedClientActivities = null)
+            : this(options.GetType().Namespace!,
+                   ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly),
+                   options.Diagnostics.IsDistributedTracingEnabled,
+                   suppressNestedClientActivities.GetValueOrDefault(false))
+        {
+        }
+
+        /// <summary>
         /// TBD
         /// </summary>
         /// <param name="clientNamespace"></param>
         /// <param name="resourceProviderNamespace"></param>
         /// <param name="isActivityEnabled"></param>
         /// <param name="suppressNestedClientActivities"></param>
-        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
+        public DiagnosticScopeFactory(string clientNamespace,
+            string? resourceProviderNamespace,
+            bool isActivityEnabled,
+            bool suppressNestedClientActivities)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;

@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// TBD
     /// </summary>
-    public class ClientDiagnostics : DiagnosticScopeFactory
+    internal class ClientDiagnostics : DiagnosticScopeFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientDiagnostics"/> class.
@@ -49,7 +49,10 @@ namespace Azure.Core.Pipeline
         ///  for backward compatibility reasons, or set it to false to explicitly disable suppression for specific cases.
         ///  The default value could change in the future, the flag should be only set to false if suppression for the client
         ///  should never be enabled.</param>
-        public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions, bool? suppressNestedClientActivities = null)
+        public ClientDiagnostics(string optionsNamespace,
+            string? providerNamespace,
+            DiagnosticsOptions diagnosticsOptions,
+            bool? suppressNestedClientActivities = null)
             : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, suppressNestedClientActivities.GetValueOrDefault(false))
         {
         }

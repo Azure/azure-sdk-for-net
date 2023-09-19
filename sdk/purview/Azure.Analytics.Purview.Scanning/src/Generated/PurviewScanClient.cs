@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Scanning
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        internal DiagnosticScopeFactory DiagnosticScopeFactory { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.Scanning
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewScanningServiceClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+            DiagnosticScopeFactory = new DiagnosticScopeFactory(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetFilterAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetFilterAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
             try
             {
@@ -119,7 +119,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetFilter(RequestContext)']/*" />
         public virtual Response GetFilter(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
             try
             {
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdateFilterAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
             try
             {
@@ -181,7 +181,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdateFilter(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateFilter(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
             try
             {
@@ -215,7 +215,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetPropertiesAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
             try
             {
@@ -309,7 +309,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetProperties(RequestContext)']/*" />
         public virtual Response GetProperties(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
             try
             {
@@ -339,7 +339,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.Delete");
             scope.Start();
             try
             {
@@ -369,7 +369,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
         public virtual Response Delete(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.Delete");
             scope.Start();
             try
             {
@@ -405,7 +405,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.RunScan");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
             {
@@ -441,7 +441,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.RunScan");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.RunScan");
             scope.Start();
             try
             {
@@ -476,7 +476,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
             {
@@ -511,7 +511,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.CancelScan");
             scope.Start();
             try
             {
@@ -541,7 +541,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetTriggerAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetTriggerAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
             try
             {
@@ -571,7 +571,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetTrigger(RequestContext)']/*" />
         public virtual Response GetTrigger(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
             try
             {
@@ -605,7 +605,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try
             {
@@ -639,7 +639,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
             scope.Start();
             try
             {
@@ -669,7 +669,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='DeleteTriggerAsync(RequestContext)']/*" />
         public virtual async Task<Response> DeleteTriggerAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
             try
             {
@@ -699,7 +699,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='DeleteTrigger(RequestContext)']/*" />
         public virtual Response DeleteTrigger(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
+            using var scope = DiagnosticScopeFactory.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
             try
             {
@@ -713,47 +713,47 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary>
-        /// [Protocol Method] Lists the scan history of a scan
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRunsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
-        }
+        ///// <summary>
+        ///// [Protocol Method] Lists the scan history of a scan
+        ///// <list type="bullet">
+        ///// <item>
+        ///// <description>
+        ///// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        ///// </description>
+        ///// </item>
+        ///// </list>
+        ///// </summary>
+        ///// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        ///// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        ///// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        ///// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRunsAsync(RequestContext)']/*" />
+        //public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context)
+        //{
+        //    HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
+        //    HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
+        //    return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
+        //}
 
-        /// <summary>
-        /// [Protocol Method] Lists the scan history of a scan
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRuns(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetRuns(RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
-        }
+        ///// <summary>
+        ///// [Protocol Method] Lists the scan history of a scan
+        ///// <list type="bullet">
+        ///// <item>
+        ///// <description>
+        ///// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        ///// </description>
+        ///// </item>
+        ///// </list>
+        ///// </summary>
+        ///// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        ///// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        ///// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        ///// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRuns(RequestContext)']/*" />
+        //public virtual Pageable<BinaryData> GetRuns(RequestContext context)
+        //{
+        //    HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
+        //    HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
+        //    return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
+        //}
 
         internal HttpMessage CreateGetFilterRequest(RequestContext context)
         {
