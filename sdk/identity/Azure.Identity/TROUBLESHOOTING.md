@@ -339,6 +339,24 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 |---|---|---|
 |The current credential is not configured to acquire tokens for tenant <tenant ID>|<p>The application must configure the credential to allow token acquisition from the requested tenant.|Make one of the following changes in your app:<ul><li>Add the requested tenant ID to `AdditionallyAllowedTenants` on the credential options.</li><li>Add `*` to `AdditionallyAllowedTenants` to allow token acquisition for any tenant.</li></ul></p><p>This exception was added as part of a breaking change to multi-tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).</p> |
 
+## Troubleshoot WAM+MSA login issues
+
+When using `InteractiveBrowserCredential`, by default, only AAD account is listed:
+
+![MSA AAD only](./images/MSA1.png)
+
+If you choose "Use another account" and type in an MSA outlook.com account, it fails:
+
+![Fail on use another account](./images/MSA2.png)
+
+Since Azure.Identity.BrokeredAuthentication 1.0.0-beta.4, you can set `IsMsaPassthroughEnabled` on `InteractiveBrowserCredentialBrokerOptions` or `SharedTokenCacheCredentialBrokerOptions` to `True`, and MSA outlook.com accounts that are logged in to Windows are automatically listed:
+
+![Enable MSA](./images/MSA3.png)
+
+You may also log in another MSA account by selecting "Microsoft account":
+
+![Microsoft account](./images/MSA4.png)
+
 ## Get additional help
 
 Additional information on ways to reach out for support can be found in the [SUPPORT.md](https://github.com/Azure/azure-sdk-for-net/blob/main/SUPPORT.md) at the root of the repo.
