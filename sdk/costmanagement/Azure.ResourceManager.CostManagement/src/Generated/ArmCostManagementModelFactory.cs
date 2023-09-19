@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The properties of the benefit recommendations.
-        /// Please note <see cref="BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
+        /// Please note <see cref="Models.BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.SharedScopeBenefitRecommendationProperties"/> and <see cref="Models.SingleScopeBenefitRecommendationProperties"/>.
         /// </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>

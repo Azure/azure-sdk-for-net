@@ -2028,8 +2028,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Services response resource.
-        /// Please note <see cref="CosmosDBServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataTransferServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, <see cref="MaterializedViewsBuilderServiceProperties"/> and <see cref="SqlDedicatedGatewayServiceProperties"/>.
+        /// Please note <see cref="Models.CosmosDBServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataTransferServiceProperties"/>, <see cref="Models.GraphApiComputeServiceProperties"/>, <see cref="Models.MaterializedViewsBuilderServiceProperties"/> and <see cref="Models.SqlDedicatedGatewayServiceProperties"/>.
         /// </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBServiceData"/> instance for mocking. </returns>
         public static CosmosDBServiceData CosmosDBServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBServiceProperties properties = null)

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="properties">
         /// AzureBackupRecoveryPointResource properties
         /// Please note <see cref="DataProtectionBackupRecoveryPointProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>.
+        /// The available derived classes include <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/>.
         /// </param>
         /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupRecoveryPointData"/> instance for mocking. </returns>
         public static DataProtectionBackupRecoveryPointData DataProtectionBackupRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataProtectionBackupRecoveryPointProperties properties = null)

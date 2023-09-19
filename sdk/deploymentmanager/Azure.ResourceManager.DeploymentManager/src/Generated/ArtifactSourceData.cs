@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <param name="artifactRoot"> The path from the location that the 'authentication' property [say, a SAS URI to the blob container] refers to, to the location of the artifacts. This can be used to differentiate different versions of the artifacts. Or, different types of artifacts like binaries or templates. The location referenced by the authentication property concatenated with this optional artifactRoot path forms the artifact source location where the artifacts are expected to be found. </param>
         /// <param name="authentication">
         /// The authentication method to use to access the artifact source.
-        /// Please note <see cref="Authentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.Authentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SasAuthentication"/>.
         /// </param>
         internal ArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string sourceType, string artifactRoot, Authentication authentication) : base(id, name, resourceType, systemData, tags, location)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public string ArtifactRoot { get; set; }
         /// <summary>
         /// The authentication method to use to access the artifact source.
-        /// Please note <see cref="Authentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.Authentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SasAuthentication"/>.
         /// </summary>
         public Authentication Authentication { get; set; }

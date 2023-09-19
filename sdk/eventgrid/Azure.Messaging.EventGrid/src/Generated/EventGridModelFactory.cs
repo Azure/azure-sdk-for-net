@@ -751,8 +751,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputStateChangeEventData"/> instance for mocking. </returns>
@@ -805,8 +805,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <param name="outputs">
         /// Gets the Job outputs.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobFinishedEventData"/> instance for mocking. </returns>
         public static MediaJobFinishedEventData MediaJobFinishedEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
@@ -823,8 +823,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <param name="outputs">
         /// Gets the Job outputs.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobCanceledEventData"/> instance for mocking. </returns>
         public static MediaJobCanceledEventData MediaJobCanceledEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
@@ -841,8 +841,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <param name="outputs">
         /// Gets the Job outputs.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobErroredEventData"/> instance for mocking. </returns>
         public static MediaJobErroredEventData MediaJobErroredEventData(MediaJobState? previousState = null, MediaJobState? state = null, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
@@ -857,8 +857,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputCanceledEventData"/> instance for mocking. </returns>
@@ -873,8 +873,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputCancelingEventData"/> instance for mocking. </returns>
@@ -889,8 +889,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputErroredEventData"/> instance for mocking. </returns>
@@ -905,8 +905,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputFinishedEventData"/> instance for mocking. </returns>
@@ -921,8 +921,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputProcessingEventData"/> instance for mocking. </returns>
@@ -937,8 +937,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="SystemEvents.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputScheduledEventData"/> instance for mocking. </returns>

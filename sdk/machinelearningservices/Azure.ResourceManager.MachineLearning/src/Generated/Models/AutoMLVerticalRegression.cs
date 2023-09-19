@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nCrossValidations">
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
-        /// Please note <see cref="NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
         /// </param>
         /// <param name="testData"> Test data input. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
-        /// Please note <see cref="NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
         /// </summary>
         public NCrossValidations NCrossValidations { get; set; }

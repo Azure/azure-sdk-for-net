@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sku"> The sku of the workspace. </param>
         /// <param name="properties">
         /// Compute properties
-        /// Please note <see cref="MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAksCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="MachineLearningSynapseSpark"/> and <see cref="MachineLearningVirtualMachineCompute"/>.
+        /// Please note <see cref="Models.MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MachineLearningAksCompute"/>, <see cref="Models.AmlCompute"/>, <see cref="Models.MachineLearningComputeInstance"/>, <see cref="Models.MachineLearningDataFactoryCompute"/>, <see cref="Models.MachineLearningDataLakeAnalytics"/>, <see cref="Models.MachineLearningDatabricksCompute"/>, <see cref="Models.MachineLearningHDInsightCompute"/>, <see cref="Models.MachineLearningKubernetesCompute"/>, <see cref="Models.MachineLearningSynapseSpark"/> and <see cref="Models.MachineLearningVirtualMachineCompute"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningComputeData"/> instance for mocking. </returns>
         public static MachineLearningComputeData MachineLearningComputeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, MachineLearningComputeProperties properties = null)
@@ -726,8 +726,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/> and <see cref="MachineLearningAzureFileDatastore"/>.
+        /// Please note <see cref="Models.MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MachineLearningAzureBlobDatastore"/>, <see cref="Models.MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="Models.MachineLearningAzureDataLakeGen2Datastore"/> and <see cref="Models.MachineLearningAzureFileDatastore"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningDatastoreData"/> instance for mocking. </returns>
         public static MachineLearningDatastoreData MachineLearningDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDatastoreProperties properties = null)
@@ -833,8 +833,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/> and <see cref="MachineLearningSweepJob"/>.
+        /// Please note <see cref="Models.MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/> and <see cref="Models.MachineLearningSweepJob"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningJobData"/> instance for mocking. </returns>
         public static MachineLearningJobData MachineLearningJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningJobProperties properties = null)
@@ -984,8 +984,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
+        /// Please note <see cref="Models.MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MachineLearningKubernetesOnlineDeployment"/> and <see cref="Models.MachineLearningManagedOnlineDeployment"/>.
         /// </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningOnlineDeploymentData"/> instance for mocking. </returns>
@@ -1601,7 +1601,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="taskDetails">
         /// [Required] This represents scenario which can be one of Tables/NLP/Image
         /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
+        /// The available derived classes include <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="Models.TextClassificationMultilabel"/> and <see cref="Models.TextNer"/>.
         /// </param>
         /// <returns> A new <see cref="Models.AutoMLJob"/> instance for mocking. </returns>
         public static AutoMLJob AutoMLJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, MachineLearningJobOutput> outputs = null, MachineLearningJobResourceConfiguration resources = null, AutoMLVertical taskDetails = null)
