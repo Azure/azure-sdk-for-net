@@ -95,6 +95,12 @@ The `DefaultAzureCredential` attempts to authenticate via the following mechanis
 1. **Azure Developer CLI** - If the developer has authenticated via the Azure Developer CLI `azd auth login` command, the `DefaultAzureCredential` will authenticate with that account.
 1. **Interactive browser** - If enabled, the `DefaultAzureCredential` will interactively authenticate the developer via the current system's default browser. By default, this credential type is disabled.
 
+#### Continuation policy
+
+As of version 1.10.1, `DefaultAzureCredential` will attempt to authenticate with all developer credentials until one succeeds, regardless of any errors previous developer credentials experienced. For example, a developer credential may attempt to get a token and fail, so `DefaultAzureCredential` will continue to the next credential in the flow. Deployed service credentials will stop the flow with a thrown exception if they're able to attempt token retrieval, but don't receive one. Prior to version 1.10.1, developer credentials would similarly stop the authentication flow if token retrieval failed.
+
+This behavior allows for trying all of the developer credentials on your machine while having predictable deployed behavior.
+
 ## Examples
 
 ### Authenticate with `DefaultAzureCredential`
@@ -260,6 +266,11 @@ Not all credentials require this configuration. Credentials which authenticate t
 Configuration is attempted in the above order. For example, if values for a
 client secret and certificate are both present, the client secret will be used.
 
+## Continuous Access Evaluation
+
+As of version 1.10.0, accessing resources protected by [Continuous Access Evaluation (CAE)][cae] is possible on a per-request basis. This behavior can be enabled by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor. CAE isn't supported for developer and managed identity credentials.
+
+
 ## Token caching
 
 Token caching is a feature provided by the Azure Identity library that allows apps to:
@@ -411,5 +422,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_VisualStudioCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet
 [ref_VisualStudioCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocodecredential?view=azure-dotnet
 [ref_WorkloadIdentityCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.workloadidentitycredential?view=azure-dotnet
+[cae]: https://learn.microsoft.com/azure/active-directory/conditional-access/concept-continuous-access-evaluation
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fidentity%2FAzure.Identity%2FREADME.png)
