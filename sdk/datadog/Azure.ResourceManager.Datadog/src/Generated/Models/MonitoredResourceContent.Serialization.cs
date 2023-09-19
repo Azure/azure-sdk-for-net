@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class MonitoredResource
+    public partial class MonitoredResourceContent
     {
-        internal static MonitoredResource DeserializeMonitoredResource(JsonElement element)
+        internal static MonitoredResourceContent DeserializeMonitoredResourceContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new MonitoredResource(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new MonitoredResourceContent(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
         }
     }
 }

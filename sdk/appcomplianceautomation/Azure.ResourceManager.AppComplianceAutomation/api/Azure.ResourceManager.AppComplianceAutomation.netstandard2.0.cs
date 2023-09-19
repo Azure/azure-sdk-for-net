@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public static partial class ArmAppComplianceAutomationModelFactory
     {
-        public static Azure.ResourceManager.AppComplianceAutomation.Models.Assessment Assessment(string name = null, Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentSeverity? severity = default(Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentSeverity?), string description = null, string remediation = null, Azure.ResourceManager.AppComplianceAutomation.Models.IsPass? isPass = default(Azure.ResourceManager.AppComplianceAutomation.Models.IsPass?), string policyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentResource> resourceList = null) { throw null; }
-        public static Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentResource AssessmentResource(string resourceId = null, Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus? resourceStatus = default(Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus?), string reason = null, string statusChangeDate = null) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.Assessment Assessment(string name = null, Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentSeverity? severity = default(Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentSeverity?), string description = null, string remediation = null, Azure.ResourceManager.AppComplianceAutomation.Models.IsPass? isPass = default(Azure.ResourceManager.AppComplianceAutomation.Models.IsPass?), string policyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentResourceContent> resourceList = null) { throw null; }
+        public static Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentResourceContent AssessmentResourceContent(string resourceId = null, Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus? resourceStatus = default(Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus?), string reason = null, string statusChangeDate = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.Category Category(string categoryName = null, Azure.ResourceManager.AppComplianceAutomation.Models.CategoryType? categoryType = default(Azure.ResourceManager.AppComplianceAutomation.Models.CategoryType?), Azure.ResourceManager.AppComplianceAutomation.Models.CategoryStatus? categoryStatus = default(Azure.ResourceManager.AppComplianceAutomation.Models.CategoryStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.ControlFamily> controlFamilies = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceReportItem ComplianceReportItem(string categoryName = null, string controlId = null, string controlName = null, Azure.ResourceManager.AppComplianceAutomation.Models.ControlType? controlType = default(Azure.ResourceManager.AppComplianceAutomation.Models.ControlType?), Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState? complianceState = default(Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceState?), string policyId = null, string policyDisplayName = null, string policyDescription = null, string subscriptionId = null, string resourceGroup = null, string resourceType = null, string resourceId = null, string statusChangeDate = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.ComplianceResult ComplianceResult(string complianceName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.Category> categories = null) { throw null; }
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string Name { get { throw null; } }
         public string PolicyId { get { throw null; } }
         public string Remediation { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentResource> ResourceList { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentResourceContent> ResourceList { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentSeverity? Severity { get { throw null; } }
     }
-    public partial class AssessmentResource
+    public partial class AssessmentResourceContent
     {
-        internal AssessmentResource() { }
+        internal AssessmentResourceContent() { }
         public string Reason { get { throw null; } }
         public string ResourceId { get { throw null; } }
         public Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus? ResourceStatus { get { throw null; } }

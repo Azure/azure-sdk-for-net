@@ -10,21 +10,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> The DatadogAgreementResource. </summary>
-    public partial class DatadogAgreementResource : ResourceData
+    /// <summary> The DatadogAgreementResourceProperties. </summary>
+    public partial class DatadogAgreementResourceProperties : ResourceData
     {
-        /// <summary> Initializes a new instance of DatadogAgreementResource. </summary>
-        public DatadogAgreementResource()
+        /// <summary> Initializes a new instance of DatadogAgreementResourceProperties. </summary>
+        public DatadogAgreementResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogAgreementResource. </summary>
+        /// <summary> Initializes a new instance of DatadogAgreementResourceProperties. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Represents the properties of the resource. </param>
-        internal DatadogAgreementResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatadogAgreementProperties properties) : base(id, name, resourceType, systemData)
+        internal DatadogAgreementResourceProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatadogAgreementProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

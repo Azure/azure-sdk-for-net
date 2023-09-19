@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> The properties of a resource currently being monitored by the Elastic monitor resource. </summary>
-    public partial class MonitoredResource
+    public partial class MonitoredResourceContent
     {
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
-        internal MonitoredResource()
+        /// <summary> Initializes a new instance of MonitoredResourceContent. </summary>
+        internal MonitoredResourceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Initializes a new instance of MonitoredResourceContent. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingLogs"> Flag indicating the status of the resource for sending logs operation to Elastic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        internal MonitoredResource(string id, SendingLog? sendingLogs, string reasonForLogsStatus)
+        internal MonitoredResourceContent(string id, SendingLog? sendingLogs, string reasonForLogsStatus)
         {
             Id = id;
             SendingLogs = sendingLogs;

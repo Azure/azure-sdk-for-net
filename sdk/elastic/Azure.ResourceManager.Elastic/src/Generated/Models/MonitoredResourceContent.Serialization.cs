@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class MonitoredResource
+    public partial class MonitoredResourceContent
     {
-        internal static MonitoredResource DeserializeMonitoredResource(JsonElement element)
+        internal static MonitoredResourceContent DeserializeMonitoredResourceContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     continue;
                 }
             }
-            return new MonitoredResource(id.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new MonitoredResourceContent(id.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
         }
     }
 }

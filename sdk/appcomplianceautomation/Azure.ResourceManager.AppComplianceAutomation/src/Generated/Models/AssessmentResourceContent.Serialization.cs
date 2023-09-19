@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class AssessmentResource
+    public partial class AssessmentResourceContent
     {
-        internal static AssessmentResource DeserializeAssessmentResource(JsonElement element)
+        internal static AssessmentResourceContent DeserializeAssessmentResourceContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new AssessmentResource(resourceId.Value, Optional.ToNullable(resourceStatus), reason.Value, statusChangeDate.Value);
+            return new AssessmentResourceContent(resourceId.Value, Optional.ToNullable(resourceStatus), reason.Value, statusChangeDate.Value);
         }
     }
 }

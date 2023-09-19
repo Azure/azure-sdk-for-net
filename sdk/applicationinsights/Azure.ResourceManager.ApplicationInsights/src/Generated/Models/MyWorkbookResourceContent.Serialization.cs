@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class MyWorkbookResource : IUtf8JsonSerializable
+    public partial class MyWorkbookResourceContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static MyWorkbookResource DeserializeMyWorkbookResource(JsonElement element)
+        internal static MyWorkbookResourceContent DeserializeMyWorkbookResourceContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new MyWorkbookResource(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag));
+            return new MyWorkbookResourceContent(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag));
         }
     }
 }
