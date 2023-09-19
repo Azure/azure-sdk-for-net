@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    public partial class SkuDetailsForExistingResource
+    public partial class SkuDetails
     {
-        internal static SkuDetailsForExistingResource DeserializeSkuDetailsForExistingResource(JsonElement element)
+        internal static SkuDetails DeserializeSkuDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     continue;
                 }
             }
-            return new SkuDetailsForExistingResource(resourceType.Value, sku.Value);
+            return new SkuDetails(resourceType.Value, sku.Value);
         }
     }
 }

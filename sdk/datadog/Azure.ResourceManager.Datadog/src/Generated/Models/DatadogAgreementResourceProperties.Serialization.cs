@@ -5,39 +5,32 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Blueprint.Models
+namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class AssignmentJobCreatedResource : IUtf8JsonSerializable
+    public partial class DatadogAgreementResourceProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
         }
 
-        internal static AssignmentJobCreatedResource DeserializeAssignmentJobCreatedResource(JsonElement element)
+        internal static DatadogAgreementResourceProperties DeserializeDatadogAgreementResourceProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> properties = default;
+            Optional<DatadogAgreementProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -50,12 +43,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
+                    properties = DatadogAgreementProperties.DeserializeDatadogAgreementProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -83,7 +71,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new AssignmentJobCreatedResource(id, name, type, systemData.Value, Optional.ToDictionary(properties));
+            return new DatadogAgreementResourceProperties(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

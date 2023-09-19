@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class PrivateLinkScopedResource
+    public partial class PrivateLinkScopedResourceContent
     {
-        internal static PrivateLinkScopedResource DeserializePrivateLinkScopedResource(JsonElement element)
+        internal static PrivateLinkScopedResourceContent DeserializePrivateLinkScopedResourceContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new PrivateLinkScopedResource(resourceId.Value, scopeId.Value);
+            return new PrivateLinkScopedResourceContent(resourceId.Value, scopeId.Value);
         }
     }
 }
