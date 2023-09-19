@@ -52,11 +52,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests.Public", "tests\public\Azure.Core.Tests.Public.csproj", "{BFBF8EF7-61D8-40E7-9E98-468A0427761E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests.Common", "tests\common\Azure.Core.Tests.Common.csproj", "{0EEDF53F-120A-45B1-8468-A97A0D46DBAC}"
-<<<<<<< HEAD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.TypeSpec", "..\System.TypeSpec\src\System.TypeSpec.csproj", "{793B795B-2107-4711-871A-656891FF6802}"
-=======
->>>>>>> c6f5e019c3fbe618f7da7fec433ec87599b591b0
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
