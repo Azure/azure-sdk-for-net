@@ -12,6 +12,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+
+    <!-- TODO: remove -->
+    <NoWarn>NU1605</NoWarn>
     <!--
       netcoreapp2.1 is out of support but we'll keep is as a target for a bit
       to give customers time to migrate without losing perf optimizations
