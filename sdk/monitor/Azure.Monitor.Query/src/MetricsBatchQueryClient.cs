@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,78 +79,117 @@ namespace Azure.Monitor.Query
         /// </summary>
         public Uri Endpoint { get; }
 
-        /// <summary> Lists the metric values for multiple resources. </summary>
-        /// <param name="subscriptionId"> The subscription identifier for the resources in this batch. </param>
-        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
-        /// <param name="resourceIds"> The comma separated list of resource IDs to query metrics for. </param>
-        /// <param name="starttime">
-        /// The start time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. If you have specified the endtime parameter, then this parameter is required.
-        /// If only starttime is specified, then endtime defaults to the current time.
-        /// If no time interval is specified, the default is 1 hour.
-        /// </param>
-        /// <param name="endtime"> The end time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. </param>
-        /// <param name="interval">
-        /// The interval (i.e. timegrain) of the query.
-        /// *Examples: PT15M, PT1H, P1D*
-        /// </param>
-        /// <param name="aggregation">
-        /// The list of aggregation types (comma separated) to retrieve.
-        /// *Examples: average, minimum, maximum*
-        /// </param>
-        /// <param name="top">
-        /// The maximum number of records to retrieve per resource ID in the request.
-        /// Valid only if filter is specified.
-        /// Defaults to 10.
-        /// </param>
-        /// <param name="orderby">
-        /// The aggregation to use for sorting results and the direction of the sort.
-        /// Only one order can be specified.
-        /// *Examples: sum asc*
-        /// </param>
-        /// <param name="filter"> The filter is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="resourceIds"/> is null. </exception>
-        public virtual Response<MetricResultsResponse> Batch(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// pass in a list of resource ids, metric names, and a time range to query metrics for those resources.
+        /// </summary>
+        /// <param name="resourceIds"></param>
+        /// <param name="metricNames"></param>
+        /// <param name="metricNamespace"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<MetricResultsResponse> Batch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            return _metricBatchClient.Batch(subscriptionId, metricnamespace, metricnames, resourceIds, starttime, endtime, interval, aggregation, top, orderby, filter, cancellationToken);
+            if (resourceIds.Count == 0)
+            {
+                throw new ArgumentException("Resource IDs can not be empty");
+            }
+
+            var subscriptionId = GetSubscriptionId(resourceIds[0]);
+
+            string filter = null;
+            TimeSpan? granularity = null;
+            string aggregations = null;
+            string startTime = null;
+            int? top = null;
+            string orderBy = null;
+            string endTime = null;
+            ResourceIdList resourceIdList = new ResourceIdList(resourceIds);
+
+            if (options != null)
+            {
+                startTime = options.TimeRange.Value.Start.ToString();
+                endTime = options.TimeRange.Value.End.ToString();
+
+                top = options.Size;
+                orderBy = options.OrderBy;
+                filter = options.Filter;
+                granularity = options.Granularity;
+            }
+
+            return _metricBatchClient.Batch(
+                subscriptionId,
+                metricNamespace,
+                metricNames,
+                resourceIdList,
+                startTime,
+                endTime,
+                granularity,
+                aggregations,
+                top,
+                orderBy,
+                filter,
+                cancellationToken);
         }
 
-        /// <summary> Lists the metric values for multiple resources. </summary>
-        /// <param name="subscriptionId"> The subscription identifier for the resources in this batch. </param>
-        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
-        /// <param name="resourceIds"> The comma separated list of resource IDs to query metrics for. </param>
-        /// <param name="starttime">
-        /// The start time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. If you have specified the endtime parameter, then this parameter is required.
-        /// If only starttime is specified, then endtime defaults to the current time.
-        /// If no time interval is specified, the default is 1 hour.
-        /// </param>
-        /// <param name="endtime"> The end time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. </param>
-        /// <param name="interval">
-        /// The interval (i.e. timegrain) of the query.
-        /// *Examples: PT15M, PT1H, P1D*
-        /// </param>
-        /// <param name="aggregation">
-        /// The list of aggregation types (comma separated) to retrieve.
-        /// *Examples: average, minimum, maximum*
-        /// </param>
-        /// <param name="top">
-        /// The maximum number of records to retrieve per resource ID in the request.
-        /// Valid only if filter is specified.
-        /// Defaults to 10.
-        /// </param>
-        /// <param name="orderby">
-        /// The aggregation to use for sorting results and the direction of the sort.
-        /// Only one order can be specified.
-        /// *Examples: sum asc*
-        /// </param>
-        /// <param name="filter"> The filter is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="resourceIds"/> is null. </exception>
-        public virtual async Task<Response<MetricResultsResponse>> BatchAsync(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        private string GetSubscriptionId(string resourceId)
         {
-            return await _metricBatchClient.BatchAsync(subscriptionId, metricnamespace, metricnames, resourceIds, starttime, endtime, interval, aggregation, top, orderby, filter, cancellationToken).ConfigureAwait(false);
+            int startIndex = resourceId.IndexOf("subscriptions/") + 14;
+            return resourceId.Substring(startIndex, resourceId.IndexOf("/", startIndex) - startIndex);
+        }
+
+        /// <summary>
+        /// todo
+        /// </summary>
+        /// <param name="resourceIds"></param>
+        /// <param name="metricNames"></param>
+        /// <param name="metricNamespace"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public virtual async Task<Response<MetricResultsResponse>> BatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceIds.Count == 0)
+            {
+                throw new ArgumentException("Resource IDs can not be empty");
+            }
+
+            var subscriptionId = GetSubscriptionId(resourceIds[0]);
+
+            string filter = null;
+            TimeSpan? granularity = null;
+            string aggregations = null;
+            string startTime = null;
+            int? top = null;
+            string orderBy = null;
+            string endTime = null;
+            ResourceIdList resourceIdList = new ResourceIdList(resourceIds);
+
+            if (options != null)
+            {
+                startTime = options.TimeRange.Value.Start.ToString();
+                endTime = options.TimeRange.Value.End.ToString();
+
+                top = options.Size;
+                orderBy = options.OrderBy;
+                filter = options.Filter;
+                granularity = options.Granularity;
+            }
+
+            return await _metricBatchClient.BatchAsync(
+                subscriptionId,
+                metricNamespace,
+                metricNames,
+                resourceIdList,
+                startTime,
+                endTime,
+                granularity,
+                aggregations,
+                top,
+                orderBy,
+                filter,
+                cancellationToken).ConfigureAwait(false);
         }
     }
 }
