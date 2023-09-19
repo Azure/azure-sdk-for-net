@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline;

@@ -3,6 +3,7 @@
 
 using System;
 using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 
 namespace OpenAI;
 

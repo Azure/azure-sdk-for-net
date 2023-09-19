@@ -10,7 +10,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a credential capable of providing an OAuth token.
     /// </summary>
-    public abstract class TokenCredential : Credential
+    public abstract class TokenCredential
     {
         /// <summary>
         /// Gets an <see cref="AccessToken"/> for the specified set of scopes.

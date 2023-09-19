@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using System.Threading;
 using System.Threading.Tasks;
 

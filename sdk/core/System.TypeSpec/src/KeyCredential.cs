@@ -3,7 +3,7 @@
 
 namespace System.ServiceModel.Rest;
 
-public class KeyCredential : Credential
+public class KeyCredential
 {
     private string _key;
 

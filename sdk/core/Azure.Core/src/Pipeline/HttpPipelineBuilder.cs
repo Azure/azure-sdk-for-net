@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline

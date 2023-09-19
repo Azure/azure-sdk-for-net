@@ -3,7 +3,7 @@
 
 using System.Threading;
 
-namespace System.ServiceModel.Rest;
+namespace System.ServiceModel.Rest.Core;
 
 public class PipelineMessage
 {

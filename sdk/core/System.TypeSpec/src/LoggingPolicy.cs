@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest;
+namespace System.ServiceModel.Rest.Core;
 
 public class LoggingPolicy : PipelinePolicy
 {

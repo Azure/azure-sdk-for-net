@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline

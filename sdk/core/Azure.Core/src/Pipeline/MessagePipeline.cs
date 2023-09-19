@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.ServiceModel.Rest.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
