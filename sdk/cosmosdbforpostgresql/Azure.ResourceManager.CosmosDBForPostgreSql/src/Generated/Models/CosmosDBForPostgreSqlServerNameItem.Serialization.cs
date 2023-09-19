@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class ServerNameItem
+    public partial class CosmosDBForPostgreSqlServerNameItem
     {
-        internal static ServerNameItem DeserializeServerNameItem(JsonElement element)
+        internal static CosmosDBForPostgreSqlServerNameItem DeserializeCosmosDBForPostgreSqlServerNameItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     continue;
                 }
             }
-            return new ServerNameItem(name.Value, fullyQualifiedDomainName.Value);
+            return new CosmosDBForPostgreSqlServerNameItem(name.Value, fullyQualifiedDomainName.Value);
         }
     }
 }
