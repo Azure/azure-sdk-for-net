@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
@@ -90,6 +89,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             return options;
         }
 
+        public DataLakeClientOptions GetOptionsWithAudience(DataLakeAudience audience)
+        {
+            DataLakeClientOptions options = DataLakeClientBuilder.GetOptions(false);
+            options.Audience = audience;
+            return options;
+        }
+
         public DataLakeServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config)
             => InstrumentClient(
                 new DataLakeServiceClient(
@@ -104,6 +110,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             => new StorageSharedKeyCredential(
                 TestConfigHierarchicalNamespace.AccountName,
                 TestConfigHierarchicalNamespace.AccountKey);
+
+        public TokenCredential GetOAuthHnsCredential()
+            => Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace);
 
         public static void AssertValidStoragePathInfo(PathInfo pathInfo)
         {
