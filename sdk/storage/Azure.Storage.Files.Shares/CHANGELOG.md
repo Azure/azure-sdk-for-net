@@ -1,5 +1,16 @@
 # Release History
 
+## 12.17.0-beta.1 (Unreleased)
+
+### Features Added
+- Added support for ShareClientOptions.Audience
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.16.0 (2023-09-12)
 - Includes all features from 12.16.0-beta.1.
 

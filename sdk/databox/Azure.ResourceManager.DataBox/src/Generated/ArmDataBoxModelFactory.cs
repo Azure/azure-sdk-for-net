@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="details">
         /// Details of a job run. This field will only be sent for expand details filter.
-        /// Please note <see cref="DataBoxBasicJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxJobDetails"/>, <see cref="DataBoxCustomerDiskJobDetails"/>, <see cref="DataBoxDiskJobDetails"/> and <see cref="DataBoxHeavyJobDetails"/>.
+        /// Please note <see cref="Models.DataBoxBasicJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataBoxJobDetails"/>, <see cref="Models.DataBoxCustomerDiskJobDetails"/>, <see cref="Models.DataBoxDiskJobDetails"/> and <see cref="Models.DataBoxHeavyJobDetails"/>.
         /// </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="deliveryType"> Delivery type of Job. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="copyLogDetails">
         /// List of copy log details.
         /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
+        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
         /// <param name="dataCenterAddress">
         /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
+        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
         /// <returns> A new <see cref="Models.DataBoxBasicJobDetails"/> instance for mocking. </returns>
@@ -245,8 +245,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="status"> Overall validation status. </param>
         /// <param name="individualResponseDetails">
         /// List of response details contain validationType and its response as key and value respectively.
-        /// Please note <see cref="DataBoxValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="DataTransferDetailsValidationResult"/>, <see cref="PreferencesValidationResult"/>, <see cref="SkuAvailabilityValidationResult"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/> and <see cref="AddressValidationResult"/>.
+        /// Please note <see cref="Models.DataBoxValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="Models.DataTransferDetailsValidationResult"/>, <see cref="Models.PreferencesValidationResult"/>, <see cref="Models.SkuAvailabilityValidationResult"/>, <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/> and <see cref="Models.AddressValidationResult"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataBoxValidationResult"/> instance for mocking. </returns>
         public static DataBoxValidationResult DataBoxValidationResult(OverallValidationStatus? status = null, IEnumerable<DataBoxValidationInputResult> individualResponseDetails = null)
@@ -269,8 +269,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="jobName"> Name of the job. </param>
         /// <param name="jobSecrets">
         /// Secrets related to this job.
-        /// Please note <see cref="JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataboxJobSecrets"/>, <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/> and <see cref="DataBoxHeavyJobSecrets"/>.
+        /// Please note <see cref="Models.JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataboxJobSecrets"/>, <see cref="Models.CustomerDiskJobSecrets"/>, <see cref="Models.DataBoxDiskJobSecrets"/> and <see cref="Models.DataBoxHeavyJobSecrets"/>.
         /// </param>
         /// <returns> A new <see cref="Models.UnencryptedCredentials"/> instance for mocking. </returns>
         public static UnencryptedCredentials UnencryptedCredentials(string jobName = null, JobSecrets jobSecrets = null)
@@ -301,8 +301,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="transportAvailabilityDetails"> Transport options available for given sku in a region. </param>
         /// <param name="dataCenterAddressResponse">
         /// Datacenter address for given sku in a region.
-        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
+        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <returns> A new <see cref="Models.RegionConfigurationResult"/> instance for mocking. </returns>
         public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates = null, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails = null, DataCenterAddressResult dataCenterAddressResponse = null)
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="copyLogDetails">
         /// List of copy log details.
         /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
+        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
@@ -479,8 +479,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
         /// <param name="dataCenterAddress">
         /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
+        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
         /// <param name="importDiskDetails"> Contains the map of disk serial number to the disk details for import jobs. </param>
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="copyLogDetails">
         /// List of copy log details.
         /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
+        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
@@ -694,8 +694,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
         /// <param name="dataCenterAddress">
         /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
+        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
         /// <param name="preferredDisks"> User preference on what size disks are needed for the job. The map is from the disk size in TB to the count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will be checked against an int. </param>
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="copyLogDetails">
         /// List of copy log details.
         /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
+        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
@@ -772,8 +772,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
         /// <param name="dataCenterAddress">
         /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
+        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
         /// <param name="copyProgress"> Copy progress per account. </param>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="copyLogDetails">
         /// List of copy log details.
         /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
+        /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
@@ -842,8 +842,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
         /// <param name="dataCenterAddress">
         /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
+        /// Please note <see cref="Models.DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
         /// <param name="copyProgress"> Copy progress per storage account. </param>

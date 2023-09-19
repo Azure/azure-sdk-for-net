@@ -40,7 +40,10 @@ param(
   [string]$ClientSecret,
 
   [Parameter(Mandatory = $false)]
-  [string]$ReadmeFolderRoot = "docs-ref-services"
+  [string]$ReadmeFolderRoot = "docs-ref-services",
+
+  [Parameter(Mandatory = $false)]
+  [array]$Monikers = @('latest', 'preview', 'legacy')
 )
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/Service-Level-Readme-Automation-Helpers.ps1
@@ -50,8 +53,7 @@ param(
 Set-StrictMode -Version 3
 
 $fullMetadata = Get-CSVMetadata
-$monikers = @("latest", "preview")
-foreach($moniker in $monikers) {
+foreach($moniker in $Monikers) {
   # The onboarded packages return is key-value pair, which key is the package index, and value is the package info from {metadata}.json
   # E.g.
   # Key as: @azure/storage-blob
