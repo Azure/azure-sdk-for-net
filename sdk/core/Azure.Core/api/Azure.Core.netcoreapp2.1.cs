@@ -968,6 +968,43 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
+    public partial class ClientDiagnostics : Azure.Core.Pipeline.DiagnosticScopeFactory
+    {
+        public ClientDiagnostics(Azure.Core.ClientOptions options, bool? suppressNestedClientActivities = default(bool?)) : base (default(string), default(string), default(bool), default(bool)) { }
+        public ClientDiagnostics(string optionsNamespace, string? providerNamespace, Azure.Core.DiagnosticsOptions diagnosticsOptions, bool? suppressNestedClientActivities = default(bool?)) : base (default(string), default(string), default(bool), default(bool)) { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiagnosticScope : System.IDisposable
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public bool IsEnabled { get { throw null; } }
+        public void AddAttribute(string name, string value) { }
+        public void AddAttribute<T>(string name, T value) { }
+        public void AddAttribute<T>(string name, T value, System.Func<T, string> format) { }
+        public void AddIntegerAttribute(string name, int value) { }
+        public void AddLink(string traceparent, string? tracestate, System.Collections.Generic.IDictionary<string, string>? attributes = null) { }
+        public void Dispose() { }
+        public void Failed(System.Exception? exception = null) { }
+        public void SetDisplayName(string displayName) { }
+        public void SetStartTime(System.DateTime dateTime) { }
+        public void SetTraceContext(string traceparent, string? tracestate = null) { }
+        public void Start() { }
+        public enum ActivityKind
+        {
+            Internal = 0,
+            Server = 1,
+            Client = 2,
+            Producer = 3,
+            Consumer = 4,
+        }
+    }
+    public partial class DiagnosticScopeFactory
+    {
+        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities) { }
+        public bool IsActivityEnabled { get { throw null; } }
+        public Azure.Core.Pipeline.DiagnosticScope CreateScope(string name, Azure.Core.Pipeline.DiagnosticScope.ActivityKind kind = Azure.Core.Pipeline.DiagnosticScope.ActivityKind.Internal) { throw null; }
+    }
     public sealed partial class DisposableHttpPipeline : Azure.Core.Pipeline.HttpPipeline, System.IDisposable
     {
         internal DisposableHttpPipeline() : base (default(Azure.Core.Pipeline.HttpPipelineTransport), default(Azure.Core.Pipeline.HttpPipelinePolicy[]), default(Azure.Core.ResponseClassifier)) { }
