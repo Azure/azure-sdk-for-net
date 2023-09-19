@@ -242,6 +242,80 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePortsLocations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ExpressRoutePortsLocationResource>> GetIfExistsAsync(string locationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _expressRoutePortsLocationRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ExpressRoutePortsLocationResource>(response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePortsLocations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        public virtual NullableResponse<ExpressRoutePortsLocationResource> GetIfExists(string locationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _expressRoutePortsLocationRestClient.Get(Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ExpressRoutePortsLocationResource>(response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ExpressRoutePortsLocationResource> IEnumerable<ExpressRoutePortsLocationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
