@@ -343,7 +343,7 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 
 When using `InteractiveBrowserCredential`, by default, only AAD account is listed:
 
-![MSA AAD only](./images/MSA1.png)
+![MSA AAD only](/images/MSA1.png)
 
 If you choose "Use another account" and type in an MSA outlook.com account, it fails:
 
