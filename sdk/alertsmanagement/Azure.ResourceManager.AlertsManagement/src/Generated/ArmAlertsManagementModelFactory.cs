@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="properties">
         /// alert meta data property bag
         /// Please note <see cref="ServiceAlertMetadataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MonitorServiceList"/>.
+        /// The available derived classes include <see cref="Models.MonitorServiceList"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ServiceAlertMetadata"/> instance for mocking. </returns>
         public static ServiceAlertMetadata ServiceAlertMetadata(ServiceAlertMetadataProperties properties = null)
