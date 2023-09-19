@@ -79,7 +79,7 @@ namespace AzureSamples.Security.KeyVault.Proxy
         protected override IEnumerable<HttpHeader> EnumerateHeaders() => _headers;
 
         /// <inheritdoc/>
-        public override bool TryGetHeader(string name, out string value) => _headers.TryGetValue(name, out value);
+        protected override bool TryGetHeader(string name, out string value) => _headers.TryGetValue(name, out value);
 
         /// <inheritdoc/>
         protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetValues(name, out values);
