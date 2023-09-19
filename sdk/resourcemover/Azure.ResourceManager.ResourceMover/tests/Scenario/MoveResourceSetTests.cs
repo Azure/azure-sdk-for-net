@@ -123,15 +123,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             MoverResource moverResource = await CreateMoverResource(moverResourceSet, virtualNetwork.Id, moverResourceName, targetVnetName);
 
             // Validate that the Vnet has an dependency.
-            ArmOperation<MoverOperationStatus> lro = null;
-            try
-            {
-                lro = await moverResourceSet.ResolveDependenciesAsync(WaitUntil.Completed);
-            }
-            catch (Exception)
-            {
-                // Always failed
-            }
+            ArmOperation<MoverOperationStatus> lro = await moverResourceSet.ResolveDependenciesAsync(WaitUntil.Completed);
 
             // Retrieve a list of the dependencies and validate that there is only one unresolved dependency about the source resource group.
             int count = 0;
