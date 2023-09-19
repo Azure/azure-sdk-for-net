@@ -75,6 +75,7 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the set of languages currently supported by other operations of the Translator. </remarks>
         /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetLanguagesAsync(string,string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<GetLanguagesResult>> GetLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -105,6 +106,7 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the set of languages currently supported by other operations of the Translator. </remarks>
         /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetLanguages(string,string,string,string,CancellationToken)']/*" />
         public virtual Response<GetLanguagesResult> GetLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
