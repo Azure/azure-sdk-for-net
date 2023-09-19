@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An SDK for interacting with the Azure Purview Catalog service</Description>
     <AssemblyTitle>Azure Purview Sacnning SDK</AssemblyTitle>
@@ -7,16 +7,31 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;CS0169</NoWarn>
     <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
+
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <!--<Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />-->
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+
+    <Compile Include="$(AzureCoreSharedSources)HttpPipelineExtensions.cs" LinkBase="Shared" />
+
+    <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)RequestUriBuilderExtensions.cs" LinkBase="Shared\Core" />
+
+    <!--<Compile Include="$(AzureCoreSharedSources)GeneratorPageableHelpers.cs" LinkBase="Shared" />-->
+    <Compile Include="$(AzureCoreSharedSources)PageableHelpers.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>

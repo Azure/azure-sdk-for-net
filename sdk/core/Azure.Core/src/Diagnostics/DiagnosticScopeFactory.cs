@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
-#nullable enable
-
 namespace Azure.Core.Pipeline
 {
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
-    internal class DiagnosticScopeFactory
+    /// <summary>
+    /// TBD
+    /// </summary>
+    public class DiagnosticScopeFactory
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private static Dictionary<string, DiagnosticListener>? _listeners;
@@ -26,6 +27,13 @@ namespace Azure.Core.Pipeline
         private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
 #endif
 
+        /// <summary>
+        /// TBD
+        /// </summary>
+        /// <param name="clientNamespace"></param>
+        /// <param name="resourceProviderNamespace"></param>
+        /// <param name="isActivityEnabled"></param>
+        /// <param name="suppressNestedClientActivities"></param>
         public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
@@ -47,8 +55,17 @@ namespace Azure.Core.Pipeline
             }
         }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
         public bool IsActivityEnabled { get; }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="kind"></param>
+        /// <returns></returns>
 #if NETCOREAPP2_1
         public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
 #else

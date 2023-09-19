@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +12,10 @@ using System.Reflection;
 
 namespace Azure.Core.Pipeline
 {
-    internal readonly struct DiagnosticScope : IDisposable
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public readonly struct DiagnosticScope : IDisposable
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
@@ -59,18 +60,37 @@ namespace Azure.Core.Pipeline
                                                     diagnosticSourceArgs: diagnosticSourceArgs) : null;
         }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
         public bool IsEnabled { get; }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         public void AddAttribute(string name, string value)
         {
             _activityAdapter?.AddTag(name, value);
         }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         public void AddIntegerAttribute(string name, int value)
         {
             _activityAdapter?.AddTag(name, value);
         }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         public void AddAttribute<T>(string name,
 #if AZURE_NULLABLE
             [AllowNull]
@@ -80,6 +100,13 @@ namespace Azure.Core.Pipeline
             AddAttribute(name, value, static v => Convert.ToString(v, CultureInfo.InvariantCulture) ?? string.Empty);
         }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="format"></param>
         public void AddAttribute<T>(string name, T value, Func<T, string> format)
         {
             if (_activityAdapter != null)
@@ -100,17 +127,28 @@ namespace Azure.Core.Pipeline
             _activityAdapter?.AddLink(traceparent, tracestate, attributes);
         }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
         public void Start()
         {
             Activity? started = _activityAdapter?.Start();
             started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
         }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="displayName"></param>
         public void SetDisplayName(string displayName)
         {
             _activityAdapter?.SetDisplayName(displayName);
         }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="dateTime"></param>
         public void SetStartTime(DateTime dateTime)
         {
             _activityAdapter?.SetStartTime(dateTime);
@@ -126,6 +164,7 @@ namespace Azure.Core.Pipeline
             _activityAdapter?.SetTraceContext(traceparent, tracestate);
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             // Reverse the Start order

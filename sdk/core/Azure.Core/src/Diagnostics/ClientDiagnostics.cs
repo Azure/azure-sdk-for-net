@@ -12,11 +12,12 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-#nullable enable
-
 namespace Azure.Core.Pipeline
 {
-    internal class ClientDiagnostics : DiagnosticScopeFactory
+    /// <summary>
+    /// TBD
+    /// </summary>
+    public class ClientDiagnostics : DiagnosticScopeFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientDiagnostics"/> class.
