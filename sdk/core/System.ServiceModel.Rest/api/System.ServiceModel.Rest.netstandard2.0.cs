@@ -48,9 +48,11 @@ namespace System.ServiceModel.Rest
         public override T Value { get { throw null; } }
         public override System.ServiceModel.Rest.Result GetRawResult() { throw null; }
     }
-    public partial class TraceSpan : System.IDisposable
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TraceSpan : System.IDisposable
     {
-        internal TraceSpan() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public void Dispose() { }
         public void Failed(System.Exception exception) { }
         public void Start() { }

@@ -56,11 +56,19 @@ namespace System.ServiceModel.Rest
         public void Dispose() { }
         public void Failed(System.Exception exception) { }
         public void Start() { }
+        public enum ActivityKind
+        {
+            Internal = 0,
+            Server = 1,
+            Client = 2,
+            Producer = 3,
+            Consumer = 4,
+        }
     }
     public partial class TraceSpanFactory
     {
         public TraceSpanFactory(System.ServiceModel.Rest.PipelineOptions options, bool suppressNestedClientActivities = true) { }
-        public System.ServiceModel.Rest.TraceSpan CreateSpan(string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal) { throw null; }
+        public System.ServiceModel.Rest.TraceSpan CreateSpan(string name, System.ServiceModel.Rest.TraceSpan.ActivityKind kind = System.ServiceModel.Rest.TraceSpan.ActivityKind.Internal) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Core

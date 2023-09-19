@@ -35,8 +35,19 @@ namespace System.ServiceModel.Rest
         /// <param name="name"></param>
         /// <param name="kind"></param>
         /// <returns></returns>
+#if NETCOREAPP2_1
+        public TraceSpan CreateSpan(string name, TraceSpan.ActivityKind kind = TraceSpan.ActivityKind.Internal)
+#else
         public TraceSpan CreateSpan(string name, ActivityKind kind = ActivityKind.Internal)
-            => new TraceSpan(_factory.CreateScope(name, kind));
+#endif
+        {
+#if NETCOREAPP2_1
+            DiagnosticScope.ActivityKind activityKind = TraceSpan.FromActivityKind(kind);
+            return new TraceSpan(_factory.CreateScope(name, activityKind));
+#else
+            return new TraceSpan(_factory.CreateScope(name, kind));
+#endif
+        }
 
         private static string? GetResourceProviderNamespace(Assembly assembly)
         {
