@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class ServerConfigurationData : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlServerConfigurationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             writer.WriteEndObject();
         }
 
-        internal static ServerConfigurationData DeserializeServerConfigurationData(JsonElement element)
+        internal static CosmosDBForPostgreSqlServerConfigurationData DeserializeCosmosDBForPostgreSqlServerConfigurationData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<CosmosDBForPostgreSqlConfigurationDataType> dataType = default;
             Optional<string> allowedValues = default;
             Optional<bool> requiresRestart = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new CosmosDBForPostgreSqlProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ServerConfigurationData(id, name, type, systemData.Value, value.Value, source.Value, description.Value, defaultValue.Value, Optional.ToNullable(dataType), allowedValues.Value, Optional.ToNullable(requiresRestart), Optional.ToNullable(provisioningState));
+            return new CosmosDBForPostgreSqlServerConfigurationData(id, name, type, systemData.Value, value.Value, source.Value, description.Value, defaultValue.Value, Optional.ToNullable(dataType), allowedValues.Value, Optional.ToNullable(requiresRestart), Optional.ToNullable(provisioningState));
         }
     }
 }

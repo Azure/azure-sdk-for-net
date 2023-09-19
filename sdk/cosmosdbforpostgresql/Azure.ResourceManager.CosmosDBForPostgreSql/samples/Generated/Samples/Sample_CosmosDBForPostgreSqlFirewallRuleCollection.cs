@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // invoke the operation
             string firewallRuleName = "rule1";
-            CosmosDBForPostgreSqlFirewallRuleData data = new CosmosDBForPostgreSqlFirewallRuleData("0.0.0.0", "255.255.255.255");
+            CosmosDBForPostgreSqlFirewallRuleData data = new CosmosDBForPostgreSqlFirewallRuleData(IPAddress.Parse("0.0.0.0"), IPAddress.Parse("255.255.255.255"));
             ArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, data);
             CosmosDBForPostgreSqlFirewallRuleResource result = lro.Value;
 

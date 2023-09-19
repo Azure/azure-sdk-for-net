@@ -12,15 +12,15 @@ using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    internal partial class ServerConfigurationListResult
+    internal partial class CosmosDBForPostgreSqlServerConfigurationListResult
     {
-        internal static ServerConfigurationListResult DeserializeServerConfigurationListResult(JsonElement element)
+        internal static CosmosDBForPostgreSqlServerConfigurationListResult DeserializeCosmosDBForPostgreSqlServerConfigurationListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServerConfigurationData>> value = default;
+            Optional<IReadOnlyList<CosmosDBForPostgreSqlServerConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     {
                         continue;
                     }
-                    List<ServerConfigurationData> array = new List<ServerConfigurationData>();
+                    List<CosmosDBForPostgreSqlServerConfigurationData> array = new List<CosmosDBForPostgreSqlServerConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerConfigurationData.DeserializeServerConfigurationData(item));
+                        array.Add(CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     continue;
                 }
             }
-            return new ServerConfigurationListResult(Optional.ToList(value), nextLink.Value);
+            return new CosmosDBForPostgreSqlServerConfigurationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
