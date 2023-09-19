@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,13 +14,25 @@ namespace Azure.Storage.DataMovement
             string transferId,
             CancellationToken cancellationToken)
         {
-            DataTransferStatus jobStatus = (DataTransferStatus)await checkpointer.GetByteValue(
+            DataTransferState transferState = (DataTransferState) await checkpointer.GetByteValue(
                 transferId,
-                DataMovementConstants.JobPartPlanFile.AtomicJobStatusIndex,
+                DataMovementConstants.JobPartPlanFile.AtomicJobStatusStateIndex,
                 cancellationToken).ConfigureAwait(false);
 
+            byte hasFailedItemsByte = await checkpointer.GetByteValue(
+                transferId,
+                DataMovementConstants.JobPartPlanFile.AtomicJobStatusHasFailedIndex,
+                cancellationToken).ConfigureAwait(false);
+            bool hasFailedItems = Convert.ToBoolean(hasFailedItemsByte);
+
+            byte hasSkippedItemsByte = await checkpointer.GetByteValue(
+                transferId,
+                DataMovementConstants.JobPartPlanFile.AtomicJobStatusHasSkippedIndex,
+                cancellationToken).ConfigureAwait(false);
+            bool hasSkippedItems = Convert.ToBoolean(hasSkippedItemsByte);
+
             // Transfers marked as fully completed are not resumable
-            return jobStatus != DataTransferStatus.Completed;
+            return transferState != DataTransferState.Completed || hasFailedItems || hasSkippedItems;
         }
 
         internal static async Task<DataTransferProperties> GetDataTransferPropertiesAsync(

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of DatadogAgreementResourceListResponse. </summary>
         internal DatadogAgreementResourceListResponse()
         {
-            Value = new ChangeTrackingList<DatadogAgreementResource>();
+            Value = new ChangeTrackingList<DatadogAgreementResourceProperties>();
         }
 
         /// <summary> Initializes a new instance of DatadogAgreementResourceListResponse. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
-        internal DatadogAgreementResourceListResponse(IReadOnlyList<DatadogAgreementResource> value, string nextLink)
+        internal DatadogAgreementResourceListResponse(IReadOnlyList<DatadogAgreementResourceProperties> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of a list operation. </summary>
-        public IReadOnlyList<DatadogAgreementResource> Value { get; }
+        public IReadOnlyList<DatadogAgreementResourceProperties> Value { get; }
         /// <summary> Link to the next set of results, if any. </summary>
         public string NextLink { get; }
     }

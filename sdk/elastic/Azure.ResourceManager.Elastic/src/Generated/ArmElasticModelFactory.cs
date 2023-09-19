@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.Elastic.Models
             return new ElasticCloudDeployment(name, deploymentId, azureSubscriptionId, elasticsearchRegion, elasticsearchServiceUri, kibanaServiceUri, kibanaSsoUri);
         }
 
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Initializes a new instance of MonitoredResourceContent. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingLogs"> Flag indicating the status of the resource for sending logs operation to Elastic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        /// <returns> A new <see cref="Models.MonitoredResource"/> instance for mocking. </returns>
-        public static MonitoredResource MonitoredResource(string id = null, SendingLog? sendingLogs = null, string reasonForLogsStatus = null)
+        /// <returns> A new <see cref="Models.MonitoredResourceContent"/> instance for mocking. </returns>
+        public static MonitoredResourceContent MonitoredResourceContent(string id = null, SendingLog? sendingLogs = null, string reasonForLogsStatus = null)
         {
-            return new MonitoredResource(id, sendingLogs, reasonForLogsStatus);
+            return new MonitoredResourceContent(id, sendingLogs, reasonForLogsStatus);
         }
 
         /// <summary> Initializes a new instance of DeploymentInfoResponse. </summary>

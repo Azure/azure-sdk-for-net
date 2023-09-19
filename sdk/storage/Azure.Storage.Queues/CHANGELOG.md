@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.17.0-beta.1 (Unreleased)
-- This release contains bug fixes to improve quality.
+- Added support for QueueClientOptions.Audience
 
 ## 12.16.0 (2023-09-12)
 - Includes all features from 12.16.0-beta.1.

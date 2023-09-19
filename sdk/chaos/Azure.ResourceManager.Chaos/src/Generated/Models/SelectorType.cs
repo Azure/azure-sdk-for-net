@@ -5,18 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Enum of the selector type. </summary>
-    public enum SelectorType
+    internal readonly partial struct SelectorType : IEquatable<SelectorType>
     {
-        /// <summary> Percent. </summary>
-        Percent,
-        /// <summary> Random. </summary>
-        Random,
-        /// <summary> Tag. </summary>
-        Tag,
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="SelectorType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SelectorType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string ListValue = "List";
+        private const string QueryValue = "Query";
+
         /// <summary> List. </summary>
-        List
+        public static SelectorType List { get; } = new SelectorType(ListValue);
+        /// <summary> Query. </summary>
+        public static SelectorType Query { get; } = new SelectorType(QueryValue);
+        /// <summary> Determines if two <see cref="SelectorType"/> values are the same. </summary>
+        public static bool operator ==(SelectorType left, SelectorType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SelectorType"/> values are not the same. </summary>
+        public static bool operator !=(SelectorType left, SelectorType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SelectorType"/>. </summary>
+        public static implicit operator SelectorType(string value) => new SelectorType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is SelectorType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(SelectorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }
