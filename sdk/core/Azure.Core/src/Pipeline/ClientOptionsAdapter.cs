@@ -1,20 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using Azure.Core.Pipeline;
+using Azure.Core;
+using Azure;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.ServiceModel.Rest;
-using System.ServiceModel.Rest.Core;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Pipeline;
+namespace System.ServiceModel.Rest.Core;
 
-internal class MessageAdapter : HttpMessage
+internal class HttpMessageToPipelineMessageAdapter : PipelineMessage
+{
+    internal HttpMessage _message;
+
+    public HttpMessageToPipelineMessageAdapter(HttpMessage message)
+    {
+        _message = message;
+    }
+}
+
+internal class PipelineMessageToHttpMessageAdapter : HttpMessage
 {
     private PipelineMessage _message;
 
-    public MessageAdapter(PipelineMessage message)  : base(new RequestAdapter(message), new ResponseClassifier())
+    public PipelineMessageToHttpMessageAdapter(PipelineMessage message) : base(new RequestAdapter(message), new ResponseClassifier())
     {
         _message = message;
     }
@@ -26,16 +36,14 @@ internal class RequestAdapter : Request
 
     public RequestAdapter(PipelineMessage message) => _message = message;
 
-    public override string ClientRequestId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public override string ClientRequestId { get; set; } = Guid.NewGuid().ToString();
 
     public override void Dispose()
     {
     }
 
     protected internal override void AddHeader(string name, string value)
-    {
-        throw new NotImplementedException();
-    }
+        => _message.AddHeader(name, value);
 
     protected internal override bool ContainsHeader(string name)
     {
@@ -48,14 +56,10 @@ internal class RequestAdapter : Request
     }
 
     protected internal override bool RemoveHeader(string name)
-    {
-        throw new NotImplementedException();
-    }
+        => _message.RemoveHeader(name);
 
     protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-    {
-        throw new NotImplementedException();
-    }
+        => _message.TryGetHeader(name, out value);
 
     protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
     {
@@ -67,7 +71,39 @@ internal class ClientOptionsAdapter : ClientOptions
 {
     private RequestOptions _options;
     public ClientOptionsAdapter(RequestOptions options)
-        => _options = options;
+    {
+        _options = options;
+        if (options.Transport != null)
+        {
+            Transport = new TransportAdapter(options.Transport);
+        }
+    }
+}
+
+internal class TransportAdapter : HttpPipelineTransport
+{
+    private PipelineTransport _transport;
+
+    public TransportAdapter(PipelineTransport transport)
+    {
+        _transport = transport;
+    }
+    public override Request CreateRequest()
+    {
+        var message = _transport.CreateRequest();
+        return new RequestAdapter(message);
+    }
+
+    public override void Process(HttpMessage message)
+    {
+        Console.WriteLine(message.ToString());
+    }
+
+    public override ValueTask ProcessAsync(HttpMessage message)
+    {
+        Console.WriteLine(message.ToString());
+        return default;
+    }
 }
 
 internal class PolicyAdapter : HttpPipelinePolicy

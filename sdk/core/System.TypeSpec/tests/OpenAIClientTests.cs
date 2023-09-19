@@ -42,4 +42,12 @@ public partial class OpenAIClientTests
         Choice choice = result.Value.Choices[0];
         Debug.WriteLine(choice.Text);
     }
+
+    [Fact]
+    public void Pipeline()
+    {
+        MessagePipeline pipeline = new MessagePipeline(new RequestOptions());
+        PipelineMessage message = pipeline.CreateMessage("POST", new Uri("http://www.google.com"));
+        pipeline.Send(message);
+    }
 }

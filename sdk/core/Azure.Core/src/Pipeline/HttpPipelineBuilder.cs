@@ -19,17 +19,24 @@ namespace Azure.Core.Pipeline
         /// TBD.
         /// </summary>
         /// <param name="options"></param>
+        /// <param name="perCallPolicies"></param>
         /// <param name="perRetryPolicies"></param>
         /// <returns></returns>
-        public static HttpPipeline Build(RequestOptions options, params PipelinePolicy[] perRetryPolicies)
+        public static HttpPipeline Build(RequestOptions options, PipelinePolicy[] perCallPolicies, PipelinePolicy[] perRetryPolicies)
         {
-            HttpPipelinePolicy[] adaptedPolicies = new HttpPipelinePolicy[perRetryPolicies.Length];
+            HttpPipelinePolicy[] adaptedPerRetryPolicies = new HttpPipelinePolicy[perRetryPolicies.Length];
             for (int i=0; i<perRetryPolicies.Length; i++)
             {
-                adaptedPolicies[i]= new PolicyAdapter(perRetryPolicies[i]);
+                adaptedPerRetryPolicies[i]= new PolicyAdapter(perRetryPolicies[i]);
             }
+            HttpPipelinePolicy[] adaptedPerCallPolicies = new HttpPipelinePolicy[perCallPolicies.Length];
+            for (int i = 0; i < perCallPolicies.Length; i++)
+            {
+                adaptedPerCallPolicies[i] = new PolicyAdapter(perCallPolicies[i]);
+            }
+
             ClientOptions adaptedOptions = new ClientOptionsAdapter(options);
-            return Build(adaptedOptions, Array.Empty<HttpPipelinePolicy>(), adaptedPolicies, ResponseClassifier.Shared);
+            return Build(adaptedOptions, adaptedPerCallPolicies, adaptedPerRetryPolicies, ResponseClassifier.Shared);
         }
 
         /// <summary>

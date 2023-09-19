@@ -14,6 +14,8 @@ public class RequestOptions // base of ClientOptions and RequestContext
 
     public PipelinePolicy LoggingPolicy { get; set; } = DefaultLoggingPolicy;
 
+    public PipelineTransport? Transport { get; set; }
+
     public static PipelinePolicy DefaultRetryPolicy { get; set; } = new RetryPolicy(maxRetries: 3);
 
     public static PipelinePolicy DefaultLoggingPolicy { get; set; } = new LoggingPolicy();

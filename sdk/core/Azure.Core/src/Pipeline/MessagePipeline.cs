@@ -23,7 +23,7 @@ public class MessagePipeline // base of HttpPipelinePolicy
     /// <param name="options"></param>
     public MessagePipeline(RequestOptions options)
     {
-        _pipeline = HttpPipelineBuilder.Build(options);
+        _pipeline = HttpPipelineBuilder.Build(new ClientOptionsAdapter(options));
     }
 
     /// <summary>
@@ -35,11 +35,10 @@ public class MessagePipeline // base of HttpPipelinePolicy
     /// <exception cref="NotImplementedException"></exception>
     public PipelineMessage CreateMessage(string verb, Uri uri)
     {
-        _pipeline.CreateRequest();
         HttpMessage message = _pipeline.CreateMessage();
         message.Request.Uri.Reset(uri);
-        message.Request.Method = RequestMethod.Post; // TODO: don't hardcode
-        return new MessageAdapter(message);
+        message.Request.Method = RequestMethod.Get; // TODO: don't hardcode
+        return new HttpMessageToPipelineMessageAdapter(message);
     }
 
     /// <summary>
@@ -49,13 +48,18 @@ public class MessagePipeline // base of HttpPipelinePolicy
     /// <exception cref="NotImplementedException"></exception>
     public void Send(PipelineMessage message)
     {
-        HttpMessage? m = message as HttpMessage;
+        HttpMessage messageToSend;
+        var m = message as HttpMessageToPipelineMessageAdapter;
         if (m == null)
         {
-            m = new MessageAdapter(message);
+            messageToSend = new PipelineMessageToHttpMessageAdapter(message);
         }
-        _pipeline.Send(m, m.CancellationToken);
-        var response = m.Response;
+        else
+        {
+            messageToSend = m._message;
+        }
+        _pipeline.Send(messageToSend, messageToSend.CancellationToken);
+        var response = messageToSend.Response;
         message.Result = new PipelineResult(response);
     }
 }
