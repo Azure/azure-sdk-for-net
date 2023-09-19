@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> correlationId = default;
             Optional<string> operationContext = default;
             Optional<CommunicationIdentifierModel> participant = default;
-            Optional<string> invitiationId = default;
+            Optional<string> invitationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -56,13 +56,13 @@ namespace Azure.Communication.CallAutomation
                     participant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("invitiationId"u8))
+                if (property.NameEquals("invitationId"u8))
                 {
-                    invitiationId = property.Value.GetString();
+                    invitationId = property.Value.GetString();
                     continue;
                 }
             }
-            return new AddParticipantCancelledInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, participant.Value, invitiationId.Value);
+            return new AddParticipantCancelledInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, participant.Value, invitationId.Value);
         }
     }
 }

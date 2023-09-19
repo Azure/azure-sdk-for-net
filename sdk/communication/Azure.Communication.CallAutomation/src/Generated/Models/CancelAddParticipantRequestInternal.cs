@@ -14,17 +14,17 @@ namespace Azure.Communication.CallAutomation
     internal partial class CancelAddParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of CancelAddParticipantRequestInternal. </summary>
-        /// <param name="invitiationId"> Invitation ID used to add a participant. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="invitiationId"/> is null. </exception>
-        public CancelAddParticipantRequestInternal(string invitiationId)
+        /// <param name="invitationId"> Invitation ID used to add a participant. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
+        public CancelAddParticipantRequestInternal(string invitationId)
         {
-            Argument.AssertNotNull(invitiationId, nameof(invitiationId));
+            Argument.AssertNotNull(invitationId, nameof(invitationId));
 
-            InvitiationId = invitiationId;
+            InvitationId = invitationId;
         }
 
         /// <summary> Invitation ID used to add a participant. </summary>
-        public string InvitiationId { get; }
+        public string InvitationId { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
         /// <summary> The callback URI to override the main callback URI. </summary>

@@ -21,15 +21,15 @@ namespace Azure.Communication.CallAutomation
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="invitiationId"> Invitation ID used to cancel the request. </param>
-        internal CancelAddParticipantFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, string invitiationId)
+        /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
+        internal CancelAddParticipantFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, string invitationId)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
-            InvitiationId = invitiationId;
+            InvitationId = invitationId;
         }
 
         /// <summary> Call connection ID. </summary>
@@ -43,6 +43,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
         public ResultInformation ResultInformation { get; }
         /// <summary> Invitation ID used to cancel the request. </summary>
-        public string InvitiationId { get; }
+        public string InvitationId { get; }
     }
 }

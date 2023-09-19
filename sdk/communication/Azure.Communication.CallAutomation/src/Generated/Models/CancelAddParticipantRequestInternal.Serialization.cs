@@ -15,8 +15,8 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("invitiationId"u8);
-            writer.WriteStringValue(InvitiationId);
+            writer.WritePropertyName("invitationId"u8);
+            writer.WriteStringValue(InvitationId);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

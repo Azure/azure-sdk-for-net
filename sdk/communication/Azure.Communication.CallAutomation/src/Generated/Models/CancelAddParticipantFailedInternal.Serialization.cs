@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> correlationId = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
-            Optional<string> invitiationId = default;
+            Optional<string> invitationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -55,13 +55,13 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("invitiationId"u8))
+                if (property.NameEquals("invitationId"u8))
                 {
-                    invitiationId = property.Value.GetString();
+                    invitationId = property.Value.GetString();
                     continue;
                 }
             }
-            return new CancelAddParticipantFailedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, invitiationId.Value);
+            return new CancelAddParticipantFailedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, invitationId.Value);
         }
     }
 }
