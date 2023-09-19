@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Net;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
@@ -108,9 +109,15 @@ namespace Microsoft.Extensions.Hosting
 
         internal static IWebJobsBuilder AddServiceBusScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
-            builder.Services.AddSingleton(serviceProvider => new ServiceBusScalerProvider(serviceProvider, triggerMetadata));
-            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetRequiredService<ServiceBusScalerProvider>());
-            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetRequiredService<ServiceBusScalerProvider>());
+            // We need to register an instance of ServiceBusScalerProvider in the DI container and then map it to the interfaces IScaleMonitorProvider and ITargetScalerProvider.
+            // Since there can be more than one instance of ServiceBusScalerProvider, we have to store a reference to the created instance to filter it out later.
+            ServiceBusScalerProvider serviceBusScalerProvider = null;
+            builder.Services.AddSingleton(serviceProvider => {
+                serviceBusScalerProvider = new ServiceBusScalerProvider(serviceProvider, triggerMetadata);
+                return serviceBusScalerProvider;
+            });
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<ServiceBusScalerProvider>().Single(x => x == serviceBusScalerProvider));
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<ServiceBusScalerProvider>().Single(x => x == serviceBusScalerProvider));
 
             return builder;
         }
