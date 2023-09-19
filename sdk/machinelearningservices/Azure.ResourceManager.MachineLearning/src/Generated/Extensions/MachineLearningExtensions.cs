@@ -50,25 +50,6 @@ namespace Azure.ResourceManager.MachineLearning
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region MachineLearningWorkspaceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningWorkspaceResource" /> object. </returns>
-        public static MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningWorkspaceResource.ValidateResourceId(id);
-                return new MachineLearningWorkspaceResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region MachineLearningComputeResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningComputeResource" /> along with the instance operations that can be performed on it but with no data.
@@ -88,39 +69,381 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region MachineLearningPrivateEndpointConnectionResource
+        #region RegistryCodeResource
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RegistryCodeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryCodeResource.CreateResourceIdentifier" /> to create a <see cref="RegistryCodeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource" /> object. </returns>
-        public static MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RegistryCodeResource" /> object. </returns>
+        public static RegistryCodeResource GetRegistryCodeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MachineLearningPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new MachineLearningPrivateEndpointConnectionResource(client, id);
+                RegistryCodeResource.ValidateResourceId(id);
+                return new RegistryCodeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MachineLearningWorkspaceConnectionResource
+        #region WorkspaceCodeResource
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningWorkspaceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkspaceCodeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceCodeResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceCodeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource" /> object. </returns>
-        public static MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkspaceCodeResource" /> object. </returns>
+        public static WorkspaceCodeResource GetWorkspaceCodeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
-                return new MachineLearningWorkspaceConnectionResource(client, id);
+                WorkspaceCodeResource.ValidateResourceId(id);
+                return new WorkspaceCodeResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RegistryCodeVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryCodeVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryCodeVersionResource.CreateResourceIdentifier" /> to create a <see cref="RegistryCodeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryCodeVersionResource" /> object. </returns>
+        public static RegistryCodeVersionResource GetRegistryCodeVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryCodeVersionResource.ValidateResourceId(id);
+                return new RegistryCodeVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkspaceCodeVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceCodeVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceCodeVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceCodeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceCodeVersionResource" /> object. </returns>
+        public static WorkspaceCodeVersionResource GetWorkspaceCodeVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspaceCodeVersionResource.ValidateResourceId(id);
+                return new WorkspaceCodeVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RegistryComponentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryComponentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryComponentResource.CreateResourceIdentifier" /> to create a <see cref="RegistryComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryComponentResource" /> object. </returns>
+        public static RegistryComponentResource GetRegistryComponentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryComponentResource.ValidateResourceId(id);
+                return new RegistryComponentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkspaceComponentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceComponentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceComponentResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceComponentResource" /> object. </returns>
+        public static WorkspaceComponentResource GetWorkspaceComponentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspaceComponentResource.ValidateResourceId(id);
+                return new WorkspaceComponentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RegistryComponentVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryComponentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryComponentVersionResource.CreateResourceIdentifier" /> to create a <see cref="RegistryComponentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryComponentVersionResource" /> object. </returns>
+        public static RegistryComponentVersionResource GetRegistryComponentVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryComponentVersionResource.ValidateResourceId(id);
+                return new RegistryComponentVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkspaceComponentVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceComponentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceComponentVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceComponentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceComponentVersionResource" /> object. </returns>
+        public static WorkspaceComponentVersionResource GetWorkspaceComponentVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspaceComponentVersionResource.ValidateResourceId(id);
+                return new WorkspaceComponentVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RegistryDataResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryDataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryDataResource.CreateResourceIdentifier" /> to create a <see cref="RegistryDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryDataResource" /> object. </returns>
+        public static RegistryDataResource GetRegistryDataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryDataResource.ValidateResourceId(id);
+                return new RegistryDataResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkspaceDataResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceDataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceDataResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceDataResource" /> object. </returns>
+        public static WorkspaceDataResource GetWorkspaceDataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspaceDataResource.ValidateResourceId(id);
+                return new WorkspaceDataResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RegistryDataVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryDataVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryDataVersionResource.CreateResourceIdentifier" /> to create a <see cref="RegistryDataVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryDataVersionResource" /> object. </returns>
+        public static RegistryDataVersionResource GetRegistryDataVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryDataVersionResource.ValidateResourceId(id);
+                return new RegistryDataVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkspaceDataVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceDataVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceDataVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceDataVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceDataVersionResource" /> object. </returns>
+        public static WorkspaceDataVersionResource GetWorkspaceDataVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspaceDataVersionResource.ValidateResourceId(id);
+                return new WorkspaceDataVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RegistryEnvironmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="RegistryEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryEnvironmentResource" /> object. </returns>
+        public static RegistryEnvironmentResource GetRegistryEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryEnvironmentResource.ValidateResourceId(id);
+                return new RegistryEnvironmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkspaceEnvironmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceEnvironmentResource" /> object. </returns>
+        public static WorkspaceEnvironmentResource GetWorkspaceEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspaceEnvironmentResource.ValidateResourceId(id);
+                return new WorkspaceEnvironmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RegistryEnvironmentVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryEnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryEnvironmentVersionResource.CreateResourceIdentifier" /> to create a <see cref="RegistryEnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryEnvironmentVersionResource" /> object. </returns>
+        public static RegistryEnvironmentVersionResource GetRegistryEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryEnvironmentVersionResource.ValidateResourceId(id);
+                return new RegistryEnvironmentVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkspaceEnvironmentVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceEnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceEnvironmentVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceEnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceEnvironmentVersionResource" /> object. </returns>
+        public static WorkspaceEnvironmentVersionResource GetWorkspaceEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspaceEnvironmentVersionResource.ValidateResourceId(id);
+                return new WorkspaceEnvironmentVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RegistryModelResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryModelResource.CreateResourceIdentifier" /> to create a <see cref="RegistryModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryModelResource" /> object. </returns>
+        public static RegistryModelResource GetRegistryModelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryModelResource.ValidateResourceId(id);
+                return new RegistryModelResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkspaceModelResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceModelResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceModelResource" /> object. </returns>
+        public static WorkspaceModelResource GetWorkspaceModelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspaceModelResource.ValidateResourceId(id);
+                return new WorkspaceModelResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RegistryModelVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryModelVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryModelVersionResource.CreateResourceIdentifier" /> to create a <see cref="RegistryModelVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryModelVersionResource" /> object. </returns>
+        public static RegistryModelVersionResource GetRegistryModelVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryModelVersionResource.ValidateResourceId(id);
+                return new RegistryModelVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region WorkspaceModelVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceModelVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceModelVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceModelVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspaceModelVersionResource" /> object. </returns>
+        public static WorkspaceModelVersionResource GetWorkspaceModelVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspaceModelVersionResource.ValidateResourceId(id);
+                return new WorkspaceModelVersionResource(client, id);
             }
             );
         }
@@ -164,120 +487,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region MachineLearningCodeContainerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningCodeContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningCodeContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningCodeContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningCodeContainerResource" /> object. </returns>
-        public static MachineLearningCodeContainerResource GetMachineLearningCodeContainerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningCodeContainerResource.ValidateResourceId(id);
-                return new MachineLearningCodeContainerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MachineLearningCodeVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningCodeVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningCodeVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningCodeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningCodeVersionResource" /> object. </returns>
-        public static MachineLearningCodeVersionResource GetMachineLearningCodeVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningCodeVersionResource.ValidateResourceId(id);
-                return new MachineLearningCodeVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MachineLearningComponentContainerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningComponentContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningComponentContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComponentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningComponentContainerResource" /> object. </returns>
-        public static MachineLearningComponentContainerResource GetMachineLearningComponentContainerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningComponentContainerResource.ValidateResourceId(id);
-                return new MachineLearningComponentContainerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MachineLearningComponentVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningComponentVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningComponentVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComponentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningComponentVersionResource" /> object. </returns>
-        public static MachineLearningComponentVersionResource GetMachineLearningComponentVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningComponentVersionResource.ValidateResourceId(id);
-                return new MachineLearningComponentVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MachineLearningDataContainerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningDataContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningDataContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDataContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningDataContainerResource" /> object. </returns>
-        public static MachineLearningDataContainerResource GetMachineLearningDataContainerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningDataContainerResource.ValidateResourceId(id);
-                return new MachineLearningDataContainerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MachineLearningDataVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningDataVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningDataVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDataVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningDataVersionResource" /> object. </returns>
-        public static MachineLearningDataVersionResource GetMachineLearningDataVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningDataVersionResource.ValidateResourceId(id);
-                return new MachineLearningDataVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region MachineLearningDatastoreResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningDatastoreResource" /> along with the instance operations that can be performed on it but with no data.
@@ -297,39 +506,96 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region MachineLearningEnvironmentContainerResource
+        #region FeaturesetContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningEnvironmentContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningEnvironmentContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FeaturesetContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FeaturesetContainerResource.CreateResourceIdentifier" /> to create a <see cref="FeaturesetContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningEnvironmentContainerResource" /> object. </returns>
-        public static MachineLearningEnvironmentContainerResource GetMachineLearningEnvironmentContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FeaturesetContainerResource" /> object. </returns>
+        public static FeaturesetContainerResource GetFeaturesetContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MachineLearningEnvironmentContainerResource.ValidateResourceId(id);
-                return new MachineLearningEnvironmentContainerResource(client, id);
+                FeaturesetContainerResource.ValidateResourceId(id);
+                return new FeaturesetContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MachineLearningEnvironmentVersionResource
+        #region FeatureResource
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningEnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningEnvironmentVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FeatureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FeatureResource.CreateResourceIdentifier" /> to create a <see cref="FeatureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningEnvironmentVersionResource" /> object. </returns>
-        public static MachineLearningEnvironmentVersionResource GetMachineLearningEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FeatureResource" /> object. </returns>
+        public static FeatureResource GetFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MachineLearningEnvironmentVersionResource.ValidateResourceId(id);
-                return new MachineLearningEnvironmentVersionResource(client, id);
+                FeatureResource.ValidateResourceId(id);
+                return new FeatureResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FeaturesetVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FeaturesetVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FeaturesetVersionResource.CreateResourceIdentifier" /> to create a <see cref="FeaturesetVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FeaturesetVersionResource" /> object. </returns>
+        public static FeaturesetVersionResource GetFeaturesetVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FeaturesetVersionResource.ValidateResourceId(id);
+                return new FeaturesetVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FeaturestoreEntityContainerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FeaturestoreEntityContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FeaturestoreEntityContainerResource.CreateResourceIdentifier" /> to create a <see cref="FeaturestoreEntityContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FeaturestoreEntityContainerResource" /> object. </returns>
+        public static FeaturestoreEntityContainerResource GetFeaturestoreEntityContainerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FeaturestoreEntityContainerResource.ValidateResourceId(id);
+                return new FeaturestoreEntityContainerResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FeaturestoreEntityVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FeaturestoreEntityVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FeaturestoreEntityVersionResource.CreateResourceIdentifier" /> to create a <see cref="FeaturestoreEntityVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FeaturestoreEntityVersionResource" /> object. </returns>
+        public static FeaturestoreEntityVersionResource GetFeaturestoreEntityVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FeaturestoreEntityVersionResource.ValidateResourceId(id);
+                return new FeaturestoreEntityVersionResource(client, id);
             }
             );
         }
@@ -354,39 +620,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region MachineLearningModelContainerResource
+        #region LabelingJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningModelContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningModelContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningModelContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabelingJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabelingJobResource.CreateResourceIdentifier" /> to create a <see cref="LabelingJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningModelContainerResource" /> object. </returns>
-        public static MachineLearningModelContainerResource GetMachineLearningModelContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabelingJobResource" /> object. </returns>
+        public static LabelingJobResource GetLabelingJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MachineLearningModelContainerResource.ValidateResourceId(id);
-                return new MachineLearningModelContainerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MachineLearningModelVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningModelVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningModelVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningModelVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningModelVersionResource" /> object. </returns>
-        public static MachineLearningModelVersionResource GetMachineLearningModelVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningModelVersionResource.ValidateResourceId(id);
-                return new MachineLearningModelVersionResource(client, id);
+                LabelingJobResource.ValidateResourceId(id);
+                return new LabelingJobResource(client, id);
             }
             );
         }
@@ -449,6 +696,157 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
+        #region RegistryResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryResource.CreateResourceIdentifier" /> to create a <see cref="RegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryResource" /> object. </returns>
+        public static RegistryResource GetRegistryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RegistryResource.ValidateResourceId(id);
+                return new RegistryResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MachineLearningWorkspaceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceResource" /> object. </returns>
+        public static MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MachineLearningWorkspaceResource.ValidateResourceId(id);
+                return new MachineLearningWorkspaceResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MachineLearningWorkspaceConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningWorkspaceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource" /> object. </returns>
+        public static MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
+                return new MachineLearningWorkspaceConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region OutboundRuleBasicResource
+        /// <summary>
+        /// Gets an object representing an <see cref="OutboundRuleBasicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OutboundRuleBasicResource.CreateResourceIdentifier" /> to create an <see cref="OutboundRuleBasicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OutboundRuleBasicResource" /> object. </returns>
+        public static OutboundRuleBasicResource GetOutboundRuleBasicResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                OutboundRuleBasicResource.ValidateResourceId(id);
+                return new OutboundRuleBasicResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MachineLearningPrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource" /> object. </returns>
+        public static MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MachineLearningPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new MachineLearningPrivateEndpointConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        /// <summary> Gets a collection of RegistryResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of RegistryResources and their operations over a RegistryResource. </returns>
+        public static RegistryCollection GetRegistries(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegistries();
+        }
+
+        /// <summary>
+        /// Get registry
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RegistryResource>> GetRegistryAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetRegistries().GetAsync(registryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get registry
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RegistryResource> GetRegistry(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetRegistries().Get(registryName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of MachineLearningWorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MachineLearningWorkspaceResources and their operations over a MachineLearningWorkspaceResource. </returns>
@@ -503,50 +901,6 @@ namespace Azure.ResourceManager.MachineLearning
         public static Response<MachineLearningWorkspaceResource> GetMachineLearningWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetMachineLearningWorkspaces().Get(workspaceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the available machine learning workspaces under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the available machine learning workspaces under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspaces(skip, cancellationToken);
         }
 
         /// <summary>
@@ -731,6 +1085,94 @@ namespace Azure.ResourceManager.MachineLearning
         public static Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningQuotas(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List registries by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/registries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="RegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RegistryResource> GetRegistriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegistriesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List registries by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/registries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RegistryResource> GetRegistries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegistries(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the available machine learning workspaces under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, kind, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the available machine learning workspaces under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspaces(skip, kind, cancellationToken);
         }
     }
 }

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ExternalFqdnResponse. </summary>
         internal ExternalFqdnResponse()
         {
-            Value = new ChangeTrackingList<MachineLearningFqdnEndpoints>();
+            Value = new ChangeTrackingList<FqdnEndpointsPropertyBag>();
         }
 
         /// <summary> Initializes a new instance of ExternalFqdnResponse. </summary>
         /// <param name="value"></param>
-        internal ExternalFqdnResponse(IReadOnlyList<MachineLearningFqdnEndpoints> value)
+        internal ExternalFqdnResponse(IReadOnlyList<FqdnEndpointsPropertyBag> value)
         {
             Value = value;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<MachineLearningFqdnEndpoints> Value { get; }
+        public IReadOnlyList<FqdnEndpointsPropertyBag> Value { get; }
     }
 }

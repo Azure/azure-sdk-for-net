@@ -15,8 +15,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(CosmosDbResourceId))
+            {
+                writer.WritePropertyName("cosmosDbResourceId"u8);
+                writer.WriteStringValue(CosmosDbResourceId);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -24,6 +27,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("keyVaultProperties"u8);
             writer.WriteObjectValue(KeyVaultProperties);
+            if (Optional.IsDefined(SearchAccountResourceId))
+            {
+                writer.WritePropertyName("searchAccountResourceId"u8);
+                writer.WriteStringValue(SearchAccountResourceId);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(StorageAccountResourceId))
+            {
+                writer.WritePropertyName("storageAccountResourceId"u8);
+                writer.WriteStringValue(StorageAccountResourceId);
+            }
             writer.WriteEndObject();
         }
 
@@ -33,14 +48,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningEncryptionStatus status = default;
+            Optional<string> cosmosDbResourceId = default;
             Optional<MachineLearningCmkIdentity> identity = default;
-            MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;
+            KeyVaultProperties keyVaultProperties = default;
+            Optional<string> searchAccountResourceId = default;
+            MachineLearningEncryptionStatus status = default;
+            Optional<string> storageAccountResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("cosmosDbResourceId"u8))
                 {
-                    status = new MachineLearningEncryptionStatus(property.Value.GetString());
+                    cosmosDbResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -54,11 +72,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("keyVaultProperties"u8))
                 {
-                    keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value);
+                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("searchAccountResourceId"u8))
+                {
+                    searchAccountResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    status = new MachineLearningEncryptionStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageAccountResourceId"u8))
+                {
+                    storageAccountResourceId = property.Value.GetString();
                     continue;
                 }
             }
-            return new MachineLearningEncryptionSetting(status, identity.Value, keyVaultProperties);
+            return new MachineLearningEncryptionSetting(cosmosDbResourceId.Value, identity.Value, keyVaultProperties, searchAccountResourceId.Value, status, storageAccountResourceId.Value);
         }
     }
 }

@@ -11,15 +11,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class ComputeSchedules
+    internal partial class ComputeSchedules : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ComputeStartStop))
+            {
+                writer.WritePropertyName("computeStartStop"u8);
+                writer.WriteStartArray();
+                foreach (var item in ComputeStartStop)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ComputeSchedules DeserializeComputeSchedules(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningComputeStartStopSchedule>> computeStartStop = default;
+            Optional<IList<MachineLearningComputeStartStopSchedule>> computeStartStop = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeStartStop"u8))

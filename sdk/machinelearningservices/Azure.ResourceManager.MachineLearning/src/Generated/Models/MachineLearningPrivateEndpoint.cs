@@ -19,16 +19,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
-        /// <param name="subnetArmId"> The ARM identifier for Subnet resource that private endpoint links to. </param>
-        internal MachineLearningPrivateEndpoint(ResourceIdentifier id, ResourceIdentifier subnetArmId)
+        internal MachineLearningPrivateEndpoint(ResourceIdentifier id)
         {
             Id = id;
-            SubnetArmId = subnetArmId;
         }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> The ARM identifier for Subnet resource that private endpoint links to. </summary>
-        public ResourceIdentifier SubnetArmId { get; }
     }
 }

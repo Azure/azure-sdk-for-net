@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: MachineLearning
 namespace: Azure.ResourceManager.MachineLearning
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b32e1896f30e6ea155449cb49719a6286e32b961/specification/machinelearningservices/resource-manager/readme.md
-tag: package-2022-10
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/79d4b87b6632452bf83711814faa5b71e4761544/specification/machinelearningservices/resource-manager/readme.md
+tag: package-preview-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -413,6 +413,10 @@ rename-mapping:
   Forecasting: MachineLearningForecasting
   EndpointAuthToken.expiryTimeUtc: ExpireOn|unixtime # this temporarily does not work
   EndpointAuthToken.refreshAfterTimeUtc: RefreshOn|unixtime # this temporarily does not work
+  SystemCreatedAcrAccount.armResourceId: ArmResourceIdentifier|arm-id
+  SystemCreatedStorageAccount.armResourceId: ArmResourceIdentifier|arm-id
+  UserCreatedAcrAccount.armResourceId: ArmResourceIdentifier|arm-id
+  UserCreatedStorageAccount.armResourceId: ArmResourceIdentifier|arm-id
 
 directive:
   - from: swagger-document

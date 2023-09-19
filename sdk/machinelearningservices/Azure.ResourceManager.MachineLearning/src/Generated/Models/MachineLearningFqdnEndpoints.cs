@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningFqdnEndpoints. </summary>
@@ -13,16 +16,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpoints. </summary>
         internal MachineLearningFqdnEndpoints()
         {
+            Endpoints = new ChangeTrackingList<MachineLearningFqdnEndpoint>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpoints. </summary>
-        /// <param name="properties"></param>
-        internal MachineLearningFqdnEndpoints(MachineLearningFqdnEndpointsProperties properties)
+        /// <param name="category"></param>
+        /// <param name="endpoints"></param>
+        internal MachineLearningFqdnEndpoints(string category, IReadOnlyList<MachineLearningFqdnEndpoint> endpoints)
         {
-            Properties = properties;
+            Category = category;
+            Endpoints = endpoints;
         }
 
-        /// <summary> Gets the properties. </summary>
-        public MachineLearningFqdnEndpointsProperties Properties { get; }
+        /// <summary> Gets the category. </summary>
+        public string Category { get; }
+        /// <summary> Gets the endpoints. </summary>
+        public IReadOnlyList<MachineLearningFqdnEndpoint> Endpoints { get; }
     }
 }
