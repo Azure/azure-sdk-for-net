@@ -350,7 +350,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options.AccessTier,
                 _options.Metadata,
                 _options.Tags,
-                false, // TODO: Update when we support uploading MD5
                 default); // TODO: Update when we support encryption scopes
         }
 

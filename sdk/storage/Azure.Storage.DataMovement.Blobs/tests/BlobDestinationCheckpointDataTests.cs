@@ -40,7 +40,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 AccessTier.Hot,
                 DefaultMetadata,
                 DefaultTags,
-                false,
                 DefaultCpkScope);
         }
 
@@ -59,7 +58,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(AccessTier.Hot, data.AccessTier);
             CollectionAssert.AreEquivalent(DefaultMetadata, data.Metadata);
             CollectionAssert.AreEquivalent(DefaultTags, data.Tags);
-            Assert.IsFalse(data.PutMd5);
             Assert.AreEqual(DefaultCpkScope, data.CpkScope);
         }
 
@@ -120,7 +118,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(AccessTier.Hot, deserialized.AccessTier);
             CollectionAssert.AreEquivalent(DefaultMetadata, deserialized.Metadata);
             CollectionAssert.AreEquivalent(DefaultTags, deserialized.Tags);
-            Assert.IsFalse(deserialized.PutMd5);
             Assert.AreEqual(DefaultCpkScope, deserialized.CpkScope);
         }
     }

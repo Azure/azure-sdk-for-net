@@ -50,11 +50,6 @@ namespace Azure.Storage.DataMovement.Blobs
         private byte[] _tagsBytes;
 
         /// <summary>
-        /// Whether to upload the MD5 hash or not.
-        /// </summary>
-        public bool PutMd5;
-
-        /// <summary>
         /// The encryption scope to use when uploading the destination blob.
         /// </summary>
         public string CpkScope;
@@ -68,7 +63,6 @@ namespace Azure.Storage.DataMovement.Blobs
             AccessTier? accessTier,
             Metadata metadata,
             Tags blobTags,
-            bool putMd5,
             string cpkScope)
         {
             Version = DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion;
@@ -84,7 +78,6 @@ namespace Azure.Storage.DataMovement.Blobs
             _metadataBytes = Metadata != default ? Encoding.UTF8.GetBytes(Metadata.DictionaryToString()) : new byte[0];
             Tags = blobTags;
             _tagsBytes = Tags != default ? Encoding.UTF8.GetBytes(Tags.DictionaryToString()) : new byte[0];
-            PutMd5 = putMd5;
             CpkScope = cpkScope;
             _cpkScopeBytes = CpkScope != default ? Encoding.UTF8.GetBytes(CpkScope) : new byte[0];
         }
@@ -125,9 +118,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Tags offset/length
             WriteVariableLengthFieldInfo(writer, _tagsBytes, ref currentVariableLengthIndex);
-
-            // PutMD5
-            writer.Write(PutMd5);
 
             // CpkScope offset/length
             WriteVariableLengthFieldInfo(writer, _cpkScopeBytes, ref currentVariableLengthIndex);
@@ -186,9 +176,6 @@ namespace Azure.Storage.DataMovement.Blobs
             // Tags offset/length
             int tagsOffset = reader.ReadInt32();
             int tagsLength = reader.ReadInt32();
-
-            // PutMd5
-            bool putMd5 = reader.ReadBoolean();
 
             // CpkScope offset/length
             int cpkScopeOffset = reader.ReadInt32();
@@ -273,7 +260,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 accessTier,
                 metadataString.ToDictionary(nameof(metadataString)),
                 tagsString.ToDictionary(nameof(tagsString)),
-                putMd5,
                 cpkScope);
         }
 

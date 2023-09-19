@@ -28,8 +28,7 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const int MetadataLengthIndex = MetadataOffsetIndex + IntSizeInBytes;
             internal const int BlobTagsOffsetIndex = MetadataLengthIndex + IntSizeInBytes;
             internal const int BlobTagsLengthIndex = BlobTagsOffsetIndex + IntSizeInBytes;
-            internal const int PutMd5Index = BlobTagsLengthIndex + IntSizeInBytes;
-            internal const int CpkScopeOffsetIndex = PutMd5Index + OneByte;
+            internal const int CpkScopeOffsetIndex = BlobTagsLengthIndex + IntSizeInBytes;
             internal const int CpkScopeLengthIndex = CpkScopeOffsetIndex + IntSizeInBytes;
             internal const int VariableLengthStartIndex = CpkScopeLengthIndex + IntSizeInBytes;
         }
