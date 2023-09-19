@@ -598,11 +598,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         public async Task AddParticipantCancelledEventResultFailedTest()
         {
             var invitationId = "invitationId";
-            var operationContext = "operationContext";
             var callConnection = CreateMockCallConnection(202, CancelAddParticipantPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
             var callInvite = CreateMockInvite();
-            var response = await callConnection.CancelAddParticipantAsync(invitationId);
+            var response = callConnection.CancelAddParticipant(invitationId);
 
             Assert.AreEqual(202, response.GetRawResponse().Status);
 
@@ -613,7 +612,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 CorelationId,
                 invitationId,
                 new ResultInformation(400, 4000, "resultInformation"),
-                operationContext));
+                OperationContext));
 
             CancelAddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -631,11 +630,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         public async Task AddParticipantCancelledEventResultSuccessTest()
         {
             var invitationId = "invitationId";
-            var operationContext = "operationContext";
             var callConnection = CreateMockCallConnection(202, CancelAddParticipantPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
             var callInvite = CreateMockInvite();
-            var response = await callConnection.CancelAddParticipantAsync(invitationId);
+            var response = callConnection.CancelAddParticipant(invitationId);
 
             Assert.AreEqual(202, response.GetRawResponse().Status);
 
@@ -646,7 +644,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 CorelationId,
                 invitationId,
                 callInvite.Target,
-                operationContext));
+                OperationContext));
 
             CancelAddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
