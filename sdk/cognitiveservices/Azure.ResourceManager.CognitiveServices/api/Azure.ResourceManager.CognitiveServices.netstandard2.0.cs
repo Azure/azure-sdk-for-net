@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CognitiveServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CognitiveServicesAccountData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class CognitiveServicesAccountData : Azure.ResourceManager.Models.TrackedResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>
     {
         public CognitiveServicesAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } }
@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.CognitiveServices
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class CognitiveServicesAccountDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>, System.Collections.IEnumerable
     {
@@ -39,12 +43,16 @@ namespace Azure.ResourceManager.CognitiveServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CognitiveServicesAccountDeploymentData : Azure.ResourceManager.Models.ResourceData
+    public partial class CognitiveServicesAccountDeploymentData : Azure.ResourceManager.Models.ResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>
     {
         public CognitiveServicesAccountDeploymentData() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class CognitiveServicesAccountDeploymentResource : Azure.ResourceManager.ArmResource
     {
@@ -406,7 +414,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions> Restrictions { get { throw null; } }
         public string Tier { get { throw null; } }
     }
-    public partial class CognitiveServicesAccountDeploymentModel
+    public partial class CognitiveServicesAccountDeploymentModel : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>
     {
         public CognitiveServicesAccountDeploymentModel() { }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit CallRateLimit { get { throw null; } }
@@ -414,8 +422,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Name { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
-    public partial class CognitiveServicesAccountDeploymentProperties
+    public partial class CognitiveServicesAccountDeploymentProperties : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties>
     {
         public CognitiveServicesAccountDeploymentProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit CallRateLimit { get { throw null; } }
@@ -426,6 +438,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> RateLimits { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings ScaleSettings { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? VersionUpgradeOption { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CognitiveServicesAccountDeploymentProvisioningState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState>
@@ -451,12 +467,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CognitiveServicesAccountDeploymentScaleSettings
+    public partial class CognitiveServicesAccountDeploymentScaleSettings : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings>
     {
         public CognitiveServicesAccountDeploymentScaleSettings() { }
         public int? ActiveCapacity { get { throw null; } }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType? ScaleType { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CognitiveServicesAccountDeploymentScaleType : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType>
@@ -489,7 +509,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku> Skus { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
-    public partial class CognitiveServicesAccountProperties
+    public partial class CognitiveServicesAccountProperties : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties>
     {
         public CognitiveServicesAccountProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.AbusePenalty AbusePenalty { get { throw null; } }
@@ -519,6 +539,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string ScheduledPurgeDate { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo SkuChangeInfo { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> UserOwnedStorage { get { throw null; } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class CognitiveServicesAccountSku
     {
@@ -555,18 +579,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Reason { get { throw null; } }
         public string SubdomainName { get { throw null; } }
     }
-    public partial class CognitiveServicesIPRule
+    public partial class CognitiveServicesIPRule : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule>
     {
         public CognitiveServicesIPRule(string value) { }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
-    public partial class CognitiveServicesKeyVaultProperties
+    public partial class CognitiveServicesKeyVaultProperties : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>
     {
         public CognitiveServicesKeyVaultProperties() { }
         public System.Guid? IdentityClientId { get { throw null; } set { } }
         public string KeyName { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class CognitiveServicesModel
     {
@@ -584,11 +616,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit> RateLimits { get { throw null; } }
         public string UsageName { get { throw null; } set { } }
     }
-    public partial class CognitiveServicesMultiRegionSettings
+    public partial class CognitiveServicesMultiRegionSettings : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings>
     {
         public CognitiveServicesMultiRegionSettings() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting> Regions { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod? RoutingMethod { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CognitiveServicesNetworkRuleAction : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction>
@@ -608,12 +644,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CognitiveServicesNetworkRuleSet
+    public partial class CognitiveServicesNetworkRuleSet : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet>
     {
         public CognitiveServicesNetworkRuleSet() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class CognitiveServicesPatchResourceTags
     {
@@ -679,12 +719,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
-    public partial class CognitiveServicesRegionSetting
+    public partial class CognitiveServicesRegionSetting : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting>
     {
         public CognitiveServicesRegionSetting() { }
         public string Customsubdomain { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public float? Value { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CognitiveServicesRoutingMethod : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod>
@@ -705,7 +749,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CognitiveServicesSku
+    public partial class CognitiveServicesSku : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku>
     {
         public CognitiveServicesSku(string name) { }
         public int? Capacity { get { throw null; } set { } }
@@ -713,6 +757,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier? Tier { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class CognitiveServicesSkuAvailabilityContent
     {
@@ -802,12 +850,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CognitiveServicesVirtualNetworkRule
+    public partial class CognitiveServicesVirtualNetworkRule : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>
     {
         public CognitiveServicesVirtualNetworkRule(Azure.Core.ResourceIdentifier id) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class CommitmentCost
     {
@@ -932,7 +984,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Key1 { get { throw null; } }
         public string Key2 { get { throw null; } }
     }
-    public partial class ServiceAccountApiProperties
+    public partial class ServiceAccountApiProperties : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>
     {
         public ServiceAccountApiProperties() { }
         public System.Guid? AadClientId { get { throw null; } set { } }
@@ -946,6 +998,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string StorageAccountConnectionString { get { throw null; } set { } }
         public string SuperUser { get { throw null; } set { } }
         public string WebsiteName { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     public partial class ServiceAccountCallRateLimit
     {
@@ -972,7 +1028,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceAccountEncryptionProperties
+    public partial class ServiceAccountEncryptionProperties : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>
     {
         public ServiceAccountEncryptionProperties() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -989,6 +1045,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public string KeyVersion { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceAccountHostingModel : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel>
@@ -1145,10 +1205,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceAccountUserOwnedStorage
+    public partial class ServiceAccountUserOwnedStorage : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>
     {
         public ServiceAccountUserOwnedStorage() { }
         public System.Guid? IdentityClientId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
     }
 }
