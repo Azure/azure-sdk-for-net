@@ -4,27 +4,15 @@
 		<Version>1.0.0-beta.1</Version>
 		<!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
 		<Nullable>enable</Nullable>
-		<TargetFrameworks>net461;netstandard2.0;netcoreapp2.1</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 		<NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
 		<IsClientLibrary>true</IsClientLibrary>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Diagnostics.DiagnosticSource"/>
 		<PackageReference Include="System.Memory.Data" />
 		<PackageReference Include="System.Text.Json" />
 		<PackageReference Include="System.Text.Encodings.Web" />
-	</ItemGroup>
-
-	<!-- Keep System.Diagnostics.DiagnosticSource 4.6.0 for netcoreapp2.1 support. -->
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
-		<PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.6.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Include="..\..\..\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared" />
-		<Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared" />
-		<Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared" />
 	</ItemGroup>
 
 </Project>
