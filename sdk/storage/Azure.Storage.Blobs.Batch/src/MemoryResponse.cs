@@ -118,7 +118,7 @@ namespace Azure.Storage.Blobs.Specialized
             _headers.Select(header => new HttpHeader(header.Key, JoinHeaderValues(header.Value)));
 
         /// <inheritdoc />
-        public override bool TryGetHeader(string name, out string value)
+        protected override bool TryGetHeader(string name, out string value)
         {
             if (_headers.TryGetValue(name, out List<string> headers))
             {
