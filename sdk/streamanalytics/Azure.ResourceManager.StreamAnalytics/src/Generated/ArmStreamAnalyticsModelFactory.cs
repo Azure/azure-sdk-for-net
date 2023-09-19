@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties">
         /// The properties that are associated with a function.
-        /// Please note <see cref="StreamingJobFunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AggregateFunctionProperties"/> and <see cref="ScalarFunctionProperties"/>.
+        /// Please note <see cref="Models.StreamingJobFunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AggregateFunctionProperties"/> and <see cref="Models.ScalarFunctionProperties"/>.
         /// </param>
         /// <returns> A new <see cref="StreamAnalytics.StreamingJobFunctionData"/> instance for mocking. </returns>
         public static StreamingJobFunctionData StreamingJobFunctionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, StreamingJobFunctionProperties properties = null)
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties">
         /// The properties that are associated with an input. Required on PUT (CreateOrReplace) requests.
-        /// Please note <see cref="StreamingJobInputProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ReferenceInputProperties"/> and <see cref="StreamInputProperties"/>.
+        /// Please note <see cref="Models.StreamingJobInputProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ReferenceInputProperties"/> and <see cref="Models.StreamInputProperties"/>.
         /// </param>
         /// <returns> A new <see cref="StreamAnalytics.StreamingJobInputData"/> instance for mocking. </returns>
         public static StreamingJobInputData StreamingJobInputData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, StreamingJobInputProperties properties = null)

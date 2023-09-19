@@ -123,7 +123,7 @@ internal static class ResourceExtensions
         try
         {
             var exportResource = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC);
-            if (exportResource.Equals("true", StringComparison.OrdinalIgnoreCase))
+            if (exportResource != null && exportResource.Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 shouldReportMetricTelemetry = true;
             }
