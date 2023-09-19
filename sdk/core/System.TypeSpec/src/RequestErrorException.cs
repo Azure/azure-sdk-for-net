@@ -5,10 +5,15 @@ namespace System.ServiceModel.Rest;
 
 public class RequestErrorException : Exception
 {
-    private Result result;
+    private Result _result;
 
-    public RequestErrorException(Result result)
+    public RequestErrorException(Result result) : base(result.Content.ToString())
     {
-        this.result = result;
+        _result = result;
+    }
+
+    public override string ToString()
+    {
+        return _result.Content.ToString();
     }
 }

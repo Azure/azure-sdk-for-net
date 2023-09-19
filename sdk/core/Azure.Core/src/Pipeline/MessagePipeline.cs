@@ -37,7 +37,29 @@ public class MessagePipeline // base of HttpPipelinePolicy
     {
         HttpMessage message = _pipeline.CreateMessage();
         message.Request.Uri.Reset(uri);
-        message.Request.Method = RequestMethod.Get; // TODO: don't hardcode
+        switch (verb)
+        {
+            case "GET":
+                message.Request.Method = RequestMethod.Get;
+                break;
+            case "POST":
+                message.Request.Method = RequestMethod.Post;
+                break;
+            case "PUT":
+                message.Request.Method = RequestMethod.Put;
+                break;
+            case "HEAD":
+                message.Request.Method = RequestMethod.Head;
+                break;
+            case "DELETE":
+                message.Request.Method = RequestMethod.Delete;
+                break;
+            case "PATCH":
+                message.Request.Method = RequestMethod.Patch;
+                break;
+            default: throw new ArgumentOutOfRangeException(nameof(verb));
+        }
+
         return new HttpMessageToPipelineMessageAdapter(message);
     }
 
@@ -73,7 +95,7 @@ internal class PipelineResult : Result
         _response = response;
     }
 
-    public override int Status => throw new NotImplementedException();
+    public override int Status => _response.Status;
 
     public override Stream? ContentStream {
         get => _response.ContentStream;

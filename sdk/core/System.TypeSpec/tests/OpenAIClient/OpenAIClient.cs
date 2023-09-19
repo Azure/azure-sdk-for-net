@@ -15,6 +15,9 @@ public class OpenAIClient
 
     public OpenAIClient(KeyCredential credential, OpenAIClientOptions options = default)
     {
+        if (options == null) {
+            options = new OpenAIClientOptions();
+        }
         _options = options;
         _credential = credential;
         _pipeline = new MessagePipeline(options);
@@ -25,7 +28,7 @@ public class OpenAIClient
         options ??= _options;
 
         var body = new {
-            model = "text-davinci-003",
+            model = "gpt-3.5-turbo-instruct",
             prompt = prompt,
             max_tokens = 7,
             temperature = 0
@@ -46,9 +49,9 @@ public class OpenAIClient
     {
         PipelineMessage message = _pipeline.CreateMessage("POST", new Uri("https://api.openai.com/v1/completions"));
         message.CancellationToken = options.CancellationToken;
-        message.AddHeader("ContentType", "application/json");
-        message.AddHeader("Authorization", $"Bearer {_credential.Key}");
-        message.AddRequestContent(body);
+        message.SetHeader("Content-Type", "application/json");
+        message.SetHeader("Authorization", $"Bearer {_credential.Key}");
+        message.SetRequestContent(body);
         return message;
     }
 }

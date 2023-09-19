@@ -9,6 +9,8 @@ namespace System.ServiceModel.Rest.Core;
 public class PipelineMessage
 {
     private Dictionary<string, string> _headers = new Dictionary<string, string>();
+    private BinaryData? _content;
+
     /// <summary>
     /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="PipelineMessage"/> processing.
     /// </summary>
@@ -16,13 +18,11 @@ public class PipelineMessage
 
     public Result? Result { get; set; }
 
-    public virtual void AddHeader(string key, string value)
+    public virtual void SetHeader(string key, string value)
         => _headers.Add(key, value);
 
-    public virtual void AddRequestContent(BinaryData content)
-    {
-        throw new NotImplementedException();
-    }
+    public virtual void SetRequestContent(BinaryData content)
+        => _content = content;
 
     public bool TryGetHeader(string name, out string value)
         => _headers.TryGetValue(name, out value);

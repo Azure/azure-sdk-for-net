@@ -18,6 +18,18 @@ internal class HttpMessageToPipelineMessageAdapter : PipelineMessage
     {
         _message = message;
     }
+
+    public override void SetHeader(string key, string value)
+    {
+        base.SetHeader(key, value);
+        _message.Request.Headers.Add(key, value);
+    }
+
+    public override void SetRequestContent(BinaryData content)
+    {
+        base.SetRequestContent(content);
+        _message.Request.Content = content;
+    }
 }
 
 internal class PipelineMessageToHttpMessageAdapter : HttpMessage
@@ -43,7 +55,7 @@ internal class RequestAdapter : Request
     }
 
     protected internal override void AddHeader(string name, string value)
-        => _message.AddHeader(name, value);
+        => _message.SetHeader(name, value);
 
     protected internal override bool ContainsHeader(string name)
     {
@@ -73,7 +85,7 @@ internal class ClientOptionsAdapter : ClientOptions
     public ClientOptionsAdapter(RequestOptions options)
     {
         _options = options;
-        if (options.Transport != null)
+        if (options != null && options.Transport != null)
         {
             Transport = new TransportAdapter(options.Transport);
         }
