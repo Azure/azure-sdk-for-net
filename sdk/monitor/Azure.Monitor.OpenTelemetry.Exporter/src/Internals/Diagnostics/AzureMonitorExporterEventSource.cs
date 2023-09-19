@@ -135,7 +135,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(10, Message = "Failed to get Azure VM Metadata due to an exception. If not hosted in an Azure VM this can safely be ignored. {0}", Level = EventLevel.Informational)]
+        [Event(10, Message = "Failed to get Azure VM Metadata due to an exception. This is only for internal telemetry and can safely be ignored. {0}", Level = EventLevel.Informational)]
         public void VmMetadataFailed(string exceptionMessage) => WriteEvent(10, exceptionMessage);
 
         [NonEvent]
