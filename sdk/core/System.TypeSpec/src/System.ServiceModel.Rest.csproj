@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Contains base building blocks for TypeSpec generated libraries.</Description>
     <Version>1.0.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <Nullable>enable</Nullable>
     <TargetFrameworks>net461;netstandard2.0;</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001;AZC0012;CS1591</NoWarn>
     <AssemblyOriginatorKeyFile>Open.snk</AssemblyOriginatorKeyFile>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>
     <PackageIconPath>..\$(PackageIcon)</PackageIconPath>

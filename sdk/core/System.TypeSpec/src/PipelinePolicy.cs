@@ -11,11 +11,6 @@ namespace System.ServiceModel.Rest;
 /// </summary>
 public abstract class PipelinePolicy // base of HttpPipelinePolicy
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="pipeline"></param>
     public abstract void Process(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline);
 
     /// <summary>

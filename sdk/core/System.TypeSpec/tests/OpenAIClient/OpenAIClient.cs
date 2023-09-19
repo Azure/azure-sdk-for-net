@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using System;
 using System.ServiceModel.Rest;
 
@@ -11,7 +8,7 @@ namespace OpenAI;
 
 public class OpenAIClient
 {
-    private readonly HttpPipeline _pipeline;
+    private readonly MessagePipeline _pipeline;
     private readonly KeyCredential _credential;
     private readonly OpenAIClientOptions _options;
 
@@ -19,20 +16,12 @@ public class OpenAIClient
     {
         _options = options;
         _credential = credential;
-        _pipeline = HttpPipelineBuilder.Build(options);
+        _pipeline = new MessagePipeline(options);
     }
 
     public Result<Completions> GetCompletions(string prompt, RequestOptions options = default)
     {
         options ??= _options;
-
-        HttpMessage message = _pipeline.CreateMessage();
-        message.BufferResponse = true;
-        Request request = message.Request;
-        request.Uri.Reset(new Uri("https://api.openai.com/v1/completions"));
-        request.Method = RequestMethod.Post;
-        request.Headers.Add(HttpHeader.Common.JsonContentType);
-        request.Headers.Add(HttpHeader.Names.Authorization, $"Bearer {_credential.Key}");
 
         var body = new {
             model = "text-davinci-003",
@@ -40,14 +29,25 @@ public class OpenAIClient
             max_tokens = 7,
             temperature = 0
         };
-        request.Content = RequestContent.Create(body);
 
-        _pipeline.Send(message, options.CancellationToken);
-        if (message.Response.IsError) {
-            throw new RequestFailedException(message.Response);
+        PipelineMessage message = CreateGetCompletions(BinaryData.FromObjectAsJson(body), options);
+
+        _pipeline.Send(message);
+        if (message.Result.Status > 299) {
+            throw new RequestErrorException(message.Result);
         }
-        var completions = Completions.Deserialize(message.Response.Content);
+        var completions = Completions.Deserialize(message.Result.Content);
 
-        return Result.FromValue(completions, message.Response);
+        return Result.FromValue(completions, message.Result);
+    }
+
+    protected PipelineMessage CreateGetCompletions(BinaryData body, RequestOptions options)
+    {
+        PipelineMessage message = _pipeline.CreateMessage("POST", new Uri("https://api.openai.com/v1/completions"));
+        message.CancellationToken = options.CancellationToken;
+        message.AddHeader("ContentType", "application/json");
+        message.AddHeader("Authorization", $"Bearer {_credential.Key}");
+        message.AddRequestContent(body);
+        return message;
     }
 }

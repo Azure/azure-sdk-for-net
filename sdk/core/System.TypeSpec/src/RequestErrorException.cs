@@ -3,9 +3,12 @@
 
 namespace System.ServiceModel.Rest;
 
-/// <summary>
-/// TBD.
-/// </summary>
 public class RequestErrorException : Exception
 {
+    private Result result;
+
+    public RequestErrorException(Result result)
+    {
+        this.result = result;
+    }
 }

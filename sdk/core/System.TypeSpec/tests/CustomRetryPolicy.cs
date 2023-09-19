@@ -23,7 +23,7 @@ public partial class OpenAIClientTests
             }
             catch (Exception) {
                 if (_try > 5) {
-                    throw new RequestErrorException();
+                    throw new RequestErrorException(message.Result);
                 }
                 Thread.Sleep(1000);
                 goto retry;
@@ -39,7 +39,7 @@ public partial class OpenAIClientTests
             }
             catch (Exception) {
                 if (_try > 5) {
-                    throw new RequestErrorException();
+                    throw new RequestErrorException(message.Result);
                 }
                 Thread.Sleep(1000);
                 goto retry;

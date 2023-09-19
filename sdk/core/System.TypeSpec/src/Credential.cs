@@ -3,9 +3,6 @@
 
 namespace System.ServiceModel.Rest;
 
-/// <summary>
-/// TBD.
-/// </summary>
 public abstract class Credential
 {
 }
