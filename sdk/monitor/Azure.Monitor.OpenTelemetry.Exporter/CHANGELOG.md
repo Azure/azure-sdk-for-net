@@ -8,6 +8,10 @@
 
 ### Bugs Fixed
 
+* Fixed an issue during network failures which prevented the exporter to store
+the telemetry offline for retrying at a later time.
+([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
+
 ### Other Changes
 
 * Update OpenTelemetry dependencies
