@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         {
             Participant = new CallParticipant(internalObj.Participant);
             OperationContext = internalObj.OperationContext;
-            InvitationId = internalObj.InvitiationId;
+            InvitationId = internalObj.InvitationId;
         }
 
         /// <summary>Gets the participant.</summary>

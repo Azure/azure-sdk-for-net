@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
             Participant = CommunicationIdentifierSerializer.Deserialize(internalEvent.Participant);
-            InvitationId = internalEvent.InvitiationId;
+            InvitationId = internalEvent.InvitationId;
         }
 
         /// <summary> Participant whoose invitation has been cancelled. </summary>
