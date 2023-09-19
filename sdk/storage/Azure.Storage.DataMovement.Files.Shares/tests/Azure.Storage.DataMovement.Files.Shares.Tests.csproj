@@ -1,13 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Files.Shareas client library tests</AssemblyTitle>
-    <DefineConstants>BlobDataMovementSDK;$(DefineConstants)</DefineConstants>
+    <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Files.Shares client library tests</AssemblyTitle>
+    <DefineConstants>ShareDataMovementSDK;$(DefineConstants)</DefineConstants>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.DataMovement.Files.Shares.csproj">
-      <Aliases>DMBlobs</Aliases>
+      <Aliases>DMShare</Aliases>
     </ProjectReference>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
   </ItemGroup>

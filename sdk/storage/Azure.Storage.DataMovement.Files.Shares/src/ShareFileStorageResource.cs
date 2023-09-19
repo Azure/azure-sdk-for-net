@@ -9,28 +9,48 @@ using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
-    internal class ShareFileStorageResourceItem : StorageResourceItem
+    internal class ShareFileStorageResource : StorageResourceItem
     {
+        internal long? _length;
         internal readonly ShareFileStorageResourceOptions _options;
+        internal ETag? _etagDownloadLock = default;
 
         internal ShareFileClient ShareFileClient { get; }
 
         public override Uri Uri => ShareFileClient.Uri;
 
-        protected override string ResourceId => throw new NotImplementedException();
+        protected override string ResourceId => "ShareFile";
 
-        protected override DataTransferOrder TransferType => throw new NotImplementedException();
+        protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        protected override long MaxChunkSize => throw new NotImplementedException();
+        protected override long MaxChunkSize => DataMovementConstants.Share.MaxRange;
 
-        protected override long? Length => throw new NotImplementedException();
+        protected override long? Length => _length;
 
-        public ShareFileStorageResourceItem(
+        public ShareFileStorageResource(
             ShareFileClient fileClient,
             ShareFileStorageResourceOptions options = default)
         {
             ShareFileClient = fileClient;
             _options = options;
+        }
+
+        /// <summary>
+        /// Internal Constructor for constructing the resource retrieved by a GetStorageResources.
+        /// </summary>
+        /// <param name="fileClient">The blob client which will service the storage resource operations.</param>
+        /// <param name="length">The content length of the blob.</param>
+        /// <param name="etagLock">Preset etag to lock on for reads.</param>
+        /// <param name="options">Options for the storage resource. See <see cref="ShareFileStorageResourceOptions"/>.</param>
+        internal ShareFileStorageResource(
+            ShareFileClient fileClient,
+            long? length,
+            ETag? etagLock,
+            ShareFileStorageResourceOptions options = default)
+            : this(fileClient, options)
+        {
+            _length = length;
+            _etagDownloadLock = etagLock;
         }
 
         protected override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
