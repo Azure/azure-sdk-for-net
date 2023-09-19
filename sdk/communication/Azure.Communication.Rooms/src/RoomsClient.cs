@@ -115,12 +115,23 @@ namespace Azure.Communication.Rooms
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant> participants = null, CancellationToken cancellationToken = default)
         {
+            return await CreateRoomAsync(new CreateRoomOptions { ValidFrom = validFrom, ValidUntil = validUntil, Participants = participants }, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a new room asynchronously.
+        /// </summary>
+        /// <param name="roomCreateOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(CreateRoomOptions roomCreateOptions, CancellationToken cancellationToken = default)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
             try
             {
-                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
-                return await RoomsServiceClient.CreateAsync(validFrom, validUntil, participantDictionary, cancellationToken).ConfigureAwait(false);
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(roomCreateOptions?.Participants);
+                return await RoomsServiceClient.CreateAsync(roomCreateOptions?.ValidFrom, roomCreateOptions?.ValidUntil, roomCreateOptions?.PstnDialOutEnabled, participantDictionary, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -138,12 +149,22 @@ namespace Azure.Communication.Rooms
         /// <param name="cancellationToken"></param>
         public virtual Response<CommunicationRoom> CreateRoom(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant> participants = null, CancellationToken cancellationToken = default)
         {
+            return CreateRoom(new CreateRoomOptions { ValidFrom = validFrom, ValidUntil = validUntil, Participants = participants }, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a new room.
+        /// </summary>
+        /// <param name="roomCreateOptions"></param>
+        /// <param name="cancellationToken"></param>
+        public virtual Response<CommunicationRoom> CreateRoom(CreateRoomOptions roomCreateOptions, CancellationToken cancellationToken = default)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
             try
             {
-                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
-                return RoomsServiceClient.Create(validFrom, validUntil, participantDictionary, cancellationToken);
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(roomCreateOptions?.Participants);
+                return RoomsServiceClient.Create(roomCreateOptions?.ValidFrom, roomCreateOptions?.ValidUntil, roomCreateOptions?.PstnDialOutEnabled, participantDictionary, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -162,11 +183,22 @@ namespace Azure.Communication.Rooms
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public virtual async Task<Response<CommunicationRoom>> UpdateRoomAsync(string roomId, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
         {
+           return await UpdateRoomAsync(new UpdateRoomOptions { Id = roomId, ValidFrom = validFrom,ValidUntil = validUntil}, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates a room asynchronously.
+        /// </summary>
+        /// <param name="roomUpdateOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<Response<CommunicationRoom>> UpdateRoomAsync(UpdateRoomOptions roomUpdateOptions, CancellationToken cancellationToken = default)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateRoom)}");
             scope.Start();
             try
             {
-                return await RoomsServiceClient.UpdateAsync(roomId, validFrom, validUntil, cancellationToken).ConfigureAwait(false);
+                return await RoomsServiceClient.UpdateAsync(roomUpdateOptions?.Id, roomUpdateOptions?.ValidFrom, roomUpdateOptions?.ValidUntil, roomUpdateOptions?.PstnDialOutEnabled, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -185,11 +217,22 @@ namespace Azure.Communication.Rooms
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         public virtual Response<CommunicationRoom> UpdateRoom(string roomId, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
         {
+            return UpdateRoom(new UpdateRoomOptions { Id = roomId, ValidFrom = validFrom, ValidUntil = validUntil }, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates a room.
+        /// </summary>
+        /// <param name="roomUpdateOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomUpdateOptions?.Id"/> is null. </exception>
+        public virtual Response<CommunicationRoom> UpdateRoom(UpdateRoomOptions roomUpdateOptions, CancellationToken cancellationToken = default)
+        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateRoom)}");
             scope.Start();
             try
             {
-                return RoomsServiceClient.Update(roomId, validFrom, validUntil, cancellationToken);
+                return RoomsServiceClient.Update(roomUpdateOptions?.Id, roomUpdateOptions?.ValidFrom, roomUpdateOptions?.ValidUntil, roomUpdateOptions?.PstnDialOutEnabled, cancellationToken);
             }
             catch (Exception ex)
             {
