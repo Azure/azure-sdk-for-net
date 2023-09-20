@@ -40,6 +40,25 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetOAuthConnectionLink_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+            RequestContent content = RequestContent.Create(new
+            {
+                partyId = "<partyId>",
+                oAuthProviderId = "<oAuthProviderId>",
+                userRedirectLink = "<userRedirectLink>",
+            });
+            Response response = await client.GetOAuthConnectionLinkAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetOAuthConnectionLink_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -53,25 +72,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 userRedirectState = "<userRedirectState>",
             });
             Response response = client.GetOAuthConnectionLink(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOAuthConnectionLink_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = RequestContent.Create(new
-            {
-                partyId = "<partyId>",
-                oAuthProviderId = "<oAuthProviderId>",
-                userRedirectLink = "<userRedirectLink>",
-            });
-            Response response = await client.GetOAuthConnectionLinkAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -114,6 +114,21 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCascadeDeleteJobDetails_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("resourceType").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -134,21 +149,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
             Console.WriteLine(result.GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("endTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("resourceType").ToString());
         }
 
         [Test]
@@ -192,6 +192,21 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAuthenticatedFarmersDetails_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+            await foreach (BinaryData item in client.GetAuthenticatedFarmersDetailsAsync(null, null, null, null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("partyId").ToString());
+                Console.WriteLine(result[0].GetProperty("authProviderId").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetAuthenticatedFarmersDetails_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -212,21 +227,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 Console.WriteLine(result[0].GetProperty("eTag").ToString());
                 Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAuthenticatedFarmersDetails_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
-
-            await foreach (BinaryData item in client.GetAuthenticatedFarmersDetailsAsync(null, null, null, null, null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("authProviderId").ToString());
             }
         }
 
@@ -273,6 +273,22 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateCascadeDeleteJob_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+            Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("resourceType").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -294,22 +310,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
             Console.WriteLine(result.GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("endTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
-
-            Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("resourceType").ToString());
         }
 
         [Test]

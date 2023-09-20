@@ -35,6 +35,20 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -71,20 +85,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -142,6 +142,19 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSensorMapping_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.GetSensorMappingAsync("<sensorMappingId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetSensorMapping_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
@@ -164,19 +177,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSensorMapping_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.GetSensorMappingAsync("<sensorMappingId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -218,23 +218,23 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
-
-            Response response = client.Delete("<sensorMappingId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<sensorMappingId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Delete_AllParameters()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+
+            Response response = client.Delete("<sensorMappingId>");
             Console.WriteLine(response.Status);
         }
 
@@ -257,6 +257,20 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
 
             foreach (BinaryData item in client.GetSensorMappings(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSensorMappings_Async()
+        {
+            TokenCredential credential = new DefaultAzureCredential();
+            SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+
+            await foreach (BinaryData item in client.GetSensorMappingsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].ToString());
@@ -311,20 +325,6 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 Console.WriteLine(result[0].GetProperty("createdBy").ToString());
                 Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
                 Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSensorMappings_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
-
-            await foreach (BinaryData item in client.GetSensorMappingsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
             }
         }
 

@@ -43,8 +43,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartDeleteSnapshotsOption _testDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption _testPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType _testRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
-        internal const DataTransferStatus _testJobStatus = DataTransferStatus.Queued;
-        internal const DataTransferStatus _testPartStatus = DataTransferStatus.Queued;
+        internal static readonly DataTransferStatus _testJobStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
+        internal static readonly DataTransferStatus _testPartStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
 
         private string _checkpointerPath;
 
@@ -92,12 +92,13 @@ namespace Azure.Storage.DataMovement.Tests
             string checkpointerPath,
             string transferId,
             int jobPartCount,
-            DataTransferStatus status = DataTransferStatus.Queued,
+            DataTransferStatus status = default,
             List<string> sourcePaths = default,
             List<string> destinationPaths = default,
             string sourceResourceId = "LocalFile",
             string destinationResourceId = "LocalFile")
         {
+            status ??= _testPartStatus;
             // Populate sourcePaths if not provided
             if (sourcePaths == default)
             {
@@ -207,9 +208,11 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartDeleteSnapshotsOption deleteSnapshotsOption = _testDeleteSnapshotsOption,
             JobPartPermanentDeleteOption permanentDeleteOption = _testPermanentDeleteOption,
             JobPartPlanRehydratePriorityType rehydratePriorityType = _testRehydratePriorityType,
-            DataTransferStatus atomicJobStatus = _testJobStatus,
-            DataTransferStatus atomicPartStatus = _testPartStatus)
+            DataTransferStatus atomicJobStatus = default,
+            DataTransferStatus atomicPartStatus = default)
         {
+            atomicJobStatus ??= _testJobStatus;
+            atomicPartStatus ??= _testPartStatus;
             if (startTime == default)
             {
                 startTime = _testStartTime;
