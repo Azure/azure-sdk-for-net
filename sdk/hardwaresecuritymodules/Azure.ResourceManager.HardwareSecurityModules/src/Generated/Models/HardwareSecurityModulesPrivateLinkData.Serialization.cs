@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class HardwareSecurityModulesPrivateLinkResource : IUtf8JsonSerializable
+    public partial class HardwareSecurityModulesPrivateLinkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             writer.WriteEndObject();
         }
 
-        internal static HardwareSecurityModulesPrivateLinkResource DeserializeHardwareSecurityModulesPrivateLinkResource(JsonElement element)
+        internal static HardwareSecurityModulesPrivateLinkData DeserializeHardwareSecurityModulesPrivateLinkData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     continue;
                 }
             }
-            return new HardwareSecurityModulesPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new HardwareSecurityModulesPrivateLinkData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }
