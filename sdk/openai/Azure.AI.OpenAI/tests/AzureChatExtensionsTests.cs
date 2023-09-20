@@ -32,9 +32,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
         ExtensionObjectStrategy extensionStrategy)
     {
         OpenAIClient client = GetTestClient(
-            serviceTarget,
-            OpenAIClientAuthenticationType.ApiKey,
-            OpenAIClientOptions.ServiceVersion.V2023_08_01_Preview);
+            serviceTarget);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
             serviceTarget,
             OpenAIClientScenario.ChatCompletions);

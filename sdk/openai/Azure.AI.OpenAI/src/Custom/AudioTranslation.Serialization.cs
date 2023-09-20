@@ -7,13 +7,13 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class AudioTranscription
+    public partial class AudioTranslation
     {
-        internal static AudioTranscription FromResponse(Response response)
+        internal static AudioTranslation FromResponse(Response response)
         {
             if (response.Headers.ContentType.Contains("text/plain"))
             {
-                return new AudioTranscription(
+                return new AudioTranslation(
                     text: response.Content.ToString(),
                     internalAudioTaskLabel: null,
                     language: null,
@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI
             else
             {
                 using var document = JsonDocument.Parse(response.Content);
-                return DeserializeAudioTranscription(document.RootElement);
+                return DeserializeAudioTranslation(document.RootElement);
             }
         }
     }

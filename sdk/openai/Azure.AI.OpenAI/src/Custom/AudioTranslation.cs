@@ -5,10 +5,9 @@
 
 namespace Azure.AI.OpenAI
 {
-    public partial class AudioTranscription
+    /// <summary> Result information for an operation that translated spoken audio into written text. </summary>
+    public partial class AudioTranslation
     {
-        // CUSTOM CODE NOTE: included to demote visibility of 'task'
-
         /// <summary> The label that describes which operation type generated the accompanying response data. </summary>
         internal AudioTaskLabel? InternalAudioTaskLabel { get; }
     }

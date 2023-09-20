@@ -3,12 +3,10 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.AI.OpenAI
 {
     internal readonly partial struct AudioTaskLabel
     {
+        // CUSTOM CODE NOTE: here to demote visibility to internal.
     }
 }

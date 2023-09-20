@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             var translationOptions = new AudioTranslationOptions()
             {
                 AudioData = BinaryData.FromStream(audioStreamFromFile),
-                ResponseFormat = AudioTranscriptionFormat.Verbose,
+                ResponseFormat = AudioTranslationFormat.Verbose,
             };
 
             Response<AudioTranscription> translationResponse = await client.GetAudioTranslationAsync(

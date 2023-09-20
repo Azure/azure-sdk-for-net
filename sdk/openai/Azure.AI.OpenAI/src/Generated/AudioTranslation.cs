@@ -11,30 +11,30 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Result information for an operation that transcribed spoken audio into written text. </summary>
-    public partial class AudioTranscription
+    /// <summary> Result information for an operation that translated spoken audio into written text. </summary>
+    public partial class AudioTranslation
     {
-        /// <summary> Initializes a new instance of AudioTranscription. </summary>
-        /// <param name="text"> The transcribed text for the provided audio data. </param>
+        /// <summary> Initializes a new instance of AudioTranslation. </summary>
+        /// <param name="text"> The translated text for the provided audio data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        internal AudioTranscription(string text)
+        internal AudioTranslation(string text)
         {
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            Segments = new ChangeTrackingList<AudioTranscriptionSegment>();
+            Segments = new ChangeTrackingList<AudioTranslationSegment>();
         }
 
-        /// <summary> Initializes a new instance of AudioTranscription. </summary>
-        /// <param name="text"> The transcribed text for the provided audio data. </param>
+        /// <summary> Initializes a new instance of AudioTranslation. </summary>
+        /// <param name="text"> The translated text for the provided audio data. </param>
         /// <param name="internalAudioTaskLabel"> The label that describes which operation type generated the accompanying response data. </param>
         /// <param name="language">
-        /// The spoken language that was detected in the transcribed audio data.
+        /// The spoken language that was detected in the translated audio data.
         /// This is expressed as a two-letter ISO-639-1 language code like 'en' or 'fr'.
         /// </param>
-        /// <param name="duration"> The total duration of the audio processed to produce accompanying transcription information. </param>
+        /// <param name="duration"> The total duration of the audio processed to produce accompanying translation information. </param>
         /// <param name="segments"> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </param>
-        internal AudioTranscription(string text, AudioTaskLabel? internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranscriptionSegment> segments)
+        internal AudioTranslation(string text, AudioTaskLabel? internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranslationSegment> segments)
         {
             Text = text;
             InternalAudioTaskLabel = internalAudioTaskLabel;
@@ -43,16 +43,16 @@ namespace Azure.AI.OpenAI
             Segments = segments;
         }
 
-        /// <summary> The transcribed text for the provided audio data. </summary>
+        /// <summary> The translated text for the provided audio data. </summary>
         public string Text { get; }
         /// <summary>
-        /// The spoken language that was detected in the transcribed audio data.
+        /// The spoken language that was detected in the translated audio data.
         /// This is expressed as a two-letter ISO-639-1 language code like 'en' or 'fr'.
         /// </summary>
         public string Language { get; }
-        /// <summary> The total duration of the audio processed to produce accompanying transcription information. </summary>
+        /// <summary> The total duration of the audio processed to produce accompanying translation information. </summary>
         public TimeSpan? Duration { get; }
         /// <summary> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </summary>
-        public IReadOnlyList<AudioTranscriptionSegment> Segments { get; }
+        public IReadOnlyList<AudioTranslationSegment> Segments { get; }
     }
 }

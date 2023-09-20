@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     {
         /// <summary> Initializes a new instance of AudioTranslationOptions. </summary>
         /// <param name="audioData">
-        /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
+        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
         /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="audioData"/> is null. </exception>
@@ -28,10 +28,10 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of AudioTranslationOptions. </summary>
         /// <param name="audioData">
-        /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
+        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
         /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
         /// </param>
-        /// <param name="responseFormat"> The requested format of the transcription response data, which will influence the content and detail of the result. </param>
+        /// <param name="responseFormat"> The requested format of the translation response data, which will influence the content and detail of the result. </param>
         /// <param name="prompt">
         /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
         /// prompt should match the primary spoken language of the audio data.
@@ -41,8 +41,8 @@ namespace Azure.AI.OpenAI
         /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </param>
-        /// <param name="internalNonAzureModelName"> The model to use for this transcription request. </param>
-        internal AudioTranslationOptions(BinaryData audioData, AudioTranscriptionFormat? responseFormat, string prompt, float? temperature, string internalNonAzureModelName)
+        /// <param name="internalNonAzureModelName"> The model to use for this translation request. </param>
+        internal AudioTranslationOptions(BinaryData audioData, AudioTranslationFormat? responseFormat, string prompt, float? temperature, string internalNonAzureModelName)
         {
             AudioData = audioData;
             ResponseFormat = responseFormat;
@@ -50,8 +50,8 @@ namespace Azure.AI.OpenAI
             Temperature = temperature;
             InternalNonAzureModelName = internalNonAzureModelName;
         }
-        /// <summary> The requested format of the transcription response data, which will influence the content and detail of the result. </summary>
-        public AudioTranscriptionFormat? ResponseFormat { get; set; }
+        /// <summary> The requested format of the translation response data, which will influence the content and detail of the result. </summary>
+        public AudioTranslationFormat? ResponseFormat { get; set; }
         /// <summary>
         /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
         /// prompt should match the primary spoken language of the audio data.

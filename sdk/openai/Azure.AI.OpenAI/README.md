@@ -430,7 +430,7 @@ BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
 var translationOptions = new AudioTranslationOptions()
 {
     AudioData = BinaryData.FromStream(audioStreamFromFile),
-    ResponseFormat = AudioTranscriptionFormat.Verbose,
+    ResponseFormat = AudioTranslationFormat.Verbose,
 };
 
 Response<AudioTranscription> translationResponse = await client.GetAudioTranslationAsync(

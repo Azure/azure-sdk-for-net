@@ -86,5 +86,16 @@ namespace Azure.AI.OpenAI
         {
             return new AudioTranscription(text, default, language, duration, segments);
         }
+
+        /// <summary> Initializes a new instance of AudioTranslation. </summary>
+        /// <param name="text"> Translated text. </param>
+        /// <param name="language"> Language detected in the source audio file. </param>
+        /// <param name="duration"> Duration. </param>
+        /// <param name="segments"> Segments. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public static AudioTranslation AudioTranslation(string text, string language, TimeSpan duration, IReadOnlyList<AudioTranslationSegment> segments)
+        {
+            return new AudioTranslation(text, default, language, duration, segments);
+        }
     }
 }

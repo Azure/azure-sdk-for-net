@@ -92,7 +92,7 @@ public class AudioTranscriptionsTest : OpenAITestBase
     [TestCase(OpenAIClientServiceTarget.NonAzure, "verbose_json")]
     public async Task TranslationWorksWithFormat(
     OpenAIClientServiceTarget serviceTarget,
-    string transcriptionFormat)
+    string translationFormat)
     {
         OpenAIClient client = GetDevelopmentTestClient(
             serviceTarget,
@@ -110,15 +110,15 @@ public class AudioTranscriptionsTest : OpenAITestBase
             Temperature = (float)0.25,
         };
 
-        if (transcriptionFormat != null && !string.IsNullOrEmpty(transcriptionFormat.ToString()))
+        if (translationFormat != null && !string.IsNullOrEmpty(translationFormat.ToString()))
         {
-            requestOptions.ResponseFormat = transcriptionFormat switch
+            requestOptions.ResponseFormat = translationFormat switch
             {
-                "json" => AudioTranscriptionFormat.Simple,
-                "verbose_json" => AudioTranscriptionFormat.Verbose,
-                "srt" => AudioTranscriptionFormat.SubRip,
-                "vtt" => AudioTranscriptionFormat.WebVideoTextTracks,
-                _ => throw new ArgumentException($"Unknown response format provided to test: {transcriptionFormat}"),
+                "json" => AudioTranslationFormat.Simple,
+                "verbose_json" => AudioTranslationFormat.Verbose,
+                "srt" => AudioTranslationFormat.SubRip,
+                "vtt" => AudioTranslationFormat.WebVideoTextTracks,
+                _ => throw new ArgumentException($"Unknown response format provided to test: {translationFormat}"),
             };
         }
 
@@ -129,14 +129,14 @@ public class AudioTranscriptionsTest : OpenAITestBase
         string text = response.Value.Text;
         Assert.That(text, Is.Not.Null.Or.Empty);
 
-        if (transcriptionFormat == null || transcriptionFormat == AudioTranscriptionFormat.Simple)
+        if (translationFormat == null || translationFormat == AudioTranscriptionFormat.Simple)
         {
             Assert.That(response.Value.Duration, Is.Null);
             Assert.That(response.Value.Language, Is.Null);
             Assert.That(response.Value.Segments, Is.Null.Or.Empty);
         }
 
-        if (transcriptionFormat != null && transcriptionFormat == AudioTranscriptionFormat.Verbose)
+        if (translationFormat != null && translationFormat == AudioTranscriptionFormat.Verbose)
         {
             Assert.That(response.Value.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(response.Value.Language, Is.Not.Null.Or.Empty);

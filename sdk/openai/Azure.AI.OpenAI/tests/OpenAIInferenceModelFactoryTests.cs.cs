@@ -112,5 +112,51 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(chatCompletions.Usage.PromptTokens, Is.EqualTo(5));
             Assert.That(chatCompletions.Usage.TotalTokens, Is.EqualTo(7));
         }
+
+        [Test]
+        public void TestAudioTranscription()
+        {
+            AudioTranscriptionSegment segment = AzureOpenAIModelFactory.AudioTranscriptionSegment(
+                id: 0,
+                start: TimeSpan.FromSeconds(5.2),
+                end: TimeSpan.FromSeconds(9.9),
+                text: " test of the emergency",
+                tokens: new int[] { 1, 2, 3, 4 });
+            AudioTranscription audioTranscription = AzureOpenAIModelFactory.AudioTranscription(
+                "this is a test of the emergency broadcast system",
+                "en",
+                TimeSpan.FromSeconds(13.3),
+                new AudioTranscriptionSegment[] { segment });
+            Assert.That(audioTranscription, Is.Not.Null);
+            Assert.That(audioTranscription.Text, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranscription.Language, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranscription.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
+            Assert.That(audioTranscription.Segments, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranscription.Segments[0].Text, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranscription.Segments[0].Tokens, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        public void TestAudioTranslation()
+        {
+            AudioTranslationSegment segment = AzureOpenAIModelFactory.AudioTranslationSegment(
+                id: 0,
+                start: TimeSpan.FromSeconds(5.2),
+                end: TimeSpan.FromSeconds(9.9),
+                text: " test of the emergency",
+                tokens: new int[] { 1, 2, 3, 4 });
+            AudioTranslation audioTranslation = AzureOpenAIModelFactory.AudioTranslation(
+                "this is a test of the emergency broadcast system",
+                "en",
+                TimeSpan.FromSeconds(13.3),
+                new AudioTranslationSegment[] { segment });
+            Assert.That(audioTranslation, Is.Not.Null);
+            Assert.That(audioTranslation.Text, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranslation.Language, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranslation.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
+            Assert.That(audioTranslation.Segments, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranslation.Segments[0].Text, Is.Not.Null.Or.Empty);
+            Assert.That(audioTranslation.Segments[0].Tokens, Is.Not.Null.Or.Empty);
+        }
     }
 }
