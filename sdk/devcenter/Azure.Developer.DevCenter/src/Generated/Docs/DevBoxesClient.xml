@@ -313,7 +313,7 @@ Console.WriteLine(result.GetProperty("next").GetProperty("scheduledTime").ToStri
 ]]></code>
 </example>
     </member>
-    <member name="GetPoolsAsync(string,int?,string,RequestContext)">
+    <member name="GetPoolsAsync(string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetPoolsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -321,7 +321,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var item in client.GetPoolsAsync("<projectName>", 1234, "<filter>", new RequestContext()))
+await foreach (var item in client.GetPoolsAsync("<projectName>", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -345,7 +345,7 @@ await foreach (var item in client.GetPoolsAsync("<projectName>", 1234, "<filter>
 ]]></code>
 </example>
     </member>
-    <member name="GetPools(string,int?,string,RequestContext)">
+    <member name="GetPools(string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetPools with required parameters and parse the result.
 <code><![CDATA[
@@ -353,7 +353,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var item in client.GetPools("<projectName>", 1234, "<filter>", new RequestContext()))
+foreach (var item in client.GetPools("<projectName>", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -377,7 +377,7 @@ foreach (var item in client.GetPools("<projectName>", 1234, "<filter>", new Requ
 ]]></code>
 </example>
     </member>
-    <member name="GetSchedulesAsync(string,string,int?,string,RequestContext)">
+    <member name="GetSchedulesAsync(string,string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetSchedulesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -385,7 +385,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var item in client.GetSchedulesAsync("<projectName>", "<poolName>", 1234, "<filter>", new RequestContext()))
+await foreach (var item in client.GetSchedulesAsync("<projectName>", "<poolName>", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -397,7 +397,7 @@ await foreach (var item in client.GetSchedulesAsync("<projectName>", "<poolName>
 ]]></code>
 </example>
     </member>
-    <member name="GetSchedules(string,string,int?,string,RequestContext)">
+    <member name="GetSchedules(string,string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetSchedules with required parameters and parse the result.
 <code><![CDATA[
@@ -405,7 +405,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var item in client.GetSchedules("<projectName>", "<poolName>", 1234, "<filter>", new RequestContext()))
+foreach (var item in client.GetSchedules("<projectName>", "<poolName>", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());

@@ -628,20 +628,20 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(string,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetPoolsAsync(string projectName, int? maxCount, string filter, RequestContext context)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(string,string,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetPoolsAsync(string projectName, string filter, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, maxCount, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, maxCount, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, filter, maxCount, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
@@ -656,20 +656,20 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(string,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetPools(string projectName, int? maxCount, string filter, RequestContext context)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(string,string,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetPools(string projectName, string filter, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, maxCount, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, maxCount, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, filter, maxCount, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
@@ -685,21 +685,21 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesAsync(string,string,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSchedulesAsync(string projectName, string poolName, int? maxCount, string filter, RequestContext context)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesAsync(string,string,string,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSchedulesAsync(string projectName, string poolName, string filter, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, maxCount, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, maxCount, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, filter, maxCount, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
         }
 
@@ -715,21 +715,21 @@ namespace Azure.Developer.DevCenter
         /// </summary>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedules(string,string,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSchedules(string projectName, string poolName, int? maxCount, string filter, RequestContext context)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedules(string,string,string,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSchedules(string projectName, string poolName, string filter, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, maxCount, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, maxCount, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, filter, maxCount, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
         }
 
@@ -1423,7 +1423,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        internal HttpMessage CreateGetPoolsRequest(string projectName, int? maxCount, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolsRequest(string projectName, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1434,13 +1434,13 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(projectName, true);
             uri.AppendPath("/pools", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1464,7 +1464,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetSchedulesRequest(string projectName, string poolName, int? maxCount, string filter, RequestContext context)
+        internal HttpMessage CreateGetSchedulesRequest(string projectName, string poolName, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1477,13 +1477,13 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(poolName, true);
             uri.AppendPath("/schedules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1831,7 +1831,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, string projectName, int? maxCount, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, string projectName, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1844,7 +1844,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetSchedulesNextPageRequest(string nextLink, string projectName, string poolName, int? maxCount, string filter, RequestContext context)
+        internal HttpMessage CreateGetSchedulesNextPageRequest(string nextLink, string projectName, string poolName, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
