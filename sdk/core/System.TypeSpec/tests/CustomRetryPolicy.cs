@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using System.Threading;
@@ -11,36 +10,36 @@ namespace System.Tests;
 
 public partial class OpenAIClientTests
 {
-    internal class CustomRetryPolicy : PipelinePolicy
+    internal class CustomRetryPolicy : IPipelinePolicy<PipelineMessage>
     {
         private int _try = 0;
 
-        public override void Process(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
+        public void Process(PipelineMessage message, ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> pipeline)
         {
             retry:
             try {
                 _try++;
-                PipelinePolicy.ProcessNext(message, pipeline);
+                MessagePipeline.ProcessNext(message, pipeline);
             }
             catch (Exception) {
                 if (_try > 5) {
-                    throw new RequestErrorException(message.Result);
+                    throw new RequestErrorException(message.Response);
                 }
                 Thread.Sleep(1000);
                 goto retry;
             }
         }
 
-        public async override ValueTask ProcessAsync(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
+        public async ValueTask ProcessAsync(PipelineMessage message, ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> pipeline)
         {
         retry:
             try {
                 _try++;
-                await PipelinePolicy.ProcessNextAsync(message, pipeline);
+                await MessagePipeline.ProcessNextAsync(message, pipeline);
             }
             catch (Exception) {
                 if (_try > 5) {
-                    throw new RequestErrorException(message.Result);
+                    throw new RequestErrorException(message.Response);
                 }
                 Thread.Sleep(1000);
                 goto retry;

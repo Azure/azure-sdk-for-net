@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core;
 
-public class LoggingPolicy : PipelinePolicy
+public class LoggingPolicy : IPipelinePolicy<PipelineMessage>
 {
     private bool _enabled;
 
@@ -15,12 +15,12 @@ public class LoggingPolicy : PipelinePolicy
         _enabled = isLoggingEnabled;
     }
 
-    public override void Process(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
+    public void Process(PipelineMessage message, ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> pipeline)
     {
         throw new NotImplementedException();
     }
 
-    public override ValueTask ProcessAsync(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
+    public ValueTask ProcessAsync(PipelineMessage message, ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> pipeline)
     {
         throw new NotImplementedException();
     }

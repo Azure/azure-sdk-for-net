@@ -4,9 +4,6 @@
 #nullable enable
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ServiceModel.Rest.Core;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -14,33 +11,8 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represent an extension point for the <see cref="HttpPipeline"/> that can mutate the <see cref="Request"/> and react to received <see cref="Response"/>.
     /// </summary>
-    public abstract class HttpPipelinePolicy : PipelinePolicy
+    public abstract class HttpPipelinePolicy
     {
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="pipeline"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override void Process(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
-        {
-            ProcessNext(message, pipeline);
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="pipeline"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ValueTask ProcessAsync(PipelineMessage message, IEnumerator<PipelinePolicy> pipeline)
-        {
-            return ProcessNextAsync(message, pipeline);
-        }
-
         /// <summary>
         /// TBD.
         /// </summary>

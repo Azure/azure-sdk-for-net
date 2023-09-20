@@ -20,10 +20,10 @@ public class OpenAIClient
         }
         _options = options;
         _credential = credential;
-        _pipeline = new MessagePipeline(options);
+        _pipeline = MessagePipeline.Create(options);
     }
 
-    public Result<Completions> GetCompletions(string prompt, RequestOptions options = default)
+    public Result GetCompletions(string prompt, RequestOptions options)
     {
         options ??= _options;
 
@@ -37,20 +37,24 @@ public class OpenAIClient
         PipelineMessage message = CreateGetCompletions(BinaryData.FromObjectAsJson(body), options);
 
         _pipeline.Send(message);
-        if (message.Result.Status > 299) {
-            throw new RequestErrorException(message.Result);
+        if (message.Response.Status > 299) {
+            throw new RequestErrorException(message.Response);
         }
-        var completions = Completions.Deserialize(message.Result.Content);
-
-        return Result.FromValue(completions, message.Result);
+        return Result.Create(message.Response);
+    }
+    public Result<Completions> GetCompletions(string prompt)
+    {
+        Result result = GetCompletions(prompt, null);
+        var value = Completions.Deserialize(result.Response.Content);
+        return new Result<Completions>(value, result);
     }
 
     protected PipelineMessage CreateGetCompletions(BinaryData body, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage("POST", new Uri("https://api.openai.com/v1/completions"));
         message.CancellationToken = options.CancellationToken;
-        message.SetHeader("Content-Type", "application/json");
-        message.SetHeader("Authorization", $"Bearer {_credential.Key}");
+        message.SetRequestHeader("Content-Type", "application/json");
+        message.SetRequestHeader("Authorization", $"Bearer {_credential.Key}");
         message.SetRequestContent(body);
         return message;
     }

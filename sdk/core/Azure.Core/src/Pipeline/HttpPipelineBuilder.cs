@@ -16,30 +16,6 @@ namespace Azure.Core.Pipeline
     public static partial class HttpPipelineBuilder
     {
         /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="options"></param>
-        /// <param name="perCallPolicies"></param>
-        /// <param name="perRetryPolicies"></param>
-        /// <returns></returns>
-        public static HttpPipeline Build(RequestOptions options, PipelinePolicy[] perCallPolicies, PipelinePolicy[] perRetryPolicies)
-        {
-            HttpPipelinePolicy[] adaptedPerRetryPolicies = new HttpPipelinePolicy[perRetryPolicies.Length];
-            for (int i=0; i<perRetryPolicies.Length; i++)
-            {
-                adaptedPerRetryPolicies[i]= new PolicyAdapter(perRetryPolicies[i]);
-            }
-            HttpPipelinePolicy[] adaptedPerCallPolicies = new HttpPipelinePolicy[perCallPolicies.Length];
-            for (int i = 0; i < perCallPolicies.Length; i++)
-            {
-                adaptedPerCallPolicies[i] = new PolicyAdapter(perCallPolicies[i]);
-            }
-
-            ClientOptions adaptedOptions = new ClientOptionsAdapter(options);
-            return Build(adaptedOptions, adaptedPerCallPolicies, adaptedPerRetryPolicies, ResponseClassifier.Shared);
-        }
-
-        /// <summary>
         /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
         /// <param name="options">The customer provided client options object.</param>

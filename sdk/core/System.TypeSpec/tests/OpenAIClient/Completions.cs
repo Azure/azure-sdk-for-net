@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
+using System.ServiceModel.Rest;
 using System.Text.Json;
 
 namespace OpenAI;
@@ -12,6 +14,9 @@ public class Completions
     public IReadOnlyList<Choice> Choices { get; internal set; }
     public DateTimeOffset Created { get; internal set; }
     public string Id { get; internal set; }
+
+    public static implicit operator Completions(Result result)
+        => Deserialize(result.Response.Content);
 
     internal static Completions Deserialize(BinaryData data)
     {

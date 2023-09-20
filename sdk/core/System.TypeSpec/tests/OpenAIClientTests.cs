@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using OpenAI;
-using System.Diagnostics;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using Xunit;
@@ -19,7 +18,7 @@ public partial class OpenAIClientTests
         var client = new OpenAIClient(credential);
         Result<Completions> result = client.GetCompletions("tell me something about life.");
         Choice choice = result.Value.Choices[0];
-        Debug.WriteLine(choice.Text);
+        Console.WriteLine(choice.Text);
     }
 
     [Fact]
@@ -38,16 +37,16 @@ public partial class OpenAIClientTests
         var callOptions = new OpenAIClientOptions();
         options.LoggingPolicy = new LoggingPolicy(isLoggingEnabled: true);
 
-        Result<Completions> result = client.GetCompletions("tell me something about life.", callOptions);
-        Choice choice = result.Value.Choices[0];
-        Debug.WriteLine(choice.Text);
+        Completions result = client.GetCompletions("tell me something about life.", callOptions);
+        Choice choice = result.Choices[0];
+        Console.WriteLine(choice.Text);
     }
 
     [Fact]
     public void Pipeline()
     {
-        MessagePipeline pipeline = new MessagePipeline(new RequestOptions());
-        PipelineMessage message = pipeline.CreateMessage("POST", new Uri("http://www.google.com"));
+        MessagePipeline pipeline = MessagePipeline.Create(new RequestOptions());
+        PipelineMessage message = pipeline.CreateMessage("GET", new Uri("http://www.google.com"));
         pipeline.Send(message);
     }
 }

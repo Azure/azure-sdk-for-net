@@ -10,15 +10,15 @@ public class RequestOptions // base of ClientOptions and RequestContext
 {
     public CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
 
-    public PipelinePolicy RetryPolicy { get; set; } = DefaultRetryPolicy;
+    public IPipelinePolicy<PipelineMessage> RetryPolicy { get; set; } = DefaultRetryPolicy;
 
-    public PipelinePolicy LoggingPolicy { get; set; } = DefaultLoggingPolicy;
+    public IPipelinePolicy<PipelineMessage> LoggingPolicy { get; set; } = DefaultLoggingPolicy;
 
-    public PipelineTransport? Transport { get; set; }
+    public PipelineTransport<PipelineMessage>? Transport { get; set; }
 
-    public static PipelinePolicy DefaultRetryPolicy { get; set; } = new RetryPolicy(maxRetries: 3);
+    public static IPipelinePolicy<PipelineMessage> DefaultRetryPolicy { get; set; } = new RetryPolicy(maxRetries: 3);
 
-    public static PipelinePolicy DefaultLoggingPolicy { get; set; } = new LoggingPolicy();
+    public static IPipelinePolicy<PipelineMessage> DefaultLoggingPolicy { get; set; } = new LoggingPolicy();
 
     public static CancellationToken DefaultCancellationToken { get; set; } = CancellationToken.None;
 }

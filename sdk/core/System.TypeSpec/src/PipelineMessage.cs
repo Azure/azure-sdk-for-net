@@ -6,27 +6,20 @@ using System.Threading;
 
 namespace System.ServiceModel.Rest.Core;
 
-public class PipelineMessage
+public abstract class PipelineMessage
 {
-    private Dictionary<string, string> _headers = new Dictionary<string, string>();
-    private BinaryData? _content;
-
     /// <summary>
     /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="PipelineMessage"/> processing.
     /// </summary>
     public CancellationToken CancellationToken { get; set; }
 
-    public Result? Result { get; set; }
+    public IResponse? Response { get; set; }
 
-    public virtual void SetHeader(string key, string value)
-        => _headers.Add(key, value);
+    public abstract void SetRequestHeader(string key, string value);
 
-    public virtual void SetRequestContent(BinaryData content)
-        => _content = content;
+    public abstract void SetRequestContent(BinaryData content);
 
-    public bool TryGetHeader(string name, out string value)
-        => _headers.TryGetValue(name, out value);
+    public abstract bool TryGetRequestHeader(string name, [NotNullWhen(true)] out string? value);
 
-    public bool RemoveHeader(string name)
-        => _headers.Remove(name);
+    public abstract bool RemoveRequestHeader(string name);
 }

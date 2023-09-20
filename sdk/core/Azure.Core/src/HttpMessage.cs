@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.ServiceModel.Rest.Core;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -12,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public class HttpMessage : PipelineMessage, IDisposable
+    public class HttpMessage : IDisposable
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
@@ -61,6 +61,11 @@ namespace Azure.Core
         public bool HasResponse => _response != null;
 
         internal void ClearResponse() => _response = null;
+
+        /// <summary>
+        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
+        /// </summary>
+        public CancellationToken CancellationToken { get; internal set; }
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
@@ -172,7 +177,7 @@ namespace Azure.Core
             _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="System.ServiceModel.Rest.Result.ContentStream"/> or <see cref="System.ServiceModel.Rest.Result.Content"/> would result in exception.
+        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.
         /// </summary>
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
