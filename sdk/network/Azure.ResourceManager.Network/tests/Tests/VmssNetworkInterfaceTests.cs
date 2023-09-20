@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             string virtualMachineScaleSetName = "vmssip";
             var vmssId = VirtualMachineScaleSetNetworkResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            var vmssListAllPageResultAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetPublicIPAddressesVirtualMachineScaleSetsAsync();
+            var vmssListAllPageResultAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetPublicIPAddressesAsync();
             var vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
             var firstResult = vmssListAllPageResult.First();
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Tests
             string nicName = GetNameById(idItem, "networkInterfaces");
 
             // Verify that NICs contain refernce to publicip, nsg and dns settings
-            var listNicPerVmssAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetNetworkInterfacesVirtualMachineScaleSetsAsync();
+            var listNicPerVmssAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetNetworkInterfacesAsync();
             var listNicPerVmss = await listNicPerVmssAP.ToEnumerableAsync();
             Assert.NotNull(listNicPerVmss);
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Verify nics on a vm level
             var vmssVmId = VirtualMachineScaleSetVmNetworkResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, resourceGroupName, virtualMachineScaleSetName, vmIndex);
-            var listNicPerVmAP = ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetNetworkInterfacesVirtualMachineScaleSetVMsAsync();
+            var listNicPerVmAP = ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetNetworkInterfacesAsync();
             var listNicPerVm = await listNicPerVmAP.ToEnumerableAsync();
             Assert.NotNull(listNicPerVm);
             Has.One.EqualTo(listNicPerVm);

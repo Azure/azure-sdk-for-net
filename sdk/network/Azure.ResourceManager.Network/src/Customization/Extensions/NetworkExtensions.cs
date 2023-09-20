@@ -6,7 +6,6 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 

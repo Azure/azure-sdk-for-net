@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceVirtualMachineScaleSetAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceVirtualMachineScaleSet");
+            using var scope = _virtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceVirtualMachineScaleSet");
             scope.Start();
             try
             {
-                var response = await _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.GetNetworkInterfaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineScaleSetsRestClient.GetNetworkInterfaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkInterfaceResource> GetNetworkInterfaceVirtualMachineScaleSet(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceResource> GetNetworkInterface(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceVirtualMachineScaleSet");
+            using var scope = _virtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceVirtualMachineScaleSet");
             scope.Start();
             try
             {
-                var response = _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.GetNetworkInterface(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand, cancellationToken);
+                var response = _virtualMachineScaleSetsRestClient.GetNetworkInterface(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand, cancellationToken);
                 return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterfaceIPConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceIPConfigurationResource> GetIPConfigurationsVirtualMachineScaleSetsAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkInterfaceIPConfigurationResource> GetIPConfigurationsAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.CreateListIPConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.CreateListIPConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceIPConfigurationResource(Client, NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetIPConfigurationsVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetsRestClient.CreateListIPConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetsRestClient.CreateListIPConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceIPConfigurationResource(Client, NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(e)), _virtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetIPConfigurationsVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterfaceIPConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceIPConfigurationResource> GetIPConfigurationsVirtualMachineScaleSets(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkInterfaceIPConfigurationResource> GetIPConfigurations(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.CreateListIPConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.CreateListIPConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceIPConfigurationResource(Client, NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetIPConfigurationsVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetsRestClient.CreateListIPConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetsRestClient.CreateListIPConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, expand);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceIPConfigurationResource(Client, NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(e)), _virtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetIPConfigurationsVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,13 +152,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The IP configuration name. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkInterfaceIPConfigurationResource>> GetIPConfigurationVirtualMachineScaleSetAsync(string networkInterfaceName, string ipConfigurationName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterfaceIPConfigurationResource>> GetIPConfigurationAsync(string networkInterfaceName, string ipConfigurationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetIPConfigurationVirtualMachineScaleSet");
+            using var scope = _virtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetIPConfigurationVirtualMachineScaleSet");
             scope.Start();
             try
             {
-                var response = await _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.GetIPConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineScaleSetsRestClient.GetIPConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName, expand, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkInterfaceIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The IP configuration name. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkInterfaceIPConfigurationResource> GetIPConfigurationVirtualMachineScaleSet(string networkInterfaceName, string ipConfigurationName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceIPConfigurationResource> GetIPConfiguration(string networkInterfaceName, string ipConfigurationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetIPConfigurationVirtualMachineScaleSet");
+            using var scope = _virtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetIPConfigurationVirtualMachineScaleSet");
             scope.Start();
             try
             {
-                var response = _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetsRestClient.GetIPConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName, expand, cancellationToken);
+                var response = _virtualMachineScaleSetsRestClient.GetIPConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName, expand, cancellationToken);
                 return Response.FromValue(new NetworkInterfaceIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

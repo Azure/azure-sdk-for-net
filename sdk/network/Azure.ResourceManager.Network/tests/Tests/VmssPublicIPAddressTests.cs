@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             string virtualMachineScaleSetName = "vmssip";
             var vmssId = VirtualMachineScaleSetNetworkResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            var vmssListAllPageResultAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetPublicIPAddressesVirtualMachineScaleSetsAsync();
+            var vmssListAllPageResultAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetPublicIPAddressesAsync();
             var vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
             var firstResult = vmssListAllPageResult.First();
 
@@ -66,13 +66,11 @@ namespace Azure.ResourceManager.Network.Tests
             string ipName = GetNameById(idItem, "publicIPAddresses");
 
             var vmssVmId = VirtualMachineScaleSetVmNetworkResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, resourceGroupName, virtualMachineScaleSetName, vmIndex);
-            var vmssListPageResultAP = ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetVirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddresses(nicName, ipConfigName);
-            var vmssListPageResult = await vmssListPageResultAP.GetAllAsync().ToEnumerableAsync();
-            var vmssListResult = vmssListPageResult.ToList();
+            var vmssListResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetPublicIPAddressesAsync(nicName, ipConfigName).ToEnumerableAsync();
 
             Has.One.EqualTo(vmssListResult);
 
-            var vmssGetResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetVirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddresses(nicName, ipConfigName).GetAsync(ipName);
+            var vmssGetResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetPublicIPAddressAsync(nicName, ipConfigName, ipName);
 
             Assert.NotNull(vmssGetResult);
             Assert.AreEqual("Succeeded", vmssGetResult.Value.Data.ProvisioningState.ToString());

@@ -1321,25 +1321,6 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource" /> object. </returns>
-        public static VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource GetVirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource.ValidateResourceId(id);
-                return new VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region PublicIPPrefixResource
         /// <summary>
         /// Gets an object representing a <see cref="PublicIPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
