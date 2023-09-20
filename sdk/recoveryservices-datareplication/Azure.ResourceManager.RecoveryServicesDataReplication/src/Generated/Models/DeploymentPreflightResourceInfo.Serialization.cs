@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class DeploymentPreflightResource : IUtf8JsonSerializable
+    public partial class DeploymentPreflightResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteEndObject();
         }
 
-        internal static DeploymentPreflightResource DeserializeDeploymentPreflightResource(JsonElement element)
+        internal static DeploymentPreflightResourceInfo DeserializeDeploymentPreflightResourceInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     continue;
                 }
             }
-            return new DeploymentPreflightResource(name.Value, Optional.ToNullable(type), Optional.ToNullable(location), apiVersion.Value);
+            return new DeploymentPreflightResourceInfo(name.Value, Optional.ToNullable(type), Optional.ToNullable(location), apiVersion.Value);
         }
     }
 }

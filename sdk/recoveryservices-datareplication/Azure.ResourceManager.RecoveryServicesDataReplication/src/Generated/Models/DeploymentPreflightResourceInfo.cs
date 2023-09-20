@@ -10,19 +10,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Deployment preflight resource. </summary>
-    public partial class DeploymentPreflightResource
+    public partial class DeploymentPreflightResourceInfo
     {
-        /// <summary> Initializes a new instance of DeploymentPreflightResource. </summary>
-        public DeploymentPreflightResource()
+        /// <summary> Initializes a new instance of DeploymentPreflightResourceInfo. </summary>
+        public DeploymentPreflightResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentPreflightResource. </summary>
+        /// <summary> Initializes a new instance of DeploymentPreflightResourceInfo. </summary>
         /// <param name="name"> Gets or sets the resource name. </param>
         /// <param name="deploymentPreflightResourceType"> Gets or sets the resource type. </param>
         /// <param name="location"> Gets or sets the location of the resource. </param>
         /// <param name="apiVersion"> Gets or sets the Api version. </param>
-        internal DeploymentPreflightResource(string name, ResourceType? deploymentPreflightResourceType, AzureLocation? location, string apiVersion)
+        internal DeploymentPreflightResourceInfo(string name, ResourceType? deploymentPreflightResourceType, AzureLocation? location, string apiVersion)
         {
             Name = name;
             DeploymentPreflightResourceType = deploymentPreflightResourceType;
