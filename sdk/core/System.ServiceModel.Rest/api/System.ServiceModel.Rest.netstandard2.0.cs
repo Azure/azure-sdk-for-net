@@ -6,19 +6,20 @@ namespace System.ServiceModel.Rest
         public string Key { get { throw null; } }
         public void Update(string key) { }
     }
-    public partial class NullableResult<T>
+    public abstract partial class NullableResult<T>
     {
-        public NullableResult(T? value, System.ServiceModel.Rest.Result result) { }
+        protected NullableResult() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public virtual bool HasValue { get { throw null; } }
-        public virtual T? Value { get { throw null; } }
-        public virtual System.ServiceModel.Rest.Result GetRawResult() { throw null; }
+        public abstract bool HasValue { get; }
+        public abstract T? Value { get; }
+        public abstract System.ServiceModel.Rest.Result GetRawResult();
     }
     public partial class PipelineOptions
     {
         public PipelineOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
+        public System.ServiceModel.Rest.ResultErrorOptions ResultErrorOptions { get { throw null; } set { } }
     }
     public partial class RequestErrorException : System.Exception
     {
@@ -27,23 +28,27 @@ namespace System.ServiceModel.Rest
         protected RequestErrorException(System.ServiceModel.Rest.Result result, string message, System.Exception? innerException) { }
         public int Status { get { throw null; } }
     }
-    public abstract partial class Result
+    public abstract partial class Result : System.IDisposable
     {
         protected Result() { }
         public virtual System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
+        public virtual bool IsError { get { throw null; } set { } }
         public abstract int Status { get; }
+        public abstract void Dispose();
         public static System.ServiceModel.Rest.Result<T> FromValue<T>(T value, System.ServiceModel.Rest.Result result) { throw null; }
         protected abstract bool TryGetHeader(string name, out string? value);
         public bool TryGetHeaderValue(string name, out string? value) { throw null; }
     }
-    public partial class Result<T> : System.ServiceModel.Rest.NullableResult<T>
+    [System.FlagsAttribute]
+    public enum ResultErrorOptions
     {
-        public Result(T value, System.ServiceModel.Rest.Result result) : base (default(T), default(System.ServiceModel.Rest.Result)) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool HasValue { get { throw null; } }
-        public override T Value { get { throw null; } }
-        public override System.ServiceModel.Rest.Result GetRawResult() { throw null; }
+        Default = 0,
+        NoThrow = 1,
+    }
+    public abstract partial class Result<T> : System.ServiceModel.Rest.NullableResult<T>
+    {
+        protected Result() { }
     }
     public partial class TelemetrySource
     {
@@ -69,6 +74,27 @@ namespace System.ServiceModel.Rest.Core
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
+    }
+    public partial class ResponseErrorClassifier
+    {
+        public ResponseErrorClassifier() { }
+        public virtual bool IsErrorResponse(System.ServiceModel.Rest.Core.RestMessage message) { throw null; }
+    }
+    public abstract partial class RestMessage : System.IDisposable
+    {
+        protected RestMessage() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public abstract System.ServiceModel.Rest.Result? Result { get; }
+        public abstract void Dispose();
+    }
+}
+namespace System.ServiceModel.Rest.Core.Pipeline
+{
+    public abstract partial class MessagePipeline
+    {
+        protected MessagePipeline() { }
+        public abstract void Send(System.ServiceModel.Rest.Core.RestMessage message, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task SendAsync(System.ServiceModel.Rest.Core.RestMessage message, System.Threading.CancellationToken cancellationToken);
     }
 }
 namespace System.ServiceModel.Rest.Shared
@@ -104,6 +130,16 @@ namespace System.ServiceModel.Rest.Shared.Core
         public virtual void Reset(System.Uri value) { }
         public override string ToString() { throw null; }
         public virtual System.Uri ToUri() { throw null; }
+    }
+}
+namespace System.ServiceModel.Rest.Shared.Core.Pipeline
+{
+    public static partial class PipelineProtocolExtensions
+    {
+        public static System.ServiceModel.Rest.Result<bool> ProcessHeadAsBoolMessage(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.RestMessage message, System.ServiceModel.Rest.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.PipelineOptions? requestContext) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Result<bool>> ProcessHeadAsBoolMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.RestMessage message, System.ServiceModel.Rest.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.PipelineOptions? requestContext) { throw null; }
+        public static System.ServiceModel.Rest.Result ProcessMessage(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.RestMessage message, System.ServiceModel.Rest.PipelineOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Result> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.RestMessage message, System.ServiceModel.Rest.PipelineOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Shared.Serialization
