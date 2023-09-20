@@ -27,7 +27,5 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> The Id of the exception policy. </summary>
         public string Id { get; }
-        /// <summary> (Optional) The name of the exception policy. </summary>
-        public string Name { get; set; }
     }
 }

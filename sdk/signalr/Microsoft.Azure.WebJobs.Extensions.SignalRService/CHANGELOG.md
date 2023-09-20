@@ -10,13 +10,21 @@
 
 ### Other Changes
 
+## 1.11.2 (2023-09-12)
+
+### Bugs Fixed
+* Fixed the issue when using customized server endpoint with Azure AD credential.
+
+### Other Changes
+* Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.21.4 to 1.21.6
+
 ## 1.11.0 (2023-06-17)
 
 ### Bugs Fixed
 * Fixed the bug that a wrong exception is thrown when the SignalR connection is not found using REST API to close a connection or add a connection to group.
 
 ### Other Changes
-* Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.21.3
+* Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.21.4
 
 ## 1.10.0 (2023-04-11)
 

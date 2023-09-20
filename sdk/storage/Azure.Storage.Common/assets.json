@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/storage/Azure.Storage.Common",
+  "Tag": "net/storage/Azure.Storage.Common_bb1a2d2669"
+}

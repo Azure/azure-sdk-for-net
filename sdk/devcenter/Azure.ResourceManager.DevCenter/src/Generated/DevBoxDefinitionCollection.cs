@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devBoxDefinitionRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devBoxDefinitionRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devBoxDefinitionRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devBoxDefinitionRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPaloAltoNetworksNgfwModelFactory
     {
-        /// <summary> Initializes a new instance of GlobalRulestackResourceData. </summary>
+        /// <summary> Initializes a new instance of GlobalRulestackData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,28 +34,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="minAppIdVersion"> minimum version. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="securityServices"> Security Profile. </param>
-        /// <returns> A new <see cref="Ngfw.GlobalRulestackResourceData"/> instance for mocking. </returns>
-        public static GlobalRulestackResourceData GlobalRulestackResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, AzureResourceManagerManagedIdentityProperties identity = null, string panETag = null, string panLocation = null, ScopeType? scope = null, IEnumerable<string> associatedSubscriptions = null, string description = null, DefaultMode? defaultMode = null, string minAppIdVersion = null, ProvisioningState? provisioningState = null, SecurityServices securityServices = null)
+        /// <returns> A new <see cref="Ngfw.GlobalRulestackData"/> instance for mocking. </returns>
+        public static GlobalRulestackData GlobalRulestackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ETag? panETag = null, AzureLocation? panLocation = null, RulestackScopeType? scope = null, IEnumerable<string> associatedSubscriptions = null, string description = null, RuleCreationDefaultMode? defaultMode = null, string minAppIdVersion = null, FirewallProvisioningState? provisioningState = null, RulestackSecurityServices securityServices = null)
         {
             associatedSubscriptions ??= new List<string>();
 
-            return new GlobalRulestackResourceData(id, name, resourceType, systemData, location, identity, panETag, panLocation, scope, associatedSubscriptions?.ToList(), description, defaultMode, minAppIdVersion, provisioningState, securityServices);
+            return new GlobalRulestackData(id, name, resourceType, systemData, location, identity, panETag, panLocation, scope, associatedSubscriptions?.ToList(), description, defaultMode, minAppIdVersion, provisioningState, securityServices);
         }
 
-        /// <summary> Initializes a new instance of AzureResourceManagerManagedIdentityProperties. </summary>
-        /// <param name="tenantId"> The Active Directory tenant id of the principal. </param>
-        /// <param name="principalId"> The active directory identifier of this principal. </param>
-        /// <param name="managedIdentityType"> The type of managed identity assigned to this resource. </param>
-        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
-        /// <returns> A new <see cref="Models.AzureResourceManagerManagedIdentityProperties"/> instance for mocking. </returns>
-        public static AzureResourceManagerManagedIdentityProperties AzureResourceManagerManagedIdentityProperties(Guid? tenantId = null, string principalId = null, ManagedIdentityType managedIdentityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
-        {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-
-            return new AzureResourceManagerManagedIdentityProperties(tenantId, principalId, managedIdentityType, userAssignedIdentities);
-        }
-
-        /// <summary> Initializes a new instance of CertificateObjectGlobalRulestackResourceData. </summary>
+        /// <summary> Initializes a new instance of GlobalRulestackCertificateObjectData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,13 +53,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="description"> user description for this object. </param>
         /// <param name="etag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.CertificateObjectGlobalRulestackResourceData"/> instance for mocking. </returns>
-        public static CertificateObjectGlobalRulestackResourceData CertificateObjectGlobalRulestackResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string certificateSignerResourceId = null, BooleanEnum certificateSelfSigned = default, string auditComment = null, string description = null, ETag? etag = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.GlobalRulestackCertificateObjectData"/> instance for mocking. </returns>
+        public static GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string certificateSignerResourceId = null, FirewallBooleanType certificateSelfSigned = default, string auditComment = null, string description = null, ETag? etag = null, FirewallProvisioningState? provisioningState = null)
         {
-            return new CertificateObjectGlobalRulestackResourceData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
+            return new GlobalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of FqdnListGlobalRulestackResourceData. </summary>
+        /// <summary> Initializes a new instance of GlobalRulestackFqdnData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -82,44 +69,44 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.FqdnListGlobalRulestackResourceData"/> instance for mocking. </returns>
-        public static FqdnListGlobalRulestackResourceData FqdnListGlobalRulestackResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> fqdnList = null, ETag? etag = null, string auditComment = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.GlobalRulestackFqdnData"/> instance for mocking. </returns>
+        public static GlobalRulestackFqdnData GlobalRulestackFqdnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> fqdnList = null, ETag? etag = null, string auditComment = null, FirewallProvisioningState? provisioningState = null)
         {
             fqdnList ??= new List<string>();
 
-            return new FqdnListGlobalRulestackResourceData(id, name, resourceType, systemData, description, fqdnList?.ToList(), etag, auditComment, provisioningState);
+            return new GlobalRulestackFqdnData(id, name, resourceType, systemData, description, fqdnList?.ToList(), etag, auditComment, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of Changelog. </summary>
+        /// <summary> Initializes a new instance of RulestackChangelog. </summary>
         /// <param name="changes"> list of changes. </param>
-        /// <param name="lastCommitted"> lastCommitted timestamp. </param>
-        /// <param name="lastModified"> lastModified timestamp. </param>
-        /// <returns> A new <see cref="Models.Changelog"/> instance for mocking. </returns>
-        public static Changelog Changelog(IEnumerable<string> changes = null, DateTimeOffset? lastCommitted = null, DateTimeOffset? lastModified = null)
+        /// <param name="lastCommittedOn"> lastCommitted timestamp. </param>
+        /// <param name="lastModifiedOn"> lastModified timestamp. </param>
+        /// <returns> A new <see cref="Models.RulestackChangelog"/> instance for mocking. </returns>
+        public static RulestackChangelog RulestackChangelog(IEnumerable<string> changes = null, DateTimeOffset? lastCommittedOn = null, DateTimeOffset? lastModifiedOn = null)
         {
             changes ??= new List<string>();
 
-            return new Changelog(changes?.ToList(), lastCommitted, lastModified);
+            return new RulestackChangelog(changes?.ToList(), lastCommittedOn, lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of AdvSecurityObjectListResponse. </summary>
+        /// <summary> Initializes a new instance of AdvancedSecurityObjectListResult. </summary>
         /// <param name="value"> response value. </param>
         /// <param name="nextLink"> next link. </param>
-        /// <returns> A new <see cref="Models.AdvSecurityObjectListResponse"/> instance for mocking. </returns>
-        public static AdvSecurityObjectListResponse AdvSecurityObjectListResponse(AdvSecurityObjectModel value = null, string nextLink = null)
+        /// <returns> A new <see cref="Models.AdvancedSecurityObjectListResult"/> instance for mocking. </returns>
+        public static AdvancedSecurityObjectListResult AdvancedSecurityObjectListResult(AdvancedSecurityObject value = null, string nextLink = null)
         {
-            return new AdvSecurityObjectListResponse(value, nextLink);
+            return new AdvancedSecurityObjectListResult(value, nextLink);
         }
 
-        /// <summary> Initializes a new instance of AdvSecurityObjectModel. </summary>
+        /// <summary> Initializes a new instance of AdvancedSecurityObject. </summary>
         /// <param name="advSecurityObjectModelType"> type of object. </param>
         /// <param name="entry"> URL entry. </param>
-        /// <returns> A new <see cref="Models.AdvSecurityObjectModel"/> instance for mocking. </returns>
-        public static AdvSecurityObjectModel AdvSecurityObjectModel(string advSecurityObjectModelType = null, IEnumerable<NameDescriptionObject> entry = null)
+        /// <returns> A new <see cref="Models.AdvancedSecurityObject"/> instance for mocking. </returns>
+        public static AdvancedSecurityObject AdvancedSecurityObject(string advSecurityObjectModelType = null, IEnumerable<NameDescriptionObject> entry = null)
         {
             entry ??= new List<NameDescriptionObject>();
 
-            return new AdvSecurityObjectModel(advSecurityObjectModelType, entry?.ToList());
+            return new AdvancedSecurityObject(advSecurityObjectModelType, entry?.ToList());
         }
 
         /// <summary> Initializes a new instance of NameDescriptionObject. </summary>
@@ -131,13 +118,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new NameDescriptionObject(name, description);
         }
 
-        /// <summary> Initializes a new instance of Country. </summary>
+        /// <summary> Initializes a new instance of RulestackCountry. </summary>
         /// <param name="code"> country code. </param>
         /// <param name="description"> code description. </param>
-        /// <returns> A new <see cref="Models.Country"/> instance for mocking. </returns>
-        public static Country Country(string code = null, string description = null)
+        /// <returns> A new <see cref="Models.RulestackCountry"/> instance for mocking. </returns>
+        public static RulestackCountry RulestackCountry(string code = null, string description = null)
         {
-            return new Country(code, description);
+            return new RulestackCountry(code, description);
         }
 
         /// <summary> Initializes a new instance of PredefinedUrlCategory. </summary>
@@ -159,27 +146,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PredefinedUrlCategory(action, name);
         }
 
-        /// <summary> Initializes a new instance of SecurityServicesResponse. </summary>
+        /// <summary> Initializes a new instance of RulestackSecurityServiceListResult. </summary>
         /// <param name="value"> response value. </param>
         /// <param name="nextLink"> next link. </param>
-        /// <returns> A new <see cref="Models.SecurityServicesResponse"/> instance for mocking. </returns>
-        public static SecurityServicesResponse SecurityServicesResponse(SecurityServicesTypeList value = null, string nextLink = null)
+        /// <returns> A new <see cref="Models.RulestackSecurityServiceListResult"/> instance for mocking. </returns>
+        public static RulestackSecurityServiceListResult RulestackSecurityServiceListResult(RulestackSecurityServiceTypeList value = null, string nextLink = null)
         {
-            return new SecurityServicesResponse(value, nextLink);
+            return new RulestackSecurityServiceListResult(value, nextLink);
         }
 
-        /// <summary> Initializes a new instance of SecurityServicesTypeList. </summary>
+        /// <summary> Initializes a new instance of RulestackSecurityServiceTypeList. </summary>
         /// <param name="securityServicesTypeListType"> security services type. </param>
         /// <param name="entry"> list. </param>
-        /// <returns> A new <see cref="Models.SecurityServicesTypeList"/> instance for mocking. </returns>
-        public static SecurityServicesTypeList SecurityServicesTypeList(string securityServicesTypeListType = null, IEnumerable<NameDescriptionObject> entry = null)
+        /// <returns> A new <see cref="Models.RulestackSecurityServiceTypeList"/> instance for mocking. </returns>
+        public static RulestackSecurityServiceTypeList RulestackSecurityServiceTypeList(string securityServicesTypeListType = null, IEnumerable<NameDescriptionObject> entry = null)
         {
             entry ??= new List<NameDescriptionObject>();
 
-            return new SecurityServicesTypeList(securityServicesTypeListType, entry?.ToList());
+            return new RulestackSecurityServiceTypeList(securityServicesTypeListType, entry?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostRulesResourceData. </summary>
+        /// <summary> Initializes a new instance of PostRulestackRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -204,17 +191,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="decryptionRuleType"> enable or disable decryption. </param>
         /// <param name="tags"> tag for rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.PostRulesResourceData"/> instance for mocking. </returns>
-        public static PostRulesResourceData PostRulesResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string ruleName = null, int? priority = null, string description = null, StateEnum? ruleState = null, SourceAddr source = null, BooleanEnum? negateSource = null, DestinationAddr destination = null, BooleanEnum? negateDestination = null, IEnumerable<string> applications = null, Category category = null, string protocol = null, IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, ActionEnum? actionType = null, StateEnum? enableLogging = null, DecryptionRuleTypeEnum? decryptionRuleType = null, IEnumerable<TagInfo> tags = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.PostRulestackRuleData"/> instance for mocking. </returns>
+        public static PostRulestackRuleData PostRulestackRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string ruleName = null, int? priority = null, string description = null, RulestackStateType? ruleState = null, SourceAddressInfo source = null, FirewallBooleanType? negateSource = null, DestinationAddressInfo destination = null, FirewallBooleanType? negateDestination = null, IEnumerable<string> applications = null, EdlMatchCategory category = null, string protocol = null, IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, RulestackActionType? actionType = null, RulestackStateType? enableLogging = null, DecryptionRuleType? decryptionRuleType = null, IEnumerable<RulestackTagInfo> tags = null, FirewallProvisioningState? provisioningState = null)
         {
             applications ??= new List<string>();
             protocolPortList ??= new List<string>();
-            tags ??= new List<TagInfo>();
+            tags ??= new List<RulestackTagInfo>();
 
-            return new PostRulesResourceData(id, name, resourceType, systemData, etag, ruleName, priority, description, ruleState, source, negateSource, destination, negateDestination, applications?.ToList(), category, protocol, protocolPortList?.ToList(), inboundInspectionCertificate, auditComment, actionType, enableLogging, decryptionRuleType, tags?.ToList(), provisioningState);
+            return new PostRulestackRuleData(id, name, resourceType, systemData, etag, ruleName, priority, description, ruleState, source, negateSource, destination, negateDestination, applications?.ToList(), category, protocol, protocolPortList?.ToList(), inboundInspectionCertificate, auditComment, actionType, enableLogging, decryptionRuleType, tags?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of RuleCounter. </summary>
+        /// <summary> Initializes a new instance of FirewallRuleCounter. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleStackName"> rule Stack Name. </param>
         /// <param name="ruleListName"> rule list name. </param>
@@ -222,24 +209,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="ruleName"> rule name. </param>
         /// <param name="hitCount"> hit count. </param>
         /// <param name="appSeen"> apps seen. </param>
-        /// <param name="timestamp"> timestamp of response. </param>
-        /// <param name="requestTimestamp"> timestamp of request. </param>
-        /// <param name="lastUpdatedTimestamp"> last updated timestamp. </param>
-        /// <returns> A new <see cref="Models.RuleCounter"/> instance for mocking. </returns>
-        public static RuleCounter RuleCounter(string priority = null, string ruleStackName = null, string ruleListName = null, string firewallName = null, string ruleName = null, int? hitCount = null, AppSeenData appSeen = null, DateTimeOffset? timestamp = null, DateTimeOffset? requestTimestamp = null, DateTimeOffset? lastUpdatedTimestamp = null)
+        /// <param name="responseOn"> timestamp of response. </param>
+        /// <param name="requestOn"> timestamp of request. </param>
+        /// <param name="lastUpdatedOn"> last updated timestamp. </param>
+        /// <returns> A new <see cref="Models.FirewallRuleCounter"/> instance for mocking. </returns>
+        public static FirewallRuleCounter FirewallRuleCounter(string priority = null, string ruleStackName = null, string ruleListName = null, string firewallName = null, string ruleName = null, int? hitCount = null, AppSeenInfoList appSeen = null, DateTimeOffset? responseOn = null, DateTimeOffset? requestOn = null, DateTimeOffset? lastUpdatedOn = null)
         {
-            return new RuleCounter(priority, ruleStackName, ruleListName, firewallName, ruleName, hitCount, appSeen, timestamp, requestTimestamp, lastUpdatedTimestamp);
+            return new FirewallRuleCounter(priority, ruleStackName, ruleListName, firewallName, ruleName, hitCount, appSeen, responseOn, requestOn, lastUpdatedOn);
         }
 
-        /// <summary> Initializes a new instance of AppSeenData. </summary>
+        /// <summary> Initializes a new instance of AppSeenInfoList. </summary>
         /// <param name="count"> number of rows. </param>
         /// <param name="appSeenList"> array of appSeen. </param>
-        /// <returns> A new <see cref="Models.AppSeenData"/> instance for mocking. </returns>
-        public static AppSeenData AppSeenData(int count = default, IEnumerable<AppSeenInfo> appSeenList = null)
+        /// <returns> A new <see cref="Models.AppSeenInfoList"/> instance for mocking. </returns>
+        public static AppSeenInfoList AppSeenInfoList(int count = default, IEnumerable<AppSeenInfo> appSeenList = null)
         {
             appSeenList ??= new List<AppSeenInfo>();
 
-            return new AppSeenData(count, appSeenList?.ToList());
+            return new AppSeenInfoList(count, appSeenList?.ToList());
         }
 
         /// <summary> Initializes a new instance of AppSeenInfo. </summary>
@@ -286,19 +273,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new AppSeenInfo(title, category, subCategory, risk, tag, technology, standardPorts);
         }
 
-        /// <summary> Initializes a new instance of RuleCounterReset. </summary>
+        /// <summary> Initializes a new instance of FirewallRuleResetConter. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleStackName"> rule Stack Name. </param>
         /// <param name="ruleListName"> rule list name. </param>
         /// <param name="firewallName"> firewall name. </param>
         /// <param name="ruleName"> rule name. </param>
-        /// <returns> A new <see cref="Models.RuleCounterReset"/> instance for mocking. </returns>
-        public static RuleCounterReset RuleCounterReset(string priority = null, string ruleStackName = null, string ruleListName = null, string firewallName = null, string ruleName = null)
+        /// <returns> A new <see cref="Models.FirewallRuleResetConter"/> instance for mocking. </returns>
+        public static FirewallRuleResetConter FirewallRuleResetConter(string priority = null, string ruleStackName = null, string ruleListName = null, string firewallName = null, string ruleName = null)
         {
-            return new RuleCounterReset(priority, ruleStackName, ruleListName, firewallName, ruleName);
+            return new FirewallRuleResetConter(priority, ruleStackName, ruleListName, firewallName, ruleName);
         }
 
-        /// <summary> Initializes a new instance of PrefixListGlobalRulestackResourceData. </summary>
+        /// <summary> Initializes a new instance of GlobalRulestackPrefixData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -308,15 +295,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.PrefixListGlobalRulestackResourceData"/> instance for mocking. </returns>
-        public static PrefixListGlobalRulestackResourceData PrefixListGlobalRulestackResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> prefixList = null, ETag? etag = null, string auditComment = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.GlobalRulestackPrefixData"/> instance for mocking. </returns>
+        public static GlobalRulestackPrefixData GlobalRulestackPrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> prefixList = null, ETag? etag = null, string auditComment = null, FirewallProvisioningState? provisioningState = null)
         {
             prefixList ??= new List<string>();
 
-            return new PrefixListGlobalRulestackResourceData(id, name, resourceType, systemData, description, prefixList?.ToList(), etag, auditComment, provisioningState);
+            return new GlobalRulestackPrefixData(id, name, resourceType, systemData, description, prefixList?.ToList(), etag, auditComment, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PreRulesResourceData. </summary>
+        /// <summary> Initializes a new instance of PreRulestackRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -341,17 +328,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="decryptionRuleType"> enable or disable decryption. </param>
         /// <param name="tags"> tag for rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.PreRulesResourceData"/> instance for mocking. </returns>
-        public static PreRulesResourceData PreRulesResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string ruleName = null, int? priority = null, string description = null, StateEnum? ruleState = null, SourceAddr source = null, BooleanEnum? negateSource = null, DestinationAddr destination = null, BooleanEnum? negateDestination = null, IEnumerable<string> applications = null, Category category = null, string protocol = null, IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, ActionEnum? actionType = null, StateEnum? enableLogging = null, DecryptionRuleTypeEnum? decryptionRuleType = null, IEnumerable<TagInfo> tags = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.PreRulestackRuleData"/> instance for mocking. </returns>
+        public static PreRulestackRuleData PreRulestackRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string ruleName = null, int? priority = null, string description = null, RulestackStateType? ruleState = null, SourceAddressInfo source = null, FirewallBooleanType? negateSource = null, DestinationAddressInfo destination = null, FirewallBooleanType? negateDestination = null, IEnumerable<string> applications = null, EdlMatchCategory category = null, string protocol = null, IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, RulestackActionType? actionType = null, RulestackStateType? enableLogging = null, DecryptionRuleType? decryptionRuleType = null, IEnumerable<RulestackTagInfo> tags = null, FirewallProvisioningState? provisioningState = null)
         {
             applications ??= new List<string>();
             protocolPortList ??= new List<string>();
-            tags ??= new List<TagInfo>();
+            tags ??= new List<RulestackTagInfo>();
 
-            return new PreRulesResourceData(id, name, resourceType, systemData, etag, ruleName, priority, description, ruleState, source, negateSource, destination, negateDestination, applications?.ToList(), category, protocol, protocolPortList?.ToList(), inboundInspectionCertificate, auditComment, actionType, enableLogging, decryptionRuleType, tags?.ToList(), provisioningState);
+            return new PreRulestackRuleData(id, name, resourceType, systemData, etag, ruleName, priority, description, ruleState, source, negateSource, destination, negateDestination, applications?.ToList(), category, protocol, protocolPortList?.ToList(), inboundInspectionCertificate, auditComment, actionType, enableLogging, decryptionRuleType, tags?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of FirewallResourceData. </summary>
+        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -369,16 +356,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <returns> A new <see cref="Ngfw.FirewallResourceData"/> instance for mocking. </returns>
-        public static FirewallResourceData FirewallResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AzureResourceManagerManagedIdentityProperties identity = null, string panETag = null, NetworkProfile networkProfile = null, BooleanEnum? isPanoramaManaged = null, PanoramaConfig panoramaConfig = null, RulestackDetails associatedRulestack = null, DnsSettings dnsSettings = null, IEnumerable<FrontendSetting> frontEndSettings = null, ProvisioningState? provisioningState = null, PlanData planData = null, MarketplaceDetails marketplaceDetails = null)
+        /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallData"/> instance for mocking. </returns>
+        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ETag? panETag = null, FirewallNetworkProfile networkProfile = null, FirewallBooleanType? isPanoramaManaged = null, FirewallPanoramaConfiguration panoramaConfig = null, RulestackDetails associatedRulestack = null, FirewallDnsSettings dnsSettings = null, IEnumerable<FirewallFrontendSetting> frontEndSettings = null, FirewallProvisioningState? provisioningState = null, FirewallBillingPlanInfo planData = null, PanFirewallMarketplaceDetails marketplaceDetails = null)
         {
             tags ??= new Dictionary<string, string>();
-            frontEndSettings ??= new List<FrontendSetting>();
+            frontEndSettings ??= new List<FirewallFrontendSetting>();
 
-            return new FirewallResourceData(id, name, resourceType, systemData, tags, location, identity, panETag, networkProfile, isPanoramaManaged, panoramaConfig, associatedRulestack, dnsSettings, frontEndSettings?.ToList(), provisioningState, planData, marketplaceDetails);
+            return new PaloAltoNetworksFirewallData(id, name, resourceType, systemData, tags, location, identity, panETag, networkProfile, isPanoramaManaged, panoramaConfig, associatedRulestack, dnsSettings, frontEndSettings?.ToList(), provisioningState, planData, marketplaceDetails);
         }
 
-        /// <summary> Initializes a new instance of PanoramaConfig. </summary>
+        /// <summary> Initializes a new instance of FirewallPanoramaConfiguration. </summary>
         /// <param name="configString"> Base64 encoded string representing Panorama parameters to be used by Firewall to connect to Panorama. This string is generated via azure plugin in Panorama. </param>
         /// <param name="vmAuthKey"> VM auth key for panorama connectivity. </param>
         /// <param name="panoramaServer"> Primary Panorama Server IP address value in dotted format for IPv4. </param>
@@ -387,35 +374,35 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="tplName"> Panorama Template Stack to join - (Once configured we can not edit the value). </param>
         /// <param name="cgName"> Panorama Collector Group to join - (Once configured we can not edit the value). </param>
         /// <param name="hostName"> Resource name(may be unique) for PN admin. </param>
-        /// <returns> A new <see cref="Models.PanoramaConfig"/> instance for mocking. </returns>
-        public static PanoramaConfig PanoramaConfig(string configString = null, string vmAuthKey = null, string panoramaServer = null, string panoramaServer2 = null, string dgName = null, string tplName = null, string cgName = null, string hostName = null)
+        /// <returns> A new <see cref="Models.FirewallPanoramaConfiguration"/> instance for mocking. </returns>
+        public static FirewallPanoramaConfiguration FirewallPanoramaConfiguration(string configString = null, string vmAuthKey = null, string panoramaServer = null, string panoramaServer2 = null, string dgName = null, string tplName = null, string cgName = null, string hostName = null)
         {
-            return new PanoramaConfig(configString, vmAuthKey, panoramaServer, panoramaServer2, dgName, tplName, cgName, hostName);
+            return new FirewallPanoramaConfiguration(configString, vmAuthKey, panoramaServer, panoramaServer2, dgName, tplName, cgName, hostName);
         }
 
-        /// <summary> Initializes a new instance of PlanData. </summary>
+        /// <summary> Initializes a new instance of FirewallBillingPlanInfo. </summary>
         /// <param name="usageType"> different usage type like PAYG/COMMITTED. </param>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. </param>
         /// <param name="planId"> plan id as published by Liftr.PAN. </param>
         /// <param name="effectiveOn"> date when plan was applied. </param>
-        /// <returns> A new <see cref="Models.PlanData"/> instance for mocking. </returns>
-        public static PlanData PlanData(UsageType? usageType = null, BillingCycle billingCycle = default, string planId = null, DateTimeOffset? effectiveOn = null)
+        /// <returns> A new <see cref="Models.FirewallBillingPlanInfo"/> instance for mocking. </returns>
+        public static FirewallBillingPlanInfo FirewallBillingPlanInfo(FirewallBillingPlanUsageType? usageType = null, FirewallBillingCycle billingCycle = default, string planId = null, DateTimeOffset? effectiveOn = null)
         {
-            return new PlanData(usageType, billingCycle, planId, effectiveOn);
+            return new FirewallBillingPlanInfo(usageType, billingCycle, planId, effectiveOn);
         }
 
-        /// <summary> Initializes a new instance of MarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of PanFirewallMarketplaceDetails. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace Subscription Status. </param>
-        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string marketplaceSubscriptionId = null, string offerId = null, string publisherId = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null)
+        /// <returns> A new <see cref="Models.PanFirewallMarketplaceDetails"/> instance for mocking. </returns>
+        public static PanFirewallMarketplaceDetails PanFirewallMarketplaceDetails(string marketplaceSubscriptionId = null, string offerId = null, string publisherId = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null)
         {
-            return new MarketplaceDetails(marketplaceSubscriptionId, offerId, publisherId, marketplaceSubscriptionStatus);
+            return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId, offerId, publisherId, marketplaceSubscriptionStatus);
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackResourceData. </summary>
+        /// <summary> Initializes a new instance of LocalRulestackData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -432,13 +419,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="minAppIdVersion"> minimum version. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="securityServices"> Security Profile. </param>
-        /// <returns> A new <see cref="Ngfw.LocalRulestackResourceData"/> instance for mocking. </returns>
-        public static LocalRulestackResourceData LocalRulestackResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AzureResourceManagerManagedIdentityProperties identity = null, string panETag = null, string panLocation = null, ScopeType? scope = null, IEnumerable<string> associatedSubscriptions = null, string description = null, DefaultMode? defaultMode = null, string minAppIdVersion = null, ProvisioningState? provisioningState = null, SecurityServices securityServices = null)
+        /// <returns> A new <see cref="Ngfw.LocalRulestackData"/> instance for mocking. </returns>
+        public static LocalRulestackData LocalRulestackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ETag? panETag = null, AzureLocation? panLocation = null, RulestackScopeType? scope = null, IEnumerable<string> associatedSubscriptions = null, string description = null, RuleCreationDefaultMode? defaultMode = null, string minAppIdVersion = null, FirewallProvisioningState? provisioningState = null, RulestackSecurityServices securityServices = null)
         {
             tags ??= new Dictionary<string, string>();
             associatedSubscriptions ??= new List<string>();
 
-            return new LocalRulestackResourceData(id, name, resourceType, systemData, tags, location, identity, panETag, panLocation, scope, associatedSubscriptions?.ToList(), description, defaultMode, minAppIdVersion, provisioningState, securityServices);
+            return new LocalRulestackData(id, name, resourceType, systemData, tags, location, identity, panETag, panLocation, scope, associatedSubscriptions?.ToList(), description, defaultMode, minAppIdVersion, provisioningState, securityServices);
         }
 
         /// <summary> Initializes a new instance of GlobalRulestackInfo. </summary>
@@ -455,7 +442,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new GlobalRulestackInfo(azureId);
         }
 
-        /// <summary> Initializes a new instance of SupportInfo. </summary>
+        /// <summary> Initializes a new instance of FirewallSupportInfo. </summary>
         /// <param name="productSku"> product SKU associated with given resource. </param>
         /// <param name="productSerial"> product Serial associated with given resource. </param>
         /// <param name="accountRegistered"> account registered in Customer Support Portal. </param>
@@ -468,13 +455,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="helpURL"> URL for paloaltonetworks live community. </param>
         /// <param name="supportURL"> URL for paloaltonetworks Customer Service Portal. </param>
         /// <param name="registerURL"> URL for registering product in paloaltonetworks Customer Service Portal. </param>
-        /// <returns> A new <see cref="Models.SupportInfo"/> instance for mocking. </returns>
-        public static SupportInfo SupportInfo(string productSku = null, string productSerial = null, BooleanEnum? accountRegistered = null, string accountId = null, BooleanEnum? userDomainSupported = null, BooleanEnum? userRegistered = null, BooleanEnum? freeTrial = null, int? freeTrialDaysLeft = null, int? freeTrialCreditLeft = null, string helpURL = null, string supportURL = null, string registerURL = null)
+        /// <returns> A new <see cref="Models.FirewallSupportInfo"/> instance for mocking. </returns>
+        public static FirewallSupportInfo FirewallSupportInfo(string productSku = null, string productSerial = null, FirewallBooleanType? accountRegistered = null, string accountId = null, FirewallBooleanType? userDomainSupported = null, FirewallBooleanType? userRegistered = null, FirewallBooleanType? freeTrial = null, int? freeTrialDaysLeft = null, int? freeTrialCreditLeft = null, string helpURL = null, string supportURL = null, string registerURL = null)
         {
-            return new SupportInfo(productSku, productSerial, accountRegistered, accountId, userDomainSupported, userRegistered, freeTrial, freeTrialDaysLeft, freeTrialCreditLeft, helpURL, supportURL, registerURL);
+            return new FirewallSupportInfo(productSku, productSerial, accountRegistered, accountId, userDomainSupported, userRegistered, freeTrial, freeTrialDaysLeft, freeTrialCreditLeft, helpURL, supportURL, registerURL);
         }
 
-        /// <summary> Initializes a new instance of CertificateObjectLocalRulestackResourceData. </summary>
+        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallStatusData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="healthStatus"> Current status of the Firewall. </param>
+        /// <param name="healthReason"> Detail description of current health of the Firewall. </param>
+        /// <param name="panoramaStatus"> Panorama Status. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallStatusData"/> instance for mocking. </returns>
+        public static PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FirewallBooleanType? isPanoramaManaged = null, FirewallHealthStatus? healthStatus = null, string healthReason = null, FirewallPanoramaStatus panoramaStatus = null, FirewallProvisioningStateType? provisioningState = null)
+        {
+            return new PaloAltoNetworksFirewallStatusData(id, name, resourceType, systemData, isPanoramaManaged, healthStatus, healthReason, panoramaStatus, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of FirewallPanoramaStatus. </summary>
+        /// <param name="panoramaServerStatus"> Primary Panorama connection status. </param>
+        /// <param name="panoramaServer2Status"> Secondary Panorama connection status. </param>
+        /// <returns> A new <see cref="Models.FirewallPanoramaStatus"/> instance for mocking. </returns>
+        public static FirewallPanoramaStatus FirewallPanoramaStatus(FirewallPanoramaServerStatus? panoramaServerStatus = null, FirewallPanoramaServerStatus? panoramaServer2Status = null)
+        {
+            return new FirewallPanoramaStatus(panoramaServerStatus, panoramaServer2Status);
+        }
+
+        /// <summary> Initializes a new instance of LocalRulestackCertificateObjectData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -485,13 +497,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="description"> user description for this object. </param>
         /// <param name="etag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.CertificateObjectLocalRulestackResourceData"/> instance for mocking. </returns>
-        public static CertificateObjectLocalRulestackResourceData CertificateObjectLocalRulestackResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string certificateSignerResourceId = null, BooleanEnum certificateSelfSigned = default, string auditComment = null, string description = null, ETag? etag = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.LocalRulestackCertificateObjectData"/> instance for mocking. </returns>
+        public static LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string certificateSignerResourceId = null, FirewallBooleanType certificateSelfSigned = default, string auditComment = null, string description = null, ETag? etag = null, FirewallProvisioningState? provisioningState = null)
         {
-            return new CertificateObjectLocalRulestackResourceData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
+            return new LocalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of FqdnListLocalRulestackResourceData. </summary>
+        /// <summary> Initializes a new instance of LocalRulestackFqdnData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -501,15 +513,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.FqdnListLocalRulestackResourceData"/> instance for mocking. </returns>
-        public static FqdnListLocalRulestackResourceData FqdnListLocalRulestackResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> fqdnList = null, ETag? etag = null, string auditComment = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.LocalRulestackFqdnData"/> instance for mocking. </returns>
+        public static LocalRulestackFqdnData LocalRulestackFqdnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> fqdnList = null, ETag? etag = null, string auditComment = null, FirewallProvisioningState? provisioningState = null)
         {
             fqdnList ??= new List<string>();
 
-            return new FqdnListLocalRulestackResourceData(id, name, resourceType, systemData, description, fqdnList?.ToList(), etag, auditComment, provisioningState);
+            return new LocalRulestackFqdnData(id, name, resourceType, systemData, description, fqdnList?.ToList(), etag, auditComment, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of LocalRulesResourceData. </summary>
+        /// <summary> Initializes a new instance of LocalRulestackRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -534,17 +546,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="decryptionRuleType"> enable or disable decryption. </param>
         /// <param name="tags"> tag for rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.LocalRulesResourceData"/> instance for mocking. </returns>
-        public static LocalRulesResourceData LocalRulesResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string ruleName = null, int? priority = null, string description = null, StateEnum? ruleState = null, SourceAddr source = null, BooleanEnum? negateSource = null, DestinationAddr destination = null, BooleanEnum? negateDestination = null, IEnumerable<string> applications = null, Category category = null, string protocol = null, IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, ActionEnum? actionType = null, StateEnum? enableLogging = null, DecryptionRuleTypeEnum? decryptionRuleType = null, IEnumerable<TagInfo> tags = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.LocalRulestackRuleData"/> instance for mocking. </returns>
+        public static LocalRulestackRuleData LocalRulestackRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string ruleName = null, int? priority = null, string description = null, RulestackStateType? ruleState = null, SourceAddressInfo source = null, FirewallBooleanType? negateSource = null, DestinationAddressInfo destination = null, FirewallBooleanType? negateDestination = null, IEnumerable<string> applications = null, EdlMatchCategory category = null, string protocol = null, IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, RulestackActionType? actionType = null, RulestackStateType? enableLogging = null, DecryptionRuleType? decryptionRuleType = null, IEnumerable<RulestackTagInfo> tags = null, FirewallProvisioningState? provisioningState = null)
         {
             applications ??= new List<string>();
             protocolPortList ??= new List<string>();
-            tags ??= new List<TagInfo>();
+            tags ??= new List<RulestackTagInfo>();
 
-            return new LocalRulesResourceData(id, name, resourceType, systemData, etag, ruleName, priority, description, ruleState, source, negateSource, destination, negateDestination, applications?.ToList(), category, protocol, protocolPortList?.ToList(), inboundInspectionCertificate, auditComment, actionType, enableLogging, decryptionRuleType, tags?.ToList(), provisioningState);
+            return new LocalRulestackRuleData(id, name, resourceType, systemData, etag, ruleName, priority, description, ruleState, source, negateSource, destination, negateDestination, applications?.ToList(), category, protocol, protocolPortList?.ToList(), inboundInspectionCertificate, auditComment, actionType, enableLogging, decryptionRuleType, tags?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PrefixListResourceData. </summary>
+        /// <summary> Initializes a new instance of LocalRulestackPrefixData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -554,12 +566,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.PrefixListResourceData"/> instance for mocking. </returns>
-        public static PrefixListResourceData PrefixListResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> prefixList = null, ETag? etag = null, string auditComment = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.LocalRulestackPrefixData"/> instance for mocking. </returns>
+        public static LocalRulestackPrefixData LocalRulestackPrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> prefixList = null, ETag? etag = null, string auditComment = null, FirewallProvisioningState? provisioningState = null)
         {
             prefixList ??= new List<string>();
 
-            return new PrefixListResourceData(id, name, resourceType, systemData, description, prefixList?.ToList(), etag, auditComment, provisioningState);
+            return new LocalRulestackPrefixData(id, name, resourceType, systemData, description, prefixList?.ToList(), etag, auditComment, provisioningState);
         }
     }
 }

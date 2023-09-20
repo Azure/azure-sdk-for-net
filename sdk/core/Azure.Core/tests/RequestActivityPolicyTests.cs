@@ -375,7 +375,7 @@ namespace Azure.Core.Tests
 
             using var clientListener = new TestActivitySourceListener("Azure.Clients.ClientName");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
-            using DiagnosticScope outerScope = clientDiagnostics.CreateScope("ClientName.ActivityName", DiagnosticScope.ActivityKind.Internal);
+            using DiagnosticScope outerScope = clientDiagnostics.CreateScope("ClientName.ActivityName", ActivityKind.Internal);
             outerScope.Start();
 
             try

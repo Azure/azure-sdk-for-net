@@ -18,12 +18,12 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of AddParticipantResponseInternal. </summary>
         /// <param name="participant"> List of current participants in the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="invitiationId"> Invitation ID used to add a participant. </param>
-        internal AddParticipantResponseInternal(CallParticipantInternal participant, string operationContext, string invitiationId)
+        /// <param name="invitationId"> Invitation ID used to add a participant. </param>
+        internal AddParticipantResponseInternal(CallParticipantInternal participant, string operationContext, string invitationId)
         {
             Participant = participant;
             OperationContext = operationContext;
-            InvitiationId = invitiationId;
+            InvitationId = invitationId;
         }
 
         /// <summary> List of current participants in the call. </summary>
@@ -31,6 +31,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The operation context provided by client. </summary>
         public string OperationContext { get; }
         /// <summary> Invitation ID used to add a participant. </summary>
-        public string InvitiationId { get; }
+        public string InvitationId { get; }
     }
 }

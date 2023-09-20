@@ -114,11 +114,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicaCapacity))
-            {
-                writer.WritePropertyName("replicaCapacity"u8);
-                writer.WriteNumberValue(ReplicaCapacity.Value);
-            }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);

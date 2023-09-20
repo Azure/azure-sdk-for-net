@@ -74,6 +74,63 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task RespectsIsSupportLoggingEnabled([Values(true, false)] bool isSupportLoggingEnabled)
+        {
+            using var _listener = new TestEventListener();
+            _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose);
+
+            var token = Guid.NewGuid().ToString();
+            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
+            bool calledDiscoveryEndpoint = false;
+            bool isPubClient = false;
+            var mockTransport = new MockTransport(req =>
+            {
+                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+
+                MockResponse response = new(200);
+                if (req.Uri.Path.EndsWith("/devicecode"))
+                {
+                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
+                }
+                else if (req.Uri.Path.Contains("/userrealm/"))
+                {
+                    response.SetContent(UserrealmResponse);
+                }
+                else
+                {
+                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
+                    {
+                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
+                    }
+                    else
+                    {
+                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
+                    }
+                }
+
+                return response;
+            });
+
+            var config = new CommonCredentialTestConfig()
+            {
+                Transport = mockTransport,
+                TenantId = TenantId,
+                IsUnsafeSupportLoggingEnabled = isSupportLoggingEnabled
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore($"{credential.GetType().Name} is not an MSAL credential.");
+            }
+            isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+
+            Assert.AreEqual(token, actualToken.Token);
+            string expectedPrefix = isSupportLoggingEnabled ? "True" : "False";
+            Assert.True(_listener.EventData.Any(d => d.Payload.Any(p => p.ToString().StartsWith($"{expectedPrefix} MSAL"))));
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task DisableInstanceMetadataDiscovery([Values(true, false)] bool disable)
         {
@@ -448,7 +505,7 @@ namespace Azure.Identity.Tests
                 // Assert.AreEqual(tenantId, tId);
                 return publicResult;
             };
-            mockPublicMsalClient.InteractiveAuthFactory = (_, _, _, _, tenant, _, _) =>
+            mockPublicMsalClient.InteractiveAuthFactory = (_, _, _, _, tenant, _, _, _) =>
             {
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;

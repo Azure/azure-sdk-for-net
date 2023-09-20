@@ -8,10 +8,21 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
-require: https://github.com/Azure/azure-rest-api-specs/blob/d03c1964cb76ffd6884d10a1871bbe779a2f68ef/specification/recoveryservicessiterecovery/resource-manager/readme.md
-#tag: package-2023-04
+require: https://github.com/Azure/azure-rest-api-specs/blob/5dd1107d5f2be8d600325d795450e1d854fbe7e8/specification/recoveryservicessiterecovery/resource-manager/readme.md
+#tag: package-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+    # The discriminator value is incorrect
+    - ReplicationFabrics_Create 
+    - ReplicationProtectionContainers_Create
+    - ReplicationProtectedItems_Delete
+    - ReplicationProtectionContainerMappings_Create
+    # Missing requried parameter
+    - ReplicationJobs_Export
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -336,7 +347,7 @@ format-by-name-rules:
   'VMwareMachineId': 'arm-id'
   '*ProcessServerId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

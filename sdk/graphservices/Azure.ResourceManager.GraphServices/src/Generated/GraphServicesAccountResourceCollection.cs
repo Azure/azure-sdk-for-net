@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -26,8 +27,6 @@ namespace Azure.ResourceManager.GraphServices
     /// </summary>
     public partial class GraphServicesAccountResourceCollection : ArmCollection, IEnumerable<GraphServicesAccountResource>, IAsyncEnumerable<GraphServicesAccountResource>
     {
-        private readonly ClientDiagnostics _graphServicesAccountResourceAccountClientDiagnostics;
-        private readonly AccountRestOperations _graphServicesAccountResourceAccountRestClient;
         private readonly ClientDiagnostics _graphServicesAccountResourceAccountsClientDiagnostics;
         private readonly AccountsRestOperations _graphServicesAccountResourceAccountsRestClient;
 
@@ -41,9 +40,6 @@ namespace Azure.ResourceManager.GraphServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GraphServicesAccountResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _graphServicesAccountResourceAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GraphServices", GraphServicesAccountResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GraphServicesAccountResource.ResourceType, out string graphServicesAccountResourceAccountApiVersion);
-            _graphServicesAccountResourceAccountRestClient = new AccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, graphServicesAccountResourceAccountApiVersion);
             _graphServicesAccountResourceAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GraphServices", GraphServicesAccountResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GraphServicesAccountResource.ResourceType, out string graphServicesAccountResourceAccountsApiVersion);
             _graphServicesAccountResourceAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, graphServicesAccountResourceAccountsApiVersion);
@@ -67,7 +63,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_CreateAndUpdate</description>
+        /// <description>Accounts_CreateAndUpdate</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,12 +78,12 @@ namespace Azure.ResourceManager.GraphServices
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.CreateOrUpdate");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _graphServicesAccountResourceAccountRestClient.CreateAndUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GraphServicesArmOperation<GraphServicesAccountResource>(new GraphServicesAccountResourceOperationSource(Client), _graphServicesAccountResourceAccountClientDiagnostics, Pipeline, _graphServicesAccountResourceAccountRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _graphServicesAccountResourceAccountsRestClient.CreateAndUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GraphServicesArmOperation<GraphServicesAccountResource>(new GraphServicesAccountResourceOperationSource(Client), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, _graphServicesAccountResourceAccountsRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +104,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_CreateAndUpdate</description>
+        /// <description>Accounts_CreateAndUpdate</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,12 +119,12 @@ namespace Azure.ResourceManager.GraphServices
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.CreateOrUpdate");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _graphServicesAccountResourceAccountRestClient.CreateAndUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new GraphServicesArmOperation<GraphServicesAccountResource>(new GraphServicesAccountResourceOperationSource(Client), _graphServicesAccountResourceAccountClientDiagnostics, Pipeline, _graphServicesAccountResourceAccountRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _graphServicesAccountResourceAccountsRestClient.CreateAndUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
+                var operation = new GraphServicesArmOperation<GraphServicesAccountResource>(new GraphServicesAccountResourceOperationSource(Client), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, _graphServicesAccountResourceAccountsRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -149,7 +145,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,11 +157,11 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.Get");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _graphServicesAccountResourceAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _graphServicesAccountResourceAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GraphServicesAccountResource(Client, response.Value), response.GetRawResponse());
@@ -186,7 +182,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,11 +194,11 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.Get");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _graphServicesAccountResourceAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
+                var response = _graphServicesAccountResourceAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GraphServicesAccountResource(Client, response.Value), response.GetRawResponse());
@@ -233,7 +229,7 @@ namespace Azure.ResourceManager.GraphServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesAccountResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesAccountResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +251,7 @@ namespace Azure.ResourceManager.GraphServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesAccountResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesAccountResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -267,7 +263,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,11 +275,11 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.Exists");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _graphServicesAccountResourceAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _graphServicesAccountResourceAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,7 +298,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,11 +310,11 @@ namespace Azure.ResourceManager.GraphServices
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _graphServicesAccountResourceAccountClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.Exists");
+            using var scope = _graphServicesAccountResourceAccountsClientDiagnostics.CreateScope("GraphServicesAccountResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _graphServicesAccountResourceAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                var response = _graphServicesAccountResourceAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="rulestackId"> Associated rulestack Id. </param>
         /// <param name="location"> Rulestack location. </param>
-        internal RulestackDetails(string resourceId, string rulestackId, AzureLocation? location)
+        internal RulestackDetails(ResourceIdentifier resourceId, string rulestackId, AzureLocation? location)
         {
             ResourceId = resourceId;
             RulestackId = rulestackId;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Associated rulestack Id. </summary>
         public string RulestackId { get; set; }
         /// <summary> Rulestack location. </summary>

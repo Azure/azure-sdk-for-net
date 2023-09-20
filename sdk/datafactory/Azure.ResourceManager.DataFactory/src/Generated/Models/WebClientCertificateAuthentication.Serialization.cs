@@ -17,10 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pfx"u8);
-            writer.WriteObjectValue(Pfx);
-            writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
-            writer.WritePropertyName("url"u8);
+            JsonSerializer.Serialize(writer, Pfx); writer.WritePropertyName("password"u8);
+            JsonSerializer.Serialize(writer, Password); writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
@@ -41,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("pfx"u8))
                 {
-                    pfx = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
+                    pfx = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
+                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("url"u8))

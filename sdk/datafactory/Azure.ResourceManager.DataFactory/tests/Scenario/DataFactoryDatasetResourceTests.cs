@@ -9,8 +9,6 @@ using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using NUnit.Framework;
-using DataFactoryLinkedServiceReference = Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceReference;
-using DataFactoryLinkedServiceReferenceType = Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceReferenceType;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
@@ -86,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         private async Task<DataFactoryDatasetResource> CreateDefaultDataset(string datasetName)
         {
             DataFactoryLinkedServiceReference linkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
-            DataFactoryDatasetDefinition properties = new DataFactoryDatasetDefinition(linkedServiceReference);
+            DataFactoryDatasetProperties properties = new DataFactoryDatasetProperties(linkedServiceReference);
             DataFactoryDatasetData data = new DataFactoryDatasetData(properties);
             var dataset = await _dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return dataset.Value;

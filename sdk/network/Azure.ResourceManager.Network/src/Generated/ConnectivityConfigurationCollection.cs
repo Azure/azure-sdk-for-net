@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectivityConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectivityConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectivityConfigurationResource(Client, ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(e)), _connectivityConfigurationClientDiagnostics, Pipeline, "ConnectivityConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectivityConfigurationResource(Client, ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(e)), _connectivityConfigurationClientDiagnostics, Pipeline, "ConnectivityConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectivityConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectivityConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectivityConfigurationResource(Client, ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(e)), _connectivityConfigurationClientDiagnostics, Pipeline, "ConnectivityConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectivityConfigurationResource(Client, ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(e)), _connectivityConfigurationClientDiagnostics, Pipeline, "ConnectivityConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

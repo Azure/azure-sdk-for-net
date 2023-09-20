@@ -10,11 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    internal partial class EndpointBaseUpdateProperties : IUtf8JsonSerializable
+    public partial class EndpointBaseUpdateProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("endpointType"u8);
+            writer.WriteStringValue(EndpointType.ToString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);

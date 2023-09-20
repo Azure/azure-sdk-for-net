@@ -75,6 +75,9 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Gets or sets the schedule and suspend mode. </summary>
+        public ScheduleAndSuspendMode ScheduleAndSuspendMode { get; internal set; }
+
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();

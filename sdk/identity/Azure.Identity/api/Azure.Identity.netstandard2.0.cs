@@ -92,6 +92,13 @@ namespace Azure.Identity
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    public partial class BrowserCustomizationOptions
+    {
+        public BrowserCustomizationOptions() { }
+        public string ErrorMessage { get { throw null; } set { } }
+        public string SuccessMessage { get { throw null; } set { } }
+        public bool? UseEmbeddedWebView { get { throw null; } set { } }
+    }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
         public ChainedTokenCredential(params Azure.Core.TokenCredential[] sources) { }
@@ -274,6 +281,7 @@ namespace Azure.Identity
         public InteractiveBrowserCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
+        public Azure.Identity.BrowserCustomizationOptions BrowserCustomization { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
@@ -365,6 +373,7 @@ namespace Azure.Identity
         public TokenCredentialOptions() { }
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
+        public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {

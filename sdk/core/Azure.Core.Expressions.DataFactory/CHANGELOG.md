@@ -1,10 +1,28 @@
 # Release History
 
-## 1.0.0-beta.4 (2023-07-10)
+## 1.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
 
-- Added `TypeReferenceTypeAttribute` to Data Factory types to support code generation.
+## 1.0.0-beta.5 (2023-08-15)
+
+### Bugs Fixed
+
+- Added serialization support for `DataFactoryElement<BinaryData>` where the underlying 
+  `BinaryData` is a JSON object.
+
+## 1.0.0-beta.4 (2023-07-13)
+
+### Other Changes
+
+- Added `PropertyReferenceTypeAttribute` to Data Factory types to support code generation.
+- Added `DataFactoryModelFactory` to support mocking.
 
 ## 1.0.0-beta.3 (2023-06-27)
 

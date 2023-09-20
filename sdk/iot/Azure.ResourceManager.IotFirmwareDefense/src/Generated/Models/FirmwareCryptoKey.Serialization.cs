@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        usage = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        filePaths = null;
                         continue;
                     }
                     List<string> array = new List<string>();

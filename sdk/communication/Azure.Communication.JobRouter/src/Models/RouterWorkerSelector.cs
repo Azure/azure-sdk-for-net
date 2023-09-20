@@ -12,18 +12,18 @@ namespace Azure.Communication.JobRouter
     [CodeGenSuppress("RouterWorkerSelector", typeof(string), typeof(LabelOperator))]
     public partial class RouterWorkerSelector
     {
-        /// <summary> Describes how long this label selector is valid in seconds. </summary>
-        public TimeSpan? Ttl { get; set; }
+        /// <summary> Describes how long this label selector is valid for. </summary>
+        public TimeSpan? ExpiresAfter { get; set; }
 
-        [CodeGenMember("TtlSeconds")]
-        internal double? _ttlSeconds {
+        [CodeGenMember("ExpiresAfterSeconds")]
+        internal double? _expiresAfterSeconds {
             get
             {
-                return Ttl?.TotalSeconds is null or 0 ? null : Ttl?.TotalSeconds;
+                return ExpiresAfter?.TotalSeconds is null or 0 ? null : ExpiresAfter?.TotalSeconds;
             }
             set
             {
-                Ttl = value != null ? TimeSpan.FromSeconds(value.Value) : null;
+                ExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
             }
         }
 

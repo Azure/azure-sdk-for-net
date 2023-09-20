@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotCentralApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotCentralApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotCentralApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotCentralApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplatesApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplatesApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
     }
 }
