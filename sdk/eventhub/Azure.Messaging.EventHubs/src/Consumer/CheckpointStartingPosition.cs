@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Consumer
     public struct CheckpointStartingPosition
     {
         /// <summary>
-        /// TODO.
+        /// The offset associated with this checkpoint. If a sequence number is not provided, then this indicates that a processor should begin reading from the next event in the stream.
         /// </summary>
         public long? Offset { get; }
 
@@ -36,6 +36,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         {
             Offset = offset;
             SequenceNumber = sequenceNumber;
+            ReplicationSegment = null;
         }
 
         /// <summary>

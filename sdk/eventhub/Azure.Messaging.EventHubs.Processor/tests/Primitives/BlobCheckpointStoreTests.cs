@@ -131,7 +131,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 expectedConsumerGroup,
                 expectedPartition,
                 expectedProcessorId,
-                new CheckpointStartingPosition(expectedOffset, expectedSequence),
+                It.Is<CheckpointStartingPosition>(csp =>
+                    csp.Offset == expectedOffset
+                    && csp.SequenceNumber == expectedSequence),
                 cancellationSource.Token),
             Times.Once);
         }

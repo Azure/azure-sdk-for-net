@@ -192,8 +192,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubName = data.EventHubName,
                     ConsumerGroup = data.ConsumerGroup,
                     PartitionId = data.PartitionId,
-                    ClientAuthorIdentifier = "Id",
-                    StartingPosition = new EventPosition { Offset = data.Offset, IsInclusive = false },
+                    ClientIdentifier = data.ClientIdentifier,
+                    StartingPosition = EventPosition.FromOffset(data.StartingPosition.Offset.Value, false),
                     LastModified = DateTimeOffset.Parse(data.LastModified)
                 };
 
@@ -215,10 +215,14 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
         ///   that an event processor should begin reading from.
         /// </summary>
-        ///
-        /// <param name="checkpoint">The <see cref="EventProcessorCheckpoint"/> to use as the checkpoint.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+        /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
-        ///
+        /// <returns></returns>
         public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
                                                    string eventHubName,
                                                    string consumerGroup,
@@ -230,9 +234,9 @@ namespace Azure.Messaging.EventHubs.Tests
             lock (_checkpointLock)
             {
                 var key = (fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
-                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, checkpointStartingPosition.Offset.ToString(), DateTimeOffset.Now.ToString(), checkpointStartingPosition.SequenceNumber);
+                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, checkpointStartingPosition, DateTimeOffset.Now.ToString());
 
-                Log($"Checkpoint with partition id = '{partitionId}' updated successfully.");
+                Log($"Checkpoint with partition id = '{partitionId}' updated successfully by {clientIdentifier}.");
             }
 
             return Task.CompletedTask;
@@ -267,25 +271,25 @@ namespace Azure.Messaging.EventHubs.Tests
             public string EventHubName { get; }
             public string ConsumerGroup { get; }
             public string PartitionId { get; }
-            public string Offset { get; }
-            public long? SequenceNumber { get; }
+            public CheckpointStartingPosition StartingPosition { get; }
             public string LastModified { get; }
+            public string ClientIdentifier { get; }
 
             public CheckpointData(string fullyQualifiedNamespace,
                                   string eventHubName,
                                   string consumerGroup,
                                   string partitionId,
-                                  string offset,
-                                  string lastModified,
-                                  long? sequenceNumber = default)
+                                  string clientIdentifier,
+                                  CheckpointStartingPosition startingPosition,
+                                  string lastModified)
             {
                FullyQualifiedNamespace = fullyQualifiedNamespace;
                EventHubName = eventHubName;
                ConsumerGroup = consumerGroup;
                PartitionId = partitionId;
-               Offset = offset;
-               SequenceNumber = sequenceNumber;
+                StartingPosition = startingPosition;
                LastModified = lastModified;
+               ClientIdentifier = clientIdentifier;
             }
         }
     }

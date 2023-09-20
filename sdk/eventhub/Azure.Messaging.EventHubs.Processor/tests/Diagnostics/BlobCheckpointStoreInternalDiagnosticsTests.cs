@@ -359,7 +359,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, "id", new CheckpointStartingPosition(999), CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, "id", new CheckpointStartingPosition(999, null), CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
             mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, "id", ex.Message));
         }
 

@@ -5,13 +5,12 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Primitives;
 
 namespace Azure.Messaging.EventHubs.Consumer
 {
     /// <summary>
     ///   The position of events in an Event Hub partition, typically used in the creation of
-    ///   an <see cref="EventHubConsumerClient" /> or an <see cref="EventProcessorCheckpoint"/>.
+    ///   an <see cref="EventHubConsumerClient" />.
     /// </summary>
     ///
     public struct EventPosition : IEquatable<EventPosition>
@@ -22,16 +21,13 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>The token that represents the last event in the stream of a partition.</summary>
         private const string EndOfStreamOffset = "@latest";
 
-        /// <summary>The token that represents the default unkown replication segment.</summary>
-        private const string UnknownReplicationSegment = "-1";
-
         /// <summary>
         ///   Corresponds to the location of the first event present in the partition.  Use this
         ///   position to begin receiving from the first event that was enqueued in the partition
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition Earliest { get; } = FromOffset(StartOfStreamOffset, null, false);
+        public static EventPosition Earliest { get; } = FromOffset(StartOfStreamOffset, false);
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
@@ -39,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   consumer begins reading with this position.
         /// </summary>
         ///
-        public static EventPosition Latest { get; } = FromOffset(EndOfStreamOffset, null, false);
+        public static EventPosition Latest { get; } = FromOffset(EndOfStreamOffset, false);
 
         /// <summary>
         ///   The offset of the event identified by this position.
@@ -47,16 +43,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
         ///
-        public string Offset { get; set; }
-
-        /// <summary>
-        ///   The replication segment of the event identified by this position. Needs to be accompanied by a sequence number when
-        ///   using a geo replication enabled Event Hubs namespace.
-        /// </summary>
-        ///
-        /// <value>Expected to be <c>null</c> if the Event Hub does not support geo replication.</value>
-        ///
-        public string ReplicationSegment { get; set; }
+        internal string Offset { get; set; }
 
         /// <summary>
         ///   Indicates if the specified offset is inclusive of the event which it identifies.  This
@@ -65,24 +52,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <value><c>true</c> if the offset is inclusive; otherwise, <c>false</c>.</value>
         ///
-        public bool IsInclusive { get; set; }
-
-        /// <summary>
-        ///   The sequence number of the event identified by this position.
-        /// </summary>
-        ///
-        /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
-        ///
-        public long? SequenceNumber { get; set; }
-
-        /// <summary>
-        ///   An optional sequence number intended as informational metadata. When this is defined it will not be used to determine
-        ///   positioning, instead the <see cref="Offset"/> value will be used.
-        /// </summary>
-        ///
-        /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
-        ///
-        public string InformationalSequenceNumber { get; set; }
+        internal bool IsInclusive { get; set; }
 
         /// <summary>
         ///   The enqueue time of the event identified by this position.
@@ -93,20 +63,21 @@ namespace Azure.Messaging.EventHubs.Consumer
         internal DateTimeOffset? EnqueuedTime { get; set; }
 
         /// <summary>
-        ///   Corresponds to a specific offset in the partition event stream.  By default, if an event is located
-        ///   at that offset, it will be read.  Setting <paramref name="isInclusive"/> to <c>false</c> will skip the
-        ///   event at that offset and begin reading at the next available event.
+        ///   The sequence number of the event identified by this position.
         /// </summary>
         ///
-        /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
-        /// <param name="informationalSequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
-        /// <param name="isInclusive">When <c>true</c>, the event with the <paramref name="offset"/> is included; otherwise the next event in sequence will be read.</param>
+        /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
         ///
-        /// <returns>The specified position of an event in the partition.</returns>
+        internal long? SequenceNumber { get; set; }
+
+        /// <summary>
+        ///   The replication segment of the event identified by this position. Needs to be accompanied by a sequence number when
+        ///   using a geo replication enabled Event Hubs namespace.
+        /// </summary>
         ///
-        public static EventPosition FromOffset(long offset,
-                                               long informationalSequenceNumber,
-                                               bool isInclusive = true) => FromOffset(offset.ToString(CultureInfo.InvariantCulture), informationalSequenceNumber, isInclusive);
+        /// <value>Expected to be <c>null</c> if the Event Hub does not support geo replication.</value>
+        ///
+        internal string ReplicationSegment { get; set; }
 
         /// <summary>
         ///   Corresponds to a specific offset in the partition event stream.  By default, if an event is located
@@ -120,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>The specified position of an event in the partition.</returns>
         ///
         public static EventPosition FromOffset(long offset,
-                                               bool isInclusive = true) => FromOffset(offset.ToString(CultureInfo.InvariantCulture), null, isInclusive);
+                                               bool isInclusive = true) => FromOffset(offset.ToString(CultureInfo.InvariantCulture), isInclusive);
 
         /// <summary>
         ///   Corresponds to an event with the specified sequence number in the partition.  By default, the event
@@ -155,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>The specified position of an event in the partition.</returns>
         ///
-        internal static EventPosition FromSequenceNumber(long sequenceNumber,
+        public static EventPosition FromSequenceNumber(long sequenceNumber,
                                                          string replicationSegment,
                                                          bool isInclusive = true)
         {
@@ -259,26 +230,14 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </summary>
         ///
         /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
-        /// <param name="informationalSequenceNumber"> An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
         /// <param name="isInclusive">If true, the event at the <paramref name="offset"/> is included; otherwise the next event in sequence will be received.</param>
         ///
         /// <returns>The position of the specified event.</returns>
         ///
         private static EventPosition FromOffset(string offset,
-                                                long? informationalSequenceNumber,
                                                 bool isInclusive)
         {
             Argument.AssertNotNullOrWhiteSpace(nameof(offset), offset);
-
-            if (informationalSequenceNumber != null)
-            {
-                return new EventPosition
-                {
-                    Offset = offset,
-                    IsInclusive = isInclusive,
-                    InformationalSequenceNumber = informationalSequenceNumber.ToString()
-                };
-            }
 
             return new EventPosition
             {

@@ -955,17 +955,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 mockCheckpointStore
                 .Verify(storage => storage.UpdateCheckpointAsync(
-                    It.Is<EventProcessorCheckpoint>(cp =>
-                    cp.FullyQualifiedNamespace == processorClient.FullyQualifiedNamespace
-                    && cp.EventHubName == processorClient.EventHubName
-                    && cp.ConsumerGroup == processorClient.ConsumerGroup
-                    && cp.PartitionId == capturedEventArgs[index].Partition.PartitionId
-                    && cp.ClientAuthorIdentifier == processorClient.Identifier
-                    && cp.StartingPosition.Offset == capturedEventArgs[index].Data.Offset.ToString()
-                    && cp.StartingPosition.InformationalSequenceNumber == capturedEventArgs[index].Data.SequenceNumber.ToString()),
-                    It.IsAny<CancellationToken>()),
-                Times.Once,
-                $"Creating a checkpoint for index {index} should have invoked the storage manager correctly.");
+                        processorClient.FullyQualifiedNamespace,
+                        processorClient.EventHubName,
+                        processorClient.ConsumerGroup,
+                        capturedEventArgs[index].Partition.PartitionId,
+                        processorClient.Identifier,
+                        It.Is<CheckpointStartingPosition>(csp =>
+                            csp.Offset == capturedEventArgs[index].Data.Offset
+                            && csp.SequenceNumber == capturedEventArgs[index].Data.SequenceNumber),
+                        It.IsAny<CancellationToken>()),
+                    Times.Once,
+                    $"Creating a checkpoint for index {index} should have invoked the storage manager correctly.");
             }
 
             cancellationSource.Cancel();
@@ -1461,14 +1461,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockStorage
                 .Verify(storage => storage.UpdateCheckpointAsync(
-                    It.Is<EventProcessorCheckpoint>(cp =>
-                    cp.FullyQualifiedNamespace == processorClient.FullyQualifiedNamespace
-                    && cp.EventHubName == processorClient.EventHubName
-                    && cp.ConsumerGroup == processorClient.ConsumerGroup
-                    && cp.PartitionId == partitionId
-                    && cp.ClientAuthorIdentifier == processorClient.Identifier
-                    && cp.StartingPosition.Offset == offset.ToString()
-                    && cp.StartingPosition.InformationalSequenceNumber == sequenceNumber.ToString()),
+                    processorClient.FullyQualifiedNamespace,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup,
+                    partitionId,
+                    processorClient.Identifier,
+                    It.Is<CheckpointStartingPosition>(csp =>
+                        csp.Offset == offset
+                        && csp.SequenceNumber == sequenceNumber),
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 

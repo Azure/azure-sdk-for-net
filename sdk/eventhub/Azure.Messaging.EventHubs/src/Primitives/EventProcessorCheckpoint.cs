@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   The identifier of the specific Event Hub client that wrote this checkpoint.
         /// </summary>
         ///
-        public string ClientAuthorIdentifier { get; set; }
+        public string ClientIdentifier { get; set; }
 
         /// <summary>
         ///   The name of the consumer group this checkpoint is associated with.
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
-            ClientAuthorIdentifier = clientIdentifier;
+            ClientIdentifier = clientIdentifier;
             StartingPosition = startingPosition;
         }
     }
