@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 Annotation = "annotation",
                 ConfigurationType = NetworkFabricConfigurationType.File,
                 AclsUri = new Uri("https://ACL-Storage-URL"),
+                DefaultAction = CommunityActionType.Permit,
                 MatchConfigurations =
 {
 new AccessControlListMatchConfiguration()

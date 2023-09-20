@@ -1,14 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.35.0-beta.1</Version>
+    <Version>1.36.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.34.0</ApiCompatVersion>
+    <ApiCompatVersion>1.35.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
@@ -17,6 +17,7 @@
       to give customers time to migrate without losing perf optimizations
      -->
     <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
+    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +42,10 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" />
     <PackageReference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,7 +81,6 @@
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
-    <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
   </ItemGroup>
 
 </Project>

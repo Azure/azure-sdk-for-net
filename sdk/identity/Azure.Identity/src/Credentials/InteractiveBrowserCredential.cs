@@ -26,8 +26,6 @@ namespace Azure.Identity
         internal CredentialPipeline Pipeline { get; }
         internal bool DisableAutomaticAuthentication { get; }
         internal AuthenticationRecord Record { get; private set; }
-        internal bool _isCaeEnabledRequestCached = false;
-        internal bool _isCaeDisabledRequestCached = false;
         internal string DefaultScope { get; }
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to interactively authenticate.";
@@ -197,13 +195,7 @@ namespace Azure.Identity
                 Exception inner = null;
 
                 var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, requestContext, AdditionallyAllowedTenantIds);
-                var isCachePopulated = Record switch
-                {
-                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
-                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
-                    _ => false
-                };
-                if (isCachePopulated)
+                if (Record is not null)
                 {
                     try
                     {
@@ -246,14 +238,6 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
-            if (context.IsCaeEnabled)
-            {
-                _isCaeEnabledRequestCached = true;
-            }
-            else
-            {
-                _isCaeDisabledRequestCached = true;
-            }
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
     }

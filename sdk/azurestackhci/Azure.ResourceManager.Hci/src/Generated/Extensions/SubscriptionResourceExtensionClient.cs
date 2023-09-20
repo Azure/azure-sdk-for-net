@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), HciClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), HciClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), HciClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), HciClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciGalleryImageGalleryImagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciGalleryImageGalleryImagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciGalleryImageResource(Client, HciGalleryImageData.DeserializeHciGalleryImageData(e)), HciGalleryImageGalleryImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciGalleryImageResource(Client, HciGalleryImageData.DeserializeHciGalleryImageData(e)), HciGalleryImageGalleryImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciGalleryImageGalleryImagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciGalleryImageGalleryImagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciGalleryImageResource(Client, HciGalleryImageData.DeserializeHciGalleryImageData(e)), HciGalleryImageGalleryImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciGalleryImageResource(Client, HciGalleryImageData.DeserializeHciGalleryImageData(e)), HciGalleryImageGalleryImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciMarketplaceGalleryImageResource(Client, HciMarketplaceGalleryImageData.DeserializeHciMarketplaceGalleryImageData(e)), HciMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciMarketplaceGalleryImageResource(Client, HciMarketplaceGalleryImageData.DeserializeHciMarketplaceGalleryImageData(e)), HciMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciMarketplaceGalleryImageResource(Client, HciMarketplaceGalleryImageData.DeserializeHciMarketplaceGalleryImageData(e)), HciMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciMarketplaceGalleryImageResource(Client, HciMarketplaceGalleryImageData.DeserializeHciMarketplaceGalleryImageData(e)), HciMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciNetworkInterfaceNetworkInterfacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciNetworkInterfaceNetworkInterfacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciNetworkInterfaceResource(Client, HciNetworkInterfaceData.DeserializeHciNetworkInterfaceData(e)), HciNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciNetworkInterfaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciNetworkInterfaceResource(Client, HciNetworkInterfaceData.DeserializeHciNetworkInterfaceData(e)), HciNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciNetworkInterfaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +242,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciNetworkInterfaceNetworkInterfacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciNetworkInterfaceNetworkInterfacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciNetworkInterfaceResource(Client, HciNetworkInterfaceData.DeserializeHciNetworkInterfaceData(e)), HciNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciNetworkInterfaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciNetworkInterfaceResource(Client, HciNetworkInterfaceData.DeserializeHciNetworkInterfaceData(e)), HciNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciNetworkInterfaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,7 +264,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciStorageContainerStorageContainersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciStorageContainerStorageContainersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciStorageContainerResource(Client, HciStorageContainerData.DeserializeHciStorageContainerData(e)), HciStorageContainerStorageContainersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciStorageContainers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciStorageContainerResource(Client, HciStorageContainerData.DeserializeHciStorageContainerData(e)), HciStorageContainerStorageContainersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciStorageContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciStorageContainerStorageContainersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciStorageContainerStorageContainersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciStorageContainerResource(Client, HciStorageContainerData.DeserializeHciStorageContainerData(e)), HciStorageContainerStorageContainersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciStorageContainers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciStorageContainerResource(Client, HciStorageContainerData.DeserializeHciStorageContainerData(e)), HciStorageContainerStorageContainersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciStorageContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciVirtualHardDiskVirtualHardDisksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVirtualHardDiskVirtualHardDisksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVirtualHardDiskResource(Client, HciVirtualHardDiskData.DeserializeHciVirtualHardDiskData(e)), HciVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualHardDisks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVirtualHardDiskResource(Client, HciVirtualHardDiskData.DeserializeHciVirtualHardDiskData(e)), HciVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualHardDisks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -329,7 +330,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciVirtualHardDiskVirtualHardDisksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVirtualHardDiskVirtualHardDisksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVirtualHardDiskResource(Client, HciVirtualHardDiskData.DeserializeHciVirtualHardDiskData(e)), HciVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualHardDisks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVirtualHardDiskResource(Client, HciVirtualHardDiskData.DeserializeHciVirtualHardDiskData(e)), HciVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualHardDisks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -351,7 +352,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVirtualMachineResource(Client, HciVirtualMachineData.DeserializeHciVirtualMachineData(e)), HciVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualMachines", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVirtualMachineResource(Client, HciVirtualMachineData.DeserializeHciVirtualMachineData(e)), HciVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -373,7 +374,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVirtualMachineResource(Client, HciVirtualMachineData.DeserializeHciVirtualMachineData(e)), HciVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualMachines", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVirtualMachineResource(Client, HciVirtualMachineData.DeserializeHciVirtualMachineData(e)), HciVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -395,7 +396,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVirtualNetworkResource(Client, HciVirtualNetworkData.DeserializeHciVirtualNetworkData(e)), HciVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVirtualNetworkResource(Client, HciVirtualNetworkData.DeserializeHciVirtualNetworkData(e)), HciVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -417,7 +418,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HciVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVirtualNetworkResource(Client, HciVirtualNetworkData.DeserializeHciVirtualNetworkData(e)), HciVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVirtualNetworkResource(Client, HciVirtualNetworkData.DeserializeHciVirtualNetworkData(e)), HciVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciVirtualNetworks", "value", "nextLink", cancellationToken);
         }
     }
 }

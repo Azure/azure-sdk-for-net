@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -870,6 +872,33 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.IsEmpty(feature.ClientFilters);
         }
 
+        [Test]
+        public async Task SupportsCustomTransportUse()
+        {
+            var expectedKey = "abc";
+            var expectedValue = "ghi";
+            var expectedLabel = "def";
+            var expectedContent = @$"{{""key"":""{expectedKey}"",""label"":""{expectedLabel}"",""value"":""{expectedValue}""}}";
+
+            var client = new ConfigurationClient(
+                s_connectionString,
+                new ConfigurationClientOptions
+                {
+                    Transport = new HttpClientTransport(new EchoHttpMessageHandler(expectedContent))
+                }
+            );
+
+            var result = await client.GetConfigurationSettingAsync("doesnt-matter");
+            Assert.AreEqual(expectedKey, result.Value.Key);
+            Assert.AreEqual(expectedValue, result.Value.Value);
+            Assert.AreEqual(expectedLabel, result.Value.Label);
+
+            var result2 = await client.SetConfigurationSettingAsync("whatever", "somevalue");
+            Assert.AreEqual(expectedKey, result.Value.Key);
+            Assert.AreEqual(expectedValue, result.Value.Value);
+            Assert.AreEqual(expectedLabel, result.Value.Label);
+        }
+
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
             using (var stream = new MemoryStream())
@@ -960,6 +989,25 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             json.WriteEndArray();
             json.WriteEndObject();
+        }
+
+        private class EchoHttpMessageHandler : HttpMessageHandler
+        {
+            private readonly string _expectedContent;
+
+            public EchoHttpMessageHandler(string expectedJsonContent)
+            {
+                _expectedContent = expectedJsonContent;
+            }
+
+            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                return Task.FromResult(new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(_expectedContent, Encoding.UTF8, "application/json")
+                });
+            }
         }
     }
 }

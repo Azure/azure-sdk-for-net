@@ -1043,6 +1043,11 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal static class ActivityExtensions
     {
+        static ActivityExtensions()
+        {
+            ResetFeatureSwitch();
+        }
+
         public static bool SupportsActivitySource { get; private set; }
 
         public static void ResetFeatureSwitch()

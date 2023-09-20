@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionNetworkManagerConnectionRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionNetworkManagerConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionNetworkManagerConnectionResource(Client, NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(e)), _subscriptionNetworkManagerConnectionClientDiagnostics, Pipeline, "SubscriptionNetworkManagerConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionNetworkManagerConnectionResource(Client, NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(e)), _subscriptionNetworkManagerConnectionClientDiagnostics, Pipeline, "SubscriptionNetworkManagerConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionNetworkManagerConnectionRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionNetworkManagerConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionNetworkManagerConnectionResource(Client, NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(e)), _subscriptionNetworkManagerConnectionClientDiagnostics, Pipeline, "SubscriptionNetworkManagerConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionNetworkManagerConnectionResource(Client, NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(e)), _subscriptionNetworkManagerConnectionClientDiagnostics, Pipeline, "SubscriptionNetworkManagerConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

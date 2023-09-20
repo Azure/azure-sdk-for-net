@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public override async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
-            await OnJobStatusChangedAsync(DataTransferStatus.InProgress).ConfigureAwait(false);
+            await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
             int partNumber = 0;
 
             if (_jobParts.Count == 0)
@@ -106,9 +106,9 @@ namespace Azure.Storage.DataMovement
                 bool isFinalPartFound = false;
                 foreach (JobPartInternal part in _jobParts)
                 {
-                    if (part.JobPartStatus != DataTransferStatus.Completed)
+                    if (!part.JobPartStatus.HasCompletedSuccessfully)
                     {
-                        part.JobPartStatus = DataTransferStatus.Queued;
+                        part.JobPartStatus.TrySetTransferStateChange(DataTransferState.Queued);
                         yield return part;
 
                         if (part.IsFinalPart)
@@ -175,9 +175,10 @@ namespace Azure.Storage.DataMovement
                 StorageResource current = enumerator.Current;
                 if (lastResource != default)
                 {
-                    string sourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
-                        ? lastResource.Path
-                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                    string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                    string sourceName = string.IsNullOrEmpty(containerUriPath)
+                        ? lastResource.Uri.GetPath()
+                        : lastResource.Uri.GetPath().Substring(containerUriPath.Length + 1);
 
                     if (!existingSources.Contains(sourceName))
                     {
@@ -215,9 +216,10 @@ namespace Azure.Storage.DataMovement
                 {
                     // Return last part but enable the part to be the last job part of the entire job
                     // so we know that we've finished listing in the container
-                    string lastSourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
-                        ? lastResource.Path
-                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                    string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                    string lastSourceName = string.IsNullOrEmpty(containerUriPath)
+                        ? lastResource.Uri.GetPath()
+                        : lastResource.Uri.GetPath().Substring(containerUriPath.Length + 1);
 
                     lastPart = await StreamToUriJobPart.CreateJobPartAsync(
                             job: this,

@@ -12,6 +12,9 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/d99f18b18405cd446f7a
 tag: package-preview-2022-12-15
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -29,7 +32,7 @@ format-by-name-rules:
   '*ApplicationObjectId': 'uuid'
   '*ServicePrincipalObjectId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -162,6 +165,7 @@ rename-mapping:
   ComponentsI4F0MhSchemasVirtualnetworkpropertiesPropertiesSubnetsItemsPropertiesRoutetable: HciSubnetRouteTable
   VirtualNetworkStatusProvisioningStatus: HciVirtualNetworkProvisioningStatus
   VmSizeEnum: HciVirtualMachineSize
+  ClusterPatch.identity.type: ManagedServiceIdentityType
 
 directive:
   # Common type should not be flatten

@@ -12,6 +12,11 @@ namespace: Azure.ResourceManager.DataFactory
 require: https://github.com/Azure/azure-rest-api-specs/blob/6885351bec8d6a2cea85c5aa793e53616e5f517b/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - ChangeDataCapture_CreateOrUpdate  # Missing required property
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -32,7 +37,7 @@ format-by-name-rules:
   'sessionId': 'uuid'
   'dataFactoryLocation': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -139,6 +144,7 @@ rename-mapping:
   GlobalParameterListResponse: DataFactoryGlobalParameterListResult
   GlobalParameterResource: DataFactoryGlobalParameter
   GlobalParameterSpecification: DataFactoryGlobalParameterProperties
+  GlobalParameterSpecification.type: GlobalParameterType
   HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   HDInsightOnDemandLinkedService.typeProperties.timeToLive: TimeToLiveExpression
   HttpSource: DataFactoryHttpFileSource
@@ -204,6 +210,7 @@ rename-mapping:
   QueryDataFlowDebugSessionsResponse: DataFlowDebugSessionInfoListResult
   ScriptActivityParameterType.Timespan: TimeSpan
   ScriptActivityTypePropertiesLogSettings: ScriptActivityTypeLogSettings
+  ScriptActivityScriptBlock.type: ScriptType
   SecretBase: DataFactorySecret
   SecureInputOutputPolicy.secureInput: IsSecureInputEnabled
   SecureInputOutputPolicy.secureOutput: IsSecureOutputEnabled

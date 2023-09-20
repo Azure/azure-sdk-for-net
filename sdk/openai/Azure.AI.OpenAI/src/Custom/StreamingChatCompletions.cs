@@ -109,7 +109,7 @@ namespace Azure.AI.OpenAI
                         // hanging!) now.
                         foreach (StreamingChatChoice streamingChatChoice in _streamingChatChoices)
                         {
-                            streamingChatChoice.EnsureFinishStreaming();
+                            streamingChatChoice.EnsureFinishStreaming(_pumpException);
                         }
                     }
                     _streamingTaskComplete = true;
@@ -124,11 +124,6 @@ namespace Azure.AI.OpenAI
             bool isFinalIndex = false;
             for (int i = 0; !isFinalIndex && !cancellationToken.IsCancellationRequested; i++)
             {
-                if (_pumpException != null)
-                {
-                    throw _pumpException;
-                }
-
                 bool doneWaiting = false;
                 while (!doneWaiting)
                 {
@@ -142,6 +137,11 @@ namespace Azure.AI.OpenAI
                     {
                         await _updateAvailableEvent.WaitAsync(cancellationToken).ConfigureAwait(false);
                     }
+                }
+
+                if (_pumpException != null)
+                {
+                    throw _pumpException;
                 }
 
                 StreamingChatChoice newChatChoice = null;
