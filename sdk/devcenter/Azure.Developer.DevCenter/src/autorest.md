@@ -16,6 +16,7 @@ security: AADToken
 security-scopes: https://devcenter.azure.com/.default
 
 directive:
+
   # Move project name to method level parameters
   - from: swagger-document
     where: $.parameters["ProjectNameParameter"]
@@ -51,94 +52,36 @@ directive:
       delete $["x-ms-long-running-operation-options"];
 
   # Override operation names to match SDK naming preferences
-  # TODO: update these names in the Swagger itself for the 2023-07-01-preview version
   - from: swagger-document
-    where-operation: DevBoxes_DelayActions
+    where: $..[?(@.operationId !== undefined)]
     transform: >-
-      $.operationId = "DevBoxes_DelayAllActions";
+      const mappingTable = {
+        "DevBoxes_DelayActions": "DevBoxes_DelayAllActions",
+        "DevBoxes_GetDevBoxByUser": "DevBoxes_GetDevBox",
+        "DevBoxes_ListDevBoxesByUser": "DevBoxes_ListDevBoxes",
+        "DevBoxes_GetScheduleByPool": "DevBoxes_GetSchedule",
+        "DevCenter_ListAllDevBoxes": "DevBoxes_ListAllDevBoxes",
+        "DevCenter_ListAllDevBoxesByUser": "DevBoxes_ListAllDevBoxesByUser",
+        "Environments_CreateOrReplaceEnvironment": "DeploymentEnvironments_CreateOrUpdateEnvironment",
+        "Environments_DeleteEnvironment": "DeploymentEnvironments_DeleteEnvironment",
+        "Environments_GetCatalog": "DeploymentEnvironments_GetCatalog",
+        "Environments_GetEnvironmentByUser": "DeploymentEnvironments_GetEnvironment",
+        "Environments_GetEnvironmentDefinition": "DeploymentEnvironments_GetEnvironmentDefinition",
+        "Environments_ListCatalogsByProject": "DeploymentEnvironments_ListCatalogs",
+        "Environments_ListEnvironmentDefinitionsByCatalog": "DeploymentEnvironments_ListEnvironmentDefinitionsByCatalog",
+        "Environments_ListEnvironmentDefinitionsByProject": "DeploymentEnvironments_ListEnvironmentDefinitions",
+        "Environments_ListEnvironments": "DeploymentEnvironments_ListAllEnvironments",
+        "Environments_ListEnvironmentsByUser": "DeploymentEnvironments_ListEnvironments",
+        "Environments_ListEnvironmentTypes": "DeploymentEnvironments_ListEnvironmentTypes",
+        "DevBoxes_ListSchedulesByPool": "DevBoxes_ListSchedules",
+      };
+
+      $.operationId = (mappingTable[$.operationId] ?? $.operationId);
 
   - from: swagger-document
-    where-operation: DevBoxes_GetDevBoxByUser
+    where: $..[?(@.operationId == "DevBoxes_ListSchedulesByPool" || @.operationId == "DevBoxes_ListPools")]
     transform: >-
-      $.operationId = "DevBoxes_GetDevBox";
-
-  - from: swagger-document
-    where-operation: DevBoxes_ListDevBoxesByUser
-    transform: >-
-      $.operationId = "DevBoxes_ListDevBoxes";
-
-  - from: swagger-document
-    where-operation: DevBoxes_ListSchedulesByPool
-    transform: >-
-      $.operationId = "DevBoxes_ListSchedules";
-
-  - from: swagger-document
-    where-operation: DevBoxes_GetScheduleByPool
-    transform: >-
-      $.operationId = "DevBoxes_GetSchedule";
-
-  - from: swagger-document
-    where-operation: DevCenter_ListAllDevBoxes
-    transform: >-
-      $.operationId = "DevBoxes_ListAllDevBoxes";
-
-  - from: swagger-document
-    where-operation: DevCenter_ListAllDevBoxesByUser
-    transform: >-
-      $.operationId = "DevBoxes_ListAllDevBoxesByUser";
-
-  - from: swagger-document
-    where-operation: Environments_CreateOrReplaceEnvironment
-    transform: >-
-      $.operationId = "DeploymentEnvironments_CreateOrUpdateEnvironment";
-
-  - from: swagger-document
-    where-operation: Environments_DeleteEnvironment
-    transform: >-
-      $.operationId = "DeploymentEnvironments_DeleteEnvironment";
-
-  - from: swagger-document
-    where-operation: Environments_GetCatalog
-    transform: >-
-      $.operationId = "DeploymentEnvironments_GetCatalog";
-
-  - from: swagger-document
-    where-operation: Environments_GetEnvironmentByUser
-    transform: >-
-      $.operationId = "DeploymentEnvironments_GetEnvironment";
-
-  - from: swagger-document
-    where-operation: Environments_GetEnvironmentDefinition
-    transform: >-
-      $.operationId = "DeploymentEnvironments_GetEnvironmentDefinition";
-
-  - from: swagger-document
-    where-operation: Environments_ListCatalogsByProject
-    transform: >-
-      $.operationId = "DeploymentEnvironments_ListCatalogs";
-
-  - from: swagger-document
-    where-operation: Environments_ListEnvironmentDefinitionsByCatalog
-    transform: >-
-      $.operationId = "DeploymentEnvironments_ListEnvironmentDefinitionsByCatalog";
-
-  - from: swagger-document
-    where-operation: Environments_ListEnvironmentDefinitionsByProject
-    transform: >-
-      $.operationId = "DeploymentEnvironments_ListEnvironmentDefinitions";
-
-  - from: swagger-document
-    where-operation: Environments_ListEnvironments
-    transform: >-
-      $.operationId = "DeploymentEnvironments_ListAllEnvironments";
-
-  - from: swagger-document
-    where-operation: Environments_ListEnvironmentsByUser
-    transform: >-
-      $.operationId = "DeploymentEnvironments_ListEnvironments";
-
-  - from: swagger-document
-    where-operation: Environments_ListEnvironmentTypes
-    transform: >-
-      $.operationId = "DeploymentEnvironments_ListEnvironmentTypes";
+      topParam = $.parameters[1];
+      $.parameters[1] = $.parameters[2];
+      $.parameters[2] = topParam;
 ```
