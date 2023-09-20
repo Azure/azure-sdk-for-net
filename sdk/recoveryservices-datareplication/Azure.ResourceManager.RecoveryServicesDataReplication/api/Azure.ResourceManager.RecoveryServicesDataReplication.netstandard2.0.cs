@@ -909,11 +909,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public partial class DeploymentPreflightModel
     {
         public DeploymentPreflightModel() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesDataReplication.Models.DeploymentPreflightResource> Resources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesDataReplication.Models.DeploymentPreflightResourceInfo> Resources { get { throw null; } }
     }
-    public partial class DeploymentPreflightResource
+    public partial class DeploymentPreflightResourceInfo
     {
-        public DeploymentPreflightResource() { }
+        public DeploymentPreflightResourceInfo() { }
         public string ApiVersion { get { throw null; } set { } }
         public Azure.Core.ResourceType? DeploymentPreflightResourceType { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
