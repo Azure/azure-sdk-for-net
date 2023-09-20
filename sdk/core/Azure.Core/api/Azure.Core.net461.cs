@@ -722,7 +722,7 @@ namespace Azure.Core
         public void Apply(Azure.Core.HttpMessage message) { }
         public override string ToString() { throw null; }
     }
-    public abstract partial class TokenCredential : System.ServiceModel.Rest.Credential
+    public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);

@@ -1,10 +1,6 @@
 namespace System.ServiceModel.Rest
 {
-    public abstract partial class Credential
-    {
-        protected Credential() { }
-    }
-    public partial class KeyCredential : System.ServiceModel.Rest.Credential
+    public partial class KeyCredential
     {
         public KeyCredential(string key) { }
         public string Key { get { throw null; } }
