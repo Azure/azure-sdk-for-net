@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
     public class AppContainersManagementTestBase : ManagementRecordedTestBase<AppContainersManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected AzureLocation DefaultLocation => TestEnvironment.Location;
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected AppContainersManagementTestBase(bool isAsync, RecordedTestMode mode)

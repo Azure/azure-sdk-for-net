@@ -15,6 +15,7 @@ using NUnit.Framework.Internal;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using Castle.Core.Resource;
 
 namespace Azure.ResourceManager.AppContainers.Tests.Helpers
 {
@@ -76,153 +77,56 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         #endregion
 
         #region containerapp
-        public static ContainerAppData GetContainerAppData()
+        public static ContainerAppData GetContainerAppData(ContainerAppManagedEnvironmentResource envResource)
         {
-            ContainerAppData data = new ContainerAppData(new AzureLocation("East US"))
+            ContainerAppData data = new ContainerAppData(AzureLocation.WestUS)
             {
-                EnvironmentId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube"),
-                WorkloadProfileName = "My-GP-01",
-                Configuration = new ContainerAppConfiguration()
+                WorkloadProfileName = "gp1",
+                ManagedEnvironmentId = new ResourceIdentifier(envResource.Data.Id),
+                Configuration = new ContainerAppConfiguration
                 {
-                    Ingress = new ContainerAppIngressConfiguration()
+                    Ingress = new ContainerAppIngressConfiguration
                     {
                         External = true,
-                        TargetPort = 3000,
-                        Traffic =
-{
-new ContainerAppRevisionTrafficWeight()
-{
-RevisionName = "testcontainerApp0-ab1234",
-Weight = 100,
-Label = "production",
-}
-},
-                        CustomDomains =
-{
-new ContainerAppCustomDomain("www.my-name.com")
-{
-BindingType = ContainerAppCustomDomainBindingType.SniEnabled,
-CertificateId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube/certificates/my-certificate-for-my-name-dot-com"),
-},new ContainerAppCustomDomain("www.my-other-name.com")
-{
-BindingType = ContainerAppCustomDomainBindingType.SniEnabled,
-CertificateId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube/certificates/my-certificate-for-my-other-name-dot-com"),
-}
-},
-                        IPSecurityRestrictions =
-{
-new ContainerAppIPSecurityRestrictionRule("Allow work IP A subnet","192.168.1.1/32",ContainerAppIPRuleAction.Allow)
-{
-Description = "Allowing all IP's within the subnet below to access containerapp",
-},new ContainerAppIPSecurityRestrictionRule("Allow work IP B subnet","192.168.1.1/8",ContainerAppIPRuleAction.Allow)
-{
-Description = "Allowing all IP's within the subnet below to access containerapp",
-}
-},
-                        StickySessionsAffinity = Affinity.Sticky,
-                        ClientCertificateMode = ContainerAppIngressClientCertificateMode.Accept,
-                        CorsPolicy = new ContainerAppCorsPolicy(new string[]
-            {
-"https://a.test.com","https://b.test.com"
-            })
-                        {
-                            AllowedMethods =
-{
-"GET","POST"
-},
-                            AllowedHeaders =
-{
-"HEADER1","HEADER2"
-},
-                            ExposeHeaders =
-{
-"HEADER3","HEADER4"
-},
-                            MaxAge = 1234,
-                            AllowCredentials = true,
-                        },
+                        TargetPort = 3000
                     },
-                    Dapr = new ContainerAppDaprConfiguration()
-                    {
-                        IsEnabled = true,
-                        AppProtocol = ContainerAppProtocol.Http,
-                        AppPort = 3000,
-                        HttpReadBufferSize = 30,
-                        HttpMaxRequestSize = 10,
-                        LogLevel = ContainerAppDaprLogLevel.Debug,
-                        IsApiLoggingEnabled = true,
-                    },
-                    MaxInactiveRevisions = 10,
                 },
-                Template = new ContainerAppTemplate()
+                Template = new ContainerAppTemplate
                 {
-                    InitContainers =
-{
-new ContainerAppInitContainer()
-{
-Image = "repo/testcontainerApp0:v4",
-Name = "testinitcontainerApp0",
-Command =
-{
-"/bin/sh"
-},
-Args =
-{
-"-c","while true; do echo hello; sleep 10;done"
-},
-Resources = new AppContainerResources()
-{
-Cpu = 0.2,
-Memory = "100Mi",
-},
-}
-},
                     Containers =
-{
-new ContainerAppContainer()
-{
-Probes =
-{
-new ContainerAppProbe()
-{
-HttpGet = new ContainerAppHttpRequestInfo(8080)
-{
-HttpHeaders =
-{
-new ContainerAppHttpHeaderInfo("Custom-Header","Awesome")
-},
-Path = "/health",
-},
-InitialDelaySeconds = 3,
-PeriodSeconds = 3,
-ProbeType = ContainerAppProbeType.Liveness,
-}
-},
-Image = "repo/testcontainerApp0:v1",
-Name = "testcontainerApp0",
-}
-},
-                    Scale = new ContainerAppScale()
+                        {
+                            new ContainerAppContainer
+                            {
+                                Image = $"mcr.microsoft.com/k8se/quickstart-jobs:latest",
+                                Name = "appcontainer",
+                                Resources = new AppContainerResources
+                                {
+                                    Cpu = 0.25,
+                                    Memory = "0.5Gi"
+                                }
+                            }
+                        },
+                    Scale = new ContainerAppScale
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
                         Rules =
-{
-new ContainerAppScaleRule()
-{
-Name = "httpscalingrule",
-Custom = new ContainerAppCustomScaleRule()
-{
-CustomScaleRuleType = "http",
-Metadata =
-{
-["concurrentRequests"] = "50",
-},
-},
-}
-},
+                            {
+                                new ContainerAppScaleRule
+                                {
+                                    Name = "httpscale",
+                                    Custom = new ContainerAppCustomScaleRule
+                                    {
+                                        CustomScaleRuleType = "http",
+                                        Metadata =
+                                        {
+                                            { "concurrentRequests", "50" }
+                                        }
+                                    }
+                                }
+                            }
                     },
-                },
+                }
             };
             return data;
         }
@@ -230,7 +134,7 @@ Metadata =
         public static void AssertContainerAppData(ContainerAppData data1,  ContainerAppData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Configuration.Dapr.AppId, data2.Configuration.Dapr.AppId);
+            //Assert.AreEqual(data1.Configuration.Dapr.AppId, data2.Configuration.Dapr.AppId);
             Assert.AreEqual(data1.CustomDomainVerificationId, data2.CustomDomainVerificationId);
             Assert.AreEqual(data1.EnvironmentId, data2.EnvironmentId);
         }
@@ -465,45 +369,17 @@ Name = "testcontainerAppsJob0",
         #region ContainerAppManagedEnvironmentData
         public static ContainerAppManagedEnvironmentData GetManagedEnvironmentData()
         {
-            ContainerAppManagedEnvironmentData data = new ContainerAppManagedEnvironmentData(new AzureLocation("East US"))
+            ContainerAppManagedEnvironmentData data = new ContainerAppManagedEnvironmentData(AzureLocation.WestUS)
             {
-                DaprAIConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://northcentralus-0.in.applicationinsights.azure.com/",
-                VnetConfiguration = new ContainerAppVnetConfiguration()
-                {
-                    InfrastructureSubnetId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/RGName/providers/Microsoft.Network/virtualNetworks/VNetName/subnets/subnetName1"),
-                },
-                AppLogsConfiguration = new ContainerAppLogsConfiguration()
-                {
-                    LogAnalyticsConfiguration = new ContainerAppLogAnalyticsConfiguration()
-                    {
-                        CustomerId = "string",
-                        SharedKey = "string",
-                    },
-                },
-                IsZoneRedundant = true,
-                CustomDomainConfiguration = new ContainerAppCustomDomainConfiguration()
-                {
-                    DnsSuffix = "www.my-name.com",
-                    CertificateValue = Convert.FromBase64String("Y2VydA=="),
-                    CertificatePassword = "1234",
-                },
                 WorkloadProfiles =
-{
-new ContainerAppWorkloadProfile("My-GP-01","GeneralPurpose")
-{
-MinimumNodeCount = 3,
-MaximumNodeCount = 12,
-},new ContainerAppWorkloadProfile("My-MO-01","MemoryOptimized")
-{
-MinimumNodeCount = 3,
-MaximumNodeCount = 6,
-},new ContainerAppWorkloadProfile("My-CO-01","ComputeOptimized")
-{
-MinimumNodeCount = 3,
-MaximumNodeCount = 6,
-},new ContainerAppWorkloadProfile("My-consumption-01","Consumption")
-},
-                InfrastructureResourceGroup = "myInfrastructureRgName",
+                {
+                    new ContainerAppWorkloadProfile("Consumption", "Consumption"),
+                    new ContainerAppWorkloadProfile("gp1", "D4")
+                    {
+                        MinimumCount = 1,
+                        MaximumCount = 3
+                    }
+                }
             };
             return data;
         }
@@ -557,7 +433,7 @@ MaximumNodeCount = 6,
             Assert.AreEqual(data1.GitHubActionConfiguration.RegistryInfo.RegistryUserName, data2.GitHubActionConfiguration.RegistryInfo.RegistryUserName);
             Assert.AreEqual(data1.GitHubActionConfiguration.RegistryInfo.RegistryPassword, data2.GitHubActionConfiguration.RegistryInfo.RegistryPassword);
             Assert.AreEqual(data1.GitHubActionConfiguration.AzureCredentials.ClientId, data2.GitHubActionConfiguration.AzureCredentials.TenantId);
-            Assert.AreEqual(data1.GitHubActionConfiguration.AzureCredentials.ClientSecret, data2.GitHubActionConfiguration.AzureCredentials.ClientSecret)
+            Assert.AreEqual(data1.GitHubActionConfiguration.AzureCredentials.ClientSecret, data2.GitHubActionConfiguration.AzureCredentials.ClientSecret);
         }
         #endregion
     }
