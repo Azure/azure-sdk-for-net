@@ -53,6 +53,8 @@ message SettlementReply {
 // The settlement property can be of any type listed below, which 
 // corresponds to the types specified in 
 // https://learn.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebusmessage.applicationproperties?view=azure-dotnet#remarks
+// Note: this list doesn't match 1:1 with the supported Service Bus types, so compatible types are used in some cases - e.g.
+// short uses int, TimeSpan uses string, etc. The full list of transforms can be found in the isolated worker extension source code.
 message SettlementProperties {
   oneof values {
     string stringValue = 1;
