@@ -36,6 +36,25 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <exception cref="ArgumentException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public HttpMessage(RestMessage message)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new ArgumentException("Unsupported type.");
+            }
+
+            Request = httpMessage.Request;
+            ResponseClassifier = httpMessage.ResponseClassifier;
+            BufferResponse = true;
+            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+        }
+
+        /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
         public Request Request { get; }
