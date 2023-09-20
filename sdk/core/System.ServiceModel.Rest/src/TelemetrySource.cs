@@ -10,7 +10,7 @@ namespace System.ServiceModel.Rest
     /// <summary>
     /// TBD.
     /// </summary>
-    public class TraceSpanFactory
+    public class TelemetrySource
     {
         private readonly DiagnosticScopeFactory _factory;
 
@@ -19,7 +19,7 @@ namespace System.ServiceModel.Rest
         /// </summary>
         /// <param name="options"></param>
         /// <param name="suppressNestedClientActivities"></param>
-        public TraceSpanFactory(PipelineOptions options, bool suppressNestedClientActivities = true)
+        public TelemetrySource(PipelineOptions options, bool suppressNestedClientActivities = true)
         {
             _factory = new DiagnosticScopeFactory(
                 options.GetType().Namespace!,
@@ -36,16 +36,16 @@ namespace System.ServiceModel.Rest
         /// <param name="kind"></param>
         /// <returns></returns>
 #if NETCOREAPP2_1
-        public TraceSpan CreateSpan(string name, TraceSpan.ActivityKind kind = TraceSpan.ActivityKind.Internal)
+        public TelemetrySpan CreateSpan(string name, TelemetrySpan.ActivityKind kind = TelemetrySpan.ActivityKind.Internal)
 #else
-        public TraceSpan CreateSpan(string name, ActivityKind kind = ActivityKind.Internal)
+        public TelemetrySpan CreateSpan(string name, ActivityKind kind = ActivityKind.Internal)
 #endif
         {
 #if NETCOREAPP2_1
-            DiagnosticScope.ActivityKind activityKind = TraceSpan.FromActivityKind(kind);
-            return new TraceSpan(_factory.CreateScope(name, activityKind));
+            DiagnosticScope.ActivityKind activityKind = TelemetrySpan.FromActivityKind(kind);
+            return new TelemetrySpan(_factory.CreateScope(name, activityKind));
 #else
-            return new TraceSpan(_factory.CreateScope(name, kind));
+            return new TelemetrySpan(_factory.CreateScope(name, kind));
 #endif
         }
 

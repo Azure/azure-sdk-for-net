@@ -49,19 +49,19 @@ namespace System.ServiceModel.Rest
         public override T Value { get { throw null; } }
         public override System.ServiceModel.Rest.Result GetRawResult() { throw null; }
     }
+    public partial class TelemetrySource
+    {
+        public TelemetrySource(System.ServiceModel.Rest.PipelineOptions options, bool suppressNestedClientActivities = true) { }
+        public System.ServiceModel.Rest.TelemetrySpan CreateSpan(string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TraceSpan : System.IDisposable
+    public readonly partial struct TelemetrySpan : System.IDisposable
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public void Dispose() { }
         public void Failed(System.Exception exception) { }
         public void Start() { }
-    }
-    public partial class TraceSpanFactory
-    {
-        public TraceSpanFactory(System.ServiceModel.Rest.PipelineOptions options, bool suppressNestedClientActivities = true) { }
-        public System.ServiceModel.Rest.TraceSpan CreateSpan(string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Core

@@ -8,11 +8,11 @@ namespace System.ServiceModel.Rest
     /// <summary>
     /// TBD.
     /// </summary>
-    public readonly struct TraceSpan : IDisposable
+    public readonly struct TelemetrySpan : IDisposable
     {
         private readonly DiagnosticScope _scope;
 
-        internal TraceSpan(DiagnosticScope scope)
+        internal TelemetrySpan(DiagnosticScope scope)
         {
             _scope = scope;
         }
