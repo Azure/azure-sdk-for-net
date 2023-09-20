@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ServiceModel.Rest;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -11,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// Base type for all client option types, exposes various common client options like <see cref="Diagnostics"/>, <see cref="Retry"/>, <see cref="Transport"/>.
     /// </summary>
-    public abstract class ClientOptions
+    public abstract class ClientOptions : PipelineOptions
     {
         private HttpPipelineTransport _transport;
         internal bool IsCustomTransportSet { get; private set; }
@@ -31,7 +32,7 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
-        protected ClientOptions(): this(Default, null)
+        protected ClientOptions() : this(Default, null)
         {
         }
 

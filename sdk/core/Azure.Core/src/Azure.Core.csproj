@@ -12,6 +12,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+
     <!--
       netcoreapp2.1 is out of support but we'll keep is as a target for a bit
       to give customers time to migrate without losing perf optimizations
@@ -81,6 +82,10 @@
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.ServiceModel.Rest\src\System.ServiceModel.Rest.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.ServiceModel.Rest;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -84,17 +85,13 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="Request"/> instance.
         /// </summary>
         /// <returns>The request.</returns>
-        public Request CreateRequest()
-            => _transport.CreateRequest();
+        public Request CreateRequest() => _transport.CreateRequest();
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage()
-        {
-            return new HttpMessage(CreateRequest(), ResponseClassifier);
-        }
+        public HttpMessage CreateMessage() => new HttpMessage(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
@@ -108,14 +105,29 @@ namespace Azure.Core.Pipeline
         /// <param name="context">Context specifying the message options.</param>
         /// <param name="classifier"></param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
+        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
+            => CreateMessage((PipelineOptions?)context, classifier);
+
+        /// <summary>
+        /// Creates a new <see cref="HttpMessage"/> instance.
+        /// </summary>
+        /// <param name="options">Request options to be used by the pipeline when sending the message request.</param>
+        /// <param name="classifier">Classifier to apply to the response.</param>
+        /// <returns>The HTTP message.</returns>
+        public HttpMessage CreateMessage(PipelineOptions? options, ResponseClassifier? classifier = default)
         {
-            var message = CreateMessage();
+            HttpMessage message = CreateMessage();
+
             if (classifier != null)
             {
                 message.ResponseClassifier = classifier;
             }
-            message.ApplyRequestContext(context, classifier);
+
+            if (options is RequestContext context)
+            {
+                message.ApplyRequestContext(context, classifier);
+            }
+
             return message;
         }
 
