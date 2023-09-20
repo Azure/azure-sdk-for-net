@@ -33,7 +33,6 @@ namespace Azure.Communication.CallAutomation
         /// This can be provided by providing CallAutomationClientOption during construction of CallAutomationClient.
         /// If left blank, service will create one each request.
         /// </summary>
-        /// <returns></returns>
         public CommunicationUserIdentifier Source { get; }
 
         #region public constructors

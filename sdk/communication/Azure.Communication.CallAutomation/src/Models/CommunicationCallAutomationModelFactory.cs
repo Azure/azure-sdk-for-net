@@ -189,12 +189,12 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call corre lation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message. </param>
         /// <param name="recognitionType">
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="recognizeResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <param name="recognizeResult"> Defines the result for RecognitionType = Dtmf, Choice, Speech. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeCompleted"/> instance for mocking. </returns>
         public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, RecognizeResult recognizeResult = null)
         {
@@ -204,12 +204,12 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of SendDtmfTonesCompleted.
         /// </summary>
-        /// <param name="callConnectionId"></param>
-        /// <param name="serverCallId"></param>
-        /// <param name="correlationId"></param>
-        /// <param name="operationContext"></param>
-        /// <param name="resultInformation"></param>
-        /// <returns></returns>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call corre lation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.SendDtmfTonesCompleted"/> instance for mocking. </returns>
         public static SendDtmfTonesCompleted SendDtmfTonesCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
             var internalObject = new SendDtmfTonesCompletedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
@@ -220,12 +220,12 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of SendDtmfTonesFailed.
         /// </summary>
-        /// <param name="callConnectionId"></param>
-        /// <param name="serverCallId"></param>
-        /// <param name="correlationId"></param>
-        /// <param name="operationContext"></param>
-        /// <param name="resultInformation"></param>
-        /// <returns></returns>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call corre lation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.SendDtmfTonesFailed"/> instance for mocking. </returns>
         public static SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
             var internalObject = new SendDtmfTonesFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);

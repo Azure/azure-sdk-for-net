@@ -600,7 +600,6 @@ namespace Azure.Communication.CallAutomation
                 };
 
                 return await CallMediaRestClient.StartContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
-                ;
             }
             catch (Exception ex)
             {

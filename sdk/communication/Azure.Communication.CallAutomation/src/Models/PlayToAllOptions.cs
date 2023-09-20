@@ -12,7 +12,7 @@ namespace Azure.Communication.CallAutomation
     public class PlayToAllOptions
     {
         /// <summary>
-        /// PlaySource objecs representing the sources to play.
+        /// PlaySource objects representing the sources to play.
         /// </summary>
         public IReadOnlyList<PlaySource> PlaySources { get; }
 
