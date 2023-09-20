@@ -25,5 +25,13 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
         public abstract void Send(RestMessage message, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="classifier"></param>
+        /// <returns></returns>
+        public abstract RestMessage CreateRestMessage(PipelineOptions options, ResponseErrorClassifier classifier);
     }
 }

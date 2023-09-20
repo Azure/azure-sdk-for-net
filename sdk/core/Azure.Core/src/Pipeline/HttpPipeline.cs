@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
@@ -131,6 +132,19 @@ namespace Azure.Core.Pipeline
             }
 
             return message;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="classifier"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override RestMessage CreateRestMessage(PipelineOptions options, ResponseErrorClassifier classifier)
+        {
+            return CreateMessage((PipelineOptions?)options, (ResponseClassifier?)classifier);
         }
 
         /// <summary>
