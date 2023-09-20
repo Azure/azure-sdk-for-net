@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -11,6 +12,7 @@ using Azure.ResourceManager.ResourceMover;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceMover.Tests

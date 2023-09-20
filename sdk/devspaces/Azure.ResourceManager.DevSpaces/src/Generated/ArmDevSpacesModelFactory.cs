@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <param name="orchestratorSpecificConnectionDetails">
         /// Base class for types that supply values used to connect to container orchestrators
         /// Please note <see cref="OrchestratorSpecificConnectionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KubernetesConnectionDetails"/>.
+        /// The available derived classes include <see cref="Models.KubernetesConnectionDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ControllerConnectionDetails"/> instance for mocking. </returns>
         public static ControllerConnectionDetails ControllerConnectionDetails(OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = null)

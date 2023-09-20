@@ -361,7 +361,10 @@ namespace Azure.Storage.Blobs
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
             _uri = blobContainerUri;
-            _authenticationPolicy = credential.AsPolicy(options);
+
+            string audienceScope = string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope();
+
+            _authenticationPolicy = credential.AsPolicy(audienceScope, options);
             options ??= new BlobClientOptions();
 
             _clientConfiguration = new BlobClientConfiguration(
