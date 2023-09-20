@@ -48,7 +48,7 @@ namespace System.ServiceModel.Rest
     public partial class TelemetrySource
     {
         public TelemetrySource(System.ServiceModel.Rest.PipelineOptions options, bool suppressNestedClientActivities = true) { }
-        public System.ServiceModel.Rest.TelemetrySpan CreateSpan(string name, System.ServiceModel.Rest.TelemetrySpan.ActivityKind kind = System.ServiceModel.Rest.TelemetrySpan.ActivityKind.Internal) { throw null; }
+        public System.ServiceModel.Rest.TelemetrySpan CreateSpan(string name) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TelemetrySpan : System.IDisposable
@@ -58,14 +58,6 @@ namespace System.ServiceModel.Rest
         public void Dispose() { }
         public void Failed(System.Exception exception) { }
         public void Start() { }
-        public enum ActivityKind
-        {
-            Internal = 0,
-            Server = 1,
-            Client = 2,
-            Producer = 3,
-            Consumer = 4,
-        }
     }
 }
 namespace System.ServiceModel.Rest.Core

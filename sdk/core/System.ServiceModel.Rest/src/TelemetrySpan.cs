@@ -48,7 +48,7 @@ namespace System.ServiceModel.Rest
         /// <summary>
         /// Kind describes the relationship between the Activity, its parents, and its children in a Trace.
         /// </summary>
-        public enum ActivityKind
+        internal enum ActivityKind
         {
             /// <summary>
             /// Default value.

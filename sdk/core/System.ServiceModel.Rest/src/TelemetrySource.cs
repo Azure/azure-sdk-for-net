@@ -33,19 +33,13 @@ namespace System.ServiceModel.Rest
         /// TBD.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="kind"></param>
         /// <returns></returns>
-#if NETCOREAPP2_1
-        public TelemetrySpan CreateSpan(string name, TelemetrySpan.ActivityKind kind = TelemetrySpan.ActivityKind.Internal)
-#else
-        public TelemetrySpan CreateSpan(string name, ActivityKind kind = ActivityKind.Internal)
-#endif
+        public TelemetrySpan CreateSpan(string name)
         {
 #if NETCOREAPP2_1
-            DiagnosticScope.ActivityKind activityKind = TelemetrySpan.FromActivityKind(kind);
-            return new TelemetrySpan(_factory.CreateScope(name, activityKind));
+            return new TelemetrySpan(_factory.CreateScope(name, TelemetrySpan.FromActivityKind(TelemetrySpan.ActivityKind.Internal)));
 #else
-            return new TelemetrySpan(_factory.CreateScope(name, kind));
+            return new TelemetrySpan(_factory.CreateScope(name, ActivityKind.Internal));
 #endif
         }
 
