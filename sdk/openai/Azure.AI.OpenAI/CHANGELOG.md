@@ -4,11 +4,36 @@
 
 ### Features Added
 
+- Audio Transcription and Audio Translation using OpenAI Whisper models is now supported. See [OpenAI's API
+  reference](https://platform.openai.com/docs/api-reference/audio) or the [Azure OpenAI
+  quickstart](https://learn.microsoft.com/azure/ai-services/openai/whisper-quickstart) for detailed overview and
+  background information.
+  - The new methods `GetAudioTranscription` and `GetAudioTranscription` expose these capabilities on `OpenAIClient`
+  - Transcription produces text in the primary, supported, spoken input language of the audio data provided, together
+    with any optional associated metadata
+  - Translation produces text, translated to English and reflective of the audio data provided, together with any
+    optional associated metadata
+  - These methods work for both Azure OpenAI and non-Azure `api.openai.com` client configurations
+
 ### Breaking Changes
+
+- The underlying representation of `PromptFilterResults` (for `Completions` and `ChatCompletions`) has had its response
+  body key changed from `prompt_annotations` to `prompt_filter_results`
+- **Prior versions of the `Azure.AI.OpenAI` library may no longer populate `PromptFilterResults` as expected** and it's
+  highly recommended to upgrade to this version if the use of Azure OpenAI content moderation annotations for input data
+  is desired
+- If a library version upgrade is not immediately possible, it's advised to use `Response<T>.GetRawResponse()` and manually
+  extract the `prompt_filter_results` object from the top level of the `Completions` or `ChatCompletions` response `Content`
+  payload
 
 ### Bugs Fixed
 
-### Other Changes
+- Support for the described breaking change for `PromptFilterResults` was added and this library version will now again
+  deserialize `PromptFilterResults` appropriately
+- `PromptFilterResults` and `ContentFilterResults` are now exposed on the result classes for streaming Completions and
+  Chat Completions. `Streaming(Chat)Completions.PromptFilterResults` will report an index-sorted list of all prompt
+  annotations received so far while `Streaming(Chat)Choice.ContentFilterResults` will reflect the latest-received
+  content annotations that were populated and received while streaming
 
 ## 1.0.0-beta.7 (2023-08-25)
 
