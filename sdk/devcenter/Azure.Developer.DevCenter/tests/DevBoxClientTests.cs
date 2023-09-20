@@ -236,7 +236,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetPoolsSucceeds()
         {
             var numberOfReturnedPools = 0;
-            await foreach (BinaryData poolData in _devBoxesClient.GetPoolsAsync(TestEnvironment.ProjectName, maxCount: null, filter: null, context: new()))
+            await foreach (BinaryData poolData in _devBoxesClient.GetPoolsAsync(TestEnvironment.ProjectName, filter: null, maxCount: null, context: new()))
             {
                 numberOfReturnedPools++;
                 JsonElement getPoolsResponseData = JsonDocument.Parse(poolData.ToStream()).RootElement;
@@ -257,7 +257,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetSchedulesSucceeds()
         {
             var numberOfReturnedSchedules = 0;
-            await foreach (BinaryData scheduleData in _devBoxesClient.GetSchedulesAsync(TestEnvironment.ProjectName, TestEnvironment.PoolName, maxCount: null, filter: null, context: new()))
+            await foreach (BinaryData scheduleData in _devBoxesClient.GetSchedulesAsync(TestEnvironment.ProjectName, TestEnvironment.PoolName, filter: null, maxCount: null, context: new()))
             {
                 numberOfReturnedSchedules++;
                 JsonElement getSchedulesResponseData = JsonDocument.Parse(scheduleData.ToStream()).RootElement;
@@ -343,8 +343,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
-                "schedule-default",
-                context: new());
+                "schedule-default");
 
             Assert.AreEqual((int)HttpStatusCode.NoContent, skipActionResponse.Status);
         }
