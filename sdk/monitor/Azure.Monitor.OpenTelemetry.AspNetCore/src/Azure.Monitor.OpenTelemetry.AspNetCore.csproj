@@ -18,7 +18,7 @@
     <ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Instrumentation\src\Azure.Monitor.OpenTelemetry.Instrumentation.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <Reference Include="$(OutputPath)\..\..\..\Azure.Monitor.OpenTelemetry.Instrumentation\$(Configuration)\netstandard2.0\Azure.Monitor.OpenTelemetry.ShadedInstrumentation.dll" />
+    <Reference Include="$(OutputPath)\..\..\..\Azure.Monitor.OpenTelemetry.Instrumentation\$(Configuration)\net6.0\Azure.Monitor.OpenTelemetry.ShadedInstrumentation.dll" />
   </ItemGroup>
 
   <!-- Shared source from Exporter -->
