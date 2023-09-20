@@ -38,7 +38,8 @@ namespace System.ServiceModel.Rest
         public abstract System.IO.Stream? ContentStream { get; set; }
         public abstract int Status { get; }
         public static System.ServiceModel.Rest.Result<T> FromValue<T>(T value, System.ServiceModel.Rest.Result result) { throw null; }
-        public abstract bool TryGetHeader(string name, out string? value);
+        protected abstract bool TryGetHeader(string name, out string? value);
+        public bool TryGetHeaderValue(string name, out string? value) { throw null; }
     }
     public partial class Result<T> : System.ServiceModel.Rest.NullableResult<T>
     {
