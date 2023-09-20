@@ -57,14 +57,14 @@ namespace Azure.Developer.DevCenter
         public virtual Azure.AsyncPageable<System.BinaryData> GetDevBoxesAsync(string projectName, string userId, string filter, int? maxCount, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetPool(string projectName, string poolName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetPoolAsync(string projectName, string poolName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetPools(string projectName, int? maxCount, string filter, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetPoolsAsync(string projectName, int? maxCount, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetPools(string projectName, string filter, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetPoolsAsync(string projectName, string filter, int? maxCount, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetRemoteConnection(string projectName, string userId, string devBoxName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRemoteConnectionAsync(string projectName, string userId, string devBoxName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetSchedule(string projectName, string poolName, string scheduleName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetScheduleAsync(string projectName, string poolName, string scheduleName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetSchedules(string projectName, string poolName, int? maxCount, string filter, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetSchedulesAsync(string projectName, string poolName, int? maxCount, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetSchedules(string projectName, string poolName, string filter, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetSchedulesAsync(string projectName, string poolName, string filter, int? maxCount, Azure.RequestContext context) { throw null; }
         public virtual Azure.Operation<System.BinaryData> RestartDevBox(Azure.WaitUntil waitUntil, string projectName, string userId, string devBoxName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> RestartDevBoxAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string devBoxName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response SkipAction(string projectName, string userId, string devBoxName, string actionName, Azure.RequestContext context = null) { throw null; }
