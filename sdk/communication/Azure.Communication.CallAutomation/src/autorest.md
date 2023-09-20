@@ -9,8 +9,8 @@ From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to g
 model-namespace: false
 tag: package-2023-01-15-preview
 
-input-file:
-    - swagger/swagger.json
+require:
+    - https://github.com/cochi2/azure-rest-api-specs/blob/165e9bcec8bcd7d2085df5fa0cd6a7e8f587caa1/specification/communication/data-plane/CallAutomation/readme.md
 
 title: Azure Communication Services
 

@@ -7,11 +7,11 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Failed cancel add participant event. </summary>
-    internal partial class CancelAddParticipantFailed
+    /// <summary> The TranscriptionFailed. </summary>
+    internal partial class TranscriptionFailed
     {
-        /// <summary> Initializes a new instance of CancelAddParticipantFailed. </summary>
-        internal CancelAddParticipantFailed()
+        /// <summary> Initializes a new instance of TranscriptionFailed. </summary>
+        internal TranscriptionFailed()
         {
         }
 
@@ -21,11 +21,11 @@ namespace Azure.Communication.CallAutomation
         public string ServerCallId { get; }
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        /// <summary> Used by customers when calling answerCall action to correlate the request to the response event. </summary>
         public string OperationContext { get; }
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
         public ResultInformation ResultInformation { get; }
-        /// <summary> Invitation ID used to cancel the request. </summary>
-        public string InvitiationId { get; }
+        /// <summary> Defines the result for TranscriptionUpdate with the current status and the details about the status. </summary>
+        public TranscriptionUpdate TranscriptionUpdateResult { get; }
     }
 }

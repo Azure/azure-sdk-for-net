@@ -10,22 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class CancelAddParticipantRequest : IUtf8JsonSerializable
+    public partial class StartTranscriptionRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("invitiationId"u8);
-            writer.WriteStringValue(InvitiationId);
+            if (Optional.IsDefined(Locale))
+            {
+                writer.WritePropertyName("locale"u8);
+                writer.WriteStringValue(Locale);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
-            }
-            if (Optional.IsDefined(CallbackUri))
-            {
-                writer.WritePropertyName("callbackUri"u8);
-                writer.WriteStringValue(CallbackUri);
             }
             writer.WriteEndObject();
         }
