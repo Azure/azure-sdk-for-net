@@ -35,6 +35,8 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> Media Streaming Configuration. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionConfiguration TranscriptionConfiguration { get; set; }
         /// <summary> The endpoint URL of the Azure Cognitive Services resource attached. </summary>
         public string AzureCognitiveServicesEndpointUrl { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>

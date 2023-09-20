@@ -883,5 +883,62 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.Fail("Event parsed wrongfully");
             }
         }
+
+        [Test]
+        public void AddParticipantCancelledEventParsed_Test()
+        {
+            AddParticipantCancelled @event = CommunicationCallAutomationModelFactory.AddParticipantCancelled(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                invitationId: "invitationId",
+                participant: new CommunicationUserIdentifier("8:acs:12345"),
+                operationContext: "operationContext");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.AddParticipantCancelled");
+
+            if (parsedEvent is AddParticipantCancelled addParticipantCancelled)
+            {
+                Assert.AreEqual("operationContext", addParticipantCancelled.OperationContext);
+                Assert.AreEqual("callConnectionId", addParticipantCancelled.CallConnectionId);
+                Assert.AreEqual("correlationId", addParticipantCancelled.CorrelationId);
+                Assert.AreEqual("serverCallId", addParticipantCancelled.ServerCallId);
+                Assert.AreEqual("invitationId", addParticipantCancelled.InvitationId);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void CancelAddParticipantFailedEventParsed_Test()
+        {
+            CancelAddParticipantFailed @event = CommunicationCallAutomationModelFactory.CancelAddParticipantFailed(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                invitationId: "invitationId",
+                resultInformation: new ResultInformation(code: 400, subCode: 8510, message: "Action failed, some error."),
+                operationContext: "operationContext");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CancelAddParticipantFailed");
+
+            if (parsedEvent is CancelAddParticipantFailed cancelAddParticipantFailed)
+            {
+                Assert.AreEqual("operationContext", cancelAddParticipantFailed.OperationContext);
+                Assert.AreEqual("callConnectionId", cancelAddParticipantFailed.CallConnectionId);
+                Assert.AreEqual("correlationId", cancelAddParticipantFailed.CorrelationId);
+                Assert.AreEqual("serverCallId", cancelAddParticipantFailed.ServerCallId);
+                Assert.AreEqual("invitationId", cancelAddParticipantFailed.InvitationId);
+                Assert.AreEqual(400, cancelAddParticipantFailed.ResultInformation?.Code);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
     }
 }

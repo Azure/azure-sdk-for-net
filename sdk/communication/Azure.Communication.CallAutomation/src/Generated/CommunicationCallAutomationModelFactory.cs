@@ -41,10 +41,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
+        /// <param name="recordingType"></param>
         /// <returns> A new <see cref="CallAutomation.RecordingStateResult"/> instance for mocking. </returns>
-        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null)
+        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null, RecordingType? recordingType = null)
         {
-            return new RecordingStateResult(recordingId, recordingState);
+            return new RecordingStateResult(recordingId, recordingState, recordingType);
         }
 
         /// <summary> Initializes a new instance of ResultInformation. </summary>
