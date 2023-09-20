@@ -513,6 +513,7 @@ namespace Azure.AI.OpenAI
     public partial class StreamingChatChoice
     {
         internal StreamingChatChoice() { }
+        public Azure.AI.OpenAI.ContentFilterResults ContentFilterResults { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsFinishReason? FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.ChatMessage> GetMessageStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -522,6 +523,7 @@ namespace Azure.AI.OpenAI
         internal StreamingChatCompletions() { }
         public System.DateTimeOffset Created { get { throw null; } }
         public string Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.PromptFilterResult> PromptFilterResults { get { throw null; } }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.StreamingChatChoice> GetChoicesStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -529,6 +531,7 @@ namespace Azure.AI.OpenAI
     public partial class StreamingChoice
     {
         internal StreamingChoice() { }
+        public Azure.AI.OpenAI.ContentFilterResults ContentFilterResults { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsFinishReason? FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsLogProbabilityModel LogProbabilityModel { get { throw null; } }
@@ -539,6 +542,7 @@ namespace Azure.AI.OpenAI
         internal StreamingCompletions() { }
         public System.DateTimeOffset Created { get { throw null; } }
         public string Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.PromptFilterResult> PromptFilterResults { get { throw null; } }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.StreamingChoice> GetChoicesStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
