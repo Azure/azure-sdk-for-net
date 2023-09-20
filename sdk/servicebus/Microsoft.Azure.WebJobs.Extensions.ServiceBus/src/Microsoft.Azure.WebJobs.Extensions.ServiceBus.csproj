@@ -19,7 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
     <PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.Azure.WebJobs.Extensions.Rpc" />
-    <PackageReference Include="Grpc.Tools" VersionOverride="2.57.0" PrivateAssets="all" />
+    <PackageReference Include="Grpc.Tools" VersionOverride="2.51.0" PrivateAssets="all" />
     <PackageReference Include="Google.Protobuf" VersionOverride="3.24.3" />
   </ItemGroup>
 

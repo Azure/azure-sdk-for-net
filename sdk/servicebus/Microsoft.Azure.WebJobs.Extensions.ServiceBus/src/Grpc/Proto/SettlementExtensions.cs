@@ -10,40 +10,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
     {
         internal static object GetPropertyValue(this SettlementProperties properties)
         {
-            if (properties.HasLongValue)
+            return properties.ValuesCase switch
             {
-                return properties.LongValue;
-            }
-            if (properties.HasUlongValue)
-            {
-                return properties.UlongValue;
-            }
-            if (properties.HasDoubleValue)
-            {
-                return properties.DoubleValue;
-            }
-            if (properties.HasFloatValue)
-            {
-                return properties.FloatValue;
-            }
-            if (properties.HasUintValue)
-            {
-                return properties.UintValue;
-            }
-            if (properties.HasIntValue)
-            {
-                return properties.IntValue;
-            }
-            if (properties.HasBoolValue)
-            {
-                return properties.BoolValue;
-            }
-            if (properties.HasStringValue)
-            {
-                return properties.StringValue;
-            }
-
-            return null;
+                SettlementProperties.ValuesOneofCase.LongValue => properties.LongValue,
+                SettlementProperties.ValuesOneofCase.UlongValue => properties.UlongValue,
+                SettlementProperties.ValuesOneofCase.DoubleValue => properties.DoubleValue,
+                SettlementProperties.ValuesOneofCase.FloatValue => properties.FloatValue,
+                SettlementProperties.ValuesOneofCase.IntValue => properties.IntValue,
+                SettlementProperties.ValuesOneofCase.UintValue => properties.UintValue,
+                SettlementProperties.ValuesOneofCase.BoolValue => properties.BoolValue,
+                SettlementProperties.ValuesOneofCase.StringValue => properties.StringValue,
+                _ => null
+            };
         }
     }
 }
