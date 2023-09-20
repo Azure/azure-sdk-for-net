@@ -15,11 +15,19 @@ using System.IO;
 using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
     public class E2EAzureMonitorDistroTests
     {
+        internal readonly ITestOutputHelper _output;
+
+        public E2EAzureMonitorDistroTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public async Task ValidateTelemetryExport()
         {
@@ -54,14 +62,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             // Telemetry is serialized as json, and then byte encoded.
             // Need to parse the request content into something assertable.
             var data = ParseJsonRequestContent<ParsedData>(transport.Requests);
-            //Assert.Equal(15, data.Count); // Total telemetry items // TODO: UNCOMTMENT THIS
+            data.ForEach(x => _output.WriteLine(x.name)); // Output to console to investigate test failures.
+            Assert.Equal(15, data.Count); // Total telemetry items
 
             // Group all parsed telemetry by name and get the count per name.
             var summary = data.GroupBy(x => x.name).ToDictionary(x => x.Key!, x => x.Count());
 
             Assert.Equal(4, summary.Count); // Total unique telemetry items
             Assert.Equal(8, summary["Message"]); // Count of telemetry items
-            Assert.Equal(4, summary["Metric"]);
+            Assert.Equal(5, summary["Metric"]);
             Assert.Equal(1, summary["RemoteDependency"]);
             Assert.Equal(1, summary["Request"]);
 
