@@ -7,8 +7,6 @@ To use these samples, you'll first need to set up resources. See [getting starte
 Create a `DevCenterClient` and issue a request to get all projects the signed-in user can access.
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
-var credential = new DefaultAzureCredential();
-var devCenterClient = new DevCenterClient(endpoint, credential);
 string targetProjectName = null;
 await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
 {

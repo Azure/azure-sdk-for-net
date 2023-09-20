@@ -14,9 +14,12 @@ namespace Azure.Developer.DevCenter.Tests.Samples
         public async Task CreateDeleteDevBoxAsync(Uri endpoint)
         {
             // Create and delete a user devbox
-            #region Snippet:Azure_DevCenter_GetProjects_Scenario
+            #region Snippet:Azure_DevCenter_CreateClient_Scenario
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(endpoint, credential);
+            #endregion
+
+            #region Snippet:Azure_DevCenter_GetProjects_Scenario
             string targetProjectName = null;
             await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
             {

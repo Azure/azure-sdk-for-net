@@ -65,11 +65,16 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 ### Build a client and get all projects in a dev center
 
-To instantiate the client, you would need to provide a DevCenter URL and credentials. The resulting client allows you to list projects and retrieve projects by their name.
+To instantiate the client, you would need to provide a DevCenter URL and credentials.
 
-```C# Snippet:Azure_DevCenter_GetProjects_Scenario
+```C# Snippet:Azure_DevCenter_CreateClient_Scenario
 var credential = new DefaultAzureCredential();
 var devCenterClient = new DevCenterClient(endpoint, credential);
+```
+
+The resulting client allows you to list projects and retrieve projects by their name.
+
+```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 string targetProjectName = null;
 await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
 {
