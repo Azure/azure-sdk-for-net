@@ -7,10 +7,19 @@ param (
   [string]$OutputVariableName,
 
   [Parameter()]
-  [int]$JobCount = 8
+  [int]$JobCount = 8,
+
+  # The minimum number of items per job. If the number of items is less than this, then the number of jobs will be reduced.
+  [Parameter()]
+  [int]$MinimumPerJob = 10,
+
+  [Parameter()]
+  [string]$OnlyTypespec
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
+
+[bool]$OnlyTypespec = $OnlyTypespec -in @("true", "t", "1", "yes", "y")
 
 # Divide the items into groups of approximately equal size.
 function Split-Items([array]$Items) {
@@ -18,8 +27,15 @@ function Split-Items([array]$Items) {
   # then $itemsPerGroup = 4
   # and $largeJobCount = 2
   # and $group.Length = 5, 5, 4, 4, 4
-  $itemsPerGroup = [math]::Floor($Items.Length / $JobCount)
-  $largeJobCount = $Items.Length % $itemsPerGroup
+  $itemCount = $Items.Length
+  $jobsForMinimum = $itemCount -lt $MinimumPerJob ? 1 : [math]::Floor($itemCount / $MinimumPerJob)
+
+  if ($JobCount -gt $jobsForMinimum) {
+    $JobCount = $jobsForMinimum
+  }
+  
+  $itemsPerGroup = [math]::Floor($itemCount / $JobCount)
+  $largeJobCount = $itemCount % $itemsPerGroup
   $groups = [object[]]::new($JobCount)
 
   $i = 0
@@ -32,6 +48,8 @@ function Split-Items([array]$Items) {
     }
   }
 
+  Write-Host "$itemCount items split into $JobCount groups of approximately $itemsPerGroup items each."
+
   return , $groups
 }
 
@@ -39,17 +57,22 @@ function Split-Items([array]$Items) {
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 
 if (Test-Path "Function:$GetFoldersForGenerationFn") {
-  $foldersForGeneration = &$GetFoldersForGenerationFn
-} else {
+  $foldersForGeneration = &$GetFoldersForGenerationFn -OnlyTypespec $OnlyTypespec
+}
+else {
   $foldersForGeneration = Get-ChildItem "$RepoRoot/sdk" -Directory | Get-ChildItem -Directory
+  
+  if ($OnlyTypespec) {
+    $foldersForGeneration = $foldersForGeneration | Where-Object { Test-Path "$_/tsp-location.yaml" }
+  }
 }
 
 [array]$packageFolders = $foldersForGeneration
 | Sort-Object -Property FullName
 | ForEach-Object {
   [ordered]@{
-    "PackageFolder"   = "$($_.Parent.Name)/$($_.Name)"
-    "ServiceArea" = $_.Parent.Name
+    "PackageFolder" = "$($_.Parent.Name)/$($_.Name)"
+    "ServiceArea"   = $_.Parent.Name
   }
 }
 
@@ -58,11 +81,20 @@ $batches = Split-Items -Items $packageFolders
 $matrix = [ordered]@{}
 for ($i = 0; $i -lt $batches.Length; $i++) {
   $batch = $batches[$i]
+  $json = $batch.PackageFolder | ConvertTo-Json -AsArray
+
   $firstPrefix = $batch[0].ServiceArea.Substring(0, 2)
   $lastPrefix = $batch[-1].ServiceArea.Substring(0, 2)
+  
   $key = "$firstPrefix`_$lastPrefix`_$i"
-  $fileName = "$i.json"
-  $batch.PackageFolder | ConvertTo-Json -AsArray | Out-File "$OutputDirectory/$fileName"
+  $fileName = "$key.json"
+  
+  Write-Host "`n`n=================================="
+  Write-Host $fileName
+  Write-Host "=================================="
+  $json | Out-Host
+  $json | Out-File "$OutputDirectory/$fileName"
+
   $matrix[$key] = [ordered]@{ "JobKey" = $key; "FolderList" = $fileName }
 }
 
