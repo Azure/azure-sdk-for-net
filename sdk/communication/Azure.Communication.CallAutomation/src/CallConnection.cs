@@ -872,7 +872,7 @@ namespace Azure.Communication.CallAutomation
 
                 var request = new CancelAddParticipantRequestInternal(options.InvitationId)
                 {
-                    OperationContext = options.OperationContext,
+                    OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
                     CallbackUri = options.CallbackUri?.AbsoluteUri,
                 };
                 var response = await RestClient.CancelAddParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
