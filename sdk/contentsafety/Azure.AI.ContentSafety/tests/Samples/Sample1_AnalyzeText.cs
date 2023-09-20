@@ -26,8 +26,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
 
             #region Snippet:Azure_AI_ContentSafety_AnalyzeText
 
-            string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "text.txt");
-            string text = File.ReadAllText(datapath);
+            string text = "You are an idiot";
 
             var request = new AnalyzeTextOptions(text);
 

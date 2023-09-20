@@ -47,7 +47,7 @@ namespace Azure.Identity.Tests
                 {
                     Transport = config.Transport,
                     DisableInstanceDiscovery = config.DisableInstanceDiscovery,
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
                 };
 
                 return InstrumentClient(new EnvironmentCredential(options));

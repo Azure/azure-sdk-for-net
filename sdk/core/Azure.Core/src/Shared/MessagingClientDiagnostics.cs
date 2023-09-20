@@ -65,7 +65,7 @@ namespace Azure.Core.Shared
             MessagingDiagnosticOperation operation = default)
         {
             DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
-            if (ActivityExtensions.SupportsActivitySource())
+            if (ActivityExtensions.SupportsActivitySource)
             {
                 scope.AddAttribute(MessagingSystem, _messagingSystem);
                 if (operation != default)
@@ -99,7 +99,7 @@ namespace Azure.Core.Shared
             traceparent = null;
             tracestate = null;
 
-            if (ActivityExtensions.SupportsActivitySource() && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            if (ActivityExtensions.SupportsActivitySource && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
                 if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
@@ -131,7 +131,7 @@ namespace Azure.Core.Shared
             traceparent = null;
             tracestate = null;
 
-            if (ActivityExtensions.SupportsActivitySource() && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            if (ActivityExtensions.SupportsActivitySource && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
                 if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
@@ -175,7 +175,7 @@ namespace Azure.Core.Shared
                 {
                     traceparent = activity.Id!;
                     properties[DiagnosticIdAttribute] = traceparent;
-                    if (ActivityExtensions.SupportsActivitySource())
+                    if (ActivityExtensions.SupportsActivitySource)
                     {
                         properties[TraceParent] = traceparent;
                         if (activity.TraceStateString != null)

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.2 (2023-08-08)
+
+### Features Added
+
+- Added `SchemaRegistrySerializer` which serializes using JSON by default.
 
 ## 1.4.0-beta.1 (2023-01-12)
 

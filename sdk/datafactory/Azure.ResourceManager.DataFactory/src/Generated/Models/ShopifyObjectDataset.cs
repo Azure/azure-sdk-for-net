@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Shopify Service dataset. </summary>
-    public partial class ShopifyObjectDataset : DataFactoryDatasetDefinition
+    public partial class ShopifyObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of ShopifyObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

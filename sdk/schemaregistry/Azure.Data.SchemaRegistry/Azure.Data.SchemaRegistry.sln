@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.SchemaRegistry", "src\Azure.Data.SchemaRegistry.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
 EndProject
@@ -27,10 +27,6 @@ Global
 		{8052009B-2126-44A3-88CD-4F3B17894C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8052009B-2126-44A3-88CD-4F3B17894C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8052009B-2126-44A3-88CD-4F3B17894C64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A8336DC-AE5F-4955-95E3-BF5010A4CE5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A8336DC-AE5F-4955-95E3-BF5010A4CE5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A8336DC-AE5F-4955-95E3-BF5010A4CE5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A8336DC-AE5F-4955-95E3-BF5010A4CE5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

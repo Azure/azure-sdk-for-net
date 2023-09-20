@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _offerRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "OfferCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "OfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _offerRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "OfferCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "OfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

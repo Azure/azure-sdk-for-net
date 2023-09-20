@@ -16,14 +16,14 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK and rel
 
 * Traces
   * [ASP.NET Core Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/) provides automatic tracing for incoming HTTP requests to ASP.NET Core applications.
-  * [HTTP Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/) provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient) and [System.Net.HttpWebRequest](https://docs.microsoft.com/dotnet/api/system.net.httpwebrequest).
+  * [HTTP Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/) provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient).
   * [SQL Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages.
 
 * Metrics
   * [ASP.NET Core Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/) provides automatic collection of common ASP.NET Core metrics.
   * [HTTP Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/) provides automatic collection of HTTP client metrics.
 
-* [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/docs/logs/getting-started/README.md)
+* [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
 
 * [Azure Monitor Exporter](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/) allows sending traces, metrics, and logs data to Azure Monitor.
 

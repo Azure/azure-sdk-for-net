@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189. </summary>
-        public IntegrationRuntimeAutoUpdate? AutoUpdate { get; set; }
+        public IntegrationRuntimeAutoUpdateState? AutoUpdate { get; set; }
         /// <summary> The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time. </summary>
         public TimeSpan? UpdateDelayOffset { get; set; }
     }

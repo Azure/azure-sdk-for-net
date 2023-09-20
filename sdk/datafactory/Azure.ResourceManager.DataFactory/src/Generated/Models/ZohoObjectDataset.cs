@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Zoho server dataset. </summary>
-    public partial class ZohoObjectDataset : DataFactoryDatasetDefinition
+    public partial class ZohoObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of ZohoObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -33,20 +33,13 @@ namespace Azure.AI.OpenAI
         /// Normal termination typically provides "stop" and encountering token limits in a request typically
         /// provides "length." If no value is present, this StreamingChoice is still in progress.
         /// </remarks>
-        public CompletionsFinishReason FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
+        public CompletionsFinishReason? FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
 
         internal ChatMessage StreamingDeltaMessage { get; set; }
 
-        internal bool StreamingDoneSignalReceived
-        {
-            get => _streamingDoneSignalReceived;
-            set
-            {
-                _streamingDoneSignalReceived = value;
-                _updateAvailableEvent.Set();
-            }
-        }
-        private bool _streamingDoneSignalReceived;
+        private bool _isFinishedStreaming { get; set; } = false;
+
+        private Exception _pumpException { get; set; }
 
         internal StreamingChatChoice(ChatChoice originalBaseChoice)
         {
@@ -59,6 +52,10 @@ namespace Azure.AI.OpenAI
             lock (_baseChoicesLock)
             {
                 _baseChoices.Add(streamingChatChoice);
+            }
+            if (streamingChatChoice.FinishReason != null)
+            {
+                EnsureFinishStreaming();
             }
             _updateAvailableEvent.Set();
         }
@@ -83,16 +80,20 @@ namespace Azure.AI.OpenAI
                     lock (_baseChoicesLock)
                     {
                         ChatChoice mostRecentChoice = _baseChoices.Last();
-                        bool choiceIsComplete = mostRecentChoice.FinishReason != null || StreamingDoneSignalReceived;
 
-                        doneWaiting = choiceIsComplete || i < _baseChoices.Count;
-                        isFinalIndex = choiceIsComplete && i >= _baseChoices.Count - 1;
+                        doneWaiting = _isFinishedStreaming || i < _baseChoices.Count;
+                        isFinalIndex = _isFinishedStreaming && i >= _baseChoices.Count - 1;
                     }
 
                     if (!doneWaiting)
                     {
                         await _updateAvailableEvent.WaitAsync(cancellationToken).ConfigureAwait(false);
                     }
+                }
+
+                if (_pumpException != null)
+                {
+                    throw _pumpException;
                 }
 
                 ChatMessage message = null;
@@ -110,6 +111,16 @@ namespace Azure.AI.OpenAI
                 {
                     yield return message;
                 }
+            }
+        }
+
+        internal void EnsureFinishStreaming(Exception pumpException = null)
+        {
+            if (!_isFinishedStreaming)
+            {
+                _isFinishedStreaming = true;
+                _pumpException = pumpException;
+                _updateAvailableEvent.Set();
             }
         }
 

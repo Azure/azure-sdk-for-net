@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Impala server dataset. </summary>
-    public partial class ImpalaObjectDataset : DataFactoryDatasetDefinition
+    public partial class ImpalaObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of ImpalaObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

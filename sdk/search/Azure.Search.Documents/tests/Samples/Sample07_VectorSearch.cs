@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
                     new SearchOptions
                     {
-                        Vector = new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "DescriptionVector" },
+                        Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
                     });
 
                 int count = 0;
@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
                     new SearchOptions
                     {
-                        Vector = new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "DescriptionVector" },
+                        Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
                         Filter = "Category eq 'Luxury'"
                     });
 
@@ -127,7 +127,7 @@ namespace Azure.Search.Documents.Tests.Samples
                         "Top hotels in town",
                         new SearchOptions
                         {
-                            Vector = new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "DescriptionVector" },
+                            Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
                         });
 
                 int count = 0;
@@ -173,7 +173,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+                        Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,
                         SemanticConfigurationName = "my-semantic-config",
@@ -220,6 +220,97 @@ namespace Azure.Search.Documents.Tests.Samples
             }
         }
 
+        [Test]
+        public async Task MultiVectorQuerySearch()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+            SearchIndexClient indexClient = null;
+            string indexName = Recording.Random.GetName();
+            try
+            {
+                indexClient = await CreateIndex(resources, indexName);
+
+                SearchClient searchClient = await UploadDocuments(resources, indexName);
+
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search
+                IReadOnlyList<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+                IReadOnlyList<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVectorizeCategory; // "Luxury hotels in town"
+#if !SNIPPET
+                await Task.Delay(TimeSpan.FromSeconds(1));
+#endif
+
+                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+                    new SearchOptions
+                    {
+                        Vectors = {
+                            new() { Value = vectorizedDescriptionQuery, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
+                            new() { Value = vectorizedCategoryQuery, KNearestNeighborsCount = 3, Fields = { "CategoryVector" } }
+                        },
+                    });
+
+                int count = 0;
+                Console.WriteLine($"Multi Vector Search Results:");
+                await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+                {
+                    count++;
+                    Hotel doc = result.Document;
+                    Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
+                }
+                Console.WriteLine($"Total number of search results:{count}");
+                #endregion
+                Assert.GreaterOrEqual(count, 1);
+            }
+            finally
+            {
+                await indexClient.DeleteIndexAsync(indexName);
+            }
+        }
+
+        [Test]
+        public async Task MultiFieldVectorQuerySearch()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+            SearchIndexClient indexClient = null;
+            string indexName = Recording.Random.GetName();
+            try
+            {
+                indexClient = await CreateIndex(resources, indexName);
+
+                SearchClient searchClient = await UploadDocuments(resources, indexName);
+
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search
+                IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+#if !SNIPPET
+                await Task.Delay(TimeSpan.FromSeconds(1));
+#endif
+
+                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+                    new SearchOptions
+                    {
+                        Vectors = { new() {
+                            Value = vectorizedResult,
+                            KNearestNeighborsCount = 3,
+                            Fields = { "DescriptionVector", "CategoryVector" } } }
+                    });
+
+                int count = 0;
+                Console.WriteLine($"Multi Fields Vector Search Results:");
+                await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+                {
+                    count++;
+                    Hotel doc = result.Document;
+                    Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
+                }
+                Console.WriteLine($"Total number of search results:{count}");
+                #endregion
+                Assert.GreaterOrEqual(count, 1);
+            }
+            finally
+            {
+                await indexClient.DeleteIndexAsync(indexName);
+            }
+        }
+
         private async Task<SearchIndexClient> CreateIndex(SearchResources resources, string name)
         {
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index
@@ -243,7 +334,13 @@ namespace Azure.Search.Documents.Tests.Samples
                         VectorSearchDimensions = modelDimensions,
                         VectorSearchConfiguration = vectorSearchConfigName
                     },
-                    new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true }
+                    new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
+                    {
+                        IsSearchable = true,
+                        VectorSearchDimensions = modelDimensions,
+                        VectorSearchConfiguration = vectorSearchConfigName
+                    },
                 },
                 VectorSearch = new()
                 {
@@ -334,6 +431,7 @@ namespace Azure.Search.Documents.Tests.Samples
             public string Description { get; set; }
             public IReadOnlyList<float> DescriptionVector { get; set; }
             public string Category { get; set; }
+            public IReadOnlyList<float> CategoryVector { get; set; }
         }
         #endregion
 
@@ -352,6 +450,7 @@ namespace Azure.Search.Documents.Tests.Samples
                         "the tourist attractions. We highly recommend this hotel.",
                     DescriptionVector = VectorSearchEmbeddings.Hotel1VectorizeDescription,
                     Category = "Luxury",
+                    CategoryVector = VectorSearchEmbeddings.LuxuryVectorizeCategory
                 },
                 new Hotel()
                 {
@@ -360,6 +459,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     Description = "Cheapest hotel in town. Infact, a motel.",
                     DescriptionVector = VectorSearchEmbeddings.Hotel2VectorizeDescription,
                     Category = "Budget",
+                    CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
                 },
  #if !SNIPPET
                 new Hotel()
@@ -369,6 +469,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     Description = "Very popular hotel in town.",
                     DescriptionVector = VectorSearchEmbeddings.Hotel3VectorizeDescription,
                     Category = "Budget",
+                    CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
                 },
                 new Hotel()
                 {
@@ -377,6 +478,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     Description = "Modern architecture, very polite staff and very clean. Also very affordable.",
                     DescriptionVector = VectorSearchEmbeddings.Hotel7VectorizeDescription,
                     Category = "Luxury",
+                    CategoryVector = VectorSearchEmbeddings.LuxuryVectorizeCategory
                 },
                 new Hotel()
                 {
@@ -387,6 +489,7 @@ namespace Azure.Search.Documents.Tests.Samples
                      "as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities.",
                     DescriptionVector = VectorSearchEmbeddings.Hotel9VectorizeDescription,
                     Category = "Boutique",
+                    CategoryVector = VectorSearchEmbeddings.BoutiqueVectorizeCategory
                 }
 #endif
                 // Add more hotel documents here...

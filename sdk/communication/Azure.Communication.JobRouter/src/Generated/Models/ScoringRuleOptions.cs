@@ -6,9 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </summary>
     public partial class ScoringRuleOptions

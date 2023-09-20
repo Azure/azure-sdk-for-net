@@ -1304,7 +1304,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 {
                     scope.AddLink(context.TraceParent, context.TraceState);
                 }
-                if (eventCount > 1 && ActivityExtensions.SupportsActivitySource())
+                if (eventCount > 1 && ActivityExtensions.SupportsActivitySource)
                 {
                     scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventCount);
                 }

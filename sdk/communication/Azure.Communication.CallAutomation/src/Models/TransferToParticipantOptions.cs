@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
@@ -57,8 +58,13 @@ namespace Azure.Communication.CallAutomation
         public CustomContext CustomContext { get; }
 
         /// <summary>
+        /// The callee that being transferred
+        /// </summary>
+        public CommunicationIdentifier Transferee { get; set; }
+
+        /// <summary>
         /// The callback URI override for this transfer call request.
         /// </summary>
-        public string CallbackUriOverride { get; set; }
+        public Uri CallbackUri { get; set; }
     }
 }

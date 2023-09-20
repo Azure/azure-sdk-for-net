@@ -46,11 +46,16 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability Type parameters. </param>
         /// <param name="urn"> String of the URN for this Capability Type. </param>
         /// <param name="kind"> String of the kind of this Capability Type. </param>
+        /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
+        /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
         /// <param name="runtimeKind"> Runtime properties of this Capability Type. </param>
         /// <returns> A new <see cref="Chaos.CapabilityTypeData"/> instance for mocking. </returns>
-        public static CapabilityTypeData CapabilityTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string publisher = null, string targetType = null, string displayName = null, string description = null, string parametersSchema = null, string urn = null, string kind = null, string runtimeKind = null)
+        public static CapabilityTypeData CapabilityTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string publisher = null, string targetType = null, string displayName = null, string description = null, string parametersSchema = null, string urn = null, string kind = null, IEnumerable<string> azureRbacActions = null, IEnumerable<string> azureRbacDataActions = null, string runtimeKind = null)
         {
-            return new CapabilityTypeData(id, name, resourceType, systemData, location, publisher, targetType, displayName, description, parametersSchema, urn, kind, runtimeKind != null ? new CapabilityTypePropertiesRuntimeProperties(runtimeKind) : null);
+            azureRbacActions ??= new List<string>();
+            azureRbacDataActions ??= new List<string>();
+
+            return new CapabilityTypeData(id, name, resourceType, systemData, location, publisher, targetType, displayName, description, parametersSchema, urn, kind, azureRbacActions?.ToList(), azureRbacDataActions?.ToList(), runtimeKind != null ? new CapabilityTypePropertiesRuntimeProperties(runtimeKind) : null);
         }
 
         /// <summary> Initializes a new instance of ExperimentData. </summary>
@@ -60,9 +65,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="steps"> List of steps. </param>
-        /// <param name="selectors"> List of selectors. </param>
+        /// <param name="selectors">
+        /// List of selectors.
+        /// Please note <see cref="Selector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ListSelector"/> and <see cref="QuerySelector"/>.
+        /// </param>
         /// <param name="startOnCreation"> A boolean value that indicates if experiment should be started on creation or not. </param>
         /// <returns> A new <see cref="Chaos.ExperimentData"/> instance for mocking. </returns>
         public static ExperimentData ExperimentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, IEnumerable<Step> steps = null, IEnumerable<Selector> selectors = null, bool? startOnCreation = null)
@@ -72,15 +81,6 @@ namespace Azure.ResourceManager.Chaos.Models
             selectors ??= new List<Selector>();
 
             return new ExperimentData(id, name, resourceType, systemData, tags, location, identity, steps?.ToList(), selectors?.ToList(), startOnCreation);
-        }
-
-        /// <summary> Initializes a new instance of TargetReference. </summary>
-        /// <param name="referenceType"> Enum of the Target reference type. </param>
-        /// <param name="id"> String of the resource ID of a Target resource. </param>
-        /// <returns> A new <see cref="Models.TargetReference"/> instance for mocking. </returns>
-        public static TargetReference TargetReference(TargetReferenceType referenceType = default, string id = null)
-        {
-            return new TargetReference(referenceType, id);
         }
 
         /// <summary> Initializes a new instance of ExperimentCancelOperationResult. </summary>

@@ -102,6 +102,95 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkTableStatus(id, status, errorMessage, startTime, stopTime, linkTableId, errorCode, lastProcessedData, lastTransactionCommitTime);
         }
 
+        /// <summary> Initializes a new instance of RunNotebookResponse. </summary>
+        /// <param name="message"> Response message. </param>
+        /// <param name="result"> Result of run notebook. </param>
+        /// <returns> A new <see cref="Models.RunNotebookResponse"/> instance for mocking. </returns>
+        public static RunNotebookResponse RunNotebookResponse(string message = null, RunNotebookResult result = null)
+        {
+            return new RunNotebookResponse(message, result);
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookResult. </summary>
+        /// <param name="runId"> Run id. </param>
+        /// <param name="runStatus"> Status of the run notebook. </param>
+        /// <param name="lastCheckedOn"> Timestamp of last update. </param>
+        /// <param name="sessionId"> Livy session id. </param>
+        /// <param name="sparkPool"> SparkPool name. </param>
+        /// <param name="sessionDetail"> Run notebook session details. </param>
+        /// <param name="exitValue"> Output of exit command. </param>
+        /// <param name="error"> Run notebook error. </param>
+        /// <returns> A new <see cref="Models.RunNotebookResult"/> instance for mocking. </returns>
+        public static RunNotebookResult RunNotebookResult(string runId = null, string runStatus = null, string lastCheckedOn = null, long? sessionId = null, string sparkPool = null, object sessionDetail = null, string exitValue = null, RunNotebookError error = null)
+        {
+            return new RunNotebookResult(runId, runStatus, lastCheckedOn, sessionId, sparkPool, sessionDetail, exitValue, error);
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookError. </summary>
+        /// <param name="ename"> Error name. </param>
+        /// <param name="evalue"> Error message. </param>
+        /// <param name="traceback"> Error trace. </param>
+        /// <returns> A new <see cref="Models.RunNotebookError"/> instance for mocking. </returns>
+        public static RunNotebookError RunNotebookError(string ename = null, string evalue = null, IEnumerable<string> traceback = null)
+        {
+            traceback ??= new List<string>();
+
+            return new RunNotebookError(ename, evalue, traceback?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookSnapshotResponse. </summary>
+        /// <param name="message"> Response message. </param>
+        /// <param name="result"> Run notebook snapshot result. </param>
+        /// <returns> A new <see cref="Models.RunNotebookSnapshotResponse"/> instance for mocking. </returns>
+        public static RunNotebookSnapshotResponse RunNotebookSnapshotResponse(string message = null, RunNotebookSnapshotResult result = null)
+        {
+            return new RunNotebookSnapshotResponse(message, result);
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookSnapshotResult. </summary>
+        /// <param name="snapshot"> Run notebook snapshot. </param>
+        /// <param name="error"> Run notebook error. </param>
+        /// <param name="runId"> Run id. </param>
+        /// <param name="runStatus"> Status of the run notebook. </param>
+        /// <param name="lastCheckedOn"> Timestamp of last update. </param>
+        /// <param name="sessionId"> Livy session id. </param>
+        /// <param name="sparkPool"> SparkPool name. </param>
+        /// <returns> A new <see cref="Models.RunNotebookSnapshotResult"/> instance for mocking. </returns>
+        public static RunNotebookSnapshotResult RunNotebookSnapshotResult(RunNotebookSnapshot snapshot = null, RunNotebookError error = null, string runId = null, string runStatus = null, string lastCheckedOn = null, long? sessionId = null, string sparkPool = null)
+        {
+            return new RunNotebookSnapshotResult(snapshot, error, runId, runStatus, lastCheckedOn, sessionId, sparkPool);
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookSnapshot. </summary>
+        /// <param name="exitValue"> Output of exit command. </param>
+        /// <param name="id"> Run notebook runId. </param>
+        /// <param name="notebook"> Notebook name. </param>
+        /// <param name="sessionOptions"> Session properties. </param>
+        /// <param name="honorSessionTimeToLive"> Whether session should run till time to live after run completes. </param>
+        /// <param name="sessionId"> Livy session id. </param>
+        /// <param name="sparkPool"> SparkPool name. </param>
+        /// <param name="parameters"> Run notebook parameters. </param>
+        /// <param name="notebookContent"> Notebook resource type. </param>
+        /// <returns> A new <see cref="Models.RunNotebookSnapshot"/> instance for mocking. </returns>
+        public static RunNotebookSnapshot RunNotebookSnapshot(string exitValue = null, string id = null, string notebook = null, RunNotebookSparkSessionOptions sessionOptions = null, bool? honorSessionTimeToLive = null, long? sessionId = null, string sparkPool = null, IReadOnlyDictionary<string, RunNotebookParameter> parameters = null, NotebookResource notebookContent = null)
+        {
+            parameters ??= new Dictionary<string, RunNotebookParameter>();
+
+            return new RunNotebookSnapshot(exitValue, id, notebook, sessionOptions, honorSessionTimeToLive, sessionId, sparkPool, parameters, notebookContent);
+        }
+
+        /// <summary> Initializes a new instance of NotebookResource. </summary>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties"> Properties of Notebook. </param>
+        /// <returns> A new <see cref="Models.NotebookResource"/> instance for mocking. </returns>
+        public static NotebookResource NotebookResource(string id = null, string name = null, string type = null, string etag = null, Notebook properties = null)
+        {
+            return new NotebookResource(id, name, type, etag, properties);
+        }
+
         /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
         /// <param name="status"> Enumerates possible request statuses. </param>
         /// <returns> A new <see cref="Models.MetastoreRegistrationResponse"/> instance for mocking. </returns>
@@ -355,7 +444,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="properties">
         /// Integration runtime properties.
         /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+        /// The available derived classes include <see cref="Models.ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeResource"/> instance for mocking. </returns>
         public static IntegrationRuntimeResource IntegrationRuntimeResource(string id = null, string name = null, string type = null, string etag = null, IntegrationRuntime properties = null)
@@ -433,18 +522,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static LinkedServiceResource LinkedServiceResource(string id = null, string name = null, string type = null, string etag = null, LinkedService properties = null)
         {
             return new LinkedServiceResource(id, name, type, etag, properties);
-        }
-
-        /// <summary> Initializes a new instance of NotebookResource. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="properties"> Properties of Notebook. </param>
-        /// <returns> A new <see cref="Models.NotebookResource"/> instance for mocking. </returns>
-        public static NotebookResource NotebookResource(string id = null, string name = null, string type = null, string etag = null, Notebook properties = null)
-        {
-            return new NotebookResource(id, name, type, etag, properties);
         }
 
         /// <summary> Initializes a new instance of PipelineResource. </summary>
@@ -755,8 +832,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties">
         /// Properties of the trigger.
-        /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
+        /// Please note <see cref="Models.Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.BlobEventsTrigger"/>, <see cref="Models.BlobTrigger"/>, <see cref="Models.ChainingTrigger"/>, <see cref="Models.CustomEventsTrigger"/>, <see cref="Models.MultiplePipelineTrigger"/>, <see cref="Models.RerunTumblingWindowTrigger"/>, <see cref="Models.ScheduleTrigger"/> and <see cref="Models.TumblingWindowTrigger"/>.
         /// </param>
         /// <returns> A new <see cref="Models.TriggerResource"/> instance for mocking. </returns>
         public static TriggerResource TriggerResource(string id = null, string name = null, string type = null, string etag = null, Trigger properties = null)

@@ -11,9 +11,10 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/0cfd102a6ecb172f04ec915732bd8ca6f6b2a7af/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/0cfd102a6ecb172f04ec915732bd8ca6f6b2a7af/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/9383e81389c2b1c64da07cc70c66f8c54b9ad4f5/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/9383e81389c2b1c64da07cc70c66f8c54b9ad4f5/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchservice.json
 generation1-convenience-client: true
+deserialize-null-collection-as-null-value: true
 ```
 
 ## Release hacks
@@ -144,6 +145,17 @@ directive:
 - from: searchindex.json
   where: $.definitions.QueryResultDocumentSemanticFieldState
   transform: $["x-ms-enum"].name = "SemanticFieldState";
+```
+
+### Remove `Vector` Property
+
+ Remove the `Vector` Property from `SearchRequest` in favor of the `Vectors` Array
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.SearchRequest
+  transform: delete $.properties.vector;
 ```
 
 ### Rename one of SearchMode definitions

@@ -50,14 +50,14 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
     {
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
     });
 
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
     {
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
     });
 
 // Register worker1
@@ -118,7 +118,7 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
     {
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(5), },
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         AvailableForOffers = true
     });
 
@@ -126,7 +126,7 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
     {
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(5), },
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         AvailableForOffers = true, // register worker upon creation
     });
 
@@ -194,7 +194,7 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
     {
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         Labels =
         {
             ["Location"] = new LabelValue("United States"),
@@ -210,7 +210,7 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
     {
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         Labels =
         {
             ["Location"] = new LabelValue("United States"),
@@ -226,7 +226,7 @@ Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker3Id, totalCapacity: 10)
     {
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         Labels =
         {
             ["Location"] = new LabelValue("United States"),
@@ -308,7 +308,7 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
     {
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         AvailableForOffers = true,
     });
 
@@ -316,7 +316,7 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
     {
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         AvailableForOffers = true,
     });
 

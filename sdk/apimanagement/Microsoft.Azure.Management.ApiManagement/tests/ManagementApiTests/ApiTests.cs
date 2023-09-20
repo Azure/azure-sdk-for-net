@@ -145,6 +145,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiGetResponse.AuthenticationSettings);
                     Assert.NotNull(apiGetResponse.AuthenticationSettings.OAuth2);
                     Assert.Equal(newApiAuthorizationServerId, apiGetResponse.AuthenticationSettings.OAuth2.AuthorizationServerId);
+                    Assert.Single(apiGetResponse.AuthenticationSettings.OAuth2AuthenticationSettings);
+                    Assert.Equal(newApiAuthorizationServerId, apiGetResponse.AuthenticationSettings.OAuth2AuthenticationSettings.First().AuthorizationServerId);
+                    Assert.Empty(apiGetResponse.AuthenticationSettings.OpenidAuthenticationSettings);
 
                     // get the API Entity Tag
                     ApiGetEntityTagHeaders apiTag = testBase.client.Api.GetEntityTag(
@@ -155,7 +158,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiTag);
                     Assert.NotNull(apiTag.ETag);
 
-                    // patch added api
+                    // patch added api with OAuth2AuthenticationSettings
                     string patchedName = TestUtilities.GenerateName("patchedname");
                     string patchedDescription = TestUtilities.GenerateName("patchedDescription");
                     string patchedPath = TestUtilities.GenerateName("patchedPath");
@@ -171,7 +174,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Path = patchedPath,
                             AuthenticationSettings = new AuthenticationSettingsContract
                             {
-                                OAuth2 = null
+                                OAuth2AuthenticationSettings = new[]
+                                {
+                                    new OAuth2AuthenticationSettingsContract
+                                        {
+                                            AuthorizationServerId = newApiAuthorizationServerId,
+                                            Scope = newApiAuthorizationScope
+                                        }
+                                }
                             }
                         },
                         apiTag.ETag);
@@ -190,6 +200,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(2, apiGetResponse.Protocols.Count);
                     Assert.True(apiGetResponse.Protocols.Contains(Protocol.Http));
                     Assert.True(apiGetResponse.Protocols.Contains(Protocol.Https));
+                    Assert.NotNull(apiGetResponse.AuthenticationSettings.OAuth2);
+                    Assert.Single(apiGetResponse.AuthenticationSettings.OAuth2AuthenticationSettings);
+                    Assert.Equal(newApiAuthorizationServerId, apiGetResponse.AuthenticationSettings.OAuth2AuthenticationSettings.First().AuthorizationServerId);
+                    Assert.Empty(apiGetResponse.AuthenticationSettings.OpenidAuthenticationSettings);
 
                     // get the latest API Entity Tag
                     apiTag = testBase.client.Api.GetEntityTag(
@@ -305,6 +319,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.True(openApiGetResponse.Protocols.Contains(Protocol.Https));
                     Assert.NotNull(openApiGetResponse.AuthenticationSettings.Openid);
                     Assert.Equal(openIdCreateResponse.Name, openApiGetResponse.AuthenticationSettings.Openid.OpenidProviderId);
+                    Assert.Empty(openApiGetResponse.AuthenticationSettings.OAuth2AuthenticationSettings);
+                    Assert.Single(openApiGetResponse.AuthenticationSettings.OpenidAuthenticationSettings);
+                    Assert.Equal(openIdCreateResponse.Name, openApiGetResponse.AuthenticationSettings.OpenidAuthenticationSettings.First().OpenidProviderId);
+
 
                     // list with paging
                     listResponse = testBase.client.Api.ListByService(
@@ -321,6 +339,84 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(listResponse);
                     Assert.Single(listResponse);
                     Assert.NotNull(listResponse.NextPageLink);
+
+
+                    // patch added api with OpenidAuthenticationSettings
+                    apiTag = testBase.client.Api.GetEntityTag(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId);
+
+                    testBase.client.Api.Update(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId,
+                        new ApiUpdateContract
+                        {
+                            AuthenticationSettings = new AuthenticationSettingsContract
+                            {
+                                OpenidAuthenticationSettings = new[]
+                                {
+                                    new OpenIdAuthenticationSettingsContract
+                                        {
+                                            OpenidProviderId = openIdCreateResponse.Name
+                                        }
+                                }
+                            }
+                        },
+                        apiTag.ETag);
+
+                    // get patched api to check it was patched
+                    var patchedOpenApiGetResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, newOpenApiId);
+
+                    Assert.NotNull(patchedOpenApiGetResponse.AuthenticationSettings.Openid);
+                    Assert.Equal(openIdCreateResponse.Name, patchedOpenApiGetResponse.AuthenticationSettings.Openid.OpenidProviderId);
+                    Assert.Empty(patchedOpenApiGetResponse.AuthenticationSettings.OAuth2AuthenticationSettings);
+                    Assert.Single(patchedOpenApiGetResponse.AuthenticationSettings.OpenidAuthenticationSettings);
+                    Assert.Equal(openIdCreateResponse.Name, patchedOpenApiGetResponse.AuthenticationSettings.OpenidAuthenticationSettings.First().OpenidProviderId);
+
+                    // patch with both OAuth2 and Oauth2AuthentiationSettings should fail
+                    var oauth2Contract = new OAuth2AuthenticationSettingsContract
+                    {
+                        AuthorizationServerId = newApiAuthorizationServerId,
+                        Scope = newApiAuthorizationScope
+                    };
+
+                    Assert.Throws<ErrorResponseException>(() =>
+                    testBase.client.Api.Update(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId,
+                        new ApiUpdateContract
+                        {
+                            AuthenticationSettings = new AuthenticationSettingsContract
+                            {
+                                OAuth2 = oauth2Contract,
+                                OAuth2AuthenticationSettings = new[] { oauth2Contract }
+                            }
+                        },
+                        apiTag.ETag));
+
+                    // patch with both OpenId and OpenidAuthenticationSettings should fail
+                    var openIdContract = new OpenIdAuthenticationSettingsContract
+                    {
+                        OpenidProviderId = openIdCreateResponse.Name
+                    };
+
+                    Assert.Throws<ErrorResponseException>(() =>
+                    testBase.client.Api.Update(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId,
+                        new ApiUpdateContract
+                        {
+                            AuthenticationSettings = new AuthenticationSettingsContract
+                            {
+                                Openid = openIdContract,
+                                OpenidAuthenticationSettings = new[] { openIdContract }
+                            }
+                        },
+                        apiTag.ETag));
 
                     // delete the api
                     testBase.client.Api.Delete(
@@ -339,6 +435,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     {
                         Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
                     }
+
 
                     // delete the api
                     testBase.client.Api.Delete(
@@ -512,6 +609,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiGetResponse.AuthenticationSettings.OAuth2);
                     Assert.Equal(newApiAuthorizationServerId, apiGetResponse.AuthenticationSettings.OAuth2.AuthorizationServerId);
                     Assert.True(apiGetResponse.SubscriptionRequired);
+                    Assert.Single(apiGetResponse.AuthenticationSettings.OAuth2AuthenticationSettings);
+                    Assert.Equal(newApiAuthorizationServerId, apiGetResponse.AuthenticationSettings.OAuth2AuthenticationSettings.First().AuthorizationServerId);
+                    Assert.Empty(apiGetResponse.AuthenticationSettings.OpenidAuthenticationSettings);
 
                     var newApiOperations = await testBase.client.ApiOperation.ListByApiAsync(
                         testBase.rgName,

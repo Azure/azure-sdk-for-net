@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Sign-Up settings for a developer portal.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PortalSignupSettings : Resource
+    public partial class PortalSignupSettings : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the PortalSignupSettings class.

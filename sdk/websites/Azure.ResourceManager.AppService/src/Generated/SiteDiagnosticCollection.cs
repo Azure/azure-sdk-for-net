@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticResource(Client, DiagnosticCategoryData.DeserializeDiagnosticCategoryData(e)), _siteDiagnosticDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticResource(Client, DiagnosticCategoryData.DeserializeDiagnosticCategoryData(e)), _siteDiagnosticDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticResource(Client, DiagnosticCategoryData.DeserializeDiagnosticCategoryData(e)), _siteDiagnosticDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticResource(Client, DiagnosticCategoryData.DeserializeDiagnosticCategoryData(e)), _siteDiagnosticDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Result of listing charge summary.
-    /// Serialized Name: ChargesListResult
-    /// </summary>
+    /// <summary> Result of listing charge summary. </summary>
     internal partial class ChargesListResult
     {
         /// <summary> Initializes a new instance of ChargesListResult. </summary>
@@ -25,7 +22,6 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ChargesListResult. </summary>
         /// <param name="value">
         /// The list of charge summary
-        /// Serialized Name: ChargesListResult.value
         /// Please note <see cref="ConsumptionChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
         /// </param>
@@ -36,7 +32,6 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary>
         /// The list of charge summary
-        /// Serialized Name: ChargesListResult.value
         /// Please note <see cref="ConsumptionChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
         /// </summary>

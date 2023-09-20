@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary>
     /// An usage detail resource.
-    /// Serialized Name: UsageDetail
     /// Please note <see cref="ConsumptionUsageDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConsumptionLegacyUsageDetail"/> and <see cref="ConsumptionModernUsageDetail"/>.
     /// </summary>
@@ -31,18 +30,9 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Specifies the kind of usage details.
-        /// Serialized Name: UsageDetail.kind
-        /// </param>
-        /// <param name="etag">
-        /// The etag for the resource.
-        /// Serialized Name: Resource.etag
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: Resource.tags
-        /// </param>
+        /// <param name="kind"> Specifies the kind of usage details. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         internal ConsumptionUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageDetailsKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
@@ -50,20 +40,11 @@ namespace Azure.ResourceManager.Consumption.Models
             Tags = tags;
         }
 
-        /// <summary>
-        /// Specifies the kind of usage details.
-        /// Serialized Name: UsageDetail.kind
-        /// </summary>
+        /// <summary> Specifies the kind of usage details. </summary>
         internal UsageDetailsKind Kind { get; set; }
-        /// <summary>
-        /// The etag for the resource.
-        /// Serialized Name: Resource.etag
-        /// </summary>
+        /// <summary> The etag for the resource. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: Resource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }
