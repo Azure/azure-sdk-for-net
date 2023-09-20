@@ -38,13 +38,23 @@ namespace Azure.Communication.CallAutomation
             return new UnmuteParticipantsResponse(operationContext);
         }
 
+        /// <summary> Initializes a new instance of CancelAddParticipantResponse. </summary>
+        /// <param name="invitationId"> Invitation ID used to cancel the add participant action. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.CancelAddParticipantResponse"/> instance for mocking. </returns>
+        public static CancelAddParticipantResponse CancelAddParticipantResponse(string invitationId = null, string operationContext = null)
+        {
+            return new CancelAddParticipantResponse(invitationId, operationContext);
+        }
+
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
+        /// <param name="recordingType"></param>
         /// <returns> A new <see cref="CallAutomation.RecordingStateResult"/> instance for mocking. </returns>
-        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null)
+        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null, RecordingType? recordingType = null)
         {
-            return new RecordingStateResult(recordingId, recordingState);
+            return new RecordingStateResult(recordingId, recordingState, recordingType);
         }
 
         /// <summary> Initializes a new instance of ResultInformation. </summary>
@@ -77,18 +87,6 @@ namespace Azure.Communication.CallAutomation
         public static CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
             return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext);
-        }
-
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
-        public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new CallTransferAccepted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Initializes a new instance of CallTransferFailed. </summary>
@@ -220,14 +218,6 @@ namespace Azure.Communication.CallAutomation
         public static UserConsent UserConsent(int? recording = null)
         {
             return new UserConsent(recording);
-        }
-
-        /// <summary> Initializes a new instance of SensitiveFlag. </summary>
-        /// <param name="recording"></param>
-        /// <returns> A new <see cref="CallAutomation.SensitiveFlag"/> instance for mocking. </returns>
-        public static SensitiveFlag SensitiveFlag(int? recording = null)
-        {
-            return new SensitiveFlag(recording);
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>

@@ -24,5 +24,10 @@ namespace Azure.Communication.CallAutomation
 
             return DeserializeCallTransferAccepted(element);
         }
+
+        /// <summary> Traffer target: the user that transferee will be transferred to. </summary>
+        internal CommunicationIdentifierModel TransferTarget { get; }
+        /// <summary> Transferee: the participant being transferred away. </summary>
+        internal CommunicationIdentifierModel Transferee { get; }
     }
 }

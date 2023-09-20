@@ -466,5 +466,153 @@ namespace Azure.Communication.CallAutomation
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateStartHoldMusicRequest(string callConnectionId, HoldParticipantRequestInternal holdParticipantRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":startHoldMusic", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(holdParticipantRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Unmute participants from the call using identifier. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="holdParticipantRequest"> The participants to be hold from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdParticipantRequest"/> is null. </exception>
+        public async Task<Response> StartHoldMusicAsync(string callConnectionId, HoldParticipantRequestInternal holdParticipantRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (holdParticipantRequest == null)
+            {
+                throw new ArgumentNullException(nameof(holdParticipantRequest));
+            }
+
+            using var message = CreateStartHoldMusicRequest(callConnectionId, holdParticipantRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Unmute participants from the call using identifier. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="holdParticipantRequest"> The participants to be hold from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdParticipantRequest"/> is null. </exception>
+        public Response StartHoldMusic(string callConnectionId, HoldParticipantRequestInternal holdParticipantRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (holdParticipantRequest == null)
+            {
+                throw new ArgumentNullException(nameof(holdParticipantRequest));
+            }
+
+            using var message = CreateStartHoldMusicRequest(callConnectionId, holdParticipantRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStopHoldMusicRequest(string callConnectionId, UnholdParticipantRequestInternal unholdParticipantRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":stopHoldMusic", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(unholdParticipantRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Unmute participants from the call using identifier. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="unholdParticipantRequest"> The participants to be hold from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdParticipantRequest"/> is null. </exception>
+        public async Task<Response> StopHoldMusicAsync(string callConnectionId, UnholdParticipantRequestInternal unholdParticipantRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (unholdParticipantRequest == null)
+            {
+                throw new ArgumentNullException(nameof(unholdParticipantRequest));
+            }
+
+            using var message = CreateStopHoldMusicRequest(callConnectionId, unholdParticipantRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Unmute participants from the call using identifier. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="unholdParticipantRequest"> The participants to be hold from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdParticipantRequest"/> is null. </exception>
+        public Response StopHoldMusic(string callConnectionId, UnholdParticipantRequestInternal unholdParticipantRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (unholdParticipantRequest == null)
+            {
+                throw new ArgumentNullException(nameof(unholdParticipantRequest));
+            }
+
+            using var message = CreateStopHoldMusicRequest(callConnectionId, unholdParticipantRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
     }
 }

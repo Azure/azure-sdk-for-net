@@ -10,22 +10,24 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class ContinuousDtmfRecognitionRequestInternal : IUtf8JsonSerializable
+    internal partial class HoldParticipantRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            writer.WritePropertyName("participantToHold"u8);
+            writer.WriteObjectValue(ParticipantToHold);
+            writer.WritePropertyName("playSourceInfo"u8);
+            writer.WriteObjectValue(PlaySourceInfo);
+            if (Optional.IsDefined(Loop))
+            {
+                writer.WritePropertyName("loop"u8);
+                writer.WriteBooleanValue(Loop.Value);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
-            }
-            if (Optional.IsDefined(CallbackUri))
-            {
-                writer.WritePropertyName("callbackUri"u8);
-                writer.WriteStringValue(CallbackUri);
             }
             writer.WriteEndObject();
         }

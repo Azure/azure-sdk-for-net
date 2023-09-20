@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Communication;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The call transfer accepted event. </summary>
@@ -21,13 +23,17 @@ namespace Azure.Communication.CallAutomation
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        internal CallTransferAccepted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        /// <param name="transferTarget"> Traffer target: the user that transferee will be transferred to. </param>
+        /// <param name="transferee"> Transferee: the participant being transferred away. </param>
+        internal CallTransferAccepted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel transferTarget, CommunicationIdentifierModel transferee)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
+            TransferTarget = transferTarget;
+            Transferee = transferee;
         }
     }
 }

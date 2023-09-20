@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -23,6 +24,8 @@ namespace Azure.Communication.CallAutomation
             Optional<string> correlationId = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
+            Optional<CommunicationIdentifierModel> transferTarget = default;
+            Optional<CommunicationIdentifierModel> transferee = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -54,8 +57,26 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
+                if (property.NameEquals("transferTarget"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transferTarget = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("transferee"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transferee = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
             }
-            return new CallTransferAccepted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
+            return new CallTransferAccepted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, transferTarget.Value, transferee.Value);
         }
     }
 }

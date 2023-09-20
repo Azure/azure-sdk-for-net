@@ -388,6 +388,58 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary>
+        /// Hold participant.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> StartHoldMusicAsync(HoldParticipantOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartHoldMusicAsync)}");
+            scope.Start();
+            try
+            {
+                var request = new HoldParticipantRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant),
+                    TranslatePlaySourceToInternal(options.PlaySourceInfo))
+                {
+                    Loop = options.Loop,
+                    OperationContext = options.OperationContext,
+                };
+
+                return await CallMediaRestClient.StartHoldMusicAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Hold participant.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> UnholdParticipantAsync(UnholdParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UnholdParticipantAsync)}");
+            scope.Start();
+            try
+            {
+                UnholdParticipantRequestInternal request = new UnholdParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+
+                return await CallMediaRestClient.StopHoldMusicAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         private static RecognizeRequestInternal CreateRecognizeRequest(CallMediaRecognizeOptions recognizeOptions)
         {
             if (recognizeOptions == null)

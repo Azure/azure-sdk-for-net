@@ -10,28 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class PlayRequestInternal : IUtf8JsonSerializable
+    public partial class CancelAddParticipantRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("playSourceInfo"u8);
-            writer.WriteObjectValue(PlaySourceInfo);
-            if (Optional.IsCollectionDefined(PlayTo))
-            {
-                writer.WritePropertyName("playTo"u8);
-                writer.WriteStartArray();
-                foreach (var item in PlayTo)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(PlayOptions))
-            {
-                writer.WritePropertyName("playOptions"u8);
-                writer.WriteObjectValue(PlayOptions);
-            }
+            writer.WritePropertyName("invitiationId"u8);
+            writer.WriteStringValue(InvitiationId);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
