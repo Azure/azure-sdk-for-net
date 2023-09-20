@@ -10,7 +10,7 @@ namespace Azure.Core
     /// An empty transport protocol that never sends anything over the wire.
     /// It allows multipart sub-operations to run through a pipeline to and have policies like Authentication prepare the Request.
     /// </summary>
-    internal class MemoryTransport : HttpPipelineTransport
+    public class MemoryTransport : HttpPipelineTransport
     {
         /// <inheritdoc />
         public override Request CreateRequest() => new MemoryRequest();

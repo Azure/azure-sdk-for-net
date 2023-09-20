@@ -7,15 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-#nullable disable
-
 namespace Azure.Core
 {
     /// <summary>
     /// A Response that can be constructed in memory without being tied to a
     /// live request.
     /// </summary>
-    internal class MemoryResponse : Response
+    public class MemoryResponse : Response
     {
         private const int NoStatusCode = 0;
         private const string XmsClientRequestIdName = "x-ms-client-request-id";

@@ -8,14 +8,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-#nullable disable
-
 namespace Azure.Core
 {
     /// <summary>
     ///  Provides a container for content encoded using multipart/form-data MIME type.
     /// </summary>
-    internal class MultipartContent : RequestContent
+    public class MultipartContent : RequestContent
     {
         #region Fields
 

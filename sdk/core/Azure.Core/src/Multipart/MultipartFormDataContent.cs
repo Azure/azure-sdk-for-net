@@ -3,14 +3,12 @@
 
 using System.Collections.Generic;
 
-#nullable disable
-
 namespace Azure.Core
 {
     /// <summary>
     ///  Provides a container for content encoded using multipart/form-data MIME type.
     /// </summary>
-    internal class MultipartFormDataContent : MultipartContent
+    public class MultipartFormDataContent : MultipartContent
     {
         #region Fields
 
