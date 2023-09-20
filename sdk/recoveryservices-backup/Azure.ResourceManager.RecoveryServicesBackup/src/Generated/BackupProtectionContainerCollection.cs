@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _backupProtectionContainerProtectionContainersRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(Response.FromValue(new BackupProtectionContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(new BackupProtectionContainerOperationSource(Client), _backupProtectionContainerProtectionContainersClientDiagnostics, Pipeline, _backupProtectionContainerProtectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _backupProtectionContainerProtectionContainersRestClient.Register(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(Response.FromValue(new BackupProtectionContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(new BackupProtectionContainerOperationSource(Client), _backupProtectionContainerProtectionContainersClientDiagnostics, Pipeline, _backupProtectionContainerProtectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
