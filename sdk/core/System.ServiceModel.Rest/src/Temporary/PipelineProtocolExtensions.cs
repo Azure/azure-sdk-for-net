@@ -21,7 +21,7 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
                 await pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
             }
 
-            if (!message.Response.IsError || statusOption == ErrorOptions.NoThrow)
+            if (!message.Response.IsError || statusOption == ResultErrorOptions.NoThrow)
             {
                 return message.Response;
             }
@@ -42,7 +42,7 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
                 pipeline.Send(message, cts.Token);
             }
 
-            if (!message.Response.IsError || statusOption == ErrorOptions.NoThrow)
+            if (!message.Response.IsError || statusOption == ResultErrorOptions.NoThrow)
             {
                 return message.Response;
             }
@@ -82,7 +82,7 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
         {
             if (requestContext == null)
             {
-                return (CancellationToken.None, ErrorOptions.Default);
+                return (CancellationToken.None, ResultErrorOptions.Default);
             }
 
             return (requestContext.CancellationToken, requestContext.ErrorOptions);
