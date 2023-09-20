@@ -57,9 +57,18 @@ namespace Azure.ResourceManager.CognitiveServices
             sb.AppendLine($"  properties: {{");
             sb.AppendChildObject(Properties, options, true);
             sb.AppendLine($"  }}");
-            sb.AppendLine($"  identity: {{");
-            sb.AppendLine($"    kind: '{Identity.ManagedServiceIdentityType}'");
-            sb.AppendLine($"  }}");
+            if(Optional.IsDefined(Identity)){
+                sb.AppendLine($"  identity: {{");
+                sb.AppendLine($"    type: '{Identity.ManagedServiceIdentityType}'");
+                if(Optional.IsDefined(Identity.UserAssignedIdentities)){
+                    sb.AppendLine($"    userAssignedIdentities: {{");
+                    foreach(var kv in Identity.UserAssignedIdentities){
+                        sb.AppendLine($"      '{kv.Key}': {{}}");
+                    }
+                    sb.AppendLine($"    }}");
+                }
+                sb.AppendLine($"  }}");
+            }
             return BinaryData.FromString(sb.ToString());
         }
     }
