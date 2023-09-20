@@ -12,6 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="../../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 </Project>
