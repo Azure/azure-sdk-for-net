@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.PowerBIDedicated.Models.SkuDetailsForExistingResource> GetSkusForCapacity(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.PowerBIDedicated.Models.SkuDetailsForExistingResource> GetSkusForCapacityAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.PowerBIDedicated.Models.SkuDetails> GetSkusForCapacity(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PowerBIDedicated.Models.SkuDetails> GetSkusForCapacityAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Resume(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static Azure.ResourceManager.PowerBIDedicated.Models.CheckCapacityNameAvailabilityResult CheckCapacityNameAvailabilityResult(bool? nameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData DedicatedCapacityData(string id = null, string name = null, string resourceType = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.PowerBIDedicated.Models.SystemData systemData = null, Azure.ResourceManager.PowerBIDedicated.Models.CapacitySku sku = null, System.Collections.Generic.IEnumerable<string> administrationMembers = null, Azure.ResourceManager.PowerBIDedicated.Models.Mode? mode = default(Azure.ResourceManager.PowerBIDedicated.Models.Mode?), System.Guid? tenantId = default(System.Guid?), string friendlyName = null, Azure.ResourceManager.PowerBIDedicated.Models.State? state = default(Azure.ResourceManager.PowerBIDedicated.Models.State?), Azure.ResourceManager.PowerBIDedicated.Models.CapacityProvisioningState? provisioningState = default(Azure.ResourceManager.PowerBIDedicated.Models.CapacityProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PowerBIDedicated.Models.PowerBIDedicatedResourceData PowerBIDedicatedResourceData(string id = null, string name = null, string resourceType = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.PowerBIDedicated.Models.SystemData systemData = null) { throw null; }
-        public static Azure.ResourceManager.PowerBIDedicated.Models.SkuDetailsForExistingResource SkuDetailsForExistingResource(string resourceType = null, Azure.ResourceManager.PowerBIDedicated.Models.CapacitySku sku = null) { throw null; }
+        public static Azure.ResourceManager.PowerBIDedicated.Models.SkuDetails SkuDetails(string resourceType = null, Azure.ResourceManager.PowerBIDedicated.Models.CapacitySku sku = null) { throw null; }
     }
     public partial class AutoScaleVCorePatch
     {
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public Azure.ResourceManager.PowerBIDedicated.Models.SystemData SystemData { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class SkuDetailsForExistingResource
+    public partial class SkuDetails
     {
-        internal SkuDetailsForExistingResource() { }
+        internal SkuDetails() { }
         public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.PowerBIDedicated.Models.CapacitySku Sku { get { throw null; } }
     }

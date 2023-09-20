@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.40"/>
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
     <PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.Azure.WebJobs.Extensions.Rpc" />
@@ -45,5 +45,9 @@
     <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="Shared" />
   </ItemGroup>
 
-
+<!--Temp - remove after next release-->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
+  </ItemGroup>
+<!--End Temp-->
 </Project>

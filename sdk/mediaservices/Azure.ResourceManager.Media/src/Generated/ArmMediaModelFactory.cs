@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="track">
         /// Detailed information about a track in the asset.
         /// Please note <see cref="MediaAssetTrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioTrack"/>, <see cref="TextTrack"/> and <see cref="VideoTrack"/>.
+        /// The available derived classes include <see cref="Models.AudioTrack"/>, <see cref="Models.TextTrack"/> and <see cref="VideoTrack"/>.
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the asset track. </param>
         /// <returns> A new <see cref="Media.MediaAssetTrackData"/> instance for mocking. </returns>
@@ -334,8 +334,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="lastModifiedOn"> The UTC date and time when the customer has last updated the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="outputs">
         /// The outputs for the Job.
-        /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+        /// Please note <see cref="Models.MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="priority"> Priority with which the job should be processed. Higher priority jobs are processed before lower priority jobs. If not set, the default is normal. </param>
         /// <param name="correlationData"> Customer provided key, value pairs that will be returned in Job and JobOutput state events. </param>
