@@ -3,14 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Files.Shares;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
     internal class ShareDirectoryStorageResourceContainer : StorageResourceContainer
     {
-        internal readonly ShareFileStorageResourceOptions _options;
+        internal ShareFileStorageResourceOptions ResourceOptions { get; set; }
+        internal PathScanner PathScanner { get; set; }
 
         internal ShareDirectoryClient ShareDirectoryClient { get; }
 
@@ -19,7 +23,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
             ShareDirectoryClient = shareDirectoryClient;
-            _options = options;
+            ResourceOptions = options;
         }
 
         protected override StorageResourceItem GetStorageResourceReference(string path)
@@ -27,9 +31,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             throw new NotImplementedException();
         }
 
-        protected override IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(CancellationToken cancellationToken = default)
+        protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await foreach (ShareFileClient client in PathScanner.ScanFilesAsync(
+                ShareDirectoryClient, cancellationToken).ConfigureAwait(false))
+            {
+                yield return new ShareFileStorageResourceItem(client, ResourceOptions);
+            }
         }
     }
 }
