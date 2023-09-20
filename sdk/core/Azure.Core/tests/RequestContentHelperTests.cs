@@ -148,5 +148,32 @@ namespace Azure.Core.Tests
                 }
             }
         }
+
+        [Test]
+        public void TestBinaryDataFromObject()
+        {
+            /*convert json string to RequestContent*/
+            string sValue = "a";
+            var scontent = RequestContentHelper.FromObject(sValue);
+            scontent.TryComputeLength(out var slength);
+            Assert.AreEqual(3, slength);
+            var stream = new MemoryStream();
+            scontent.WriteTo(stream, default);
+            stream.Position = 0;
+            var document = JsonDocument.Parse(stream);
+            Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
+            Assert.AreEqual("\"a\"", document.RootElement.GetRawText());
+
+            /*convert bool to RequestContent*/
+            bool bValue = true;
+            var bcontent = RequestContentHelper.FromObject(bValue);
+            bcontent.TryComputeLength(out var blength);
+            Assert.AreEqual(4, blength);
+            var bstream = new MemoryStream();
+            bcontent.WriteTo(bstream, default);
+            bstream.Position = 0;
+            var documentb = JsonDocument.Parse(bstream);
+            Assert.AreEqual(true, documentb.RootElement.GetBoolean());
+        }
     }
 }
