@@ -10,6 +10,9 @@ namespace: Azure.ResourceManager.VoiceServices
 require: https://github.com/Azure/azure-rest-api-specs/blob/7b47689d4efc098f25f46781f05f22179c153314/specification/voiceservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

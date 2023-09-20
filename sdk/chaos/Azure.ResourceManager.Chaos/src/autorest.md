@@ -2,19 +2,21 @@
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
-``` yaml
-
+```yaml
 azure-arm: true
 csharp: true
 library-name: Chaos
 namespace: Azure.ResourceManager.Chaos
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/1114a5b1f0831d8b3de07db7248c8a4f38c5bbb7/specification/chaos/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/eb29c07a0f08110c932b384d5dc41241dc0b03ab/specification/chaos/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
-  flatten-payloads: false
+    flatten-payloads: false
 
 format-by-name-rules:
   'tenantId': 'uuid'

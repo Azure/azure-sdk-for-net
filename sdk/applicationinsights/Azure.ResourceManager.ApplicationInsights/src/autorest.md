@@ -11,6 +11,13 @@ namespace: Azure.ResourceManager.ApplicationInsights
 require: https://github.com/Azure/azure-rest-api-specs/blob/1fea23ac36b111293dc3efc30f725e9ebb790f7f/specification/applicationinsights/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - LiveToken_Get
+  - WorkItemConfigurations_Create
+  - WorkItemConfigurations_UpdateItem
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -68,6 +75,9 @@ rename-mapping:
   WebTestPropertiesValidationRules.SSLCheck: CheckSsl
   ApplicationInsightsComponentFeature.ResouceId: ResourceId
   ItemScopePath.myanalyticsItems: MyAnalyticsItems
+  MyWorkbookResource: MyWorkbookResourceContent
+  PrivateLinkScopedResource: PrivateLinkScopedResourceContent
+  TagsResource: ComponentTag
 
 directive:
   - from: webTestLocations_API.json

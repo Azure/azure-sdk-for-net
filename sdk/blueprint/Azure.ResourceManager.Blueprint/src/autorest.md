@@ -12,6 +12,11 @@ namespace: Azure.ResourceManager.Blueprint
 require: https://github.com/Azure/azure-rest-api-specs/blob/4270cc435fd2496bdb2a5f056dbddb463e52c7c2/specification/blueprint/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - Assignments_CreateOrUpdate
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -48,5 +53,8 @@ acronym-mapping:
 
 list-exception:
   - /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
+
+rename-mapping:
+  AssignmentJobCreatedResource: AssignmentJobCreatedResult
 
 ```
