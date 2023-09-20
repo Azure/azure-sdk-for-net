@@ -87,24 +87,26 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                    string partitionId,
                                                    long offset,
                                                    long? sequenceNumber,
-                                                   CancellationToken cancellationToken)
-        {
-            if (sequenceNumber == null)
-            {
-                return UpdateCheckpointAsync(new EventProcessorCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, null, EventPosition.FromOffset(offset)), cancellationToken);
-            }
-            return UpdateCheckpointAsync(new EventProcessorCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, null, EventPosition.FromOffset(offset, sequenceNumber.Value)), cancellationToken);
-        }
+                                                   CancellationToken cancellationToken) => UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, null, new CheckpointStartingPosition(offset, sequenceNumber), cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
         ///   that an event processor should begin reading from.
         /// </summary>
-        ///
-        /// <param name="checkpoint">The <see cref="EventProcessorCheckpoint"/> to use as the checkpoint.</param>
+        /// <param name="fullyQualifiedNamespace"></param>
+        /// <param name="eventHubName"></param>
+        /// <param name="consumerGroup"></param>
+        /// <param name="partitionId"></param>
+        /// <param name="clientIdentifier"></param>
+        /// <param name="checkpointStartingPosition"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        public virtual Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+        public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
+                                                  string eventHubName,
+                                                  string consumerGroup,
+                                                  string partitionId,
+                                                  string clientIdentifier,
+                                                  CheckpointStartingPosition checkpointStartingPosition,
                                                   CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 }

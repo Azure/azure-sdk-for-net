@@ -353,25 +353,34 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
         ///   that an event processor should begin reading from.
         /// </summary>
-        ///
-        /// <param name="checkpoint">The <see cref="EventProcessorCheckpoint"/> to use as the checkpoint.</param>
+        /// <param name="fullyQualifiedNamespace"></param>
+        /// <param name="eventHubName"></param>
+        /// <param name="consumerGroup"></param>
+        /// <param name="partitionId"></param>
+        /// <param name="clientIdentifier"></param>
+        /// <param name="checkpointStartingPosition"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        public override async Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+        public override async Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
+                                                         string eventHubName,
+                                                         string consumerGroup,
+                                                         string partitionId,
+                                                         string clientIdentifier,
+                                                         CheckpointStartingPosition checkpointStartingPosition,
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientAuthorIdentifier);
+            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier);
 
-            var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLowerInvariant(), checkpoint.EventHubName.ToLowerInvariant(), checkpoint.ConsumerGroup.ToLowerInvariant());
+            var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
 
             var metadata = new Dictionary<string, string>()
             {
-                { BlobMetadataKey.Offset, checkpoint.StartingPosition.Offset },
-                { BlobMetadataKey.SequenceNumber, (checkpoint.StartingPosition.SequenceNumber ?? long.MinValue).ToString(CultureInfo.InvariantCulture) },
-                { BlobMetadataKey.ClientAuthorIdentifier, checkpoint.ClientAuthorIdentifier },
-                { BlobMetadataKey.ReplicationSegment,  checkpoint.StartingPosition.ReplicationSegment ?? "-1" }
+                { BlobMetadataKey.Offset, checkpointStartingPosition.Offset.ToString() },
+                { BlobMetadataKey.SequenceNumber, (checkpointStartingPosition.SequenceNumber ?? long.MinValue).ToString(CultureInfo.InvariantCulture) },
+                { BlobMetadataKey.ClientAuthorIdentifier, clientIdentifier },
+                { BlobMetadataKey.ReplicationSegment,  checkpointStartingPosition.ReplicationSegment ?? "-1" }
             };
 
             try
@@ -392,17 +401,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientAuthorIdentifier, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientAuthorIdentifier, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientAuthorIdentifier);
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier);
             }
         }
 

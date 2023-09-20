@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -221,13 +222,28 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
                                                       CancellationToken cancellationToken)
         {
-            var eventPosition = sequenceNumber == null ? EventPosition.FromOffset(offset) : EventPosition.FromOffset(offset, sequenceNumber.Value);
-            return _checkpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, eventPosition), cancellationToken);
+            return _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, new CheckpointStartingPosition(offset, sequenceNumber), cancellationToken);
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="partitionId"></param>
+        /// <param name="checkpointStartingPosition"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override Task UpdateCheckpointAsync(string partitionId,
+                                                      CheckpointStartingPosition checkpointStartingPosition,
+                                                      CancellationToken cancellationToken)
+        {
+            return _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, checkpointStartingPosition, cancellationToken);
         }
 
         /// <summary>

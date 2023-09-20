@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
@@ -94,14 +95,43 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                           CancellationToken cancellationToken) => _checkpointStoreImplementation.GetCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, cancellationToken);
 
         /// <summary>
-        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
-        ///   that an event processor should begin reading from.
+        /// TODO.
         /// </summary>
-        ///
-        /// <param name="checkpoint">The <see cref="EventProcessorCheckpoint"/> to use as the checkpoint.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
-        ///
-        public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
-                                                   CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(checkpoint, cancellationToken);
+        /// <param name="fullyQualifiedNamespace"></param>
+        /// <param name="eventHubName"></param>
+        /// <param name="consumerGroup"></param>
+        /// <param name="partitionId"></param>
+        /// <param name="offset"></param>
+        /// <param name="sequenceNumber"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
+                                                   string eventHubName,
+                                                   string consumerGroup,
+                                                   string partitionId,
+                                                   long offset,
+                                                   long? sequenceNumber,
+                                                   CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="fullyQualifiedNamespace"></param>
+        /// <param name="eventHubName"></param>
+        /// <param name="consumerGroup"></param>
+        /// <param name="partitionId"></param>
+        /// <param name="clientIdentifier"></param>
+        /// <param name="checkpointStartingPosition"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
+                                                   string eventHubName,
+                                                   string consumerGroup,
+                                                   string partitionId,
+                                                   string clientIdentifier,
+                                                   CheckpointStartingPosition checkpointStartingPosition,
+                                                   CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, checkpointStartingPosition, cancellationToken);
     }
 }

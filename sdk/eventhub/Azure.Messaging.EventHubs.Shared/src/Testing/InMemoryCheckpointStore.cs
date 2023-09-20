@@ -219,15 +219,20 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="checkpoint">The <see cref="EventProcessorCheckpoint"/> to use as the checkpoint.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+        public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
+                                                   string eventHubName,
+                                                   string consumerGroup,
+                                                   string partitionId,
+                                                   string clientIdentifier,
+                                                   CheckpointStartingPosition checkpointStartingPosition,
                                                    CancellationToken cancellationToken = default)
         {
             lock (_checkpointLock)
             {
-                var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
-                Checkpoints[key] = new CheckpointData(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.StartingPosition.Offset, DateTimeOffset.Now.ToString(), checkpoint.StartingPosition.SequenceNumber);
+                var key = (fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+                Checkpoints[key] = new CheckpointData(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, checkpointStartingPosition.Offset.ToString(), DateTimeOffset.Now.ToString(), checkpointStartingPosition.SequenceNumber);
 
-                Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated successfully.");
+                Log($"Checkpoint with partition id = '{partitionId}' updated successfully.");
             }
 
             return Task.CompletedTask;

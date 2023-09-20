@@ -920,7 +920,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             mockCheckpointStore
-                .Setup(storage => storage.UpdateCheckpointAsync(It.IsAny<EventProcessorCheckpoint>(), It.IsAny<CancellationToken>()))
+                .Setup(storage => storage.UpdateCheckpointAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CheckpointStartingPosition>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             processorClient.ProcessEventAsync += eventArgs =>
@@ -1000,7 +1007,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockCheckpointStore
                 .Verify(storage => storage.UpdateCheckpointAsync(
-                    It.IsAny<EventProcessorCheckpoint>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CheckpointStartingPosition>(),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
 
@@ -1538,7 +1550,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockStorage
                 .Setup(storage => storage.UpdateCheckpointAsync(
-                    It.IsAny<EventProcessorCheckpoint>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CheckpointStartingPosition>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
 

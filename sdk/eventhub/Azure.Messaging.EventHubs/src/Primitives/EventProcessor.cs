@@ -1074,9 +1074,22 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
+                                                     CancellationToken cancellationToken) => throw new NotImplementedException();
+
+        /// <summary>
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
+        /// </summary>
+        /// <param name="partitionId"></param>
+        /// <param name="checkpointStartingPosition"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        protected virtual Task UpdateCheckpointAsync(string partitionId,
+                                                     CheckpointStartingPosition checkpointStartingPosition,
                                                      CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
@@ -2191,14 +2204,23 @@ namespace Azure.Messaging.EventHubs.Primitives
             ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
             ///   that an event processor should begin reading from.
             /// </summary>
-            /// <param name="checkpoint"></param>
+            /// <param name="fullyQualifiedNamespace"></param>
+            /// <param name="eventHubName"></param>
+            /// <param name="consumerGroup"></param>
+            /// <param name="partitionId"></param>
+            /// <param name="clientIdentifier"></param>
+            /// <param name="checkpointStartingPosition"></param>
             /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
             ///
-            public async override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+            public async override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
+                                                             string eventHubName,
+                                                             string consumerGroup,
+                                                             string partitionId,
+                                                             string clientIdentifier,
+                                                             CheckpointStartingPosition checkpointStartingPosition,
                                                              CancellationToken cancellationToken)
             {
-                var checkpointOffset = long.Parse(checkpoint.StartingPosition.Offset);
-                await Processor.UpdateCheckpointAsync(checkpoint.PartitionId, checkpointOffset, checkpoint.StartingPosition.SequenceNumber, cancellationToken).ConfigureAwait(false);
+                await Processor.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken).ConfigureAwait(false);
             }
         }
 

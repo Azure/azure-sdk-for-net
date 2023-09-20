@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 };
 
                 await checkpointStore.ClaimOwnershipAsync(ownershipList, default);
-                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint("namespace", "eventHubName", "consumerGroup", "partitionId", "Id", EventPosition.FromOffset(10, 20)), default), Throws.Nothing);
+                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId", "Id", new CheckpointStartingPosition(10, 20), default), Throws.Nothing);
             }
         }
 
@@ -705,9 +705,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var containerClient = new BlobContainerClient(storageConnectionString, $"test-container-{Guid.NewGuid()}");
                 var checkpointStore = new BlobCheckpointStoreInternal(containerClient);
 
-                var checkpoint = new EventProcessorCheckpoint("namespace", "eventHubName", "consumerGroup", "partitionId", "Id", EventPosition.FromOffset(10, 20));
-
-                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, default), Throws.InstanceOf<RequestFailedException>());
+                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId", "Id", new CheckpointStartingPosition(10, 20), default), Throws.InstanceOf<RequestFailedException>());
             }
         }
 
@@ -755,9 +753,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Calling update should create the checkpoint.
 
-                var updateCheckpoint = new EventProcessorCheckpoint(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientAuthorIdentifier, EventPosition.FromOffset(mockEvent.Offset, mockEvent.SequenceNumber));
-
-                await checkpointStore.UpdateCheckpointAsync(updateCheckpoint, default);
+                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientAuthorIdentifier, new CheckpointStartingPosition(mockEvent.Offset, mockEvent.SequenceNumber), default);
                 storedCheckpoint = await checkpointStore.GetCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, default);
 
                 Assert.That(storedCheckpoint, Is.Not.Null);
@@ -812,9 +808,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Calling update should create the checkpoint.
 
-                var updateCheckpoint = new EventProcessorCheckpoint(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientAuthorIdentifier, EventPosition.FromOffset(mockEvent.Offset, mockEvent.SequenceNumber));
-
-                await checkpointStore.UpdateCheckpointAsync(updateCheckpoint, default);
+                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientAuthorIdentifier, new CheckpointStartingPosition(mockEvent.Offset, mockEvent.SequenceNumber), default);
 
                 var blobCount = 0;
                 var storedCheckpoint = await checkpointStore.GetCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, default);
@@ -841,9 +835,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     offset: 50,
                     sequenceNumber: 60);
 
-                var updateCheckpointAgain = new EventProcessorCheckpoint(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientAuthorIdentifier, EventPosition.FromOffset(mockEvent.Offset, mockEvent.SequenceNumber));
-
-                await checkpointStore.UpdateCheckpointAsync(updateCheckpointAgain, default);
+                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientAuthorIdentifier, new CheckpointStartingPosition(mockEvent.Offset, mockEvent.SequenceNumber), default);
 
                 blobCount = 0;
                 storedCheckpoint = await checkpointStore.GetCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, default);
@@ -879,11 +871,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
                 var checkpointStore = new BlobCheckpointStoreInternal(containerClient);
 
-                var checkpoint1 = new EventProcessorCheckpoint("namespace", "eventHubName", "consumerGroup1", "partitionId", "Id", EventPosition.FromOffset(10, 20));
-                var checkpoint2 = new EventProcessorCheckpoint("namespace", "eventHubName", "consumerGroup2", "partitionId", "Id", EventPosition.FromOffset(10, 20));
-
-                await checkpointStore.UpdateCheckpointAsync(checkpoint1, default);
-                await checkpointStore.UpdateCheckpointAsync(checkpoint2, default);
+                await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup1", "partitionId", "Id", new CheckpointStartingPosition(10, 20), default);
+                await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup2", "partitionId", "Id", new CheckpointStartingPosition(10, 20), default);
 
                 var storedCheckpoint1 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup1", "partitionId", default);
                 var storedCheckpoint2 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup2", "partitionId", default);
@@ -907,11 +896,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
                 var checkpointStore = new BlobCheckpointStoreInternal(containerClient);
 
-                var checkpoint1 = new EventProcessorCheckpoint("namespace", "eventHubName1", "consumerGroup", "partitionId", "Id", EventPosition.FromOffset(10, 20));
-                var checkpoint2 = new EventProcessorCheckpoint("namespace", "eventHubName2", "consumerGroup", "partitionId", "Id", EventPosition.FromOffset(10, 20));
-
-                await checkpointStore.UpdateCheckpointAsync(checkpoint1, default);
-                await checkpointStore.UpdateCheckpointAsync(checkpoint2, default);
+                await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName1", "consumerGroup", "partitionId", "Id", new CheckpointStartingPosition(10, 20), default);
+                await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName2", "consumerGroup", "partitionId", "Id", new CheckpointStartingPosition(10, 20), default);
 
                 var storedCheckpoint1 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName1", "consumerGroup", "partitionId", default);
                 var storedCheckpoint2 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName2", "consumerGroup", "partitionId", default);
@@ -935,11 +921,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
                 var checkpointStore = new BlobCheckpointStoreInternal(containerClient);
 
-                var checkpoint1 = new EventProcessorCheckpoint("namespace1", "eventHubName", "consumerGroup", "partitionId", "Id", EventPosition.FromOffset(10, 20));
-                var checkpoint2 = new EventProcessorCheckpoint("namespace2", "eventHubName", "consumerGroup", "partitionId", "Id", EventPosition.FromOffset(10, 20));
-
-                await checkpointStore.UpdateCheckpointAsync(checkpoint1, default);
-                await checkpointStore.UpdateCheckpointAsync(checkpoint2, default);
+                await checkpointStore.UpdateCheckpointAsync("namespace1", "eventHubName", "consumerGroup", "partitionId", "Id", new CheckpointStartingPosition(10, 20), default);
+                await checkpointStore.UpdateCheckpointAsync("namespace2", "eventHubName", "consumerGroup", "partitionId", "Id", new CheckpointStartingPosition(10, 20), default);
 
                 var storedCheckpoint1 = await checkpointStore.GetCheckpointAsync("namespace1", "eventHubName", "consumerGroup", "partitionId", default);
                 var storedCheckpoint2 = await checkpointStore.GetCheckpointAsync("namespace2", "eventHubName", "consumerGroup", "partitionId", default);
@@ -963,11 +946,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
                 var checkpointStore = new BlobCheckpointStoreInternal(containerClient);
 
-                var checkpoint1 = new EventProcessorCheckpoint("namespace", "eventHubName", "consumerGroup", "partitionId1", "Id", EventPosition.FromOffset(10, 20));
-                var checkpoint2 = new EventProcessorCheckpoint("namespace", "eventHubName", "consumerGroup", "partitionId2", "Id", EventPosition.FromOffset(10, 20));
-
-                await checkpointStore.UpdateCheckpointAsync(checkpoint1, default);
-                await checkpointStore.UpdateCheckpointAsync(checkpoint2, default);
+                await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId1", "Id", new CheckpointStartingPosition(10, 20), default);
+                await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId2", "Id", new CheckpointStartingPosition(10, 20), default);
 
                 var storedCheckpoint1 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId1", default);
                 var storedCheckpoint2 = await checkpointStore.GetCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId2", default);

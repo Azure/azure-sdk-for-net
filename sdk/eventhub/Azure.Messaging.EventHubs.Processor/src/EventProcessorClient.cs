@@ -878,12 +878,25 @@ namespace Azure.Messaging.EventHubs
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
+                                                      CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointStartingPosition(offset, sequenceNumber), cancellationToken);
+
+        /// <summary>
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="checkpointStartingPosition"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        protected override Task UpdateCheckpointAsync(string partitionId,
+                                                      CheckpointStartingPosition checkpointStartingPosition,
                                                       CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             Argument.AssertNotNull(partitionId, nameof(partitionId));
-            Argument.AssertInRange(offset, long.MinValue + 1, long.MaxValue, nameof(offset));
+            Argument.AssertInRange(checkpointStartingPosition.Offset.Value, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.Offset));
 
             Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
 
@@ -892,8 +905,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                var eventPosition = sequenceNumber == null ? EventPosition.FromOffset(offset) : EventPosition.FromOffset(offset, sequenceNumber.Value);
-                return CheckpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, eventPosition), cancellationToken);
+                return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, checkpointStartingPosition, cancellationToken);
             }
             catch (Exception ex)
             {
