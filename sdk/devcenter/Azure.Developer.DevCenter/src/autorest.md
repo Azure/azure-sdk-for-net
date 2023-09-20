@@ -79,7 +79,7 @@ directive:
       $.operationId = (mappingTable[$.operationId] ?? $.operationId);
 
   - from: swagger-document
-    where: $..[?(@.operationId == "DevBoxes_ListSchedulesByPool" || @.operationId == "DevBoxes_ListPools")]
+    where: $..[?(@.operationId == "DevBoxes_ListSchedules" || @.operationId == "DevBoxes_ListPools")]
     transform: >-
       topParam = $.parameters[1];
       $.parameters[1] = $.parameters[2];
