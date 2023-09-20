@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
     /// Completions support a wide variety of tasks and generate text that continues from or "completes"
     /// provided prompt data.
     /// </summary>
-    public partial class ChatCompletions
+    internal partial class ChatCompletions
     {
         /// <summary> Initializes a new instance of ChatCompletions. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>

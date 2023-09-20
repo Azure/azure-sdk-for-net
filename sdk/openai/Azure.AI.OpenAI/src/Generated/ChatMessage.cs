@@ -8,7 +8,7 @@
 namespace Azure.AI.OpenAI
 {
     /// <summary> A single, role-attributed message within a chat completion interaction. </summary>
-    public partial class ChatMessage
+    internal partial class ChatMessage
     {
         /// <summary> Initializes a new instance of ChatMessage. </summary>
         /// <param name="role"> The role associated with this message payload. </param>
