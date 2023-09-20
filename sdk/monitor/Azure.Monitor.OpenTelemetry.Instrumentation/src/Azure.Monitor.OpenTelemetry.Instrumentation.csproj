@@ -3,7 +3,7 @@
     <Description>A shaded and repacked internal OpenTelemetry .NET instrumentation for ASP.NET Core, HTTP, and SQLClient</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Shaded Instrumentation</AssemblyTitle>
     <Version>1.0.0-beta.7</Version>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
