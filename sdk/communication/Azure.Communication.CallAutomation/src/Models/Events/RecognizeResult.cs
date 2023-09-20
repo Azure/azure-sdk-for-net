@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The Recognize result which could be tone or choice result.
+    /// The Recognize result which could be tone result.
     /// </summary>
     public abstract class RecognizeResult
     {

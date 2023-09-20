@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
 
         private const string PlayDownloadFailedValue = "8536";
         private const string PlayInvalidFileFormatValue = "8535";
-        private const string PlayCognitiveServicesPlayErrorValue = "8565";
+        private const string CognitiveServicesErrorValue = "8565";
 
         private const string CompletedSuccessfullyValue = "0";
         private const string UnspecifiedErrorValue = "9999";
@@ -71,10 +71,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static MediaEventReasonCode PlayInvalidFileFormat { get; } = new MediaEventReasonCode(PlayInvalidFileFormatValue);
         /// <summary> Action failed, cognitive service error. </summary>
-        public static MediaEventReasonCode PlayCognitiveServicesPlayError { get; } = new MediaEventReasonCode(PlayCognitiveServicesPlayErrorValue);
+        public static MediaEventReasonCode CognitiveServicesError { get; } = new MediaEventReasonCode(CognitiveServicesErrorValue);
 
         /// <summary> Action completed successfully. </summary>
-        public static MediaEventReasonCode CompletedSuccessfully { get; } = new MediaEventReasonCode (CompletedSuccessfullyValue);
+        public static MediaEventReasonCode CompletedSuccessfully { get; } = new MediaEventReasonCode(CompletedSuccessfullyValue);
         /// <summary> Unknown internal server error. </summary>
         public static MediaEventReasonCode UnspecifiedError { get; } = new MediaEventReasonCode(UnspecifiedErrorValue);
 

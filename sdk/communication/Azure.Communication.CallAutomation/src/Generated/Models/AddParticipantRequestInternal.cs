@@ -43,9 +43,5 @@ namespace Azure.Communication.CallAutomation
         public int? InvitationTimeoutInSeconds { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContextInternal CustomContext { get; set; }
-        /// <summary> The callback URI to override the main callback URI. </summary>
-        public string CallbackUri { get; set; }
     }
 }

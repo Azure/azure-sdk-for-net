@@ -633,7 +633,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
                 Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
-               // Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
+                // Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
                 if (recognizeResult is ChoiceResult choiceRecongizedResult)
                 {
                     Assert.AreEqual("testLabel", choiceRecongizedResult.Label);
@@ -833,9 +833,9 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void SendDtmfCompletedEventParsed_Test()
+        public void SendDtmfTonesCompletedEventParsed_Test()
         {
-            SendDtmfCompleted @event = CommunicationCallAutomationModelFactory.SendDtmfCompleted(
+            SendDtmfTonesCompleted @event = CommunicationCallAutomationModelFactory.SendDtmfTonesCompleted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -843,14 +843,14 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfCompleted");
-            if (parsedEvent is SendDtmfCompleted SendDtmfCompleted)
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfTonesCompleted");
+            if (parsedEvent is SendDtmfTonesCompleted SendDtmfTonesCompleted)
             {
-                Assert.AreEqual("callConnectionId", SendDtmfCompleted.CallConnectionId);
-                Assert.AreEqual("operationContext", SendDtmfCompleted.OperationContext);
-                Assert.AreEqual("correlationId", SendDtmfCompleted.CorrelationId);
-                Assert.AreEqual("serverCallId", SendDtmfCompleted.ServerCallId);
-                Assert.AreEqual(200, SendDtmfCompleted.ResultInformation?.Code);
+                Assert.AreEqual("callConnectionId", SendDtmfTonesCompleted.CallConnectionId);
+                Assert.AreEqual("operationContext", SendDtmfTonesCompleted.OperationContext);
+                Assert.AreEqual("correlationId", SendDtmfTonesCompleted.CorrelationId);
+                Assert.AreEqual("serverCallId", SendDtmfTonesCompleted.ServerCallId);
+                Assert.AreEqual(200, SendDtmfTonesCompleted.ResultInformation?.Code);
             }
             else
             {
@@ -861,7 +861,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void SendDtmfFailedEventParsed_Test()
         {
-            SendDtmfFailed @event = CommunicationCallAutomationModelFactory.SendDtmfFailed(
+            SendDtmfTonesFailed @event = CommunicationCallAutomationModelFactory.SendDtmfTonesFailed(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -869,8 +869,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 resultInformation: new ResultInformation(code: 400, subCode: 8510, message: "Action failed, some error."));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfFailed");
-            if (parsedEvent is SendDtmfFailed sendDtmfFailed)
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfTonesFailed");
+            if (parsedEvent is SendDtmfTonesFailed sendDtmfFailed)
             {
                 Assert.AreEqual("operationContext", sendDtmfFailed.OperationContext);
                 Assert.AreEqual("callConnectionId", sendDtmfFailed.CallConnectionId);

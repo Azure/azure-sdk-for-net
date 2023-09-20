@@ -9,32 +9,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The call transfer accepted event.
     /// </summary>
+    [CodeGenModel("CallTransferAccepted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class CallTransferAccepted : CallAutomationEventBase
     {
-        /// <summary>
-        /// Transferee is the participant who is transferring the call.
-        /// </summary>
-        public CommunicationIdentifier Transferee { get; }
-
-        /// <summary>
-        /// The identity of the target where call should be transferred to.
-        /// </summary>
-        public CommunicationIdentifier TransferTarget { get; }
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
-        internal CallTransferAccepted()
-        {
-        }
-        internal CallTransferAccepted(CallTransferAcceptedInternal internalEvent)
-        {
-            OperationContext = internalEvent.OperationContext;
-            ResultInformation = internalEvent.ResultInformation;
-            CallConnectionId = internalEvent.CallConnectionId;
-            ServerCallId = internalEvent.ServerCallId;
-            CorrelationId = internalEvent.CorrelationId;
-            Transferee = internalEvent.Transferee == null ? null : CommunicationIdentifierSerializer.Deserialize(internalEvent.Transferee);
-            TransferTarget = internalEvent.TransferTarget == null ? null : CommunicationIdentifierSerializer.Deserialize(internalEvent.TransferTarget);
-        }
-
         /// <summary>
         /// Deserialize <see cref="CallTransferAccepted"/> event.
         /// </summary>
@@ -44,8 +21,8 @@ namespace Azure.Communication.CallAutomation
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
-            var internalEvent = CallTransferAcceptedInternal.DeserializeCallTransferAcceptedInternal(element);
-            return new CallTransferAccepted(internalEvent);
+
+            return DeserializeCallTransferAccepted(element);
         }
     }
 }

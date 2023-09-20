@@ -10,6 +10,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Model factory for read-only models. </summary>
+    [CodeGenModel("AzureCommunicationServicesModelFactory")]
     public static partial class CommunicationCallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
@@ -39,7 +40,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceIdentity">Source identity.</param>
         /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
-        /// <param name="mediaSubscriptionId">The subscriptionId for Media Streaming.</param>
+        /// <param name="answeredBy">AnsweredBy identity.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
         public static CallConnectionProperties CallConnectionProperties(
             string callConnectionId = default,
@@ -50,9 +51,9 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier sourceIdentity = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
-            string mediaSubscriptionId = default)
+            CommunicationIdentifier answeredBy = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, answeredBy);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -193,34 +194,43 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="recognizeResult"> Defines the result for RecognitionType = Dtmf,Choice,Speech. </param>
+        /// <param name="recognizeResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeCompleted"/> instance for mocking. </returns>
         public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, RecognizeResult recognizeResult = null)
         {
             return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, recognizeResult);
         }
 
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="transferee"> Transferee is the participant who is transferring the call.  </param>
-        /// <param name="transferTarget"> The identity of the target where call should be transferred to. </param>
-        /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
-        public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CommunicationIdentifier transferee = null, CommunicationIdentifier transferTarget = null)
+        /// <summary>
+        /// Initializes a new instance of SendDtmfTonesCompleted.
+        /// </summary>
+        /// <param name="callConnectionId"></param>
+        /// <param name="serverCallId"></param>
+        /// <param name="correlationId"></param>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
+        /// <returns></returns>
+        public static SendDtmfTonesCompleted SendDtmfTonesCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            var internalEvent =  new CallTransferAcceptedInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation,
-                transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
-                transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
-                );
-            return new CallTransferAccepted(internalEvent);
+            var internalObject = new SendDtmfTonesCompletedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+
+            return new SendDtmfTonesCompleted(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of SendDtmfTonesFailed.
+        /// </summary>
+        /// <param name="callConnectionId"></param>
+        /// <param name="serverCallId"></param>
+        /// <param name="correlationId"></param>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
+        /// <returns></returns>
+        public static SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            var internalObject = new SendDtmfTonesFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+
+            return new SendDtmfTonesFailed(internalObject);
         }
     }
 }

@@ -24,7 +24,6 @@ namespace Azure.Communication.CallAutomation
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<CallMediaRecognitionType> recognitionType = default;
-            Optional<CollectTonesResult> collectTonesResult = default;
             Optional<DtmfResult> dtmfResult = default;
             Optional<ChoiceResult> choiceResult = default;
             Optional<SpeechResult> speechResult = default;
@@ -68,15 +67,6 @@ namespace Azure.Communication.CallAutomation
                     recognitionType = new CallMediaRecognitionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("collectTonesResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("dtmfResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -105,7 +95,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, dtmfResult.Value, choiceResult.Value, speechResult.Value);
+            return new RecognizeCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, dtmfResult.Value, choiceResult.Value, speechResult.Value);
         }
     }
 }

@@ -36,13 +36,8 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
-        public Uri AzureCognitiveServicesEndpointUri { get; set; }
+        public Uri CognitiveServicesEndpoint { get; set; }
     }
 }
