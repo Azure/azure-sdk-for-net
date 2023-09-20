@@ -3,7 +3,7 @@
 
 using System.IO;
 
-namespace System.ServiceModel.Rest;
+namespace System.ServiceModel.Rest.Core;
 
 // TODO: this does not include some members from Response (e.g. ClientRequestId). Is that OK?
 public interface IResponse

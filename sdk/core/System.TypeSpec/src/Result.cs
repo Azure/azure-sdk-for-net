@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using System.ServiceModel.Rest.Core;
 
 namespace System.ServiceModel.Rest;
 
