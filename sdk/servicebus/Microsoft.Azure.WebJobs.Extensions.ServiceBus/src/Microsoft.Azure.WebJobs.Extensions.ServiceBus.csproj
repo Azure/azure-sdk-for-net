@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
     <Version>5.13.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.12.0</ApiCompatVersion>
-    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
+    <!--Since we are adding a new target for net6.0, we need to temporarily remove the ApiCompatVersion-->
+    <!--<ApiCompatVersion>5.12.0</ApiCompatVersion>-->
+    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;AZC0007;AZC0015</NoWarn>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <InheritDocTrimLevel>internal</InheritDocTrimLevel>
@@ -14,9 +15,16 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.40"/>
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
+    <PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.Azure.WebJobs.Extensions.Rpc" />
+    <PackageReference Include="Grpc.Tools" VersionOverride="2.58.0" PrivateAssets="all" />
+    <PackageReference Include="Google.Protobuf" VersionOverride="3.24.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Condition="'$(TargetFramework)' == 'net6.0'" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,5 +44,6 @@
     <Compile Include="$(AzureCoreSharedSources)MessagingClientDiagnostics.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="Shared" />
   </ItemGroup>
+
 
 </Project>

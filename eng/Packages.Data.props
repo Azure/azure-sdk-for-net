@@ -148,6 +148,7 @@
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.9.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.37" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.0" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />

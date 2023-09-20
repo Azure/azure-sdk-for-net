@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     public class ServiceBusMessageActions
     {
         private readonly ServiceBusReceiver _receiver;
-        private readonly ProcessMessageEventArgs _eventArgs;
+        internal readonly ProcessMessageEventArgs _eventArgs;
         private readonly ProcessSessionMessageEventArgs _sessionEventArgs;
 
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> SettledMessages { get; } = new();

@@ -63,11 +63,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         // Serialize execution of StopAsync to avoid calling Unregister* concurrently
         private readonly SemaphoreSlim _stopAsyncSemaphore = new SemaphoreSlim(1, 1);
         private readonly string _functionId;
-        private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
         private Lazy<string> _details;
         private Lazy<MessagingClientDiagnostics> _clientDiagnostics;
         private readonly IDrainModeManager _drainModeManager;
+        private readonly MessagingProvider _messagingProvider;
 
         public ServiceBusListener(
             string functionId,
@@ -94,6 +94,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
             _functionId = functionId;
             _drainModeManager = drainModeManager;
+            _messagingProvider = messagingProvider;
 
             _client = new Lazy<ServiceBusClient>(
                 () => clientFactory.CreateClientFromSetting(connection));
@@ -334,7 +335,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
             _stopAsyncSemaphore.Dispose();
             _stoppingCancellationTokenSource.Dispose();
-            _batchReceiveRegistration.Dispose();
             _concurrencyUpdateManager?.Dispose();
 
             // No need to dispose the _functionExecutionCancellationTokenSource since we don't create it as a linked token and
@@ -355,6 +355,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _stoppingCancellationTokenSource.Token))
             {
                 var actions = new ServiceBusMessageActions(args);
+                _messagingProvider.ActionsCache.TryAdd(args.Message.LockToken, actions);
+
                 if (!await _messageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
                 {
                     return;
