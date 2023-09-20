@@ -399,7 +399,36 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> StartHoldMusicAsync(HoldParticipantOptions options, CancellationToken cancellationToken = default)
+        public virtual Response StartHoldMusic(StartHoldMusicOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartHoldMusic)}");
+            scope.Start();
+            try
+            {
+                var request = new HoldParticipantRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant),
+                    TranslatePlaySourceToInternal(options.PlaySourceInfo))
+                {
+                    Loop = options.Loop,
+                    OperationContext = options.OperationContext,
+                };
+
+                return CallMediaRestClient.StartHoldMusic(CallConnectionId, request, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Hold participant.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> StartHoldMusicAsync(StartHoldMusicOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartHoldMusicAsync)}");
             scope.Start();
@@ -423,20 +452,43 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Hold participant.
+        /// Remove hold from participant.
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response> UnholdParticipantAsync(UnholdParticipantsOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopHoldMusicAsync(StopHoldMusicOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UnholdParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopHoldMusicAsync)}");
             scope.Start();
             try
             {
                 UnholdParticipantRequestInternal request = new UnholdParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
 
                 return await CallMediaRestClient.StopHoldMusicAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove hold from participant.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response StopHoldMusic(StopHoldMusicOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopHoldMusicAsync)}");
+            scope.Start();
+            try
+            {
+                UnholdParticipantRequestInternal request = new UnholdParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+
+                return CallMediaRestClient.StopHoldMusic(CallConnectionId, request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
