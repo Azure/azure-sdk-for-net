@@ -1,0 +1,1443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="UpsertJobAsync(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertJobAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.UpsertJobAsync("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertJobAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    channelReference = "<channelReference>",
+    channelId = "<channelId>",
+    classificationPolicyId = "<classificationPolicyId>",
+    queueId = "<queueId>",
+    priority = 1234,
+    dispositionCode = "<dispositionCode>",
+    requestedWorkerSelectors = new[] {
+        new {
+            key = "<key>",
+            labelOperator = "equal",
+            value = new {},
+            expiresAfterSeconds = 123.45d,
+            expedite = true,
+        }
+    },
+    labels = new {
+        key = new {},
+    },
+    tags = new {
+        key = new {},
+    },
+    notes = new {
+        key = "<String>",
+    },
+    matchingMode = new {
+        modeType = "queueAndMatchMode",
+        queueAndMatchMode = new {},
+        scheduleAndSuspendMode = new {
+            scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
+        },
+        suspendMode = new {},
+    },
+};
+
+Response response = await client.UpsertJobAsync("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("channelReference").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+Console.WriteLine(result.GetProperty("channelId").ToString());
+Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("workerId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("closedAt").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("notes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("queueAndMatchMode").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("suspendMode").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="UpsertJob(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertJob with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.UpsertJob("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertJob with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    channelReference = "<channelReference>",
+    channelId = "<channelId>",
+    classificationPolicyId = "<classificationPolicyId>",
+    queueId = "<queueId>",
+    priority = 1234,
+    dispositionCode = "<dispositionCode>",
+    requestedWorkerSelectors = new[] {
+        new {
+            key = "<key>",
+            labelOperator = "equal",
+            value = new {},
+            expiresAfterSeconds = 123.45d,
+            expedite = true,
+        }
+    },
+    labels = new {
+        key = new {},
+    },
+    tags = new {
+        key = new {},
+    },
+    notes = new {
+        key = "<String>",
+    },
+    matchingMode = new {
+        modeType = "queueAndMatchMode",
+        queueAndMatchMode = new {},
+        scheduleAndSuspendMode = new {
+            scheduleAt = "2022-05-10T14:57:31.2311892-04:00",
+        },
+        suspendMode = new {},
+    },
+};
+
+Response response = client.UpsertJob("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("channelReference").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+Console.WriteLine(result.GetProperty("channelId").ToString());
+Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("workerId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("closedAt").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("notes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("queueAndMatchMode").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("suspendMode").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetJobAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = await client.GetJobAsync("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetJob(string,CancellationToken)">
+<example>
+This sample shows how to call GetJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = client.GetJob("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetJobAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetJobAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = await client.GetJobAsync("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("channelReference").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+Console.WriteLine(result.GetProperty("channelId").ToString());
+Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("workerId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("closedAt").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("notes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("queueAndMatchMode").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("suspendMode").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetJob(string,RequestContext)">
+<example>
+This sample shows how to call GetJob with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = client.GetJob("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("channelReference").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+Console.WriteLine(result.GetProperty("channelId").ToString());
+Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("workerId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<test>").GetProperty("closedAt").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("notes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("modeType").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("queueAndMatchMode").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("suspendMode").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteJobAsync(string,RequestContext)">
+<example>
+This sample shows how to call DeleteJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = await client.DeleteJobAsync("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteJob(string,RequestContext)">
+<example>
+This sample shows how to call DeleteJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = client.DeleteJob("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="ReclassifyJobAsync(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call ReclassifyJobAsync with required parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.ReclassifyJobAsync("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="ReclassifyJob(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call ReclassifyJob with required parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.ReclassifyJob("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CancelJobAsync(string,CancelJobRequest,CancellationToken)">
+<example>
+This sample shows how to call CancelJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var cancelJobRequest = new CancelJobRequest()
+{
+    Note = "<Note>",
+    DispositionCode = "<DispositionCode>",
+};
+var result = await client.CancelJobAsync("<id>", cancelJobRequest);
+]]></code>
+</example>
+    </member>
+    <member name="CancelJob(string,CancelJobRequest,CancellationToken)">
+<example>
+This sample shows how to call CancelJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var cancelJobRequest = new CancelJobRequest()
+{
+    Note = "<Note>",
+    DispositionCode = "<DispositionCode>",
+};
+var result = client.CancelJob("<id>", cancelJobRequest);
+]]></code>
+</example>
+    </member>
+    <member name="CancelJobAsync(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CancelJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.CancelJobAsync("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CancelJobAsync with all parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    note = "<note>",
+    dispositionCode = "<dispositionCode>",
+};
+
+Response response = await client.CancelJobAsync("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CancelJob(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CancelJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.CancelJob("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CancelJob with all parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    note = "<note>",
+    dispositionCode = "<dispositionCode>",
+};
+
+Response response = client.CancelJob("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CompleteJobAsync(string,CompleteJobRequest,CancellationToken)">
+<example>
+This sample shows how to call CompleteJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var completeJobRequest = new CompleteJobRequest("<assignmentId>")
+{
+    Note = "<Note>",
+};
+var result = await client.CompleteJobAsync("<id>", completeJobRequest);
+]]></code>
+</example>
+    </member>
+    <member name="CompleteJob(string,CompleteJobRequest,CancellationToken)">
+<example>
+This sample shows how to call CompleteJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var completeJobRequest = new CompleteJobRequest("<assignmentId>")
+{
+    Note = "<Note>",
+};
+var result = client.CompleteJob("<id>", completeJobRequest);
+]]></code>
+</example>
+    </member>
+    <member name="CompleteJobAsync(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CompleteJobAsync with required parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    assignmentId = "<assignmentId>",
+};
+
+Response response = await client.CompleteJobAsync("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CompleteJobAsync with all parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    assignmentId = "<assignmentId>",
+    note = "<note>",
+};
+
+Response response = await client.CompleteJobAsync("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CompleteJob(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CompleteJob with required parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    assignmentId = "<assignmentId>",
+};
+
+Response response = client.CompleteJob("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CompleteJob with all parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    assignmentId = "<assignmentId>",
+    note = "<note>",
+};
+
+Response response = client.CompleteJob("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CloseJobAsync(string,CloseJobRequest,CancellationToken)">
+<example>
+This sample shows how to call CloseJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var closeJobRequest = new CloseJobRequest("<assignmentId>")
+{
+    DispositionCode = "<DispositionCode>",
+    CloseAt = DateTimeOffset.UtcNow,
+    Note = "<Note>",
+};
+var result = await client.CloseJobAsync("<id>", closeJobRequest);
+]]></code>
+</example>
+    </member>
+    <member name="CloseJob(string,CloseJobRequest,CancellationToken)">
+<example>
+This sample shows how to call CloseJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var closeJobRequest = new CloseJobRequest("<assignmentId>")
+{
+    DispositionCode = "<DispositionCode>",
+    CloseAt = DateTimeOffset.UtcNow,
+    Note = "<Note>",
+};
+var result = client.CloseJob("<id>", closeJobRequest);
+]]></code>
+</example>
+    </member>
+    <member name="CloseJobAsync(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CloseJobAsync with required parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    assignmentId = "<assignmentId>",
+};
+
+Response response = await client.CloseJobAsync("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CloseJobAsync with all parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    assignmentId = "<assignmentId>",
+    dispositionCode = "<dispositionCode>",
+    closeAt = "2022-05-10T14:57:31.2311892-04:00",
+    note = "<note>",
+};
+
+Response response = await client.CloseJobAsync("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="CloseJob(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CloseJob with required parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    assignmentId = "<assignmentId>",
+};
+
+Response response = client.CloseJob("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CloseJob with all parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    assignmentId = "<assignmentId>",
+    dispositionCode = "<dispositionCode>",
+    closeAt = "2022-05-10T14:57:31.2311892-04:00",
+    note = "<note>",
+};
+
+Response response = client.CloseJob("<id>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetQueuePositionAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetQueuePositionAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = await client.GetQueuePositionAsync("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetQueuePosition(string,CancellationToken)">
+<example>
+This sample shows how to call GetQueuePosition with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = client.GetQueuePosition("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetQueuePositionAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetQueuePositionAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = await client.GetQueuePositionAsync("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("position").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("queueLength").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetQueuePosition(string,RequestContext)">
+<example>
+This sample shows how to call GetQueuePosition with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = client.GetQueuePosition("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("position").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("queueLength").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="UnassignJobAsync(string,string,UnassignJobRequest,CancellationToken)">
+<example>
+This sample shows how to call UnassignJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var unassignJobRequest = new UnassignJobRequest()
+{
+    SuspendMatching = true,
+};
+var result = await client.UnassignJobAsync("<id>", "<assignmentId>", unassignJobRequest);
+]]></code>
+</example>
+    </member>
+    <member name="UnassignJob(string,string,UnassignJobRequest,CancellationToken)">
+<example>
+This sample shows how to call UnassignJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var unassignJobRequest = new UnassignJobRequest()
+{
+    SuspendMatching = true,
+};
+var result = client.UnassignJob("<id>", "<assignmentId>", unassignJobRequest);
+]]></code>
+</example>
+    </member>
+    <member name="UnassignJobAsync(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call UnassignJobAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.UnassignJobAsync("<id>", "<assignmentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
+]]></code>
+This sample shows how to call UnassignJobAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    suspendMatching = true,
+};
+
+Response response = await client.UnassignJobAsync("<id>", "<assignmentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="UnassignJob(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call UnassignJob with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.UnassignJob("<id>", "<assignmentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
+]]></code>
+This sample shows how to call UnassignJob with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    suspendMatching = true,
+};
+
+Response response = client.UnassignJob("<id>", "<assignmentId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="AcceptJobAsync(string,string,CancellationToken)">
+<example>
+This sample shows how to call AcceptJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = await client.AcceptJobAsync("<workerId>", "<offerId>");
+]]></code>
+</example>
+    </member>
+    <member name="AcceptJob(string,string,CancellationToken)">
+<example>
+This sample shows how to call AcceptJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = client.AcceptJob("<workerId>", "<offerId>");
+]]></code>
+</example>
+    </member>
+    <member name="AcceptJobAsync(string,string,RequestContext)">
+<example>
+This sample shows how to call AcceptJobAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = await client.AcceptJobAsync("<workerId>", "<offerId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("workerId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="AcceptJob(string,string,RequestContext)">
+<example>
+This sample shows how to call AcceptJob with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = client.AcceptJob("<workerId>", "<offerId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("workerId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeclineJobAsync(string,string,DeclineJobOfferRequest,CancellationToken)">
+<example>
+This sample shows how to call DeclineJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var declineJobOfferRequest = new DeclineJobOfferRequest()
+{
+    RetryOfferAt = DateTimeOffset.UtcNow,
+};
+var result = await client.DeclineJobAsync("<workerId>", "<offerId>", declineJobOfferRequest);
+]]></code>
+</example>
+    </member>
+    <member name="DeclineJob(string,string,DeclineJobOfferRequest,CancellationToken)">
+<example>
+This sample shows how to call DeclineJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var declineJobOfferRequest = new DeclineJobOfferRequest()
+{
+    RetryOfferAt = DateTimeOffset.UtcNow,
+};
+var result = client.DeclineJob("<workerId>", "<offerId>", declineJobOfferRequest);
+]]></code>
+</example>
+    </member>
+    <member name="DeclineJobAsync(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call DeclineJobAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.DeclineJobAsync("<workerId>", "<offerId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeclineJobAsync with all parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    retryOfferAt = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = await client.DeclineJobAsync("<workerId>", "<offerId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeclineJob(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call DeclineJob with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.DeclineJob("<workerId>", "<offerId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeclineJob with all parameters and request content.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    retryOfferAt = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = client.DeclineJob("<workerId>", "<offerId>", RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetQueueStatisticsAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetQueueStatisticsAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = await client.GetQueueStatisticsAsync("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetQueueStatistics(string,CancellationToken)">
+<example>
+This sample shows how to call GetQueueStatistics with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = client.GetQueueStatistics("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetQueueStatisticsAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetQueueStatisticsAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = await client.GetQueueStatisticsAsync("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("longestJobWaitTimeMinutes").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetQueueStatistics(string,RequestContext)">
+<example>
+This sample shows how to call GetQueueStatistics with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = client.GetQueueStatistics("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("longestJobWaitTimeMinutes").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="UpsertWorkerAsync(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertWorkerAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.UpsertWorkerAsync("<workerId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertWorkerAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    queueAssignments = new {
+        key = new {},
+    },
+    totalCapacity = 1234,
+    labels = new {
+        key = new {},
+    },
+    tags = new {
+        key = new {},
+    },
+    channelConfigurations = new {
+        key = new {
+            capacityCostPerJob = 1234,
+            maxNumberOfJobs = 1234,
+        },
+    },
+    availableForOffers = true,
+};
+
+Response response = await client.UpsertWorkerAsync("<workerId>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("queueAssignments").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("totalCapacity").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("capacityCostPerJob").ToString());
+Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("maxNumberOfJobs").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("loadRatio").ToString());
+Console.WriteLine(result.GetProperty("availableForOffers").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="UpsertWorker(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertWorker with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.UpsertWorker("<workerId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertWorker with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var data = new {
+    queueAssignments = new {
+        key = new {},
+    },
+    totalCapacity = 1234,
+    labels = new {
+        key = new {},
+    },
+    tags = new {
+        key = new {},
+    },
+    channelConfigurations = new {
+        key = new {
+            capacityCostPerJob = 1234,
+            maxNumberOfJobs = 1234,
+        },
+    },
+    availableForOffers = true,
+};
+
+Response response = client.UpsertWorker("<workerId>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("queueAssignments").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("totalCapacity").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("capacityCostPerJob").ToString());
+Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("maxNumberOfJobs").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("loadRatio").ToString());
+Console.WriteLine(result.GetProperty("availableForOffers").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetWorkerAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetWorkerAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = await client.GetWorkerAsync("<workerId>");
+]]></code>
+</example>
+    </member>
+    <member name="GetWorker(string,CancellationToken)">
+<example>
+This sample shows how to call GetWorker with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+var result = client.GetWorker("<workerId>");
+]]></code>
+</example>
+    </member>
+    <member name="GetWorkerAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetWorkerAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = await client.GetWorkerAsync("<workerId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("queueAssignments").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("totalCapacity").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("capacityCostPerJob").ToString());
+Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("maxNumberOfJobs").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("loadRatio").ToString());
+Console.WriteLine(result.GetProperty("availableForOffers").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetWorker(string,RequestContext)">
+<example>
+This sample shows how to call GetWorker with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = client.GetWorker("<workerId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("queueAssignments").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("totalCapacity").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("capacityCostPerJob").ToString());
+Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("maxNumberOfJobs").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("loadRatio").ToString());
+Console.WriteLine(result.GetProperty("availableForOffers").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteWorkerAsync(string,RequestContext)">
+<example>
+This sample shows how to call DeleteWorkerAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = await client.DeleteWorkerAsync("<workerId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteWorker(string,RequestContext)">
+<example>
+This sample shows how to call DeleteWorker with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+Response response = client.DeleteWorker("<workerId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetJobsAsync(RouterJobStatusSelector,string,string,string,DateTimeOffset,DateTimeOffset,int,CancellationToken)">
+<example>
+This sample shows how to call GetJobsAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+await foreach (var item in client.GetJobsAsync(null, "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetJobs(RouterJobStatusSelector,string,string,string,DateTimeOffset,DateTimeOffset,int,CancellationToken)">
+<example>
+This sample shows how to call GetJobs with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+foreach (var item in client.GetJobs(null, "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetJobsAsync(string,string,string,string,DateTimeOffset,DateTimeOffset,int,RequestContext)">
+<example>
+This sample shows how to call GetJobsAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+await foreach (var item in client.GetJobsAsync("<status>", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("job").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("channelReference").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("enqueuedAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("channelId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("classificationPolicyId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("queueId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("priority").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("dispositionCode").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("labels").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("assignmentId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("workerId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("assignedAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("closedAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("tags").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("notes").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("scheduledAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("modeType").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("queueAndMatchMode").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("suspendMode").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetJobs(string,string,string,string,DateTimeOffset,DateTimeOffset,int,RequestContext)">
+<example>
+This sample shows how to call GetJobs with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+foreach (var item in client.GetJobs("<status>", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("job").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("channelReference").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("enqueuedAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("channelId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("classificationPolicyId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("queueId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("priority").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("dispositionCode").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("labels").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("assignmentId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("workerId").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("assignedAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<test>").GetProperty("closedAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("tags").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("notes").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("scheduledAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("modeType").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("queueAndMatchMode").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("scheduleAndSuspendMode").GetProperty("scheduleAt").ToString());
+    Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("suspendMode").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetWorkersAsync(RouterWorkerStateSelector,string,string,bool,int,CancellationToken)">
+<example>
+This sample shows how to call GetWorkersAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+await foreach (var item in client.GetWorkersAsync(null, "<channelId>", "<queueId>", true, 1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetWorkers(RouterWorkerStateSelector,string,string,bool,int,CancellationToken)">
+<example>
+This sample shows how to call GetWorkers with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+foreach (var item in client.GetWorkers(null, "<channelId>", "<queueId>", true, 1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetWorkersAsync(string,string,string,bool,int,RequestContext)">
+<example>
+This sample shows how to call GetWorkersAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+await foreach (var item in client.GetWorkersAsync("<state>", "<channelId>", "<queueId>", true, 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("worker").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("queueAssignments").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("totalCapacity").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("labels").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("tags").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("capacityCostPerJob").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("maxNumberOfJobs").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("offerId").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("loadRatio").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("availableForOffers").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetWorkers(string,string,string,bool,int,RequestContext)">
+<example>
+This sample shows how to call GetWorkers with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterRestClient(endpoint);
+
+foreach (var item in client.GetWorkers("<state>", "<channelId>", "<queueId>", true, 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("worker").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("queueAssignments").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("totalCapacity").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("labels").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("tags").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("capacityCostPerJob").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("channelConfigurations").GetProperty("<test>").GetProperty("maxNumberOfJobs").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("offerId").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("loadRatio").ToString());
+    Console.WriteLine(result.GetProperty("worker").GetProperty("availableForOffers").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

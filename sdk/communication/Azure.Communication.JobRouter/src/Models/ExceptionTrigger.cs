@@ -11,7 +11,5 @@ namespace Azure.Communication.JobRouter
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<ExceptionTrigger>))]
     public abstract partial class ExceptionTrigger
     {
-        /// <summary> The type discriminator describing a sub-type of ExceptionTrigger. </summary>
-        protected string Kind { get; set; }
     }
 }

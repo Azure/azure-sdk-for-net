@@ -11,12 +11,5 @@ namespace Azure.Communication.JobRouter
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<RouterRule>))]
     public abstract partial class RouterRule
     {
-        /// <summary> Initializes a new instance of RouterRule. </summary>
-        internal RouterRule()
-        {
-        }
-
-        /// <summary> The type discriminator describing a sub-type of Rule. </summary>
-        public string Kind { get; set; }
     }
 }

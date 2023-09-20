@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
@@ -11,14 +12,14 @@ namespace Azure.Communication.JobRouter
     public partial class RouterQueueSelector
     {
         [CodeGenMember("Value")]
-        private object _value {
+        private BinaryData _value {
             get
             {
-                return Value.Value;
+                return BinaryData.FromObjectAsJson(Value.Value);
             }
             set
             {
-                Value = new LabelValue(value);
+                Value = new LabelValue(value.ToObjectFromJson());
             } }
 
         /// <summary> The value to compare against the actual label value with the given operator. </summary>

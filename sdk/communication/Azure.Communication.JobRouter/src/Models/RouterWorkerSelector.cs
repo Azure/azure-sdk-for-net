@@ -28,15 +28,15 @@ namespace Azure.Communication.JobRouter
         }
 
         [CodeGenMember("Value")]
-        private object _value
+        private BinaryData _value
         {
             get
             {
-                return Value.Value;
+                return BinaryData.FromObjectAsJson(Value.Value);
             }
             set
             {
-                Value = new LabelValue(value);
+                Value = new LabelValue(value.ToObjectFromJson());
             }
         }
 

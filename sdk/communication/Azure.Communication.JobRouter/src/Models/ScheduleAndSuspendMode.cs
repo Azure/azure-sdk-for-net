@@ -20,8 +20,5 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(scheduleAt, nameof(scheduleAt));
             ScheduleAt = scheduleAt;
         }
-
-        /// <summary> Gets or sets the schedule at. </summary>
-        public DateTimeOffset ScheduleAt { get; }
     }
 }

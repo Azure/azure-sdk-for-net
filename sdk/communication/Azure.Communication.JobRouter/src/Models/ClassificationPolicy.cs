@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("ClassificationPolicy")]
     [CodeGenSuppress("ClassificationPolicy")]

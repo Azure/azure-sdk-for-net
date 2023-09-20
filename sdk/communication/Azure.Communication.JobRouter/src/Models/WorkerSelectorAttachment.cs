@@ -10,12 +10,5 @@ namespace Azure.Communication.JobRouter
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<WorkerSelectorAttachment>))]
     public abstract partial class WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of QueueSelectorAttachment. </summary>
-        internal WorkerSelectorAttachment()
-        {
-        }
-
-        /// <summary> The type discriminator describing the type of label selector attachment. </summary>
-        protected string Kind { get; set; }
     }
 }

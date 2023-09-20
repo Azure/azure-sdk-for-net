@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenSuppress("CreateListExceptionPoliciesNextPageRequest", typeof(string), typeof(int?))]
-    [CodeGenSuppress("CreateListClassificationPoliciesNextPageRequest", typeof(string), typeof(int?))]
-    [CodeGenSuppress("CreateListQueuesNextPageRequest", typeof(string), typeof(int?))]
-    [CodeGenSuppress("CreateListDistributionPoliciesNextPageRequest", typeof(string), typeof(int?))]
+    [CodeGenSuppress("CreateGetExceptionPoliciesNextPageRequest", typeof(string), typeof(int), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetClassificationPoliciesNextPageRequest", typeof(string), typeof(int), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetQueuesNextPageRequest", typeof(string), typeof(int), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetDistributionPoliciesNextPageRequest", typeof(string), typeof(int), typeof(RequestContext))]
     internal partial class JobRouterAdministrationRestClient
     {
 #pragma warning disable CA1801 // Review unused parameters
         // Temporary work around before fix: https://github.com/Azure/autorest.csharp/issues/2323
-        internal HttpMessage CreateListExceptionPoliciesNextPageRequest(string nextLink, int? maxpagesize)
+        internal HttpMessage CreateGetExceptionPoliciesNextPageRequest(string nextLink, int maxpagesize, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -35,14 +35,14 @@ namespace Azure.Communication.JobRouter
 
 #pragma warning disable CA1801 // Review unused parameters
         // Temporary work around before fix: https://github.com/Azure/autorest.csharp/issues/2323
-        internal HttpMessage CreateListClassificationPoliciesNextPageRequest(string nextLink, int? maxpagesize)
+        internal HttpMessage CreateGetClassificationPoliciesNextPageRequest(string nextLink, int maxpagesize, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -52,14 +52,14 @@ namespace Azure.Communication.JobRouter
 
 #pragma warning disable CA1801 // Review unused parameters
         // Temporary work around before fix: https://github.com/Azure/autorest.csharp/issues/2323
-        internal HttpMessage CreateListQueuesNextPageRequest(string nextLink, int? maxpagesize)
+        internal HttpMessage CreateGetQueuesNextPageRequest(string nextLink, int maxpagesize, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -69,14 +69,14 @@ namespace Azure.Communication.JobRouter
 
 #pragma warning disable CA1801 // Review unused parameters
         // Temporary work around before fix: https://github.com/Azure/autorest.csharp/issues/2323
-        internal HttpMessage CreateListDistributionPoliciesNextPageRequest(string nextLink, int? maxpagesize)
+        internal HttpMessage CreateGetDistributionPoliciesNextPageRequest(string nextLink, int maxpagesize, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

@@ -11,12 +11,5 @@ namespace Azure.Communication.JobRouter
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<ExceptionAction>))]
     public abstract partial class ExceptionAction
     {
-        /// <summary> Initializes a new instance of ExceptionAction. </summary>
-        internal ExceptionAction()
-        {
-        }
-
-        /// <summary> The type discriminator describing a sub-type of ExceptionAction. </summary>
-        protected string Kind { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("RouterJob")]
     [CodeGenSuppress("RouterJob")]
@@ -20,8 +20,8 @@ namespace Azure.Communication.JobRouter.Models
             AttachedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
             Assignments = new ChangeTrackingDictionary<string, RouterJobAssignment>();
             _requestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
-            _labels = new ChangeTrackingDictionary<string, object>();
-            _tags = new ChangeTrackingDictionary<string, object>();
+            _labels = new ChangeTrackingDictionary<string, BinaryData>();
+            _tags = new ChangeTrackingDictionary<string, BinaryData>();
             _notes = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -61,13 +61,13 @@ namespace Azure.Communication.JobRouter.Models
         public JobMatchingMode MatchingMode { get; internal set; }
 
         [CodeGenMember("Labels")]
-        internal IDictionary<string, object> _labels
+        internal IDictionary<string, BinaryData> _labels
         {
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Labels?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
@@ -82,13 +82,13 @@ namespace Azure.Communication.JobRouter.Models
         }
 
         [CodeGenMember("Tags")]
-        internal IDictionary<string, object> _tags
+        internal IDictionary<string, BinaryData> _tags
         {
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Tags?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {

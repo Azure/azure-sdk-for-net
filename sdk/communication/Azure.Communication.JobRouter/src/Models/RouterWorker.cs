@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -14,9 +15,9 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of RouterWorker. </summary>
         internal RouterWorker()
         {
-            _queueAssignments = new ChangeTrackingDictionary<string, object>();
-            _labels = new ChangeTrackingDictionary<string, object>();
-            _tags = new ChangeTrackingDictionary<string, object>();
+            _queueAssignments = new ChangeTrackingDictionary<string, BinaryData>();
+            _labels = new ChangeTrackingDictionary<string, BinaryData>();
+            _tags = new ChangeTrackingDictionary<string, BinaryData>();
             _channelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
             Offers = new ChangeTrackingList<RouterJobOffer>();
             AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
@@ -45,13 +46,13 @@ namespace Azure.Communication.JobRouter.Models
         public bool? AvailableForOffers { get; internal set; }
 
         [CodeGenMember("Labels")]
-        internal IDictionary<string, object> _labels
+        internal IDictionary<string, BinaryData> _labels
         {
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Labels?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
@@ -59,20 +60,20 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value);
+                        Labels[label.Key] = new LabelValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
         }
 
         [CodeGenMember("Tags")]
-        internal IDictionary<string, object> _tags
+        internal IDictionary<string, BinaryData> _tags
         {
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Tags?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
@@ -105,14 +106,14 @@ namespace Azure.Communication.JobRouter.Models
         }
 
         [CodeGenMember("QueueAssignments")]
-        internal IDictionary<string, object> _queueAssignments
+        internal IDictionary<string, BinaryData> _queueAssignments
         {
             get
             {
                 return QueueAssignments != null
                     ? QueueAssignments.ToDictionary(x => x.Key,
-                        x => (object)x.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                        x => BinaryData.FromObjectAsJson( new {}))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {

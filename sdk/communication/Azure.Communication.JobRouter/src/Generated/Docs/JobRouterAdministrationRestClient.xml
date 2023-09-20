@@ -1,0 +1,1029 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="UpsertDistributionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertDistributionPolicyAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.UpsertDistributionPolicyAsync("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertDistributionPolicyAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {
+    name = "<name>",
+    offerExpiresAfterSeconds = 123.45d,
+    mode = new {
+        scoringRule = new {
+            kind = "direct-map-rule",
+        },
+        scoringRuleOptions = new {
+            batchSize = 1234,
+            scoringParameters = new[] {
+                "jobLabels"
+            },
+            allowScoringBatchOfWorkers = true,
+            descendingOrder = true,
+        },
+        kind = "best-worker",
+        minConcurrentOffers = 1234,
+        maxConcurrentOffers = 1234,
+        bypassSelectors = true,
+    },
+};
+
+Response response = await client.UpsertDistributionPolicyAsync("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("offerExpiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="UpsertDistributionPolicy(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertDistributionPolicy with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.UpsertDistributionPolicy("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertDistributionPolicy with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {
+    name = "<name>",
+    offerExpiresAfterSeconds = 123.45d,
+    mode = new {
+        scoringRule = new {
+            kind = "direct-map-rule",
+        },
+        scoringRuleOptions = new {
+            batchSize = 1234,
+            scoringParameters = new[] {
+                "jobLabels"
+            },
+            allowScoringBatchOfWorkers = true,
+            descendingOrder = true,
+        },
+        kind = "best-worker",
+        minConcurrentOffers = 1234,
+        maxConcurrentOffers = 1234,
+        bypassSelectors = true,
+    },
+};
+
+Response response = client.UpsertDistributionPolicy("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("offerExpiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetDistributionPolicyAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetDistributionPolicyAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var result = await client.GetDistributionPolicyAsync("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetDistributionPolicy(string,CancellationToken)">
+<example>
+This sample shows how to call GetDistributionPolicy with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var result = client.GetDistributionPolicy("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetDistributionPolicyAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetDistributionPolicyAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = await client.GetDistributionPolicyAsync("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("offerExpiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetDistributionPolicy(string,RequestContext)">
+<example>
+This sample shows how to call GetDistributionPolicy with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = client.GetDistributionPolicy("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("offerExpiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteDistributionPolicyAsync(string,RequestContext)">
+<example>
+This sample shows how to call DeleteDistributionPolicyAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = await client.DeleteDistributionPolicyAsync("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteDistributionPolicy(string,RequestContext)">
+<example>
+This sample shows how to call DeleteDistributionPolicy with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = client.DeleteDistributionPolicy("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="UpsertClassificationPolicyAsync(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertClassificationPolicyAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.UpsertClassificationPolicyAsync("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertClassificationPolicyAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {
+    name = "<name>",
+    fallbackQueueId = "<fallbackQueueId>",
+    queueSelectors = new[] {
+        new {
+            condition = new {
+                kind = "direct-map-rule",
+            },
+            queueSelectors = new[] {
+                new {
+                    key = "<key>",
+                    labelOperator = "equal",
+                    value = new {},
+                }
+            },
+            kind = "conditional",
+        }
+    },
+    prioritizationRule = new {
+        kind = "direct-map-rule",
+    },
+    workerSelectors = new[] {
+        new {
+            condition = new {
+                kind = "direct-map-rule",
+            },
+            workerSelectors = new[] {
+                new {
+                    key = "<key>",
+                    labelOperator = "equal",
+                    value = new {},
+                    expiresAfterSeconds = 123.45d,
+                    expedite = true,
+                }
+            },
+            kind = "conditional",
+        }
+    },
+};
+
+Response response = await client.UpsertClassificationPolicyAsync("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("fallbackQueueId").ToString());
+Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="UpsertClassificationPolicy(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertClassificationPolicy with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.UpsertClassificationPolicy("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertClassificationPolicy with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {
+    name = "<name>",
+    fallbackQueueId = "<fallbackQueueId>",
+    queueSelectors = new[] {
+        new {
+            condition = new {
+                kind = "direct-map-rule",
+            },
+            queueSelectors = new[] {
+                new {
+                    key = "<key>",
+                    labelOperator = "equal",
+                    value = new {},
+                }
+            },
+            kind = "conditional",
+        }
+    },
+    prioritizationRule = new {
+        kind = "direct-map-rule",
+    },
+    workerSelectors = new[] {
+        new {
+            condition = new {
+                kind = "direct-map-rule",
+            },
+            workerSelectors = new[] {
+                new {
+                    key = "<key>",
+                    labelOperator = "equal",
+                    value = new {},
+                    expiresAfterSeconds = 123.45d,
+                    expedite = true,
+                }
+            },
+            kind = "conditional",
+        }
+    },
+};
+
+Response response = client.UpsertClassificationPolicy("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("fallbackQueueId").ToString());
+Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetClassificationPolicyAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetClassificationPolicyAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var result = await client.GetClassificationPolicyAsync("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetClassificationPolicy(string,CancellationToken)">
+<example>
+This sample shows how to call GetClassificationPolicy with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var result = client.GetClassificationPolicy("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetClassificationPolicyAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetClassificationPolicyAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = await client.GetClassificationPolicyAsync("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("fallbackQueueId").ToString());
+Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetClassificationPolicy(string,RequestContext)">
+<example>
+This sample shows how to call GetClassificationPolicy with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = client.GetClassificationPolicy("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("fallbackQueueId").ToString());
+Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteClassificationPolicyAsync(string,RequestContext)">
+<example>
+This sample shows how to call DeleteClassificationPolicyAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = await client.DeleteClassificationPolicyAsync("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteClassificationPolicy(string,RequestContext)">
+<example>
+This sample shows how to call DeleteClassificationPolicy with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = client.DeleteClassificationPolicy("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="UpsertExceptionPolicyAsync(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertExceptionPolicyAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.UpsertExceptionPolicyAsync("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertExceptionPolicyAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {
+    name = "<name>",
+    exceptionRules = new {
+        key = new {
+            trigger = new {
+                threshold = 1234,
+                kind = "queue-length",
+            },
+            actions = new {
+                key = new {
+                    note = "<note>",
+                    dispositionCode = "<dispositionCode>",
+                    kind = "cancel",
+                },
+            },
+        },
+    },
+};
+
+Response response = await client.UpsertExceptionPolicyAsync("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="UpsertExceptionPolicy(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertExceptionPolicy with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.UpsertExceptionPolicy("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertExceptionPolicy with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {
+    name = "<name>",
+    exceptionRules = new {
+        key = new {
+            trigger = new {
+                threshold = 1234,
+                kind = "queue-length",
+            },
+            actions = new {
+                key = new {
+                    note = "<note>",
+                    dispositionCode = "<dispositionCode>",
+                    kind = "cancel",
+                },
+            },
+        },
+    },
+};
+
+Response response = client.UpsertExceptionPolicy("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetExceptionPolicyAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetExceptionPolicyAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var result = await client.GetExceptionPolicyAsync("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetExceptionPolicy(string,CancellationToken)">
+<example>
+This sample shows how to call GetExceptionPolicy with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var result = client.GetExceptionPolicy("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetExceptionPolicyAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetExceptionPolicyAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = await client.GetExceptionPolicyAsync("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetExceptionPolicy(string,RequestContext)">
+<example>
+This sample shows how to call GetExceptionPolicy with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = client.GetExceptionPolicy("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteExceptionPolicyAsync(string,RequestContext)">
+<example>
+This sample shows how to call DeleteExceptionPolicyAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = await client.DeleteExceptionPolicyAsync("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteExceptionPolicy(string,RequestContext)">
+<example>
+This sample shows how to call DeleteExceptionPolicy with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = client.DeleteExceptionPolicy("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="UpsertQueueAsync(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertQueueAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {};
+
+Response response = await client.UpsertQueueAsync("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertQueueAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {
+    name = "<name>",
+    distributionPolicyId = "<distributionPolicyId>",
+    labels = new {
+        key = new {},
+    },
+    exceptionPolicyId = "<exceptionPolicyId>",
+};
+
+Response response = await client.UpsertQueueAsync("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="UpsertQueue(string,RequestContent,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call UpsertQueue with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {};
+
+Response response = client.UpsertQueue("<id>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpsertQueue with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var data = new {
+    name = "<name>",
+    distributionPolicyId = "<distributionPolicyId>",
+    labels = new {
+        key = new {},
+    },
+    exceptionPolicyId = "<exceptionPolicyId>",
+};
+
+Response response = client.UpsertQueue("<id>", RequestContent.Create(data), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetQueueAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetQueueAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var result = await client.GetQueueAsync("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetQueue(string,CancellationToken)">
+<example>
+This sample shows how to call GetQueue with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+var result = client.GetQueue("<id>");
+]]></code>
+</example>
+    </member>
+    <member name="GetQueueAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetQueueAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = await client.GetQueueAsync("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetQueue(string,RequestContext)">
+<example>
+This sample shows how to call GetQueue with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = client.GetQueue("<id>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteQueueAsync(string,RequestContext)">
+<example>
+This sample shows how to call DeleteQueueAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = await client.DeleteQueueAsync("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteQueue(string,RequestContext)">
+<example>
+This sample shows how to call DeleteQueue with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+Response response = client.DeleteQueue("<id>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetDistributionPoliciesAsync(int,CancellationToken)">
+<example>
+This sample shows how to call GetDistributionPoliciesAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+await foreach (var item in client.GetDistributionPoliciesAsync(1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetDistributionPolicies(int,CancellationToken)">
+<example>
+This sample shows how to call GetDistributionPolicies with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+foreach (var item in client.GetDistributionPolicies(1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetDistributionPoliciesAsync(int,RequestContext)">
+<example>
+This sample shows how to call GetDistributionPoliciesAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+await foreach (var item in client.GetDistributionPoliciesAsync(1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetDistributionPolicies(int,RequestContext)">
+<example>
+This sample shows how to call GetDistributionPolicies with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+foreach (var item in client.GetDistributionPolicies(1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+    Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetClassificationPoliciesAsync(int,CancellationToken)">
+<example>
+This sample shows how to call GetClassificationPoliciesAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+await foreach (var item in client.GetClassificationPoliciesAsync(1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetClassificationPolicies(int,CancellationToken)">
+<example>
+This sample shows how to call GetClassificationPolicies with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+foreach (var item in client.GetClassificationPolicies(1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetClassificationPoliciesAsync(int,RequestContext)">
+<example>
+This sample shows how to call GetClassificationPoliciesAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+await foreach (var item in client.GetClassificationPoliciesAsync(1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetClassificationPolicies(int,RequestContext)">
+<example>
+This sample shows how to call GetClassificationPolicies with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+foreach (var item in client.GetClassificationPolicies(1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetExceptionPoliciesAsync(int,CancellationToken)">
+<example>
+This sample shows how to call GetExceptionPoliciesAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+await foreach (var item in client.GetExceptionPoliciesAsync(1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetExceptionPolicies(int,CancellationToken)">
+<example>
+This sample shows how to call GetExceptionPolicies with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+foreach (var item in client.GetExceptionPolicies(1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetExceptionPoliciesAsync(int,RequestContext)">
+<example>
+This sample shows how to call GetExceptionPoliciesAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+await foreach (var item in client.GetExceptionPoliciesAsync(1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetExceptionPolicies(int,RequestContext)">
+<example>
+This sample shows how to call GetExceptionPolicies with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+foreach (var item in client.GetExceptionPolicies(1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetQueuesAsync(int,CancellationToken)">
+<example>
+This sample shows how to call GetQueuesAsync with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+await foreach (var item in client.GetQueuesAsync(1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetQueues(int,CancellationToken)">
+<example>
+This sample shows how to call GetQueues with required parameters.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+foreach (var item in client.GetQueues(1234))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetQueuesAsync(int,RequestContext)">
+<example>
+This sample shows how to call GetQueuesAsync with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+await foreach (var item in client.GetQueuesAsync(1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("queue").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("queue").GetProperty("distributionPolicyId").ToString());
+    Console.WriteLine(result.GetProperty("queue").GetProperty("labels").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetQueues(int,RequestContext)">
+<example>
+This sample shows how to call GetQueues with required parameters and parse the result.
+<code><![CDATA[
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new JobRouterAdministrationRestClient(endpoint);
+
+foreach (var item in client.GetQueues(1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("queue").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("queue").GetProperty("distributionPolicyId").ToString());
+    Console.WriteLine(result.GetProperty("queue").GetProperty("labels").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>
