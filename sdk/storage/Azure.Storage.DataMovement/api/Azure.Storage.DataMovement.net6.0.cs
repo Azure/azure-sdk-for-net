@@ -114,7 +114,7 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageResourceCheckpointData() { }
         public abstract int Length { get; }
-        public abstract void Serialize(System.IO.Stream stream);
+        protected internal abstract void Serialize(System.IO.Stream stream);
     }
     public abstract partial class StorageResourceContainer : Azure.Storage.DataMovement.StorageResource
     {

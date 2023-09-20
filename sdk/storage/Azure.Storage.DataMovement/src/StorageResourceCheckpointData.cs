@@ -19,6 +19,6 @@ namespace Azure.Storage.DataMovement
         /// Serializes the checkpoint data into the given stream.
         /// </summary>
         /// <param name="stream">The stream to serialize the data into.</param>
-        public abstract void Serialize(Stream stream);
+        protected internal abstract void Serialize(Stream stream);
     }
 }

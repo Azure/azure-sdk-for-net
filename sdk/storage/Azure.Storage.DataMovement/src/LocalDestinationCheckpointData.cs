@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement
     {
         public override int Length => 0;
 
-        public override void Serialize(Stream stream)
+        protected internal override void Serialize(Stream stream)
         {
         }
     }
