@@ -2,13 +2,14 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
-### Features Added
+### Feature Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2023-02' to 'package-preview-2023-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/d99f18b18405cd446f7abc2c9e6b3884f5c549f8/specification/azurestackhci/resource-manager/readme.md
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.32.0 to 1.35.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0
 
 ## 1.0.2 (2023-05-31)
 
