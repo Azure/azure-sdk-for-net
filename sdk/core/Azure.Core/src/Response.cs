@@ -14,7 +14,7 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : Result, IDisposable
+    public abstract class Response : Result
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
@@ -31,17 +31,6 @@ namespace Azure
         /// Get the HTTP response headers.
         /// </summary>
         public virtual ResponseHeaders Headers => new ResponseHeaders(this);
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Response"/> instance.
-        /// </summary>
-        public abstract void Dispose();
-
-        /// <summary>
-        /// Indicates whether the status code of the returned response is considered
-        /// an error code.
-        /// </summary>
-        public virtual bool IsError { get; internal set; }
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 

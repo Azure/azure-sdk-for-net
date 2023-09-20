@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using System.Threading;
 using Azure.Core.Pipeline;
 
@@ -12,10 +14,11 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : IDisposable
+    public sealed class HttpMessage : RestMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
-        private Response? _response;
+
+        private Result? _result;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpMessage"/>.
@@ -44,33 +47,23 @@ namespace Azure.Core
         {
             get
             {
-                if (_response == null)
+                if (_result == null)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
-                return _response;
+                return _result;
             }
-            set => _response = value;
+            set => _result = value;
         }
 
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => _response != null;
+        public bool HasResponse => _result != null;
 
-        internal void ClearResponse() => _response = null;
-
-        /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
-        /// </summary>
-        public CancellationToken CancellationToken { get; internal set; }
-
-        /// <summary>
-        /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
-        /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
+        internal void ClearResponse() => _result = null;
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
@@ -182,12 +175,12 @@ namespace Azure.Core
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
         {
-            switch (_response?.ContentStream)
+            switch (_result?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
+                    _result.ContentStream = new ResponseShouldNotBeUsedStream(_result.ContentStream);
                     return stream;
                 default:
                     return null;
@@ -197,15 +190,15 @@ namespace Azure.Core
         /// <summary>
         /// Disposes the request and response.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             Request.Dispose();
             _propertyBag.Dispose();
 
-            var response = _response;
+            var response = _result;
             if (response != null)
             {
-                _response = null;
+                _result = null;
                 response.Dispose();
             }
         }
@@ -265,5 +258,17 @@ namespace Azure.Core
         /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
         /// </summary>
         private class MessagePropertyKey { }
+
+        //private class RestResponse : Response
+        //{
+        //    private Result _result;
+        //    private Response _response;
+
+        //    public RestResponse(Result result, Response response)
+        //    {
+        //        _result = result;
+
+        //    }
+        //}
     }
 }

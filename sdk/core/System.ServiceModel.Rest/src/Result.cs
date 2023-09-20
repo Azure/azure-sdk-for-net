@@ -8,7 +8,7 @@ namespace System.ServiceModel.Rest;
 /// <summary>
 /// TBD.
 /// </summary>
-public abstract class Result
+public abstract class Result : IDisposable
 {
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
@@ -26,27 +26,39 @@ public abstract class Result
     }
 
     /// <summary>
+    /// Indicates whether the status code of the returned response is considered
+    /// an error code.
+    /// </summary>
+    public virtual bool IsError { get; internal set; }
+
+    /// <summary>
     /// Gets the contents of HTTP response, if it is available.
     /// </summary>
     /// <remarks>
     /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
     /// </remarks>
-    public virtual BinaryData Content {
-        get {
-            if (ContentStream == null) {
+    public virtual BinaryData Content
+    {
+        get
+        {
+            if (ContentStream == null)
+            {
                 return s_EmptyBinaryData;
             }
 
             MemoryStream? memoryContent = ContentStream as MemoryStream;
 
-            if (memoryContent == null) {
+            if (memoryContent == null)
+            {
                 throw new InvalidOperationException($"The response is not fully buffered.");
             }
 
-            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment)) {
+            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+            {
                 return new BinaryData(segment.AsMemory());
             }
-            else {
+            else
+            {
                 return new BinaryData(memoryContent.ToArray());
             }
         }
@@ -77,4 +89,9 @@ public abstract class Result
     /// <param name="value">The reference to populate with value.</param>
     /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
     protected abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
+
+    /// <summary>
+    /// Frees resources held by this <see cref="Result"/> instance.
+    /// </summary>
+    public abstract void Dispose();
 }
