@@ -71,3 +71,45 @@ namespace System.ServiceModel.Rest.Core
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
     }
 }
+namespace System.ServiceModel.Rest.Shared
+{
+    public partial class ClientUtilities
+    {
+        public ClientUtilities() { }
+        public static void AssertNotNullOrEmpty(string value, string name) { }
+        public static void AssertNotNull<T>(T value, string name) { }
+    }
+}
+namespace System.ServiceModel.Rest.Shared.Core
+{
+    public partial class RequestUri
+    {
+        public RequestUri() { }
+        protected bool HasPath { get { throw null; } }
+        protected bool HasQuery { get { throw null; } }
+        public string? Host { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public string PathAndQuery { get { throw null; } }
+        public int Port { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public string? Scheme { get { throw null; } set { } }
+        public virtual void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
+        public virtual void AppendPath(string value) { }
+        public virtual void AppendPath(string value, bool escape) { }
+        public virtual void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
+        public virtual void AppendQuery(string name, string value) { }
+        public virtual void AppendQuery(string name, string value, bool escapeValue) { }
+        public virtual void AppendRaw(string value, bool escape) { }
+        public virtual void AppendRawNextLink(string nextLink, bool escape) { }
+        public virtual void Reset(System.Uri value) { }
+        public override string ToString() { throw null; }
+        public virtual System.Uri ToUri() { throw null; }
+    }
+}
+namespace System.ServiceModel.Rest.Shared.Serialization
+{
+    public partial interface IUtf8JsonWriteable
+    {
+        void Write(System.Text.Json.Utf8JsonWriter writer);
+    }
+}
