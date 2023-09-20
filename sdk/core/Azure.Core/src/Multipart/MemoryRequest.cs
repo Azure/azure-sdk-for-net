@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Core
 {
@@ -16,7 +15,7 @@ namespace Azure.Core
 
         private readonly DictionaryHeaders _headers = new();
 
-        public override RequestContent Content
+        public override RequestContent? Content
         {
             get { return base.Content; }
             set

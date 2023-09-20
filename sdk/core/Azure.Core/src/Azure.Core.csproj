@@ -69,7 +69,6 @@
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
-    <Compile Include="Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />
     <Compile Include="Shared\TrimmingAttribute.cs" />
