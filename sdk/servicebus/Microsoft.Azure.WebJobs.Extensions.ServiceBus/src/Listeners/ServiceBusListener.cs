@@ -921,7 +921,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     var sessionProcessor = _sessionMessageProcessor.Value.Processor;
                     if (currentConcurrency != sessionProcessor.MaxConcurrentSessions)
                     {
-                        // Per session call concurrency is limited to 1 meaning sessions are 1:1 with invocations.
+                        // Per session call concurrency is limited to 1 when dynamic concurrency is enabled,
+                        // meaning the number of sessions are 1:1 with invocations.
                         // So we can scale MaxConcurrentSessions 1:1 with CurrentConcurrency.
                         sessionProcessor.UpdateConcurrency(currentConcurrency, sessionProcessor.MaxConcurrentCallsPerSession);
                     }
