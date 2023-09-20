@@ -15,9 +15,9 @@ namespace Azure.AI.OpenAI
         private readonly int _dummyPrimitive;
         public AudioTranscriptionFormat(string value) { throw null; }
         public static Azure.AI.OpenAI.AudioTranscriptionFormat Simple { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat SubRip { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranscriptionFormat Srt { get { throw null; } }
         public static Azure.AI.OpenAI.AudioTranscriptionFormat Verbose { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranscriptionFormat WebVideoTextTracks { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranscriptionFormat Vtt { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.AudioTranscriptionFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -67,9 +67,9 @@ namespace Azure.AI.OpenAI
         private readonly int _dummyPrimitive;
         public AudioTranslationFormat(string value) { throw null; }
         public static Azure.AI.OpenAI.AudioTranslationFormat Simple { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranslationFormat SubRip { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranslationFormat Srt { get { throw null; } }
         public static Azure.AI.OpenAI.AudioTranslationFormat Verbose { get { throw null; } }
-        public static Azure.AI.OpenAI.AudioTranslationFormat WebVideoTextTracks { get { throw null; } }
+        public static Azure.AI.OpenAI.AudioTranslationFormat Vtt { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.AudioTranslationFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

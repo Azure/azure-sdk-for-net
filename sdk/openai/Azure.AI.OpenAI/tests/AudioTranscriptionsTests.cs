@@ -49,8 +49,8 @@ public class AudioTranscriptionsTest : OpenAITestBase
             {
                 "json" => AudioTranscriptionFormat.Simple,
                 "verbose_json" => AudioTranscriptionFormat.Verbose,
-                "srt" => AudioTranscriptionFormat.SubRip,
-                "vtt" => AudioTranscriptionFormat.WebVideoTextTracks,
+                "srt" => AudioTranscriptionFormat.Srt,
+                "vtt" => AudioTranscriptionFormat.Vtt,
                 _ => throw new ArgumentException($"Unknown response format provided to test: {transcriptionFormat}"),
             };
         }
@@ -116,8 +116,8 @@ public class AudioTranscriptionsTest : OpenAITestBase
             {
                 "json" => AudioTranslationFormat.Simple,
                 "verbose_json" => AudioTranslationFormat.Verbose,
-                "srt" => AudioTranslationFormat.SubRip,
-                "vtt" => AudioTranslationFormat.WebVideoTextTracks,
+                "srt" => AudioTranslationFormat.Srt,
+                "vtt" => AudioTranslationFormat.Vtt,
                 _ => throw new ArgumentException($"Unknown response format provided to test: {translationFormat}"),
             };
         }

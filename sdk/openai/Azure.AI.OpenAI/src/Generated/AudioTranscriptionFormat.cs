@@ -25,8 +25,12 @@ namespace Azure.AI.OpenAI
         private const string SimpleValue = "json";
         private const string VerboseValue = "verbose_json";
         private const string InternalPlainTextValue = "text";
-        private const string SubRipValue = "srt";
-        private const string WebVideoTextTracksValue = "vtt";
+        private const string SrtValue = "srt";
+        private const string VttValue = "vtt";
+        /// <summary> Use a response body that is plain text in SubRip (SRT) format that also includes timing information. </summary>
+        public static AudioTranscriptionFormat Srt { get; } = new AudioTranscriptionFormat(SrtValue);
+        /// <summary> Use a response body that is plain text in Web Video Text Tracks (VTT) format that also includes timing information. </summary>
+        public static AudioTranscriptionFormat Vtt { get; } = new AudioTranscriptionFormat(VttValue);
         /// <summary> Determines if two <see cref="AudioTranscriptionFormat"/> values are the same. </summary>
         public static bool operator ==(AudioTranscriptionFormat left, AudioTranscriptionFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AudioTranscriptionFormat"/> values are not the same. </summary>
