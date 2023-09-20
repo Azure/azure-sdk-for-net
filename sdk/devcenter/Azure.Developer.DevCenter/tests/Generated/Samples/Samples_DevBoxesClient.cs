@@ -27,7 +27,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetPool("<projectName>", "<poolName>", new RequestContext());
+            Response response = client.GetPool("<projectName>", "<poolName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -43,7 +43,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetPool("<projectName>", "<poolName>", new RequestContext());
+            Response response = client.GetPool("<projectName>", "<poolName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -73,7 +73,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetPoolAsync("<projectName>", "<poolName>", new RequestContext());
+            Response response = await client.GetPoolAsync("<projectName>", "<poolName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -89,7 +89,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetPoolAsync("<projectName>", "<poolName>", new RequestContext());
+            Response response = await client.GetPoolAsync("<projectName>", "<poolName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -119,7 +119,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>", new RequestContext());
+            Response response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -137,7 +137,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>", new RequestContext());
+            Response response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -155,7 +155,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>", new RequestContext());
+            Response response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -173,7 +173,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>", new RequestContext());
+            Response response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -191,7 +191,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetDevBox("<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            Response response = client.GetDevBox("<projectName>", "<userId>", "<devBoxName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -205,7 +205,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetDevBox("<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            Response response = client.GetDevBox("<projectName>", "<userId>", "<devBoxName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -243,7 +243,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetDevBoxAsync("<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            Response response = await client.GetDevBoxAsync("<projectName>", "<userId>", "<devBoxName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -257,7 +257,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetDevBoxAsync("<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            Response response = await client.GetDevBoxAsync("<projectName>", "<userId>", "<devBoxName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -295,7 +295,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetRemoteConnection("<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            Response response = client.GetRemoteConnection("<projectName>", "<userId>", "<devBoxName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -309,7 +309,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetRemoteConnection("<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            Response response = client.GetRemoteConnection("<projectName>", "<userId>", "<devBoxName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("webUrl").ToString());
@@ -324,7 +324,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetRemoteConnectionAsync("<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            Response response = await client.GetRemoteConnectionAsync("<projectName>", "<userId>", "<devBoxName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -338,7 +338,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetRemoteConnectionAsync("<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            Response response = await client.GetRemoteConnectionAsync("<projectName>", "<userId>", "<devBoxName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("webUrl").ToString());
@@ -353,7 +353,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetAction("<projectName>", "<userId>", "<devBoxName>", "<actionName>", new RequestContext());
+            Response response = client.GetAction("<projectName>", "<userId>", "<devBoxName>", "<actionName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -369,7 +369,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.GetAction("<projectName>", "<userId>", "<devBoxName>", "<actionName>", new RequestContext());
+            Response response = client.GetAction("<projectName>", "<userId>", "<devBoxName>", "<actionName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -387,7 +387,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetActionAsync("<projectName>", "<userId>", "<devBoxName>", "<actionName>", new RequestContext());
+            Response response = await client.GetActionAsync("<projectName>", "<userId>", "<devBoxName>", "<actionName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -403,7 +403,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.GetActionAsync("<projectName>", "<userId>", "<devBoxName>", "<actionName>", new RequestContext());
+            Response response = await client.GetActionAsync("<projectName>", "<userId>", "<devBoxName>", "<actionName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -469,7 +469,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.DelayAction("<projectName>", "<userId>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.DelayAction("<projectName>", "<userId>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -485,7 +485,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = client.DelayAction("<projectName>", "<userId>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow, new RequestContext());
+            Response response = client.DelayAction("<projectName>", "<userId>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -503,7 +503,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.DelayActionAsync("<projectName>", "<userId>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.DelayActionAsync("<projectName>", "<userId>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -519,7 +519,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            Response response = await client.DelayActionAsync("<projectName>", "<userId>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow, new RequestContext());
+            Response response = await client.DelayActionAsync("<projectName>", "<userId>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -537,7 +537,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetPools("<projectName>", "<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetPools("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -554,7 +554,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetPools("<projectName>", "<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetPools("<projectName>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -585,7 +585,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetPoolsAsync("<projectName>", "<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetPoolsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -602,7 +602,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetPoolsAsync("<projectName>", "<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetPoolsAsync("<projectName>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -633,7 +633,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetSchedules("<projectName>", "<poolName>", "<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetSchedules("<projectName>", "<poolName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -652,7 +652,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetSchedules("<projectName>", "<poolName>", "<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetSchedules("<projectName>", "<poolName>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -671,7 +671,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetSchedulesAsync("<projectName>", "<poolName>", "<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetSchedulesAsync("<projectName>", "<poolName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -690,7 +690,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetSchedulesAsync("<projectName>", "<poolName>", "<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetSchedulesAsync("<projectName>", "<poolName>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -709,7 +709,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllDevBoxes("<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetAllDevBoxes())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -724,7 +724,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllDevBoxes("<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetAllDevBoxes("<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -763,7 +763,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllDevBoxesAsync("<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetAllDevBoxesAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -778,7 +778,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllDevBoxesAsync("<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetAllDevBoxesAsync("<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -817,7 +817,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllDevBoxesByUser("<userId>", "<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetAllDevBoxesByUser("<userId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -832,7 +832,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllDevBoxesByUser("<userId>", "<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetAllDevBoxesByUser("<userId>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -871,7 +871,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>", "<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -886,7 +886,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>", "<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -925,7 +925,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetDevBoxes("<projectName>", "<userId>", "<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetDevBoxes("<projectName>", "<userId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -940,7 +940,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetDevBoxes("<projectName>", "<userId>", "<filter>", 1234, new RequestContext()))
+            foreach (var item in client.GetDevBoxes("<projectName>", "<userId>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -979,7 +979,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetDevBoxesAsync("<projectName>", "<userId>", "<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetDevBoxesAsync("<projectName>", "<userId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -994,7 +994,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetDevBoxesAsync("<projectName>", "<userId>", "<filter>", 1234, new RequestContext()))
+            await foreach (var item in client.GetDevBoxesAsync("<projectName>", "<userId>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1033,7 +1033,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetActions("<projectName>", "<userId>", "<devBoxName>", new RequestContext()))
+            foreach (var item in client.GetActions("<projectName>", "<userId>", "<devBoxName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1050,7 +1050,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.GetActions("<projectName>", "<userId>", "<devBoxName>", new RequestContext()))
+            foreach (var item in client.GetActions("<projectName>", "<userId>", "<devBoxName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1069,7 +1069,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetActionsAsync("<projectName>", "<userId>", "<devBoxName>", new RequestContext()))
+            await foreach (var item in client.GetActionsAsync("<projectName>", "<userId>", "<devBoxName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1086,7 +1086,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.GetActionsAsync("<projectName>", "<userId>", "<devBoxName>", new RequestContext()))
+            await foreach (var item in client.GetActionsAsync("<projectName>", "<userId>", "<devBoxName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1105,7 +1105,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.DelayAllActions("<projectName>", "<userId>", "<devBoxName>", DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.DelayAllActions("<projectName>", "<userId>", "<devBoxName>", DateTimeOffset.UtcNow))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1121,7 +1121,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            foreach (var item in client.DelayAllActions("<projectName>", "<userId>", "<devBoxName>", DateTimeOffset.UtcNow, new RequestContext()))
+            foreach (var item in client.DelayAllActions("<projectName>", "<userId>", "<devBoxName>", DateTimeOffset.UtcNow))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1145,7 +1145,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.DelayAllActionsAsync("<projectName>", "<userId>", "<devBoxName>", DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.DelayAllActionsAsync("<projectName>", "<userId>", "<devBoxName>", DateTimeOffset.UtcNow))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1161,7 +1161,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (var item in client.DelayAllActionsAsync("<projectName>", "<userId>", "<devBoxName>", DateTimeOffset.UtcNow, new RequestContext()))
+            await foreach (var item in client.DelayAllActionsAsync("<projectName>", "<userId>", "<devBoxName>", DateTimeOffset.UtcNow))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1315,7 +1315,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1330,7 +1330,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1354,7 +1354,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1369,7 +1369,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1393,7 +1393,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1408,7 +1408,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1432,7 +1432,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1447,7 +1447,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1471,7 +1471,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", true, new RequestContext());
+            var operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1486,7 +1486,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", true, new RequestContext());
+            var operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", true);
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1510,7 +1510,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", true, new RequestContext());
+            var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1525,7 +1525,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", true, new RequestContext());
+            var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", true);
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1549,7 +1549,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1564,7 +1564,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1588,7 +1588,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1603,7 +1603,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevBoxesClient(endpoint, credential);
 
-            var operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", new RequestContext());
+            var operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
