@@ -22,7 +22,7 @@ public abstract class Result : IDisposable
     /// <exception cref="NotImplementedException"></exception>
     public static Result<T> FromValue<T>(T value, Result result)
     {
-        return new Result<T>(value, result);
+        return new ValueResult<T>(result, value);
     }
 
     /// <summary>
@@ -94,4 +94,26 @@ public abstract class Result : IDisposable
     /// Frees resources held by this <see cref="Result"/> instance.
     /// </summary>
     public abstract void Dispose();
+
+    private class ValueResult<T> : Result<T>
+    {
+        private readonly Result _result;
+
+        public ValueResult(Result result, T value)
+        {
+            if (result is null)
+            {
+                throw new ArgumentException(nameof(result));
+            }
+
+            _result = result;
+            Value = value;
+        }
+
+        public override T Value { get; }
+
+        public override bool HasValue => _result != null;
+
+        public override Result GetRawResult() => _result;
+    }
 }

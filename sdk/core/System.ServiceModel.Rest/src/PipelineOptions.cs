@@ -15,6 +15,9 @@ namespace System.ServiceModel.Rest
         /// </summary>
         public CancellationToken CancellationToken { get; set; }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
         public ResultErrorOptions ErrorOptions { get; set; } = ResultErrorOptions.Default;
 
         /// <summary>

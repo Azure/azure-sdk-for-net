@@ -6,6 +6,8 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +16,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a primitive for sending HTTP requests and receiving responses extensible by adding <see cref="HttpPipelinePolicy"/> processing steps.
     /// </summary>
-    public class HttpPipeline
+    public class HttpPipeline : MessagePipeline
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
@@ -328,6 +330,29 @@ namespace Azure.Core.Pipeline
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public override Task SendAsync(RestMessage message, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="cancellationToken"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public override void Send(RestMessage message, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
         private class HttpMessagePropertiesScope : IDisposable

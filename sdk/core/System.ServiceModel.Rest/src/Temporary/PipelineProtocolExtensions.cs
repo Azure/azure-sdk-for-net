@@ -2,14 +2,27 @@
 // Licensed under the MIT License.
 
 using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Shared.Pipeline
 {
+    /// <summary>
+    /// TBD.
+    /// </summary>
     public static class PipelineProtocolExtensions
     {
-        public static async ValueTask<Result> ProcessMessageAsync(this HttpPipeline pipeline, RestMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="pipeline"></param>
+        /// <param name="message"></param>
+        /// <param name="requestContext"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="RequestErrorException"></exception>
+        public static async ValueTask<Result> ProcessMessageAsync(this MessagePipeline pipeline, RestMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
         {
             var (userCt, statusOption) = ApplyRequestContext(requestContext);
             if (!userCt.CanBeCanceled || !cancellationToken.CanBeCanceled)
@@ -30,7 +43,16 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
             throw new RequestErrorException(message.Result);
         }
 
-        public static Result ProcessMessage(this HttpPipeline pipeline, RestMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="pipeline"></param>
+        /// <param name="message"></param>
+        /// <param name="requestContext"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="RequestErrorException"></exception>
+        public static Result ProcessMessage(this MessagePipeline pipeline, RestMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
         {
             var (userCt, statusOption) = ApplyRequestContext(requestContext);
             if (!userCt.CanBeCanceled || !cancellationToken.CanBeCanceled)
@@ -51,7 +73,15 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
             throw new RequestErrorException(message.Result);
         }
 
-        public static async ValueTask<Result<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, RestMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="pipeline"></param>
+        /// <param name="message"></param>
+        /// <param name="clientDiagnostics"></param>
+        /// <param name="requestContext"></param>
+        /// <returns></returns>
+        public static async ValueTask<Result<bool>> ProcessHeadAsBoolMessageAsync(this MessagePipeline pipeline, RestMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
         {
             var response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
             switch (response.Status)
@@ -65,7 +95,15 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
             }
         }
 
-        public static Result<bool> ProcessHeadAsBoolMessage(this HttpPipeline pipeline, RestMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="pipeline"></param>
+        /// <param name="message"></param>
+        /// <param name="clientDiagnostics"></param>
+        /// <param name="requestContext"></param>
+        /// <returns></returns>
+        public static Result<bool> ProcessHeadAsBoolMessage(this MessagePipeline pipeline, RestMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
         {
             var response = pipeline.ProcessMessage(message, requestContext);
             switch (response.Status)
@@ -101,6 +139,8 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
             }
 
             public override T Value { get => throw _exception; }
+
+            public override bool HasValue => false;
 
             public override Result GetRawResult() => _response;
         }
