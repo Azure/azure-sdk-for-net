@@ -47,10 +47,5 @@ namespace Azure.Communication.CallAutomation
             var internalEvent = CallTransferAcceptedInternal.DeserializeCallTransferAcceptedInternal(element);
             return new CallTransferAccepted(internalEvent);
         }
-
-        /// <summary> Traffer target: the user that transferee will be transferred to. </summary>
-        internal CommunicationIdentifierModel TransferTarget { get; }
-        /// <summary> Transferee: the participant being transferred away. </summary>
-        internal CommunicationIdentifierModel Transferee { get; }
     }
 }
