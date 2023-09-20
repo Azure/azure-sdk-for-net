@@ -72,5 +72,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             throw new NotImplementedException();
         }
+
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
