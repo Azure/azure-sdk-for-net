@@ -64,6 +64,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/devcenter/Azure.Developer.DevCenter/samples).
 
 ### Build a client and get all projects in a dev center
+
+To instantiate the client, you would need to provide a DevCenter URL and credentials. The resulting client allows you to list projects and retrieve projects by their name.
+
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 var credential = new DefaultAzureCredential();
 var devCenterClient = new DevCenterClient(endpoint, credential);
@@ -76,6 +79,9 @@ await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
 ```
 
 ### List available Dev Box Pools
+
+Interaction with DevBox pools is facilitated through the DevBoxesClient. Pools can be listed for a specific project or fetched individually.
+
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
 var devBoxesClient = new DevBoxesClient(endpoint, credential);
 string targetPoolName = null;
@@ -87,6 +93,9 @@ await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName
 ```
 
 ### Provision a Dev Box
+
+To create a new DevBox, provide the pool name in the content and specify the desired DevBox name. Upon successful execution of this operation, a DevBox should appear in the portal.
+
 ```C# Snippet:Azure_DevCenter_CreateDevBox_Scenario
 var content = new
 {
@@ -106,6 +115,9 @@ Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetPr
 ```
 
 ### Connect to your Dev Box
+
+Once a DevBox is provisioned, you can connect to it using an RDP connection string. Below is a sample code that demonstrates how to retrieve it.
+
 ```C# Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
 Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
     targetProjectName,
@@ -116,6 +128,9 @@ Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("web
 ```
 
 ### Delete the Dev Box
+
+Deleting a DevBox is easy. It's much faster operation that creating a new DevBox. 
+
 ```C# Snippet:Azure_DevCenter_DeleteDevBox_Scenario
 Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(
     WaitUntil.Completed,
@@ -128,7 +143,7 @@ Console.WriteLine($"Completed dev box deletion.");
 
 ## Get project catalogs
 
-Create an `EnvironmentsClient` and issue a request to get all catalogs in a project.
+Create an `DeploymentEnvironmentsClient` and issue a request to get all catalogs in a project.
 
 ```C# Snippet:Azure_DevCenter_GetCatalogs_Scenario
 var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
@@ -142,6 +157,8 @@ await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectNam
 ```
 
 ## Get all environment definitions in a project for a catalog
+
+Environment definitions are a part of the catalog associated with your project. If you don't see the expected environment definitions in the results, please ensure that you have pushed your changes to the catalog repository and synchronized the catalog.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
 string environmentDefinitionName = null;
