@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string webTestName, TagsResource webTestTags)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string webTestName, ComponentTag webTestTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="webTestName"/> or <paramref name="webTestTags"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WebTestData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string webTestName, TagsResource webTestTags, CancellationToken cancellationToken = default)
+        public async Task<Response<WebTestData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string webTestName, ComponentTag webTestTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="webTestName"/> or <paramref name="webTestTags"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WebTestData> UpdateTags(string subscriptionId, string resourceGroupName, string webTestName, TagsResource webTestTags, CancellationToken cancellationToken = default)
+        public Response<WebTestData> UpdateTags(string subscriptionId, string resourceGroupName, string webTestName, ComponentTag webTestTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

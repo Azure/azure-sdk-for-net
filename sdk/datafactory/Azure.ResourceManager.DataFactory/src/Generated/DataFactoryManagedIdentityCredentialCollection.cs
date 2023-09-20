@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryManagedIdentityCredentialResource(Client, DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(e)), _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics, Pipeline, "DataFactoryManagedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryManagedIdentityCredentialResource(Client, DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(e)), _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics, Pipeline, "DataFactoryManagedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryManagedIdentityCredentialResource(Client, DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(e)), _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics, Pipeline, "DataFactoryManagedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryManagedIdentityCredentialResource(Client, DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(e)), _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics, Pipeline, "DataFactoryManagedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

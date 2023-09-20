@@ -1130,7 +1130,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     processorClient.Identifier,
                     processorClient.EventHubName,
-                    processorClient.ConsumerGroup),
+                    processorClient.ConsumerGroup,
+                    It.IsAny<string>()),
                 Times.Once);
 
             mockLogger
@@ -1138,7 +1139,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     processorClient.Identifier,
                     processorClient.EventHubName,
-                    processorClient.ConsumerGroup),
+                    processorClient.ConsumerGroup,
+                    It.IsAny<string>()),
                 Times.Once);
 
             cancellationSource.Cancel();
@@ -1176,6 +1178,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.Identifier,
                     processorClient.EventHubName,
                     processorClient.ConsumerGroup,
+                    It.IsAny<string>(),
                     expectedException.Message),
                 Times.Exactly(eventBatch.Length));
 

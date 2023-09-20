@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines the current state of the transfer.
         /// </summary>
-        internal DataTransferState _state;
+        internal DataTransferInternalState _state;
 
         /// <summary>
         /// For mocking.
@@ -54,11 +54,12 @@ namespace Azure.Storage.DataMovement
         internal DataTransfer(
             string id,
             TransferManager transferManager,
-            DataTransferStatus status = DataTransferStatus.Queued)
+            DataTransferStatus status = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(transferManager, nameof(transferManager));
-            _state = new DataTransferState(id, status);
+            status ??= new DataTransferStatus();
+            _state = new DataTransferInternalState(id, status);
             TransferManager = transferManager;
         }
 

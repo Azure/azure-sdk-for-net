@@ -8,15 +8,15 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-/// <summary>
-/// The suite of tests for the `StartRecognizeCustomForms` methods in the <see cref="FormRecognizerClient"/> class.
-/// </summary>
-/// <remarks>
-/// These tests have a dependency on live Azure services and may incur costs for the associated
-/// Azure subscription.
-/// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
+    /// <summary>
+    /// The suite of tests for the `StartRecognizeCustomForms` methods in the <see cref="FormRecognizerClient"/> class.
+    /// </summary>
+    /// <remarks>
+    /// These tests have a dependency on live Azure services and may incur costs for the associated
+    /// Azure subscription.
+    /// </remarks>
     [ClientTestFixture(
     FormRecognizerClientOptions.ServiceVersion.V2_0,
     FormRecognizerClientOptions.ServiceVersion.V2_1)]
@@ -410,9 +410,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
-        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm()
         {
             var client = CreateFormRecognizerClient();
             var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
@@ -420,18 +418,10 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, ContainerType.MultipageFiles);
 
-            if (useStream)
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
+            using (Recording.DisableRequestBodyRecording())
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
-                }
-            }
-            else
-            {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
-                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
@@ -463,6 +453,22 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsNotNull(secondFormFieldInPage);
             Assert.IsNotNull(secondFormFieldInPage.ValueData);
             Assert.AreEqual("Southridge Video", secondFormFieldInPage.ValueData.Text);
+        }
+
+        [RecordedTest]
+        public async Task StartRecognizeCustomFormsFromUriWithoutLabelsThrowsWithMultipageForm()
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, ContainerType.MultipageFiles);
+
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
+            var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
+
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+
+            Assert.AreEqual("2002", exception.ErrorCode);
         }
 
         [RecordedTest]
@@ -500,9 +506,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
-        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage()
         {
             var client = CreateFormRecognizerClient();
             var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
@@ -510,18 +514,10 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
 
-            if (useStream)
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
-                }
-            }
-            else
-            {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceMultipageBlank);
-                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();

@@ -160,7 +160,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region Get
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/35243")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task GetDocumentClassifier(bool useTokenCredential)
         {
@@ -284,12 +284,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ClassifierDocumentTypeDetails docType1 = docTypes1[key];
                 ClassifierDocumentTypeDetails docType2 = docTypes2[key];
 
-                Assert.AreEqual(docType1.TrainingDataContentSource.Kind, docType2.TrainingDataContentSource.Kind);
+                Assert.AreEqual(docType1.TrainingDataSource.Kind, docType2.TrainingDataSource.Kind);
 
-                if (docType1.TrainingDataContentSource.Kind == ContentSourceKind.Blob)
+                if (docType1.TrainingDataSource.Kind == DocumentContentSourceKind.Blob)
                 {
-                    var source1 = docType1.TrainingDataContentSource as BlobContentSource;
-                    var source2 = docType2.TrainingDataContentSource as BlobContentSource;
+                    var source1 = docType1.TrainingDataSource as BlobContentSource;
+                    var source2 = docType2.TrainingDataSource as BlobContentSource;
 
                     // The URI returned by the service does not include query parameters, so we're
                     // making sure they're not included in our comparison.
@@ -299,10 +299,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     Assert.AreEqual(uri1, uri2);
                     Assert.AreEqual(source1.Prefix, source2.Prefix);
                 }
-                else if (docType1.TrainingDataContentSource.Kind == ContentSourceKind.BlobFileList)
+                else if (docType1.TrainingDataSource.Kind == DocumentContentSourceKind.BlobFileList)
                 {
-                    var source1 = docType1.TrainingDataContentSource as BlobFileListContentSource;
-                    var source2 = docType2.TrainingDataContentSource as BlobFileListContentSource;
+                    var source1 = docType1.TrainingDataSource as BlobFileListContentSource;
+                    var source2 = docType2.TrainingDataSource as BlobFileListContentSource;
 
                     // The URI returned by the service does not include query parameters, so we're
                     // making sure they're not included in our comparison.

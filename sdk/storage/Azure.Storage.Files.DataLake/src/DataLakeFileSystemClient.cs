@@ -366,15 +366,8 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential)
-            : this(
-                  fileSystemUri,
-                  credential.AsPolicy(new DataLakeClientOptions()),
-                  options: null,
-                  storageSharedKeyCredential: null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+            : this(fileSystemUri, credential, new DataLakeClientOptions())
         {
-            Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
 
         /// <summary>
@@ -395,12 +388,14 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options)
             : this(
-                  fileSystemUri,
-                  credential.AsPolicy(options),
-                  options,
-                  storageSharedKeyCredential: null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+                fileSystemUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                storageSharedKeyCredential: null,
+                sasCredential: null,
+                tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
@@ -3334,6 +3329,7 @@ namespace Azure.Storage.Files.DataLake
                             marker: continuation,
                             maxResults: maxResults,
                             include: null,
+                            showonly: ListBlobsShowOnly.Deleted,
                             timeout: null,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3346,6 +3342,7 @@ namespace Azure.Storage.Files.DataLake
                             marker: continuation,
                             maxResults: maxResults,
                             include: null,
+                            showonly: ListBlobsShowOnly.Deleted,
                             timeout: null,
                             cancellationToken: cancellationToken);
                     }
