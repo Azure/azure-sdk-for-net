@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IList<DeploymentPreflightResource>> resources = default;
+            Optional<IList<DeploymentPreflightResourceInfo>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resources"u8))
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    List<DeploymentPreflightResource> array = new List<DeploymentPreflightResource>();
+                    List<DeploymentPreflightResourceInfo> array = new List<DeploymentPreflightResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentPreflightResource.DeserializeDeploymentPreflightResource(item));
+                        array.Add(DeploymentPreflightResourceInfo.DeserializeDeploymentPreflightResourceInfo(item));
                     }
                     resources = array;
                     continue;
