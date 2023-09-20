@@ -18,7 +18,7 @@ namespace System.ServiceModel.Rest
         /// <summary>
         /// TBD.
         /// </summary>
-        public ResultErrorOptions ErrorOptions { get; set; } = ResultErrorOptions.Default;
+        public ResultErrorOptions ResultErrorOptions { get; set; } = ResultErrorOptions.Default;
 
         /// <summary>
         /// TBD

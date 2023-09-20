@@ -6,7 +6,7 @@ using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest.Shared.Pipeline
+namespace System.ServiceModel.Rest.Shared.Core.Pipeline
 {
     /// <summary>
     /// TBD.
@@ -33,6 +33,11 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
             {
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(userCt, cancellationToken);
                 await pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
+            }
+
+            if (message.Result is null)
+            {
+                throw new InvalidOperationException("Failed to receive Result.");
             }
 
             if (!message.Result.IsError || statusOption == ResultErrorOptions.NoThrow)
@@ -63,6 +68,11 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
             {
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(userCt, cancellationToken);
                 pipeline.Send(message, cts.Token);
+            }
+
+            if (message.Result is null)
+            {
+                throw new InvalidOperationException("Failed to receive Result.");
             }
 
             if (!message.Result.IsError || statusOption == ResultErrorOptions.NoThrow)
@@ -124,7 +134,7 @@ namespace System.ServiceModel.Rest.Shared.Pipeline
                 return (CancellationToken.None, ResultErrorOptions.Default);
             }
 
-            return (requestContext.CancellationToken, requestContext.ErrorOptions);
+            return (requestContext.CancellationToken, requestContext.ResultErrorOptions);
         }
 
         internal class ErrorResult<T> : Result<T>

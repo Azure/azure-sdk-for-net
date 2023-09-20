@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
@@ -52,7 +54,7 @@ namespace Azure.Core
                     throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
-                return _result;
+                return new ResultResponse(_result);
             }
             set => _result = value;
         }
@@ -63,6 +65,11 @@ namespace Azure.Core
         public bool HasResponse => _result != null;
 
         internal void ClearResponse() => _result = null;
+
+        /// <summary>
+        /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
+        /// </summary>
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
@@ -106,6 +113,12 @@ namespace Azure.Core
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override Result? Result => _result;
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
@@ -258,16 +271,45 @@ namespace Azure.Core
         /// </summary>
         private class MessagePropertyKey { }
 
-        //private class RestResponse : Response
-        //{
-        //    private Result _result;
-        //    private Response _response;
+        private class ResultResponse : Response
+        {
+            private readonly Response _innerResponse;
 
-        //    public RestResponse(Result result, Response response)
-        //    {
-        //        _result = result;
+            public ResultResponse(Result result)
+            {
+                if (result is not Response response)
+                {
+                    throw new NotSupportedException("Must assign a result of type Response.");
+                }
 
-        //    }
-        //}
+                _innerResponse = response;
+            }
+
+            public override string ReasonPhrase => _innerResponse.ReasonPhrase;
+
+            public override string ClientRequestId
+            {
+                get => _innerResponse.ClientRequestId;
+                set => _innerResponse.ClientRequestId = value;
+            }
+
+            public override int Status => _innerResponse.Status;
+
+            public override Stream? ContentStream
+            {
+                get => _innerResponse?.ContentStream;
+                set => _innerResponse.ContentStream = value;
+            }
+
+            public override void Dispose() => _innerResponse.Dispose();
+
+            protected override bool TryGetHeader(string name, out string? value) => _innerResponse.TryGetHeaderValue(name, out value);
+
+            protected internal override bool ContainsHeader(string name) => _innerResponse.ContainsHeader(name);
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _innerResponse.EnumerateHeaders();
+
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) => _innerResponse.TryGetHeaderValues(name, out values);
+        }
     }
 }

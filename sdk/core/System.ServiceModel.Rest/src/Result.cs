@@ -29,7 +29,8 @@ public abstract class Result : IDisposable
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
     /// </summary>
-    public virtual bool IsError { get; internal set; }
+    // TODO: we have to make IsError publicly settable, but we might not want this.  Rethink?
+    public virtual bool IsError { get; set; }
 
     /// <summary>
     /// Gets the contents of HTTP response, if it is available.

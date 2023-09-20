@@ -52,5 +52,12 @@ namespace Azure.Core
                    // Retry non-user initiated cancellations
                    (exception is OperationCanceledException && !message.CancellationToken.IsCancellationRequested);
         }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public virtual bool IsErrorResponse(HttpMessage message) => base.IsErrorResponse(message);
     }
 }
