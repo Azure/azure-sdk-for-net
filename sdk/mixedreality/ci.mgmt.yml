@@ -1,6 +1,19 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 trigger: none
+
 pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/mixedreality/ci.mgmt.yml
+    - sdk/mixedreality/Azure.ResourceManager.MixedReality/
+
+
   branches:
     include:
     - main

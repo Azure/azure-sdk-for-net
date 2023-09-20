@@ -1,7 +1,32 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
+
 pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/hdinsight/ci.mgmt.yml
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers/
+
+
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/hdinsight/ci.mgmt.yml
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers/
+
+
   branches:
     include:
     - main
