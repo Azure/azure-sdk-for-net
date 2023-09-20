@@ -10,7 +10,7 @@ Create a `DevCenterClient` and issue a request to get all projects the signed-in
 var credential = new DefaultAzureCredential();
 var devCenterClient = new DevCenterClient(endpoint, credential);
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(maxCount: 1, filter: null, context: new()))
+await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetProjectName = result.GetProperty("name").ToString();
@@ -24,7 +24,7 @@ Create a `DevBoxesClient` and issue a request to get all pools in a project.
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
 var devBoxesClient = new DevBoxesClient(endpoint, credential);
 string targetPoolName = null;
-await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, maxCount: 1, filter: null, context: new()))
+await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetPoolName = result.GetProperty("name").ToString();
@@ -61,8 +61,7 @@ Once your dev box is created, issue a request to get URLs for connecting to it v
 Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
     targetProjectName,
     "me",
-    "MyDevBox",
-    context: new());
+    "MyDevBox");
 JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
 Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
 ```
@@ -76,8 +75,7 @@ Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(
     WaitUntil.Completed,
     targetProjectName,
     "me",
-    "MyDevBox",
-    context: new());
+    "MyDevBox");
 await devBoxDeleteOperation.WaitForCompletionResponseAsync();
 Console.WriteLine($"Completed dev box deletion.");
 ```

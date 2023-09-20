@@ -68,7 +68,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 var credential = new DefaultAzureCredential();
 var devCenterClient = new DevCenterClient(endpoint, credential);
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(maxCount: 1, filter: null, context: new()))
+await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetProjectName = result.GetProperty("name").ToString();
@@ -79,7 +79,7 @@ await foreach (BinaryData data in devCenterClient.GetProjectsAsync(maxCount: 1, 
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
 var devBoxesClient = new DevBoxesClient(endpoint, credential);
 string targetPoolName = null;
-await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, maxCount: 1, filter: null, context: new()))
+await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetPoolName = result.GetProperty("name").ToString();
@@ -110,8 +110,7 @@ Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetPr
 Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
     targetProjectName,
     "me",
-    "MyDevBox",
-    context: new());
+    "MyDevBox");
 JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
 Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
 ```
@@ -122,8 +121,7 @@ Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(
     WaitUntil.Completed,
     targetProjectName,
     "me",
-    "MyDevBox",
-    context: new());
+    "MyDevBox");
 await devBoxDeleteOperation.WaitForCompletionResponseAsync();
 Console.WriteLine($"Completed dev box deletion.");
 ```
@@ -136,7 +134,7 @@ Create an `EnvironmentsClient` and issue a request to get all catalogs in a proj
 var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
 string catalogName = null;
 
-await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, maxCount: 1, context: new()))
+await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     catalogName = result.GetProperty("name").ToString();
@@ -160,7 +158,7 @@ Issue a request to get all environment types in a project.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
 string environmentTypeName = null;
-await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, maxCount: 1, context: new()))
+await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     environmentTypeName = result.GetProperty("name").ToString();
@@ -201,8 +199,7 @@ Operation environmentDeleteOperation = await environmentsClient.DeleteEnvironmen
     WaitUntil.Completed,
     projectName,
     "me",
-    "DevEnvironment",
-    context: new());
+    "DevEnvironment");
 await environmentDeleteOperation.WaitForCompletionResponseAsync();
 Console.WriteLine($"Completed environment deletion.");
 ```

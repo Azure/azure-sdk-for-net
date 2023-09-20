@@ -17,7 +17,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(endpoint, credential);
             string projectName = null;
-            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1, context: new()))
+            await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 projectName = result.GetProperty("name").ToString();
@@ -32,7 +32,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
             string catalogName = null;
 
-            await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, maxCount: 1, context: new()))
+            await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 catalogName = result.GetProperty("name").ToString();
@@ -60,7 +60,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             #region Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
             string environmentTypeName = null;
-            await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, maxCount: 1, context: new()))
+            await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 environmentTypeName = result.GetProperty("name").ToString();
@@ -99,8 +99,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 WaitUntil.Completed,
                 projectName,
                 "me",
-                "DevEnvironment",
-                context: new());
+                "DevEnvironment");
             await environmentDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed environment deletion.");
             #endregion

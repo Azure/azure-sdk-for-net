@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests.Samples
 {
@@ -20,7 +18,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(endpoint, credential);
             string targetProjectName = null;
-            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(maxCount: 1, filter: null, context: new()))
+            await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetProjectName = result.GetProperty("name").ToString();
@@ -36,7 +34,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             #region Snippet:Azure_DevCenter_GetPools_Scenario
             var devBoxesClient = new DevBoxesClient(endpoint, credential);
             string targetPoolName = null;
-            await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, maxCount: 1, filter: null, context: new()))
+            await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetPoolName = result.GetProperty("name").ToString();
@@ -72,8 +70,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
                 targetProjectName,
                 "me",
-                "MyDevBox",
-                context: new());
+                "MyDevBox");
             JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
             Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
             #endregion
@@ -84,8 +81,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 WaitUntil.Completed,
                 targetProjectName,
                 "me",
-                "MyDevBox",
-                context: new());
+                "MyDevBox");
             await devBoxDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed dev box deletion.");
             #endregion
