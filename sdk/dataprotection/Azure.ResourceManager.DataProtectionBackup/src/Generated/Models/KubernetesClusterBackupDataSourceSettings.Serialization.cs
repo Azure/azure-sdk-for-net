@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<IList<string>> includedResourceTypes = default;
             Optional<IList<string>> excludedResourceTypes = default;
             Optional<IList<string>> labelSelectors = default;
-            Optional<IList<NamespacedNameResource>> backupHookReferences = default;
+            Optional<IList<NamespacedName>> backupHookReferences = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    List<NamespacedNameResource> array = new List<NamespacedNameResource>();
+                    List<NamespacedName> array = new List<NamespacedName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamespacedNameResource.DeserializeNamespacedNameResource(item));
+                        array.Add(NamespacedName.DeserializeNamespacedName(item));
                     }
                     backupHookReferences = array;
                     continue;

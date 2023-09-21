@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IncludedResourceTypes = new ChangeTrackingList<string>();
             ExcludedResourceTypes = new ChangeTrackingList<string>();
             LabelSelectors = new ChangeTrackingList<string>();
-            BackupHookReferences = new ChangeTrackingList<NamespacedNameResource>();
+            BackupHookReferences = new ChangeTrackingList<NamespacedName>();
             ObjectType = "KubernetesClusterBackupDatasourceParameters";
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="excludedResourceTypes"> Gets or sets the exclude resource types property. This property sets the resource types to be excluded during backup. </param>
         /// <param name="labelSelectors"> Gets or sets the LabelSelectors property. This property sets the resource with such label selectors to be included during backup. </param>
         /// <param name="backupHookReferences"> Gets or sets the backup hook references. This property sets the hook reference to be executed during backup. </param>
-        internal KubernetesClusterBackupDataSourceSettings(string objectType, bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, IList<NamespacedNameResource> backupHookReferences) : base(objectType)
+        internal KubernetesClusterBackupDataSourceSettings(string objectType, bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, IList<NamespacedName> backupHookReferences) : base(objectType)
         {
             IsSnapshotVolumesEnabled = isSnapshotVolumesEnabled;
             IsClusterScopeResourcesIncluded = isClusterScopeResourcesIncluded;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Gets or sets the LabelSelectors property. This property sets the resource with such label selectors to be included during backup. </summary>
         public IList<string> LabelSelectors { get; }
         /// <summary> Gets or sets the backup hook references. This property sets the hook reference to be executed during backup. </summary>
-        public IList<NamespacedNameResource> BackupHookReferences { get; }
+        public IList<NamespacedName> BackupHookReferences { get; }
     }
 }

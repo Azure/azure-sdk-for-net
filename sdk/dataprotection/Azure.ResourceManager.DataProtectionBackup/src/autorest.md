@@ -248,6 +248,7 @@ rename-mapping:
   SecureScoreLevel: BackupVaultSecureScoreLevel
   FeatureSettings: BackupVaultFeatureSettings
   IdentityDetails: DataProtectionIdentityDetails
+  NamespacedNameResource: NamespacedName
 
 directive:
 # Correct the type of properties

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class NamespacedNameResource : IUtf8JsonSerializable
+    public partial class NamespacedName : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static NamespacedNameResource DeserializeNamespacedNameResource(JsonElement element)
+        internal static NamespacedName DeserializeNamespacedName(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new NamespacedNameResource(name.Value, @namespace.Value);
+            return new NamespacedName(name.Value, @namespace.Value);
         }
     }
 }

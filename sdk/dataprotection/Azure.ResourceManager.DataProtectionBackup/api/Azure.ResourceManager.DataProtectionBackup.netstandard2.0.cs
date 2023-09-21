@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class KubernetesClusterBackupDataSourceSettings : Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings
     {
         public KubernetesClusterBackupDataSourceSettings(bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.NamespacedNameResource> BackupHookReferences { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.NamespacedName> BackupHookReferences { get { throw null; } }
         public System.Collections.Generic.IList<string> ExcludedNamespaces { get { throw null; } }
         public System.Collections.Generic.IList<string> ExcludedResourceTypes { get { throw null; } }
         public System.Collections.Generic.IList<string> IncludedNamespaces { get { throw null; } }
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public System.Collections.Generic.IList<string> LabelSelectors { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> NamespaceMappings { get { throw null; } }
         public Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode? PersistentVolumeRestoreMode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.NamespacedNameResource> RestoreHookReferences { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.NamespacedName> RestoreHookReferences { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KubernetesClusterRestoreExistingResourcePolicy : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.KubernetesClusterRestoreExistingResourcePolicy>
@@ -1421,9 +1421,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string Provisioner { get { throw null; } set { } }
         public string SelectedStorageClassName { get { throw null; } set { } }
     }
-    public partial class NamespacedNameResource
+    public partial class NamespacedName
     {
-        public NamespacedNameResource() { }
+        public NamespacedName() { }
         public string Name { get { throw null; } set { } }
         public string Namespace { get { throw null; } set { } }
     }
