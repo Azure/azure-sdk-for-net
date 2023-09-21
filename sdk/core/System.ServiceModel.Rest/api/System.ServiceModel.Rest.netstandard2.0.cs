@@ -149,4 +149,77 @@ namespace System.ServiceModel.Rest.Shared.Serialization
     {
         void Write(System.Text.Json.Utf8JsonWriter writer);
     }
+    public partial class OptionalDictionary<TKey, TValue> : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>, System.Collections.IEnumerable where TKey : notnull
+    {
+        public OptionalDictionary() { }
+        public OptionalDictionary(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optionalDictionary) { }
+        public OptionalDictionary(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optionalDictionary) { }
+        public int Count { get { throw null; } }
+        public bool IsReadOnly { get { throw null; } }
+        public bool IsUndefined { get { throw null; } }
+        public TValue this[TKey key] { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<TKey> Keys { get { throw null; } }
+        System.Collections.Generic.IEnumerable<TKey> System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.Keys { get { throw null; } }
+        System.Collections.Generic.IEnumerable<TValue> System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.Values { get { throw null; } }
+        public System.Collections.Generic.ICollection<TValue> Values { get { throw null; } }
+        public void Add(System.Collections.Generic.KeyValuePair<TKey, TValue> item) { }
+        public void Add(TKey key, TValue value) { }
+        public void Clear() { }
+        public bool Contains(System.Collections.Generic.KeyValuePair<TKey, TValue> item) { throw null; }
+        public bool ContainsKey(TKey key) { throw null; }
+        public void CopyTo(System.Collections.Generic.KeyValuePair<TKey, TValue>[] array, int arrayIndex) { }
+        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
+        public bool Remove(System.Collections.Generic.KeyValuePair<TKey, TValue> item) { throw null; }
+        public bool Remove(TKey key) { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGetValue(TKey key, out TValue value) { throw null; }
+    }
+    public partial class OptionalList<T> : System.Collections.Generic.ICollection<T>, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IList<T>, System.Collections.Generic.IReadOnlyCollection<T>, System.Collections.Generic.IReadOnlyList<T>, System.Collections.IEnumerable
+    {
+        public OptionalList() { }
+        public OptionalList(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<System.Collections.Generic.IList<T>> optionalList) { }
+        public OptionalList(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optionalList) { }
+        public int Count { get { throw null; } }
+        public bool IsReadOnly { get { throw null; } }
+        public bool IsUndefined { get { throw null; } }
+        public T this[int index] { get { throw null; } set { } }
+        public void Add(T item) { }
+        public void Clear() { }
+        public bool Contains(T item) { throw null; }
+        public void CopyTo(T[] array, int arrayIndex) { }
+        public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+        public int IndexOf(T item) { throw null; }
+        public void Insert(int index, T item) { }
+        public bool Remove(T item) { throw null; }
+        public void RemoveAt(int index) { }
+        public void Reset() { }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public static partial class OptionalProperty
+    {
+        public static bool IsCollectionDefined<T>(System.Collections.Generic.IEnumerable<T> collection) { throw null; }
+        public static bool IsCollectionDefined<TKey, TValue>(System.Collections.Generic.IDictionary<TKey, TValue> collection) { throw null; }
+        public static bool IsCollectionDefined<TKey, TValue>(System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> collection) { throw null; }
+        public static bool IsDefined(object value) { throw null; }
+        public static bool IsDefined(string value) { throw null; }
+        public static bool IsDefined(System.Text.Json.JsonElement value) { throw null; }
+        public static bool IsDefined<T>(T? value) where T : struct { throw null; }
+        public static System.Collections.Generic.IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optional) { throw null; }
+        public static System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optional) { throw null; }
+        public static System.Collections.Generic.IList<T> ToList<T>(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<System.Collections.Generic.IList<T>> optional) { throw null; }
+        public static System.Collections.Generic.IReadOnlyList<T> ToList<T>(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optional) { throw null; }
+        public static T? ToNullable<T>(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<T?> optional) where T : struct { throw null; }
+        public static T? ToNullable<T>(System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<T> optional) where T : struct { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OptionalProperty<T>
+    {
+        private readonly T _Value_k__BackingField;
+        private readonly int _dummyPrimitive;
+        public OptionalProperty(T value) { throw null; }
+        public bool HasValue { get { throw null; } }
+        public T Value { get { throw null; } }
+        public static implicit operator T (System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<T> optional) { throw null; }
+        public static implicit operator System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<T> (T value) { throw null; }
+    }
 }
