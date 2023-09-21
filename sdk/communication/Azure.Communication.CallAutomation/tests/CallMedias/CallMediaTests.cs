@@ -109,7 +109,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
-            EndSilenceTimeoutInMs = TimeSpan.FromMilliseconds(500),
+            EndSilenceTimeout = TimeSpan.FromMilliseconds(500),
             InterruptPrompt = true,
             OperationContext = "operationContext",
             Prompt = new TextSource("PlayTTS test text.")
@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
-            EndSilenceTimeoutInMs = TimeSpan.FromMilliseconds(500),
+            EndSilenceTimeout = TimeSpan.FromMilliseconds(500),
             InterruptPrompt = true,
             OperationContext = "operationContext",
             Prompt = new TextSource("PlayTTS test text.")
@@ -146,7 +146,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [SetUp]
         public void Setup()
         {
-            _fileSource.PlaySourceId = "playSourceId";
+            _fileSource.PlaySourceCacheId = "playSourceId";
         }
 
         private CallMedia GetCallMedia(int responseCode)

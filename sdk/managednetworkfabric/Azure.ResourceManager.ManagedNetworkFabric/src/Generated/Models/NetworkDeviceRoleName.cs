@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         private const string CEValue = "CE";
         private const string ToRValue = "ToR";
-        private const string NPBValue = "NPB";
+        private const string NpbValue = "NPB";
         private const string TSValue = "TS";
         private const string ManagementValue = "Management";
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> ToR. </summary>
         public static NetworkDeviceRoleName ToR { get; } = new NetworkDeviceRoleName(ToRValue);
         /// <summary> NPB. </summary>
-        public static NetworkDeviceRoleName NPB { get; } = new NetworkDeviceRoleName(NPBValue);
+        public static NetworkDeviceRoleName Npb { get; } = new NetworkDeviceRoleName(NpbValue);
         /// <summary> TS. </summary>
         public static NetworkDeviceRoleName TS { get; } = new NetworkDeviceRoleName(TSValue);
         /// <summary> Management. </summary>

@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     [ClientTestFixture(
         DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31,
-        DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
+        DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)]
     public class DocumentAnalysisLiveTestBase : RecordedTestBase<DocumentAnalysisTestEnvironment>
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             ServiceVersionString = _serviceVersion switch
             {
                 DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31 => "2022-08-31",
-                DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview => "2023-02-28-preview",
+                DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31 => "2023-07-31",
                 _ => null
             };
 
@@ -111,17 +111,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         /// <summary>
-        /// Builds a document model and returns the associated <see cref="DisposableDocumentModel"/> instance.
-        /// Upon disposal, the document model will be deleted.
+        /// Builds a document model and returns the associated <see cref="DisposableDocumentModel"/> instance. A cached
+        /// model may be returned instead when running in live mode.
         /// </summary>
-        /// <param name="modelId">The identifier of the model.</param>
         /// <param name="containerType">The type of container to use for training.</param>
         /// <param name="options">A set of options to apply when configuring the request.</param>
-        /// <returns>A <see cref="DisposableDocumentModel"/> instance from which the built model ID can be obtained.</returns>
-        protected async Task<DisposableDocumentModel> BuildDisposableDocumentModelAsync(string modelId, ContainerType containerType = default, BuildDocumentModelOptions options = null)
+        /// <param name="skipCaching">If <c>true</c>, the model cache will be ignored and a new model will be returned. Otherwise, the model cache may be used.</param>
+        /// <returns>A <see cref="DisposableDocumentModel"/> instance from which the built model can be obtained.</returns>
+        protected async ValueTask<DisposableDocumentModel> BuildDisposableDocumentModelAsync(ContainerType containerType = default, BuildDocumentModelOptions options = null, bool skipCaching = false)
         {
             var client = CreateDocumentModelAdministrationClient();
-
             string trainingFiles = containerType switch
             {
                 ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
@@ -130,8 +129,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 _ => TestEnvironment.BlobContainerSasUrl,
             };
             var trainingFilesUri = new Uri(trainingFiles);
+            var buildMode = DocumentBuildMode.Template;
+            var modelId = Recording.GenerateId();
 
-            return await DisposableDocumentModel.BuildAsync(client, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
+            skipCaching |= (Recording.Mode == RecordedTestMode.Record) || (Recording.Mode == RecordedTestMode.Playback);
+
+            if (skipCaching)
+            {
+                return await DisposableDocumentModel.BuildAsync(client, trainingFilesUri, buildMode, modelId, options);
+            }
+
+            var modelKey = new DocumentModelCache.ModelKey(_serviceVersion, containerType.ToString(), buildMode, options);
+
+            if (!DocumentModelCache.Models.TryGetValue(modelKey, out DisposableDocumentModel model))
+            {
+                model = await DisposableDocumentModel.BuildAsync(client, trainingFilesUri, buildMode, modelId, options, deleteOnDisposal: false);
+                DocumentModelCache.Models.Add(modelKey, model);
+            }
+
+            return model;
         }
 
         /// <summary>
@@ -145,11 +161,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
-            var sourceC = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-C/train" };
-            var sourceD = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-D/train" };
-            var sourceE = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-E/train" };
+            var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
+            var sourceC = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-C/train" };
+            var sourceD = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-D/train" };
+            var sourceE = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-E/train" };
 
             var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {

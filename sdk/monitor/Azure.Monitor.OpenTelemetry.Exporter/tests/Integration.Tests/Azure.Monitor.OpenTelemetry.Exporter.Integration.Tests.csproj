@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\**" Link="CommonTestFramework\%(Filename)%(Extension)" />
+    <Compile Include="..\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\**" LinkBase="CommonTestFramework" />
   </ItemGroup>
 
 </Project>

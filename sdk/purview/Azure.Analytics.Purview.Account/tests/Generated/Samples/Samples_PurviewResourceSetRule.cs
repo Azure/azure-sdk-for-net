@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Analytics.Purview.Account;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,11 +23,25 @@ namespace Azure.Analytics.Purview.Account.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetResourceSetRule()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            Response response = client.GetResourceSetRule(new RequestContext());
+            Response response = client.GetResourceSetRule(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetResourceSetRule_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+            Response response = await client.GetResourceSetRuleAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -37,11 +51,11 @@ namespace Azure.Analytics.Purview.Account.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetResourceSetRule_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            Response response = client.GetResourceSetRule(new RequestContext());
+            Response response = client.GetResourceSetRule(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -133,27 +147,13 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetResourceSetRule_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
-
-            Response response = await client.GetResourceSetRuleAsync(new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetResourceSetRule_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            Response response = await client.GetResourceSetRuleAsync(new RequestContext());
+            Response response = await client.GetResourceSetRuleAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -247,13 +247,27 @@ namespace Azure.Analytics.Purview.Account.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateResourceSetRule()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.CreateOrUpdateResourceSetRule(content);
 
-            Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateResourceSetRule_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -263,11 +277,11 @@ namespace Azure.Analytics.Purview.Account.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateResourceSetRule_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 advancedResourceSet = new
                 {
@@ -276,102 +290,109 @@ namespace Azure.Analytics.Purview.Account.Samples
                 },
                 pathPatternConfig = new
                 {
-                    acceptedPatterns = new[] {
-            new {
-                createdBy = "<createdBy>",
-                filterType = "Pattern",
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                path = "<path>",
-            }
-        },
-                    complexReplacers = new[] {
-            new {
-                createdBy = "<createdBy>",
-                description = "<description>",
-                disabled = true,
-                disableRecursiveReplacerApplication = true,
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                typeName = "<typeName>",
-            }
-        },
+                    acceptedPatterns = new List<object>()
+{
+new
+{
+createdBy = "<createdBy>",
+filterType = "Pattern",
+lastUpdatedTimestamp = 1234L,
+modifiedBy = "<modifiedBy>",
+name = "<name>",
+path = "<path>",
+}
+},
+                    complexReplacers = new List<object>()
+{
+new
+{
+createdBy = "<createdBy>",
+description = "<description>",
+disabled = true,
+disableRecursiveReplacerApplication = true,
+lastUpdatedTimestamp = 1234L,
+modifiedBy = "<modifiedBy>",
+name = "<name>",
+typeName = "<typeName>",
+}
+},
                     createdBy = "<createdBy>",
                     enableDefaultPatterns = true,
                     lastUpdatedTimestamp = 1234L,
                     modifiedBy = "<modifiedBy>",
-                    normalizationRules = new[] {
-            new {
-                description = "<description>",
-                disabled = true,
-                dynamicReplacement = true,
-                entityTypes = new[] {
-                    "<String>"
-                },
-                lastUpdatedTimestamp = 1234L,
-                name = "<name>",
-                regex = new {
-                    maxDigits = 1234,
-                    maxLetters = 1234,
-                    minDashes = 1234,
-                    minDigits = 1234,
-                    minDigitsOrLetters = 1234,
-                    minDots = 1234,
-                    minHex = 1234,
-                    minLetters = 1234,
-                    minUnderscores = 1234,
-                    options = 1234,
-                    regexStr = "<regexStr>",
-                },
-                replaceWith = "<replaceWith>",
-                version = 123.45d,
-            }
-        },
-                    regexReplacers = new[] {
-            new {
-                condition = "<condition>",
-                createdBy = "<createdBy>",
-                description = "<description>",
-                disabled = true,
-                disableRecursiveReplacerApplication = true,
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                replaceWith = "<replaceWith>",
-            }
-        },
-                    rejectedPatterns = new[] {
-            new {
-                createdBy = "<createdBy>",
-                filterType = "Pattern",
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                path = "<path>",
-            }
-        },
-                    scopedRules = new[] {
-            new {
-                bindingUrl = "<bindingUrl>",
-                rules = new[] {
-                    new {
-                        displayName = "<displayName>",
-                        isResourceSet = true,
-                        lastUpdatedTimestamp = 1234L,
-                        name = "<name>",
-                        qualifiedName = "<qualifiedName>",
-                    }
-                },
-                storeType = "<storeType>",
-            }
-        },
+                    normalizationRules = new List<object>()
+{
+new
+{
+description = "<description>",
+disabled = true,
+dynamicReplacement = true,
+entityTypes = new List<object>()
+{
+"<entityTypes>"
+},
+lastUpdatedTimestamp = 1234L,
+name = "<name>",
+regex = new
+{
+maxDigits = 1234,
+maxLetters = 1234,
+minDashes = 1234,
+minDigits = 1234,
+minDigitsOrLetters = 1234,
+minDots = 1234,
+minHex = 1234,
+minLetters = 1234,
+minUnderscores = 1234,
+options = 1234,
+regexStr = "<regexStr>",
+},
+replaceWith = "<replaceWith>",
+version = 123.45,
+}
+},
+                    regexReplacers = new List<object>()
+{
+new
+{
+condition = "<condition>",
+createdBy = "<createdBy>",
+description = "<description>",
+disabled = true,
+disableRecursiveReplacerApplication = true,
+lastUpdatedTimestamp = 1234L,
+modifiedBy = "<modifiedBy>",
+name = "<name>",
+replaceWith = "<replaceWith>",
+}
+},
+                    rejectedPatterns = new List<object>()
+{
+null
+},
+                    scopedRules = new List<object>()
+{
+new
+{
+bindingUrl = "<bindingUrl>",
+rules = new List<object>()
+{
+new
+{
+displayName = "<displayName>",
+isResourceSet = true,
+lastUpdatedTimestamp = 1234L,
+name = "<name>",
+qualifiedName = "<qualifiedName>",
+}
+},
+storeType = "<storeType>",
+}
+},
                     version = 1234,
                 },
-            };
-
-            Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdateResourceSetRule(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -463,29 +484,13 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateResourceSetRule_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
-
-            var data = new { };
-
-            Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateResourceSetRule_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 advancedResourceSet = new
                 {
@@ -494,102 +499,109 @@ namespace Azure.Analytics.Purview.Account.Samples
                 },
                 pathPatternConfig = new
                 {
-                    acceptedPatterns = new[] {
-            new {
-                createdBy = "<createdBy>",
-                filterType = "Pattern",
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                path = "<path>",
-            }
-        },
-                    complexReplacers = new[] {
-            new {
-                createdBy = "<createdBy>",
-                description = "<description>",
-                disabled = true,
-                disableRecursiveReplacerApplication = true,
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                typeName = "<typeName>",
-            }
-        },
+                    acceptedPatterns = new List<object>()
+{
+new
+{
+createdBy = "<createdBy>",
+filterType = "Pattern",
+lastUpdatedTimestamp = 1234L,
+modifiedBy = "<modifiedBy>",
+name = "<name>",
+path = "<path>",
+}
+},
+                    complexReplacers = new List<object>()
+{
+new
+{
+createdBy = "<createdBy>",
+description = "<description>",
+disabled = true,
+disableRecursiveReplacerApplication = true,
+lastUpdatedTimestamp = 1234L,
+modifiedBy = "<modifiedBy>",
+name = "<name>",
+typeName = "<typeName>",
+}
+},
                     createdBy = "<createdBy>",
                     enableDefaultPatterns = true,
                     lastUpdatedTimestamp = 1234L,
                     modifiedBy = "<modifiedBy>",
-                    normalizationRules = new[] {
-            new {
-                description = "<description>",
-                disabled = true,
-                dynamicReplacement = true,
-                entityTypes = new[] {
-                    "<String>"
-                },
-                lastUpdatedTimestamp = 1234L,
-                name = "<name>",
-                regex = new {
-                    maxDigits = 1234,
-                    maxLetters = 1234,
-                    minDashes = 1234,
-                    minDigits = 1234,
-                    minDigitsOrLetters = 1234,
-                    minDots = 1234,
-                    minHex = 1234,
-                    minLetters = 1234,
-                    minUnderscores = 1234,
-                    options = 1234,
-                    regexStr = "<regexStr>",
-                },
-                replaceWith = "<replaceWith>",
-                version = 123.45d,
-            }
-        },
-                    regexReplacers = new[] {
-            new {
-                condition = "<condition>",
-                createdBy = "<createdBy>",
-                description = "<description>",
-                disabled = true,
-                disableRecursiveReplacerApplication = true,
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                replaceWith = "<replaceWith>",
-            }
-        },
-                    rejectedPatterns = new[] {
-            new {
-                createdBy = "<createdBy>",
-                filterType = "Pattern",
-                lastUpdatedTimestamp = 1234L,
-                modifiedBy = "<modifiedBy>",
-                name = "<name>",
-                path = "<path>",
-            }
-        },
-                    scopedRules = new[] {
-            new {
-                bindingUrl = "<bindingUrl>",
-                rules = new[] {
-                    new {
-                        displayName = "<displayName>",
-                        isResourceSet = true,
-                        lastUpdatedTimestamp = 1234L,
-                        name = "<name>",
-                        qualifiedName = "<qualifiedName>",
-                    }
-                },
-                storeType = "<storeType>",
-            }
-        },
+                    normalizationRules = new List<object>()
+{
+new
+{
+description = "<description>",
+disabled = true,
+dynamicReplacement = true,
+entityTypes = new List<object>()
+{
+"<entityTypes>"
+},
+lastUpdatedTimestamp = 1234L,
+name = "<name>",
+regex = new
+{
+maxDigits = 1234,
+maxLetters = 1234,
+minDashes = 1234,
+minDigits = 1234,
+minDigitsOrLetters = 1234,
+minDots = 1234,
+minHex = 1234,
+minLetters = 1234,
+minUnderscores = 1234,
+options = 1234,
+regexStr = "<regexStr>",
+},
+replaceWith = "<replaceWith>",
+version = 123.45,
+}
+},
+                    regexReplacers = new List<object>()
+{
+new
+{
+condition = "<condition>",
+createdBy = "<createdBy>",
+description = "<description>",
+disabled = true,
+disableRecursiveReplacerApplication = true,
+lastUpdatedTimestamp = 1234L,
+modifiedBy = "<modifiedBy>",
+name = "<name>",
+replaceWith = "<replaceWith>",
+}
+},
+                    rejectedPatterns = new List<object>()
+{
+null
+},
+                    scopedRules = new List<object>()
+{
+new
+{
+bindingUrl = "<bindingUrl>",
+rules = new List<object>()
+{
+new
+{
+displayName = "<displayName>",
+isResourceSet = true,
+lastUpdatedTimestamp = 1234L,
+name = "<name>",
+qualifiedName = "<qualifiedName>",
+}
+},
+storeType = "<storeType>",
+}
+},
                     version = 1234,
                 },
-            };
-
-            Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -683,21 +695,9 @@ namespace Azure.Analytics.Purview.Account.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteResourceSetRule()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
-
-            Response response = client.DeleteResourceSetRule();
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteResourceSetRule_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
             Response response = client.DeleteResourceSetRule();
             Console.WriteLine(response.Status);
@@ -707,9 +707,9 @@ namespace Azure.Analytics.Purview.Account.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteResourceSetRule_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
             Response response = await client.DeleteResourceSetRuleAsync();
             Console.WriteLine(response.Status);
@@ -717,11 +717,23 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteResourceSetRule_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+
+            Response response = client.DeleteResourceSetRule();
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteResourceSetRule_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
             Response response = await client.DeleteResourceSetRuleAsync();
             Console.WriteLine(response.Status);

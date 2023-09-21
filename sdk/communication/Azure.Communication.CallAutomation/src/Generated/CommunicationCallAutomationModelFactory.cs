@@ -22,29 +22,30 @@ namespace Azure.Communication.CallAutomation
             return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of MuteParticipantsResponse. </summary>
+        /// <summary> Initializes a new instance of MuteParticipantsResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.MuteParticipantsResponse"/> instance for mocking. </returns>
-        public static MuteParticipantsResponse MuteParticipantsResponse(string operationContext = null)
+        /// <returns> A new <see cref="CallAutomation.MuteParticipantsResult"/> instance for mocking. </returns>
+        public static MuteParticipantsResult MuteParticipantsResult(string operationContext = null)
         {
-            return new MuteParticipantsResponse(operationContext);
+            return new MuteParticipantsResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of UnmuteParticipantsResponse. </summary>
+        /// <summary> Initializes a new instance of UnmuteParticipantsResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.UnmuteParticipantsResponse"/> instance for mocking. </returns>
-        public static UnmuteParticipantsResponse UnmuteParticipantsResponse(string operationContext = null)
+        /// <returns> A new <see cref="CallAutomation.UnmuteParticipantsResult"/> instance for mocking. </returns>
+        public static UnmuteParticipantsResult UnmuteParticipantsResult(string operationContext = null)
         {
-            return new UnmuteParticipantsResponse(operationContext);
+            return new UnmuteParticipantsResult(operationContext);
         }
 
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
+        /// <param name="recordingType"></param>
         /// <returns> A new <see cref="CallAutomation.RecordingStateResult"/> instance for mocking. </returns>
-        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null)
+        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null, RecordingType? recordingType = null)
         {
-            return new RecordingStateResult(recordingId, recordingState);
+            return new RecordingStateResult(recordingId, recordingState, recordingType);
         }
 
         /// <summary> Initializes a new instance of ResultInformation. </summary>

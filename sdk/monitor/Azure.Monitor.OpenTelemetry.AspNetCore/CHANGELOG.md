@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.7 (2023-09-20)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#38568](https://github.com/Azure/azure-sdk-for-net/pull/38568))
+  ([#38833](https://github.com/Azure/azure-sdk-for-net/pull/38833))
+  - OpenTelemetry 1.6.0
+  - OpenTelemetry.Extensions.Hosting 1.6.0
+  - OpenTelemetry.ResourceDetectors.Azure 1.0.0-beta.3
+
+## 1.0.0-beta.6 (2023-08-09)
+
+### Features Added
+
+* Added `Resource` to traces, logs, and metrics with default configuration.
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+* Added resource detection for `Azure App Service` and `Azure Virtual Machine` environment. .
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+  ([#37881](https://github.com/Azure/azure-sdk-for-net/pull/37881))
+  - OpenTelemetry 1.5.1
+  - OpenTelemetry.Extensions.Hosting 1.5.1
+  - OpenTelemetry.Instrumentation.AspNetCore 1.5.1-beta.1
+  - OpenTelemetry.Instrumentation.Http 1.5.1-beta.1
+  - OpenTelemetry.Instrumentation.SqlClient 1.5.1-beta.1
+  - OpenTelemetry.ResourceDetectors.Azure 1.0.0-beta2
 
 ## 1.0.0-beta.5 (2023-07-13)
 

@@ -34,6 +34,7 @@ namespace Azure.Search.Documents.Indexes
                     [typeof(DateTime)] = SearchFieldDataType.DateTimeOffset,
                     [typeof(DateTimeOffset)] = SearchFieldDataType.DateTimeOffset,
                     [typeof(GeoPoint)] = SearchFieldDataType.GeographyPoint,
+                    [typeof(Single)] = SearchFieldDataType.Single
                 });
 
         private static readonly ISet<Type> s_unsupportedTypes =

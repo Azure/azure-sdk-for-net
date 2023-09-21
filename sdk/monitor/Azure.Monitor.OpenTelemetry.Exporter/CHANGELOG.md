@@ -1,18 +1,54 @@
 # Release History
 
-## 1.0.0-beta.14 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2023-09-20)
+
+### Bugs Fixed
+
+* Fixed an issue during network failures which prevented the exporter to store
+the telemetry offline for retrying at a later time.
+([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#38430](https://github.com/Azure/azure-sdk-for-net/pull/38430))
+  ([#38568](https://github.com/Azure/azure-sdk-for-net/pull/38568))
+  - OpenTelemetry 1.6.0
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.0
+
+## 1.0.0-beta.14 (2023-08-09)
 
 ### Breaking Changes
 
 * Location ip on server spans will now be set using `client.address` tag key on
   activity instead of `http.client_ip`.
   ([#37707](https://github.com/Azure/azure-sdk-for-net/pull/37707))
+* Removing `ServiceVersion.V2020_09_15_Preview`. This is no longer in use and
+  the exporter has already defaulted to the latest `ServiceVersion.v2_1`.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
+* Remove Nullable Annotations from the Exporter's public API.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
 
 ### Bugs Fixed
 
+* Fixed an issue causing no telemetry if SDK Version string exceeds max length.
+  ([#37807](https://github.com/Azure/azure-sdk-for-net/pull/37807))
+
 ### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+  - OpenTelemetry 1.5.1
 
 ## 1.0.0-beta.13 (2023-07-13)
 

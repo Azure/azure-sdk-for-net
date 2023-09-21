@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A Rest service dataset. </summary>
-    public partial class RestResourceDataset : DataFactoryDatasetDefinition
+    public partial class RestResourceDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of RestResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

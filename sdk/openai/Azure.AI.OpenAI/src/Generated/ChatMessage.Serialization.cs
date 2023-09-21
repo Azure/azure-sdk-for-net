@@ -37,6 +37,11 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("function_call"u8);
                 writer.WriteObjectValue(FunctionCall);
             }
+            if (Optional.IsDefined(AzureExtensionsContext))
+            {
+                writer.WritePropertyName("context"u8);
+                writer.WriteObjectValue(AzureExtensionsContext);
+            }
             writer.WriteEndObject();
         }
 
@@ -50,6 +55,7 @@ namespace Azure.AI.OpenAI
             string content = default;
             Optional<string> name = default;
             Optional<FunctionCall> functionCall = default;
+            Optional<AzureChatExtensionsMessageContext> context = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))
@@ -81,8 +87,17 @@ namespace Azure.AI.OpenAI
                     functionCall = FunctionCall.DeserializeFunctionCall(property.Value);
                     continue;
                 }
+                if (property.NameEquals("context"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    context = AzureChatExtensionsMessageContext.DeserializeAzureChatExtensionsMessageContext(property.Value);
+                    continue;
+                }
             }
-            return new ChatMessage(role, content, name.Value, functionCall.Value);
+            return new ChatMessage(role, content, name.Value, functionCall.Value, context.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

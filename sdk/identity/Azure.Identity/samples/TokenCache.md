@@ -18,6 +18,10 @@ The in-memory token cache provided by the Azure Identity library is thread-safe.
 
 **Note:** When Azure Identity library credentials are used with Azure service libraries (for example, Azure Blob Storage), the in-memory token caching is active in the `HttpPipeline` layer as well. All `TokenCredential` implementations are supported there, including custom implementations external to the Azure Identity library.
 
+#### Disable caching
+
+As there are many levels of cache, it's not possible to disable in-memory caching. However, the in-memory cache may be cleared by creating a new credential instance.
+
 ## Persistent token caching
 
 *Persistent disk token caching* is an opt-in feature in the Azure Identity library. The feature allows apps to cache access tokens in an encrypted, persistent storage mechanism. As indicated in the following table, the storage mechanism differs across operating systems.

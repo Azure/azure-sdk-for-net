@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,9 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Tests;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
@@ -65,24 +68,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string directoryName = "directoryName";
             BlobContainerClient blobContainerClient = new BlobContainerClient(uri);
             BlobStorageResourceContainer storageResource =
-                new BlobStorageResourceContainer(blobContainerClient, new() { DirectoryPrefix = "directoryName" });
+                new BlobStorageResourceContainer(blobContainerClient, new() { BlobDirectoryPrefix = directoryName });
 
             // Assert
             Assert.AreEqual(uri, storageResource.Uri);
-            Assert.AreEqual(directoryName, storageResource.Path);
-            Assert.IsTrue(storageResource.CanProduceUri);
         }
 
         [RecordedTest]
         public async Task GetStorageResourcesAsync()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string folderName = "foo";
             BlobStorageResourceContainer storageResourceContainer =
-                new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = folderName });
+                new BlobStorageResourceContainer(test.Container, new() { BlobDirectoryPrefix = folderName });
 
             var resources = new List<StorageResource>();
 
@@ -99,14 +100,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task GetChildStorageResourceAsync()
         {
-            await using DisposingBlobContainer test = await GetTestContainerAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string prefix = "foo";
             StorageResourceContainer containerResource =
-                new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = prefix });
+                new BlobStorageResourceContainer(test.Container, new() { BlobDirectoryPrefix = prefix });
 
-            StorageResourceSingle resource = containerResource.GetChildStorageResource("bar");
+            StorageResourceItem resource = containerResource.GetStorageResourceReference("bar");
 
             // Assert
             StorageResourceProperties properties = await resource.GetPropertiesAsync();

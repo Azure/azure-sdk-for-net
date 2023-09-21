@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public override void OnEnd(Activity activity)
         {
-            if (activity.Kind == ActivityKind.Server)
+            if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
                 if (_requestDuration.Enabled)
                 {
@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     ReportRequestDurationMetric(activity);
                 }
             }
-            if (activity.Kind == ActivityKind.Client || activity.Kind == ActivityKind.Internal)
+            if (activity.Kind == ActivityKind.Client || activity.Kind == ActivityKind.Internal || activity.Kind == ActivityKind.Producer)
             {
                 if (_dependencyDuration.Enabled)
                 {
@@ -58,8 +58,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     ReportDependencyDurationMetric(activity);
                 }
             }
-
-            // TODO: other activity kinds
         }
 
         private void ReportRequestDurationMetric(Activity activity)
@@ -109,7 +107,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpStatusCode)?.ToString();
             }
 
-            var dependencyType = activityTagsProcessor.MappedTags.GetDependencyType(activityTagsProcessor.activityType);
+            string? dependencyType;
+            if (activityTagsProcessor.AzureNamespace != null)
+            {
+                dependencyType = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
+            }
+            else
+            {
+                dependencyType = activity.Kind == ActivityKind.Internal ? "InProc" : activityTagsProcessor.MappedTags.GetDependencyType(activityTagsProcessor.activityType);
+            }
 
             TagList tags = default;
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
