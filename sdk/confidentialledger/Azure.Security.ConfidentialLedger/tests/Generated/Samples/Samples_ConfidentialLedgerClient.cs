@@ -6,12 +6,13 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Security.ConfidentialLedger;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Samples
@@ -22,8 +23,24 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetConstitution()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            Response response = client.GetConstitution();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("digest").ToString());
+            Console.WriteLine(result.GetProperty("script").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetConstitution_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetConstitution();
 
@@ -36,8 +53,9 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetConstitution_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = await client.GetConstitutionAsync();
 
@@ -48,24 +66,11 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetConstitution_AllParameters()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            Response response = client.GetConstitution();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("digest").ToString());
-            Console.WriteLine(result.GetProperty("script").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetConstitution_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = await client.GetConstitutionAsync();
 
@@ -78,97 +83,86 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnclaveQuotes()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetEnclaveQuotes();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("currentNodeId").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("nodeId").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("quoteVersion").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("raw").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnclaveQuotes_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            Response response = await client.GetEnclaveQuotesAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("currentNodeId").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("nodeId").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("quoteVersion").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("raw").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("quoteVersion").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("raw").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnclaveQuotes_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetEnclaveQuotes();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("currentNodeId").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("nodeId").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("mrenclave").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("quoteVersion").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("raw").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("mrenclave").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("quoteVersion").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("raw").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEnclaveQuotes_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            Response response = await client.GetEnclaveQuotesAsync();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("currentNodeId").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("quoteVersion").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("raw").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEnclaveQuotes_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = await client.GetEnclaveQuotesAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("currentNodeId").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("nodeId").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("mrenclave").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("quoteVersion").ToString());
-            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("raw").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("mrenclave").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("quoteVersion").ToString());
+            Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("raw").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateLedgerEntry()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 contents = "<contents>",
-            });
-            Response response = client.CreateLedgerEntry(content);
+            };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("collectionId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateLedgerEntry_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                contents = "<contents>",
-            });
-            Response response = await client.CreateLedgerEntryAsync(content);
+            Response response = client.CreateLedgerEntry(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -178,14 +172,35 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateLedgerEntry_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 contents = "<contents>",
-            });
-            Response response = client.CreateLedgerEntry(content, collectionId: "<collectionId>");
+            };
+
+            Response response = client.CreateLedgerEntry(RequestContent.Create(data), "<collectionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("collectionId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateLedgerEntry_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            var data = new
+            {
+                contents = "<contents>",
+            };
+
+            Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -195,14 +210,16 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateLedgerEntry_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 contents = "<contents>",
-            });
-            Response response = await client.CreateLedgerEntryAsync(content, collectionId: "<collectionId>");
+            };
+
+            Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data), "<collectionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("collectionId").ToString());
@@ -212,8 +229,9 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetLedgerEntry()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetLedgerEntry("<transactionId>");
 
@@ -223,25 +241,13 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLedgerEntry_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            Response response = await client.GetLedgerEntryAsync("<transactionId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("state").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetLedgerEntry_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = client.GetLedgerEntry("<transactionId>", collectionId: "<collectionId>");
+            Response response = client.GetLedgerEntry("<transactionId>", "<collectionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("state").ToString());
@@ -252,12 +258,27 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLedgerEntry_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            Response response = await client.GetLedgerEntryAsync("<transactionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("state").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetLedgerEntry_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = await client.GetLedgerEntryAsync("<transactionId>", collectionId: "<collectionId>");
+            Response response = await client.GetLedgerEntryAsync("<transactionId>", "<collectionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("state").ToString());
@@ -270,8 +291,9 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetReceipt()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetReceipt("<transactionId>");
 
@@ -282,24 +304,11 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetReceipt_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            Response response = await client.GetReceiptAsync("<transactionId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("transactionId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetReceipt_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetReceipt("<transactionId>");
 
@@ -321,10 +330,26 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetReceipt_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            Response response = await client.GetReceiptAsync("<transactionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("transactionId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetReceipt_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = await client.GetReceiptAsync("<transactionId>");
 
@@ -348,8 +373,24 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTransactionStatus()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            Response response = client.GetTransactionStatus("<transactionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("transactionId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTransactionStatus_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetTransactionStatus("<transactionId>");
 
@@ -362,8 +403,9 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTransactionStatus_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = await client.GetTransactionStatusAsync("<transactionId>");
 
@@ -374,24 +416,11 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTransactionStatus_AllParameters()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            Response response = client.GetTransactionStatus("<transactionId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("transactionId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTransactionStatus_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = await client.GetTransactionStatusAsync("<transactionId>");
 
@@ -404,8 +433,9 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCurrentLedgerEntry()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetCurrentLedgerEntry();
 
@@ -415,25 +445,13 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCurrentLedgerEntry_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            Response response = await client.GetCurrentLedgerEntryAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("contents").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetCurrentLedgerEntry_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = client.GetCurrentLedgerEntry(collectionId: "<collectionId>");
+            Response response = client.GetCurrentLedgerEntry("<collectionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("contents").ToString());
@@ -443,12 +461,27 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCurrentLedgerEntry_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            Response response = await client.GetCurrentLedgerEntryAsync();
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("contents").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCurrentLedgerEntry_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            Response response = await client.GetCurrentLedgerEntryAsync(collectionId: "<collectionId>");
+            Response response = await client.GetCurrentLedgerEntryAsync("<collectionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("contents").ToString());
@@ -460,8 +493,21 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteUser()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            Response response = client.DeleteUser("<userId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteUser_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.DeleteUser("<userId>");
             Console.WriteLine(response.Status);
@@ -471,8 +517,9 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteUser_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = await client.DeleteUserAsync("<userId>");
             Console.WriteLine(response.Status);
@@ -480,21 +527,11 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteUser_AllParameters()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            Response response = client.DeleteUser("<userId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteUser_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = await client.DeleteUserAsync("<userId>");
             Console.WriteLine(response.Status);
@@ -504,8 +541,9 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUser()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetUser("<userId>");
 
@@ -515,23 +553,11 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUser_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            Response response = await client.GetUserAsync("<userId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("assignedRole").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetUser_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = client.GetUser("<userId>");
 
@@ -542,10 +568,25 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetUser_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            Response response = await client.GetUserAsync("<userId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRole").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUser_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
             Response response = await client.GetUserAsync("<userId>");
 
@@ -558,31 +599,16 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateUser()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 assignedRole = "Administrator",
-            });
-            Response response = client.CreateOrUpdateUser("<userId>", content);
+            };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("assignedRole").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateUser_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                assignedRole = "Administrator",
-            });
-            Response response = await client.CreateOrUpdateUserAsync("<userId>", content);
+            Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("assignedRole").ToString());
@@ -592,14 +618,16 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateUser_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 assignedRole = "Administrator",
-            });
-            Response response = client.CreateOrUpdateUser("<userId>", content);
+            };
+
+            Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("assignedRole").ToString());
@@ -608,16 +636,37 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateUser_AllParameters_Async()
+        public async Task Example_CreateOrUpdateUser_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 assignedRole = "Administrator",
-            });
-            Response response = await client.CreateOrUpdateUserAsync("<userId>", content);
+            };
+
+            Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("assignedRole").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateUser_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            var data = new
+            {
+                assignedRole = "Administrator",
+            };
+
+            Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("assignedRole").ToString());
@@ -628,29 +677,15 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetConsortiumMembers()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetConsortiumMembers())
+            foreach (var item in client.GetConsortiumMembers())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("certificate").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetConsortiumMembers_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            await foreach (BinaryData item in client.GetConsortiumMembersAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("certificate").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("certificate").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -658,14 +693,31 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetConsortiumMembers_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetConsortiumMembers())
+            foreach (var item in client.GetConsortiumMembers())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("certificate").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("certificate").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetConsortiumMembers_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            await foreach (var item in client.GetConsortiumMembersAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("certificate").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -673,14 +725,15 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetConsortiumMembers_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetConsortiumMembersAsync())
+            await foreach (var item in client.GetConsortiumMembersAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("certificate").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("certificate").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -688,27 +741,14 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCollections()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetCollections())
+            foreach (var item in client.GetCollections())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCollections_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            await foreach (BinaryData item in client.GetCollectionsAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
             }
         }
 
@@ -716,13 +756,29 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCollections_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetCollections())
+            foreach (var item in client.GetCollections())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCollections_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            await foreach (var item in client.GetCollectionsAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
             }
         }
 
@@ -730,13 +786,14 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCollections_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetCollectionsAsync())
+            await foreach (var item in client.GetCollectionsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
             }
         }
 
@@ -744,27 +801,14 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetLedgerEntries()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetLedgerEntries())
+            foreach (var item in client.GetLedgerEntries())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("contents").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLedgerEntries_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
-
-            await foreach (BinaryData item in client.GetLedgerEntriesAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("contents").ToString());
+                Console.WriteLine(result.GetProperty("contents").ToString());
             }
         }
 
@@ -772,15 +816,31 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetLedgerEntries_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetLedgerEntries(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
+            foreach (var item in client.GetLedgerEntries("<collectionId>", "<fromTransactionId>", "<toTransactionId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("contents").ToString());
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
-                Console.WriteLine(result[0].GetProperty("transactionId").ToString());
+                Console.WriteLine(result.GetProperty("contents").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("transactionId").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLedgerEntries_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
+
+            await foreach (var item in client.GetLedgerEntriesAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("contents").ToString());
             }
         }
 
@@ -788,15 +848,16 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetLedgerEntries_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConfidentialLedgerClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetLedgerEntriesAsync(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
+            await foreach (var item in client.GetLedgerEntriesAsync("<collectionId>", "<fromTransactionId>", "<toTransactionId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("contents").ToString());
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
-                Console.WriteLine(result[0].GetProperty("transactionId").ToString());
+                Console.WriteLine(result.GetProperty("contents").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("transactionId").ToString());
             }
         }
     }
