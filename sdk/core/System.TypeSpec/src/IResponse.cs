@@ -6,6 +6,7 @@ using System.IO;
 namespace System.ServiceModel.Rest.Core;
 
 // TODO: this does not include some members from Response (e.g. ClientRequestId). Is that OK?
+// TODO: can we turn it into a class?
 public interface IResponse
 {
     int Status { get; }

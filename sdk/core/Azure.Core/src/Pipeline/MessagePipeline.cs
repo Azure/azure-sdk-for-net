@@ -39,12 +39,29 @@ public class MessagePipeline : Pipeline<PipelineMessage>
     /// <summary>
     /// TBD.
     /// </summary>
-    /// <param name="options"></param>
+    /// <param name="options">User settings and policies</param>
+    /// <param name="clientPerTryPolicies">client implementation policies</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public static MessagePipeline Create(RequestOptions options)
+    public static MessagePipeline Create(
+        RequestOptions options,
+        params IPipelinePolicy<PipelineMessage>[] clientPerTryPolicies)
+        => Create(options, clientPerTryPolicies, ReadOnlySpan<IPipelinePolicy<PipelineMessage>>.Empty);
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="options">User settings and policies</param>
+    /// <param name="clientPerTryPolicies">client implementation policies</param>
+    /// <param name="clientPerCallPolicies">client implementation policies</param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public static MessagePipeline Create(
+        RequestOptions options,
+        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> clientPerTryPolicies,
+        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> clientPerCallPolicies)
     {
-        int pipelineLength = 0;
+        int pipelineLength = clientPerCallPolicies.Length + clientPerTryPolicies.Length;
 
         if (options.PerTryPolicies != null) pipelineLength += options.PerTryPolicies.Length;
         if (options.PerCallPolicies != null) pipelineLength += options.PerCallPolicies.Length;
@@ -54,6 +71,10 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         var pipeline = new IPipelinePolicy<PipelineMessage>[pipelineLength];
 
         int index = 0;
+
+        clientPerCallPolicies.CopyTo(pipeline.AsSpan(index));
+        index += clientPerCallPolicies.Length;
+
         if (options.PerCallPolicies != null)
         {
             options.PerCallPolicies.CopyTo(pipeline.AsSpan());
@@ -68,6 +89,10 @@ public class MessagePipeline : Pipeline<PipelineMessage>
             options.PerTryPolicies.CopyTo(pipeline.AsSpan(index));
             index += options.PerTryPolicies.Length;
         }
+
+        clientPerTryPolicies.CopyTo(pipeline.AsSpan(index));
+        index += clientPerCallPolicies.Length;
+
         if (options.LoggingPolicy != null)
         {
             pipeline[index++] = options.LoggingPolicy;

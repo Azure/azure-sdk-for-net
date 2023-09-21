@@ -6,6 +6,7 @@ using System.Threading;
 
 namespace System.ServiceModel.Rest;
 
+// Make options freezable
 public class RequestOptions
 {
     public CancellationToken? CancellationToken { get; set; }
