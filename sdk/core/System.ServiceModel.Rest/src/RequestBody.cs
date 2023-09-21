@@ -44,6 +44,8 @@ namespace System.ServiceModel.Rest.Core
         /// <inheritdoc/>
         public abstract void Dispose();
 
+        // TODO: Note, this is copied from RequestContent.  When we can remove the corresponding
+        // shared source file, we should make sure there is only one copy of this moving forward.
         private sealed class StreamBody : RequestBody
         {
             private const int CopyToBufferSize = 81920;
