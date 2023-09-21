@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             mock.Setup(m => m.AccountName).Returns(builder.AccountName);
             mock.Setup(m => m.ShareName).Returns(builder.ShareName);
             mock.Setup(m => m.Path).Returns(builder.DirectoryOrFilePath);
-            mock.Setup(m => m.Name).Returns(Path.GetFileName(builder.DirectoryOrFilePath));
+            mock.Setup(m => m.Name).Returns(builder.DirectoryOrFilePath.Split('/').Last());
             return mock;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             mock.Setup(m => m.AccountName).Returns(builder.AccountName);
             mock.Setup(m => m.ShareName).Returns(builder.ShareName);
             mock.Setup(m => m.Path).Returns(builder.DirectoryOrFilePath);
-            mock.Setup(m => m.Name).Returns(Path.GetDirectoryName(builder.DirectoryOrFilePath));
+            mock.Setup(m => m.Name).Returns(builder.DirectoryOrFilePath.Split('/').Last());
             return mock;
         }
 
