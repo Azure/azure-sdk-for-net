@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
         {
             var content = new MultipartFormDataRequestContent();
             content.Add(new StringContent(InternalNonAzureModelName), "model");
-            content.Add(new ByteArrayContent(AudioData.ToArray()), "file", "@placeholderFile.wav");
+            content.Add(new ByteArrayContent(AudioData.ToArray()), "file", "@file.wav");
             if (Optional.IsDefined(ResponseFormat))
             {
                 content.Add(new StringContent(ResponseFormat.ToString()), "response_format");

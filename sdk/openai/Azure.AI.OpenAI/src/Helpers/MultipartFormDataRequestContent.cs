@@ -19,9 +19,7 @@ namespace Azure.AI.OpenAI
 
         public MultipartFormDataRequestContent() : base()
         {
-            // Open: does this need to be random?
-            Boundary = "1234-multipart-boundary-token";
-            // Boundary = Guid.NewGuid().ToString();
+            Boundary = Guid.NewGuid().ToString();
             _baseContent = new MultipartFormDataContent(Boundary);
         }
 

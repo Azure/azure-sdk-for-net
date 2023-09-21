@@ -782,7 +782,7 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranslationOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AudioTranscription>> GetAudioTranslationAsync(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AudioTranslation>> GetAudioTranslationAsync(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
@@ -810,7 +810,7 @@ namespace Azure.AI.OpenAI
                 throw;
             }
 
-            return Response.FromValue(AudioTranscription.FromResponse(rawResponse), rawResponse);
+            return Response.FromValue(AudioTranslation.FromResponse(rawResponse), rawResponse);
         }
 
         /// <summary> Transcribes and translates input audio into English text. </summary>
@@ -823,7 +823,7 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranslationOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AudioTranscription> GetAudioTranslation(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
+        public virtual Response<AudioTranslation> GetAudioTranslation(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
@@ -848,7 +848,7 @@ namespace Azure.AI.OpenAI
                 throw;
             }
 
-            return Response.FromValue(AudioTranscription.FromResponse(rawResponse), rawResponse);
+            return Response.FromValue(AudioTranslation.FromResponse(rawResponse), rawResponse);
         }
 
         internal RequestUriBuilder GetUri(string deploymentOrModelName, string operationPath)

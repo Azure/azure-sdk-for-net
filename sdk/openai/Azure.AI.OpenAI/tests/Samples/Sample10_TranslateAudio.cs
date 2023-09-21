@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
@@ -30,15 +28,15 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 ResponseFormat = AudioTranslationFormat.Verbose,
             };
 
-            Response<AudioTranscription> translationResponse = await client.GetAudioTranslationAsync(
+            Response<AudioTranslation> translationResponse = await client.GetAudioTranslationAsync(
                 deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
                 translationOptions);
-            AudioTranscription transcription = translationResponse.Value;
+            AudioTranslation translation = translationResponse.Value;
 
-            // When using Simple, SRT, or VTT formats, only transcription.Text will be populated
-            Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
+            // When using Simple, SRT, or VTT formats, only translation.Text will be populated
+            Console.WriteLine($"Translation ({translation.Duration.Value.TotalSeconds}s):");
             // .Text will be translated to English (ISO-639-1 "en")
-            Console.WriteLine(transcription.Text);
+            Console.WriteLine(translation.Text);
             #endregion
         }
     }
