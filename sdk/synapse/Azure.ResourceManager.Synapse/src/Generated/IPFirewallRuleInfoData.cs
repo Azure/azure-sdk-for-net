@@ -13,17 +13,17 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing the SynapseIPFirewallRuleInfo data model.
+    /// A class representing the IPFirewallRuleInfo data model.
     /// IP firewall rule
     /// </summary>
-    public partial class SynapseIPFirewallRuleInfoData : ResourceData
+    public partial class IPFirewallRuleInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoData. </summary>
-        public SynapseIPFirewallRuleInfoData()
+        /// <summary> Initializes a new instance of IPFirewallRuleInfoData. </summary>
+        public IPFirewallRuleInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoData. </summary>
+        /// <summary> Initializes a new instance of IPFirewallRuleInfoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. </param>
-        internal SynapseIPFirewallRuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress endIPAddress, SynapseProvisioningState? provisioningState, IPAddress startIPAddress) : base(id, name, resourceType, systemData)
+        internal IPFirewallRuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress endIPAddress, SynapseProvisioningState? provisioningState, IPAddress startIPAddress) : base(id, name, resourceType, systemData)
         {
             EndIPAddress = endIPAddress;
             ProvisioningState = provisioningState;
