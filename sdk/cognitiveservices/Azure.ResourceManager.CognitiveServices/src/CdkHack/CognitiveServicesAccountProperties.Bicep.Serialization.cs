@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 sb.AppendChildObject(Encryption, options, true);
                 sb.AppendLine($"  }}");
             }
-            if (Optional.IsCollectionDefined(UserOwnedStorage))
+            if (Optional.IsCollectionDefined(UserOwnedStorage) && UserOwnedStorage.Count > 0)
             {
                 sb.AppendLine($"  userOwnedStorage: [");
                 foreach (var item in UserOwnedStorage)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 sb.AppendLine($"  restrictOutboundNetworkAccess: {RestrictOutboundNetworkAccess.Value.ToString().ToLower()}");
             }
-            if (Optional.IsCollectionDefined(AllowedFqdnList))
+            if (Optional.IsCollectionDefined(AllowedFqdnList) && AllowedFqdnList.Count > 0)
             {
                 sb.AppendLine($"  allowedFqdnList: [");
                 foreach (var item in AllowedFqdnList)
