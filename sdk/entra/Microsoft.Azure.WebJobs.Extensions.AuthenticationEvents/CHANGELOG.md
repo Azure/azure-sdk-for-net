@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0.4 (Unreleased)
+## 1.0.4 (Unreleased)
 
 ### Features
 
@@ -8,7 +8,7 @@
 
 ### Other Changes
 
-- Change version semantics to Major.Minor.Patch.PreRelease
+- Change version semantics to Major.Minor.Patch
 
 ### Bugs Fixed
 
