@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -23,23 +23,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetZone()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Response response = client.GetZone("<partyId>", "<zoneId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetZone_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.GetZoneAsync("<partyId>", "<zoneId>", null);
+            Response response = client.GetZone("<partyId>", "<zoneId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -49,36 +36,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetZone_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Response response = client.GetZone("<partyId>", "<zoneId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("managementZoneId").ToString());
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("eTag").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetZone_AllParameters_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.GetZoneAsync("<partyId>", "<zoneId>", null);
+            Response response = client.GetZone("<partyId>", "<zoneId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -94,18 +55,17 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public async Task Example_GetZone_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.CreateOrUpdate("<partyId>", "<zoneId>", content);
+            Response response = await client.GetZoneAsync("<partyId>", "<zoneId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -113,13 +73,40 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_GetZone_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<zoneId>", content);
+            Response response = await client.GetZoneAsync("<partyId>", "<zoneId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("managementZoneId").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("eTag").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdate()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
+
+            var data = new { };
+
+            Response response = client.CreateOrUpdate("<partyId>", "<zoneId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -129,10 +116,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 type = "<type>",
                 managementZoneId = "<managementZoneId>",
@@ -142,10 +129,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new object(),
+                    key = new { },
                 },
-            });
-            Response response = client.CreateOrUpdate("<partyId>", "<zoneId>", content);
+            };
+
+            Response response = client.CreateOrUpdate("<partyId>", "<zoneId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -161,17 +149,32 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
+
+            var data = new { };
+
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<zoneId>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 type = "<type>",
                 managementZoneId = "<managementZoneId>",
@@ -181,10 +184,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new object(),
+                    key = new { },
                 },
-            });
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<zoneId>", content);
+            };
+
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<zoneId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -200,15 +204,26 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
+
+            Response response = client.Delete("<partyId>", "<zoneId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Delete_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<zoneId>");
             Console.WriteLine(response.Status);
@@ -218,8 +233,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<zoneId>");
             Console.WriteLine(response.Status);
@@ -227,21 +242,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
-
-            Response response = client.Delete("<partyId>", "<zoneId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<zoneId>");
             Console.WriteLine(response.Status);
@@ -251,25 +255,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("resourceType").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -281,10 +270,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCascadeDeleteJobDetails_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -303,12 +292,27 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCascadeDeleteJobDetails_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
+
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("resourceType").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -329,27 +333,13 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetZonesByPartyId()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetZonesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
+            foreach (var item in client.GetZonesByPartyId("<partyId>", new string[] { "<types>" }, new string[] { "<managementZoneIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetZonesByPartyId_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
-
-            await foreach (BinaryData item in client.GetZonesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -357,47 +347,40 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetZonesByPartyId_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetZonesByPartyId("<partyId>", new List<string>()
-{
-"<types>"
-}, new List<string>()
-{
-"<managementZoneIds>"
-}, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (var item in client.GetZonesByPartyId("<partyId>", new string[] { "<types>" }, new string[] { "<managementZoneIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("managementZoneId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("managementZoneId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetZonesByPartyId_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
+
+            await foreach (var item in client.GetZonesByPartyIdAsync("<partyId>", new string[] { "<types>" }, new string[] { "<managementZoneIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -405,47 +388,26 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetZonesByPartyId_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetZonesByPartyIdAsync("<partyId>", new List<string>()
-{
-"<types>"
-}, new List<string>()
-{
-"<managementZoneIds>"
-}, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (var item in client.GetZonesByPartyIdAsync("<partyId>", new string[] { "<types>" }, new string[] { "<managementZoneIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("managementZoneId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("managementZoneId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
             }
         }
 
@@ -453,27 +415,13 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetZones()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetZones(null, null, null, null, null, null, null, null, null, null, null, null, null, null))
+            foreach (var item in client.GetZones(new string[] { "<types>" }, new string[] { "<managementZoneIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetZones_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
-
-            await foreach (BinaryData item in client.GetZonesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -481,47 +429,40 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetZones_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetZones(new List<string>()
-{
-"<types>"
-}, new List<string>()
-{
-"<managementZoneIds>"
-}, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (var item in client.GetZones(new string[] { "<types>" }, new string[] { "<managementZoneIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("managementZoneId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("managementZoneId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetZones_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
+
+            await foreach (var item in client.GetZonesAsync(new string[] { "<types>" }, new string[] { "<managementZoneIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -529,47 +470,26 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetZones_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetZonesAsync(new List<string>()
-{
-"<types>"
-}, new List<string>()
-{
-"<managementZoneIds>"
-}, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (var item in client.GetZonesAsync(new string[] { "<types>" }, new string[] { "<managementZoneIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("managementZoneId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("managementZoneId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
             }
         }
 
@@ -577,28 +497,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<zoneId>", null);
+            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<zoneId>", new RequestContext());
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("resourceType").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
-
-            Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<zoneId>", null);
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -609,12 +513,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateCascadeDeleteJob_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<zoneId>", null);
+            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<zoneId>", new RequestContext());
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -632,14 +536,30 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateCascadeDeleteJob_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
+
+            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<zoneId>", new RequestContext());
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("resourceType").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<zoneId>", null);
+            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<zoneId>", new RequestContext());
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("resourceId").ToString());
