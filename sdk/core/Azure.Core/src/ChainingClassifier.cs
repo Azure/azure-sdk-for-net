@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
-using System.ServiceModel.Rest.Core;
 
 namespace Azure.Core
 {
@@ -42,26 +40,21 @@ namespace Azure.Core
             _endOfChain = endOfChain;
         }
 
-        public override bool IsErrorResponse(RestMessage message)
+        public override bool IsErrorResponse(HttpMessage message)
         {
-            return base.IsErrorResponse(message);
+            if (_handlers != null)
+            {
+                foreach (var handler in _handlers)
+                {
+                    if (handler.TryClassify(message, out bool isError))
+                    {
+                        return isError;
+                    }
+                }
+            }
+
+            return _endOfChain.IsErrorResponse(message);
         }
-
-        //public override bool IsErrorResponse(HttpMessage message)
-        //{
-        //    if (_handlers != null)
-        //    {
-        //        foreach (var handler in _handlers)
-        //        {
-        //            if (handler.TryClassify(message, out bool isError))
-        //            {
-        //                return isError;
-        //            }
-        //        }
-        //    }
-
-        //    return _endOfChain.IsErrorResponse(message);
-        //}
 
         private void AddClassifiers(ReadOnlySpan<ResponseClassificationHandler> handlers)
         {
