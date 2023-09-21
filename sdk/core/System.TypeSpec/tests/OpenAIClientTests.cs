@@ -29,13 +29,13 @@ public partial class OpenAIClientTests
 
         var options = new OpenAIClientOptions();
         options.RetryPolicy = new CustomRetryPolicy();
-        options.LoggingPolicy = new LoggingPolicy(isLoggingEnabled: false);
+        options.LoggingPolicy = new LoggingPolicy(isLoggingEnabled: true);
 
         var credential = new KeyCredential(Environment.GetEnvironmentVariable("OPENAI_KEY"));
         var client = new OpenAIClient(credential, options);
 
         var callOptions = new OpenAIClientOptions();
-        options.LoggingPolicy = new LoggingPolicy(isLoggingEnabled: true);
+        //options.LoggingPolicy = new LoggingPolicy(isLoggingEnabled: false);
 
         Completions result = client.GetCompletions("tell me something about life.", callOptions);
         Choice choice = result.Choices[0];
@@ -48,5 +48,6 @@ public partial class OpenAIClientTests
         MessagePipeline pipeline = MessagePipeline.Create(new RequestOptions());
         PipelineMessage message = pipeline.CreateMessage("GET", new Uri("http://www.google.com"));
         pipeline.Send(message);
+        Assert.True(message.Response.Status < 299);
     }
 }

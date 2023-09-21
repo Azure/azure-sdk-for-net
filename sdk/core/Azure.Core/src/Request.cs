@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using System.ServiceModel.Rest.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -13,7 +14,7 @@ namespace Azure.Core
     /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Request : IDisposable
+    public abstract class Request : PipelineRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private RequestUriBuilder? _uri;
@@ -98,18 +99,8 @@ namespace Azure.Core
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
         /// <summary>
-        /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
-        /// </summary>
-        public abstract string ClientRequestId { get; set; }
-
-        /// <summary>
         /// Gets the response HTTP headers.
         /// </summary>
         public RequestHeaders Headers => new(this);
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Response"/> instance.
-        /// </summary>
-        public abstract void Dispose();
     }
 }

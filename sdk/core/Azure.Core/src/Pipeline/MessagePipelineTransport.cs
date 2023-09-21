@@ -46,9 +46,12 @@ internal class MessagePipelineTransport
     private static HttpMessage ToHttpMessage(PipelineMessage message)
     {
         var tam = message as MessagePipelineMessage;
-        if (tam == null)
-            throw new Exception("this message is not mine");
-        var m = new HttpMessage(tam.Request, new ResponseClassifier());
+        if (tam == null) throw new Exception("this message is not mine");
+
+        var rq = tam.Request as Request;
+        if (rq == null) throw new InvalidOperationException("not my request");
+
+        var m = new HttpMessage(rq, new ResponseClassifier());
         m.BufferResponse = true;
         return m;
     }
@@ -98,22 +101,6 @@ internal class MessagePipelineTransport
 internal class MessagePipelineMessage : PipelineMessage
 {
     private Request _request;
-    public MessagePipelineMessage(Request request)
-    {
-        _request = request;
-    }
-
-    public Request Request => _request;
-
-    public override bool RemoveRequestHeader(string name)
-        => _request.RemoveHeader(name);
-
-    public override void SetRequestHeader(string key, string value)
-        => _request.SetHeader(key, value);
-
-    public override void SetRequestContent(BinaryData content)
-        => _request.Content = content;
-
-    public override bool TryGetRequestHeader(string name, out string? value)
-        => _request.TryGetHeader(name, out value);
+    public MessagePipelineMessage(Request request) : base(request)
+        => _request = request;
 }

@@ -23,7 +23,8 @@ public partial class OpenAIClientTests
             }
             catch (Exception) {
                 if (_try > 5) {
-                    throw new RequestErrorException(message.Response);
+                    if (message.Response != null) throw new RequestErrorException(message.Response);
+                    else throw;
                 }
                 Thread.Sleep(1000);
                 goto retry;

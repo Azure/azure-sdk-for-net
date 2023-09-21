@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.Http;
 using System.ServiceModel.Rest.Core;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace System.ServiceModel.Rest;
 
@@ -33,6 +30,12 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         _pipeline = larger;
     }
 
+    private MessagePipeline(ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
+    {
+        _transport = (PipelineTransport<PipelineMessage>)policies.Span[policies.Length-1];
+        _pipeline = policies;
+    }
+
     /// <summary>
     /// TBD.
     /// </summary>
@@ -41,9 +44,43 @@ public class MessagePipeline : Pipeline<PipelineMessage>
     /// <exception cref="NotImplementedException"></exception>
     public static MessagePipeline Create(RequestOptions options)
     {
-        return new MessagePipeline(
-            new MessagePipelineTransport(),
-            Array.Empty<IPipelinePolicy<PipelineMessage>>());
+        int pipelineLength = 0;
+
+        if (options.PerTryPolicies != null) pipelineLength += options.PerTryPolicies.Length;
+        if (options.PerCallPolicies != null) pipelineLength += options.PerCallPolicies.Length;
+        pipelineLength += options.RetryPolicy==null?0:1;
+        pipelineLength += options.LoggingPolicy == null ? 0 : 1;
+        pipelineLength++; // for transport
+        var pipeline = new IPipelinePolicy<PipelineMessage>[pipelineLength];
+
+        int index = 0;
+        if (options.PerCallPolicies != null)
+        {
+            options.PerCallPolicies.CopyTo(pipeline.AsSpan());
+            index += options.PerCallPolicies.Length;
+        }
+        if (options.RetryPolicy != null)
+        {
+            pipeline[index++] = options.RetryPolicy;
+        }
+        if (options.PerTryPolicies != null)
+        {
+            options.PerTryPolicies.CopyTo(pipeline.AsSpan(index));
+            index += options.PerTryPolicies.Length;
+        }
+        if (options.LoggingPolicy != null)
+        {
+            pipeline[index++] = options.LoggingPolicy;
+        }
+        if (options.Transport != null)
+        {
+            pipeline[index++] = options.Transport;
+        }
+        else
+        {
+            pipeline[index++] = new MessagePipelineTransport();
+        }
+        return new MessagePipeline(pipeline);
     }
 
     /// <summary>
@@ -67,27 +104,4 @@ public class MessagePipeline : Pipeline<PipelineMessage>
     {
         ProcessNext(message, _pipeline);
     }
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <typeparam name="TMessage"></typeparam>
-    /// <param name="message"></param>
-    /// <param name="pipeline"></param>
-    public static void ProcessNext<TMessage>(TMessage message, ReadOnlyMemory<IPipelinePolicy<TMessage>> pipeline)
-    {
-        pipeline.Span[0].Process(message, pipeline.Slice(1));
-    }
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <typeparam name="TMessage"></typeparam>
-    /// <param name="message"></param>
-    /// <param name="pipeline"></param>
-    /// <returns></returns>
-    public static async ValueTask ProcessNextAsync<TMessage>(TMessage message, ReadOnlyMemory<IPipelinePolicy<TMessage>> pipeline)
-    {
-        await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
-    }
-}
+ }

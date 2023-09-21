@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.ServiceModel.Rest.Core;
 using System.Threading;
 using Azure.Core.Pipeline;
 
@@ -12,7 +13,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public class HttpMessage : IDisposable
+    public class HttpMessage : PipelineMessage, IDisposable
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
@@ -22,7 +23,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
-        public HttpMessage(Request request, ResponseClassifier responseClassifier)
+        public HttpMessage(Request request, ResponseClassifier responseClassifier) : base(request)
         {
             Argument.AssertNotNull(request, nameof(Request));
             Request = request;
@@ -34,13 +35,13 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; }
+        public new Request Request { get; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
         /// To avoid the exception use <see cref="HasResponse"/> property to check.
         /// </summary>
-        public Response Response
+        public new Response Response
         {
             get
             {
@@ -61,11 +62,6 @@ namespace Azure.Core
         public bool HasResponse => _response != null;
 
         internal void ClearResponse() => _response = null;
-
-        /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
-        /// </summary>
-        public CancellationToken CancellationToken { get; internal set; }
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.

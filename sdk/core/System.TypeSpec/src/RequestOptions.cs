@@ -10,6 +10,9 @@ public class RequestOptions
 {
     public CancellationToken? CancellationToken { get; set; }
 
+    public IPipelinePolicy<PipelineMessage>[]? PerTryPolicies { get; set; }
+    public IPipelinePolicy<PipelineMessage>[]? PerCallPolicies { get; set; }
+
     public IPipelinePolicy<PipelineMessage>? RetryPolicy { get; set; }
 
     public IPipelinePolicy<PipelineMessage>? LoggingPolicy { get; set; }
@@ -19,6 +22,8 @@ public class RequestOptions
     public static IPipelinePolicy<PipelineMessage> DefaultRetryPolicy { get; set; } = new RetryPolicy(maxRetries: 3);
 
     public static IPipelinePolicy<PipelineMessage> DefaultLoggingPolicy { get; set; } = new LoggingPolicy();
+
+    public static PipelineTransport<PipelineMessage>? DefaultTransport { get; set; }
 
     public static CancellationToken DefaultCancellationToken { get; set; } = System.Threading.CancellationToken.None;
 }

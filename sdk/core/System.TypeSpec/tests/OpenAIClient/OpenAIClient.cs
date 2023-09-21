@@ -4,6 +4,7 @@
 using System;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
+using System.Threading;
 
 namespace OpenAI;
 
@@ -38,7 +39,8 @@ public class OpenAIClient
 
         _pipeline.Send(message);
         if (message.Response.Status > 299) {
-            throw new RequestErrorException(message.Response);
+            if (message.Response != null) throw new RequestErrorException(message.Response);
+            else throw new Exception("response null");
         }
         return Result.Create(message.Response);
     }
@@ -52,10 +54,10 @@ public class OpenAIClient
     protected PipelineMessage CreateGetCompletions(BinaryData body, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage("POST", new Uri("https://api.openai.com/v1/completions"));
-        message.CancellationToken = options.CancellationToken;
-        message.SetRequestHeader("Content-Type", "application/json");
-        message.SetRequestHeader("Authorization", $"Bearer {_credential.Key}");
-        message.SetRequestContent(body);
+        message.CancellationToken = options.CancellationToken??CancellationToken.None;
+        message.Request.SetHeaderValue("Content-Type", "application/json");
+        message.Request.SetHeaderValue("Authorization", $"Bearer {_credential.Key}");
+        message.Request.SetContent(body);
         return message;
     }
 }
