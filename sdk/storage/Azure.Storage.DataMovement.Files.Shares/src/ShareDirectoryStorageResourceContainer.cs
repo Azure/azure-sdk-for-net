@@ -40,5 +40,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 yield return new ShareFileStorageResourceItem(client, ResourceOptions);
             }
         }
+
+        #region Protected Hooks
+        // Internal func to access protected member for testing.
+        internal async IAsyncEnumerable<StorageResource> GetStorageResourcesInternal(
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            await foreach (StorageResource resource in GetStorageResourcesAsync(cancellationToken).ConfigureAwait(false))
+            {
+                yield return resource;
+            }
+        }
+        #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 {
     internal class PathScanner
     {
-        public async IAsyncEnumerable<ShareFileClient> ScanFilesAsync(
+        public virtual async IAsyncEnumerable<ShareFileClient> ScanFilesAsync(
             ShareDirectoryClient directory,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
         }
 
-        public async IAsyncEnumerable<(ShareDirectoryClient Dir, ShareFileClient File)> ScanAsync(
+        public virtual async IAsyncEnumerable<(ShareDirectoryClient Dir, ShareFileClient File)> ScanAsync(
             ShareDirectoryClient directory,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
