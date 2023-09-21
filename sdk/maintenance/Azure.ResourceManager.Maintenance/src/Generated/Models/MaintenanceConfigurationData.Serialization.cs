@@ -230,19 +230,11 @@ namespace Azure.ResourceManager.Maintenance
                             {
                                 if (property1.NameEquals("startDateTime"u8))
                                 {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
                                     startDateTime = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }
                                 if (property1.NameEquals("expirationDateTime"u8))
                                 {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
                                     expirationDateTime = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }

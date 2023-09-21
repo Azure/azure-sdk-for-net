@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
 using Azure.Core;
-using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Models
 {
