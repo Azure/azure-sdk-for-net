@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricInternetGatewayRuleResource>> GetIfExistsAsync(string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+
+            using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricInternetGatewayRuleInternetGatewayRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, internetGatewayRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricInternetGatewayRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricInternetGatewayRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricInternetGatewayRuleResource> GetIfExists(string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+
+            using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricInternetGatewayRuleInternetGatewayRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, internetGatewayRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricInternetGatewayRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricInternetGatewayRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkFabricInternetGatewayRuleResource> IEnumerable<NetworkFabricInternetGatewayRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
