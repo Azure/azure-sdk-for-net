@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class NetworkWatcherTests : NetworkServiceClientTestBase
     {
-        public NetworkWatcherTests(bool isAsync) : base(isAsync,RecordedTestMode.Record)
+        public NetworkWatcherTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -124,9 +124,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create Network Watcher in the resource group
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            var networkWatcherCollection = await GetCollection();
             var properties = new NetworkWatcherData { Location = location };
-            var networkWatcherLro = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
+            var networkWatcherLro = await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
             NetworkWatcherResource networkWatcher = networkWatcherLro.Value;
 
             // Create two VMs for test vm connectivity
@@ -141,6 +140,7 @@ namespace Azure.ResourceManager.Network.Tests
                 new ConnectivityDestination() { Port = 22, ResourceId = vm2.Id });
             var connectivityResult = await networkWatcher.CheckConnectivityAsync(WaitUntil.Completed, content);
             Assert.IsNotNull(connectivityResult.Value.NetworkConnectionStatus);
+            Assert.IsEmpty(connectivityResult.Value.Hops.First().Links.First().ResourceIdString);
         }
     }
 }
