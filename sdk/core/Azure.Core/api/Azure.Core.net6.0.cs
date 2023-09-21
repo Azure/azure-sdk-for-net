@@ -1011,7 +1011,7 @@ namespace Azure.Core.Pipeline
         public Azure.Core.RequestFailedDetailsParser RequestFailedDetailsParser { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
     }
-    public abstract partial class HttpPipelinePolicy
+    public abstract partial class HttpPipelinePolicy : System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy
     {
         protected HttpPipelinePolicy() { }
         public abstract void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);

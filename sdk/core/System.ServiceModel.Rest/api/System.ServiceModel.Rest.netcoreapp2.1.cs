@@ -98,6 +98,10 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public abstract void Send(System.ServiceModel.Rest.Core.RestMessage message, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.RestMessage message, System.Threading.CancellationToken cancellationToken);
     }
+    public abstract partial class PipelinePolicy
+    {
+        protected PipelinePolicy() { }
+    }
 }
 namespace System.ServiceModel.Rest.Shared
 {
@@ -107,6 +111,10 @@ namespace System.ServiceModel.Rest.Shared
         public static void AssertNotNullOrEmpty(string value, string name) { }
         public static void AssertNotNull<T>(T value, string name) { }
         public static void ThrowIfCancellationRequested(System.Threading.CancellationToken cancellationToken) { }
+    }
+    public partial class KeyCredentialPolicy
+    {
+        public KeyCredentialPolicy() { }
     }
 }
 namespace System.ServiceModel.Rest.Shared.Core
