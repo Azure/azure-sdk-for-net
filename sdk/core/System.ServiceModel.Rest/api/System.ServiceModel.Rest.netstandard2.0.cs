@@ -64,20 +64,6 @@ namespace System.ServiceModel.Rest
         public void Failed(System.Exception exception) { }
         public void Start() { }
     }
-    public partial class TelemetrySource
-    {
-        public TelemetrySource(System.ServiceModel.Rest.PipelineOptions options, bool suppressNestedClientActivities = true) { }
-        public System.ServiceModel.Rest.TelemetrySpan CreateSpan(string name) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TelemetrySpan : System.IDisposable
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public void Dispose() { }
-        public void Failed(System.Exception exception) { }
-        public void Start() { }
-    }
 }
 namespace System.ServiceModel.Rest.Core
 {
