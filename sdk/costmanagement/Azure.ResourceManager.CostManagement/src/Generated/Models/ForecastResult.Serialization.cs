@@ -5,12 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
