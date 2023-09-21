@@ -36,20 +36,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaries_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossariesAsync(null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaries_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -91,6 +77,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
             Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaries_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossariesAsync(null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -148,21 +148,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateGlossary(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateGlossaryAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -276,6 +261,21 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossary_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateGlossaryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -408,24 +408,6 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryCategories_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.CreateGlossaryCategoriesAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryCategories_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -545,6 +527,24 @@ guid = "<guid>",
             Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
             Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossaryCategories_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = await client.CreateGlossaryCategoriesAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -687,21 +687,6 @@ guid = "<guid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryCategory_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateGlossaryCategoryAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryCategory_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -818,6 +803,21 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossaryCategory_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateGlossaryCategoryAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -956,20 +956,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryCategory_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryCategory_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1017,6 +1003,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryCategory_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1080,21 +1080,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateGlossaryCategory("<categoryGuid>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateGlossaryCategory_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1218,6 +1203,21 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateGlossaryCategory_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1354,18 +1354,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteGlossaryCategory_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteGlossaryCategory_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1373,6 +1361,18 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossaryCategory("<categoryGuid>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteGlossaryCategory_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
             Console.WriteLine(response.Status);
         }
 
@@ -1401,24 +1401,6 @@ lastModifiedTS = "<lastModifiedTS>",
                 key = "<partialUpdates>",
             });
             Response response = client.PartialUpdateGlossaryCategory("<categoryGuid>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateGlossaryCategory_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new
-            {
-                key = "<partialUpdates>",
-            });
-            Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1477,6 +1459,24 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateGlossaryCategory_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new
+            {
+                key = "<partialUpdates>",
+            });
+            Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -1550,20 +1550,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelatedCategories_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetRelatedCategories_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1578,6 +1564,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("parentCategoryGuid").ToString());
             Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("relationGuid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRelatedCategories_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("<key>")[0].ToString());
         }
 
         [Test]
@@ -1614,20 +1614,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCategoryTerms_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetCategoryTermsAsync("<categoryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetCategoryTerms_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1645,6 +1631,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("status").ToString());
             Console.WriteLine(result[0].GetProperty("steward").ToString());
             Console.WriteLine(result[0].GetProperty("termGuid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCategoryTerms_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetCategoryTermsAsync("<categoryGuid>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -1678,21 +1678,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateGlossaryTerm(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateGlossaryTermAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2047,6 +2032,21 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossaryTerm_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateGlossaryTermAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -2416,20 +2416,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryTermAsync("<termGuid>", null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryTerm_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2596,6 +2582,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryTerm_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryTermAsync("<termGuid>", null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -2778,21 +2778,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateGlossaryTerm("<termGuid>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateGlossaryTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateGlossaryTermAsync("<termGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -3147,6 +3132,21 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateGlossaryTerm_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateGlossaryTermAsync("<termGuid>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -3514,18 +3514,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteGlossaryTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteGlossaryTerm_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3533,6 +3521,18 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossaryTerm("<termGuid>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteGlossaryTerm_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
             Console.WriteLine(response.Status);
         }
 
@@ -3561,24 +3561,6 @@ lastModifiedTS = "<lastModifiedTS>",
                 key = "<partialUpdates>",
             });
             Response response = client.PartialUpdateGlossaryTerm("<termGuid>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateGlossaryTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new
-            {
-                key = "<partialUpdates>",
-            });
-            Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -3753,6 +3735,24 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateGlossaryTerm_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new
+            {
+                key = "<partialUpdates>",
+            });
+            Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -3939,24 +3939,6 @@ lastModifiedTS = "<lastModifiedTS>",
 new object()
 });
             Response response = client.CreateGlossaryTerms(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryTerms_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.CreateGlossaryTermsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -4314,6 +4296,24 @@ guid = "<guid>",
             Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
             Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossaryTerms_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = await client.CreateGlossaryTermsAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -4686,20 +4686,6 @@ guid = "<guid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntitiesAssignedWithTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetEntitiesAssignedWithTerm_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4720,6 +4706,20 @@ guid = "<guid>",
             Console.WriteLine(result[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEntitiesAssignedWithTerm_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -4764,22 +4764,6 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AssignTermToEntities_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.AssignTermToEntitiesAsync("<termGuid>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_AssignTermToEntities_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4813,6 +4797,22 @@ key = new object(),
 }
 });
             Response response = client.AssignTermToEntities("<termGuid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AssignTermToEntities_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = await client.AssignTermToEntitiesAsync("<termGuid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4872,22 +4872,6 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveTermAssignmentFromEntities_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_RemoveTermAssignmentFromEntities_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -4921,6 +4905,22 @@ key = new object(),
 }
 });
             Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_RemoveTermAssignmentFromEntities_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -4980,22 +4980,6 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTermAssignmentFromEntities_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", content);
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTermAssignmentFromEntities_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -5029,6 +5013,22 @@ key = new object(),
 }
 });
             Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", content);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteTermAssignmentFromEntities_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+new object()
+});
+            Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", content);
             Console.WriteLine(response.Status);
         }
 
@@ -5086,20 +5086,6 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelatedTerms_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetRelatedTermsAsync("<termGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetRelatedTerms_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -5117,6 +5103,20 @@ key = new object(),
             Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("termGuid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRelatedTerms_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetRelatedTermsAsync("<termGuid>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("<key>")[0].ToString());
         }
 
         [Test]
@@ -5149,20 +5149,6 @@ key = new object(),
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.GetGlossary("<glossaryGuid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryAsync("<glossaryGuid>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -5211,6 +5197,20 @@ key = new object(),
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossary_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryAsync("<glossaryGuid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -5268,21 +5268,6 @@ key = new object(),
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateGlossary("<glossaryGuid>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -5396,6 +5381,21 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateGlossary_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -5522,18 +5522,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteGlossary_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -5541,6 +5529,18 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossary("<glossaryGuid>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteGlossary_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
             Console.WriteLine(response.Status);
         }
 
@@ -5565,20 +5565,6 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.GetGlossaryCategories("<glossaryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryCategories_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -5633,6 +5619,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
             Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryCategories_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -5702,20 +5702,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryCategoriesHeaders_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryCategoriesHeaders_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -5730,6 +5716,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("displayText").ToString());
             Console.WriteLine(result[0].GetProperty("parentCategoryGuid").ToString());
             Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryCategoriesHeaders_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -5759,20 +5759,6 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.GetDetailedGlossary("<glossaryGuid>", null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDetailedGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6013,6 +5999,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDetailedGlossary_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -6272,24 +6272,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new
-            {
-                key = "<partialUpdates>",
-            });
-            Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateGlossary_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -6335,6 +6317,24 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("shortDescription").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateGlossary_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new
+            {
+                key = "<partialUpdates>",
+            });
+            Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -6395,20 +6395,6 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.GetGlossaryTerms("<glossaryGuid>", null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryTerms_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", null, null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -6579,6 +6565,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
             Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryTerms_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -6764,20 +6764,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryTermHeaders_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryTermHeaders_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -6795,6 +6781,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("status").ToString());
             Console.WriteLine(result[0].GetProperty("steward").ToString());
             Console.WriteLine(result[0].GetProperty("termGuid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryTermHeaders_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -6834,20 +6834,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportCsvOperationStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetImportCsvOperationStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -6865,6 +6851,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetImportCsvOperationStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -6908,24 +6908,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportGlossaryTermsAsCsv_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<termGuids>"
-});
-            Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_ExportGlossaryTermsAsCsv_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -6937,6 +6919,24 @@ lastModifiedTS = "<lastModifiedTS>",
 "<termGuids>"
 });
             Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", content, includeTermHierarchy: true);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ExportGlossaryTermsAsCsv_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(new List<object>()
+{
+"<termGuids>"
+});
+            Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6969,20 +6969,6 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.GetTermsByGlossaryName("<glossaryName>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTermsByGlossaryName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -7153,6 +7139,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
             Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("guid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTermsByGlossaryName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
@@ -7340,22 +7340,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportGlossaryTermsViaCsv_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_ImportGlossaryTermsViaCsv_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -7375,6 +7359,22 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ImportGlossaryTermsViaCsv_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -7418,22 +7418,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportGlossaryTermsViaCsvByGlossaryName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_ImportGlossaryTermsViaCsvByGlossaryName_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -7453,6 +7437,22 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ImportGlossaryTermsViaCsvByGlossaryName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]

@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class NewRelicObservabilityVmHostsListResponse
+    internal partial class VmHostsListResponse
     {
-        internal static NewRelicObservabilityVmHostsListResponse DeserializeNewRelicObservabilityVmHostsListResponse(JsonElement element)
+        internal static VmHostsListResponse DeserializeVmHostsListResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<NewRelicObservabilityVmInfo> value = default;
+            IReadOnlyList<VmInfo> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<NewRelicObservabilityVmInfo> array = new List<NewRelicObservabilityVmInfo>();
+                    List<VmInfo> array = new List<VmInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityVmInfo.DeserializeNewRelicObservabilityVmInfo(item));
+                        array.Add(VmInfo.DeserializeVmInfo(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicObservabilityVmHostsListResponse(value, nextLink.Value);
+            return new VmHostsListResponse(value, nextLink.Value);
         }
     }
 }

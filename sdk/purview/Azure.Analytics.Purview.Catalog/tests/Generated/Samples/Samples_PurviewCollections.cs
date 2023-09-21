@@ -36,21 +36,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntity_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateEntityAsync("<collection>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateEntity_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -226,6 +211,21 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateEntity_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateEntityAsync("<collection>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -424,21 +424,6 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntityInBulk_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateEntityInBulk_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -617,6 +602,21 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateEntityInBulk_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -818,21 +818,6 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MoveEntitiesToCollection_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.MoveEntitiesToCollectionAsync("<collection>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_MoveEntitiesToCollection_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -912,6 +897,21 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_MoveEntitiesToCollection_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewCollections client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.MoveEntitiesToCollectionAsync("<collection>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]

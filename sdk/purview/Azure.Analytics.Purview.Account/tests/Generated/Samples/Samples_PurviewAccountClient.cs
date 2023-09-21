@@ -34,20 +34,6 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAccountProperties_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
-
-            Response response = await client.GetAccountPropertiesAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetAccountProperties_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -95,6 +81,20 @@ namespace Azure.Analytics.Purview.Account.Samples
             Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("type").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAccountProperties_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+
+            Response response = await client.GetAccountPropertiesAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -165,21 +165,6 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateAccountProperties_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateAccountPropertiesAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_UpdateAccountProperties_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -231,6 +216,21 @@ namespace Azure.Analytics.Purview.Account.Samples
             Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("type").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateAccountProperties_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateAccountPropertiesAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -304,20 +304,6 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAccessKeys_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
-
-            Response response = await client.GetAccessKeysAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetAccessKeys_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -329,6 +315,20 @@ namespace Azure.Analytics.Purview.Account.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
             Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAccessKeys_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+
+            Response response = await client.GetAccessKeysAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -363,21 +363,6 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RegenerateAccessKey_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.RegenerateAccessKeyAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_RegenerateAccessKey_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -393,6 +378,21 @@ namespace Azure.Analytics.Purview.Account.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
             Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_RegenerateAccessKey_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.RegenerateAccessKeyAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -431,21 +431,6 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCollections_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetCollectionsAsync(null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetCollections_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -467,6 +452,21 @@ namespace Azure.Analytics.Purview.Account.Samples
                 Console.WriteLine(result[0].GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
                 Console.WriteLine(result[0].GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
                 Console.WriteLine(result[0].GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCollections_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetCollectionsAsync(null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -505,21 +505,6 @@ namespace Azure.Analytics.Purview.Account.Samples
             PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetResourceSetRules(null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetResourceSetRules_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetResourceSetRulesAsync(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].ToString());
@@ -622,6 +607,21 @@ namespace Azure.Analytics.Purview.Account.Samples
                 Console.WriteLine(result[0].GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
                 Console.WriteLine(result[0].GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
                 Console.WriteLine(result[0].GetProperty("pathPatternConfig").GetProperty("version").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetResourceSetRules_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetResourceSetRulesAsync(null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
             }
         }
 

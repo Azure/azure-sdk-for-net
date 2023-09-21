@@ -34,20 +34,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLineageGraph_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
-
-            Response response = await client.GetLineageGraphAsync("<guid>", "BOTH", null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetLineageGraph_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -101,6 +87,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relations")[0].GetProperty("fromEntityId").ToString());
             Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId").ToString());
             Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLineageGraph_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
+
+            Response response = await client.GetLineageGraphAsync("<guid>", "BOTH", null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -176,20 +176,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_NextPageLineage_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
-
-            Response response = await client.NextPageLineageAsync("<guid>", "BOTH", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_NextPageLineage_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -243,6 +229,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relations")[0].GetProperty("fromEntityId").ToString());
             Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId").ToString());
             Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_NextPageLineage_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
+
+            Response response = await client.NextPageLineageAsync("<guid>", "BOTH", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -318,20 +318,6 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLineageByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
-
-            Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "BOTH", null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetLineageByUniqueAttribute_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -385,6 +371,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relations")[0].GetProperty("fromEntityId").ToString());
             Console.WriteLine(result.GetProperty("relations")[0].GetProperty("relationshipId").ToString());
             Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLineageByUniqueAttribute_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
+
+            Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "BOTH", null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
