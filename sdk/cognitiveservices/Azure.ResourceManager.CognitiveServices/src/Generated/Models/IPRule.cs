@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A rule governing the accessibility from a specific ip address or ip range. </summary>
-    public partial class CognitiveServicesIPRule
+    public partial class IPRule
     {
-        /// <summary> Initializes a new instance of CognitiveServicesIPRule. </summary>
+        /// <summary> Initializes a new instance of IPRule. </summary>
         /// <param name="value"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CognitiveServicesIPRule(string value)
+        public IPRule(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
