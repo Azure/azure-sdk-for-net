@@ -326,6 +326,80 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/integrationServiceEnvironments/{integrationServiceEnvironmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<IntegrationServiceEnvironmentResource>> GetIfExistsAsync(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+
+            using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _integrationServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, integrationServiceEnvironmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationServiceEnvironmentResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/integrationServiceEnvironments/{integrationServiceEnvironmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
+        public virtual NullableResponse<IntegrationServiceEnvironmentResource> GetIfExists(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+
+            using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _integrationServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, integrationServiceEnvironmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationServiceEnvironmentResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<IntegrationServiceEnvironmentResource> IEnumerable<IntegrationServiceEnvironmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
