@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Monitor.Ingestion;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Samples
@@ -22,31 +23,15 @@ namespace Azure.Monitor.Ingestion.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Upload()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LogsIngestionClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.Upload("<ruleId>", "<streamName>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    new {}
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Upload_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.UploadAsync("<ruleId>", "<streamName>", content);
+            Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -54,15 +39,31 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_Upload_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LogsIngestionClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.Upload("<ruleId>", "<streamName>", content, contentEncoding: "<contentEncoding>");
+            var data = new[] {
+    new {}
+};
+
+            Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Upload_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LogsIngestionClient(endpoint, credential);
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -70,15 +71,15 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Upload_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LogsIngestionClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.UploadAsync("<ruleId>", "<streamName>", content, contentEncoding: "<contentEncoding>");
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
             Console.WriteLine(response.Status);
         }
     }
