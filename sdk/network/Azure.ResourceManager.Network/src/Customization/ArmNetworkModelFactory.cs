@@ -190,5 +190,23 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualNetworkGatewayData VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IEnumerable<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, ResourceIdentifier gatewayDefaultSiteId, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IEnumerable<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, IEnumerable<string> customRoutesAddressPrefixes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IEnumerable<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState)
             => VirtualNetworkGatewayData(id, name, resourceType, location, tags, extendedLocation, etag, null, ipConfigurations, gatewayType, vpnType, vpnGatewayGeneration, enableBgp, enablePrivateIPAddress, active, disableIPSecReplayProtection, gatewayDefaultSiteId, sku, vpnClientConfiguration, virtualNetworkGatewayPolicyGroups, bgpSettings, customRoutesAddressPrefixes, resourceGuid, provisioningState, enableDnsForwarding, inboundDnsForwardingEndpoint, vNetExtendedLocationResourceId, natRules, enableBgpRouteTranslationForNat, allowVirtualWanTraffic, allowRemoteVnetTraffic, adminState);
+
+        /// <summary> Initializes a new instance of HopLink. </summary>
+        /// <param name="nextHopId"> The ID of the next hop. </param>
+        /// <param name="linkType"> Link type. </param>
+        /// <param name="issues"> List of issues. </param>
+        /// <param name="context"> Provides additional context on links. </param>
+        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="roundTripTimeMin"> Minimum roundtrip time in milliseconds. </param>
+        /// <param name="roundTripTimeAvg"> Average roundtrip time in milliseconds. </param>
+        /// <param name="roundTripTimeMax"> Maximum roundtrip time in milliseconds. </param>
+        /// <returns> A new <see cref="Models.HopLink"/> instance for mocking. </returns>
+        public static HopLink HopLink(string nextHopId = null, string linkType = null, IEnumerable<ConnectivityIssueInfo> issues = null, IReadOnlyDictionary<string, string> context = null, ResourceIdentifier resourceId = null, long? roundTripTimeMin = null, long? roundTripTimeAvg = null, long? roundTripTimeMax = null)
+        {
+            issues ??= new List<ConnectivityIssueInfo>();
+            context ??= new Dictionary<string, string>();
+
+            return new HopLink(nextHopId, linkType, issues?.ToList(), context, resourceId, roundTripTimeMin, roundTripTimeAvg, roundTripTimeMax);
+        }
     }
 }
