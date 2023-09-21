@@ -1078,14 +1078,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
-                                                     CancellationToken cancellationToken) => throw new NotImplementedException();
+                                                     CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointStartingPosition(offset, sequenceNumber), cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
         ///   that an event processor should begin reading from.
         /// </summary>
-        /// <param name="partitionId"></param>
-        /// <param name="checkpointStartingPosition"></param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         protected virtual Task UpdateCheckpointAsync(string partitionId,
@@ -2204,12 +2204,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
             ///   that an event processor should begin reading from.
             /// </summary>
-            /// <param name="fullyQualifiedNamespace"></param>
-            /// <param name="eventHubName"></param>
-            /// <param name="consumerGroup"></param>
-            /// <param name="partitionId"></param>
-            /// <param name="clientIdentifier"></param>
-            /// <param name="checkpointStartingPosition"></param>
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+            /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+            /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+            /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+            /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+            /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
             ///
             public async override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,

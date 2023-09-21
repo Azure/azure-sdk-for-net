@@ -222,7 +222,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
-        /// <returns></returns>
+        ///
         public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
                                                    string eventHubName,
                                                    string consumerGroup,
@@ -287,7 +287,7 @@ namespace Azure.Messaging.EventHubs.Tests
                EventHubName = eventHubName;
                ConsumerGroup = consumerGroup;
                PartitionId = partitionId;
-                StartingPosition = startingPosition;
+               StartingPosition = startingPosition;
                LastModified = lastModified;
                ClientIdentifier = clientIdentifier;
             }

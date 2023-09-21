@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string EventHubName { get; set; }
 
         /// <summary>
-        ///   The identifier of the specific Event Hub client that wrote this checkpoint.
+        ///   The unique identifier of the client that authored this checkpoint.
         /// </summary>
         ///
         public string ClientIdentifier { get; set; }
@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string PartitionId { get; set; }
 
         /// <summary>
-        /// The date and time that the checkpoint was last modified.
+        /// The date and time the checkpoint was last modified.
         /// </summary>
         ///
         public DateTimeOffset? LastModified {  get; set; }
@@ -64,19 +64,6 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         public EventProcessorCheckpoint()
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EventProcessorCheckpoint"/> class.
-        /// </summary>
-        public EventProcessorCheckpoint(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, EventPosition startingPosition)
-        {
-            FullyQualifiedNamespace = fullyQualifiedNamespace;
-            EventHubName = eventHubName;
-            ConsumerGroup = consumerGroup;
-            PartitionId = partitionId;
-            ClientIdentifier = clientIdentifier;
-            StartingPosition = startingPosition;
         }
     }
 }

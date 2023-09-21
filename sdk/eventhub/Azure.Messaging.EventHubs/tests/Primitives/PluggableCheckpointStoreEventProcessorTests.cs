@@ -87,13 +87,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockCheckpointStore
                 .Setup(store => store.UpdateCheckpointAsync(
-                    It.Is<EventProcessorCheckpoint>(cp =>
-                    cp.FullyQualifiedNamespace == mockProcessor.FullyQualifiedNamespace
-                    && cp.EventHubName == mockProcessor.EventHubName
-                    && cp.ConsumerGroup == mockProcessor.ConsumerGroup
-                    && cp.PartitionId == partitionId
-                    && cp.StartingPosition.Offset == offset.ToString()
-                    && cp.StartingPosition.InformationalSequenceNumber == sequence.ToString()),
+                    mockProcessor.FullyQualifiedNamespace,
+                    mockProcessor.EventHubName,
+                    mockProcessor.ConsumerGroup,
+                    partitionId,
+                    mockProcessor.Identifier,
+                    It.Is<CheckpointStartingPosition>(csp =>
+                        csp.Offset == offset
+                        && csp.SequenceNumber == sequence),
                     cancellationSource.Token))
                 .ThrowsAsync(expectedException);
 

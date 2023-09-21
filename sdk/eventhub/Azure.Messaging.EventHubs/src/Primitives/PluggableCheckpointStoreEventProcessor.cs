@@ -226,25 +226,21 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
-                                                      CancellationToken cancellationToken)
-        {
-            return _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, new CheckpointStartingPosition(offset, sequenceNumber), cancellationToken);
-        }
+                                                      CancellationToken cancellationToken) =>
+            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, new CheckpointStartingPosition(offset, sequenceNumber), cancellationToken);
 
         /// <summary>
-        /// TODO.
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
         /// </summary>
-        /// <param name="partitionId"></param>
-        /// <param name="checkpointStartingPosition"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation</param>
         /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       CheckpointStartingPosition checkpointStartingPosition,
-                                                      CancellationToken cancellationToken)
-        {
-            return _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, checkpointStartingPosition, cancellationToken);
-        }
+                                                      CancellationToken cancellationToken) =>
+            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, checkpointStartingPosition, cancellationToken);
 
         /// <summary>
         ///   Requests a list of the ownership assignments for partitions between each of the cooperating event processor
