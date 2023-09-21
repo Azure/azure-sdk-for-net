@@ -7,12 +7,11 @@
 - Added support for AKS workload.
 - Added support for secure score
 
-### Breaking Changes
+### Other Changes
 
 - Add property `identityDetails` to class `DataProtectionBackupInstanceProperties`.
 - Add property `RehydrationPriority ` to class `DataProtectionBackupJobProperties`.
-- Add property `FeatureSettings ` to class `DataProtectionBackupVaultPatchProperties`, replace the `CrossSubscriptionRestoreState`
-- Add property `SecureScore  ` to class `DataProtectionBackupVaultProperties`.
+- Add property `FeatureSettings ` to class `DataProtectionBackupVaultPatchProperties`, replace the `CrossSubscriptionRestoreState`.
 - Add property `IdentityDetails  ` to class `DeletedDataProtectionBackupInstanceProperties`.
 
 ## 1.2.0 (2023-07-20)
