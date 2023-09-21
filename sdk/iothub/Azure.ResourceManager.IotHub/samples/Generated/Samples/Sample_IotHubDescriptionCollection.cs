@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.IotHub.Samples
                     IPFilterRules =
 {
 },
-                    NetworkRuleSets = new IotHubNetworkRuleSetProperties(true, new IotHubNetworkRuleSetIPRule[]
+                    NetworkRuleSets = new IotHubNetworkRuleSetProperties(true, new NetworkRuleSetIPRule[]
             {
-new IotHubNetworkRuleSetIPRule("rule1","131.117.159.53")
+new NetworkRuleSetIPRule("rule1","131.117.159.53")
 {
 Action = IotHubNetworkRuleIPAction.Allow,
-},new IotHubNetworkRuleSetIPRule("rule2","157.55.59.128/25")
+},new NetworkRuleSetIPRule("rule2","157.55.59.128/25")
 {
 Action = IotHubNetworkRuleIPAction.Allow,
 }
@@ -265,12 +265,12 @@ MaxDeliveryCount = 10,
                     IPFilterRules =
 {
 },
-                    NetworkRuleSets = new IotHubNetworkRuleSetProperties(true, new IotHubNetworkRuleSetIPRule[]
+                    NetworkRuleSets = new IotHubNetworkRuleSetProperties(true, new NetworkRuleSetIPRule[]
             {
-new IotHubNetworkRuleSetIPRule("rule1","131.117.159.53")
+new NetworkRuleSetIPRule("rule1","131.117.159.53")
 {
 Action = IotHubNetworkRuleIPAction.Allow,
-},new IotHubNetworkRuleSetIPRule("rule2","157.55.59.128/25")
+},new NetworkRuleSetIPRule("rule2","157.55.59.128/25")
 {
 Action = IotHubNetworkRuleIPAction.Allow,
 }

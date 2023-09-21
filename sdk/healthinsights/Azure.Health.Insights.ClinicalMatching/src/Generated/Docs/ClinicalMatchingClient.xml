@@ -2,360 +2,332 @@
 <doc>
   <members>
     <member name="MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)">
-      <example>
-This sample shows how to call MatchTrialsAsync.
+<example>
+This sample shows how to call MatchTrialsAsync with required parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
 
-TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
+var trialMatcherData = new TrialMatcherData(new PatientRecord[] 
 {
     new PatientRecord("<id>")
-});
-Operation<TrialMatcherResult> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
-TrialMatcherResult responseData = operation.Value;
-]]></code>
-This sample shows how to call MatchTrialsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
-
-TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
 {
-    new PatientRecord("<id>")
-    {
         Info = new PatientInfo()
-        {
+{
             Sex = PatientInfoSex.Female,
-            BirthDate = DateTimeOffset.Parse("2022-05-10"),
-            ClinicalInfo =
-            {
-                new ClinicalCodedElement("<system>","<code>")
-                {
-                    Name = "<name>",
-                    Value = "<value>",
+            BirthDate = DateTimeOffset.UtcNow,
+            ClinicalInfo = 
+{
+                new ClinicalCodedElement("<system>", "<code>")
+{
+                    Name = "<Name>",
+                    Value = "<Value>",
                 }
             },
         },
-        Data =
-        {
-            new PatientDocument(DocumentType.Note,"<id>",new DocumentContent(DocumentContentSourceType.Inline,"<value>"))
-            {
+        Data = 
+{
+            new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+{
                 ClinicalType = ClinicalDocumentType.Consultation,
-                Language = "<language>",
-                CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                Language = "<Language>",
+                CreatedDateTime = DateTimeOffset.UtcNow,
             }
         },
     }
 })
 {
     Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
-    {
-        CustomTrials =
-        {
-            new ClinicalTrialDetails("<id>",new ClinicalTrialMetadata(new List<string>()
-            {
-                "<conditions>"
+{
+        CustomTrials = 
+{
+            new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[] 
+{
+                "<null>"
             })
-            {
-                Phases =
-                {
+{
+                Phases = 
+{
                     ClinicalTrialPhase.NotApplicable
                 },
                 StudyType = ClinicalTrialStudyType.Interventional,
                 RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
-                Sponsors =
-                {
-                    "<sponsors>"
+                Sponsors = 
+{
+                    "<null>"
                 },
-                Contacts =
-                {
+                Contacts = 
+{
                     new ContactDetails()
-                    {
-                        Name = "<name>",
-                        Email = "<email>",
-                        Phone = "<phone>",
+{
+                        Name = "<Name>",
+                        Email = "<Email>",
+                        Phone = "<Phone>",
                     }
                 },
-                Facilities =
-                {
-                    new ClinicalTrialResearchFacility("<name>","<countryOrRegion>")
-                    {
-                        City = "<city>",
-                        State = "<state>",
+                Facilities = 
+{
+                    new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
                     }
                 },
             })
-            {
-                EligibilityCriteriaText = "<eligibilityCriteriaText>",
+{
+                EligibilityCriteriaText = "<EligibilityCriteriaText>",
                 Demographics = new ClinicalTrialDemographics()
-                {
+{
                     AcceptedSex = ClinicalTrialAcceptedSex.All,
                     AcceptedAgeRange = new AcceptedAgeRange()
-                    {
-                        MinimumAge = new AcceptedAge(AgeUnit.Years,123.45F),
-                        MaximumAge = null,
+{
+                        MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                        MaximumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
                     },
                 },
             }
         },
-        RegistryFilters =
-        {
+        RegistryFilters = 
+{
             new ClinicalTrialRegistryFilter()
-            {
-                Conditions =
-                {
-                    "<conditions>"
+{
+                Conditions = 
+{
+                    "<null>"
                 },
-                StudyTypes =
-                {
+                StudyTypes = 
+{
                     ClinicalTrialStudyType.Interventional
                 },
-                RecruitmentStatuses =
-                {
+                RecruitmentStatuses = 
+{
                     ClinicalTrialRecruitmentStatus.UnknownStatus
                 },
-                Sponsors =
-                {
-                    "<sponsors>"
+                Sponsors = 
+{
+                    "<null>"
                 },
-                Phases =
-                {
+                Phases = 
+{
                     ClinicalTrialPhase.NotApplicable
                 },
-                Purposes =
-                {
+                Purposes = 
+{
                     ClinicalTrialPurpose.NotApplicable
                 },
-                Ids =
-                {
-                    "<ids>"
+                Ids = 
+{
+                    "<null>"
                 },
-                Sources =
-                {
+                Sources = 
+{
                     ClinicalTrialSource.Custom
                 },
-                FacilityNames =
-                {
-                    "<facilityNames>"
+                FacilityNames = 
+{
+                    "<null>"
                 },
-                FacilityLocations =
-                {
+                FacilityLocations = 
+{
                     new GeographicLocation("<countryOrRegion>")
-                    {
-                        City = "<city>",
-                        State = "<state>",
+{
+                        City = "<City>",
+                        State = "<State>",
                     }
                 },
-                FacilityAreas =
-                {
-                    new GeographicArea(GeoJsonType.Feature,new AreaGeometry(GeoJsonGeometryType.Point,new List<float>()
-                    {
-                        123.45F
-                    }),new AreaProperties(GeoJsonPropertiesSubType.Circle,123.45))
+                FacilityAreas = 
+{
+                    new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[] 
+{
+                        3.14f
+                    }), new AreaProperties(GeoJsonPropertiesSubType.Circle, 3.14))
                 },
             }
         },
     })
-    {
+{
         Verbose = true,
         IncludeEvidence = true,
     },
 };
-Operation<TrialMatcherResult> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
-TrialMatcherResult responseData = operation.Value;
-]]></code></example>
+var operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+]]></code>
+</example>
     </member>
     <member name="MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)">
-      <example>
-This sample shows how to call MatchTrials.
+<example>
+This sample shows how to call MatchTrials with required parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
 
-TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
+var trialMatcherData = new TrialMatcherData(new PatientRecord[] 
 {
     new PatientRecord("<id>")
-});
-Operation<TrialMatcherResult> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
-TrialMatcherResult responseData = operation.Value;
-]]></code>
-This sample shows how to call MatchTrials with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
-
-TrialMatcherData trialMatcherData = new TrialMatcherData(new List<PatientRecord>()
 {
-    new PatientRecord("<id>")
-    {
         Info = new PatientInfo()
-        {
+{
             Sex = PatientInfoSex.Female,
-            BirthDate = DateTimeOffset.Parse("2022-05-10"),
-            ClinicalInfo =
-            {
-                new ClinicalCodedElement("<system>","<code>")
-                {
-                    Name = "<name>",
-                    Value = "<value>",
+            BirthDate = DateTimeOffset.UtcNow,
+            ClinicalInfo = 
+{
+                new ClinicalCodedElement("<system>", "<code>")
+{
+                    Name = "<Name>",
+                    Value = "<Value>",
                 }
             },
         },
-        Data =
-        {
-            new PatientDocument(DocumentType.Note,"<id>",new DocumentContent(DocumentContentSourceType.Inline,"<value>"))
-            {
+        Data = 
+{
+            new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+{
                 ClinicalType = ClinicalDocumentType.Consultation,
-                Language = "<language>",
-                CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                Language = "<Language>",
+                CreatedDateTime = DateTimeOffset.UtcNow,
             }
         },
     }
 })
 {
     Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
-    {
-        CustomTrials =
-        {
-            new ClinicalTrialDetails("<id>",new ClinicalTrialMetadata(new List<string>()
-            {
-                "<conditions>"
+{
+        CustomTrials = 
+{
+            new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[] 
+{
+                "<null>"
             })
-            {
-                Phases =
-                {
+{
+                Phases = 
+{
                     ClinicalTrialPhase.NotApplicable
                 },
                 StudyType = ClinicalTrialStudyType.Interventional,
                 RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
-                Sponsors =
-                {
-                    "<sponsors>"
+                Sponsors = 
+{
+                    "<null>"
                 },
-                Contacts =
-                {
+                Contacts = 
+{
                     new ContactDetails()
-                    {
-                        Name = "<name>",
-                        Email = "<email>",
-                        Phone = "<phone>",
+{
+                        Name = "<Name>",
+                        Email = "<Email>",
+                        Phone = "<Phone>",
                     }
                 },
-                Facilities =
-                {
-                    new ClinicalTrialResearchFacility("<name>","<countryOrRegion>")
-                    {
-                        City = "<city>",
-                        State = "<state>",
+                Facilities = 
+{
+                    new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
                     }
                 },
             })
-            {
-                EligibilityCriteriaText = "<eligibilityCriteriaText>",
+{
+                EligibilityCriteriaText = "<EligibilityCriteriaText>",
                 Demographics = new ClinicalTrialDemographics()
-                {
+{
                     AcceptedSex = ClinicalTrialAcceptedSex.All,
                     AcceptedAgeRange = new AcceptedAgeRange()
-                    {
-                        MinimumAge = new AcceptedAge(AgeUnit.Years,123.45F),
-                        MaximumAge = null,
+{
+                        MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                        MaximumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
                     },
                 },
             }
         },
-        RegistryFilters =
-        {
+        RegistryFilters = 
+{
             new ClinicalTrialRegistryFilter()
-            {
-                Conditions =
-                {
-                    "<conditions>"
+{
+                Conditions = 
+{
+                    "<null>"
                 },
-                StudyTypes =
-                {
+                StudyTypes = 
+{
                     ClinicalTrialStudyType.Interventional
                 },
-                RecruitmentStatuses =
-                {
+                RecruitmentStatuses = 
+{
                     ClinicalTrialRecruitmentStatus.UnknownStatus
                 },
-                Sponsors =
-                {
-                    "<sponsors>"
+                Sponsors = 
+{
+                    "<null>"
                 },
-                Phases =
-                {
+                Phases = 
+{
                     ClinicalTrialPhase.NotApplicable
                 },
-                Purposes =
-                {
+                Purposes = 
+{
                     ClinicalTrialPurpose.NotApplicable
                 },
-                Ids =
-                {
-                    "<ids>"
+                Ids = 
+{
+                    "<null>"
                 },
-                Sources =
-                {
+                Sources = 
+{
                     ClinicalTrialSource.Custom
                 },
-                FacilityNames =
-                {
-                    "<facilityNames>"
+                FacilityNames = 
+{
+                    "<null>"
                 },
-                FacilityLocations =
-                {
+                FacilityLocations = 
+{
                     new GeographicLocation("<countryOrRegion>")
-                    {
-                        City = "<city>",
-                        State = "<state>",
+{
+                        City = "<City>",
+                        State = "<State>",
                     }
                 },
-                FacilityAreas =
-                {
-                    new GeographicArea(GeoJsonType.Feature,new AreaGeometry(GeoJsonGeometryType.Point,new List<float>()
-                    {
-                        123.45F
-                    }),new AreaProperties(GeoJsonPropertiesSubType.Circle,123.45))
+                FacilityAreas = 
+{
+                    new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[] 
+{
+                        3.14f
+                    }), new AreaProperties(GeoJsonPropertiesSubType.Circle, 3.14))
                 },
             }
         },
     })
-    {
+{
         Verbose = true,
         IncludeEvidence = true,
     },
 };
-Operation<TrialMatcherResult> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
-TrialMatcherResult responseData = operation.Value;
-]]></code></example>
+var operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
+]]></code>
+</example>
     </member>
     <member name="MatchTrialsAsync(WaitUntil,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call MatchTrialsAsync and parse the result.
+<example>
+This sample shows how to call MatchTrialsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
-    patients = new List<object>()
-    {
-        new
-        {
+var data = new {
+    patients = new[] {
+        new {
             id = "<id>",
         }
     },
-});
-Operation<BinaryData> operation = await client.MatchTrialsAsync(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
+};
 
+var operation = await client.MatchTrialsAsync(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -363,27 +335,21 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call MatchTrialsAsync with all parameters and request content and parse the result.
+This sample shows how to call MatchTrialsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
-    patients = new List<object>()
-    {
-        new
-        {
+var data = new {
+    patients = new[] {
+        new {
             id = "<id>",
-            info = new
-            {
+            info = new {
                 sex = "female",
                 birthDate = "2022-05-10",
-                clinicalInfo = new List<object>()
-                {
-                    new
-                    {
+                clinicalInfo = new[] {
+                    new {
                         system = "<system>",
                         code = "<code>",
                         name = "<name>",
@@ -391,17 +357,14 @@ RequestContent content = RequestContent.Create(new
                     }
                 },
             },
-            data = new List<object>()
-            {
-                new
-                {
+            data = new[] {
+                new {
                     type = "note",
                     clinicalType = "consultation",
                     id = "<id>",
                     language = "<language>",
                     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-                    content = new
-                    {
+                    content = new {
                         sourceType = "inline",
                         value = "<value>",
                     },
@@ -409,59 +372,48 @@ RequestContent content = RequestContent.Create(new
             },
         }
     },
-    configuration = new
-    {
+    configuration = new {
         verbose = true,
         includeEvidence = true,
-        clinicalTrials = new
-        {
-            customTrials = new List<object>()
-            {
-                new
-                {
+        clinicalTrials = new {
+            customTrials = new[] {
+                new {
                     id = "<id>",
                     eligibilityCriteriaText = "<eligibilityCriteriaText>",
-                    demographics = new
-                    {
+                    demographics = new {
                         acceptedSex = "all",
-                        acceptedAgeRange = new
-                        {
-                            minimumAge = new
-                            {
+                        acceptedAgeRange = new {
+                            minimumAge = new {
                                 unit = "years",
-                                value = 123.45F,
+                                value = 123.45f,
+                            },
+                            maximumAge = new {
+                                unit = "years",
+                                value = 123.45f,
                             },
                         },
                     },
-                    metadata = new
-                    {
-                        phases = new List<object>()
-                        {
+                    metadata = new {
+                        phases = new[] {
                             "notApplicable"
                         },
                         studyType = "interventional",
                         recruitmentStatus = "unknownStatus",
-                        conditions = new List<object>()
-                        {
-                            "<conditions>"
+                        conditions = new[] {
+                            "<String>"
                         },
-                        sponsors = new List<object>()
-                        {
-                            "<sponsors>"
+                        sponsors = new[] {
+                            "<String>"
                         },
-                        contacts = new List<object>()
-                        {
-                            new
-                            {
+                        contacts = new[] {
+                            new {
                                 name = "<name>",
                                 email = "<email>",
                                 phone = "<phone>",
                             }
                         },
-                        facilities = new List<object>()
-                        {
-                            new
-                            {
+                        facilities = new[] {
+                            new {
                                 name = "<name>",
                                 city = "<city>",
                                 state = "<state>",
@@ -471,72 +423,54 @@ RequestContent content = RequestContent.Create(new
                     },
                 }
             },
-            registryFilters = new List<object>()
-            {
-                new
-                {
-                    conditions = new List<object>()
-                    {
-                        "<conditions>"
+            registryFilters = new[] {
+                new {
+                    conditions = new[] {
+                        "<String>"
                     },
-                    studyTypes = new List<object>()
-                    {
+                    studyTypes = new[] {
                         "interventional"
                     },
-                    recruitmentStatuses = new List<object>()
-                    {
+                    recruitmentStatuses = new[] {
                         "unknownStatus"
                     },
-                    sponsors = new List<object>()
-                    {
-                        "<sponsors>"
+                    sponsors = new[] {
+                        "<String>"
                     },
-                    phases = new List<object>()
-                    {
+                    phases = new[] {
                         "notApplicable"
                     },
-                    purposes = new List<object>()
-                    {
+                    purposes = new[] {
                         "notApplicable"
                     },
-                    ids = new List<object>()
-                    {
-                        "<ids>"
+                    ids = new[] {
+                        "<String>"
                     },
-                    sources = new List<object>()
-                    {
+                    sources = new[] {
                         "custom"
                     },
-                    facilityNames = new List<object>()
-                    {
-                        "<facilityNames>"
+                    facilityNames = new[] {
+                        "<String>"
                     },
-                    facilityLocations = new List<object>()
-                    {
-                        new
-                        {
+                    facilityLocations = new[] {
+                        new {
                             city = "<city>",
                             state = "<state>",
                             countryOrRegion = "<countryOrRegion>",
                         }
                     },
-                    facilityAreas = new List<object>()
-                    {
-                        new
-                        {
+                    facilityAreas = new[] {
+                        new {
                             type = "Feature",
-                            geometry = new
-                            {
+                            geometry = new {
                                 type = "Point",
-                                coordinates = new List<object>()
-                                {
-                                    123.45F
+                                coordinates = new[] {
+                                    123.45f
                                 },
                             },
-                            properties = new
-                            {
+                            properties = new {
                                 subType = "Circle",
-                                radius = 123.45,
+                                radius = 123.45d,
                             },
                         }
                     },
@@ -544,10 +478,11 @@ RequestContent content = RequestContent.Create(new
             },
         },
     },
-});
-Operation<BinaryData> operation = await client.MatchTrialsAsync(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
+};
 
+var operation = await client.MatchTrialsAsync(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -595,29 +530,28 @@ Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetPr
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("knowledgeGraphLastUpdateDate").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="MatchTrials(WaitUntil,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call MatchTrials and parse the result.
+<example>
+This sample shows how to call MatchTrials with required parameters and request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
-    patients = new List<object>()
-    {
-        new
-        {
+var data = new {
+    patients = new[] {
+        new {
             id = "<id>",
         }
     },
-});
-Operation<BinaryData> operation = client.MatchTrials(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
+};
 
+var operation = client.MatchTrials(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -625,27 +559,21 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call MatchTrials with all parameters and request content and parse the result.
+This sample shows how to call MatchTrials with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
-    patients = new List<object>()
-    {
-        new
-        {
+var data = new {
+    patients = new[] {
+        new {
             id = "<id>",
-            info = new
-            {
+            info = new {
                 sex = "female",
                 birthDate = "2022-05-10",
-                clinicalInfo = new List<object>()
-                {
-                    new
-                    {
+                clinicalInfo = new[] {
+                    new {
                         system = "<system>",
                         code = "<code>",
                         name = "<name>",
@@ -653,17 +581,14 @@ RequestContent content = RequestContent.Create(new
                     }
                 },
             },
-            data = new List<object>()
-            {
-                new
-                {
+            data = new[] {
+                new {
                     type = "note",
                     clinicalType = "consultation",
                     id = "<id>",
                     language = "<language>",
                     createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
-                    content = new
-                    {
+                    content = new {
                         sourceType = "inline",
                         value = "<value>",
                     },
@@ -671,59 +596,48 @@ RequestContent content = RequestContent.Create(new
             },
         }
     },
-    configuration = new
-    {
+    configuration = new {
         verbose = true,
         includeEvidence = true,
-        clinicalTrials = new
-        {
-            customTrials = new List<object>()
-            {
-                new
-                {
+        clinicalTrials = new {
+            customTrials = new[] {
+                new {
                     id = "<id>",
                     eligibilityCriteriaText = "<eligibilityCriteriaText>",
-                    demographics = new
-                    {
+                    demographics = new {
                         acceptedSex = "all",
-                        acceptedAgeRange = new
-                        {
-                            minimumAge = new
-                            {
+                        acceptedAgeRange = new {
+                            minimumAge = new {
                                 unit = "years",
-                                value = 123.45F,
+                                value = 123.45f,
+                            },
+                            maximumAge = new {
+                                unit = "years",
+                                value = 123.45f,
                             },
                         },
                     },
-                    metadata = new
-                    {
-                        phases = new List<object>()
-                        {
+                    metadata = new {
+                        phases = new[] {
                             "notApplicable"
                         },
                         studyType = "interventional",
                         recruitmentStatus = "unknownStatus",
-                        conditions = new List<object>()
-                        {
-                            "<conditions>"
+                        conditions = new[] {
+                            "<String>"
                         },
-                        sponsors = new List<object>()
-                        {
-                            "<sponsors>"
+                        sponsors = new[] {
+                            "<String>"
                         },
-                        contacts = new List<object>()
-                        {
-                            new
-                            {
+                        contacts = new[] {
+                            new {
                                 name = "<name>",
                                 email = "<email>",
                                 phone = "<phone>",
                             }
                         },
-                        facilities = new List<object>()
-                        {
-                            new
-                            {
+                        facilities = new[] {
+                            new {
                                 name = "<name>",
                                 city = "<city>",
                                 state = "<state>",
@@ -733,72 +647,54 @@ RequestContent content = RequestContent.Create(new
                     },
                 }
             },
-            registryFilters = new List<object>()
-            {
-                new
-                {
-                    conditions = new List<object>()
-                    {
-                        "<conditions>"
+            registryFilters = new[] {
+                new {
+                    conditions = new[] {
+                        "<String>"
                     },
-                    studyTypes = new List<object>()
-                    {
+                    studyTypes = new[] {
                         "interventional"
                     },
-                    recruitmentStatuses = new List<object>()
-                    {
+                    recruitmentStatuses = new[] {
                         "unknownStatus"
                     },
-                    sponsors = new List<object>()
-                    {
-                        "<sponsors>"
+                    sponsors = new[] {
+                        "<String>"
                     },
-                    phases = new List<object>()
-                    {
+                    phases = new[] {
                         "notApplicable"
                     },
-                    purposes = new List<object>()
-                    {
+                    purposes = new[] {
                         "notApplicable"
                     },
-                    ids = new List<object>()
-                    {
-                        "<ids>"
+                    ids = new[] {
+                        "<String>"
                     },
-                    sources = new List<object>()
-                    {
+                    sources = new[] {
                         "custom"
                     },
-                    facilityNames = new List<object>()
-                    {
-                        "<facilityNames>"
+                    facilityNames = new[] {
+                        "<String>"
                     },
-                    facilityLocations = new List<object>()
-                    {
-                        new
-                        {
+                    facilityLocations = new[] {
+                        new {
                             city = "<city>",
                             state = "<state>",
                             countryOrRegion = "<countryOrRegion>",
                         }
                     },
-                    facilityAreas = new List<object>()
-                    {
-                        new
-                        {
+                    facilityAreas = new[] {
+                        new {
                             type = "Feature",
-                            geometry = new
-                            {
+                            geometry = new {
                                 type = "Point",
-                                coordinates = new List<object>()
-                                {
-                                    123.45F
+                                coordinates = new[] {
+                                    123.45f
                                 },
                             },
-                            properties = new
-                            {
+                            properties = new {
                                 subType = "Circle",
-                                radius = 123.45,
+                                radius = 123.45d,
                             },
                         }
                     },
@@ -806,10 +702,11 @@ RequestContent content = RequestContent.Create(new
             },
         },
     },
-});
-Operation<BinaryData> operation = client.MatchTrials(WaitUntil.Completed, content);
-BinaryData responseData = operation.Value;
+};
 
+var operation = client.MatchTrials(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -857,7 +754,8 @@ Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetPr
 Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToString());
 Console.WriteLine(result.GetProperty("results").GetProperty("knowledgeGraphLastUpdateDate").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
   </members>
 </doc>

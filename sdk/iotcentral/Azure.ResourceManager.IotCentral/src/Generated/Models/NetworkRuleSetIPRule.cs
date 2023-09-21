@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.IotCentral.Models
 {
     /// <summary> An object for an IP range that will be allowed access. </summary>
-    public partial class IotCentralNetworkRuleSetIPRule
+    public partial class NetworkRuleSetIPRule
     {
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSetIPRule. </summary>
-        public IotCentralNetworkRuleSetIPRule()
+        /// <summary> Initializes a new instance of NetworkRuleSetIPRule. </summary>
+        public NetworkRuleSetIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of NetworkRuleSetIPRule. </summary>
         /// <param name="filterName"> The readable name of the IP rule. </param>
         /// <param name="ipMask"> The CIDR block defining the IP range. </param>
-        internal IotCentralNetworkRuleSetIPRule(string filterName, string ipMask)
+        internal NetworkRuleSetIPRule(string filterName, string ipMask)
         {
             FilterName = filterName;
             IPMask = ipMask;
